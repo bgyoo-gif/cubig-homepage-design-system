@@ -2508,14 +2508,20 @@ function openDetail(path, name) {
   currentFilePath = path;
   document.getElementById('detail-title').textContent = name;
   var iframe = document.getElementById('detail-iframe');
-  if (path.endsWith('.tsx') || path.endsWith('.ts') || path.endsWith('.js')) {
-    fetch(path).then(function(r) { return r.text(); }).then(function(text) {
+  iframe.src = '';
+  iframe.srcdoc = '';
+  fetch(path).then(function(r) {
+    if (!r.ok) throw new Error(r.status);
+    return r.text();
+  }).then(function(text) {
+    if (path.endsWith('.tsx') || path.endsWith('.ts') || path.endsWith('.js')) {
       iframe.srcdoc = '<html><head><style>body{margin:0;padding:24px;font-family:"Fragment Mono",monospace;font-size:13px;line-height:1.7;background:#0f0f0f;color:#bababa;white-space:pre-wrap;word-break:break-all;}</style></head><body>' + text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</body></html>';
-    });
-  } else {
-    iframe.src = path;
-    iframe.srcdoc = '';
-  }
+    } else {
+      iframe.srcdoc = text;
+    }
+  }).catch(function() {
+    iframe.srcdoc = '<html><body style="display:flex;align-items:center;justify-content:center;height:100vh;margin:0;font-family:DM Sans,sans-serif;color:#9c9c9c"><p>파일을 불러올 수 없습니다.<br>HTTP 서버에서 접근해주세요.</p></body></html>';
+  });
   document.getElementById('detail-overlay').classList.add('v-detail-overlay--open');
 }
 function closeDetail() {
