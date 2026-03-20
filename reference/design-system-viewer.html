@@ -2436,23 +2436,37 @@ document.querySelectorAll('[data-step-tabs]').forEach(function(root) {
 });
 
 /* ===== GNB 탭 전환 ===== */
+function switchPage(page, scroll) {
+  document.querySelectorAll('.v-gnb__item').forEach(function(b) {
+    b.classList.remove('v-gnb__item--active');
+  });
+  var activeBtn = document.querySelector('.v-gnb__item[data-page="' + page + '"]');
+  if (activeBtn) activeBtn.classList.add('v-gnb__item--active');
+  document.querySelectorAll('.v-page').forEach(function(p) {
+    p.classList.remove('v-page--active');
+  });
+  var target = document.getElementById('page-' + page);
+  if (target) {
+    target.classList.add('v-page--active');
+    if (scroll) window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  // Save to hash
+  history.replaceState(null, '', '#' + page);
+}
+
 document.querySelectorAll('.v-gnb__item').forEach(function(btn) {
   btn.addEventListener('click', function() {
-    document.querySelectorAll('.v-gnb__item').forEach(function(b) {
-      b.classList.remove('v-gnb__item--active');
-    });
-    btn.classList.add('v-gnb__item--active');
-    var page = btn.dataset.page;
-    document.querySelectorAll('.v-page').forEach(function(p) {
-      p.classList.remove('v-page--active');
-    });
-    var target = document.getElementById('page-' + page);
-    if (target) {
-      target.classList.add('v-page--active');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    switchPage(btn.dataset.page, true);
   });
 });
+
+// Restore page from hash on load
+(function() {
+  var hash = location.hash.replace('#', '');
+  if (hash && document.getElementById('page-' + hash)) {
+    switchPage(hash, false);
+  }
+})();
 
 /* ===== Output Detail ===== */
 var currentFilePath = '';
