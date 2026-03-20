@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI-Ready Data Infrastructure for Enterprise AI | Cubig</title>
+<meta name="description" content="Enterprise data is never AI-ready by default. CUBIG removes the three blockers — restricted data, unusable data, and unstable AI execution — so production AI actually works.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://cubig.ai/">
+<meta property="og:title" content="AI-Ready Data Infrastructure for Enterprise AI | Cubig">
+<meta property="og:description" content="Make restricted and unusable data usable, and stabilize AI execution in production.">
+<meta property="og:site_name" content="Cubig">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cubig.ai/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://cubig.ai/#org",
+      "name": "Cubig",
+      "alternateName": [
+        "CUBIG",
+        "CUBIG Corp"
+      ],
+      "url": "https://cubig.ai",
+      "description": "Cubig builds AI-ready data infrastructure for enterprise AI. We make restricted and unusable data usable, and stabilize AI execution in production.",
+      "slogan": "AI-Ready Data Infrastructure for Enterprise AI",
+      "foundingDate": "2021",
+      "category": "AI-ready data infrastructure",
+      "knowsAbout": [
+        "AI-ready data infrastructure",
+        "enterprise AI data infrastructure",
+        "restricted data for AI",
+        "AI-ready data infrastructure",
+        "differential privacy",
+        "LLM data protection",
+        "PII anonymization for AI",
+        "production AI reproducibility",
+        "reproducible AI execution",
+        "AI release state management",
+        "run binding for AI systems",
+        "execution state tracking"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "contact@cubig.ai",
+        "contactType": "customer support"
+      },
+      "sameAs": [
+        "https://syntitan.ai",
+        "https://llmcapsule.ai",
+        "https://www.linkedin.com/company/cubig"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://cubig.ai/#website",
+      "url": "https://cubig.ai",
+      "name": "Cubig",
+      "publisher": {
+        "@id": "https://cubig.ai/#org"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://cubig.ai/#webpage",
+      "url": "https://cubig.ai/",
+      "name": "AI-Ready Data Infrastructure for Enterprise AI | Cubig",
+      "isPartOf": {
+        "@id": "https://cubig.ai/#website"
+      },
+      "about": {
+        "@type": "Thing",
+        "name": "AI-ready data infrastructure",
+        "description": "AI-ready data infrastructure is the infrastructure layer that makes enterprise data usable, privacy-safe, and stable for production AI execution."
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is AI-ready data infrastructure?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "AI-ready data infrastructure is the infrastructure layer that makes enterprise data usable, privacy-safe, and stable for production AI execution. It solves three blockers: restricted data (sensitive data that cannot be used safely for AI), unusable data (data that exists but has missing values, bias, or coverage gaps), and unstable execution (AI results that cannot be reproduced after deployment because conditions change). Cubig builds this infrastructure, implemented as the AI-Ready Data OS."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the AI-Ready Data OS?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The AI-Ready Data OS is the architecture implementation of Cubig's AI-Ready Data Infrastructure. It consists of three layers: SynTitan (execution stability platform with Release State and Run Binding), DTS (data usability and privacy capability based on differential privacy), and LLM Capsule (AI enablement layer for secure enterprise LLM usage). The category is AI-Ready Data Infrastructure; AI-Ready Data OS describes how that infrastructure is architected."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why does enterprise AI fail in production?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Enterprise AI fails in production not because of models, but because of data conditions. Three primary blockers: 1) Restricted Data — sensitive or regulated data cannot be used safely for AI; 2) Unusable Data — data exists but is not usable due to missing values, bias, or coverage gaps; 3) Unstable Execution — after deployment, data and execution conditions change so results cannot be reproduced. Most PoC environments use fixed data in controlled conditions, but production is dynamic."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is Release State?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Release State is SynTitan's mechanism for defining and locking AI execution conditions as a fixed, immutable reference point. Every execution condition — data state, schema, preprocessing steps, runtime dependencies — is captured in a Release State. Every AI run is bound to a specific Release State (Run Binding), making results traceable and reproducible."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between DTS and LLM Capsule?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "DTS and LLM Capsule both address data privacy but at different layers. LLM Capsule removes the data blockers that prevent AI adoption — handling PII and sensitive fields at runtime so enterprises can actually use LLMs on their own data. DTS generates privacy-safe synthetic datasets for training, validation, and testing — creating replacements for data that cannot be used or accessed. DTS operates at the dataset level; LLM Capsule at the interaction level."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<meta property="og:image" content="https://cubig.ai/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cubig.ai/og-default.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Fragment+Mono:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.bunny.net/css?family=geist:400,500,600,700,800">
+<style>
+:root {
+
+  /* ── CUBIG REAL BRAND COLORS ── */
+  --brand-purple: #6C54A0;
+  --brand-purple-mid: #d932ff;
+  --brand-accent: #ff266a;
+  --brand-orange: #ffa66f;
+  --brand-soft: #8A72C8;
+  --brand-gradient: linear-gradient(130deg, #6C54A0 0%, #b44fcc 50%, #ff266a 100%);
+  --brand-text-gradient: linear-gradient(270deg, #ffa66f 7%, #8A72C8 80%);
+  --blue: #6C54A0;
+  --blue-hi: #8A72C8;
+  --blue-dim: rgba(108,84,160,0.08);
+  --blue-glow: rgba(108,84,160,0.2);
+  --green: #1a7a4a;
+  --green-dim: rgba(26,122,74,0.09);
+
+  --bg:#ffffff;--bg2:#F8F8F8;--bg3:#F2F2F4;
+  --line:rgba(0,0,0,0.08);--line2:rgba(0,0,0,0.14);
+  --text:#141414;--text2:#4A4A52;--text3:#8A8A94;
+  --blue: #6C54A0;--blue-hi: #8A72C8;--blue-dim: rgba(108,84,160,0.08);--blue-glow: rgba(108,84,160,0.2);
+  --green:#1a7a4a;--green-dim:rgba(26,122,74,0.09);
+  --amber:#C47A00;--red:#C13535;
+  --purple:#7B5CF5;--purple-dim:rgba(123,92,245,0.08);
+  --mono:'Fragment Mono',monospace;--serif:'Geist','DM Sans',sans-serif;--body:'DM Sans',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;font-size:16px;}
+body{font-family:var(--body);background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+a{text-decoration:none;color:inherit;}img{max-width:100%;}
+.mono{font-family:var(--mono);}.serif{font-family:var(--serif);}
+.label{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);}
+.label-blue{color:var(--brand-purple);}.label-green{color:var(--green);}
+/* nav: see v3 */
+.section{padding:100px 40px;max-width:1120px;margin:0 auto;}
+.section-wide{padding:100px 40px;}
+.section-wide>.inner{max-width:1120px;margin:0 auto;}
+/* eyebrow: see v3 */
+.display{font-family:var(--serif);font-size:clamp(36px,5vw,60px);font-weight:700;line-height:1.05;letter-spacing:-.025em;}
+.display em{font-style:normal;color:var(--brand-purple);}
+.h2{font-family:var(--serif);font-size:clamp(28px,3.5vw,44px);font-weight:700;line-height:1.1;letter-spacing:-.022em;}
+.h2 em{font-style:normal;color:var(--brand-purple);}
+/* btn: see v3 */
+.hero-wrap{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0;position:relative;overflow:hidden;}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(108,84,160,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(108,84,160,.06) 1px,transparent 1px);background-size:60px 60px;}
+.hero-grid::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 100%,rgba(108,84,160,.07) 0%,transparent 70%);}
+.hero-bg-num{position:absolute;right:-40px;top:50%;transform:translateY(-50%);font-family:var(--serif);font-size:clamp(300px,40vw,500px);font-weight:500;color:rgba(108,84,160,.06);line-height:1;pointer-events:none;user-select:none;}
+.hero-inner{max-width:1120px;margin:0 auto;padding:160px 40px 100px;position:relative;z-index:2;width:100%;}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--brand-purple);border:1px solid rgba(108,84,160,.22);padding:5px 12px;margin-bottom:32px;animation:fadeUp .6s ease both;}
+.hero-tag-dot{width:5px;height:5px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.hero-h1{font-family:var(--serif);font-size:clamp(48px,7vw,88px);font-weight:800;line-height:1.0;letter-spacing:-.03em;margin-bottom:28px;animation:fadeUp .7s .1s ease both;}
+.hero-h1 em{font-style:normal;color:var(--brand-purple);}
+.hero-sub{font-size:clamp(16px,2vw,19px);color:var(--text2);line-height:1.55;max-width:560px;margin-bottom:14px;font-weight:300;animation:fadeUp .7s .2s ease both;}
+.hero-supporting{font-family:var(--mono);font-size:12px;color:var(--text3);line-height:1.6;max-width:480px;margin-bottom:40px;padding-left:14px;border-left:2px solid rgba(108,84,160,.3);animation:fadeUp .7s .3s ease both;}
+.hero-ctas{display:flex;align-items:center;gap:14px;flex-wrap:wrap;animation:fadeUp .7s .4s ease both;}
+.hero-hint{margin-top:60px;padding-top:24px;border-top:1px solid var(--line);font-family:var(--mono);font-size:11px;color:var(--text3);line-height:1.7;animation:fadeUp .7s .5s ease both;}
+.hero-hint strong{color:var(--text2);}
+.hero-scroll{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);animation:fadeUp 1s .8s ease both;}
+.hero-scroll-line{width:1px;height:36px;background:linear-gradient(to bottom,var(--text3),transparent);animation:scrollLine 2s infinite;}
+@keyframes scrollLine{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.problems-wrap{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+.problems-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:48px;border:1px solid var(--line);}
+.problem-card{padding:36px 32px;border-right:1px solid var(--line);position:relative;transition:background .2s;}
+.problem-card:last-child{border-right:none;}
+.problem-card:hover{background:var(--bg2);}
+.problem-num{font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--text3);margin-bottom:20px;}
+.problem-icon{width:36px;height:36px;border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;font-size:15px;margin-bottom:20px;}
+.problem-title{font-family:var(--serif);font-size:24px;font-weight:500;margin-bottom:10px;line-height:1.1;}
+.problem-body{font-size:14px;color:var(--text2);line-height:1.65;}
+.problem-state{display:inline-block;font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;margin-top:16px;}
+.state-restricted{background:rgba(240,82,82,.1);color:var(--red);border:1px solid rgba(240,82,82,.2);}
+.state-unusable{background:rgba(240,180,41,.1);color:var(--amber);border:1px solid rgba(240,180,41,.2);}
+.state-unstable{background:rgba(138,147,168,.1);color:var(--text2);border:1px solid var(--line2);}
+.problems-bridge{margin-top:36px;padding:20px 24px;border:1px solid var(--line);border-left:3px solid var(--blue);background:var(--blue-dim);font-size:15px;color:var(--text);line-height:1.6;}
+.problems-bridge strong{color:#fff;}
+.definition-wrap{background:var(--bg);border-bottom:1px solid var(--line);}
+.definition-box{margin-top:36px;padding:36px;border:1px solid var(--line2);background:var(--bg2);position:relative;}
+.definition-box::before{content:'"';position:absolute;top:16px;left:24px;font-family:var(--serif);font-size:60px;font-weight:500;color:rgba(108,84,160,.12);line-height:1;}
+.definition-text{font-family:var(--serif);font-size:clamp(20px,2.5vw,27px);font-weight:400;line-height:1.45;color:var(--text);padding-left:20px;}
+.definition-text em{font-style:normal;color:var(--brand-purple);}
+.definition-three{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);margin-top:24px;}
+.def-item{background:var(--bg2);padding:20px 22px;}
+.def-item-title{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--brand-purple);margin-bottom:6px;display:flex;align-items:center;gap:8px;}
+.def-item-title::before{content:'';width:6px;height:6px;background:var(--green);border-radius:50%;flex-shrink:0;}
+.def-item-body{font-size:13.5px;color:var(--text2);line-height:1.55;}
+.definition-bridge{margin-top:28px;font-size:15px;color:var(--text2);line-height:1.65;max-width:700px;}
+.platform-wrap{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+.platform-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:1px;background:var(--line);margin-top:48px;}
+.cap-card{background:var(--bg);padding:36px 30px;position:relative;overflow:hidden;transition:background .2s;}
+.cap-card:hover{background:var(--bg2);}
+.cap-card.primary{background:var(--blue-dim);}
+.cap-card.primary:hover{background:rgba(108,84,160,.08);}
+.cap-card.primary::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--blue);}
+.cap-label{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px;}
+.cap-label.platform{color:var(--brand-purple);}.cap-label.capability{color:var(--text3);}
+.cap-name{font-family:var(--serif);font-size:30px;font-weight:500;line-height:1;margin-bottom:6px;}
+.cap-role{font-size:12.5px;color:var(--text2);font-family:var(--mono);margin-bottom:20px;padding-bottom:18px;border-bottom:1px solid var(--line);}
+.cap-points{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.cap-points li{font-size:13.5px;color:var(--text2);display:flex;gap:10px;line-height:1.5;}
+.cap-points li::before{content:'→';color:var(--brand-purple);font-family:var(--mono);font-size:11px;flex-shrink:0;margin-top:2px;}
+.cap-cta{margin-top:28px;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--brand-purple);font-family:var(--mono);letter-spacing:.04em;transition:gap .2s;}
+.cap-cta:hover{gap:10px;}
+.overlap-note{margin-top:28px;padding:18px 20px;background:var(--bg2);border:1px solid var(--line);border-left:2px solid rgba(108,84,160,.3);}
+.overlap-note p{font-family:var(--mono);font-size:11.5px;color:var(--text3);line-height:1.7;}
+.overlap-note p+p{margin-top:4px;}
+.platform-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:40px;}
+.proof-wrap{background:var(--bg);border-bottom:1px solid var(--line);}
+.proof-header-row{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:48px;flex-wrap:wrap;}
+.proof-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);}
+.proof-card{background:#fff;border:1px solid var(--line);padding:28px;position:relative;transition:background .2s;}
+.proof-card:hover{background:var(--bg2);}
+.proof-card-context{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.proof-card-context::before{content:'';width:6px;height:6px;background:var(--green);border-radius:50%;flex-shrink:0;}
+.proof-row{display:flex;flex-direction:column;gap:10px;margin-bottom:18px;}
+.proof-row-item{font-size:12.5px;line-height:1.55;padding:10px 12px;background:rgba(255,255,255,.025);border-left:2px solid transparent;}
+.proof-row-item.before{border-left-color:var(--red);}.proof-row-item.after{border-left-color:var(--green);}
+.proof-row-item.diff{border-left-color:var(--brand-purple);}.proof-row-item.reproduce{border-left-color:var(--amber);}
+.proof-row-label{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px;}
+.proof-row-label.before-l{color:var(--red);}.proof-row-label.after-l{color:var(--green);}
+.proof-row-label.diff-l{color:var(--brand-purple);}.proof-row-label.reproduce-l{color:var(--amber);}
+.proof-row-text{font-size:12.5px;color:var(--text2);line-height:1.5;}
+.proof-artifacts{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px;}
+.artifact-pill{font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line2);color:var(--text3);}
+.proof-ctas{margin-top:40px;display:flex;gap:12px;flex-wrap:wrap;align-items:center;}
+.trust-wrap{background:var(--bg2);border-bottom:1px solid var(--line);}
+.trust-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);margin-top:48px;}
+.trust-item{background:#fff;padding:24px 26px;display:flex;gap:18px;align-items:flex-start;transition:background .2s;}
+.trust-item:hover{background:var(--bg2);}
+.trust-icon{width:34px;height:34px;flex-shrink:0;border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;font-size:14px;margin-top:2px;}
+.trust-title{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text);margin-bottom:5px;}
+.trust-body{font-size:13.5px;color:var(--text2);line-height:1.6;}
+.learn-wrap{background:var(--bg);border-bottom:1px solid var(--line);}
+.learn-cols{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:48px;}
+.learn-pillar-title{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:14px;}
+.learn-pillar-link{display:block;padding:18px 20px;border:1px solid var(--line2);margin-bottom:8px;transition:border-color .2s,background .2s;}
+.learn-pillar-link:hover{border-color:var(--brand-purple);background:var(--blue-dim);}
+.learn-pillar-link-title{font-family:var(--serif);font-size:18px;font-weight:500;margin-bottom:4px;}
+.learn-pillar-link-sub{font-size:12.5px;color:var(--text2);}
+.learn-clusters{margin-top:28px;}
+.learn-clusters-title{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:14px;}
+.cluster-list{list-style:none;display:flex;flex-direction:column;gap:0;border:1px solid var(--line);}
+.cluster-item{padding:12px 16px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;font-size:13.5px;transition:background .15s;cursor:pointer;}
+.cluster-item:last-child{border-bottom:none;}
+.cluster-item:hover{background:rgba(255,255,255,.025);}
+.cluster-item-arrow{font-family:var(--mono);font-size:11px;color:var(--text3);transition:transform .2s,color .2s;}
+.cluster-item:hover .cluster-item-arrow{transform:translateX(4px);color:var(--brand-purple);}
+.cluster-tag{font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;background:var(--blue-dim);color:var(--brand-purple);border:1px solid rgba(108,84,160,.2);}
+.cluster-tag.seo{background:var(--green-dim);color:var(--green);border-color:rgba(24,217,139,.2);}
+.learn-glossary{margin-top:28px;padding:16px 18px;border:1px solid var(--line);background:var(--bg2);}
+.glossary-title{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:10px;}
+.glossary-terms{display:flex;flex-wrap:wrap;gap:6px;}
+.glossary-term{font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--text2);border:1px solid var(--line2);padding:4px 10px;transition:border-color .15s,color .15s;}
+.glossary-term:hover{border-color:var(--brand-purple);color:var(--brand-purple);}
+.final-wrap{background:var(--bg2);border-top:1px solid var(--line);position:relative;overflow:hidden;}
+.final-wrap::before{content:'';position:absolute;bottom:-100px;left:50%;transform:translateX(-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(108,84,160,.10) 0%,transparent 70%);pointer-events:none;}
+.final-bg-text{position:absolute;bottom:-30px;left:50%;transform:translateX(-50%);font-family:var(--serif);font-size:clamp(100px,18vw,220px);font-weight:500;color:rgba(108,84,160,.06);white-space:nowrap;pointer-events:none;user-select:none;line-height:1;}
+.final-inner{position:relative;z-index:2;text-align:center;}
+.final-h{font-family:var(--serif);font-size:clamp(32px,5vw,56px);font-weight:500;line-height:1.1;margin-bottom:14px;}
+.final-sub{font-size:15px;color:var(--text2);margin-bottom:36px;font-weight:300;}
+.final-ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+footer{background:var(--bg);border-top:1px solid var(--line);padding:48px 40px;}
+.footer-inner{max-width:1120px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;}
+.footer-brand{font-family:var(--mono);font-size:13px;display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.footer-brand-mark{display:none;}
+.footer-tagline{font-size:12.5px;color:var(--text3);max-width:240px;line-height:1.6;}
+.footer-col-title{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:14px;}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.footer-links a{font-size:13px;color:var(--text2);transition:color .2s;}
+.footer-links a:hover{color:var(--text);}
+.footer-bottom{max-width:1120px;margin:32px auto 0;padding-top:20px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+.footer-copy{font-family:var(--mono);font-size:11px;color:var(--text3);}
+@media(max-width:900px){nav{padding:0 20px;}.nav-links{display:none;}.section,.section-wide{padding:72px 20px;}.hero-inner{padding:130px 20px 80px;}.problems-grid{grid-template-columns:1fr;}.problem-card{border-right:none;border-bottom:1px solid var(--line);}.problem-card:last-child{border-bottom:none;}.definition-three{grid-template-columns:1fr;}.platform-grid{grid-template-columns:1fr;}.proof-grid{grid-template-columns:1fr;}.trust-grid{grid-template-columns:1fr;}.learn-cols{grid-template-columns:1fr;}footer{padding:40px 20px;}.footer-inner{flex-direction:column;}.final-bg-text{display:none;}}
+@media(max-width:600px){.hero-ctas{flex-direction:column;}}
+
+/* ── v3 shared styles ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;background:rgba(255,255,255,0.96);backdrop-filter:blur(20px) saturate(160%);border-bottom:1px solid var(--line);}
+.nav-logo{display:flex;align-items:center;gap:9px;font-family:var(--serif);font-size:14px;font-weight:700;letter-spacing:.04em;color:var(--text);}
+.nav-logo-mark{display:none;}
+.nav-links{display:flex;align-items:center;gap:2px;list-style:none;}
+.nav-links li{position:relative;}
+.nav-links a{font-family:var(--body);font-size:13.5px;font-weight:400;color:var(--text2);padding:7px 12px;border-radius:6px;transition:color .15s,background .15s;display:flex;align-items:center;gap:4px;}
+.nav-links a:hover,.nav-links a.active{color:var(--text);background:var(--bg2);}
+.nav-links .has-sub:hover .nav-sub{display:block;}
+.nav-sub{display:none;position:absolute;top:calc(100% + 4px);left:0;background:#fff;border:1px solid var(--line2);min-width:190px;box-shadow:0 8px 32px rgba(0,0,0,0.08);padding:6px 0;border-radius:10px;z-index:200;}
+.nav-sub a{display:block;padding:9px 16px;font-size:13px;color:var(--text2);border-radius:0;background:transparent;}
+.nav-sub a:hover{color:var(--brand-purple);background:var(--blue-dim);}
+.nav-cta{background:linear-gradient(130deg, #6C54A0 0%, #b44fcc 50%, #ff266a 100%)!important;color:#fff!important;padding:8px 20px!important;font-weight:500!important;font-size:13.5px!important;border-radius:100px!important;transition:background .15s!important;}
+.nav-cta:hover{background:#141414!important;}
+.nav-chevron{font-size:9px;opacity:.4;}
+.btn-primary{display:inline-flex;align-items:center;gap:8px;background: linear-gradient(130deg, #6C54A0 0%, #b44fcc 50%, #ff266a 100%); color: #fff;color:#fff;padding:13px 28px;font-family:var(--body);font-size:14px;font-weight:500;border:none;cursor:pointer;border-radius:100px;transition:background .15s;text-decoration:none;}
+.btn-primary:hover{background:#141414;}
+.btn-secondary{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--text);padding:12px 26px;font-family:var(--body);font-size:14px;border:1px solid var(--line2);cursor:pointer;border-radius:100px;transition:border-color .15s,color .15s;text-decoration:none;}
+.btn-secondary:hover{border-color:var(--text3);color:var(--brand-purple);}
+.btn-arrow{transition:transform .2s;}
+.btn-primary:hover .btn-arrow,.btn-secondary:hover .btn-arrow{transform:translateX(4px);}
+.eyebrow{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--brand-purple);margin-bottom:18px;}
+.eyebrow::before{content:'';width:20px;height:1px;background:var(--blue);}
+.h1{font-family:var(--serif);font-size:clamp(40px,5.5vw,72px);font-weight:800;line-height:1.0;letter-spacing:-.03em;}
+.h1 em,.h2 em,.final-h em{font-style:normal;color:var(--brand-purple);}
+.h2{font-family:var(--serif);font-size:clamp(28px,3.5vw,44px);font-weight:700;line-height:1.1;letter-spacing:-.022em;}
+
+</style>
+</head>
+<body>
+<nav aria-label="Main navigation">
+  <a href="/" class="nav-logo" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+  <svg width="20" height="31" viewBox="0 0 15.5 23.5" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M 15.494 10.91 L 15.494 10.301 C 15.494 9.987 15.388 9.709 15.174 9.481 C 14.977 9.26 14.692 9.136 14.396 9.142 L 13.764 9.142 C 13.64 9.148 13.52 9.099 13.436 9.008 C 13.347 8.917 13.3 8.795 13.304 8.669 L 13.304 5.725 C 13.304 5.412 13.197 5.141 12.976 4.922 C 12.768 4.707 12.48 4.587 12.181 4.592 L 11.574 4.592 C 11.443 4.592 11.317 4.536 11.229 4.439 C 11.134 4.346 11.081 4.218 11.081 4.085 L 11.081 3.433 C 11.081 3.12 10.974 2.85 10.753 2.63 C 10.545 2.416 10.257 2.296 9.958 2.3 L 9.383 2.3 C 9.242 2.305 9.104 2.25 9.006 2.148 C 8.906 2.044 8.853 1.903 8.859 1.759 L 8.859 1.133 C 8.859 0.812 8.752 0.55 8.531 0.33 C 8.323 0.115 8.035 -0.004 7.735 0 C 7.423 0 7.169 0.109 6.955 0.33 C 6.744 0.543 6.628 0.833 6.636 1.133 L 6.636 1.724 C 6.636 1.886 6.586 2.021 6.488 2.122 C 6.393 2.23 6.255 2.289 6.111 2.283 L 5.536 2.283 C 5.233 2.283 4.962 2.393 4.741 2.613 C 4.524 2.823 4.405 3.114 4.413 3.416 L 4.413 4.068 C 4.413 4.201 4.36 4.329 4.265 4.422 C 4.177 4.519 4.052 4.575 3.92 4.575 L 3.313 4.575 C 3.014 4.571 2.726 4.69 2.518 4.905 C 2.297 5.124 2.19 5.395 2.19 5.708 L 2.19 8.652 C 2.194 8.778 2.147 8.9 2.058 8.991 C 1.974 9.082 1.854 9.131 1.73 9.125 L 1.098 9.125 C 0.802 9.119 0.517 9.243 0.32 9.464 C 0.106 9.692 0 9.97 0 10.284 L 0 13.175 C 0 13.489 0.106 13.767 0.32 13.995 C 0.517 14.216 0.802 14.34 1.098 14.334 L 1.73 14.334 C 1.854 14.328 1.974 14.377 2.058 14.468 C 2.147 14.559 2.194 14.681 2.19 14.807 L 2.19 17.751 C 2.19 18.064 2.297 18.335 2.518 18.554 C 2.726 18.769 3.014 18.888 3.313 18.884 L 3.92 18.884 C 4.052 18.884 4.177 18.94 4.265 19.037 C 4.36 19.13 4.413 19.258 4.413 19.391 L 4.413 20.034 C 4.405 20.336 4.524 20.627 4.741 20.837 C 4.949 21.051 5.237 21.171 5.536 21.167 L 6.111 21.167 C 6.255 21.161 6.393 21.22 6.488 21.328 C 6.586 21.429 6.636 21.564 6.636 21.726 L 6.636 22.326 C 6.628 22.626 6.744 22.916 6.955 23.129 C 7.169 23.35 7.423 23.459 7.735 23.459 C 8.035 23.462 8.323 23.343 8.531 23.129 C 8.752 22.909 8.859 22.638 8.859 22.326 L 8.859 21.7 C 8.853 21.556 8.906 21.415 9.006 21.311 C 9.104 21.209 9.242 21.153 9.383 21.159 L 9.958 21.159 C 10.257 21.163 10.545 21.043 10.753 20.829 C 10.974 20.608 11.081 20.338 11.081 20.025 L 11.081 19.373 C 11.081 19.24 11.134 19.112 11.229 19.019 C 11.317 18.922 11.443 18.866 11.574 18.866 L 12.181 18.866 C 12.48 18.872 12.768 18.752 12.976 18.537 C 13.197 18.317 13.304 18.047 13.304 17.734 L 13.304 14.807 C 13.3 14.681 13.347 14.559 13.436 14.468 C 13.52 14.377 13.64 14.328 13.764 14.334 L 14.396 14.334 C 14.692 14.34 14.977 14.216 15.174 13.995 C 15.388 13.767 15.494 13.489 15.494 13.175 Z" fill="#6C54A0"/>
+    <path d="M 7.024 9.113 L 5.515 11.895 C 5.416 12.072 5.416 12.286 5.515 12.462 L 7.024 15.244 C 7.12 15.424 7.307 15.536 7.512 15.536 C 7.716 15.536 7.904 15.424 8 15.244 L 9.51 12.462 C 9.608 12.286 9.608 12.072 9.51 11.895 L 8 9.113 C 7.904 8.934 7.716 8.821 7.512 8.821 C 7.307 8.821 7.12 8.934 7.024 9.113 Z" fill="white"/>
+  </svg>
+  <div style="display:flex;flex-direction:column;line-height:1.1;">
+    <span style="font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;letter-spacing:.18em;color:#141414;">C U B I G</span>
+    <span style="font-family:'DM Sans',sans-serif;font-size:7.5px;font-weight:400;letter-spacing:.14em;color:#6C54A0;text-transform:uppercase;">Cure Bigdata</span>
+  </div>
+</a>
+  <ul class="nav-links" role="list">
+    <li class="has-sub"><a href="/syntitan">Platform <span class="nav-chevron">▾</span></a><div class="nav-sub"><a href="/syntitan">SynTitan</a></div></li>
+    <li class="has-sub"><a href="#">Capabilities <span class="nav-chevron">▾</span></a><div class="nav-sub"><a href="/dts">DTS</a><a href="/llm-capsule">LLM Capsule</a></div></li>
+    <li><a href="/proof">Proof</a></li>
+    <li class="has-sub"><a href="/learn">Learn <span class="nav-chevron">▾</span></a><div class="nav-sub"><a href="/learn/ai-ready-data-infrastructure">AI-Ready Data Infrastructure</a><a href="/learn/release-state">Release State</a><a href="/learn/articles">Articles</a><a href="/learn/glossary">Glossary</a></div></li>
+    <li><a href="/company">Company</a></li>
+    <li><a href="https://syntitan.ai" class="nav-cta" target="_blank" rel="noopener">Try SynTitan</a></li>
+  </ul>
+</nav>
+
+<section class="hero-wrap" aria-label="Hero">
+  <div class="hero-grid"></div>
+  <div class="hero-bg-num" aria-hidden="true">OS</div>
+  <div class="hero-inner">
+    <div class="hero-tag"><span class="hero-tag-dot"></span>AI-Ready Data Infrastructure</div>
+    <h1 class="hero-h1">Enterprise data is<br><em>never AI-ready by default.</em></h1>
+    <p class="hero-sub">Three things block enterprise AI — data you can't legally use, data that exists but is too broken to train on, and results that don't reproduce in production. CUBIG is the AI-ready data infrastructure that removes all three.</p>
+    <p class="hero-supporting">Most AI works in PoC. It fails in production because execution conditions change.<br>We make production AI stable and reproducible.</p>
+    <div class="hero-ctas">
+      <a href="https://syntitan.ai" class="btn-primary">Explore SynTitan <span class="btn-arrow">→</span></a>
+      <a href="/proof" class="btn-secondary">See production cases <span class="btn-arrow">→</span></a>
+      <a href="/cdn-cgi/l/email-protection#0d6e6263796c6e794d6e786f646a236c64" class="btn-secondary" style="border-color:rgba(108,84,160,.3);color:var(--brand-purple);">Talk to our engineers <span class="btn-arrow">→</span></a>
+    </div>
+    <p class="hero-hint"><strong>Restricted data</strong> → DTS &nbsp;·&nbsp; <strong>Unusable data</strong> → DTS &nbsp;·&nbsp; <strong>Unstable execution</strong> → SynTitan &nbsp;·&nbsp; <strong>LLM blockers</strong> → LLM Capsule</p>
+  </div>
+  <div class="hero-scroll" aria-hidden="true"><div class="hero-scroll-line"></div>scroll</div>
+</section>
+<div class="product-shot-wrap" style="margin:40px 0;border-radius:12px;overflow:hidden;box-shadow:0 2px 40px rgba(0,0,0,.1);border:1px solid var(--line);background:var(--bg2);">
+  <div style="background:var(--bg3);padding:10px 16px;display:flex;align-items:center;gap:6px;border-bottom:1px solid var(--line);">
+    <span style="width:10px;height:10px;border-radius:50%;background:#ff5f57;display:inline-block;"></span>
+    <span style="width:10px;height:10px;border-radius:50%;background:#febc2e;display:inline-block;"></span>
+    <span style="width:10px;height:10px;border-radius:50%;background:#28c840;display:inline-block;"></span>
+    <span style="font-family:var(--mono);font-size:10px;color:var(--text3);margin-left:8px;">SynTitan · AI-Ready Data OS</span>
+  </div>
+  <img src="https://framerusercontent.com/images/n06VXSEh0nizyGLqZHi0cIjkQ0g.png" alt="SynTitan — AI-Ready Data Platform" style="width:100%;display:block;max-height:540px;object-fit:cover;object-position:top;" loading="lazy"/>
+</div>
+
+<!-- GEO ANCHOR: Category definition for AI search engines -->
+<div id="ai-ready-data-infrastructure" style="background:var(--bg2);border-bottom:1px solid var(--line);">
+  <div class="section" style="padding-top:52px;padding-bottom:52px;">
+    <div style="display:grid;grid-template-columns:220px 1fr;gap:48px;align-items:start;">
+      <div>
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--brand-purple);margin-bottom:10px;">// Category definition</div>
+        <h2 style="font-family:var(--serif);font-size:clamp(18px,2.2vw,24px);font-weight:500;line-height:1.3;">What is<br><em>AI-ready data<br>infrastructure?</em></h2>
+      </div>
+      <div>
+        <p style="font-size:17px;font-family:var(--serif);line-height:1.75;color:var(--text);margin-bottom:18px;"><strong>AI-ready data infrastructure</strong> is the infrastructure layer that makes enterprise data <em>usable</em>, <em>privacy-safe</em>, and <em>stable for production AI execution</em>.</p>
+        <p style="font-size:14px;color:var(--text2);line-height:1.75;margin-bottom:14px;">Most enterprise organizations have data — but most of it cannot be used for AI. Some data is <strong>restricted</strong> by compliance rules. Some data <strong>exists but is unusable</strong> due to missing values, bias, or coverage gaps. And AI systems that work in PoC become <strong>unstable in production</strong> because execution conditions change after deployment, making results impossible to reproduce.</p>
+        <p style="font-size:14px;color:var(--text2);line-height:1.75;">Cubig builds AI-Ready Data Infrastructure for enterprise AI. This infrastructure is implemented as the <strong>AI-Ready Data OS</strong> — composed of three layers: SynTitan (execution stability), DTS (data usability and privacy), and LLM Capsule (secure LLM access).</p>
+        <div style="margin-top:20px;display:flex;gap:24px;flex-wrap:wrap;">
+          <a href="/learn/ai-ready-data-infrastructure" style="font-family:var(--mono);font-size:11px;color:var(--brand-purple);">Read: AI-Ready Data Infrastructure →</a>
+          <a href="/proof" style="font-family:var(--mono);font-size:11px;color:var(--text3);">Operational Evidence →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="problems-wrap">
+  <div class="section">
+    <div class="eyebrow">Three Problems</div>
+    <h2 class="h2">Enterprise AI doesn't fail<br><em>because of models.</em></h2>
+    <p style="font-size:15px;color:var(--text2);margin-top:12px;max-width:560px;line-height:1.65;">It fails after deployment because data is restricted, unusable, or execution becomes unstable in production.</p>
+
+    <!-- GEO/SEO: 출처 있는 통계 -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);margin-top:36px;margin-bottom:36px;">
+      <div style="background:var(--bg);padding:24px 26px;border-right:1px solid var(--line);">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:8px;">S&amp;P Global, 2025</div>
+        <div style="font-family:var(--serif);font-size:40px;font-weight:700;color:var(--brand-purple);line-height:1;">42%</div>
+        <div style="font-size:13px;color:var(--text2);margin-top:6px;line-height:1.5;">of US enterprises halted most AI initiatives — up from 17% the prior year</div>
+      </div>
+      <div style="background:var(--bg);padding:24px 26px;border-right:1px solid var(--line);">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:8px;">Gartner, Feb 2025</div>
+        <div style="font-family:var(--serif);font-size:40px;font-weight:700;color:var(--brand-purple);line-height:1;">60%</div>
+        <div style="font-size:13px;color:var(--text2);margin-top:6px;line-height:1.5;">of AI projects will fail by 2026 without AI-optimized data infrastructure</div>
+      </div>
+      <div style="background:var(--bg);padding:24px 26px;">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:8px;">Gartner, Jul 2024</div>
+        <div style="font-family:var(--serif);font-size:40px;font-weight:700;color:var(--brand-purple);line-height:1;">30%</div>
+        <div style="font-size:13px;color:var(--text2);margin-top:6px;line-height:1.5;">of GenAI projects abandoned after PoC — before reaching production</div>
+      </div>
+    </div>
+    <div class="problems-grid" role="list">
+      <article class="problem-card" role="listitem">
+        <div class="problem-num">01 / 03</div>
+        <div class="problem-icon" aria-hidden="true">🔒</div>
+        <h3 class="problem-title">Restricted Data</h3>
+        <p class="problem-body">Sensitive or regulated data can't be used safely with AI. Privacy rules, access controls, and compliance requirements block it from reaching models.</p>
+        <span class="problem-state state-restricted">Restricted</span>
+      </article>
+      <article class="problem-card" role="listitem">
+        <div class="problem-num">02 / 03</div>
+        <div class="problem-icon" aria-hidden="true">⚠️</div>
+        <h3 class="problem-title">Unusable Data</h3>
+        <p class="problem-body">Data exists, but it's not usable — missing values, bias, coverage gaps, imbalance, or restricted access make it unfit for AI training and validation.</p>
+        <span class="problem-state state-unusable">Unusable</span>
+      </article>
+      <article class="problem-card" role="listitem">
+        <div class="problem-num">03 / 03</div>
+        <div class="problem-icon" aria-hidden="true">↯</div>
+        <h3 class="problem-title">Unstable Execution</h3>
+        <p class="problem-body">Data and execution conditions change after deployment — schema shifts, pipeline updates, runtime variance — so results can't be reproduced.</p>
+        <span class="problem-state state-unstable">Unstable</span>
+      </article>
+    </div>
+    <div class="problems-bridge"><strong>True AI-ready data</strong> means it becomes usable, reliable, and stable in production.</div>
+
+    <!-- OPERATIONAL COST SIGNALS: engineering-style, not marketing -->
+    <div style="margin-top:32px;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);">
+      <div style="background:var(--bg);padding:24px 26px;">
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:10px;">// Operational cost of execution failures</div>
+        <p style="font-size:13.5px;color:var(--text2);line-height:1.75;">When AI systems fail in production, the cost is rarely the model itself. Teams spend days or weeks isolating the cause — checking models, retraining pipelines, or rebuilding datasets — without visibility into what execution conditions actually changed. Without execution traceability, debugging becomes guesswork.</p>
+      </div>
+      <div style="background:var(--bg);padding:24px 26px;">
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:10px;">// Effect on deployment timelines</div>
+        <p style="font-size:13.5px;color:var(--text2);line-height:1.75;">These incidents slow AI deployment cycles and reduce organizational trust in production systems. Projects that worked correctly in development get deprioritized — not because the model was wrong, but because no one can reliably explain why the results changed after deployment.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ AI-READY DATA INFRASTRUCTURE ARCHITECTURE ═══ -->
+<div style="background:var(--bg);border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
+  <div class="section" style="padding-bottom:80px;">
+    <div class="eyebrow">Architecture</div>
+    <h2 class="h2">AI-Ready Data<br><em>Infrastructure.</em></h2>
+    <p style="font-size:15px;color:var(--text2);margin-top:12px;max-width:600px;line-height:1.65;">Infrastructure that makes enterprise data usable, privacy-safe, and stable for production AI execution.</p>
+    <p style="font-family:var(--mono);font-size:12px;color:var(--text3);margin-top:20px;max-width:680px;line-height:1.7;">Cubig removes the three blockers preventing enterprise AI adoption by introducing an AI-Ready Data Infrastructure layer.</p>
+
+    <!-- Architecture diagram -->
+    <div style="margin-top:48px;width:100%;overflow-x:auto;">
+      <svg viewBox="0 0 1000 780" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:960px;display:block;margin:0 auto;height:auto;">
+        <defs>
+          <marker id="arch-arr-left" markerWidth="8" markerHeight="8" refX="1" refY="4" orient="auto">
+            <path d="M7,1 L1,4 L7,7 Z" fill="rgba(255,255,255,.35)"/>
+          </marker>
+          <marker id="arch-arr-down" markerWidth="8" markerHeight="8" refX="4" refY="7" orient="auto">
+            <path d="M1,1 L4,7 L7,1 Z" fill="rgba(255,255,255,.2)"/>
+          </marker>
+          <filter id="arch-glow-syn" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="6" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <linearGradient id="arch-g-app" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#1a1a2e"/><stop offset="100%" style="stop-color:#111120"/>
+          </linearGradient>
+          <linearGradient id="arch-g-llm" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#180f2e"/><stop offset="100%" style="stop-color:#100d20"/>
+          </linearGradient>
+          <linearGradient id="arch-g-syn" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#0e1830"/><stop offset="100%" style="stop-color:#0a1020"/>
+          </linearGradient>
+          <linearGradient id="arch-g-dts" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#0a1e14"/><stop offset="100%" style="stop-color:#090f10"/>
+          </linearGradient>
+          <linearGradient id="arch-g-src" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#141420"/><stop offset="100%" style="stop-color:#0d0d16"/>
+          </linearGradient>
+          <radialGradient id="arch-bg-glow" cx="50%" cy="45%" r="50%">
+            <stop offset="0%" style="stop-color:rgba(80,50,160,.12)"/>
+            <stop offset="100%" style="stop-color:rgba(0,0,0,0)"/>
+          </radialGradient>
+        </defs>
+
+        <rect width="1000" height="780" rx="6" fill="#080810"/>
+        <rect width="1000" height="780" rx="6" fill="url(#arch-bg-glow)"/>
+
+        <!-- Left: layer labels -->
+        <rect x="14" y="106" width="62" height="78" rx="3" fill="rgba(255,255,255,.02)" stroke="rgba(255,255,255,.07)" stroke-width="1" stroke-dasharray="3,3"/>
+        <g transform="translate(45,145) rotate(-90)"><text text-anchor="middle" font-family="monospace" font-size="7.5" letter-spacing="1.8" fill="#40405a">AI APPLICATIONS LAYER</text></g>
+
+        <rect x="14" y="192" width="62" height="78" rx="3" fill="rgba(255,255,255,.02)" stroke="rgba(255,255,255,.07)" stroke-width="1" stroke-dasharray="3,3"/>
+        <g transform="translate(45,231) rotate(-90)"><text text-anchor="middle" font-family="monospace" font-size="7.5" letter-spacing="1.8" fill="#40405a">AI INTERACTION LAYER</text></g>
+
+        <rect x="14" y="278" width="62" height="100" rx="3" fill="rgba(59,127,232,.04)" stroke="rgba(59,127,232,.15)" stroke-width="1" stroke-dasharray="3,3"/>
+        <g transform="translate(45,328) rotate(-90)"><text text-anchor="middle" font-family="monospace" font-size="7.5" letter-spacing="1.8" fill="#3B7FE8" opacity=".7">EXECUTION LAYER</text></g>
+
+        <rect x="14" y="386" width="62" height="78" rx="3" fill="rgba(255,255,255,.02)" stroke="rgba(255,255,255,.07)" stroke-width="1" stroke-dasharray="3,3"/>
+        <g transform="translate(45,425) rotate(-90)"><text text-anchor="middle" font-family="monospace" font-size="7.5" letter-spacing="1.8" fill="#40405a">DATA LAYER</text></g>
+
+        <rect x="14" y="472" width="62" height="78" rx="3" fill="rgba(255,255,255,.02)" stroke="rgba(255,255,255,.07)" stroke-width="1" stroke-dasharray="3,3"/>
+        <g transform="translate(45,511) rotate(-90)"><text text-anchor="middle" font-family="monospace" font-size="7.5" letter-spacing="1.8" fill="#40405a">DATA SOURCES LAYER</text></g>
+
+        <!-- Down arrows between layers -->
+        <line x1="185" y1="185" x2="185" y2="192" stroke="rgba(255,255,255,.18)" stroke-width="1.2" marker-end="url(#arch-arr-down)"/>
+        <line x1="185" y1="270" x2="185" y2="278" stroke="rgba(255,255,255,.18)" stroke-width="1.2" marker-end="url(#arch-arr-down)"/>
+        <line x1="185" y1="378" x2="185" y2="386" stroke="rgba(255,255,255,.18)" stroke-width="1.2" marker-end="url(#arch-arr-down)"/>
+        <line x1="185" y1="464" x2="185" y2="472" stroke="rgba(255,255,255,.18)" stroke-width="1.2" marker-end="url(#arch-arr-down)"/>
+
+        <!-- Layer 1: AI Applications -->
+        <rect x="82" y="106" width="636" height="80" rx="4" fill="url(#arch-g-app)" stroke="rgba(255,255,255,.12)" stroke-width="1"/>
+        <rect x="82" y="106" width="4" height="80" rx="2" fill="rgba(255,255,255,.2)"/>
+        <text x="106" y="138" font-family="Georgia,serif" font-size="26" font-weight="700" fill="#ffffff">AI Applications</text>
+        <text x="106" y="157" font-family="monospace" font-size="9" letter-spacing="1" fill="#50507a">// DELIVERING HIGH-VALUE BUSINESS OUTCOMES</text>
+        <text x="390" y="130" font-family="monospace" font-size="9" fill="#8080a0">→ Fraud detection models</text>
+        <text x="390" y="147" font-family="monospace" font-size="9" fill="#8080a0">→ Customer analytics</text>
+        <text x="390" y="164" font-family="monospace" font-size="9" fill="#8080a0">→ Enterprise copilots</text>
+        <text x="572" y="130" font-family="monospace" font-size="9" font-weight="700" fill="#c0c0e0">→ Stable production models</text>
+        <text x="572" y="147" font-family="monospace" font-size="9" font-weight="700" fill="#c0c0e0">→ Privacy-safe insights</text>
+        <text x="572" y="164" font-family="monospace" font-size="9" font-weight="700" fill="#c0c0e0">→ LLM on internal data</text>
+
+        <!-- Layer 2: LLM Capsule -->
+        <rect x="82" y="192" width="636" height="80" rx="4" fill="url(#arch-g-llm)" stroke="rgba(123,92,245,.25)" stroke-width="1"/>
+        <rect x="82" y="192" width="4" height="80" rx="2" fill="#7B5CF5" opacity=".8"/>
+        <text x="106" y="224" font-family="Georgia,serif" font-size="26" font-weight="700" fill="#b090ff">LLM Capsule</text>
+        <text x="106" y="243" font-family="monospace" font-size="9" letter-spacing="1" fill="#5040a0">// SECURE LLM USAGE LAYER</text>
+        <text x="390" y="217" font-family="monospace" font-size="9" fill="#7060a0">→ PII detection in prompts</text>
+        <text x="390" y="234" font-family="monospace" font-size="9" fill="#7060a0">→ Prompt anonymization</text>
+        <text x="390" y="251" font-family="monospace" font-size="9" fill="#7060a0">→ Enterprise RAG support</text>
+        <text x="572" y="217" font-family="monospace" font-size="9" fill="#9070c0">→ Output remapping</text>
+        <text x="572" y="234" font-family="monospace" font-size="9" fill="#9070c0">→ LLM privacy protection</text>
+        <text x="572" y="251" font-family="monospace" font-size="9" fill="#9070c0">→ Sensitive doc access</text>
+
+        <!-- Layer 3: SynTitan (CORE) -->
+        <rect x="78" y="274" width="644" height="108" rx="6" fill="none" stroke="rgba(59,127,232,.18)" stroke-width="8" filter="url(#arch-glow-syn)"/>
+        <rect x="82" y="278" width="636" height="100" rx="4" fill="url(#arch-g-syn)" stroke="#3B7FE8" stroke-width="2" filter="url(#arch-glow-syn)"/>
+        <rect x="82" y="278" width="6" height="100" rx="2" fill="#3B7FE8"/>
+        <rect x="82" y="278" width="636" height="3" rx="1" fill="#3B7FE8" opacity=".6"/>
+        <text x="110" y="316" font-family="Georgia,serif" font-size="30" font-weight="700" fill="#ffffff">SynTitan</text>
+        <text x="110" y="338" font-family="monospace" font-size="9" letter-spacing="1" fill="#3060a0">// EXECUTION STABILITY PLATFORM</text>
+        <text x="360" y="300" font-family="monospace" font-size="9" fill="#5090d4">→ Release State versioning</text>
+        <text x="360" y="317" font-family="monospace" font-size="9" fill="#5090d4">→ Run Binding</text>
+        <text x="360" y="334" font-family="monospace" font-size="9" fill="#5090d4">→ Execution state drift detection</text>
+        <text x="360" y="351" font-family="monospace" font-size="9" fill="#5090d4">→ Production incident root cause</text>
+        <text x="572" y="300" font-family="monospace" font-size="9" fill="#80b4f0">→ Reproducible AI execution</text>
+        <text x="572" y="317" font-family="monospace" font-size="9" fill="#80b4f0">→ Change log diff</text>
+        <text x="572" y="334" font-family="monospace" font-size="9" fill="#80b4f0">→ Schema fingerprint tracking</text>
+        <text x="572" y="351" font-family="monospace" font-size="9" fill="#80b4f0">→ Reproduce any prior run</text>
+
+        <!-- Layer 4: DTS -->
+        <rect x="82" y="386" width="636" height="80" rx="4" fill="url(#arch-g-dts)" stroke="rgba(13,190,122,.22)" stroke-width="1"/>
+        <rect x="82" y="386" width="4" height="80" rx="2" fill="#0DBE7A" opacity=".8"/>
+        <text x="106" y="418" font-family="Georgia,serif" font-size="26" font-weight="700" fill="#0DBE7A">DTS</text>
+        <text x="106" y="437" font-family="monospace" font-size="9" letter-spacing="1" fill="#1a6040">// AI-READY DATA GENERATION AND TRANSFORMATION</text>
+        <text x="360" y="408" font-family="monospace" font-size="9" font-weight="700" fill="#20a060">→ Fix unusable or restricted datasets</text>
+        <text x="360" y="425" font-family="monospace" font-size="9" fill="#206040">→ Synthetic data augmentation</text>
+        <text x="360" y="442" font-family="monospace" font-size="9" fill="#206040">→ Differential privacy</text>
+        <text x="572" y="408" font-family="monospace" font-size="9" fill="#206040">→ Class balancing</text>
+        <text x="572" y="425" font-family="monospace" font-size="9" fill="#206040">→ Privacy-safe datasets</text>
+        <text x="572" y="442" font-family="monospace" font-size="9" fill="#206040">→ Access restriction bypass</text>
+
+        <!-- Layer 5: Enterprise Data Sources -->
+        <rect x="82" y="472" width="636" height="80" rx="4" fill="url(#arch-g-src)" stroke="rgba(255,255,255,.09)" stroke-width="1"/>
+        <rect x="82" y="472" width="4" height="80" rx="2" fill="rgba(255,255,255,.2)"/>
+        <text x="106" y="504" font-family="Georgia,serif" font-size="22" font-weight="700" fill="#c0c0d8">Enterprise Data Sources</text>
+        <text x="106" y="523" font-family="monospace" font-size="9" letter-spacing="1" fill="#35355a">// Enterprise data sources across structured and unstructured systems</text>
+        <text x="380" y="496" font-family="monospace" font-size="9" fill="#50506a">→ Databases</text>
+        <text x="380" y="513" font-family="monospace" font-size="9" fill="#50506a">→ Documents</text>
+        <text x="380" y="530" font-family="monospace" font-size="9" fill="#50506a">→ Logs &amp; IoT</text>
+        <text x="510" y="496" font-family="monospace" font-size="9" fill="#50506a">→ CRM &amp; ERP</text>
+        <text x="510" y="513" font-family="monospace" font-size="9" fill="#50506a">→ Data Warehouse</text>
+        <text x="510" y="530" font-family="monospace" font-size="9" fill="#50506a">→ Object Storage</text>
+        <text x="640" y="496" font-family="monospace" font-size="9" fill="#50506a">→ Internal Docs</text>
+        <text x="640" y="513" font-family="monospace" font-size="9" fill="#50506a">→ Legacy Systems</text>
+        <text x="640" y="530" font-family="monospace" font-size="9" fill="#50506a">→ APIs</text>
+
+        <!-- Right: Blockers panel -->
+        <text x="752" y="120" font-family="monospace" font-size="9.5" font-weight="700" fill="#c0c0e0">The Three AI</text>
+        <text x="752" y="135" font-family="monospace" font-size="9.5" font-weight="700" fill="#c0c0e0">Data Blockers</text>
+        <line x1="748" y1="232" x2="722" y2="232" stroke="rgba(255,255,255,.3)" stroke-width="1.2" marker-end="url(#arch-arr-left)"/>
+        <text x="752" y="236" font-family="monospace" font-size="11" font-weight="700" fill="#b090ff">Restricted Data</text>
+        <line x1="748" y1="328" x2="722" y2="328" stroke="rgba(59,127,232,.8)" stroke-width="1.5" marker-end="url(#arch-arr-left)"/>
+        <text x="752" y="322" font-family="monospace" font-size="11" font-weight="700" fill="#ffffff">Unstable</text>
+        <text x="752" y="337" font-family="monospace" font-size="11" font-weight="700" fill="#ffffff">Execution</text>
+        <line x1="748" y1="426" x2="722" y2="426" stroke="rgba(13,190,122,.7)" stroke-width="1.2" marker-end="url(#arch-arr-left)"/>
+        <text x="752" y="430" font-family="monospace" font-size="11" font-weight="700" fill="#0DBE7A">Unusable Data</text>
+
+        <!-- Bottom summary bar -->
+        <rect x="0" y="570" width="1000" height="80" fill="rgba(255,255,255,.03)"/>
+        <line x1="0" y1="570" x2="1000" y2="570" stroke="rgba(255,255,255,.08)" stroke-width="1"/>
+        <text x="40" y="598" font-family="-apple-system,sans-serif" font-size="13" fill="#a0a0c0">Cubig builds AI-Ready Data Infrastructure that removes the three blockers preventing enterprise AI adoption.</text>
+        <text x="40" y="622" font-family="monospace" font-size="11.5" fill="#9070c0">Restricted Data → LLM Capsule</text>
+        <text x="316" y="622" font-family="monospace" font-size="11.5" fill="#60606a">  ·  </text>
+        <text x="332" y="622" font-family="monospace" font-size="11.5" fill="#0DBE7A">Unusable Data → DTS</text>
+        <text x="532" y="622" font-family="monospace" font-size="11.5" fill="#60606a">  ·  </text>
+        <text x="548" y="622" font-family="monospace" font-size="11.5" fill="#3B7FE8">Unstable Execution → SynTitan</text>
+        <text x="40" y="644" font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#e0e0f0">Together these layers make enterprise data usable, privacy-safe, and stable for production AI.</text>
+        <text x="960" y="635" text-anchor="middle" font-family="monospace" font-size="28" fill="rgba(123,92,245,.3)">✦</text>
+      </svg>
+    </div>
+
+    <!-- Post-diagram one-liner -->
+    <div style="margin-top:32px;padding:20px 24px;border:1px solid var(--line);border-left:3px solid var(--brand-purple);background:var(--blue-dim);max-width:960px;margin-left:auto;margin-right:auto;">
+      <p style="font-family:var(--mono);font-size:13px;color:var(--text);line-height:1.8;">
+        Cubig removes the three blockers preventing enterprise AI adoption.&nbsp;&nbsp;
+        <span style="color:#b090ff;font-weight:700;">Restricted Data → LLM Capsule</span>&nbsp;&nbsp;·&nbsp;&nbsp;
+        <span style="color:#0DBE7A;font-weight:700;">Unusable Data → DTS</span>&nbsp;&nbsp;·&nbsp;&nbsp;
+        <span style="color:#5090d4;font-weight:700;">Unstable Execution → SynTitan</span>
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="definition-wrap">
+  <div class="section">
+    <div class="eyebrow">Definition</div>
+    <h2 class="h2">What is <em>AI-ready data?</em></h2>
+    <div class="definition-box" id="ai-ready-data-definition">
+      <p class="definition-text">"True AI-ready data means it is <em>usable</em>, <em>privacy-safe</em>, and <em>stable for production execution</em>."</p>
+    </div>
+    <div class="definition-three">
+      <div class="def-item"><div class="def-item-title">Usable</div><p class="def-item-body">Data can actually be used for training, validation, and decisions — not just stored or partially accessible.</p></div>
+      <div class="def-item"><div class="def-item-title">Privacy-Safe</div><p class="def-item-body">Sensitive information is protected while data remains useful and compliant for AI workflows.</p></div>
+      <div class="def-item"><div class="def-item-title">Stable in Production</div><p class="def-item-body">AI runs stay reproducible even as environments, schemas, and pipelines change over time.</p></div>
+    </div>
+    <p class="definition-bridge">This requires a platform to stabilize execution, plus capabilities to make data privacy-safe and usable at scale.</p>
+  </div>
+</div>
+
+<div class="platform-wrap">
+  <div class="section">
+    <div class="eyebrow">Platform &amp; Capabilities</div>
+    <h2 class="h2">One platform. Two capabilities.<br><em>One outcome.</em></h2>
+    <p style="font-size:15px;color:var(--text2);margin-top:12px;max-width:580px;line-height:1.65;">SynTitan is the core platform. DTS and LLM Capsule are capabilities that attach when needed — and DTS runs standalone too.</p>
+    <div class="platform-grid">
+      <article class="cap-card primary">
+        <div class="cap-label platform">Platform</div>
+        <h3 class="cap-name">SynTitan</h3>
+        <p class="cap-role">AI Data Operational Integrity Platform</p>
+        <ul class="cap-points">
+          <li>Stabilizes AI execution in production through Release State and Run Binding</li>
+          <li>Every run is bound to a reproducible execution state</li>
+          <li>Built-in data quality refinement for execution stability</li>
+          <li>Diff between Release States to trace what changed</li>
+          <li>Re-run the same conditions for incident response and regression verification</li>
+        </ul>
+        <a href="/syntitan" class="cap-cta">Explore SynTitan →</a>
+      </article>
+      <article class="cap-card">
+        <div class="cap-label capability">Capability</div>
+        <h3 class="cap-name">DTS</h3>
+        <p class="cap-role">Data Privacy &amp; Quality</p>
+        <ul class="cap-points">
+          <li>Enterprise synthetic data engine based on differential privacy</li>
+          <li>Generates privacy-safe datasets for training, validation, and testing</li>
+          <li>Expands data coverage and fixes imbalance at scale</li>
+          <li>Non-accessible data generation — safe replacement datasets</li>
+          <li>Runs standalone or integrates with SynTitan</li>
+        </ul>
+        <a href="/dts" class="cap-cta">Explore DTS →</a>
+      </article>
+      <article class="cap-card">
+        <div class="cap-label capability">Capability</div>
+        <h3 class="cap-name">LLM Capsule</h3>
+        <p class="cap-role">AI Enablement</p>
+        <ul class="cap-points">
+          <li>Protects sensitive data including PII during LLM usage</li>
+          <li>Detect sensitive fields in prompts and outputs</li>
+          <li>Anonymize or shield before LLM interaction</li>
+          <li>Preserve output usability for downstream workflows</li>
+          <li>Works within SynTitan execution workflows</li>
+        </ul>
+        <a href="/llm-capsule" class="cap-cta">Explore LLM Capsule →</a>
+      </article>
+    </div>
+    <div class="overlap-note">
+      <p>SynTitan performs data quality refinement as part of execution stability.</p>
+      <p>SynTitan stabilizes AI execution in production. DTS is the standalone data engine that makes restricted and incomplete enterprise data AI-ready.</p>
+    </div>
+    <div class="platform-ctas">
+      <a href="https://syntitan.ai" class="btn-primary">Explore SynTitan <span class="btn-arrow">→</span></a>
+      <a href="/dts" class="btn-secondary">Explore DTS <span class="btn-arrow">→</span></a>
+      <a href="/llm-capsule" class="btn-secondary">Explore LLM Capsule <span class="btn-arrow">→</span></a>
+    </div>
+  </div>
+</div>
+
+<!-- ENGINEER ENTRY PATHS -->
+<div style="background:var(--bg);border-bottom:1px solid var(--line);">
+  <div class="section" style="padding-bottom:80px;">
+    <div class="eyebrow">Where teams start</div>
+    <h2 class="h2">Where teams typically<br><em>start with Cubig.</em></h2>
+    <p style="font-size:15px;color:var(--text2);margin-top:12px;max-width:580px;line-height:1.65;">Three distinct entry points. Each maps to a specific production blocker. Teams usually come in through one — and then expand from there.</p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);margin-top:40px;">
+
+      <div style="background:var(--bg2);padding:32px 28px;">
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--purple);border:1px solid rgba(123,92,245,.25);background:rgba(123,92,245,.06);display:inline-block;padding:3px 8px;margin-bottom:20px;">Entry via LLM Capsule</div>
+        <h3 style="font-family:var(--serif);font-size:20px;font-weight:500;line-height:1.2;margin-bottom:12px;">Use LLMs safely on enterprise data</h3>
+        <p style="font-size:13.5px;color:var(--text2);line-height:1.7;margin-bottom:16px;">Teams adopting external LLM APIs often discover that enterprise documents contain sensitive fields that cannot be safely transmitted. Compliance blocks adoption. Projects stall at the data access layer.</p>
+        <p style="font-family:var(--mono);font-size:11.5px;color:var(--text3);line-height:1.6;margin-bottom:20px;">LLM Capsule removes that blocker by anonymizing sensitive data inline during LLM interaction — PII never reaches the external model.</p>
+        <a href="/llm-capsule" style="display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:12px;font-weight:700;color:var(--purple);letter-spacing:.04em;">→ Explore LLM Capsule</a>
+      </div>
+
+      <div style="background:var(--bg2);padding:32px 28px;border-left:1px solid var(--line);">
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--green);border:1px solid rgba(26,122,74,.25);background:var(--green-dim);display:inline-block;padding:3px 8px;margin-bottom:20px;">Entry via DTS</div>
+        <h3 style="font-family:var(--serif);font-size:20px;font-weight:500;line-height:1.2;margin-bottom:12px;">Fix unusable or restricted datasets</h3>
+        <p style="font-size:13.5px;color:var(--text2);line-height:1.7;margin-bottom:16px;">Teams building classification or detection models often find that rare classes are underrepresented, privacy rules prevent using original data, or access restrictions block the pipeline entirely. The data exists — it just cannot be used.</p>
+        <p style="font-family:var(--mono);font-size:11.5px;color:var(--text3);line-height:1.6;margin-bottom:20px;">DTS generates privacy-safe synthetic datasets to expand coverage and fix imbalance when real data is restricted or incomplete.</p>
+        <a href="/dts" style="display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:12px;font-weight:700;color:var(--green);letter-spacing:.04em;">→ Explore DTS</a>
+      </div>
+
+      <div style="background:var(--blue-dim);padding:32px 28px;border-left:1px solid var(--line);border-top:2px solid var(--brand-purple);">
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--brand-purple);border:1px solid rgba(108,84,160,.3);background:rgba(108,84,160,.08);display:inline-block;padding:3px 8px;margin-bottom:20px;">Entry via SynTitan</div>
+        <h3 style="font-family:var(--serif);font-size:20px;font-weight:500;line-height:1.2;margin-bottom:12px;">Stabilize AI execution in production</h3>
+        <p style="font-size:13.5px;color:var(--text2);line-height:1.7;margin-bottom:16px;">Teams operating production AI pipelines encounter results that change without model updates — schema drift, pipeline changes, runtime variance. Debugging takes weeks because there is no traceability layer to isolate which execution condition changed.</p>
+        <p style="font-family:var(--mono);font-size:11.5px;color:var(--text3);line-height:1.6;margin-bottom:20px;">SynTitan binds every AI run to a versioned Release State — making execution conditions traceable, comparable, and reproducible on demand.</p>
+        <a href="/syntitan" style="display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:12px;font-weight:700;color:var(--brand-purple);letter-spacing:.04em;">→ Explore SynTitan</a>
+      </div>
+
+    </div>
+    <p style="font-family:var(--mono);font-size:11px;color:var(--text3);margin-top:20px;line-height:1.7;">// Not sure which fits? <a href="/proof" style="color:var(--brand-purple);">See production case records</a> or <a href="/cdn-cgi/l/email-protection#0d6e6263796c6e794d6e786f646a236c64" style="color:var(--brand-purple);">talk to our engineers</a>.</p>
+  </div>
+</div>
+
+<!-- ENTERPRISE AI USE CASES -->
+<div style="background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
+  <div class="section">
+    <div class="eyebrow">Enterprise AI Use Cases</div>
+    <h2 class="h2">Where AI-ready data infrastructure<br><em>shows up in production.</em></h2>
+    <p style="font-size:15px;color:var(--text2);margin-top:12px;max-width:600px;line-height:1.65;">Enterprise AI doesn't fail because the model is wrong. It fails because the data conditions underneath it are broken. These are common production scenarios — and the blocker pattern each one exposes.</p>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);margin-top:40px;">
+
+      <div style="background:#fff;padding:32px 28px;">
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);margin-bottom:16px;">Financial Services</div>
+        <h3 style="font-family:var(--serif);font-size:20px;font-weight:500;margin-bottom:10px;line-height:1.2;">Fraud Detection</h3>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px;">
+          <div style="padding:10px 12px;background:var(--bg2);border-left:2px solid var(--red);">
+            <div style="font-family:var(--mono);font-size:9px;color:var(--red);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;">Blocker</div>
+            <div style="font-size:12.5px;color:var(--text2);">Rare fraud events are underrepresented — model misses new patterns</div>
+          </div>
+          <div style="padding:10px 12px;background:var(--bg2);border-left:2px solid var(--amber);">
+            <div style="font-family:var(--mono);font-size:9px;color:var(--amber);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;">Data State</div>
+            <div style="font-size:12.5px;color:var(--text2);">Imbalanced dataset, unusable transaction records, restricted PII</div>
+          </div>
+          <div style="padding:10px 12px;background:var(--blue-dim);border-left:2px solid var(--brand-purple);">
+            <div style="font-family:var(--mono);font-size:9px;color:var(--brand-purple);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;">Cubig Solution</div>
+            <div style="font-size:12.5px;color:var(--text2);">DTS generates privacy-safe synthetic minority-class samples; SynTitan locks execution state across retraining runs</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:#fff;padding:32px 28px;border-left:1px solid var(--line);">
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);margin-bottom:16px;">Telecom / Subscription</div>
+        <h3 style="font-family:var(--serif);font-size:20px;font-weight:500;margin-bottom:10px;line-height:1.2;">Customer Churn Prediction</h3>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px;">
+          <div style="padding:10px 12px;background:var(--bg2);border-left:2px solid var(--red);">
+            <div style="font-family:var(--mono);font-size:9px;color:var(--red);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;">Blocker</div>
+            <div style="font-size:12.5px;color:var(--text2);">Upstream customer feature schemas change between runs — execution state drift degrades predictions silently</div>
+          </div>
+          <div style="padding:10px 12px;background:var(--bg2);border-left:2px solid var(--amber);">
+            <div style="font-family:var(--mono);font-size:9px;color:var(--amber);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;">Data State</div>
+            <div style="font-size:12.5px;color:var(--text2);">Preprocessing drift, schema mismatches, coverage gaps in minority churn class</div>
+          </div>
+          <div style="padding:10px 12px;background:var(--blue-dim);border-left:2px solid var(--brand-purple);">
+            <div style="font-family:var(--mono);font-size:9px;color:var(--brand-purple);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;">Cubig Solution</div>
+            <div style="font-size:12.5px;color:var(--text2);">SynTitan Release State detects schema drift at ingestion; DTS augments rare churn-event classes</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:#fff;padding:32px 28px;border-top:1px solid var(--line);">
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);margin-bottom:16px;">Enterprise / Knowledge Work</div>
+        <h3 style="font-family:var(--serif);font-size:20px;font-weight:500;margin-bottom:10px;line-height:1.2;">Enterprise LLM Search</h3>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px;">
+          <div style="padding:10px 12px;background:var(--bg2);border-left:2px solid var(--red);">
+            <div style="font-family:var(--mono);font-size:9px;color:var(--red);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;">Blocker</div>
+            <div style="font-size:12.5px;color:var(--text2);">PII and confidential records in documents — prompt data leakage risk blocks adoption</div>
+          </div>
+          <div style="padding:10px 12px;background:var(--bg2);border-left:2px solid var(--amber);">
+            <div style="font-family:var(--mono);font-size:9px;color:var(--amber);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;">Data State</div>
+            <div style="font-size:12.5px;color:var(--text2);">Restricted enterprise data, sensitive field exposure, compliance-blocked documents</div>
+          </div>
+          <div style="padding:10px 12px;background:var(--blue-dim);border-left:2px solid var(--brand-purple);">
+            <div style="font-family:var(--mono);font-size:9px;color:var(--brand-purple);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;">Cubig Solution</div>
+            <div style="font-size:12.5px;color:var(--text2);">LLM Capsule removes PII and sensitive fields before reaching the LLM — enterprise data stays within perimeter</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:#fff;padding:32px 28px;border-top:1px solid var(--line);border-left:1px solid var(--line);">
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);margin-bottom:16px;">Retail / E-commerce</div>
+        <h3 style="font-family:var(--serif);font-size:20px;font-weight:500;margin-bottom:10px;line-height:1.2;">Personalization Systems</h3>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px;">
+          <div style="padding:10px 12px;background:var(--bg2);border-left:2px solid var(--red);">
+            <div style="font-family:var(--mono);font-size:9px;color:var(--red);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;">Blocker</div>
+            <div style="font-size:12.5px;color:var(--text2);">Recommendation model results differ between test and production — schema updates, new user segments not represented</div>
+          </div>
+          <div style="padding:10px 12px;background:var(--bg2);border-left:2px solid var(--amber);">
+            <div style="font-family:var(--mono);font-size:9px;color:var(--amber);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;">Data State</div>
+            <div style="font-size:12.5px;color:var(--text2);">Unstable execution, cold-start data gaps, coverage gaps for new product categories</div>
+          </div>
+          <div style="padding:10px 12px;background:var(--blue-dim);border-left:2px solid var(--brand-purple);">
+            <div style="font-family:var(--mono);font-size:9px;color:var(--brand-purple);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;">Cubig Solution</div>
+            <div style="font-size:12.5px;color:var(--text2);">SynTitan Run Binding reproduces results across environments; DTS fills cold-start coverage gaps with AI-ready datasets</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <p style="font-family:var(--mono);font-size:11px;color:var(--text3);margin-top:20px;line-height:1.7;">// These are illustrative patterns — not industry-specific products. Cubig is horizontal AI-ready data infrastructure that works across sectors.</p>
+  </div>
+</div>
+
+<!-- BUYER ENTRY PATHS -->
+<div style="background:var(--bg);border-bottom:1px solid var(--line);">
+  <div class="section" style="padding-bottom:80px;">
+    <div class="eyebrow">Where to start</div>
+    <h2 class="h2">Which problem<br><em>describes your situation?</em></h2>
+    <p style="font-size:15px;color:var(--text2);margin-top:12px;max-width:560px;line-height:1.65;">Enterprise AI failures are not random. They trace back to one of three structural blockers. Find yours.</p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);margin-top:40px;">
+
+      <!-- Path 1: LLM Capsule -->
+      <div style="background:var(--bg2);padding:36px 30px;position:relative;">
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--red);border:1px solid rgba(193,53,53,.2);background:rgba(193,53,53,.06);display:inline-block;padding:3px 8px;margin-bottom:20px;">Restricted Data</div>
+        <h3 style="font-family:var(--serif);font-size:22px;font-weight:500;line-height:1.15;margin-bottom:12px;">We want to use LLMs on enterprise data, but sensitive fields block us.</h3>
+        <p style="font-size:13.5px;color:var(--text2);line-height:1.65;margin-bottom:8px;">PII, internal identifiers, regulated records — employees can't send this to an LLM. Compliance blocks adoption. Projects stall.</p>
+        <p style="font-family:var(--mono);font-size:11.5px;color:var(--text3);line-height:1.6;margin-bottom:24px;">// prompt data leakage · PII in LLM prompts · enterprise LLM privacy</p>
+        <a href="/llm-capsule" style="display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:12px;font-weight:700;color:var(--brand-purple);letter-spacing:.04em;">→ LLM Capsule removes the blocker</a>
+        <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--text3);">Available on AWS Marketplace. GS Certified.</div>
+      </div>
+
+      <!-- Path 2: DTS -->
+      <div style="background:var(--bg2);padding:36px 30px;position:relative;border-left:1px solid var(--line);">
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);border:1px solid rgba(196,122,0,.2);background:rgba(196,122,0,.06);display:inline-block;padding:3px 8px;margin-bottom:20px;">Unusable Data</div>
+        <h3 style="font-family:var(--serif);font-size:22px;font-weight:500;line-height:1.15;margin-bottom:12px;">We have data but it's restricted, imbalanced, or too incomplete to train on.</h3>
+        <p style="font-size:13.5px;color:var(--text2);line-height:1.65;margin-bottom:8px;">Access controls, coverage gaps, rare classes, privacy constraints — the data exists but AI can't use it. Projects can't start.</p>
+        <p style="font-family:var(--mono);font-size:11.5px;color:var(--text3);line-height:1.6;margin-bottom:24px;">// unusable data for AI · imbalanced datasets · AI-ready dataset generation</p>
+        <a href="/dts" style="display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:12px;font-weight:700;color:var(--brand-purple);letter-spacing:.04em;">→ DTS makes it AI-ready</a>
+        <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--text3);">GS Certified. Differential privacy engine.</div>
+      </div>
+
+      <!-- Path 3: SynTitan -->
+      <div style="background:var(--blue-dim);padding:36px 30px;position:relative;border-left:1px solid var(--line);border-top:2px solid var(--brand-purple);">
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--text2);border:1px solid var(--line2);background:var(--bg3);display:inline-block;padding:3px 8px;margin-bottom:20px;">Unstable Execution</div>
+        <h3 style="font-family:var(--serif);font-size:22px;font-weight:500;line-height:1.15;margin-bottom:12px;">AI worked in PoC but fails or produces inconsistent results in production.</h3>
+        <p style="font-size:13.5px;color:var(--text2);line-height:1.65;margin-bottom:8px;">Schema changes, pipeline updates, silent data drift — execution state is never fixed. Results change after deployment. Root cause takes weeks to find.</p>
+        <p style="font-family:var(--mono);font-size:11.5px;color:var(--text3);line-height:1.6;margin-bottom:24px;">// AI fails in production · execution state · release state · reproducible AI execution</p>
+        <a href="/syntitan" style="display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:12px;font-weight:700;color:var(--brand-purple);letter-spacing:.04em;">→ SynTitan stabilizes it</a>
+        <div style="margin-top:16px;padding-top:16px;border-top:1px solid rgba(108,84,160,.2);font-size:12.5px;color:var(--text3);">Core platform. Try at syntitan.ai</div>
+      </div>
+
+    </div>
+    <p style="font-family:var(--mono);font-size:11px;color:var(--text3);margin-top:20px;line-height:1.7;">// Not sure which fits? <a href="/proof" style="color:var(--brand-purple);">Read production case records</a> or <a href="/cdn-cgi/l/email-protection#7b1814150f1a180f3b180e19121c551a12" style="color:var(--brand-purple);">book a 30-min architecture review</a>.</p>
+  </div>
+</div>
+
+<!-- ═══ ENTERPRISE AI USE CASES — REAL WORLD ═══ -->
+<div style="background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);" id="enterprise-use-cases">
+  <div class="section">
+    <div class="eyebrow">Enterprise AI in the Real World</div>
+    <h2 class="h2">Where AI-Ready Data Infrastructure<br><em>unlocks production AI across industries.</em></h2>
+    <p style="font-size:15px;color:var(--text2);margin-top:12px;max-width:640px;line-height:1.65;">These are real deployment patterns across actual enterprise environments. Each reflects a specific production blocker removed by Cubig's infrastructure.</p>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);margin-top:48px;">
+
+      <!-- UC1: Finance — Fraud Detection -->
+      <article style="background:#fff;padding:28px 26px;position:relative;">
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:14px;display:flex;align-items:center;gap:8px;"><span style="width:6px;height:6px;border-radius:50%;background:var(--amber);flex-shrink:0;"></span>Finance</div>
+        <h3 style="font-family:var(--serif);font-size:18px;font-weight:500;line-height:1.2;margin-bottom:12px;">Fraud Detection &amp; Monitoring</h3>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px;">
+          <div style="padding:10px 12px;border-left:2px solid var(--red);background:var(--bg2);">
+            <div style="font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.09em;color:var(--red);margin-bottom:4px;">Problem</div>
+            <p style="font-size:12.5px;color:var(--text2);line-height:1.6;">Rare fraud patterns are underrepresented in training data. Monitoring pipelines produce inconsistent scores after pipeline updates.</p>
+          </div>
+          <div style="padding:10px 12px;border-left:2px solid var(--brand-purple);background:var(--blue-dim);">
+            <div style="font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.09em;color:var(--brand-purple);margin-bottom:4px;">Cubig Solution</div>
+            <p style="font-size:12.5px;color:var(--text2);line-height:1.6;"><strong>DTS</strong> expands rare fraud scenarios with synthetic data. <strong>SynTitan</strong> stabilizes monitoring pipelines via Release State and Run Binding.</p>
+          </div>
+          <div style="padding:10px 12px;border-left:2px solid var(--green);background:var(--green-dim);">
+            <div style="font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.09em;color:var(--green);margin-bottom:4px;">Outcome</div>
+            <p style="font-size:12.5px;color:var(--text2);line-height:1.6;">Improved anomaly detection reliability and expanded validation coverage for rare event classes.</p>
+          </div>
+        </div>
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:.06em;padding:3px 8px;display:inline-flex;gap:4px;flex-wrap:wrap;">
+          <span style="border:1px solid var(--line2);padding:3px 8px;color:var(--text3);">DTS</span>
+          <span style="border:1px solid var(--line2);padding:3px 8px;color:var(--text3);">SynTitan</span>
+        </div>
+      </article>
+
+      <!-- UC2: Insurance — Customer Interaction Analytics -->
+      <article style="background:#fff;padding:28px 26px;position:relative;border-left:1px solid var(--line);">
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:14px;display:flex;align-items:center;gap:8px;"><span style="width:6px;height:6px;border-radius:50%;background:var(--amber);flex-shrink:0;"></span>Insurance / Finance</div>
+        <h3 style="font-family:var(--serif);font-size:18px;font-weight:500;line-height:1.2;margin-bottom:12px;">Customer Interaction Analytics</h3>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px;">
+          <div style="padding:10px 12px;border-left:2px solid var(--red);background:var(--bg2);">
+            <div style="font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.09em;color:var(--red);margin-bottom:4px;">Problem</div>
+            <p style="font-size:12.5px;color:var(--text2);line-height:1.6;">Customer interaction records contain sensitive data. Cross-team analysis is blocked by access and privacy constraints.</p>
+          </div>
+          <div style="padding:10px 12px;border-left:2px solid var(--brand-purple);background:var(--blue-dim);">
+            <div style="font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.09em;color:var(--brand-purple);margin-bottom:4px;">Cubig Solution</div>
+            <p style="font-size:12.5px;color:var(--text2);line-height:1.6;"><strong>DTS</strong> generates privacy-safe synthetic datasets. <strong>SynTitan</strong> ensures reproducible analytics pipelines across teams.</p>
+          </div>
+          <div style="padding:10px 12px;border-left:2px solid var(--green);background:var(--green-dim);">
+            <div style="font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.09em;color:var(--green);margin-bottom:4px;">Outcome</div>
+            <p style="font-size:12.5px;color:var(--text2);line-height:1.6;">Complaint classification accuracy improved. Cross-team analysis enabled without exposing original customer records.</p>
+          </div>
+        </div>
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:.06em;padding:3px 8px;display:inline-flex;gap:4px;flex-wrap:wrap;">
+          <span style="border:1px solid var(--line2);padding:3px 8px;color:var(--text3);">DTS</span>
+          <span style="border:1px solid var(--line2);padding:3px 8px;color:var(--text3);">SynTitan</span>
+        </div>
+      </article>
+
+      <!-- UC3: Public Sector — Sentiment & Policy Monitoring -->
+      <article style="background:#fff;padding:28px 26px;position:relative;border-left:1px solid var(--line);">
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:14px;display:flex;align-items:center;gap:8px;"><span style="width:6px;height:6px;border-radius:50%;background:var(--brand-purple);flex-shrink:0;"></span>Public Sector</div>
+        <h3 style="font-family:var(--serif);font-size:18px;font-weight:500;line-height:1.2;margin-bottom:12px;">Sentiment &amp; Policy Monitoring</h3>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px;">
+          <div style="padding:10px 12px;border-left:2px solid var(--red);background:var(--bg2);">
+            <div style="font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.09em;color:var(--red);margin-bottom:4px;">Problem</div>
+            <p style="font-size:12.5px;color:var(--text2);line-height:1.6;">Public sentiment signals across media and communities are fragmented and difficult to quantify at the speed policy teams need.</p>
+          </div>
+          <div style="padding:10px 12px;border-left:2px solid var(--brand-purple);background:var(--blue-dim);">
+            <div style="font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.09em;color:var(--brand-purple);margin-bottom:4px;">Cubig Solution</div>
+            <p style="font-size:12.5px;color:var(--text2);line-height:1.6;">Synthetic data-driven analytics and agent-based monitoring models built on Cubig AI-Ready Data Infrastructure.</p>
+          </div>
+          <div style="padding:10px 12px;border-left:2px solid var(--green);background:var(--green-dim);">
+            <div style="font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.09em;color:var(--green);margin-bottom:4px;">Outcome</div>
+            <p style="font-size:12.5px;color:var(--text2);line-height:1.6;">Early detection of opinion leader influence and policy sentiment shifts — before they escalate to public-facing issues.</p>
+          </div>
+        </div>
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:.06em;padding:3px 8px;display:inline-flex;gap:4px;flex-wrap:wrap;">
+          <span style="border:1px solid var(--line2);padding:3px 8px;color:var(--text3);">DTS</span>
+          <span style="border:1px solid var(--line2);padding:3px 8px;color:var(--text3);">Cubig Infrastructure</span>
+        </div>
+      </article>
+
+      <!-- UC4: Marketing — AI Persona Trend Research -->
+      <article style="background:#fff;padding:28px 26px;position:relative;border-top:1px solid var(--line);">
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:14px;display:flex;align-items:center;gap:8px;"><span style="width:6px;height:6px;border-radius:50%;background:var(--brand-purple);flex-shrink:0;"></span>Marketing</div>
+        <h3 style="font-family:var(--serif);font-size:18px;font-weight:500;line-height:1.2;margin-bottom:12px;">AI Persona Trend Research</h3>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px;">
+          <div style="padding:10px 12px;border-left:2px solid var(--red);background:var(--bg2);">
+            <div style="font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.09em;color:var(--red);margin-bottom:4px;">Problem</div>
+            <p style="font-size:12.5px;color:var(--text2);line-height:1.6;">Traditional consumer surveys require large volumes of personal data and long collection cycles that cannot keep up with trend velocity.</p>
+          </div>
+          <div style="padding:10px 12px;border-left:2px solid var(--brand-purple);background:var(--blue-dim);">
+            <div style="font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.09em;color:var(--brand-purple);margin-bottom:4px;">Cubig Solution</div>
+            <p style="font-size:12.5px;color:var(--text2);line-height:1.6;">Synthetic behavioral data and AI persona simulations built on <strong>DTS</strong> — no personal data collection required.</p>
+          </div>
+          <div style="padding:10px 12px;border-left:2px solid var(--green);background:var(--green-dim);">
+            <div style="font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.09em;color:var(--green);margin-bottom:4px;">Outcome</div>
+            <p style="font-size:12.5px;color:var(--text2);line-height:1.6;">Trend insights delivered significantly faster — without collecting personal data from survey respondents.</p>
+          </div>
+        </div>
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:.06em;padding:3px 8px;display:inline-flex;gap:4px;flex-wrap:wrap;">
+          <span style="border:1px solid var(--line2);padding:3px 8px;color:var(--text3);">DTS</span>
+        </div>
+      </article>
+
+      <!-- UC5: Retail — Privacy-Safe Customer Analytics -->
+      <article style="background:#fff;padding:28px 26px;position:relative;border-top:1px solid var(--line);border-left:1px solid var(--line);">
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:14px;display:flex;align-items:center;gap:8px;"><span style="width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0;"></span>Retail / Sales</div>
+        <h3 style="font-family:var(--serif);font-size:18px;font-weight:500;line-height:1.2;margin-bottom:12px;">Privacy-Safe Customer Analytics</h3>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px;">
+          <div style="padding:10px 12px;border-left:2px solid var(--red);background:var(--bg2);">
+            <div style="font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.09em;color:var(--red);margin-bottom:4px;">Problem</div>
+            <p style="font-size:12.5px;color:var(--text2);line-height:1.6;">Privacy regulations restrict detailed analysis of customer interaction data. Analytics pipelines stall at the compliance layer.</p>
+          </div>
+          <div style="padding:10px 12px;border-left:2px solid var(--brand-purple);background:var(--blue-dim);">
+            <div style="font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.09em;color:var(--brand-purple);margin-bottom:4px;">Cubig Solution</div>
+            <p style="font-size:12.5px;color:var(--text2);line-height:1.6;"><strong>LLM Capsule</strong> anonymizes sensitive identifiers at the interaction layer. <strong>DTS</strong> generates privacy-safe analytical datasets for downstream use.</p>
+          </div>
+          <div style="padding:10px 12px;border-left:2px solid var(--green);background:var(--green-dim);">
+            <div style="font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.09em;color:var(--green);margin-bottom:4px;">Outcome</div>
+            <p style="font-size:12.5px;color:var(--text2);line-height:1.6;">Customer insights generated and analytics pipelines unblocked — without exposing personal data at any stage.</p>
+          </div>
+        </div>
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:.06em;padding:3px 8px;display:inline-flex;gap:4px;flex-wrap:wrap;">
+          <span style="border:1px solid var(--line2);padding:3px 8px;color:var(--text3);">LLM Capsule</span>
+          <span style="border:1px solid var(--line2);padding:3px 8px;color:var(--text3);">DTS</span>
+        </div>
+      </article>
+
+      <!-- UC6: Gaming — Player Behavior Analytics -->
+      <article style="background:#fff;padding:28px 26px;position:relative;border-top:1px solid var(--line);border-left:1px solid var(--line);">
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:14px;display:flex;align-items:center;gap:8px;"><span style="width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0;"></span>Gaming</div>
+        <h3 style="font-family:var(--serif);font-size:18px;font-weight:500;line-height:1.2;margin-bottom:12px;">Player Behavior &amp; Community Analytics</h3>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px;">
+          <div style="padding:10px 12px;border-left:2px solid var(--red);background:var(--bg2);">
+            <div style="font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.09em;color:var(--red);margin-bottom:4px;">Problem</div>
+            <p style="font-size:12.5px;color:var(--text2);line-height:1.6;">Game telemetry and community sentiment data are fragmented across platforms. Integration and reliable insight generation is complex.</p>
+          </div>
+          <div style="padding:10px 12px;border-left:2px solid var(--brand-purple);background:var(--blue-dim);">
+            <div style="font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.09em;color:var(--brand-purple);margin-bottom:4px;">Cubig Solution</div>
+            <p style="font-size:12.5px;color:var(--text2);line-height:1.6;">Synthetic augmentation of sparse behavior signals and unified analytics pipelines using Cubig AI-Ready Data Infrastructure.</p>
+          </div>
+          <div style="padding:10px 12px;border-left:2px solid var(--green);background:var(--green-dim);">
+            <div style="font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.09em;color:var(--green);margin-bottom:4px;">Outcome</div>
+            <p style="font-size:12.5px;color:var(--text2);line-height:1.6;">Clear behavioral insights and community sentiment trends — integrated from fragmented data sources into reliable production pipelines.</p>
+          </div>
+        </div>
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:.06em;padding:3px 8px;display:inline-flex;gap:4px;flex-wrap:wrap;">
+          <span style="border:1px solid var(--line2);padding:3px 8px;color:var(--text3);">DTS</span>
+          <span style="border:1px solid var(--line2);padding:3px 8px;color:var(--text3);">SynTitan</span>
+        </div>
+      </article>
+
+    </div>
+
+    <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+      <a href="/proof" class="btn-primary">See all production cases <span class="btn-arrow">→</span></a>
+      <a href="/cdn-cgi/l/email-protection#0d6e6263796c6e794d6e786f646a236c64" class="btn-secondary">Talk to our engineers <span class="btn-arrow">→</span></a>
+    </div>
+    <p style="font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:14px;line-height:1.7;">// These represent deployment patterns from real enterprise environments. Cubig is horizontal AI-Ready Data Infrastructure — not an industry-specific solution.</p>
+  </div>
+</div>
+
+<div class="proof-wrap">
+  <div class="section">
+    <div class="proof-header-row">
+      <div><div class="eyebrow">Proof</div><h2 class="h2">Operational evidence of<br><em>reproducible AI execution.</em></h2></div>
+      <p style="font-size:13.5px;color:var(--text2);max-width:320px;line-height:1.65;">AI runs in PoC under controlled conditions. Production is where conditions change and results break. Here's the evidence it doesn't have to.</p>
+    </div>
+    <div class="proof-grid">
+      <article class="proof-card">
+        <div class="proof-card-context">Financial services · Model retraining pipeline</div>
+        <div class="proof-row">
+          <div class="proof-row-item before"><div class="proof-row-label before-l">Before</div><div class="proof-row-text">Schema change in upstream data caused silent model degradation. Root cause identification took <strong>21 days</strong>. F1-score dropped below threshold without alert.</div></div>
+          <div class="proof-row-item after"><div class="proof-row-label after-l">After</div><div class="proof-row-text">Release State detected the schema diff at ingestion. Root cause identified in <strong>under 4 hours</strong> — 95% reduction. Issue flagged before the next training run.</div></div>
+          <div class="proof-row-item diff"><div class="proof-row-label diff-l">What Changed</div><div class="proof-row-text">2 feature columns removed · 1 schema type coercion</div></div>
+          <div class="proof-row-item reproduce"><div class="proof-row-label reproduce-l">Reproduce</div><div class="proof-row-text">Prior run re-executed under locked conditions. Behavior verified.</div></div>
+        </div>
+        <div class="proof-artifacts"><span class="artifact-pill">State Card</span><span class="artifact-pill">Change Log</span><span class="artifact-pill">Re-run Record</span></div>
+      </article>
+      <article class="proof-card">
+        <div class="proof-card-context">Telco · Real-time inference service</div>
+        <div class="proof-row">
+          <div class="proof-row-item before"><div class="proof-row-label before-l">Before</div><div class="proof-row-text">Preprocessing pipeline update produced inconsistent scores in production. No way to trace which version caused the drift.</div></div>
+          <div class="proof-row-item after"><div class="proof-row-label after-l">After</div><div class="proof-row-text">Run Binding linked every score to its exact Release State. Rollback to stable state in under 2 hours.</div></div>
+          <div class="proof-row-item diff"><div class="proof-row-label diff-l">What Changed</div><div class="proof-row-text">Normalization logic updated · feature scaling range shifted</div></div>
+          <div class="proof-row-item reproduce"><div class="proof-row-label reproduce-l">Reproduce</div><div class="proof-row-text">Stable release re-run confirmed. Score distribution matched baseline.</div></div>
+        </div>
+        <div class="proof-artifacts"><span class="artifact-pill">State Card</span><span class="artifact-pill">Change Log</span><span class="artifact-pill">Re-run Record</span></div>
+      </article>
+      <article class="proof-card">
+        <div class="proof-card-context">Manufacturing · Quality inspection model</div>
+        <div class="proof-row">
+          <div class="proof-row-item before"><div class="proof-row-label before-l">Before</div><div class="proof-row-text">Rare defect class underrepresented in training data. Model missed edge cases in production — invisible until incidents. Weighted F1-score: 58.55%.</div></div>
+          <div class="proof-row-item after"><div class="proof-row-label after-l">After</div><div class="proof-row-text">DTS generated privacy-safe synthetic samples for rare classes. Weighted F1-score improved to <strong>88.55% (+30pp)</strong>. Time-to-deploy reduced from 4 weeks to 1 day.</div></div>
+          <div class="proof-row-item diff"><div class="proof-row-label diff-l">What Changed</div><div class="proof-row-text">3 underrepresented classes augmented · class distribution rebalanced · coverage gap closed</div></div>
+          <div class="proof-row-item reproduce"><div class="proof-row-label reproduce-l">Reproduce</div><div class="proof-row-text">Augmented dataset versioned. Same training run reproducible on demand.</div></div>
+        </div>
+        <div class="proof-artifacts"><span class="artifact-pill">State Card</span><span class="artifact-pill">Change Log</span><span class="artifact-pill">Re-run Record</span></div>
+      </article>
+    </div>
+    <div class="proof-ctas">
+      <a href="https://syntitan.ai" class="btn-primary">Explore SynTitan <span class="btn-arrow">→</span></a>
+      <a href="/proof" class="btn-secondary">See all production cases <span class="btn-arrow">→</span></a>
+    </div>
+  </div>
+</div>
+
+<div class="trust-wrap">
+  <div class="section">
+    <div class="eyebrow">Trust</div>
+    <h2 class="h2">Built for production.<br><em>Designed for enterprise constraints.</em></h2>
+    <p style="font-size:15px;color:var(--text2);margin-top:12px;max-width:560px;line-height:1.65;">We're not a PoC vendor — we're the production AI infrastructure layer enterprises were missing.</p>
+
+    <!-- Social proof numbers -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);margin-top:40px;margin-bottom:40px;">
+      <div style="background:#fff;padding:24px;text-align:center;">
+        <div style="font-family:var(--serif);font-size:36px;font-weight:700;color:var(--brand-purple);">15+</div>
+        <div style="font-size:12.5px;color:var(--text2);margin-top:4px;">Enterprise clients across Finance, Healthcare, Public, Telecom</div>
+      </div>
+      <div style="background:#fff;padding:24px;text-align:center;">
+        <div style="font-family:var(--serif);font-size:36px;font-weight:700;color:var(--brand-purple);">10+</div>
+        <div style="font-size:12.5px;color:var(--text2);margin-top:4px;">Awards &amp; certifications incl. 4 Ministerial Prizes, GS &amp; KISA</div>
+      </div>
+      <div style="background:#fff;padding:24px;text-align:center;">
+        <div style="font-family:var(--serif);font-size:36px;font-weight:700;color:var(--brand-purple);">10</div>
+        <div style="font-size:12.5px;color:var(--text2);margin-top:4px;">Patents (8 domestic incl. 3 registered, 2 overseas)</div>
+      </div>
+      <div style="background:#fff;padding:24px;text-align:center;">
+        <div style="font-family:var(--serif);font-size:36px;font-weight:700;color:var(--brand-purple);">2021</div>
+        <div style="font-size:12.5px;color:var(--text2);margin-top:4px;">Founded · Seongnam-si, Korea · UK entity established</div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:40px;">
+  <div style="font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:16px;">// Partners &amp; Clients</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;align-items:center;">
+<div style="display:flex;align-items:center;justify-content:center;padding:14px 20px;border:1px solid var(--line2);"><img src="https://framerusercontent.com/images/c5j42VKCf5AGphfhxqnzRMWE.png" alt="Amazon AWS" height="28" style="max-width:90px;object-fit:contain;filter:grayscale(100%);opacity:.65;" loading="lazy"/></div>
+<div style="display:flex;align-items:center;justify-content:center;padding:14px 20px;border:1px solid var(--line2);"><img src="https://framerusercontent.com/images/JoCYsUaMh8JhQRoBG8Guf9KUC5I.png" alt="NVIDIA" height="28" style="max-width:90px;object-fit:contain;filter:grayscale(100%);opacity:.65;" loading="lazy"/></div>
+<div style="display:flex;align-items:center;justify-content:center;padding:14px 20px;border:1px solid var(--line2);"><img src="https://framerusercontent.com/images/iZLEu0r5pt2TkeICu4GcaJntH4.png" alt="Gartner" height="28" style="max-width:90px;object-fit:contain;filter:grayscale(100%);opacity:.65;" loading="lazy"/></div>
+<div style="display:flex;align-items:center;justify-content:center;padding:14px 20px;border:1px solid var(--line2);"><img src="https://framerusercontent.com/images/Zu9vaFchWUZ58HGkgOVo5Wpws.png" alt="Naver Cloud" height="28" style="max-width:90px;object-fit:contain;filter:grayscale(100%);opacity:.65;" loading="lazy"/></div>
+<div style="display:flex;align-items:center;justify-content:center;padding:14px 20px;border:1px solid var(--line2);"><img src="https://framerusercontent.com/images/mZzK4rW00S0FY3XgKeVHOLekQ8Y.png" alt="SK Telecom" height="28" style="max-width:90px;object-fit:contain;filter:grayscale(100%);opacity:.65;" loading="lazy"/></div>
+<div style="display:flex;align-items:center;justify-content:center;padding:14px 20px;border:1px solid var(--line2);"><img src="https://framerusercontent.com/images/YagTFXRdQQnGjcno56AzwZH0ww.png" alt="IBK" height="28" style="max-width:90px;object-fit:contain;filter:grayscale(100%);opacity:.65;" loading="lazy"/></div>
+<div style="display:flex;align-items:center;justify-content:center;padding:14px 20px;border:1px solid var(--line2);"><img src="https://framerusercontent.com/images/NxonYIgXwmaGmSqilQ1gAq5dhkI.png" alt="Woori Bank" height="28" style="max-width:90px;object-fit:contain;filter:grayscale(100%);opacity:.65;" loading="lazy"/></div>
+<div style="display:flex;align-items:center;justify-content:center;padding:14px 20px;border:1px solid var(--line2);"><img src="https://framerusercontent.com/images/5CIEcaLfmBUTDSmqANhjATS4.png" alt="Kyobo" height="28" style="max-width:90px;object-fit:contain;filter:grayscale(100%);opacity:.65;" loading="lazy"/></div>
+<div style="display:flex;align-items:center;justify-content:center;padding:14px 20px;border:1px solid var(--line2);"><img src="https://framerusercontent.com/images/lBYbVbakJ1O5C8hmtVhaUu8aD50.png" alt="ROK Army" height="28" style="max-width:90px;object-fit:contain;filter:grayscale(100%);opacity:.65;" loading="lazy"/></div>
+<div style="display:flex;align-items:center;justify-content:center;padding:14px 20px;border:1px solid var(--line2);"><img src="https://framerusercontent.com/images/s5KQfL7xWpphoLjixNXitZgru3c.png" alt="ROK Air Force" height="28" style="max-width:90px;object-fit:contain;filter:grayscale(100%);opacity:.65;" loading="lazy"/></div>
+<div style="display:flex;align-items:center;justify-content:center;padding:14px 20px;border:1px solid var(--line2);"><img src="https://framerusercontent.com/images/7oTxMkGKJAKRcItRaXfa95tOw.png" alt="EUMC" height="28" style="max-width:90px;object-fit:contain;filter:grayscale(100%);opacity:.65;" loading="lazy"/></div>
+  </div>
+</div>
+    <!-- Certification badges -->
+    <div style="margin-bottom:40px;">
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:16px;">// Certifications &amp; Recognition</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;">
+        <span style="font-family:var(--mono);font-size:10px;letter-spacing:.06em;padding:5px 12px;border:1px solid rgba(13,190,124,.3);color:var(--green);background:var(--green-dim);">GS Certified · LLM Capsule</span>
+        <span style="font-family:var(--mono);font-size:10px;letter-spacing:.06em;padding:5px 12px;border:1px solid rgba(13,190,124,.3);color:var(--green);background:var(--green-dim);">GS Certified — DTS</span>
+        <span style="font-family:var(--mono);font-size:10px;letter-spacing:.06em;padding:5px 12px;border:1px solid rgba(13,190,124,.3);color:var(--green);background:var(--green-dim);">ISO/IEC 27001:2022</span>
+        <span style="font-family:var(--mono);font-size:10px;letter-spacing:.06em;padding:5px 12px;border:1px solid rgba(13,190,124,.3);color:var(--green);background:var(--green-dim);">ISO/IEC 42001:2023</span>
+        <span style="font-family:var(--mono);font-size:10px;letter-spacing:.06em;padding:5px 12px;border:1px solid rgba(13,190,124,.3);color:var(--green);background:var(--green-dim);">KISA AI Certification</span>
+        <span style="font-family:var(--mono);font-size:10px;letter-spacing:.06em;padding:5px 12px;border:1px solid rgba(108,84,160,.25);color:var(--brand-purple);background:var(--blue-dim);">Recognized by Gartner · AI Data Infrastructure</span>
+        <span style="font-family:var(--mono);font-size:10px;letter-spacing:.06em;padding:5px 12px;border:1px solid rgba(108,84,160,.25);color:var(--brand-purple);background:var(--blue-dim);">Available on AWS Marketplace</span>
+      </div>
+    </div>
+    <div class="trust-grid">
+      <div class="trust-item"><div class="trust-icon" aria-hidden="true">🔐</div><div><div class="trust-title">Data Safety Controls</div><p class="trust-body">Access control, audit logging, and separation of duties built into the operational workflow.</p></div></div>
+      <div class="trust-item"><div class="trust-icon" aria-hidden="true">✓</div><div><div class="trust-title">Compliance &amp; Certification</div><p class="trust-body">Designed to operate within regulated industries. Enterprise-grade data handling principles throughout.</p></div></div>
+      <div class="trust-item"><div class="trust-icon" aria-hidden="true">⬡</div><div><div class="trust-title">Deployment Options</div><p class="trust-body">On-premises, cloud, or enterprise marketplace deployment. Flexible to fit your existing infrastructure and security posture.</p></div></div>
+      <div class="trust-item"><div class="trust-icon" aria-hidden="true">◈</div><div><div class="trust-title">Data Handling Principles</div><p class="trust-body">Raw data boundary enforcement, data minimization, and policy-based handling across all workflows.</p></div></div>
+      <div class="trust-item"><div class="trust-icon" aria-hidden="true">⤢</div><div><div class="trust-title">Procurement-Friendly</div><p class="trust-body">Available via enterprise marketplace channels. Procurement processes supported from first contact.</p></div></div>
+      <div class="trust-item"><div class="trust-icon" aria-hidden="true">↺</div><div><div class="trust-title">Audit &amp; Traceability</div><p class="trust-body">Every execution is traceable. Release State history and Change Logs give your security team what they need.</p></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="learn-wrap">
+  <div class="section">
+    <div class="eyebrow">Learn</div>
+    <h2 class="h2">Concepts behind<br><em>AI-ready data infrastructure.</em></h2>
+    <p style="font-size:15px;color:var(--text2);margin-top:12px;max-width:560px;line-height:1.65;">Start with the concepts. Move to the evidence. Build on the platform.</p>
+    <div class="learn-cols">
+      <div>
+        <div class="learn-pillar-title">// Pillar articles</div>
+        <a href="/learn/ai-ready-data-infrastructure" class="learn-pillar-link"><div class="learn-pillar-link-title">What is AI-Ready Data Infrastructure?</div><div class="learn-pillar-link-sub">The definitive guide — definition, the three data states, and what it takes to achieve production readiness.</div></a>
+        <a href="/learn/release-state" class="learn-pillar-link"><div class="learn-pillar-link-title">What is Release State?</div><div class="learn-pillar-link-sub">How SynTitan freezes execution conditions and makes AI runs reproducible in production.</div></a>
+        <div class="learn-glossary">
+          <div class="glossary-title">// Glossary</div>
+          <div class="glossary-terms">
+            <a href="/learn/glossary#run-binding" class="glossary-term">Run Binding</a>
+            <a href="/learn/glossary#release-state" class="glossary-term">Release State</a>
+            <a href="/learn/glossary#execution-state" class="glossary-term">Execution State</a>
+            <a href="/learn/glossary#differential-privacy" class="glossary-term">Differential Privacy</a>
+            <a href="/learn/glossary#synthetic-data" class="glossary-term">Synthetic Data</a>
+            <a href="/learn/glossary#llm-data-anonymization" class="glossary-term">LLM Data Anonymization</a>
+            <a href="/learn/glossary#ai-ready-data" class="glossary-term">AI-Ready Data</a>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="learn-clusters-title">// By problem</div>
+        <ul class="cluster-list" role="list">
+          <li class="cluster-item" role="listitem"><span>Restricted data — privacy &amp; access restriction</span><div style="display:flex;align-items:center;gap:8px;"><span class="cluster-tag seo">SEO</span><span class="cluster-item-arrow">→</span></div></li>
+          <li class="cluster-item" role="listitem"><span>Unusable data — bias, coverage gaps, imbalance</span><div style="display:flex;align-items:center;gap:8px;"><span class="cluster-tag seo">SEO</span><span class="cluster-item-arrow">→</span></div></li>
+          <li class="cluster-item" role="listitem"><span>Unstable execution — schema, pipeline, runtime changes</span><div style="display:flex;align-items:center;gap:8px;"><span class="cluster-tag">Core</span><span class="cluster-item-arrow">→</span></div></li>
+          <li class="cluster-item" role="listitem"><span>Synthetic data — DP, augmentation, privacy-safe datasets</span><div style="display:flex;align-items:center;gap:8px;"><span class="cluster-tag seo">SEO</span><span class="cluster-item-arrow">→</span></div></li>
+          <li class="cluster-item" role="listitem"><span>Secure LLM usage — PII protection, anonymization</span><div style="display:flex;align-items:center;gap:8px;"><span class="cluster-tag seo">SEO</span><span class="cluster-item-arrow">→</span></div></li>
+        </ul>
+        <div style="margin-top:20px;padding:16px 18px;border:1px solid var(--line);background:var(--bg2);">
+          <p style="font-family:var(--mono);font-size:11px;color:var(--text3);line-height:1.7;">// Internal link rule<br>Execution / Release / Stability → <span style="color:var(--text2)">Learn → Proof → SynTitan</span><br>Synthetic / Privacy / Data expansion → <span style="color:var(--text2)">Learn → DTS</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="final-wrap">
+  <div class="section final-inner">
+    <div class="final-bg-text" aria-hidden="true">CUBIG</div>
+    <div class="eyebrow" style="justify-content:center;">PoC worked. Production broke. Here's why.</div>
+    <h2 class="final-h">Is your AI actually<br><em>production-ready?</em></h2>
+    <p class="final-sub">Production AI failures cost weeks of incident recovery time. The root cause is almost always data or execution state — not the model. Let's find yours in 30 minutes.</p>
+    <div class="final-ctas">
+      <a href="https://syntitan.ai" class="btn-primary">Start evaluation — free <span class="btn-arrow">→</span></a>
+      <a href="/cdn-cgi/l/email-protection#c6a5a9a8b2a7a5b286a5b3a4afa1e8a7af" class="btn-secondary">Run a technical demo <span class="btn-arrow">→</span></a>
+      <a href="/proof" class="btn-secondary">See production cases <span class="btn-arrow">→</span></a>
+    </div>
+    <p style="font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:24px;line-height:1.7;">// 30-min architecture review · no commitment · engineers-first conversation</p>
+  </div>
+</div>
+
+
+<!-- SAAS-DIFF -->
+<section style='padding:80px 0;border-top:1px solid var(--line2);'><div class='section'><div class='eyebrow'>// Why not existing platforms</div><h2 class='h2'>Databricks stores your data.<br><em>CUBIG makes it usable for AI.</em></h2><p style='font-size:16px;color:var(--text2);max-width:600px;line-height:1.7;margin-top:16px;margin-bottom:48px;'>Databricks, Snowflake, dbt solve storage, query, and pipeline. They do not solve AI execution stability, sensitive data blockers, or unusable training data. That is a different layer. That is what CUBIG builds.</p><div style='display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);'><div style='background:var(--bg2);padding:28px 24px;'><div style='font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:12px;'>Databricks / Snowflake</div><div style='font-size:14px;color:var(--text2);line-height:1.7;'>Storage, query, pipelines, BI. Does not address AI execution drift, restricted data, or LLM blockers.</div></div><div style='background:var(--bg2);padding:28px 24px;'><div style='font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:12px;'>MLflow / W&B</div><div style='font-size:14px;color:var(--text2);line-height:1.7;'>Model experiment tracking. Does not version data state or fix data that cannot be used for AI.</div></div><div style='background:var(--brand-purple);padding:28px 24px;'><div style='font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:12px;'>CUBIG</div><div style='font-size:14px;color:#fff;line-height:1.7;'>Makes data AI-ready. Binds AI runs to reproducible states. Removes sensitive data blockers. Generates usable data where none exists.</div></div></div><p style='font-family:var(--mono);font-size:11px;color:var(--text3);margin-top:20px;'>// CUBIG sits between your data platform and your AI layer. Not a replacement. What makes the rest work for AI.</p></div></section>
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 0.5L19.5 10L10 19.5L0.5 10Z" stroke="#141414" stroke-width="1.2"/><path d="M10 4L16 10L10 16L4 10Z" stroke="#141414" stroke-width="0.9"/><path d="M10 7L12.5 10L10 13L7.5 10Z" fill="#141414"/></svg>CUBIG</div>
+      <p class="footer-tagline">AI-ready data infrastructure for enterprise AI.</p>
+      <p style="font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:10px;line-height:1.7;">Korea: 4F, NAVER 1784, 95 Jeongjail-ro,<br>Bundang-gu, Seongnam-si<br>UK: 21 Arthur Street, Belfast BT1 4GA</p>
+    </div>
+    <div><div class="footer-col-title">Platform</div><ul class="footer-links"><li><a href="/syntitan">SynTitan</a></li></ul></div>
+    <div><div class="footer-col-title">Capabilities</div><ul class="footer-links"><li><a href="/dts">DTS</a></li><li><a href="/llm-capsule">LLM Capsule</a></li></ul></div>
+    <div><div class="footer-col-title">Learn</div><ul class="footer-links"><li><a href="/learn/ai-ready-data-infrastructure">AI-Ready Data Infrastructure</a></li><li><a href="/learn/release-state">Release State</a></li><li><a href="/learn/articles">Articles</a></li><li><a href="/learn/glossary">Glossary</a></li></ul></div>
+    <div><div class="footer-col-title">Company</div><ul class="footer-links"><li><a href="/company">About</a></li><li><a href="/proof">Proof</a></li><li><a href="/cdn-cgi/l/email-protection#5635393822373522163523343f3178373f">Contact</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 CUBIG Corp. All rights reserved.</span

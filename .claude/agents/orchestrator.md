@@ -54,15 +54,15 @@ def update_job(job_id, stage, message, status=None, result=None):
   │
   ▼
 [Step 1] product-designer
-  → output/[파일명]-spec.md 생성
+  → output/docs/[파일명]-spec.md 생성
   │
   ▼
 [Step 2] frontend-dev
-  → output/[파일명]-b-type.html 생성
+  → output/html/[파일명]-b-type.html 생성
   │
   ▼
 [Step 3] qa
-  → output/[파일명]-qa-report.md 생성
+  → output/docs/[파일명]-qa-report.md 생성
   │
   ├─ PASS/CONDITIONAL PASS → Step 4
   └─ FAIL → Step 2 재호출 (최대 2회, 이후 사용자에게 보고)
@@ -73,7 +73,16 @@ def update_job(job_id, stage, message, status=None, result=None):
   → output/framer/[페이지명]/html/*.html
   │
   ▼
-[완료] 결과 요약 보고
+[Step 5] feedback-sync (자동 판단)
+  → 규칙성 변경이 있었으면 전파 + 이력 기록
+  │
+  ▼
+[Step 6] deploy
+  → gh-pages push (뷰어 + output 파일)
+  → GitHub Pages 자동 배포
+  │
+  ▼
+[완료] 결과 요약 + 배포 URL 보고
 ```
 
 ---
@@ -102,7 +111,7 @@ def update_job(job_id, stage, message, status=None, result=None):
 ```
 product-designer 에이전트를 호출합니다:
 "input/[파일명].html을 분석하여 B타입 변환 설계 명세서를 작성해줘.
-output/[파일명]-spec.md로 저장해줘."
+output/docs/[파일명]-spec.md로 저장해줘."
 ```
 
 검증:
@@ -113,18 +122,18 @@ output/[파일명]-spec.md로 저장해줘."
 
 ```
 frontend-dev 에이전트를 호출합니다:
-"output/[파일명]-spec.md 기반으로 B타입 HTML을 생성해줘.
+"output/docs/[파일명]-spec.md 기반으로 B타입 HTML을 생성해줘.
 원본: input/[파일명].html
-output/[파일명]-b-type.html로 저장해줘."
+output/html/[파일명]-b-type.html로 저장해줘."
 ```
 
 ### Step 3: qa 호출
 
 ```
 qa 에이전트를 호출합니다:
-"output/[파일명]-b-type.html을 QA 검증해줘.
+"output/html/[파일명]-b-type.html을 QA 검증해줘.
 원본: input/[파일명].html
-명세서: output/[파일명]-spec.md"
+명세서: output/docs/[파일명]-spec.md"
 ```
 
 판정 처리:
@@ -162,6 +171,44 @@ framer-dev 에이전트를 호출합니다:
 [14:34:11] [framer-dev] Converting to Framer components...
 [14:35:30] [framer-dev] 15 TSX + 15 HTML preview files generated
 [14:35:31] [complete] Pipeline complete. All output files ready.
+```
+
+### Step 5: feedback-sync (자동 판단)
+
+파이프라인 도중 규칙 변경이 발생했는지 판단한다:
+- design-system.md가 변경됐으면 → feedback-sync 호출
+- 사용자가 피드백을 줬으면 → feedback-sync 호출
+- 변경 없으면 → 건너뛰기
+
+### Step 6: deploy (항상 실행)
+
+파이프라인 완료 후 **항상** gh-pages에 배포한다.
+
+```bash
+# 현재 브랜치 저장
+CURRENT=$(git branch --show-current 2>/dev/null || echo "")
+
+# gh-pages 브랜치에서 최신 파일 반영
+git stash --include-untracked 2>/dev/null
+git checkout gh-pages
+
+# 뷰어 + 이미지 + output 파일 복사
+git checkout "$CURRENT" -- reference/design-system-viewer.html reference/graphics/ reference/images/ output/ 2>/dev/null || true
+
+# 커밋 & 푸시
+git add reference/ output/
+git diff --cached --quiet || git commit -m "Auto-deploy: pipeline complete"
+git push origin gh-pages
+
+# 원래 브랜치 복귀
+git checkout "$CURRENT" 2>/dev/null || git checkout -
+git stash pop 2>/dev/null || true
+```
+
+배포 후 로그에 URL 기록:
+```
+[HH:MM:SS] [deploy] GitHub Pages updated
+[HH:MM:SS] [deploy] https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/design-system-viewer.html
 ```
 
 ---

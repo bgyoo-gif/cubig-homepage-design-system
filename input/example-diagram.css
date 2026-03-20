@@ -1,0 +1,643 @@
+/* ============================================================
+   CUBIG Design System — Component & Logic Guide
+   ============================================================
+   INDEX
+   1.  Silver Token (은빛 그라디언트 핵심 토큰)
+   2.  OS Window Frame
+   3.  Main Card
+   4.  Title Bar
+   5.  Section Headers & Body Grid
+   6.  Transform Dashed Box (Left)
+   7.  Silver Box — 내부 박스 공통
+   8.  Activation Card (Middle)
+   9.  Gradient Border — Normal (일반 카드형)
+   10. Gradient Border — Accent (보라 강조형 + glow pulse)
+   11. Exchange Inner Card
+   12. SAFE Badge / Share Button
+   13. DB Grid + Check Dot
+   14. Section Arrows — JS Logic (좌표 계산 → SVG)
+   15. Diagram Builder — AI Prompt → Layout JSON
+   16. Color Tokens
+   ============================================================ */
+
+
+/* ── 1. Flat + Shimmer Border Token ─────────────────────────
+   핵심 원칙: 배경은 완전 FLAT, 입체감(inset shadow) 없음.
+   "빛나는 느낌"은 border에만 — pseudo-element shimmer로 구현.
+
+   3종류:
+   .shimmer-border  — 아이템 박스 (Raw Data 등) 은빛 shimmer
+   .shimmer-card    — 중간 섹션 카드 (Activation) 은빛 shimmer
+   .accent-border   — 우측 섹션 (Exchange) 보라/하늘 glow pulse
+   ──────────────────────────────────────────────────────── */
+
+/* 공통 shimmer 애니메이션 */
+@keyframes shimmer {
+  0%   { background-position:  200% center; }
+  100% { background-position: -200% center; }
+}
+
+/* 아이템 박스용 shimmer wrapper */
+.shimmer-border {
+  position: relative;
+  border-radius: 9px;
+}
+.shimmer-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 10px;
+  background: linear-gradient(
+    90deg,
+    #d0d0d0  0%,
+    #ffffff 30%,
+    #c8c8c8 50%,
+    #ffffff 70%,
+    #d0d0d0 100%
+  );
+  z-index: 0;
+}
+.shimmer-border > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* 내부 실제 박스 — 완전 flat */
+.flat-item-box {
+  background: #f2f2f2;   /* flat. gradient 없음 */
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: #1e1e1e;
+  text-align: center;
+  width: 100%;
+  /* box-shadow 없음 — 볼록함 제거 */
+}
+
+/* Activation 카드용 shimmer wrapper */
+.shimmer-card {
+  position: relative;
+  border-radius: 13px;
+}
+.shimmer-card::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 14px;
+  background: linear-gradient(
+    120deg,
+    #d8d8d8  0%,
+    #ececec 20%,
+    #c0c0c0 40%,
+    #f0f0f0 60%,
+    #c8c8c8 80%,
+    #e8e8e8 100%
+  );
+  z-index: 0;
+}
+.shimmer-card > .flat-card-inner {
+  position: relative;
+  z-index: 1;
+  background: #f8f8f8;   /* flat */
+  border-radius: 12px;
+  padding: 18px 12px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+/* 아이콘 배경 — flat */
+.icon-bg-flat {
+  width: 56px;
+  height: 56px;
+  background: #ececec;   /* flat, no gradient */
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* SVG 아이콘 내부 DB 실린더도 은빛 그라디언트 적용:
+   <linearGradient id="db-silver" x1="0" y1="0" x2="0" y2="1">
+     <stop offset="0%"   stop-color="#a8a8a8"/>
+     <stop offset="100%" stop-color="#686868"/>
+   </linearGradient>
+   fill="url(#db-silver)"  ← 상단 ellipse에 사용
+*/
+
+
+/* ── 2. OS Window Frame ─────────────────────────────────── */
+
+.os-window {
+  background: #f0f0f0;
+  border-radius: 12px;
+  box-shadow:
+    0  8px 32px rgba(0, 0, 0, 0.18),
+    0  2px  8px rgba(0, 0, 0, 0.10);
+  overflow: hidden;
+  font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
+}
+.os-titlebar {
+  background: linear-gradient(180deg, #e8e8e8 0%, #d8d8d8 100%);
+  height: 36px;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  gap: 8px;
+  border-bottom: 1px solid #c0c0c0;
+}
+.os-btn        { width: 12px; height: 12px; border-radius: 50%; }
+.os-btn.close  { background: #ff5f57; }
+.os-btn.min    { background: #ffbd2e; }
+.os-btn.max    { background: #28ca41; }
+
+.os-content {
+  background: linear-gradient(
+    135deg,
+    #dff0ea  0%,
+    #eef3ff 40%,
+    #f3eeff 70%,
+    #fdeef8 100%
+  );
+  padding: 28px;
+}
+
+
+/* ── 3. Main Card ───────────────────────────────────────── */
+
+.main-card {
+  /* silver-surface 적용 + 넉넉한 radius */
+  background: linear-gradient(145deg, #ffffff 0%, #f0f0f0 40%, #e8e8e8 70%, #f5f5f5 100%);
+  border: 1px solid #d0d0d0;
+  box-shadow:
+    inset 0  1px 0 rgba(255,255,255,0.90),
+    inset 0 -1px 0 rgba(0,0,0,0.06),
+    0 1px 3px rgba(0,0,0,0.08);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+
+/* ── 4. Title Bar ───────────────────────────────────────── */
+
+.title-bar {
+  text-align: center;
+  padding: 15px 24px 13px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #2a2a2a;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid #e8e8e8;
+  font-family: "Courier New", monospace;
+  background: linear-gradient(180deg, #ffffff 0%, #f8f8f8 100%);
+}
+
+
+/* ── 5. Section Headers & Body Grid ────────────────────── */
+
+.section-headers {
+  display: grid;
+  grid-template-columns: repeat(var(--col-count, 3), 1fr);
+  border-bottom: 1px dashed #d0d0d0;
+}
+.section-header {
+  padding: 11px 12px;
+  font-size: 12.5px;
+  color: #444;
+  text-align: center;
+  font-weight: 400;
+  border-right: 1px dashed #d0d0d0;
+  background: #fafafa;
+}
+.section-header:last-child { border-right: none; }
+
+.sections-body {
+  display: grid;
+  grid-template-columns: repeat(var(--col-count, 3), 1fr);
+  position: relative; /* SVG 화살표 absolute 기준점 */
+}
+.section-col {
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.section-col:not(:last-child) {
+  border-right: 1px dashed #d0d0d0;
+}
+
+
+/* ── 6. Transform Dashed Box ────────────────────────────── */
+
+.transform-dashed-box {
+  border: 1.5px dashed #c0c0c0;
+  border-radius: 12px;
+  padding: 18px 14px;
+  background: #f7f7f7;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 수직 실선 화살표 */
+.arrow-down-solid {
+  width: 1.5px;
+  height: 14px;
+  background: #888;
+  position: relative;
+  margin: 5px auto;
+}
+.arrow-down-solid::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -6px;
+  transform: translateX(-50%);
+  border-left:  5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top:   6px solid #888;
+}
+
+/* 수직 점선 연결 */
+.dashed-down-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  margin: 5px 0;
+}
+.dashed-down-connector .seg {
+  width: 1.5px;
+  height: 4px;
+  background: #bbb;
+  border-radius: 1px;
+}
+
+/* 오른쪽 연결 Dot */
+.r-dot {
+  position: absolute;
+  right: -5px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  background: #999;
+  border-radius: 50%;
+  z-index: 3;
+}
+
+
+/* ── 7. Silver Box (내부 아이템 공통) ───────────────────── */
+
+.silver-item-box {
+  background: linear-gradient(160deg, #fafafa 0%, #efefef 50%, #e4e4e4 100%);
+  border: 1px solid #c8c8c8;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.85),
+    0 1px 2px rgba(0,0,0,0.07);
+  border-radius: 8px;
+  padding: 10px 0;
+  width: 100%;
+  text-align: center;
+  font-size: 13px;
+  color: #222;
+  position: relative;
+}
+
+
+/* ── 8. Activation Card ─────────────────────────────────── */
+
+.activation-card {
+  background: linear-gradient(145deg, #ffffff 0%, #f0f0f0 40%, #e8e8e8 70%, #f5f5f5 100%);
+  border: 1px solid #d0d0d0;
+  box-shadow:
+    inset 0  1px 0 rgba(255,255,255,0.90),
+    inset 0 -1px 0 rgba(0,0,0,0.05),
+    0 1px 3px rgba(0,0,0,0.07);
+  border-radius: 12px;
+  padding: 15px 10px 13px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.activation-card + .activation-card { margin-top: 10px; }
+
+.activation-icon-wrap {
+  width: 52px;
+  height: 52px;
+  background: linear-gradient(145deg, #f2f2f2, #e2e2e2);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* ── 9. Gradient Border — Normal (일반 카드형) ────────────
+   블루-회보라-핑크. 은은한 정적 glow.
+   사용: 중간 강조 카드, 일반 정보 섹션
+   ──────────────────────────────────────────────────────── */
+
+.grad-border-normal {
+  padding: 2px;
+  border-radius: 14px;
+  background: linear-gradient(
+    135deg,
+    #c8d8e8  0%,   /* 차가운 스틸 블루 */
+    #d4c8e8 40%,   /* 연보라-은색 전환 */
+    #e8c8e4 100%   /* 핑크-은색 */
+  );
+  box-shadow:
+    0  0  8px rgba(180, 200, 230, 0.30),
+    0  0 16px rgba(200, 180, 230, 0.15);
+}
+.grad-border-normal .inner {
+  background: linear-gradient(145deg, #ffffff 0%, #f4f4f4 100%);
+  border-radius: 12px;
+  padding: 14px 12px;
+}
+
+
+/* ── 10. Gradient Border — Accent (보라 강조형) ────────────
+   하늘→보라→핑크→시안 고채도 순환 그라디언트.
+   3초 맥동 glow animation.
+   사용: 최종 결과 섹션, CTA 카드, Safe Data Exchange
+   ──────────────────────────────────────────────────────── */
+
+.grad-border-accent {
+  padding: 2px;
+  border-radius: 14px;
+  background: linear-gradient(
+    135deg,
+    #7dd3fc  0%,   /* sky-300 */
+    #a78bfa 30%,   /* violet-400 */
+    #e879f9 65%,   /* fuchsia-400 */
+    #67e8f9 100%   /* cyan-300 */
+  );
+  animation: accentGlow 3s ease-in-out infinite;
+}
+
+@keyframes accentGlow {
+  0%, 100% {
+    box-shadow:
+      0  0 14px rgba(125, 211, 252, 0.50),
+      0  0 28px rgba(167, 139, 250, 0.35),
+      0  0 10px rgba(232, 121, 249, 0.30);
+  }
+  50% {
+    box-shadow:
+      0  0 22px rgba(125, 211, 252, 0.75),
+      0  0 42px rgba(167, 139, 250, 0.55),
+      0  0 20px rgba(232, 121, 249, 0.50);
+  }
+}
+
+.grad-border-accent .inner {
+  background: linear-gradient(
+    145deg,
+    rgba(237, 246, 255, 0.95)  0%,
+    rgba(243, 236, 255, 0.92) 55%,
+    rgba(255, 238, 255, 0.90) 100%
+  );
+  border-radius: 12px;
+  padding: 14px 11px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+}
+
+
+/* ── 11. SAFE Badge & Share Button ─────────────────────── */
+
+.safe-badge {
+  background: #ffffff;
+  border: 1.5px solid #5badee;
+  border-radius: 20px;
+  padding: 3px 11px;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #2b8dd6;
+  letter-spacing: 0.12em;
+}
+
+.share-btn {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.40);
+}
+
+
+/* ── 12. DB Grid & Check Dot ────────────────────────────── */
+
+.db-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 7px;
+  width: 100%;
+}
+.db-cell {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.check-dot {
+  position: absolute;
+  bottom: -1px;
+  right: 0;
+  width: 13px;
+  height: 13px;
+  background: #3b82f6;
+  border-radius: 50%;
+  border: 1.5px solid #e8eeff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* ── 13. Arrow SVG Overlay ──────────────────────────────── */
+
+.arrow-overlay {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  overflow: visible;
+}
+
+/*
+  JS 화살표 좌표 계산 함수 (drawArrows)
+  ────────────────────────────────────
+  원칙: 모든 좌표는 런타임에 getBoundingClientRect()로 측정.
+        하드코딩 금지 — 카드 높이가 콘텐츠에 따라 가변적.
+
+  화살표 규칙:
+  ① Section N → Section N+1 (마지막 제외): 검정 #444, L자 경로
+  ② Section 마지막 직전 → 마지막: 파랑 #4a9de0, 직선
+
+  L자 경로 사용 조건:
+  - 출발점 Y ≠ 도착점 Y (높이가 다를 때)
+  - 경로: M x1 y1 → L mx y1 → L mx y2 → L x2 y2
+    (mx = (x1+x2)/2 — 두 섹션 사이 중간 x)
+
+  직선 경로:
+  - 출발점 Y ≈ 도착점 Y (같은 높이)
+  - <line x1 y1 x2 y2>
+
+  JavaScript:
+  ─────────────────────────────────────────
+  function drawArrows(bodyEl, refMap) {
+    const svg = bodyEl.querySelector('.arrow-overlay');
+    svg.innerHTML = svg.querySelector('defs').outerHTML;
+    const bp = bodyEl.getBoundingClientRect();
+
+    const rel = el => {
+      const r = el.getBoundingClientRect();
+      return {
+        left:  r.left  - bp.left,
+        right: r.right - bp.left,
+        midY: (r.top + r.bottom) / 2 - bp.top
+      };
+    };
+
+    const keys = Object.keys(refMap);  // 순서대로 섹션 ref 배열
+    for (let i = 0; i < keys.length - 1; i++) {
+      const a = rel(refMap[keys[i]]);
+      const b = rel(refMap[keys[i+1]]);
+      const isLast = (i === keys.length - 2);
+      const color  = isLast ? '#4a9de0' : '#444';
+      const markId = isLast ? 'ah-blue' : 'ah-dark';
+      const x1 = a.right + 2, y1 = a.midY;
+      const x2 = b.left  - 2, y2 = b.midY;
+
+      if (Math.abs(y1 - y2) > 8) {
+        // L자 경로
+        const mx = (x1 + x2) / 2;
+        const path = document.createElementNS(NS, 'path');
+        path.setAttribute('d', `M${x1} ${y1} L${mx} ${y1} L${mx} ${y2} L${x2} ${y2}`);
+        path.setAttribute('fill', 'none');
+        path.setAttribute('stroke', color);
+        path.setAttribute('stroke-width', '1.5');
+        path.setAttribute('marker-end', `url(#${markId})`);
+        svg.appendChild(path);
+      } else {
+        // 직선
+        const line = document.createElementNS(NS, 'line');
+        ['x1','y1','x2','y2'].forEach((k,j)=>
+          line.setAttribute(k, [x1,y1,x2,y2][j]));
+        line.setAttribute('stroke', color);
+        line.setAttribute('stroke-width', '1.5');
+        line.setAttribute('marker-end', `url(#${markId})`);
+        svg.appendChild(line);
+      }
+    }
+  }
+
+  // 사용:
+  drawArrows(document.getElementById('sections-body'), {
+    section1: document.getElementById('gen-box'),
+    section2: document.getElementById('valid-card'),
+    section3: document.getElementById('exchange-card'),
+  });
+  window.addEventListener('resize', () => drawArrows(...));
+  ─────────────────────────────────────────
+*/
+
+
+/* ── 14. Diagram Builder — AI Prompt → Layout ────────────
+   사용자 프롬프트 → Anthropic API → Layout JSON → 렌더
+
+   API 요청 (claude-sonnet-4-20250514):
+   ────────────────────────────────────
+   System: JSON만 반환. 마크다운 없음.
+   Prompt: 사용자 요청 + 아래 스키마
+
+   응답 JSON 스키마:
+   {
+     "title": "다이어그램 제목",
+     "sections": [
+       {
+         "header": "섹션 헤더 텍스트",
+         "type": "transform | activation | exchange | default",
+         "items": ["아이템1", "아이템2"]
+       }
+     ]
+   }
+
+   섹션 타입 → 컴포넌트 매핑:
+   ┌─────────────┬──────────────────────────────────────┐
+   │ transform   │ dashed 컨테이너 + 수직 박스 스택      │
+   │             │ (파이프라인, 순차 처리 단계)           │
+   ├─────────────┼──────────────────────────────────────┤
+   │ activation  │ silver card 스택 + DB 아이콘          │
+   │             │ (검증, 분석, 처리 서비스)              │
+   ├─────────────┼──────────────────────────────────────┤
+   │ exchange    │ grad-border-accent + DB 그리드        │
+   │             │ (최종 출력, 공유, 안전 구역)           │
+   ├─────────────┼──────────────────────────────────────┤
+   │ default     │ grad-border-normal 카드               │
+   │             │ (일반 정보, 중간 결과)                 │
+   └─────────────┴──────────────────────────────────────┘
+
+   제한:
+   - 섹션 2~4개
+   - 섹션당 아이템 2~4개
+   - 마지막 섹션은 exchange 권장
+   ─────────────────────────────────────────
+*/
+
+
+/* ── 15. Color Tokens ───────────────────────────────────── */
+/*
+  Silver 계열 (핵심)
+  --silver-white:      #ffffff
+  --silver-light:      #f5f5f5
+  --silver-mid:        #efefef
+  --silver-base:       #e4e4e4
+  --silver-dark:       #d0d0d0
+  --silver-border:     #c8c8c8
+  --silver-deep:       #a8a8a8 (DB 아이콘 상단)
+  --silver-shadow:     #686868 (DB 아이콘 하단)
+
+  Arrow
+  --arrow-dark:        #444444 (섹션→섹션 일반)
+  --arrow-blue:        #4a9de0 (마지막 섹션 진입)
+
+  Grad Border Normal
+  --grad-n-start:      #c8d8e8
+  --grad-n-mid:        #d4c8e8
+  --grad-n-end:        #e8c8e4
+
+  Grad Border Accent
+  --grad-a-sky:        #7dd3fc
+  --grad-a-violet:     #a78bfa
+  --grad-a-fuchsia:    #e879f9
+  --grad-a-cyan:       #67e8f9
+
+  SAFE Badge
+  --safe-border:       #5badee
+  --safe-text:         #2b8dd6
+
+  DB Icon
+  --db-light:          #5aaee8
+  --db-dark:           #3d91d1
+  --db-check:          #3b82f6
+
+  OS Window
+  --os-bg:             #f0f0f0
+  --os-titlebar-top:   #e8e8e8
+  --os-titlebar-bot:   #d8d8d8
+  --os-content: linear-gradient(135deg, #dff0ea, #eef3ff, #f3eeff, #fdeef8)
+*/

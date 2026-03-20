@@ -155,6 +155,70 @@ async def list_files():
     return files
 
 
+@app.get("/api/tree")
+async def file_tree():
+    """Input → Output 매핑 트리 반환"""
+
+    def scan(directory):
+        result = []
+        for p in sorted(directory.rglob("*")):
+            if p.is_file() and not p.name.startswith("."):
+                rel = p.relative_to(PROJECT_ROOT)
+                result.append({
+                    "path": str(rel),
+                    "name": p.name,
+                    "ext": p.suffix,
+                    "modified": time.strftime("%Y-%m-%d %H:%M", time.localtime(p.stat().st_mtime)),
+                })
+        return result
+
+    inputs = scan(INPUT_DIR)
+    outputs = scan(OUTPUT_DIR)
+
+    # input 파일별로 output 매핑
+    tree = []
+    for inp in inputs:
+        base = inp["name"].replace(".html", "")
+        related = {"html": [], "tsx": [], "md": [], "preview": []}
+        for out in outputs:
+            oname = out["name"]
+            opath = out["path"]
+            # 파일명에 base가 포함되면 연결
+            if base in oname or base.replace("A-", "").replace("cubig-", "") in opath:
+                if out["ext"] in (".html",) and "preview" in oname:
+                    related["preview"].append(out)
+                elif out["ext"] in (".html",) and "framer" not in opath:
+                    related["html"].append(out)
+                elif out["ext"] in (".tsx",):
+                    related["tsx"].append(out)
+                elif out["ext"] in (".md",):
+                    related["md"].append(out)
+        # output이 하나라도 있는 input만 포함
+        if any(related[k] for k in related):
+            tree.append({"input": inp, "output": related})
+
+    # 매핑 안 된 output (독립 파일)
+    mapped_paths = set()
+    for t in tree:
+        for k in t["output"]:
+            for f in t["output"][k]:
+                mapped_paths.add(f["path"])
+    orphans = {"html": [], "tsx": [], "md": [], "preview": []}
+    for out in outputs:
+        if out["path"] not in mapped_paths:
+            if out["ext"] == ".tsx":
+                orphans["tsx"].append(out)
+            elif out["ext"] == ".md":
+                orphans["md"].append(out)
+            elif "preview" in out["name"]:
+                orphans["preview"].append(out)
+            elif out["ext"] == ".html":
+                orphans["html"].append(out)
+    has_orphans = any(orphans[k] for k in orphans)
+
+    return {"tree": tree, "orphans": orphans if has_orphans else None}
+
+
 @app.get("/api/file-content")
 async def get_file_content(path: str):
     """파일 내용을 텍스트로 반환 (보안: PROJECT_ROOT 내부만 허용)"""

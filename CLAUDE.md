@@ -8,7 +8,7 @@ CUBIG 홈페이지용 콘텐츠 HTML을 A타입(LLM 생성, 내용 중심) → B
 ## 에이전트 파이프라인
 
 ```
-product-designer → frontend-dev → qa (FAIL 시 frontend-dev 재호출 → qa 반복)
+product-designer → frontend-dev → qa (FAIL 시 재호출) → feedback-sync → deploy (gh-pages push)
 ```
 
 | 에이전트 | 역할 | 모델 |
@@ -22,17 +22,20 @@ product-designer → frontend-dev → qa (FAIL 시 frontend-dev 재호출 → qa
 | feedback-sync | 사용자 피드백을 모든 관련 파일에 일괄 전파 | sonnet |
 | orchestrator | 전체 변환 파이프라인 자동 실행 (PD→FE→QA→Framer) | opus |
 
-### 자동 연동 체인
+### 자동 연동 체인 (모든 작업 완료 후 자동 실행)
 ```
 작업 완료
   ↓
-feedback-sync (규칙 변경이면 자동 호출 → 모든 파일 전파 + 이력 기록)
+feedback-sync (규칙 변경 판단 → 전파 + 이력 기록)
   ↓
-design-system.md가 변경됐으면
+design-system.md 변경 시 → design-system-viewer (뷰어 업데이트)
   ↓
-design-system-viewer (뷰어 업데이트 → gh-pages push → GitHub Pages 자동 배포)
+deploy (gh-pages push → GitHub Pages 자동 배포)
+  → 뷰어 + output 파일 모두 포함
+  → 사용자가 요청하지 않아도 항상 실행
 ```
 배포 URL: https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/design-system-viewer.html
+로컬 서버: http://localhost:3333/reference/design-system-viewer.html (실시간 Output)
 
 ### feedback-sync 자동 호출 규칙
 아래 상황이 발생하면 **명시적 요청 없이도** feedback-sync 에이전트를 호출한다:
@@ -110,7 +113,7 @@ design-system-viewer (뷰어 업데이트 → gh-pages push → GitHub Pages 자
 | [M] Checklist 2-col | ds-grid--2 + ds-bullet--check | 요구사항 목록 6개 이상 |
 | [N] Number steps | ds-bullet--number | 순서 있는 프로세스 |
 | [O] Table | ds-table--3col | 규정/스펙 비교표 |
-| [P] FAQ | ds-grid--1 + ds-card | FAQ 섹션 |
+| [P] FAQ | ds-ac-card (아코디언) | FAQ 섹션 — 반드시 아코디언 형태로 구현 |
 | [Q] Banner/callout | ds-banner | 중요 정의/경고/인용 |
 | [R] Dark link cards | ds-card--dark | 다크 배경 다음 단계 링크 |
 | [S] Accordion list | ds-ac-card | 케이스/항목 5개+ 상세 내용 아코디언 |

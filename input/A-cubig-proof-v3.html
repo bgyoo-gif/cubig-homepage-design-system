@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ─── SEO ─── -->
+<title>Proof | Operational Evidence of Reproducible AI Execution — Cubig</title>
+<meta name="description" content="See operational evidence of reproducible AI execution, including before/after outcomes, state comparison, and reproducible releases under production constraints.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://cubig.ai/proof">
+
+<!-- ─── OG ─── -->
+<meta property="og:title" content="Proof | Operational Evidence of Reproducible AI Execution">
+<meta property="og:description" content="Operational evidence of reproducible AI execution in production. Before/after outcomes, state comparison, reproducible runs.">
+<meta property="og:site_name" content="Cubig">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cubig.ai/proof">
+
+<!-- ─── GEO: Schema ─── -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://cubig.ai/#org",
+      "name": "Cubig",
+      "url": "https://cubig.ai"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://cubig.ai/proof#webpage",
+      "url": "https://cubig.ai/proof",
+      "name": "Proof | Operational Evidence of Reproducible AI Execution - Cubig",
+      "description": "Operational evidence of reproducible AI execution. Before/after outcomes, state comparison, and reproducible releases under production constraints.",
+      "isPartOf": {
+        "@id": "https://cubig.ai/#org"
+      },
+      "about": {
+        "@type": "Thing",
+        "name": "reproducible AI execution",
+        "description": "Reproducible AI execution means the same AI run produces the same result when run under the same execution state conditions."
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is operational evidence in AI systems?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Operational evidence in AI systems is concrete, verifiable documentation that shows how an AI system behaves in production — including what changed between runs, what caused behavioral differences, and whether the same conditions can reproduce the same results. It includes before/after outcomes, state comparisons (what changed), and re-run records."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is reproducible AI execution?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Reproducible AI execution means that given the same execution conditions — data state, schema, preprocessing logic, runtime dependencies — an AI system produces the same result. SynTitan achieves this through Release State (capturing and locking execution conditions), Run Binding (tying every run to a specific state), and Reproduce (re-running identical conditions to verify behavior)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is AI execution unstable in production?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "AI execution becomes unstable in production when execution conditions change after deployment — data schemas, preprocessing logic, dependencies, data windows. Any of these changes can cause AI results to drift without any change to the model itself. When execution state is not captured and fixed, there is no way to identify which change caused a production issue."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<!-- ─── Fonts ─── -->
+<meta property="og:image" content="https://cubig.ai/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cubig.ai/og-default.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Fragment+Mono:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.bunny.net/css?family=geist:400,500,600,700,800">
+
+<style>
+/* ═══════════════════════════════════════
+   TOKENS (identical to home)
+═══════════════════════════════════════ */
+:root {
+
+  /* ── CUBIG REAL BRAND COLORS ── */
+  --brand-purple: #6C54A0;
+  --brand-purple-mid: #d932ff;
+  --brand-accent: #ff266a;
+  --brand-orange: #ffa66f;
+  --brand-soft: #8A72C8;
+  --brand-gradient: linear-gradient(130deg, #6C54A0 0%, #b44fcc 50%, #ff266a 100%);
+  --brand-text-gradient: linear-gradient(270deg, #ffa66f 7%, #8A72C8 80%);
+  --blue: #6C54A0;
+  --blue-hi: #8A72C8;
+  --blue-dim: rgba(108,84,160,0.08);
+  --blue-glow: rgba(108,84,160,0.2);
+  --green: #1a7a4a;
+  --green-dim: rgba(26,122,74,0.09);
+
+  --bg:#ffffff;--bg2:#F8F8F8;--bg3:#F2F2F4;
+  --line:rgba(0,0,0,0.08);--line2:rgba(0,0,0,0.14);
+  --text:#141414;--text2:#4A4A52;--text3:#8A8A94;
+  --blue: #6C54A0;--blue-hi: #8A72C8;--blue-dim: rgba(108,84,160,0.08);--blue-glow: rgba(108,84,160,0.2);
+  --green:#1a7a4a;--green-dim:rgba(26,122,74,0.09);
+  --amber:#C47A00;--red:#C13535;
+  --purple:#7B5CF5;--purple-dim:rgba(123,92,245,0.08);
+  --mono:'Fragment Mono',monospace;--serif:'Geist','DM Sans',sans-serif;--body:'DM Sans',sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: var(--body);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-thumb { background: var(--blue); }
+a { text-decoration: none; color: inherit; }
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 9999; opacity: 0.2;
+}
+
+/* ── Nav ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: 58px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--line);
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--mono); font-size: 13px; font-weight: 500; letter-spacing: .08em;
+}
+.nav-logo-mark {
+  width: 24px; height: 24px; background: var(--blue);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 500; color: #fff;
+}
+.nav-links { display: flex; align-items: center; gap: 6px; list-style: none; }
+.nav-links li { position: relative; }
+.nav-links a { font-size: 13px; font-weight: 400; color: var(--text2); padding: 6px 12px; transition: color .2s; display: flex; align-items: center; gap: 4px; }
+.nav-links a:hover { color: var(--text); }
+.nav-links a.active { color: var(--text); }
+.nav-links .has-sub:hover .nav-sub { display: block; }
+.nav-sub { display: none; position: absolute; top: 100%; left: 0; background: #fff; border: 1px solid var(--line2); min-width: 160px; box-shadow: 0 8px 24px rgba(108,84,160,0.08); padding: 6px 0; }
+.nav-sub a { display: block; padding: 8px 16px; font-size: 12.5px; color: var(--text2); }
+.nav-sub a:hover { color: var(--text); }
+.nav-cta { background: var(--blue); color: #fff !important; padding: 8px 18px !important; font-weight: 500 !important; font-size: 13px !important; transition: background .2s, transform .15s !important; }
+.nav-cta:hover { background: var(--blue) !important; transform: translateY(-1px); }
+.nav-chevron { font-size: 10px; opacity: .5; }
+
+/* ── Layout ── */
+.section { padding: 100px 40px; max-width: 1120px; margin: 0 auto; }
+
+.eyebrow {
+  display: flex; align-items: center; gap: 12px;
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--brand-purple); margin-bottom: 18px;
+}
+.eyebrow::before { content: ''; width: 20px; height: 1px; background: var(--blue); }
+
+.h1 { font-family: var(--serif); font-size: clamp(40px, 5.5vw, 68px); font-weight: 500; line-height: 1.0; letter-spacing: -.025em; }
+.h1 em { font-style: italic; color: var(--brand-purple); }
+.h2 { font-family: var(--serif); font-size: clamp(28px, 3.5vw, 44px); font-weight: 500; line-height: 1.1; letter-spacing: -.02em; }
+.h2 em { font-style: italic; }
+
+.btn-primary { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(130deg, #6C54A0 0%, #b44fcc 50%, #ff266a 100%); color: #fff; color: #fff; padding: 13px 26px; font-family: var(--body); font-size: 14px; font-weight: 500; border: none; cursor: pointer; transition: background .2s, transform .15s, box-shadow .2s; }
+.btn-primary:hover { background: var(--blue); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(108,84,160,.25); }
+.btn-secondary { display: inline-flex; align-items: center; gap: 8px; background: transparent; color: var(--text); padding: 12px 24px; font-family: var(--body); font-size: 14px; font-weight: 400; border: 1px solid var(--line2); cursor: pointer; transition: border-color .2s; }
+.btn-secondary:hover { border-color: var(--text2); }
+.btn-arrow { transition: transform .2s; }
+.btn-primary:hover .btn-arrow, .btn-secondary:hover .btn-arrow { transform: translateX(4px); }
+
+/* ─────────────────────────────────────
+   HERO
+───────────────────────────────────── */
+.hero-wrap {
+  min-height: 60vh;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  position: relative; overflow: hidden;
+  border-bottom: 1px solid var(--line);
+}
+.hero-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(108,84,160,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(108,84,160,.05) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.hero-grid::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 50% at 50% 100%, rgba(108,84,160,.06) 0%, transparent 70%); }
+
+.hero-inner {
+  max-width: 1120px; margin: 0 auto;
+  padding: 140px 40px 80px;
+  position: relative; z-index: 2; width: 100%;
+}
+
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--brand-purple); border: 1px solid rgba(108,84,160,.22);
+  padding: 5px 12px; margin-bottom: 32px;
+  animation: fadeUp .6s ease both;
+}
+.hero-tag-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1}50%{opacity:.3} }
+@keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+
+/* GEO definition box */
+.geo-definition {
+  display: inline-block;
+  margin-top: 28px;
+  padding: 14px 20px;
+  border: 1px solid var(--line2);
+  border-left: 3px solid var(--blue);
+  background: var(--blue-dim);
+  font-family: var(--mono); font-size: 12px;
+  color: var(--text2); line-height: 1.65;
+  max-width: 680px;
+  animation: fadeUp .7s .3s ease both;
+}
+.geo-definition em { color: var(--brand-purple); font-style: normal; }
+
+/* ─────────────────────────────────────
+   EVIDENCE FILTER BAR
+───────────────────────────────────── */
+.filter-wrap {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--line);
+  position: sticky; top: 58px; z-index: 50;
+}
+.filter-inner {
+  max-width: 1120px; margin: 0 auto;
+  padding: 0 40px;
+  display: flex; align-items: center; gap: 0;
+  overflow-x: auto;
+}
+.filter-btn {
+  display: flex; align-items: center; gap: 7px;
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--text3);
+  padding: 16px 20px;
+  border: none; background: none; cursor: pointer;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: color .2s, border-color .2s;
+}
+.filter-btn:hover { color: var(--text2); }
+.filter-btn.active { color: var(--brand-purple); border-bottom-color: var(--brand-purple); }
+.filter-dot { width: 6px; height: 6px; border-radius: 50%; }
+.dot-all    { background: var(--blue); }
+.dot-stable { background: var(--amber); }
+.dot-data   { background: var(--green); }
+.dot-secure { background: #7B5CF5; }
+
+/* ─────────────────────────────────────
+   EVIDENCE SECTION
+───────────────────────────────────── */
+.evidence-wrap { background: var(--bg); border-bottom: 1px solid var(--line); }
+
+/* Header row */
+.evidence-header {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  gap: 24px; flex-wrap: wrap; margin-bottom: 52px;
+}
+.evidence-count {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--text3); margin-top: 10px;
+}
+
+/* Evidence cards */
+.evidence-grid {
+  display: flex; flex-direction: column; gap: 2px;
+}
+
+.ev-card {
+  border: 1px solid var(--line);
+  background: #fff;
+  overflow: hidden;
+  transition: background .2s;
+}
+.ev-card:hover { background: #F8F8F8; }
+
+.ev-card-header {
+  display: grid;
+  grid-template-columns: 220px 1fr auto;
+  align-items: center; gap: 24px;
+  padding: 20px 28px;
+  border-bottom: 1px solid var(--line);
+  cursor: pointer;
+  user-select: none;
+}
+.ev-card-header:hover .ev-toggle { color: var(--brand-purple); }
+
+.ev-industry {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--text3);
+  display: flex; align-items: center; gap: 8px;
+}
+.ev-industry-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+
+.ev-title {
+  font-family: var(--serif);
+  font-size: 18px; font-weight: 500;
+  line-height: 1.2;
+}
+
+.ev-meta {
+  display: flex; align-items: center; gap: 8px;
+}
+.ev-tag {
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: .08em; text-transform: uppercase;
+  padding: 3px 9px; border: 1px solid var(--line2); color: var(--text3);
+}
+.ev-tag.stable  { border-color: rgba(232,160,32,.3); color: var(--amber); background: rgba(232,160,32,.07); }
+.ev-tag.data    { border-color: rgba(13,190,124,.25); color: var(--green); background: var(--green-dim); }
+.ev-tag.secure  { border-color: rgba(123,92,245,.3); color: #7B5CF5; background: rgba(123,92,245,.07); }
+
+.ev-toggle {
+  font-family: var(--mono); font-size: 11px;
+  color: var(--text3); transition: color .2s, transform .2s;
+  width: 24px; text-align: center;
+}
+.ev-card.open .ev-toggle { transform: rotate(45deg); color: var(--brand-purple); }
+
+/* Evidence body — accordion */
+.ev-body {
+  display: none;
+  padding: 32px 28px;
+}
+.ev-card.open .ev-body { display: block; }
+
+.ev-rows {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--line);
+  margin-bottom: 24px;
+}
+
+.ev-row {
+  background: var(--bg);
+  padding: 20px 22px;
+}
+.ev-row-label {
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: .12em; text-transform: uppercase;
+  margin-bottom: 8px; padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+}
+.ev-row-label.before-l   { color: var(--red); }
+.ev-row-label.after-l    { color: var(--green); }
+.ev-row-label.diff-l     { color: var(--brand-purple); }
+.ev-row-label.reproduce-l { color: var(--amber); }
+
+.ev-row-text {
+  font-size: 13px; color: var(--text2); line-height: 1.65;
+}
+
+/* Metric pills */
+.ev-metrics {
+  display: flex; gap: 8px; flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.ev-metric {
+  display: flex; flex-direction: column;
+  padding: 12px 18px;
+  border: 1px solid var(--line2);
+  background: var(--bg2);
+  min-width: 120px;
+}
+.ev-metric-val {
+  font-family: var(--mono); font-size: 22px; font-weight: 500;
+  color: var(--text); line-height: 1;
+}
+.ev-metric-val.green { color: var(--green); }
+.ev-metric-val.amber { color: var(--amber); }
+.ev-metric-val.blue  { color: var(--brand-purple); }
+.ev-metric-label {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--text3); margin-top: 5px;
+}
+
+/* Artifacts */
+.ev-artifacts {
+  display: flex; gap: 6px; flex-wrap: wrap;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+.artifact-pill {
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: .08em; text-transform: uppercase;
+  padding: 4px 10px; border: 1px solid var(--line2); color: var(--text3);
+}
+
+/* ─────────────────────────────────────
+   OVERLAP NOTE (mandatory)
+───────────────────────────────────── */
+.overlap-note {
+  margin-top: 40px;
+  padding: 18px 20px;
+  background: var(--bg2); border: 1px solid var(--line);
+  border-left: 2px solid rgba(108,84,160,.4);
+}
+.overlap-note p { font-family: var(--mono); font-size: 11.5px; color: var(--text3); line-height: 1.7; }
+.overlap-note p + p { margin-top: 4px; }
+
+/* ─────────────────────────────────────
+   ARCHITECTURE CTA STRIP
+───────────────────────────────────── */
+.arch-wrap {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--line);
+}
+.arch-inner {
+  max-width: 1120px; margin: 0 auto;
+  padding: 64px 40px;
+  display: grid; grid-template-columns: 1fr auto;
+  gap: 40px; align-items: center;
+}
+.arch-title { font-family: var(--serif); font-size: clamp(24px, 3vw, 36px); font-weight: 500; margin-bottom: 10px; }
+.arch-title em { font-style: italic; color: var(--brand-purple); }
+.arch-sub { font-size: 14px; color: var(--text2); line-height: 1.65; max-width: 480px; }
+.arch-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+
+/* ─────────────────────────────────────
+   FAQ SECTION
+───────────────────────────────────── */
+.faq-wrap { background: var(--bg); border-bottom: 1px solid var(--line); }
+.faq-list { margin-top: 40px; display: flex; flex-direction: column; gap: 1px; background: var(--line); }
+.faq-item { background: #fff; }
+.faq-q {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 20px 24px; cursor: pointer;
+  font-family: var(--serif); font-size: 17px; font-weight: 500;
+  gap: 16px;
+  user-select: none;
+  transition: background .15s;
+}
+.faq-q:hover { background: #F8F8F8; }
+.faq-icon { font-family: var(--mono); font-size: 16px; color: var(--text3); flex-shrink: 0; transition: transform .2s, color .2s; }
+.faq-item.open .faq-icon { transform: rotate(45deg); color: var(--brand-purple); }
+.faq-a { display: none; padding: 0 24px 20px; font-size: 14px; color: var(--text2); line-height: 1.75; border-top: 1px solid var(--line); padding-top: 18px; }
+.faq-item.open .faq-a { display: block; }
+
+/* ─────────────────────────────────────
+   FINAL CTA
+───────────────────────────────────── */
+.final-wrap {
+  background: var(--bg3);
+  border-top: 1px solid var(--line);
+  position: relative; overflow: hidden;
+}
+.final-wrap::before {
+  content: ''; position: absolute; bottom: -100px; left: 50%;
+  transform: translateX(-50%);
+  width: 600px; height: 300px;
+  background: radial-gradient(ellipse, rgba(108,84,160,.10) 0%, transparent 70%);
+  pointer-events: none;
+}
+.final-bg-text {
+  position: absolute; bottom: -30px; left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--serif); font-size: clamp(100px, 18vw, 220px); font-weight: 500;
+  color: rgba(108,84,160,.06); white-space: nowrap;
+  pointer-events: none; user-select: none; line-height: 1;
+}
+.final-inner { position: relative; z-index: 2; text-align: center; }
+.final-h { font-family: var(--serif); font-size: clamp(32px, 5vw, 56px); font-weight: 500; line-height: 1.1; margin-bottom: 14px; }
+.final-h em { font-style: italic; color: var(--brand-purple); }
+.final-sub { font-size: 15px; color: var(--text2); margin-bottom: 36px; font-weight: 300; }
+.final-ctas { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+/* ─────────────────────────────────────
+   FOOTER
+───────────────────────────────────── */
+footer { background: var(--bg); border-top: 1px solid var(--line); padding: 48px 40px; }
+.footer-inner { max-width: 1120px; margin: 0 auto; display: flex; justify-content: space-between; align-items: flex-start; gap: 40px; flex-wrap: wrap; }
+.footer-brand { font-family: var(--mono); font-size: 13px; display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.footer-brand-mark { width: 22px; height: 22px; background: var(--blue); display: flex; align-items: center; justify-content: center; font-size: 10px; color: #fff; }
+.footer-tagline { font-size: 12.5px; color: var(--text3); max-width: 240px; line-height: 1.6; }
+.footer-col-title { font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--text3); margin-bottom: 14px; }
+.footer-links { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.footer-links a { font-size: 13px; color: var(--text2); transition: color .2s; }
+.footer-links a:hover { color: var(--text); }
+.footer-bottom { max-width: 1120px; margin: 32px auto 0; padding-top: 20px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+.footer-copy { font-family: var(--mono); font-size: 11px; color: var(--text3); }
+
+/* ─────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────── */
+@media (max-width: 900px) {
+  nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  .section { padding: 72px 20px; }
+  .hero-inner { padding: 120px 20px 64px; }
+  .ev-card-header { grid-template-columns: 1fr auto; }
+  .ev-industry { display: none; }
+  .ev-rows { grid-template-columns: 1fr 1fr; }
+  .arch-inner { grid-template-columns: 1fr; }
+  .filter-inner { padding: 0 20px; }
+  footer { padding: 40px 20px; }
+  .footer-inner { flex-direction: column; }
+  .final-bg-text { display: none; }
+}
+@media (max-width: 600px) {
+  .ev-rows { grid-template-columns: 1fr; }
+  .ev-metrics { flex-direction: column; }
+}
+
+/* ── v3 shared styles ── */
+/* nav: see v3 */
+/* btn: see v3 */
+/* eyebrow: see v3 */
+.h1{font-family:var(--serif);font-size:clamp(40px,5.5vw,72px);font-weight:800;line-height:1.0;letter-spacing:-.03em;}
+.h1 em,.h2 em,.final-h em{font-style:normal;color:var(--brand-purple);}
+.h2{font-family:var(--serif);font-size:clamp(28px,3.5vw,44px);font-weight:700;line-height:1.1;letter-spacing:-.022em;}
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav aria-label="Main navigation">
+  <a href="/" class="nav-logo" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+  <svg width="20" height="31" viewBox="0 0 15.5 23.5" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M 15.494 10.91 L 15.494 10.301 C 15.494 9.987 15.388 9.709 15.174 9.481 C 14.977 9.26 14.692 9.136 14.396 9.142 L 13.764 9.142 C 13.64 9.148 13.52 9.099 13.436 9.008 C 13.347 8.917 13.3 8.795 13.304 8.669 L 13.304 5.725 C 13.304 5.412 13.197 5.141 12.976 4.922 C 12.768 4.707 12.48 4.587 12.181 4.592 L 11.574 4.592 C 11.443 4.592 11.317 4.536 11.229 4.439 C 11.134 4.346 11.081 4.218 11.081 4.085 L 11.081 3.433 C 11.081 3.12 10.974 2.85 10.753 2.63 C 10.545 2.416 10.257 2.296 9.958 2.3 L 9.383 2.3 C 9.242 2.305 9.104 2.25 9.006 2.148 C 8.906 2.044 8.853 1.903 8.859 1.759 L 8.859 1.133 C 8.859 0.812 8.752 0.55 8.531 0.33 C 8.323 0.115 8.035 -0.004 7.735 0 C 7.423 0 7.169 0.109 6.955 0.33 C 6.744 0.543 6.628 0.833 6.636 1.133 L 6.636 1.724 C 6.636 1.886 6.586 2.021 6.488 2.122 C 6.393 2.23 6.255 2.289 6.111 2.283 L 5.536 2.283 C 5.233 2.283 4.962 2.393 4.741 2.613 C 4.524 2.823 4.405 3.114 4.413 3.416 L 4.413 4.068 C 4.413 4.201 4.36 4.329 4.265 4.422 C 4.177 4.519 4.052 4.575 3.92 4.575 L 3.313 4.575 C 3.014 4.571 2.726 4.69 2.518 4.905 C 2.297 5.124 2.19 5.395 2.19 5.708 L 2.19 8.652 C 2.194 8.778 2.147 8.9 2.058 8.991 C 1.974 9.082 1.854 9.131 1.73 9.125 L 1.098 9.125 C 0.802 9.119 0.517 9.243 0.32 9.464 C 0.106 9.692 0 9.97 0 10.284 L 0 13.175 C 0 13.489 0.106 13.767 0.32 13.995 C 0.517 14.216 0.802 14.34 1.098 14.334 L 1.73 14.334 C 1.854 14.328 1.974 14.377 2.058 14.468 C 2.147 14.559 2.194 14.681 2.19 14.807 L 2.19 17.751 C 2.19 18.064 2.297 18.335 2.518 18.554 C 2.726 18.769 3.014 18.888 3.313 18.884 L 3.92 18.884 C 4.052 18.884 4.177 18.94 4.265 19.037 C 4.36 19.13 4.413 19.258 4.413 19.391 L 4.413 20.034 C 4.405 20.336 4.524 20.627 4.741 20.837 C 4.949 21.051 5.237 21.171 5.536 21.167 L 6.111 21.167 C 6.255 21.161 6.393 21.22 6.488 21.328 C 6.586 21.429 6.636 21.564 6.636 21.726 L 6.636 22.326 C 6.628 22.626 6.744 22.916 6.955 23.129 C 7.169 23.35 7.423 23.459 7.735 23.459 C 8.035 23.462 8.323 23.343 8.531 23.129 C 8.752 22.909 8.859 22.638 8.859 22.326 L 8.859 21.7 C 8.853 21.556 8.906 21.415 9.006 21.311 C 9.104 21.209 9.242 21.153 9.383 21.159 L 9.958 21.159 C 10.257 21.163 10.545 21.043 10.753 20.829 C 10.974 20.608 11.081 20.338 11.081 20.025 L 11.081 19.373 C 11.081 19.24 11.134 19.112 11.229 19.019 C 11.317 18.922 11.443 18.866 11.574 18.866 L 12.181 18.866 C 12.48 18.872 12.768 18.752 12.976 18.537 C 13.197 18.317 13.304 18.047 13.304 17.734 L 13.304 14.807 C 13.3 14.681 13.347 14.559 13.436 14.468 C 13.52 14.377 13.64 14.328 13.764 14.334 L 14.396 14.334 C 14.692 14.34 14.977 14.216 15.174 13.995 C 15.388 13.767 15.494 13.489 15.494 13.175 Z" fill="#6C54A0"/>
+    <path d="M 7.024 9.113 L 5.515 11.895 C 5.416 12.072 5.416 12.286 5.515 12.462 L 7.024 15.244 C 7.12 15.424 7.307 15.536 7.512 15.536 C 7.716 15.536 7.904 15.424 8 15.244 L 9.51 12.462 C 9.608 12.286 9.608 12.072 9.51 11.895 L 8 9.113 C 7.904 8.934 7.716 8.821 7.512 8.821 C 7.307 8.821 7.12 8.934 7.024 9.113 Z" fill="white"/>
+  </svg>
+  <div style="display:flex;flex-direction:column;line-height:1.1;">
+    <span style="font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;letter-spacing:.18em;color:#141414;">C U B I G</span>
+    <span style="font-family:'DM Sans',sans-serif;font-size:7.5px;font-weight:400;letter-spacing:.14em;color:#6C54A0;text-transform:uppercase;">Cure Bigdata</span>
+  </div>
+</a>
+  <ul class="nav-links" role="list">
+    <li class="has-sub"><a href="/syntitan">Platform <span class="nav-chevron">▾</span></a><div class="nav-sub"><a href="/syntitan">SynTitan</a></div></li>
+    <li class="has-sub"><a href="#">Capabilities <span class="nav-chevron">▾</span></a><div class="nav-sub"><a href="/dts">DTS</a><a href="/llm-capsule">LLM Capsule</a></div></li>
+    <li><a href="/proof" class="active">Proof</a></li>
+    <li class="has-sub"><a href="/learn">Learn <span class="nav-chevron">▾</span></a><div class="nav-sub"><a href="/learn/ai-ready-data-infrastructure">AI-Ready Data Infrastructure</a><a href="/learn/release-state">Release State</a><a href="/learn/articles">Articles</a><a href="/learn/glossary">Glossary</a></div></li>
+    <li><a href="/company">Company</a></li>
+    <li><a href="https://syntitan.ai" class="nav-cta" target="_blank" rel="noopener">Try SynTitan</a></li>
+  </ul>
+</nav>
+
+
+<!-- ═══════════════════════════════════════
+     HERO
+═══════════════════════════════════════ -->
+<section class="hero-wrap" aria-label="Proof Hero">
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="hero-tag" style="animation-delay:0s">
+      <span class="hero-tag-dot"></span>
+      Operational Evidence
+    </div>
+    <h1 class="h1" style="animation:fadeUp .7s .1s ease both;max-width:800px;">Proof</h1>
+    <p style="font-size:clamp(15px,1.8vw,18px);color:var(--text2);line-height:1.6;max-width:560px;margin-top:18px;font-weight:300;animation:fadeUp .7s .2s ease both;">
+      PoC runs in controlled conditions. Production data changes.
+      Pipelines update. Environments shift. Here's the evidence
+      that AI execution doesn't have to break.
+    </p>
+
+    <!-- GEO: 1-sentence definition block -->
+    <div class="geo-definition" id="ai-ready-data-definition">
+      True AI-ready data means it is <em>usable</em>, <em>privacy-safe</em>,
+      and <em>stable for production execution</em>.
+    </div>
+
+    <!-- Social proof: Industry coverage -->
+    <div style="margin-top:32px;">
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:14px;">// Deployed across regulated industries — 15+ enterprise clients</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
+        <span style="font-family:var(--mono);font-size:10px;letter-spacing:.06em;padding:5px 12px;border:1px solid var(--line2);color:var(--text2);">Finance (Woori Bank · KYOBO · Hana Bank · Samsung Securities)</span>
+        <span style="font-family:var(--mono);font-size:10px;letter-spacing:.06em;padding:5px 12px;border:1px solid var(--line2);color:var(--text2);">Telecom (SK telecom)</span>
+        <span style="font-family:var(--mono);font-size:10px;letter-spacing:.06em;padding:5px 12px;border:1px solid var(--line2);color:var(--text2);">Healthcare (EUMC)</span>
+        <span style="font-family:var(--mono);font-size:10px;letter-spacing:.06em;padding:5px 12px;border:1px solid var(--line2);color:var(--text2);">Defense &amp; Public</span>
+        <span style="font-family:var(--mono);font-size:10px;letter-spacing:.06em;padding:5px 12px;border:1px solid var(--line2);color:var(--text2);">Global (CLAROTY · Aramco)</span>
+      </div>
+    </div>
+
+    <!-- Quantified ROI summary -->
+    <div style="margin-top:28px;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);max-width:720px;">
+      <div style="background:var(--bg2);padding:18px 20px;">
+        <div style="font-family:var(--serif);font-size:28px;font-weight:500;color:var(--brand-purple);line-height:1;">95%</div>
+        <div style="font-size:12px;color:var(--text2);margin-top:4px;line-height:1.4;">reduction in root cause identification time (21 days → under 4 hours)</div>
+      </div>
+      <div style="background:var(--bg2);padding:18px 20px;">
+        <div style="font-family:var(--serif);font-size:28px;font-weight:500;color:var(--brand-purple);line-height:1;">+30pp</div>
+        <div style="font-size:12px;color:var(--text2);margin-top:4px;line-height:1.4;">F1-score improvement (58.55% → 88.55%) via DTS synthetic data augmentation</div>
+      </div>
+      <div style="background:var(--bg2);padding:18px 20px;">
+        <div style="font-family:var(--serif);font-size:28px;font-weight:500;color:var(--brand-purple);line-height:1;">−90%</div>
+        <div style="font-size:12px;color:var(--text2);margin-top:4px;line-height:1.4;">time-to-deploy: 4 weeks → 1 day on AI model production cycle</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     FILTER BAR
+═══════════════════════════════════════ -->
+<div class="filter-wrap" role="navigation" aria-label="Evidence filter">
+  <div class="filter-inner">
+    <button class="filter-btn active" data-filter="all" onclick="setFilter('all',this)">
+      <span class="filter-dot dot-all"></span> All Evidence
+    </button>
+    <button class="filter-btn" data-filter="stable" onclick="setFilter('stable',this)">
+      <span class="filter-dot dot-stable"></span> Execution Stability
+    </button>
+    <button class="filter-btn" data-filter="data" onclick="setFilter('data',this)">
+      <span class="filter-dot dot-data"></span> Data Usability
+    </button>
+    <button class="filter-btn" data-filter="secure" onclick="setFilter('secure',this)">
+      <span class="filter-dot dot-secure"></span> Secure LLM Usage
+    </button>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     EVIDENCE CARDS
+═══════════════════════════════════════ -->
+<div class="evidence-wrap">
+  <div class="section">
+
+    <div class="evidence-header">
+      <div>
+        <div class="eyebrow">Evidence</div>
+        <h2 class="h2">Operational case records</h2>
+        <p class="evidence-count" id="ev-count">6 records · filtered: all</p>
+      </div>
+      <p style="font-size:13.5px;color:var(--text2);max-width:300px;line-height:1.65;">
+        Each record follows the same format: Before → After → What Changed → Reproduce.
+      </p>
+    </div>
+
+    <div class="evidence-grid" id="evidence-grid">
+
+      <!-- ── Card 1: Execution Stability ── -->
+      <article class="ev-card open" data-tag="stable">
+        <div class="ev-card-header" onclick="toggleCard(this)">
+          <div class="ev-industry">
+            <span class="ev-industry-dot" style="background:var(--amber)"></span>
+            Financial Services
+          </div>
+          <div class="ev-title">Model retraining pipeline — schema drift detection</div>
+          <div class="ev-meta">
+            <span class="ev-tag stable">Execution Stability</span>
+            <span style="font-family:var(--mono);font-size:9px;letter-spacing:.06em;padding:3px 8px;border:1px solid rgba(108,84,160,.2);color:var(--brand-purple);background:var(--blue-dim);">Fraud Detection</span>
+            <span class="ev-toggle">+</span>
+          </div>
+        </div>
+        <div class="ev-body">
+          <div class="ev-metrics">
+            <div class="ev-metric">
+              <span class="ev-metric-val amber">3 wk</span>
+              <span class="ev-metric-label">Root cause time (before)</span>
+            </div>
+            <div class="ev-metric">
+              <span class="ev-metric-val green">&lt; 1 run</span>
+              <span class="ev-metric-label">Detection time (after)</span>
+            </div>
+            <div class="ev-metric">
+              <span class="ev-metric-val blue">2</span>
+              <span class="ev-metric-label">Feature columns removed</span>
+            </div>
+            <div class="ev-metric">
+              <span class="ev-metric-val blue">1</span>
+              <span class="ev-metric-label">Schema type coercion</span>
+            </div>
+          </div>
+          <div class="ev-rows">
+            <div class="ev-row">
+              <div class="ev-row-label before-l">Before</div>
+              <p class="ev-row-text">Schema change in upstream data caused silent model degradation. Root cause took <strong>21 days</strong> to identify — by which time downstream decisions had been affected.</p>
+            </div>
+            <div class="ev-row">
+              <div class="ev-row-label after-l">After</div>
+              <p class="ev-row-text">SynTitan Release State detected the schema diff at ingestion. Issue flagged before the next training run triggered. No degraded model reached production.</p>
+            </div>
+            <div class="ev-row">
+              <div class="ev-row-label diff-l">What Changed</div>
+              <p class="ev-row-text">2 feature columns removed from upstream feed. 1 schema type coercion introduced silently. Release State diff surfaced both in the change log.</p>
+            </div>
+            <div class="ev-row">
+              <div class="ev-row-label reproduce-l">Reproduce</div>
+              <p class="ev-row-text">Prior run re-executed under locked Release State conditions. Model behavior verified against known-good baseline. Root cause identification time: <strong>21 days → under 4 hours (95% reduction)</strong>. Incident response completed before next production run.</p>
+            </div>
+          </div>
+          <div class="ev-artifacts">
+            <span class="artifact-pill">State Card</span>
+            <span class="artifact-pill">Change Log</span>
+            <span class="artifact-pill">Re-run Record</span>
+            <span class="artifact-pill">Schema Diff</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- ── Card 2: Execution Stability ── -->
+      <article class="ev-card" data-tag="stable">
+        <div class="ev-card-header" onclick="toggleCard(this)">
+          <div class="ev-industry">
+            <span class="ev-industry-dot" style="background:var(--amber)"></span>
+            Telco
+          </div>
+          <div class="ev-title">Real-time inference service — pipeline version rollback</div>
+          <div class="ev-meta">
+            <span class="ev-tag stable">Execution Stability</span>
+            <span style="font-family:var(--mono);font-size:9px;letter-spacing:.06em;padding:3px 8px;border:1px solid rgba(108,84,160,.2);color:var(--brand-purple);background:var(--blue-dim);">Customer Churn Prediction</span>
+            <span class="ev-toggle">+</span>
+          </div>
+        </div>
+        <div class="ev-body">
+          <div class="ev-metrics">
+            <div class="ev-metric">
+              <span class="ev-metric-val amber">Unknown</span>
+              <span class="ev-metric-label">Drift source (before)</span>
+            </div>
+            <div class="ev-metric">
+              <span class="ev-metric-val green">&lt; 2 hr</span>
+              <span class="ev-metric-label">Rollback time (after)</span>
+            </div>
+            <div class="ev-metric">
+              <span class="ev-metric-val blue">100%</span>
+              <span class="ev-metric-label">Score distribution match</span>
+            </div>
+          </div>
+          <div class="ev-rows">
+            <div class="ev-row">
+              <div class="ev-row-label before-l">Before</div>
+              <p class="ev-row-text">Preprocessing pipeline update produced inconsistent scores in production. No way to trace which version caused the score drift. Engineers spent days reconstructing execution history manually.</p>
+            </div>
+            <div class="ev-row">
+              <div class="ev-row-label after-l">After</div>
+              <p class="ev-row-text">Run Binding linked every score to its exact Release State. Rollback to stable state completed in under 2 hours. No manual reconstruction required.</p>
+            </div>
+            <div class="ev-row">
+              <div class="ev-row-label diff-l">What Changed</div>
+              <p class="ev-row-text">Normalization logic updated across the preprocessing step. Feature scaling range shifted by 12%. Release State diff identified both changes with exact pipeline version reference.</p>
+            </div>
+            <div class="ev-row">
+              <div class="ev-row-label reproduce-l">Reproduce</div>
+              <p class="ev-row-text">Stable release re-run confirmed. Score distribution matched baseline output. Run Binding record archived for future regression checks.</p>
+            </div>
+          </div>
+          <div class="ev-artifacts">
+            <span class="artifact-pill">State Card</span>
+            <span class="artifact-pill">Change Log</span>
+            <span class="artifact-pill">Re-run Record</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- ── Card 3: Data Usability ── -->
+      <article class="ev-card" data-tag="data">
+        <div class="ev-card-header" onclick="toggleCard(this)">
+          <div class="ev-industry">
+            <span class="ev-industry-dot" style="background:var(--green)"></span>
+            Manufacturing
+          </div>
+          <div class="ev-title">Quality inspection model — rare defect class coverage</div>
+          <div class="ev-meta">
+            <span class="ev-tag data">Data Usability</span>
+            <span style="font-family:var(--mono);font-size:9px;letter-spacing:.06em;padding:3px 8px;border:1px solid rgba(13,190,124,.25);color:var(--green);background:var(--green-dim);">Imbalanced Dataset · AI-Ready Data</span>
+            <span class="ev-toggle">+</span>
+          </div>
+        </div>
+        <div class="ev-body">
+          <div class="ev-metrics">
+            <div class="ev-metric">
+              <span class="ev-metric-val amber">3</span>
+              <span class="ev-metric-label">Underrepresented classes</span>
+            </div>
+            <div class="ev-metric">
+              <span class="ev-metric-val green">Closed</span>
+              <span class="ev-metric-label">Coverage gap (after DTS)</span>
+            </div>
+            <div class="ev-metric">
+              <span class="ev-metric-val blue">↑ Recall</span>
+              <span class="ev-metric-label">Defect detection</span>
+            </div>
+          </div>
+          <div class="ev-rows">
+            <div class="ev-row">
+              <div class="ev-row-label before-l">Before</div>
+              <p class="ev-row-text">Rare defect class underrepresented in training data. Model missed edge cases in production — the gap was invisible until incidents occurred on the line.</p>
+            </div>
+            <div class="ev-row">
+              <div class="ev-row-label after-l">After</div>
+              <p class="ev-row-text">DTS generated privacy-safe synthetic samples for the 3 underrepresented classes using differential privacy. Coverage gap closed before next training cycle.</p>
+            </div>
+            <div class="ev-row">
+              <div class="ev-row-label diff-l">What Changed</div>
+              <p class="ev-row-text">3 underrepresented defect classes augmented with DP-safe synthetic data. Class distribution rebalanced. Augmented dataset versioned within SynTitan Release State.</p>
+            </div>
+            <div class="ev-row">
+              <div class="ev-row-label reproduce-l">Reproduce</div>
+              <p class="ev-row-text">Augmented dataset versioned and bound to Release State. Same training run reproducible on demand. Defect detection recall improved and verified against holdout.</p>
+            </div>
+          </div>
+          <div class="ev-artifacts">
+            <span class="artifact-pill">State Card</span>
+            <span class="artifact-pill">Dataset Version</span>
+            <span class="artifact-pill">Re-run Record</span>
+            <span class="artifact-pill">Class Dist. Log</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- ── Card 4: Data Usability ── -->
+      <article class="ev-card" data-tag="data">
+        <div class="ev-card-header" onclick="toggleCard(this)">
+          <div class="ev-industry">
+            <span class="ev-industry-dot" style="background:var(--green)"></span>
+            Healthcare
+          </div>
+          <div class="ev-title">Clinical AI validation — restricted patient data replacement</div>
+          <div class="ev-meta">
+            <span class="ev-tag data">Data Usability</span>
+            <span class="ev-toggle">+</span>
+          </div>
+        </div>
+        <div class="ev-body">
+          <div class="ev-metrics">
+            <div class="ev-metric">
+              <span class="ev-metric-val amber">Blocked</span>
+              <span class="ev-metric-label">Validation status (before)</span>
+            </div>
+            <div class="ev-metric">
+              <span class="ev-metric-val green">Unblocked</span>
+              <span class="ev-metric-label">Validation status (after)</span>
+            </div>
+            <div class="ev-metric">
+              <span class="ev-metric-val blue">DP</span>
+              <span class="ev-metric-label">Differential privacy applied</span>
+            </div>
+          </div>
+          <div class="ev-rows">
+            <div class="ev-row">
+              <div class="ev-row-label before-l">Before</div>
+              <p class="ev-row-text">Real patient records required for model validation could not be accessed due to HIPAA compliance constraints. Validation pipeline stalled. No way to test model behavior on realistic distributions.</p>
+            </div>
+            <div class="ev-row">
+              <div class="ev-row-label after-l">After</div>
+              <p class="ev-row-text">DTS generated differential-privacy synthetic patient records that matched real distribution characteristics without containing any real identifiable information. Validation unblocked.</p>
+            </div>
+            <div class="ev-row">
+              <div class="ev-row-label diff-l">What Changed</div>
+              <p class="ev-row-text">Non-accessible real records replaced with DP-safe synthetic equivalents. Data distribution preserved. Compliance review passed. Validation pipeline resumed without modification.</p>
+            </div>
+            <div class="ev-row">
+              <div class="ev-row-label reproduce-l">Reproduce</div>
+              <p class="ev-row-text">Synthetic dataset versioned in SynTitan. Validation run reproducible with same synthetic distribution on demand. Audit trail maintained throughout.</p>
+            </div>
+          </div>
+          <div class="ev-artifacts">
+            <span class="artifact-pill">State Card</span>
+            <span class="artifact-pill">DP Audit Log</span>
+            <span class="artifact-pill">Dataset Version</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- ── Card 5: Secure LLM ── -->
+      <article class="ev-card" data-tag="secure">
+        <div class="ev-card-header" onclick="toggleCard(this)">
+          <div class="ev-industry">
+            <span class="ev-industry-dot" style="background:#7B5CF5"></span>
+            Insurance
+          </div>
+          <div class="ev-title">LLM-assisted claims processing — PII leakage prevention</div>
+          <div class="ev-meta">
+            <span class="ev-tag secure">Secure LLM Usage</span>
+            <span style="font-family:var(--mono);font-size:9px;letter-spacing:.06em;padding:3px 8px;border:1px solid rgba(123,92,245,.3);color:#7B5CF5;background:rgba(123,92,245,.07);">Enterprise LLM Search · PII Protection</span>
+            <span class="ev-toggle">+</span>
+          </div>
+        </div>
+        <div class="ev-body">
+          <div class="ev-metrics">
+            <div class="ev-metric">
+              <span class="ev-metric-val amber">Exposed</span>
+              <span class="ev-metric-label">PII in LLM prompts (before)</span>
+            </div>
+            <div class="ev-metric">
+              <span class="ev-metric-val green">0</span>
+              <span class="ev-metric-label">PII fields in prompts (after)</span>
+            </div>
+            <div class="ev-metric">
+              <span class="ev-metric-val blue">Preserved</span>
+              <span class="ev-metric-label">Output usability</span>
+            </div>
+          </div>
+          <div class="ev-rows">
+            <div class="ev-row">
+              <div class="ev-row-label before-l">Before</div>
+              <p class="ev-row-text">Claims documents containing policyholder names, ID numbers, and medical details were passed directly to an external LLM API. Compliance team blocked the workflow pending a PII solution.</p>
+            </div>
+            <div class="ev-row">
+              <div class="ev-row-label after-l">After</div>
+              <p class="ev-row-text">LLM Capsule intercepted prompts, detected and anonymized all PII fields before submission to the LLM. Outputs returned with anonymized tokens re-mapped for downstream use.</p>
+            </div>
+            <div class="ev-row">
+              <div class="ev-row-label diff-l">What Changed</div>
+              <p class="ev-row-text">LLM Capsule layer inserted into the workflow. PII detection covered names, IDs, dates, and medical field patterns. Zero identified PII fields reached the external API.</p>
+            </div>
+            <div class="ev-row">
+              <div class="ev-row-label reproduce-l">Reproduce</div>
+              <p class="ev-row-text">Each anonymization run logged and bound to SynTitan Release State. Workflow reproducible with same anonymization logic for audit and regression verification.</p>
+            </div>
+          </div>
+          <div class="ev-artifacts">
+            <span class="artifact-pill">State Card</span>
+            <span class="artifact-pill">PII Detect Log</span>
+            <span class="artifact-pill">Anonymization Map</span>
+            <span class="artifact-pill">Re-run Record</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- ── Card 6: Execution Stability ── -->
+      <article class="ev-card" data-tag="stable">
+        <div class="ev-card-header" onclick="toggleCard(this)">
+          <div class="ev-industry">
+            <span class="ev-industry-dot" style="background:var(--amber)"></span>
+            Retail / E-commerce
+          </div>
+          <div class="ev-title">Recommendation engine — runtime environment drift</div>
+          <div class="ev-meta">
+            <span class="ev-tag stable">Execution Stability</span>
+            <span style="font-family:var(--mono);font-size:9px;letter-spacing:.06em;padding:3px 8px;border:1px solid rgba(108,84,160,.2);color:var(--brand-purple);background:var(--blue-dim);">Personalization Systems</span>
+            <span class="ev-toggle">+</span>
+          </div>
+        </div>
+        <div class="ev-body">
+          <div class="ev-metrics">
+            <div class="ev-metric">
+              <span class="ev-metric-val amber">Days</span>
+              <span class="ev-metric-label">Debugging time (before)</span>
+            </div>
+            <div class="ev-metric">
+              <span class="ev-metric-val green">&lt; 3 hr</span>
+              <span class="ev-metric-label">Root cause identified (after)</span>
+            </div>
+            <div class="ev-metric">
+              <span class="ev-metric-val blue">Exact</span>
+              <span class="ev-metric-label">Environment reproduced</span>
+            </div>
+          </div>
+          <div class="ev-rows">
+            <div class="ev-row">
+              <div class="ev-row-label before-l">Before</div>
+              <p class="ev-row-text">Recommendation scores degraded after a routine infrastructure upgrade. Engineers could not reproduce the pre-upgrade behavior — all runtime parameters had changed and were not recorded.</p>
+            </div>
+            <div class="ev-row">
+              <div class="ev-row-label after-l">After</div>
+              <p class="ev-row-text">SynTitan's Run Binding captured every runtime parameter at execution time. Pre-upgrade Release State re-run in under 3 hours. Exact recommendation distribution confirmed and compared.</p>
+            </div>
+            <div class="ev-row">
+              <div class="ev-row-label diff-l">What Changed</div>
+              <p class="ev-row-text">Library version bump changed default float precision handling. Embedding normalization behavior altered. Release State diff identified the exact library version delta.</p>
+            </div>
+            <div class="ev-row">
+              <div class="ev-row-label reproduce-l">Reproduce</div>
+              <p class="ev-row-text">Pre-upgrade run reproduced exactly. Score distribution delta measured and confirmed. Infrastructure team patched and validated against reproduced baseline.</p>
+            </div>
+          </div>
+          <div class="ev-artifacts">
+            <span class="artifact-pill">State Card</span>
+            <span class="artifact-pill">Runtime Snapshot</span>
+            <span class="artifact-pill">Change Log</span>
+            <span class="artifact-pill">Re-run Record</span>
+          </div>
+        </div>
+      </article>
+
+    </div><!-- /evidence-grid -->
+
+    <!-- Overlap prevention note -->
+    <div class="overlap-note">
+      <p>SynTitan performs data quality refinement as part of execution stability.</p>
+      <p>SynTitan can use a subset of DTS capabilities when privacy-safe synthetic data is needed, while DTS is a full standalone enterprise synthetic data engine.</p>
+    </div>
+
+    <!-- TECHNICAL ARTIFACTS SECTION -->
+    <div style="margin-top:60px;">
+      <div class="eyebrow">Technical Artifacts</div>
+      <h2 class="h2">What traceability<br><em>looks like in practice.</em></h2>
+      <p style="font-size:15px;color:var(--text2);margin-top:12px;max-width:600px;line-height:1.65;">Every SynTitan run produces structured artifacts that make execution conditions inspectable, comparable, and reproducible. These are the operational records teams use for incident response and regression verification.</p>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);margin-top:40px;">
+
+        <!-- Artifact 1: Release State Diff -->
+        <div style="background:var(--bg2);padding:28px;">
+          <div style="font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--brand-purple);margin-bottom:14px;">// Artifact type: Release State Diff</div>
+          <div style="font-family:var(--serif);font-size:18px;font-weight:500;margin-bottom:8px;line-height:1.2;">Release State Comparison</div>
+          <p style="font-size:13px;color:var(--text2);line-height:1.65;margin-bottom:16px;">When output behavior changes between runs, SynTitan diffs the two Release States to surface exactly which execution condition changed.</p>
+          <div style="background:var(--bg3);border:1px solid var(--line2);font-family:var(--mono);font-size:12px;padding:16px;line-height:1.9;color:var(--text2);">
+            <div style="color:var(--text3);margin-bottom:8px;">// Release State diff: RS-0041 → RS-0042</div>
+            <div style="color:var(--red);">− schema.feature_col_7: dtype=int64</div>
+            <div style="color:var(--green);">+ schema.feature_col_7: dtype=object</div>
+            <div style="margin-top:8px;color:var(--text3);">// 1 schema fingerprint change detected</div>
+            <div style="color:var(--text3);">// preprocessing.normalization_v: 1.2.1 → 1.3.0</div>
+            <div style="margin-top:8px;color:var(--amber);">! Run Binding: RS-0042 flagged before production</div>
+          </div>
+          <div style="margin-top:12px;font-size:12.5px;color:var(--text2);line-height:1.65;"><strong>Root cause:</strong> Feature column type coerced from integer to string upstream. Preprocessing normalization version updated in the same window.</div>
+          <div style="margin-top:8px;font-size:12.5px;color:var(--text2);line-height:1.65;"><strong>Resolution:</strong> Restored prior schema type constraint. Pinned preprocessing version in Release State.</div>
+        </div>
+
+        <!-- Artifact 2: Schema Fingerprint Change -->
+        <div style="background:var(--bg2);padding:28px;border-left:1px solid var(--line);">
+          <div style="font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--brand-purple);margin-bottom:14px;">// Artifact type: Schema Fingerprint Log</div>
+          <div style="font-family:var(--serif);font-size:18px;font-weight:500;margin-bottom:8px;line-height:1.2;">Schema Fingerprint Change</div>
+          <p style="font-size:13px;color:var(--text2);line-height:1.65;margin-bottom:16px;">SynTitan captures a schema fingerprint at each ingestion. When the fingerprint changes, it is logged in the Release State and surfaced in the Change Log before the run proceeds.</p>
+          <div style="background:var(--bg3);border:1px solid var(--line2);font-family:var(--mono);font-size:12px;padding:16px;line-height:1.9;color:var(--text2);">
+            <div style="color:var(--text3);margin-bottom:8px;">// Schema fingerprint audit log</div>
+            <div>run_id: r-20240318-084501</div>
+            <div>release_state: RS-0041</div>
+            <div style="color:var(--red);">schema_fingerprint: CHANGED</div>
+            <div style="color:var(--text3);">prev: sha256:a4f2b...3c91</div>
+            <div style="color:var(--amber);">curr: sha256:d9e7a...11fa</div>
+            <div style="margin-top:8px;color:var(--text3);">// columns_added: 0</div>
+            <div style="color:var(--red);">// columns_removed: 2 [user_segment_v2, tenure_bucket]</div>
+            <div style="color:var(--text3);">// type_changes: 1</div>
+          </div>
+          <div style="margin-top:12px;font-size:12.5px;color:var(--text2);line-height:1.65;"><strong>Root cause:</strong> Upstream data feed removed two feature columns without downstream notification.</div>
+          <div style="margin-top:8px;font-size:12.5px;color:var(--text2);line-height:1.65;"><strong>Resolution:</strong> Run halted before training. Schema contract enforced. Upstream notified within the same hour.</div>
+        </div>
+
+        <!-- Artifact 3: Preprocessing Logic Change -->
+        <div style="background:var(--bg2);padding:28px;border-top:1px solid var(--line);">
+          <div style="font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--brand-purple);margin-bottom:14px;">// Artifact type: Preprocessing Diff</div>
+          <div style="font-family:var(--serif);font-size:18px;font-weight:500;margin-bottom:8px;line-height:1.2;">Preprocessing Logic Change</div>
+          <p style="font-size:13px;color:var(--text2);line-height:1.65;margin-bottom:16px;">Preprocessing steps are versioned inside each Release State. When logic changes — normalization, imputation, encoding — the diff shows exactly which step changed and what the expected effect is.</p>
+          <div style="background:var(--bg3);border:1px solid var(--line2);font-family:var(--mono);font-size:12px;padding:16px;line-height:1.9;color:var(--text2);">
+            <div style="color:var(--text3);margin-bottom:8px;">// Preprocessing diff: RS-0042 → RS-0043</div>
+            <div style="color:var(--red);">− step: normalize_amount</div>
+            <div style="color:var(--red);">  method: min-max  range: [0, 1000]</div>
+            <div style="color:var(--green);">+ step: normalize_amount</div>
+            <div style="color:var(--green);">  method: z-score  params: μ=0, σ=1</div>
+            <div style="margin-top:8px;color:var(--amber);">! normalization method changed</div>
+            <div style="color:var(--text3);">// all downstream feature scores affected</div>
+          </div>
+          <div style="margin-top:12px;font-size:12.5px;color:var(--text2);line-height:1.65;"><strong>Root cause:</strong> Normalization method switched from min-max to z-score — changing the scale of all downstream feature inputs.</div>
+          <div style="margin-top:8px;font-size:12.5px;color:var(--text2);line-height:1.65;"><strong>Resolution:</strong> Reverted to prior Release State for immediate rollback. New method evaluated in staging before reintroduction.</div>
+        </div>
+
+        <!-- Artifact 4: Runtime Dependency Change -->
+        <div style="background:var(--bg2);padding:28px;border-top:1px solid var(--line);border-left:1px solid var(--line);">
+          <div style="font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--brand-purple);margin-bottom:14px;">// Artifact type: Runtime Dependency Log</div>
+          <div style="font-family:var(--serif);font-size:18px;font-weight:500;margin-bottom:8px;line-height:1.2;">Runtime Dependency Change</div>
+          <p style="font-size:13px;color:var(--text2);line-height:1.65;margin-bottom:16px;">Runtime environment versions — libraries, Python runtime, inference server — are captured in each Release State. Unexpected version changes are surfaced as execution state drift events.</p>
+          <div style="background:var(--bg3);border:1px solid var(--line2);font-family:var(--mono);font-size:12px;padding:16px;line-height:1.9;color:var(--text2);">
+            <div style="color:var(--text3);margin-bottom:8px;">// Runtime dependency audit: RS-0043</div>
+            <div style="color:var(--red);">− sklearn: 1.2.2</div>
+            <div style="color:var(--green);">+ sklearn: 1.4.0</div>
+            <div style="color:var(--red);">− pandas: 1.5.3</div>
+            <div style="color:var(--green);">+ pandas: 2.1.0</div>
+            <div style="margin-top:8px;color:var(--amber);">! 2 runtime dependencies changed</div>
+            <div style="color:var(--amber);">! imputation behavior may differ</div>
+          </div>
+          <div style="margin-top:12px;font-size:12.5px;color:var(--text2);line-height:1.65;"><strong>Root cause:</strong> Container image updated in CI/CD pipeline without version-pinning the AI dependencies.</div>
+          <div style="margin-top:8px;font-size:12.5px;color:var(--text2);line-height:1.65;"><strong>Resolution:</strong> Dependency versions pinned in Release State manifest. Container image rebuild triggered with verified versions.</div>
+        </div>
+
+      </div>
+
+      <div style="margin-top:24px;padding:16px 20px;background:var(--bg2);border:1px solid var(--line);border-left:3px solid var(--brand-purple);">
+        <p style="font-family:var(--mono);font-size:11.5px;color:var(--text3);line-height:1.7;">// These artifact types are produced by SynTitan during every AI run. State Cards, Change Logs, Schema Diffs, Preprocessing Diffs, and Re-run Records are all standard outputs — not manual reports. <a href="/syntitan" style="color:var(--brand-purple);">See execution state comparison →</a></p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     ARCHITECTURE CTA
+═══════════════════════════════════════ -->
+<div class="arch-wrap">
+  <div class="arch-inner">
+    <div>
+      <h2 class="arch-title">
+        Want to see <em>how it works</em><br>inside your stack?
+      </h2>
+      <p class="arch-sub">
+        Schedule an architecture walkthrough. We'll map your
+        current AI execution conditions against the Release State
+        and Run Binding model — and show you exactly where
+        reproducibility breaks down.
+      </p>
+    </div>
+    <div class="arch-ctas">
+      <a href="/cdn-cgi/l/email-protection#e3808c8d97828097a38096818a84cd828a" class="btn-primary">
+        Request Walkthrough <span class="btn-arrow">→</span>
+      </a>
+      <a href="https://syntitan.ai" class="btn-secondary">
+        Try SynTitan <span class="btn-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     FAQ — GEO
+═══════════════════════════════════════ -->
+<div class="faq-wrap">
+  <div class="section">
+    <div class="eyebrow">FAQ</div>
+    <h2 class="h2">Common questions</h2>
+
+    <div class="faq-list">
+
+      <div class="faq-item open">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          What does "reproducible AI execution" mean in production?
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">
+          Reproducible AI execution means that any past AI run can be re-executed under the exact same data, environment, and pipeline conditions — returning the same result. SynTitan achieves this through Release State and Run Binding, which lock execution conditions at every run. When something breaks in production, you don't debug blind — you diff the states and reproduce the last known-good run.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          What is a Release State in SynTitan?
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">
+          A Release State is a versioned snapshot of all execution conditions at the time of an AI run — including data schema, pipeline configuration, feature set, and runtime parameters. It enables diff between states to trace what changed and re-run the same conditions for incident response and regression verification.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          How does DTS solve the unusable data problem?
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">
+          DTS generates privacy-safe synthetic data using differential privacy to fill coverage gaps, fix class imbalance, and replace non-accessible data. It operates as a standalone engine or integrates with SynTitan for end-to-end execution stability.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          How does LLM Capsule protect sensitive data during LLM usage?
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">
+          LLM Capsule detects sensitive fields including PII in prompts and outputs, anonymizes or shields them before LLM interaction, and preserves output usability for downstream workflows — all within SynTitan execution workflows.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          What is the difference between SynTitan and DTS?
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">
+          SynTitan performs data quality refinement as part of execution stability. SynTitan can use a subset of DTS capabilities when privacy-safe synthetic data is needed, while DTS is a full standalone enterprise synthetic data engine.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     FINAL CTA
+═══════════════════════════════════════ -->
+<!-- BUSINESS IMPACT SUMMARY -->
+<div style="background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
+  <div class="section" style="padding-bottom:80px;">
+    <div class="eyebrow">Business impact summary</div>
+    <h2 class="h2">What changes when<br><em>AI execution is reproducible.</em></h2>
+    <p style="font-size:15px;color:var(--text2);margin-top:12px;max-width:580px;line-height:1.65;">These are the business outcomes the operational evidence demonstrates — not theoretical capabilities, but changes documented in production deployments.</p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);margin-top:40px;">
+      <div style="background:#fff;padding:28px 24px;">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:14px;">Incident recovery</div>
+        <div style="font-family:var(--serif);font-size:32px;font-weight:700;color:var(--brand-purple);line-height:1;">21 days → &lt;4h</div>
+        <p style="font-size:13px;color:var(--text2);margin-top:10px;line-height:1.65;">Root cause identification time. Schema change detected at ingestion via Release State. Incident resolved before next training run.</p>
+      </div>
+      <div style="background:#fff;padding:28px 24px;border-left:1px solid var(--line);">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:14px;">Data usability improvement</div>
+        <div style="font-family:var(--serif);font-size:32px;font-weight:700;color:var(--brand-purple);line-height:1;">+30pp F1</div>
+        <p style="font-size:13px;color:var(--text2);margin-top:10px;line-height:1.65;">Model accuracy improvement after DTS fixed class imbalance. Rare defect class augmented with privacy-safe synthetic data. Deploy time cut from 4 weeks to 1 day.</p>
+      </div>
+      <div style="background:#fff;padding:28px 24px;border-left:1px solid var(--line);">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:14px;">LLM adoption unblocked</div>
+        <div style="font-family:var(--serif);font-size:32px;font-weight:700;color:var(--brand-purple);line-height:1;">98.1%</div>
+        <p style="font-size:13px;color:var(--text2);margin-top:10px;line-height:1.65;">PII detection accuracy in enterprise prompts. Compliance-blocked LLM projects unblocked without sacrificing data usability or audit requirements.</p>
+      </div>
+      <div style="background:#fff;padding:28px 24px;border-top:1px solid var(--line);">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:14px;">Rollback speed</div>
+        <div style="font-family:var(--serif);font-size:32px;font-weight:700;color:var(--brand-purple);line-height:1;">&lt;2h rollback</div>
+        <p style="font-size:13px;color:var(--text2);margin-top:10px;line-height:1.65;">Run Binding enabled stable-state re-execution after preprocessing drift caused inference inconsistency. Prior Release State re-run confirmed. Score distribution matched baseline.</p>
+      </div>
+      <div style="background:#fff;padding:28px 24px;border-top:1px solid var(--line);border-left:1px solid var(--line);">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:14px;">Compliance-safe AI data</div>
+        <div style="font-family:var(--serif);font-size:32px;font-weight:700;color:var(--brand-purple);line-height:1;">277K records</div>
+        <p style="font-size:13px;color:var(--text2);margin-top:10px;line-height:1.65;">DP-safe synthetic records generated to replace retention-deleted data. F1 churn model reached 0.92. Zero real customer data accessed or exported. Full regulatory compliance.</p>
+      </div>
+      <div style="background:var(--blue-dim);padding:28px 24px;border-top:1px solid var(--line);border-left:1px solid var(--line);">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--brand-purple);margin-bottom:14px;">// Common thread</div>
+        <p style="font-size:15px;font-family:var(--serif);line-height:1.6;color:var(--text);">Each case reduced <strong>deployment risk</strong>, <strong>incident investigation time</strong>, or <strong>AI adoption blockers</strong> — without replacing existing data infrastructure.</p>
+        <a href="/cdn-cgi/l/email-protection#6f0c00011b0e0c1b2f0c1a0d0608410e06" style="font-family:var(--mono);font-size:11px;color:var(--brand-purple);margin-top:16px;display:inline-block;">Talk to our engineers →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="final-wrap">
+  <div class="section final-inner">
+    <div class="final-bg-text" aria-hidden="true">PROOF</div>
+    <div class="eyebrow" style="justify-content:center;">From evidence to execution</div>
+    <h2 class="final-h">
+      Make your AI runs<br>
+      <em>reproducible.</em>
+    </h2>
+    <p class="final-sub">
+      Every production AI failure has a root cause. These cases show how to find it fast, fix it correctly, and prevent recurrence. The same infrastructure is available now.
+    </p>
+    <div class="final-ctas">
+      <a href="https://syntitan.ai" class="btn-primary">
+        Start evaluation <span class="btn-arrow">→</span>
+      </a>
+      <a href="/cdn-cgi/l/email-protection#32515d5c46535146725147505b551c535b" class="btn-secondary">
+        Run a technical demo <span class="btn-arrow">→</span>
+      </a>
+      <a href="/learn/why-ai-fails-after-deployment" class="btn-secondary">
+        Explore concept: Why AI fails <span class="btn-arrow">→</span>
+      </a>
+    </div>
+    <p style="font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:24px;">// 30-min architecture review · engineers-first · no sales pitch</p>
+  </div>
+</div>
+
+
+<!-- FOOTER -->
+
+<!-- SAAS-DIFF-PROOF -->
+<div style="margin:48px 0;padding:24px 28px;background:var(--bg2);border:1px solid var(--line);">
+  <div style="font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:12px;">// Why these results don't happen with existing tools</div>
+  <p style="font-size:13.5px;color:var(--text2);line-height:1.7;margin:0;">Databricks versioned the data. MLflow tracked the model. The AI still broke in production. <strong style="color:var(--text);">Because neither tool versions the data state the model was bound to at run time.</strong> SynTitan does. That's the difference these cases reflect.</p>
+</div>
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 0.5L19.5 10L10 19.5L0.5 10Z" stroke="#141414" stroke-width="1.2"/><path d="M10 4L16 10L10 16L4 10Z" stroke="#141414" stroke-width="0.9"/><path d="M10 7L12.5 10L10 13L7.5 10Z" fill="#141414"/></svg>CUBIG</div>
+      <p class="footer-tagline">AI-ready data infrastructure for enterprise AI.</p>
+      <p style="font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:10px;line-height:1.7;">Korea: 4F, NAVER 1784, 95 Jeongjail-ro,<br>Bundang-gu, Seongnam-si<br>UK: 21 Arthur Street, Belfast BT1 4GA</p>
+    </div>
+    <div><div class="footer-col-title">Platform</div><ul class="footer-links"><li><a href="/syntitan">SynTitan</a></li></ul></div>
+    <div><div class="footer-col-title">Capabilities</div><ul class="footer-links"><li><a href="/dts">DTS</a></li><li><a href="/llm-capsule">LLM Capsule</a></li></ul></div>
+    <div><div class="footer-col-title">Learn</div><ul class="footer-links"><li><a href="/learn/ai-ready-data-infrastructure">AI-Ready Data Infrastructure</a></li><li><a href="/learn/release-state">Release State</a></li><li><a href="/learn/articles">Articles</a></li><li><a href="/learn/glossary">Glossary</a></li></ul></div>
+    <div><div class="footer-col-title">Company</div><ul class="footer-links"><li><a href="/company">About</a></li><li><a href="/proof">Proof</a></li><li><a href="/cdn-cgi/l/email-protection#385b57564c595b4c785b4d5a515f165951">Contact</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 CUBIG Corp. All rights reserved.</span>
+    <span class="footer-copy"><a href="/cdn-cgi/l/email-protection#492a26273d282a3d092a3c2b202e672820" style="color:var(--text3);"><span class="__cf_email__" data-cfemail="ee8d81809a8f8d9aae8d9b8c8789c08f87">[email&#160;protected]</span></a></span>
+  </div>
+</footer>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></body>
+</html>
+
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// ── Evidence card accordion ──
+function toggleCard(header) {
+  const card = header.closest('.ev-card');
+  card.classList.toggle('open');
+}
+
+// ── FAQ accordion ──
+func

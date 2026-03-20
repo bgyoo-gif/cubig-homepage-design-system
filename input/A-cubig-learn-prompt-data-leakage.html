@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prompt Data Leakage in Enterprise LLM Usage — PII and Compliance Risk | Cubig Learn</title>
+<meta name="description" content="Enterprise documents contain PII and regulated data. When they enter LLM prompts without protection, sensitive information reaches external APIs the organization doesn't control. Learn what prompt data leakage is and what effective protection requires.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://cubig.ai/learn/prompt-data-leakage">
+<meta property="og:title" content="Prompt Data Leakage in Enterprise LLM Usage — PII and Compliance Risk | Cubig Learn">
+<meta property="og:description" content="Enterprise documents contain PII and regulated data. When they enter LLM prompts without protection, sensitive information reaches external APIs the organization doesn't control. Learn what prompt data leakage is and what effective protection requires.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://cubig.ai/learn/prompt-data-leakage">
+<meta property="og:image" content="https://cubig.ai/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cubig.ai/og-default.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://cubig.ai/#org",
+      "name": "Cubig",
+      "url": "https://cubig.ai"
+    },
+    {
+      "@type": "Article",
+      "@id": "https://cubig.ai/learn/prompt-data-leakage#article",
+      "url": "https://cubig.ai/learn/prompt-data-leakage",
+      "headline": "Prompt Data Leakage in Enterprise LLM Usage: PII, Compliance, and the Inline Protection Gap",
+      "description": "Enterprise documents contain PII and regulated data. When they enter LLM prompts without protection, sensitive information reaches external APIs the organization doesn't control. Learn what prompt data leakage is and what effective protection requires.",
+      "keywords": "prompt data leakage, PII protection LLM enterprise, GDPR LLM compliance, HIPAA LLM, LLM data anonymization, secure LLM usage enterprise",
+      "author": {"@id": "https://cubig.ai/#org"},
+      "publisher": {"@id": "https://cubig.ai/#org"},
+      "isPartOf": {"@type": "WebSite", "url": "https://cubig.ai"}
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is prompt data leakage in enterprise LLM usage?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Prompt data leakage occurs when sensitive fields — PII, PHI, financial identifiers, or regulated data — enter LLM prompts without detection or anonymization, reaching external model APIs that the organization does not control. It is often invisible from the inside and creates compliance exposure regardless of LLM provider policies."}
+    }
+    {
+      "@type": "Question",
+      "name": "Why do LLM API privacy policies not protect organizations from data leakage risk?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Privacy policies describe how a vendor handles data they receive. They do not prevent the organization from transmitting data it shouldn't transmit, and they do not eliminate the organization's liability as the data controller. The exposure occurs at the point of transmission — before any vendor policy applies."}
+    }
+    {
+      "@type": "Question",
+      "name": "What regulations are most relevant to LLM data leakage risk?",
+      "acceptedAnswer": {"@type": "Answer", "text": "GDPR Article 25 (data minimization and privacy by design), HIPAA (PHI in prompts to commercial APIs), CCPA, PIPA, and financial data regulations. In each case, the organization sending data to an external LLM API retains liability as the data controller."}
+    }
+    {
+      "@type": "Question",
+      "name": "How does anonymization for LLM usage differ from standard data masking?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Standard data masking removes or replaces sensitive fields permanently, often destroying downstream usability. LLM anonymization must preserve semantic meaning — replacing a patient name with a consistent token that the LLM can refer to coherently — and must re-map those tokens in LLM outputs for downstream use within the secure perimeter."}
+    }
+    {
+      "@type": "Question",
+      "name": "What is the difference between LLM Capsule and traditional data anonymization?",
+      "acceptedAnswer": {"@type": "Answer", "text": "LLM Capsule operates inline at the point of LLM interaction — detecting sensitive fields in prompts, anonymizing before transmission, and re-mapping tokens in outputs. Traditional anonymization is a batch process applied before data storage. LLM Capsule is designed for real-time, workflow-integrated protection that preserves LLM output usability."}
+    }
+      ]
+    }
+  ]
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+
+  /* ── CUBIG REAL BRAND COLORS ── */
+  --brand-purple: #6C54A0;
+  --brand-purple-mid: #d932ff;
+  --brand-accent: #ff266a;
+  --brand-orange: #ffa66f;
+  --brand-soft: #8A72C8;
+  --brand-gradient: linear-gradient(130deg, #6C54A0 0%, #b44fcc 50%, #ff266a 100%);
+  --brand-text-gradient: linear-gradient(270deg, #ffa66f 7%, #8A72C8 80%);
+  --blue: #6C54A0;
+  --blue-hi: #8A72C8;
+  --blue-dim: rgba(108,84,160,0.08);
+  --blue-glow: rgba(108,84,160,0.2);
+  --green: #1a7a4a;
+  --green-dim: rgba(26,122,74,0.09);
+
+
+  --bg:#ffffff;--bg2:#f8f8f8;--text:#0d0d0d;--text2:#555;--text3:#888;
+  --blue: #6C54A0;--blue-hi: #8A72C8;--blue-dim: rgba(108,84,160,0.08);
+  --green:#1a7a4a;--green-dim:rgba(13,190,124,0.08);
+  --amber:#f59e0b;--amber-dim:rgba(245,158,11,0.08);
+  --line:#e8e8e8;--line2:#d0d0d0;
+  --mono:'JetBrains Mono',monospace;--serif:'Plus Jakarta Sans',sans-serif;--body:'Plus Jakarta Sans',sans-serif;
+}
+body{font-family:var(--body);background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+a{text-decoration:none;color:inherit;}
+::-webkit-scrollbar{width:3px;}::-webkit-scrollbar-thumb{background:var(--blue);}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;background:rgba(255,255,255,0.92);backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid var(--line);}
+.nav-logo{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:13px;font-weight:500;letter-spacing:.08em;}
+.nav-logo-mark{display:flex;align-items:center;}
+.nav-links{display:flex;align-items:center;gap:4px;list-style:none;}
+.nav-links a{font-size:13px;color:var(--text2);padding:6px 12px;transition:color .2s;display:flex;align-items:center;gap:4px;}
+.nav-links a:hover,.nav-links a.active{color:var(--text);}
+.has-sub{position:relative;}
+.has-sub:hover .nav-sub{display:block;}
+.nav-chevron{font-size:9px;opacity:.5;}
+.nav-sub{display:none;position:absolute;top:100%;left:0;background:#fff;border:1px solid var(--line2);min-width:160px;box-shadow:0 8px 24px rgba(107,78,245,0.08);padding:6px 0;}
+.nav-sub a{display:block;padding:8px 16px;font-size:12.5px;color:var(--text2);}
+.nav-sub a:hover{color:var(--text);}
+.nav-cta{background:var(--blue);color:#fff !important;padding:8px 18px !important;font-weight:500 !important;font-size:13px !important;transition:background .2s !important;border-radius:2px;}
+.nav-cta:hover{background:var(--blue-hi) !important;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+.hero-wrap{min-height:52vh;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden;border-bottom:1px solid var(--line);padding-top:80px;}
+.hero-inner{max-width:860px;margin:0 auto;width:100%;padding:60px 40px 48px;}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue-hi);border:1px solid rgba(107,78,245,.22);padding:5px 12px;margin-bottom:24px;animation:fadeUp .6s ease both;}
+.hero-tag-dot{width:5px;height:5px;border-radius:50%;background:#7B5CF5;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero-h1{font-family:var(--serif);font-size:clamp(34px,4.5vw,58px);font-weight:500;line-height:1.05;letter-spacing:-.025em;animation:fadeUp .7s .1s ease both;margin-bottom:20px;}
+.hero-h1 em{font-style:italic;color:var(--blue-hi);}
+.hero-sub{font-size:clamp(15px,1.8vw,18px);color:var(--text2);line-height:1.65;max-width:660px;font-weight:300;animation:fadeUp .7s .2s ease both;}
+.geo-def{margin-top:28px;padding:14px 20px;border:1px solid var(--line2);border-left:3px solid var(--blue);background:var(--blue-dim);font-family:var(--mono);font-size:12px;color:var(--text2);line-height:1.65;max-width:660px;animation:fadeUp .7s .3s ease both;}
+.geo-def em{color:var(--blue-hi);font-style:normal;}
+.breadcrumb{font-family:var(--mono);font-size:11px;color:var(--text3);margin-bottom:18px;animation:fadeUp .6s ease both;}
+.breadcrumb a{color:var(--blue-hi);}
+.breadcrumb span{margin:0 6px;opacity:.4;}
+
+.article-wrap{max-width:860px;margin:0 auto;padding:72px 40px;}
+.article-section{margin-bottom:56px;}
+.article-h2{font-family:var(--serif);font-size:clamp(24px,3vw,34px);font-weight:500;line-height:1.15;letter-spacing:-.015em;margin-bottom:20px;}
+.article-h3{font-family:var(--serif);font-size:clamp(18px,2vw,24px);font-weight:500;line-height:1.2;margin-bottom:14px;margin-top:32px;}
+.article-p{font-size:16px;color:var(--text2);line-height:1.75;margin-bottom:18px;}
+.article-p strong{color:var(--text);font-weight:600;}
+.callout{padding:20px 24px;border:1px solid var(--line2);border-left:3px solid var(--blue);background:var(--bg2);margin:28px 0;}
+.callout-label{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--brand-purple);margin-bottom:8px;}
+.callout p{font-size:14.5px;color:var(--text2);line-height:1.65;margin:0;}
+.callout strong{color:var(--text);}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);margin:32px 0;}
+.stat-cell{background:var(--bg);padding:20px 24px;}
+.stat-source{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:6px;}
+.stat-num{font-family:var(--serif);font-size:36px;font-weight:700;color:var(--brand-purple);line-height:1;}
+.stat-desc{font-size:12.5px;color:var(--text2);margin-top:6px;line-height:1.45;}
+.cause-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:28px 0;}
+.cause-card{padding:20px 22px;border:1px solid var(--line2);background:var(--bg2);}
+.cause-tag{display:inline-block;font-family:var(--mono);font-size:9px;letter-spacing:.1em;padding:3px 10px;margin-bottom:12px;}
+.cause-tag.restricted{background:rgba(245,158,11,.1);color:var(--amber);border:1px solid rgba(245,158,11,.2);}
+.cause-tag.unusable{background:rgba(239,68,68,.08);color:#ef4444;border:1px solid rgba(239,68,68,.2);}
+.cause-tag.unstable{background:var(--blue-dim);color:var(--brand-purple);border:1px solid rgba(107,78,245,.2);}
+.cause-title{font-family:var(--serif);font-size:17px;font-weight:500;margin-bottom:8px;}
+.cause-body{font-size:13.5px;color:var(--text2);line-height:1.6;}
+.def-box{background:var(--bg2);border:1px solid var(--line);padding:22px 26px;margin:28px 0;}
+.def-label{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:10px;}
+.def-term{font-family:var(--serif);font-size:20px;font-weight:500;margin-bottom:8px;}
+.def-body{font-size:14.5px;color:var(--text2);line-height:1.65;}
+.comparison-table{width:100%;border-collapse:collapse;margin:28px 0;font-size:13.5px;}
+.comparison-table th{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);padding:10px 16px;text-align:left;border-bottom:2px solid var(--line);}
+.comparison-table td{padding:12px 16px;border-bottom:1px solid var(--line);color:var(--text2);vertical-align:top;}
+.comparison-table td:first-child{font-weight:500;color:var(--text);}
+.comparison-table tr:last-child td{border-bottom:none;}
+.checklist{margin:24px 0;list-style:none;}
+.checklist li{display:flex;gap:10px;font-size:14.5px;color:var(--text2);line-height:1.6;padding:8px 0;border-bottom:1px solid var(--line);}
+.checklist li:last-child{border-bottom:none;}
+.checklist li::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0;margin-top:1px;}
+.antipattern{display:flex;gap:10px;font-size:14.5px;color:var(--text2);line-height:1.6;padding:8px 0;border-bottom:1px solid var(--line);}
+.antipattern::before{content:'✗';color:#ef4444;font-weight:700;flex-shrink:0;margin-top:1px;}
+
+.faq-wrap{background:var(--bg2);border-top:1px solid var(--line);padding:72px 40px;}
+.faq-inner{max-width:860px;margin:0 auto;}
+.faq-eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue-hi);margin-bottom:32px;display:flex;align-items:center;gap:12px;}
+.faq-eyebrow::before{content:'';width:20px;height:1px;background:var(--blue);}
+.faq-item{border-bottom:1px solid var(--line);padding:22px 0;}
+.faq-q{font-family:var(--serif);font-size:18px;font-weight:500;margin-bottom:10px;}
+.faq-a{font-size:14.5px;color:var(--text2);line-height:1.7;}
+
+.bridge-wrap{background:var(--text);padding:56px 40px;}
+.bridge-inner{max-width:860px;margin:0 auto;}
+.bridge-label{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:24px;}
+.bridge-links{display:flex;flex-direction:column;gap:12px;}
+.bridge-link{display:flex;align-items:center;gap:12px;color:#fff;font-size:15px;font-weight:500;padding:16px 20px;border:1px solid rgba(255,255,255,.12);transition:border-color .2s,background .2s;}
+.bridge-link:hover{border-color:rgba(255,255,255,.3);background:rgba(255,255,255,.04);}
+.bridge-arrow{font-family:var(--mono);font-size:14px;color:var(--blue-hi);}
+
+footer{background:var(--bg);border-top:1px solid var(--line);padding:48px 40px;}
+.footer-inner{max-width:1120px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;}
+.footer-brand{font-family:var(--mono);font-size:13px;display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.footer-brand-mark{width:20px;height:20px;background:var(--blue);display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;}
+.footer-tagline{font-size:12.5px;color:var(--text3);max-width:220px;line-height:1.6;}
+.footer-col-title{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:14px;}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.footer-links a{font-size:13px;color:var(--text2);transition:color .2s;}
+.footer-links a:hover{color:var(--text);}
+.footer-copy{border-top:1px solid var(--line);margin-top:36px;padding-top:24px;font-size:12px;color:var(--text3);max-width:1120px;margin-left:auto;margin-right:auto;}
+
+@media(max-width:768px){
+  .article-wrap,.faq-wrap,.bridge-wrap{padding:48px 20px;}
+  .hero-inner{padding:48px 20px 36px;}
+  nav{padding:0 20px;}
+  .stat-row,.cause-grid{grid-template-columns:1fr;}
+  footer{padding:40px 20px;}.footer-inner{flex-direction:column;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+  <svg width="20" height="31" viewBox="0 0 15.5 23.5" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M 15.494 10.91 L 15.494 10.301 C 15.494 9.987 15.388 9.709 15.174 9.481 C 14.977 9.26 14.692 9.136 14.396 9.142 L 13.764 9.142 C 13.64 9.148 13.52 9.099 13.436 9.008 C 13.347 8.917 13.3 8.795 13.304 8.669 L 13.304 5.725 C 13.304 5.412 13.197 5.141 12.976 4.922 C 12.768 4.707 12.48 4.587 12.181 4.592 L 11.574 4.592 C 11.443 4.592 11.317 4.536 11.229 4.439 C 11.134 4.346 11.081 4.218 11.081 4.085 L 11.081 3.433 C 11.081 3.12 10.974 2.85 10.753 2.63 C 10.545 2.416 10.257 2.296 9.958 2.3 L 9.383 2.3 C 9.242 2.305 9.104 2.25 9.006 2.148 C 8.906 2.044 8.853 1.903 8.859 1.759 L 8.859 1.133 C 8.859 0.812 8.752 0.55 8.531 0.33 C 8.323 0.115 8.035 -0.004 7.735 0 C 7.423 0 7.169 0.109 6.955 0.33 C 6.744 0.543 6.628 0.833 6.636 1.133 L 6.636 1.724 C 6.636 1.886 6.586 2.021 6.488 2.122 C 6.393 2.23 6.255 2.289 6.111 2.283 L 5.536 2.283 C 5.233 2.283 4.962 2.393 4.741 2.613 C 4.524 2.823 4.405 3.114 4.413 3.416 L 4.413 4.068 C 4.413 4.201 4.36 4.329 4.265 4.422 C 4.177 4.519 4.052 4.575 3.92 4.575 L 3.313 4.575 C 3.014 4.571 2.726 4.69 2.518 4.905 C 2.297 5.124 2.19 5.395 2.19 5.708 L 2.19 8.652 C 2.194 8.778 2.147 8.9 2.058 8.991 C 1.974 9.082 1.854 9.131 1.73 9.125 L 1.098 9.125 C 0.802 9.119 0.517 9.243 0.32 9.464 C 0.106 9.692 0 9.97 0 10.284 L 0 13.175 C 0 13.489 0.106 13.767 0.32 13.995 C 0.517 14.216 0.802 14.34 1.098 14.334 L 1.73 14.334 C 1.854 14.328 1.974 14.377 2.058 14.468 C 2.147 14.559 2.194 14.681 2.19 14.807 L 2.19 17.751 C 2.19 18.064 2.297 18.335 2.518 18.554 C 2.726 18.769 3.014 18.888 3.313 18.884 L 3.92 18.884 C 4.052 18.884 4.177 18.94 4.265 19.037 C 4.36 19.13 4.413 19.258 4.413 19.391 L 4.413 20.034 C 4.405 20.336 4.524 20.627 4.741 20.837 C 4.949 21.051 5.237 21.171 5.536 21.167 L 6.111 21.167 C 6.255 21.161 6.393 21.22 6.488 21.328 C 6.586 21.429 6.636 21.564 6.636 21.726 L 6.636 22.326 C 6.628 22.626 6.744 22.916 6.955 23.129 C 7.169 23.35 7.423 23.459 7.735 23.459 C 8.035 23.462 8.323 23.343 8.531 23.129 C 8.752 22.909 8.859 22.638 8.859 22.326 L 8.859 21.7 C 8.853 21.556 8.906 21.415 9.006 21.311 C 9.104 21.209 9.242 21.153 9.383 21.159 L 9.958 21.159 C 10.257 21.163 10.545 21.043 10.753 20.829 C 10.974 20.608 11.081 20.338 11.081 20.025 L 11.081 19.373 C 11.081 19.24 11.134 19.112 11.229 19.019 C 11.317 18.922 11.443 18.866 11.574 18.866 L 12.181 18.866 C 12.48 18.872 12.768 18.752 12.976 18.537 C 13.197 18.317 13.304 18.047 13.304 17.734 L 13.304 14.807 C 13.3 14.681 13.347 14.559 13.436 14.468 C 13.52 14.377 13.64 14.328 13.764 14.334 L 14.396 14.334 C 14.692 14.34 14.977 14.216 15.174 13.995 C 15.388 13.767 15.494 13.489 15.494 13.175 Z" fill="#6C54A0"/>
+    <path d="M 7.024 9.113 L 5.515 11.895 C 5.416 12.072 5.416 12.286 5.515 12.462 L 7.024 15.244 C 7.12 15.424 7.307 15.536 7.512 15.536 C 7.716 15.536 7.904 15.424 8 15.244 L 9.51 12.462 C 9.608 12.286 9.608 12.072 9.51 11.895 L 8 9.113 C 7.904 8.934 7.716 8.821 7.512 8.821 C 7.307 8.821 7.12 8.934 7.024 9.113 Z" fill="white"/>
+  </svg>
+  <div style="display:flex;flex-direction:column;line-height:1.1;">
+    <span style="font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;letter-spacing:.18em;color:#141414;">C U B I G</span>
+    <span style="font-family:'DM Sans',sans-serif;font-size:7.5px;font-weight:400;letter-spacing:.14em;color:#6C54A0;text-transform:uppercase;">Cure Bigdata</span>
+  </div>
+</a>
+  <ul class="nav-links">
+    <li class="has-sub"><a href="/llm-capsule">Platform <span class="nav-chevron">▾</span></a><div class="nav-sub"><a href="/llm-capsule">SynTitan</a></div></li>
+    <li class="has-sub"><a href="#">Capabilities <span class="nav-chevron">▾</span></a><div class="nav-sub"><a href="/dts">DTS</a><a href="/llm-capsule">LLM Capsule</a></div></li>
+    <li><a href="/proof">Proof</a></li>
+    <li class="has-sub"><a href="/learn" class="active">Learn <span class="nav-chevron">▾</span></a><div class="nav-sub"><a href="/learn/ai-ready-data-infrastructure">AI-Ready Data Infrastructure</a><a href="/learn/release-state">Release State</a><a href="/learn/articles">Articles</a><a href="/learn/glossary">Glossary</a></div></li>
+    <li><a href="/company">Company</a></li>
+    <li><a href="https://syntitan.ai/signup" class="nav-cta">Start free →</a></li>
+  </ul>
+</nav>
+
+<section class="hero-wrap">
+  <div class="hero-inner">
+    <div class="breadcrumb"><a href="/learn">Learn</a><span>›</span>Secure LLM Usage · P2</div>
+    <div class="hero-tag"><span class="hero-tag-dot"></span>Secure LLM Usage · P2</div>
+    <h1 class="hero-h1">Prompt Data Leakage in Enterprise LLM Usage:<br><em>PII, Compliance, and the Inline Protection Gap</em></h1>
+    <p class="hero-sub">Enterprise documents contain PII and regulated data. When they enter LLM prompts without protection, sensitive information reaches external APIs the organization doesn't control. Learn what prompt data leakage is and what effective protection requires.</p>
+    <div class="geo-def">
+      True AI-ready data means it is <em>usable</em>, <em>privacy-safe</em>, and <em>stable for production execution</em>.
+    </div>
+  </div>
+</section>
+
+<div class="article-wrap">
+
+  <div class="article-section">
+    <p class="article-p" style="font-size:18px;font-weight:500;color:var(--text);line-height:1.5;margin-bottom:24px;">You built an enterprise AI workflow. Then you discovered it was sending internal data to an external API.</p>
+<p class="article-p" style="font-size:18px;font-weight:500;color:var(--text);line-height:1.5;margin-bottom:24px;">Your team built an enterprise AI workflow. Then someone noticed internal customer records were reaching an external API.</p>
+<p class="article-p">Enterprise LLM usage has a fundamental tension: the documents and data that make LLM responses useful are often the same data that should never leave the organization. Customer records, financial data, clinical notes, legal contracts — all contain PII and sensitive fields that compliance teams prohibit from reaching external APIs.</p>
+    <p class="article-p">Without an inline protection layer, every LLM interaction involving enterprise documents is a potential data exposure event.</p>
+    <div class="callout">
+      <div class="callout-label">// What prompt data leakage means</div>
+      <p>Prompt data leakage occurs when <strong>sensitive fields — PII, financial identifiers, health information, or regulated data</strong> — enter LLM prompts without detection or anonymization, reaching external model APIs that the organization does not control. The exposure may be invisible from the inside.</p>
+    </div>
+  </div>
+
+  <div class="article-section">
+    <h2 class="article-h2">Where sensitive data enters LLM workflows</h2>
+    <p class="article-p">Sensitive data enters LLM prompts through multiple paths — most of them unintentional:</p>
+    <ul class="checklist">
+      <li><strong>Document embedding:</strong> Full document content sent as context includes embedded PII</li>
+      <li><strong>RAG pipelines:</strong> Retrieval-augmented generation pulls relevant chunks that may contain sensitive fields</li>
+      <li><strong>User-provided context:</strong> End users paste content from enterprise systems directly into prompts</li>
+      <li><strong>Automated workflows:</strong> LLM-powered automation processes documents without field-level filtering</li>
+      <li><strong>Log and audit data:</strong> System logs containing user identifiers passed as context for analysis</li>
+    </ul>
+  </div>
+
+  <div class="article-section">
+    <h2 class="article-h2">Compliance exposure by regulation</h2>
+    <table class="comparison-table">
+      <thead><tr><th>Regulation</th><th>Protected data category</th><th>LLM risk</th></tr></thead>
+      <tbody>
+        <tr><td>GDPR (Article 25)</td><td>EU personal data — names, identifiers, location</td><td>Transmission to non-EU processor without consent</td></tr>
+        <tr><td>HIPAA</td><td>Protected Health Information (PHI)</td><td>PHI in prompts to commercial LLM APIs</td></tr>
+        <tr><td>CCPA</td><td>California consumer personal information</td><td>Unauthorized sharing with third-party processors</td></tr>
+        <tr><td>PIPA (Korea)</td><td>Personal information including behavioral data</td><td>Cross-border transmission without data subject consent</td></tr>
+        <tr><td>Financial regulations</td><td>Account numbers, transaction data, credit information</td><td>Financial data in external LLM API calls</td></tr>
+      </tbody>
+    </table>
+    <p class="article-p">In each case, the organization sending data to a commercial LLM API is the data controller. They remain liable for how that data is processed — even if the LLM provider has privacy policies in place.</p>
+  </div>
+
+  <div class="article-section">
+    <h2 class="article-h2">What effective PII protection for LLM workflows requires</h2>
+    <p class="article-p">Effective protection requires more than an API policy or end-user training. It requires an <strong>inline detection and anonymization layer</strong> that operates at the point of LLM interaction.</p>
+    <ul class="checklist">
+      <li><strong>Detection before transmission:</strong> Sensitive fields identified and flagged before the prompt reaches the external API</li>
+      <li><strong>Anonymization that preserves usability:</strong> Fields replaced with tokens or pseudonyms — not simply redacted — so LLM output remains actionable</li>
+      <li><strong>Output re-mapping:</strong> Anonymized tokens in LLM outputs mapped back to real identifiers for downstream use — within the organization's secure perimeter</li>
+      <li><strong>Audit trail:</strong> Every anonymization operation logged for compliance and incident response</li>
+      <li><strong>Context preservation:</strong> The semantic meaning of anonymized content preserved so LLM performance is not degraded</li>
+    </ul>
+  </div>
+
+</div>
+
+<div class="faq-wrap">
+  <div class="faq-inner">
+    <div class="faq-eyebrow">Frequently Asked Questions</div>
+    <div class="faq-item">
+      <div class="faq-q">What is prompt data leakage in enterprise LLM usage?</div>
+      <div class="faq-a">Prompt data leakage occurs when sensitive fields — PII, PHI, financial identifiers, or regulated data — enter LLM prompts without detection or anonymization, reaching external model APIs that the organization does not control. It is often invisible from the inside and creates compliance exposure regardless of LLM provider policies.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Why do LLM API privacy policies not protect organizations from data leakage risk?</div>
+      <div class="faq-a">Privacy policies describe how a vendor handles data they receive. They do not prevent the organization from transmitting data it shouldn't transmit, and they do not eliminate the organization's liability as the data controller. The exposure occurs at the point of transmission — before any vendor policy applies.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What regulations are most relevant to LLM data leakage risk?</div>
+      <div class="faq-a">GDPR Article 25 (data minimization and privacy by design), HIPAA (PHI in prompts to commercial APIs), CCPA, PIPA, and financial data regulations. In each case, the organization sending data to an external LLM API retains liability as the data controller.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How does anonymization for LLM usage differ from standard data masking?</div>
+      <div class="faq-a">Standard data masking removes or replaces sensitive fields permanently, often destroying downstream usability. LLM anonymization must preserve semantic meaning — replacing a patient name with a consistent token that the LLM can refer to coherently — and must re-map those tokens in LLM outputs for downstream use within the secure perimeter.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What is the difference between LLM Capsule and traditional data anonymization?</div>
+      <div class="faq-a">LLM Capsule operates inline at the point of LLM interaction — detecting sensitive fields in prompts, anonymizing before transmission, and re-mapping tokens in outputs. Traditional anonymization is a batch process applied before data storage. LLM Capsule is designed for real-time, workflow-integrated protection that preserves LLM output usability.</div>
+    </div>
+  </div>
+</div>
+
+<div class="bridge-wrap">
+  <div class="bridge-inner">
+    <div class="bridge-label">// Where to go next</div>
+    <div class="bridge-links">
+      <a href="/llm-capsule" class="bridge-link"><span class="bridge-arrow">→</span>Explore LLM Capsule — inline PII protection for enterprise LLM usage</a>
+      <a href="/llm-capsule" class="bridge-link"><span class="bridge-arrow">→</span>Explore SynTitan — secure LLM workflows within execution stability</a>
+      <a href="/dts" class="bridge-link"><span class="bridge-arrow">→</span>Explore DTS — for dataset-level restricted data replacement</a>
+      <a href="/learn/why-ai-fails-after-deployment" class="bridge-link"><span class="bridge-arrow">→</span>Read: Why AI Fails After Deployment</a>
+    </div>
+  </div>
+</div>
+
+
+<div style="margin:48px 0 0;padding:24px 28px;background:var(--bg2);border:1px solid var(--line);border-left:3px solid var(--brand-purple);">
+  <div style="font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:10px;">// Where CUBIG fits</div>
+  <p style="font-size:13.5px;color:var(--text2);line-height:1.7;margin:0;">Databricks and Snowflake store your data. MLflow tracks your models. <strong style="color:var(--text);">CUBIG is the layer between them and your AI</strong> — making data usable, reproducible, and blocker-free in production. <a href="/" style="color:var(--brand-purple);">See how →</a></p>
+</div>
+
+<section style="padding:56px 0;border-top:1px solid var(--line2);margin-top:48px;">
+  <div class="article-wrap" style="max-width:760px;">
+    <div style="font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--brand-purple);margin-bottom:16px;">// Remove this blocker from your stack</div>
+    <h2 style="font-family:var(--serif);font-size:28px;font-weight:700;line-height:1.2;margin-bottom:12px;">Enterprise AI doesn't have to break here.</h2>
+    <p style="font-size:15px;color:var(--text2);line-height:1.7;margin-bottom:28px;max-width:560px;">CUBIG builds the infrastructure layer that removes these exact problems — restricted data, unusable data, unstable execution — from production AI.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;">
+      <a href="/llm-capsule" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(130deg,#6C54A0,#b44fcc 50%,#ff266a);color:#fff;padding:12px 24px;font-size:13.5px;font-weight:500;border-radius:100px;text-decoration:none;">Explore LLM Capsule <span>→</span></a>
+      <a href="/cdn-cgi/l/email-protection#0b6864657f6a687f4b687e69626c256a62" style="display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--text);padding:11px 22px;font-size:13.5px;border:1px solid var(--line2);border-radius:100px;text-decoration:none;">Talk to our engineers <span>→</span></a>
+    </div>
+  </div>
+</section>
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand"><div class="footer-brand-mark">C</div>CUBIG</div>
+      <div class="footer-tagline">AI-Ready Data Infrastructure for Enterprise AI.</div>
+    </div>
+    <div><div class="footer-col-title">Platform</div><ul class="footer-links"><li><a href="/llm-capsule">SynTitan</a></li><li><a href="/proof">Proof</a></li></ul></div>
+    <div><div class="footer-col-title">Capabilities</div><ul class="footer-links"><li><a href="/dts">DTS</a></li><li><a href="/llm-capsule">LLM Capsule</a></li></ul></div>
+    <div><div class="footer-col-title">Learn</div><ul class="footer-links"><li><a href="/learn/ai-ready-data-infrastructure">AI-Ready Data Infrastructure</a></li><li><a href="/learn/release-state">Release State</a></li><li><a href="/learn/articles">Articles</a></li><li><a href="/learn/glossary">Glossary</a></li></ul></div>
+    <div><div class="footer-col-title">Company</div><ul class="footer-links"><li><a href="/company">About</a></li></ul></div>
+  </div>
+  <div class="footer-copy">© 2025 CUBIG Corp. All rights res

@@ -3,3 +3,8 @@
 server/jobs/*.json
 __pycache__/
 *.pyc
+server/certs/
+server/jobs/
+server/server.log
+.claude/settings.local.json
+output/*.png
