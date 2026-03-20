@@ -1,0 +1,2292 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CUBIG Design System v5.0</title>
+<!-- last-updated: 20260320145342 -->
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@400;600;700&family=Fragment+Mono&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ds-color-brand-primary: #3061f2;
+  --ds-color-brand-purple: #a617ff;
+  --ds-color-brand-purple-lt: #c6c5fa;
+  --ds-color-neutral-900: #0f0f0f;
+  --ds-color-neutral-850: #141414;
+  --ds-color-neutral-800: #171719;
+  --ds-color-neutral-700: #303135;
+  --ds-color-neutral-500: #636363;
+  --ds-color-neutral-300: #bababa;
+  --ds-color-neutral-100: #ececec;
+  --ds-color-neutral-025: #f7f7f7;
+  --ds-color-white: #fff;
+  --ds-color-text-primary: #0f0f0f;
+  --ds-color-text-secondary: #636363;
+  --ds-color-text-tertiary: #9c9c9c;
+  --ds-color-text-inverse: #fff;
+  --ds-color-text-muted: #cacccf;
+  --ds-color-success: #0e824c;
+  --ds-color-error: #ff3030;
+  --ds-color-info: #155ea0;
+  --ds-color-warn: #f59e0b;
+  --ds-color-success-light: #34d399;
+  --ds-color-error-light: #ff6b6b;
+  --ds-color-info-light: #60a5fa;
+  --ds-color-warn-light: #fbbf24;
+  --ds-color-border-default: #e6e7e9;
+  --ds-color-border-brand: #a617ff;
+  --ds-color-surface-dark: #171719;
+  --ds-color-surface-mid: #f2f2f2;
+  --ds-color-surface-light: #f7f7f7;
+  --ds-color-surface-white: #fff;
+  --ds-gradient-brand: linear-gradient(130deg, #6C54A0, #b44fcc 50%, #ff266a);
+  --ds-font-base: "DM Sans", sans-serif;
+  --ds-font-brand: "Oxanium", sans-serif;
+  --ds-font-code: "Fragment Mono", monospace;
+  --ds-text-xs: 12px; --ds-text-sm: 14px; --ds-text-md: 16px; --ds-text-lg: 18px;
+  --ds-text-xl: 20px; --ds-text-2xl: 24px; --ds-text-3xl: 30px; --ds-text-4xl: 36px;
+  --ds-text-5xl: 40px; --ds-text-6xl: 50px; --ds-text-7xl: 64px;
+  --ds-weight-light: 300; --ds-weight-regular: 400; --ds-weight-medium: 500;
+  --ds-weight-semibold: 600; --ds-weight-bold: 700;
+  --ds-leading-tight: 1.2; --ds-leading-normal: 1.5; --ds-leading-relaxed: 1.7;
+  --ds-tracking-tight: -0.5px; --ds-tracking-wide: 0.08em;
+  --ds-space-2xs: 4px; --ds-space-xs: 8px; --ds-space-sm: 12px; --ds-space-md: 16px;
+  --ds-space-lg: 24px; --ds-space-xl: 32px; --ds-space-2xl: 48px; --ds-space-3xl: 64px;
+  --ds-space-4xl: 80px;
+  --ds-radius-xs: 5px; --ds-radius-sm: 8px; --ds-radius-md: 18px; --ds-radius-lg: 24px;
+  --ds-radius-xl: 40px; --ds-radius-pill: 9999px;
+  --ds-border-default: 1px solid var(--ds-color-border-default);
+  --ds-border-brand: 1px solid var(--ds-color-brand-purple);
+  --ds-shadow-card: 0px 24px 40px rgba(0,0,0,0.04);
+
+  /* Diagram Silver 계열 */
+  --ds-diag-surface:       #f8f8f8;
+  --ds-diag-surface-inner: #f2f2f2;
+  --ds-diag-border:        #d0d0d0;
+  --ds-diag-border-light:  #e0e0e0;
+  --ds-diag-text:          #2a2a2a;
+  --ds-diag-text-sub:      #666666;
+  --ds-diag-arrow-dark:    #444444;
+  --ds-diag-arrow-accent:  #4a9de0;
+  /* Diagram Gradient — Normal (shimmer border) */
+  --ds-diag-shimmer-normal: linear-gradient(90deg, #d0d0d0 0%, #ffffff 30%, #c8c8c8 50%, #ffffff 70%, #d0d0d0 100%);
+  /* Diagram Gradient — Accent (glow pulse) */
+  --ds-diag-grad-accent: linear-gradient(135deg, #7dd3fc 0%, #a78bfa 30%, #e879f9 65%, #67e8f9 100%);
+  /* Diagram Gradient — Nature (초록-노랑) */
+  --ds-diag-grad-nature: linear-gradient(135deg, #6ee7b7 0%, #a3e635 35%, #fbbf24 70%, #34d399 100%);
+  /* Diagram Gradient — Warm (주황-분홍) */
+  --ds-diag-grad-warm:   linear-gradient(135deg, #fb923c 0%, #f472b6 35%, #e879f9 70%, #fda4af 100%);
+  /* Diagram OS Window content bg */
+  --ds-diag-os-content: linear-gradient(135deg, #dff0ea 0%, #eef3ff 40%, #f3eeff 70%, #fdeef8 100%);
+}
+
+/* ===== Viewer Layout ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+button { font: inherit; background: none; border: none; cursor: pointer; color: inherit; }
+body { font-family: var(--ds-font-base); color: var(--ds-color-text-primary); background: #ffffff; word-break: keep-all; overflow-wrap: break-word; padding-top: 56px; }
+.v-shell { min-height: 100vh; max-width: 1440px; margin: 0 auto; padding: 0 32px; }
+
+/* GNB */
+.v-gnb { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: 56px; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--ds-color-border-default); display: flex; align-items: center; padding: 0 32px; gap: 32px; }
+.v-gnb__logo { font-family: var(--ds-font-brand); font-weight: 700; font-size: 16px; color: var(--ds-color-text-primary); white-space: nowrap; text-decoration: none; }
+.v-gnb__menu { display: flex; gap: 4px; }
+.v-gnb__item { padding: 8px 16px; font-size: 14px; font-weight: 500; color: var(--ds-color-text-secondary); cursor: pointer; border-radius: 8px; border: none; background: none; transition: all 0.15s; }
+.v-gnb__item:hover { background: var(--ds-color-surface-light); color: var(--ds-color-text-primary); }
+.v-gnb__item--active { background: var(--ds-color-neutral-900); color: var(--ds-color-white); }
+
+/* Page containers */
+.v-page { display: none; }
+.v-page--active { display: block; }
+
+/* Sub navigation (pill tabs within a page) */
+.v-subnav { position: sticky; top: 56px; z-index: 80; background: rgba(240,240,243,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid var(--ds-color-border-default); padding: 8px 40px; display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
+.v-subnav::-webkit-scrollbar { display: none; }
+.v-subnav__item { flex-shrink: 0; padding: 6px 14px; font-size: 12px; font-weight: 500; color: var(--ds-color-text-secondary); border-radius: var(--ds-radius-pill); background: var(--ds-color-surface-white); border: 1px solid var(--ds-color-border-default); text-decoration: none; transition: all 0.12s; white-space: nowrap; }
+.v-subnav__item:hover { background: var(--ds-color-neutral-900); color: var(--ds-color-white); border-color: var(--ds-color-neutral-900); }
+
+/* Coming Soon placeholder */
+.v-placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: calc(100vh - 56px); gap: 16px; }
+.v-placeholder__label { font-family: var(--ds-font-code); font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--ds-color-text-tertiary); }
+.v-placeholder__title { font-family: var(--ds-font-brand); font-size: 32px; font-weight: 700; color: var(--ds-color-text-primary); }
+.v-placeholder__desc { font-size: 14px; color: var(--ds-color-text-secondary); }
+
+/* Main */
+.v-main { padding: 0 40px 80px; max-width: 1000px; }
+.v-section { margin-bottom: 56px; padding-top: 32px; }
+.v-section__title { font-family: var(--ds-font-brand); font-size: 22px; font-weight: var(--ds-weight-bold); margin-bottom: 6px; }
+.v-section__desc { font-size: 13px; color: var(--ds-color-text-secondary); margin-bottom: 20px; }
+.v-card { background: var(--ds-color-surface-white); border: var(--ds-border-default); border-radius: var(--ds-radius-md); overflow: hidden; }
+.v-card__body { padding: 24px; }
+.v-label { font-family: var(--ds-font-code); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ds-color-text-tertiary); margin-bottom: 12px; display: block; }
+.v-note { font-size: 11px; color: var(--ds-color-text-tertiary); padding: 10px 16px; background: var(--ds-color-surface-light); border-top: var(--ds-border-default); font-family: var(--ds-font-code); }
+.v-row { display: flex; flex-wrap: wrap; gap: 12px; }
+.v-spacer { height: 20px; }
+
+@media (max-width: 1023px) {
+  .v-main { padding: 0 16px 80px; }
+  .v-subnav { padding: 8px 16px; }
+  .v-gnb { padding: 0 16px; gap: 16px; }
+}
+
+/* ===== DS Components (inline) ===== */
+
+/* Typography helpers */
+.ds-h1 { font-family: var(--ds-font-base); font-size: var(--ds-text-4xl); font-weight: var(--ds-weight-bold); line-height: var(--ds-leading-tight); letter-spacing: var(--ds-tracking-tight); }
+.ds-h2 { font-family: var(--ds-font-base); font-size: var(--ds-text-3xl); font-weight: var(--ds-weight-bold); line-height: var(--ds-leading-tight); letter-spacing: var(--ds-tracking-tight); }
+.ds-h3 { font-family: var(--ds-font-base); font-size: var(--ds-text-2xl); font-weight: var(--ds-weight-semibold); line-height: var(--ds-leading-tight); }
+.ds-body-l { font-size: var(--ds-text-xl); line-height: var(--ds-leading-normal); }
+.ds-body-m { font-size: var(--ds-text-md); line-height: var(--ds-leading-normal); font-weight: var(--ds-weight-medium); }
+.ds-body-s { font-size: var(--ds-text-sm); line-height: var(--ds-leading-normal); font-weight: var(--ds-weight-medium); }
+.ds-caption { font-size: var(--ds-text-xs); line-height: var(--ds-leading-normal); }
+.ds-data { font-family: var(--ds-font-base); font-size: var(--ds-text-7xl); font-weight: var(--ds-weight-bold); line-height: 1; }
+.ds-text--brand { color: var(--ds-color-brand-purple); }
+.ds-text--product { font-family: var(--ds-font-brand); font-weight: var(--ds-weight-bold); }
+
+/* Hero Screenshot */
+.ds-hero-screenshot-section { padding-top: 48px; overflow: visible; }
+.ds-hero__screenshot-frame { margin-top: var(--ds-space-xl); border-radius: var(--ds-radius-xl); padding: var(--ds-space-2xl) var(--ds-space-2xl) 0; background-size: cover; background-position: center; overflow: hidden; }
+.ds-hero__screenshot { border-radius: var(--ds-radius-lg) var(--ds-radius-lg) 0 0; overflow: hidden; box-shadow: 0 -8px 40px rgba(0,0,0,0.12); background: var(--ds-color-surface-white); min-height: 180px; }
+
+/* Button */
+.ds-btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--ds-space-xs); border-radius: var(--ds-radius-pill); font-family: var(--ds-font-base); font-weight: var(--ds-weight-medium); cursor: pointer; border: none; transition: opacity 0.2s; white-space: nowrap; text-decoration: none; }
+.ds-btn--sm { padding: var(--ds-space-xs) var(--ds-space-md); font-size: var(--ds-text-sm); }
+.ds-btn--md { padding: var(--ds-space-sm) var(--ds-space-xl); font-size: var(--ds-text-md); }
+.ds-btn--lg { padding: var(--ds-space-md) var(--ds-space-2xl); font-size: var(--ds-text-lg); }
+.ds-btn--primary { background: var(--ds-gradient-brand); color: var(--ds-color-white); }
+.ds-btn--primary:hover { opacity: 0.88; }
+.ds-btn--secondary { background: transparent; color: var(--ds-color-text-primary); border: var(--ds-border-default); }
+.ds-btn--secondary:hover { background: var(--ds-color-surface-light); }
+.ds-btn--ghost { background: transparent; color: var(--ds-color-brand-primary); border: none; padding-left: 0; padding-right: 0; }
+.ds-btn--dark { background: var(--ds-color-neutral-800); color: var(--ds-color-text-inverse); border: 1px solid var(--ds-color-neutral-700); }
+
+/* Card */
+.ds-card { background: var(--ds-color-surface-white); border-radius: var(--ds-radius-md); border: var(--ds-border-default); padding: var(--ds-space-lg); box-shadow: var(--ds-shadow-card); }
+.ds-card--dark { background: var(--ds-color-neutral-850); border-color: var(--ds-color-neutral-700); color: var(--ds-color-text-inverse); }
+.ds-card--highlight { border-radius: var(--ds-radius-lg); padding: var(--ds-space-xl); }
+.ds-card--flat { background: transparent; border: none; padding: 0; box-shadow: none; }
+.ds-card__badge { display: inline-flex; width: fit-content; padding: 4px 12px; border-radius: var(--ds-radius-pill); font-size: var(--ds-text-xs); font-weight: var(--ds-weight-medium); font-family: var(--ds-font-code); text-transform: uppercase; letter-spacing: var(--ds-tracking-wide); border: 1px solid currentColor; margin-bottom: var(--ds-space-md); }
+.ds-card__badge--brand { color: var(--ds-color-brand-purple); }
+.ds-card__badge--teal { color: #0e9f8e; }
+.ds-card__badge--red { color: var(--ds-color-error); }
+.ds-card__title { font-size: var(--ds-text-2xl); font-weight: var(--ds-weight-bold); line-height: var(--ds-leading-tight); margin-bottom: var(--ds-space-sm); }
+.ds-card__title--lg { font-size: var(--ds-text-4xl); }
+.ds-card__title--sm { font-size: var(--ds-text-lg); font-weight: var(--ds-weight-semibold); }
+.ds-card__subtitle { font-size: var(--ds-text-sm); color: var(--ds-color-text-tertiary); margin-bottom: var(--ds-space-md); }
+.ds-card__description { font-size: var(--ds-text-sm); color: var(--ds-color-text-secondary); line-height: var(--ds-leading-relaxed); }
+.ds-card__icon { font-size: 24px; margin-bottom: var(--ds-space-sm); display: block; }
+.ds-card__button { margin-top: auto; padding-top: var(--ds-space-lg); }
+
+/* Banner */
+.ds-banner { padding: var(--ds-space-md) var(--ds-space-lg); border: none; border-top: 1px solid var(--ds-color-border-default); border-bottom: 1px solid var(--ds-color-border-default); background: var(--ds-banner-bg, var(--ds-color-surface-light)); font-size: var(--ds-text-sm); line-height: var(--ds-leading-relaxed); }
+.ds-banner__label { font-family: var(--ds-font-code); font-size: var(--ds-text-xs); text-transform: uppercase; letter-spacing: var(--ds-tracking-wide); color: var(--ds-color-text-tertiary); margin-bottom: var(--ds-space-xs); display: block; }
+.ds-banner--info { --ds-banner-bg: rgba(21,94,160,0.06); }
+.ds-banner--success { --ds-banner-bg: rgba(14,130,76,0.06); }
+.ds-banner--error { --ds-banner-bg: rgba(255,48,48,0.06); }
+.ds-banner--brand { --ds-banner-bg: rgba(166,23,255,0.06); }
+.ds-banner--full { width: 100%; text-align: center; padding: var(--ds-space-3xl) var(--ds-space-2xl); border-radius: var(--ds-radius-xl); background-size: cover; background-position: center; position: relative; overflow: hidden; isolation: isolate; color: var(--ds-color-text-primary); font-size: var(--ds-text-lg); font-weight: var(--ds-weight-medium); line-height: var(--ds-leading-relaxed); border: none; word-break: keep-all; }
+.ds-banner--full::before { content: ''; position: absolute; inset: 0; background: rgba(255,255,255,0.72); z-index: 0; }
+
+/* Badge */
+.ds-badge { display: inline-flex; align-items: center; gap: var(--ds-space-2xs); padding: var(--ds-space-2xs) var(--ds-space-xs); border-radius: var(--ds-radius-pill); font-size: var(--ds-text-xs); font-weight: var(--ds-weight-medium); line-height: 1; white-space: nowrap; }
+.ds-badge--primary { background: var(--ds-color-brand-primary); color: var(--ds-color-white); }
+.ds-badge--purple { background: var(--ds-color-brand-purple-lt); color: var(--ds-color-brand-purple); }
+.ds-badge--neutral { background: #e6e7e9; color: var(--ds-color-text-secondary); }
+.ds-badge--success { background: rgba(14,130,76,0.12); color: var(--ds-color-success); }
+.ds-badge--error { background: rgba(255,48,48,0.12); color: var(--ds-color-error); }
+.ds-badge--dark { background: var(--ds-color-neutral-700); color: var(--ds-color-text-inverse); }
+
+/* Bullet */
+.ds-bullet { list-style: none; display: flex; flex-direction: column; gap: var(--ds-space-sm); }
+.ds-bullet__item { display: flex; align-items: flex-start; gap: var(--ds-space-xs); font-size: var(--ds-text-md); line-height: var(--ds-leading-normal); }
+.ds-bullet__icon { width: 20px; height: 20px; flex-shrink: 0; margin-top: 2px; }
+.ds-bullet--dot .ds-bullet__icon::before { content: "•"; color: var(--ds-color-brand-purple); font-size: var(--ds-text-xl); line-height: 1; }
+.ds-bullet--check .ds-bullet__icon::before { content: "✓"; color: var(--ds-color-success); font-weight: var(--ds-weight-bold); }
+.ds-bullet--number { counter-reset: bullet; }
+.ds-bullet--number .ds-bullet__icon::before { counter-increment: bullet; content: counter(bullet); font-size: var(--ds-text-sm); font-weight: var(--ds-weight-bold); color: var(--ds-color-brand-primary); }
+
+/* Section Header */
+.ds-section-header { margin-bottom: var(--ds-space-2xl); text-align: center; }
+.ds-section-header__eyebrow { font-family: var(--ds-font-code); font-size: var(--ds-text-xs); font-weight: var(--ds-weight-medium); text-transform: uppercase; letter-spacing: var(--ds-tracking-wide); color: var(--ds-color-brand-purple); margin-bottom: var(--ds-space-sm); display: block; }
+.ds-section-header__title { font-family: var(--ds-font-base); font-size: var(--ds-text-3xl); font-weight: var(--ds-weight-bold); color: var(--ds-color-text-primary); line-height: var(--ds-leading-tight); letter-spacing: var(--ds-tracking-tight); margin-bottom: var(--ds-space-md); }
+.ds-section-header__description { font-size: var(--ds-text-lg); color: var(--ds-color-text-secondary); line-height: var(--ds-leading-relaxed); max-width: 640px; margin: 0 auto; }
+.ds-section-header--underline { padding-bottom: var(--ds-space-lg); border-bottom: 1px solid var(--ds-color-border-default); margin-bottom: var(--ds-space-xl); }
+.ds-section-header--left { text-align: left; }
+.ds-section-header--left .ds-section-header__description { margin: 0; }
+
+/* Section Title Icon */
+.ds-section-title-icon { display: flex; align-items: center; gap: 12px; margin-bottom: var(--ds-space-xl); }
+.ds-section-title-icon__icon { font-size: 28px; line-height: 1; }
+.ds-section-title-icon__text { font-size: var(--ds-text-2xl); font-weight: var(--ds-weight-semibold); }
+
+/* KPI Band */
+.ds-kpi-band { border-radius: var(--ds-radius-xl); padding: 48px 40px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; background: linear-gradient(135deg, #1a6fe8, #0ea5a0); position: relative; overflow: hidden; justify-items: center; }
+.ds-kpi-band__item { display: flex; flex-direction: column; gap: 12px; text-align: center; }
+.ds-kpi-band__number { font-family: var(--ds-font-base); font-size: var(--ds-text-6xl); font-weight: var(--ds-weight-bold); line-height: 1; color: var(--ds-color-white); }
+.ds-kpi-band__label { font-size: var(--ds-text-sm); color: rgba(255,255,255,0.85); line-height: var(--ds-leading-normal); }
+
+/* Card Grid */
+.ds-card-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+.ds-card-grid .ds-card { display: flex; flex-direction: column; }
+.ds-card-grid--2col { grid-template-columns: repeat(2, 1fr); }
+.ds-card-grid--3col { grid-template-columns: repeat(3, 1fr); }
+.ds-card-grid--4col { grid-template-columns: repeat(4, 1fr); }
+
+/* Feature Grid */
+.ds-feature-grid { background: var(--ds-color-surface-white); border: 1px solid var(--ds-color-border-default); border-radius: var(--ds-radius-xl); padding: 40px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px 48px; }
+.ds-feature-item { display: flex; flex-direction: column; gap: 8px; }
+.ds-feature-item__icon { font-size: 28px; margin-bottom: 4px; }
+.ds-feature-item__title { font-size: var(--ds-text-lg); font-weight: var(--ds-weight-semibold); }
+.ds-feature-item__description { font-size: var(--ds-text-sm); color: var(--ds-color-text-secondary); line-height: var(--ds-leading-relaxed); }
+
+/* CTA Band */
+.ds-cta-band { width: 100%; position: relative; overflow: hidden; padding: 64px 24px; text-align: center; background: linear-gradient(135deg, #b2f0e8 0%, #7ecfea 40%, #4a9fd4 100%); }
+.ds-cta-band::before { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.15); z-index: 0; }
+.ds-cta-band > * { position: relative; z-index: 1; }
+.ds-cta-band__inner { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: var(--ds-space-lg); }
+.ds-cta-band__title { font-family: var(--ds-font-base); font-size: var(--ds-text-4xl); font-weight: var(--ds-weight-bold); color: #fff; line-height: var(--ds-leading-tight); letter-spacing: -1px; }
+.ds-cta-band__description { font-size: var(--ds-text-lg); color: rgba(255,255,255,0.85); line-height: var(--ds-leading-relaxed); }
+.ds-cta-band__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; }
+.ds-cta-band__actions .ds-btn { background: rgba(255,255,255,0.92); color: var(--ds-color-text-primary); border: 1px solid rgba(255,255,255,0.6); backdrop-filter: blur(8px); }
+.ds-cta-band__footnote { font-size: var(--ds-text-xs); color: rgba(255,255,255,0.6); font-family: var(--ds-font-code); letter-spacing: var(--ds-tracking-wide); }
+@media (min-width: 768px)  { .ds-cta-band { padding: 100px var(--ds-container-padding-tablet, 32px); } }
+@media (min-width: 1440px) { .ds-cta-band { padding: 120px var(--ds-container-padding-desktop, 120px); max-width: 1440px; margin: 0 auto; } }
+@media (max-width: 767px)  { .ds-cta-band__title { font-size: var(--ds-text-5xl); letter-spacing: -1px; } .ds-cta-band__actions { flex-direction: column; align-items: center; } .ds-cta-band__actions .ds-btn { width: 100%; max-width: 320px; } }
+
+/* Accordion Card */
+.ds-ac-list { display: flex; flex-direction: column; gap: 2px; }
+.ds-ac-card { border: var(--ds-border-default); border-radius: var(--ds-radius-sm); background: var(--ds-color-surface-white); overflow: hidden; }
+.ds-ac-card:hover { background: var(--ds-color-neutral-025); }
+.ds-ac-card__header { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: var(--ds-space-md); padding: var(--ds-space-lg); cursor: pointer; user-select: none; }
+.ds-ac-card__title-wrap { display: flex; flex-direction: column; gap: 4px; }
+.ds-ac-card__industry { font-family: var(--ds-font-code); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ds-color-text-tertiary); display: flex; align-items: center; gap: var(--ds-space-2xs); }
+.ds-ac-card__industry-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.ds-ac-card__title { font-size: var(--ds-text-lg); font-weight: var(--ds-weight-medium); line-height: var(--ds-leading-tight); }
+.ds-ac-card__meta { display: flex; align-items: center; gap: var(--ds-space-xs); flex-wrap: wrap; }
+.ds-ac-card__toggle { width: 28px; height: 28px; border-radius: 6px; border: 0.5px solid var(--ds-color-border-default); background: var(--ds-color-surface-light); display: flex; align-items: center; justify-content: center; flex-shrink: 0; cursor: pointer; }
+.ds-ac-card__toggle-icon { width: 12px; height: 12px; position: relative; }
+.ds-ac-card__toggle-icon::before, .ds-ac-card__toggle-icon::after { content: ''; position: absolute; background: var(--ds-color-text-muted); border-radius: 1px; }
+.ds-ac-card__toggle-icon::before { width: 10px; height: 1.5px; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+.ds-ac-card__toggle-icon::after { width: 1.5px; height: 10px; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+.ds-ac-card.ds-ac--open .ds-ac-card__toggle-icon::after { opacity: 0; }
+.ds-ac-card__body { display: none; padding: var(--ds-space-lg); border-top: var(--ds-border-default); background: var(--ds-color-surface-light); }
+.ds-ac-card.ds-ac--open .ds-ac-card__body { display: block; }
+.ds-ac-metrics { display: flex; gap: var(--ds-space-xs); flex-wrap: wrap; margin-bottom: var(--ds-space-lg); }
+.ds-ac-metric { display: flex; flex-direction: column; padding: var(--ds-space-sm) var(--ds-space-md); border: var(--ds-border-default); border-radius: var(--ds-radius-sm); background: var(--ds-color-surface-white); min-width: 100px; flex: 1; }
+.ds-ac-metric__val { font-family: var(--ds-font-base); font-size: var(--ds-text-xl); font-weight: var(--ds-weight-bold); line-height: 1; }
+.ds-ac-metric__val--success { color: var(--ds-color-success); }
+.ds-ac-metric__label { font-family: var(--ds-font-code); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ds-color-text-tertiary); margin-top: var(--ds-space-2xs); }
+
+/* Table */
+.ds-table-wrap { overflow-x: auto; border-radius: var(--ds-radius-lg); border: 1px solid var(--ds-color-border-default); }
+.ds-table { width: 100%; border-collapse: collapse; font-size: var(--ds-text-sm); }
+.ds-table thead th { font-family: var(--ds-font-code); font-size: 11px; text-transform: uppercase; letter-spacing: var(--ds-tracking-wide); color: var(--ds-color-text-primary); font-weight: var(--ds-weight-semibold); padding: 12px 16px; border-bottom: 2px solid var(--ds-color-border-default); text-align: left; background: var(--ds-color-surface-light); }
+.ds-table tbody td { padding: 14px 16px; border-bottom: 1px solid var(--ds-color-border-default); color: var(--ds-color-text-primary); }
+.ds-table tbody tr:last-child td { border-bottom: none; }
+.ds-table tbody td:first-child { font-weight: var(--ds-weight-semibold); color: var(--ds-color-text-primary); }
+
+/* Product Split */
+.ds-product-split { display: grid; grid-template-columns: 4fr 6fr; gap: 48px; align-items: stretch; }
+.ds-product-split__visual { border-radius: var(--ds-radius-xl); overflow: hidden; background-size: cover; background-position: center; padding: var(--ds-space-lg) var(--ds-space-lg) 0; display: flex; flex-direction: column; justify-content: flex-end; gap: var(--ds-space-sm); }
+.ds-product-split__visual-logo { height: 24px; object-fit: contain; align-self: center; flex-shrink: 0; }
+.ds-product-split__visual-screenshot { border-radius: var(--ds-radius-md) var(--ds-radius-md) 0 0; overflow: hidden; box-shadow: 0 -4px 24px rgba(0,0,0,0.08); flex: 1; min-height: 0; margin-bottom: -1px; }
+.ds-product-split__visual-screenshot img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+.ds-product-split__content { display: flex; flex-direction: column; gap: 16px; }
+.ds-product-split__title { font-size: var(--ds-text-2xl); font-weight: var(--ds-weight-bold); line-height: var(--ds-leading-tight); }
+.ds-product-split__lead { font-size: var(--ds-text-md); color: var(--ds-color-text-primary); line-height: var(--ds-leading-relaxed); font-weight: var(--ds-weight-medium); }
+.ds-product-split__body { font-size: var(--ds-text-sm); color: var(--ds-color-text-secondary); line-height: var(--ds-leading-relaxed); }
+.ds-product-split__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: var(--ds-space-sm); }
+
+/* Partner Grid — Marquee */
+.ds-partner-grid { width: 100vw; margin-left: calc(-50vw + 50%); overflow: hidden; padding: var(--ds-space-xl) 0; }
+.ds-partner-grid__track { display: flex; gap: var(--ds-space-3xl); align-items: center; width: max-content; animation: ds-marquee 30s linear infinite; }
+.ds-partner-grid__track:hover { animation-play-state: paused; }
+.ds-partner-item { display: flex; flex-direction: column; align-items: center; gap: var(--ds-space-xs); flex-shrink: 0; }
+.ds-partner-item__logo { width: 120px; height: 100px; object-fit: contain; }
+.ds-partner-item__name { font-size: var(--ds-text-xs); color: var(--ds-color-text-tertiary); text-align: center; white-space: nowrap; }
+@keyframes ds-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+/* Cert Grid — Marquee */
+.ds-cert-grid { width: 100vw; margin-left: calc(-50vw + 50%); overflow: hidden; padding: var(--ds-space-xl) 0; }
+.ds-cert-grid__track { display: flex; gap: var(--ds-space-lg); align-items: stretch; width: max-content; animation: ds-marquee 40s linear infinite; }
+.ds-cert-grid__track:hover { animation-play-state: paused; }
+
+/* Cert Card */
+.ds-cert-card {
+  background: var(--ds-color-surface-white); border: 1px solid var(--ds-color-border-default);
+  border-radius: var(--ds-radius-lg); padding: var(--ds-space-lg) var(--ds-space-xl);
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  gap: var(--ds-space-xs); flex-shrink: 0; width: 200px;
+}
+.ds-cert-card__group {
+  font-family: var(--ds-font-code); font-size: 10px; font-weight: var(--ds-weight-medium);
+  text-transform: uppercase; letter-spacing: var(--ds-tracking-wide);
+  color: var(--ds-color-brand-purple); margin-bottom: var(--ds-space-2xs);
+}
+.ds-cert-card__wreath { position: relative; width: 160px; height: 120px; display: flex; align-items: center; justify-content: center; }
+.ds-cert-card__wreath-left,
+.ds-cert-card__wreath-right { position: absolute; top: 0; height: 100%; width: 34%; object-fit: contain; }
+.ds-cert-card__wreath-left { left: -6px; object-position: right; }
+.ds-cert-card__wreath-right { right: -6px; object-position: left; }
+.ds-cert-card__wreath-text {
+  position: relative; z-index: 1; font-size: var(--ds-text-sm); font-weight: var(--ds-weight-bold);
+  color: var(--ds-color-text-primary); text-align: center; line-height: var(--ds-leading-tight); max-width: 90px;
+}
+.ds-cert-card__org { font-size: var(--ds-text-xs); color: var(--ds-color-text-secondary); }
+.ds-cert-card__year { font-size: var(--ds-text-xs); color: var(--ds-color-text-tertiary); font-family: var(--ds-font-code); }
+.ds-cert-card__logo { width: 60px; height: 60px; object-fit: contain; margin-top: auto; margin-bottom: -10px; }
+@media (max-width: 767px) {
+  .ds-cert-card { width: 170px; padding: var(--ds-space-md) var(--ds-space-md); }
+  .ds-cert-card__wreath { width: 130px; height: 96px; }
+  .ds-cert-card__wreath-text { font-size: var(--ds-text-xs); max-width: 72px; }
+  .ds-cert-card__logo { width: 72px; height: 72px; }
+  .ds-cert-grid__track { gap: var(--ds-space-md); animation-duration: 25s; }
+}
+
+/* Case Study Card */
+.ds-card--case-study { display: grid; grid-template-columns: 200px 1fr; border: 1px solid var(--ds-color-border-default); border-radius: var(--ds-radius-lg); overflow: hidden; background: var(--ds-color-surface-white); }
+.ds-card--case-study .ds-card__left { background: transparent; border-right: 1px solid var(--ds-color-border-default); padding: var(--ds-space-lg); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--ds-space-sm); text-align: center; }
+.ds-card--case-study .ds-card__left-img { width: 100%; max-height: 120px; object-fit: contain; border-radius: var(--ds-radius-sm); }
+.ds-card--case-study .ds-card__left-label { font-size: var(--ds-text-xs); color: var(--ds-color-text-secondary); }
+.ds-card--case-study .ds-card__left-name { font-size: var(--ds-text-md); font-weight: var(--ds-weight-bold); color: var(--ds-color-text-primary); }
+.ds-card--case-study .ds-card__right { padding: var(--ds-space-lg); display: flex; flex-direction: column; gap: var(--ds-space-xs); }
+.ds-card--case-study--compact { grid-template-columns: 100px 1fr; }
+.ds-card--case-study--compact .ds-card__left { padding: var(--ds-space-sm); }
+.ds-card--case-study--compact .ds-card__left-img { max-height: 60px; max-width: 72px; }
+.ds-card--case-study--compact .ds-card__left-label { font-size: 10px; }
+.ds-card--case-study--compact .ds-card__left-name { font-size: var(--ds-text-xs); }
+.ds-card--case-study--compact .ds-card__right { padding: var(--ds-space-md); }
+.ds-card--case-study .ds-card__right .ds-bullet { gap: var(--ds-space-2xs); }
+.ds-card--case-study .ds-card__right .ds-bullet__item { font-size: var(--ds-text-sm); }
+
+/* Step Tabs */
+.ds-step-tabs__nav { display: flex; justify-content: center; gap: var(--ds-space-sm); flex-wrap: wrap; margin-bottom: var(--ds-space-3xl); }
+.ds-step-tabs__tab { display: inline-flex; align-items: center; gap: var(--ds-space-xs); padding: var(--ds-space-xs) var(--ds-space-lg); border-radius: var(--ds-radius-pill); border: var(--ds-border-default); background-color: var(--ds-color-surface-white); font-family: var(--ds-font-base); font-size: var(--ds-text-sm); font-weight: var(--ds-weight-medium); color: var(--ds-color-text-secondary); cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+.ds-step-tabs__tab-number { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background-color: var(--ds-color-neutral-100); border: 1px solid var(--ds-color-border-default); font-size: var(--ds-text-xs); font-weight: var(--ds-weight-bold); color: var(--ds-color-text-secondary); flex-shrink: 0; transition: all 0.2s; }
+.ds-step-tabs__tab:hover { background-color: var(--ds-color-neutral-900); border-color: var(--ds-color-neutral-900); color: var(--ds-color-white); }
+.ds-step-tabs__tab:hover .ds-step-tabs__tab-number { background-color: var(--ds-color-white); border-color: var(--ds-color-white); color: var(--ds-color-neutral-900); }
+.ds-step-tabs__tab--active { background-color: var(--ds-color-neutral-900); border-color: var(--ds-color-neutral-900); color: var(--ds-color-white); font-weight: var(--ds-weight-semibold); }
+.ds-step-tabs__tab--active .ds-step-tabs__tab-number { background-color: var(--ds-color-white); border-color: var(--ds-color-white); color: var(--ds-color-neutral-900); }
+.ds-step-tabs__panel { display: none; }
+.ds-step-tabs__panel--active { display: grid; grid-template-columns: 1fr; gap: var(--ds-space-2xl); align-items: center; }
+@media (min-width: 1024px) { .ds-step-tabs__panel--active { grid-template-columns: 5fr 7fr; gap: var(--ds-space-3xl); } }
+.ds-step-tabs__content { display: flex; flex-direction: column; gap: var(--ds-space-lg); }
+.ds-step-tabs__title { font-family: var(--ds-font-base); font-size: var(--ds-text-3xl); font-weight: var(--ds-weight-bold); color: var(--ds-color-text-primary); line-height: var(--ds-leading-tight); }
+.ds-step-tabs__description { font-size: var(--ds-text-md); color: var(--ds-color-text-secondary); line-height: var(--ds-leading-relaxed); }
+.ds-step-tabs__actions { display: flex; flex-wrap: wrap; gap: var(--ds-space-sm); margin-top: var(--ds-space-xs); }
+.ds-step-tabs__screenshot { border-radius: var(--ds-radius-lg); overflow: hidden; border: var(--ds-border-default); box-shadow: var(--ds-shadow-card); background-color: var(--ds-color-surface-light); }
+.ds-step-tabs__screenshot img { width: 100%; display: block; }
+/* Step Tabs screenshot placeholder */
+.v-screenshot-placeholder { width: 100%; aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--ds-color-neutral-025) 0%, var(--ds-color-neutral-150) 100%); border-radius: var(--ds-radius-lg); border: var(--ds-border-default); }
+.v-screenshot-placeholder__inner { display: flex; flex-direction: column; align-items: center; gap: var(--ds-space-sm); }
+.v-screenshot-placeholder__icon { width: 48px; height: 48px; border-radius: var(--ds-radius-md); background: linear-gradient(130deg, #6C54A0, #b44fcc 50%, #ff266a); opacity: 0.3; }
+.v-screenshot-placeholder__text { font-family: var(--ds-font-code); font-size: 11px; color: var(--ds-color-text-tertiary); text-transform: uppercase; letter-spacing: 0.08em; }
+
+/* Color swatches */
+.v-swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
+.v-swatch { border: var(--ds-border-default); border-radius: var(--ds-radius-sm); overflow: hidden; cursor: pointer; transition: box-shadow 0.15s; }
+.v-swatch:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+.v-swatch__color { height: 48px; }
+.v-swatch__info { padding: 8px 10px; }
+.v-swatch__name { font-size: 11px; font-weight: var(--ds-weight-semibold); display: block; margin-bottom: 2px; }
+.v-swatch__var { font-family: var(--ds-font-code); font-size: 9px; color: var(--ds-color-text-tertiary); display: block; }
+
+/* Type scale */
+.v-type-row { display: flex; align-items: baseline; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--ds-color-surface-light); }
+.v-type-row:last-child { border-bottom: none; }
+.v-type-label { font-family: var(--ds-font-code); font-size: 10px; color: var(--ds-color-text-tertiary); width: 80px; flex-shrink: 0; }
+
+/* Spacing */
+.v-space-bar { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+.v-space-bar__fill { height: 20px; background: var(--ds-color-brand-purple); opacity: 0.15; border-radius: 4px; }
+.v-space-bar__label { font-family: var(--ds-font-code); font-size: 10px; color: var(--ds-color-text-tertiary); width: 70px; flex-shrink: 0; }
+.v-space-bar__val { font-family: var(--ds-font-code); font-size: 10px; color: var(--ds-color-text-secondary); }
+
+/* DS: Inline Code */
+code, .ds-code-inline {
+  font-family: var(--ds-font-code);
+  font-size: 0.875em;
+  font-weight: var(--ds-weight-regular);
+  background-color: var(--ds-color-neutral-100);
+  border-radius: 3px;
+  padding: 0 4px;
+  color: inherit;
+}
+
+/* DS: Code Block — 다크 테마 */
+.ds-code-block {
+  background-color: var(--ds-color-neutral-900);
+  border: none;
+  border-radius: var(--ds-radius-sm);
+  padding: var(--ds-space-md);
+  margin-top: var(--ds-space-lg);
+  font-family: var(--ds-font-code);
+  font-size: var(--ds-text-sm);
+  line-height: 1.9;
+  color: var(--ds-color-neutral-300);
+  overflow-x: auto;
+  margin-bottom: var(--ds-space-md);
+}
+.ds-code--remove { color: var(--ds-color-error-light); }
+.ds-code--add    { color: var(--ds-color-success-light); }
+.ds-code--warn   { color: var(--ds-color-warn-light); }
+.ds-code--muted  { color: var(--ds-color-neutral-500); }
+
+/* ===== [W] Diagram ===== */
+.ds-diagram__window {
+  background: var(--ds-diag-surface);
+  border-radius: var(--ds-radius-md);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.10);
+  overflow: hidden;
+  font-family: var(--ds-font-base);
+}
+.ds-diagram__titlebar {
+  background: linear-gradient(180deg, #e8e8e8 0%, #d8d8d8 100%);
+  height: 36px;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  gap: 8px;
+  border-bottom: 1px solid #c0c0c0;
+}
+.ds-diagram__titlebar-dot { width: 12px; height: 12px; border-radius: 50%; }
+.ds-diagram__titlebar-dot--close { background: #ff5f57; }
+.ds-diagram__titlebar-dot--min   { background: #ffbd2e; }
+.ds-diagram__titlebar-dot--max   { background: #28ca41; }
+.ds-diagram__content {
+  background: var(--ds-diag-os-content);
+  padding: var(--ds-space-xl);
+}
+.ds-diagram__card {
+  background: linear-gradient(145deg, #ffffff 0%, #f0f0f0 40%, #e8e8e8 70%, #f5f5f5 100%);
+  border: 1px solid var(--ds-diag-border);
+  border-radius: var(--ds-radius-md);
+  overflow: hidden;
+}
+.ds-diagram__card-title {
+  text-align: center;
+  padding: var(--ds-space-md) var(--ds-space-lg);
+  font-size: var(--ds-text-sm);
+  font-weight: 500;
+  color: var(--ds-diag-text);
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid var(--ds-diag-border-light);
+  font-family: var(--ds-font-code);
+  background: linear-gradient(180deg, #ffffff 0%, #f8f8f8 100%);
+}
+.ds-diagram__headers {
+  display: grid;
+  border-bottom: 1px dashed var(--ds-diag-border);
+}
+.ds-diagram__header {
+  padding: 11px 12px;
+  font-size: var(--ds-text-sm);
+  color: var(--ds-diag-text-sub);
+  text-align: center;
+  font-weight: 400;
+  border-right: 1px dashed var(--ds-diag-border);
+  background: #fafafa;
+}
+.ds-diagram__header:last-child { border-right: none; }
+.ds-diagram__body {
+  display: grid;
+  position: relative;
+}
+.ds-diagram__col {
+  padding: var(--ds-space-lg) var(--ds-space-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.ds-diagram__col:not(:last-child) { border-right: 1px dashed var(--ds-diag-border); }
+/* Transform */
+.ds-diagram__transform {
+  border: 1.5px dashed #c0c0c0;
+  border-radius: var(--ds-radius-md);
+  padding: var(--ds-space-md) var(--ds-space-sm);
+  background: var(--ds-diag-surface);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.ds-diagram__item-box {
+  background: var(--ds-diag-surface-inner);
+  border: 1px solid var(--ds-diag-border-light);
+  border-radius: var(--ds-radius-sm);
+  padding: 10px 14px;
+  font-size: var(--ds-text-sm);
+  color: var(--ds-diag-text);
+  text-align: center;
+  width: 100%;
+}
+.ds-diagram__arrow-down {
+  width: 1.5px; height: 14px;
+  background: var(--ds-diag-arrow-dark);
+  margin: 6px auto;
+  position: relative;
+}
+.ds-diagram__arrow-down::after {
+  content: '';
+  position: absolute;
+  left: 50%; bottom: -6px;
+  transform: translateX(-50%);
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid var(--ds-diag-arrow-dark);
+}
+.ds-diagram__dashed-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  margin: 5px 0;
+}
+.ds-diagram__dashed-seg {
+  width: 1.5px; height: 4px;
+  background: #bbb;
+  border-radius: 1px;
+}
+/* Activation */
+.ds-diagram__act-card {
+  background: var(--ds-diag-surface);
+  border: 1px solid var(--ds-diag-border);
+  border-radius: var(--ds-radius-md);
+  padding: 15px 10px 13px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ds-space-xs);
+}
+.ds-diagram__act-card + .ds-diagram__act-card { margin-top: 10px; }
+.ds-diagram__act-icon {
+  width: 52px; height: 52px;
+  background: var(--ds-diag-surface-inner);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* Exchange */
+.ds-diagram__exchange-wrap {
+  padding: 2px;
+  border-radius: var(--ds-radius-md);
+  background: var(--ds-diag-grad-accent);
+  animation: ds-diag-glow 3s ease-in-out infinite;
+  width: 100%;
+}
+@keyframes ds-diag-glow {
+  0%, 100% { box-shadow: 0 0 14px rgba(125,211,252,0.5), 0 0 28px rgba(167,139,250,0.35); }
+  50%      { box-shadow: 0 0 22px rgba(125,211,252,0.75), 0 0 42px rgba(167,139,250,0.55); }
+}
+.ds-diagram__exchange-wrap--nature {
+  padding: 2px;
+  border-radius: var(--ds-radius-md);
+  background: var(--ds-diag-grad-nature);
+  animation: ds-diag-glow-nature 3s ease-in-out infinite;
+  width: 100%;
+}
+@keyframes ds-diag-glow-nature {
+  0%, 100% { box-shadow: 0 0 14px rgba(110,231,183,0.5), 0 0 28px rgba(163,230,53,0.35); }
+  50%      { box-shadow: 0 0 22px rgba(110,231,183,0.75), 0 0 42px rgba(163,230,53,0.55); }
+}
+.ds-diagram__exchange-wrap--warm {
+  padding: 2px;
+  border-radius: var(--ds-radius-md);
+  background: var(--ds-diag-grad-warm);
+  animation: ds-diag-glow-warm 3s ease-in-out infinite;
+  width: 100%;
+}
+@keyframes ds-diag-glow-warm {
+  0%, 100% { box-shadow: 0 0 14px rgba(251,146,60,0.5), 0 0 28px rgba(244,114,182,0.35); }
+  50%      { box-shadow: 0 0 22px rgba(251,146,60,0.75), 0 0 42px rgba(244,114,182,0.55); }
+}
+.ds-diagram__exchange-inner {
+  background: linear-gradient(145deg, rgba(237,246,255,0.95), rgba(243,236,255,0.92), rgba(255,238,255,0.9));
+  border-radius: calc(var(--ds-radius-md) - 2px);
+  padding: 14px 11px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ds-space-xs);
+}
+.ds-diagram__safe-badge {
+  background: #ffffff;
+  border: 1.5px solid #5badee;
+  border-radius: var(--ds-radius-pill);
+  padding: 3px 11px;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #2b8dd6;
+  letter-spacing: 0.12em;
+}
+/* Default */
+.ds-diagram__default-wrap {
+  padding: 2px;
+  border-radius: var(--ds-radius-md);
+  background: linear-gradient(90deg, #d0d0d0 0%, #ffffff 30%, #c8c8c8 50%, #ffffff 70%, #d0d0d0 100%);
+  background-size: 300% 100%;
+  animation: ds-diag-shimmer 4s linear infinite;
+  width: 100%;
+}
+@keyframes ds-diag-shimmer {
+  0%   { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+.ds-diagram__default-inner {
+  background: linear-gradient(145deg, #ffffff 0%, #f4f4f4 100%);
+  border-radius: calc(var(--ds-radius-md) - 2px);
+  padding: 14px 12px;
+  text-align: center;
+  font-size: var(--ds-text-sm);
+  color: var(--ds-diag-text);
+}
+/* Arrow SVG Overlay */
+.ds-diagram__arrow-layer {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  overflow: visible;
+}
+</style>
+</head>
+<body>
+
+<div class="v-shell">
+
+<!-- GNB -->
+<nav class="v-gnb">
+  <span class="v-gnb__logo">CUBIG 소개 DS</span>
+  <div class="v-gnb__menu">
+    <button class="v-gnb__item" data-page="style-converter">Style Converter</button>
+    <button class="v-gnb__item" data-page="diagram-builder">Diagram Builder</button>
+    <button class="v-gnb__item v-gnb__item--active" data-page="foundation">Foundation</button>
+    <button class="v-gnb__item" data-page="layout">Layout</button>
+  </div>
+</nav>
+
+<!-- Main Content -->
+<main class="v-main">
+
+<!-- ==================== PAGE: FOUNDATION ==================== -->
+<div class="v-page v-page--active" id="page-foundation">
+
+<!-- Foundation Sub Nav -->
+<nav class="v-subnav">
+  <a class="v-subnav__item" href="#colors">Color System</a>
+  <a class="v-subnav__item" href="#typography">Typography</a>
+  <a class="v-subnav__item" href="#spacing">Spacing &amp; Shape</a>
+  <a class="v-subnav__item" href="#iconography">Iconography</a>
+  <a class="v-subnav__item" href="#responsive">Responsive System</a>
+</nav>
+
+<!-- Colors -->
+<section class="v-section" id="colors">
+  <h2 class="v-section__title">Color System</h2>
+  <p class="v-section__desc">모든 색상은 :root CSS 변수로 정의. 하드코딩 금지.</p>
+
+  <div class="v-card"><div class="v-card__body">
+    <span class="v-label">Brand</span>
+    <div class="v-swatches" style="margin-bottom:20px">
+      <div class="v-swatch"><div class="v-swatch__color" style="background:#3061f2"></div><div class="v-swatch__info"><span class="v-swatch__name">Brand Primary</span><span class="v-swatch__var">--ds-color-brand-primary</span></div></div>
+      <div class="v-swatch"><div class="v-swatch__color" style="background:#a617ff"></div><div class="v-swatch__info"><span class="v-swatch__name">Brand Purple</span><span class="v-swatch__var">--ds-color-brand-purple</span></div></div>
+      <div class="v-swatch"><div class="v-swatch__color" style="background:#c6c5fa"></div><div class="v-swatch__info"><span class="v-swatch__name">Purple Light</span><span class="v-swatch__var">--ds-color-brand-purple-lt</span></div></div>
+      <div class="v-swatch"><div class="v-swatch__color" style="background:linear-gradient(130deg, #6C54A0, #b44fcc 50%, #ff266a)"></div><div class="v-swatch__info"><span class="v-swatch__name">Gradient Brand</span><span class="v-swatch__var">--ds-gradient-brand</span></div></div>
+    </div>
+
+    <span class="v-label">Neutral</span>
+    <div class="v-swatches" style="margin-bottom:20px">
+      <div class="v-swatch"><div class="v-swatch__color" style="background:#0f0f0f"></div><div class="v-swatch__info"><span class="v-swatch__name">900</span><span class="v-swatch__var">--ds-color-neutral-900</span></div></div>
+      <div class="v-swatch"><div class="v-swatch__color" style="background:#141414"></div><div class="v-swatch__info"><span class="v-swatch__name">850</span><span class="v-swatch__var">--ds-color-neutral-850</span></div></div>
+      <div class="v-swatch"><div class="v-swatch__color" style="background:#171719"></div><div class="v-swatch__info"><span class="v-swatch__name">800</span><span class="v-swatch__var">--ds-color-neutral-800</span></div></div>
+      <div class="v-swatch"><div class="v-swatch__color" style="background:#303135"></div><div class="v-swatch__info"><span class="v-swatch__name">700</span><span class="v-swatch__var">--ds-color-neutral-700</span></div></div>
+      <div class="v-swatch"><div class="v-swatch__color" style="background:#636363"></div><div class="v-swatch__info"><span class="v-swatch__name">500</span><span class="v-swatch__var">--ds-color-neutral-500</span></div></div>
+      <div class="v-swatch"><div class="v-swatch__color" style="background:#9c9c9c"></div><div class="v-swatch__info"><span class="v-swatch__name">400</span><span class="v-swatch__var">--ds-color-neutral-400</span></div></div>
+      <div class="v-swatch"><div class="v-swatch__color" style="background:#e6e7e9"></div><div class="v-swatch__info"><span class="v-swatch__name">150</span><span class="v-swatch__var">--ds-color-neutral-150</span></div></div>
+      <div class="v-swatch"><div class="v-swatch__color" style="background:#f2f2f2"></div><div class="v-swatch__info"><span class="v-swatch__name">050</span><span class="v-swatch__var">--ds-color-neutral-050</span></div></div>
+      <div class="v-swatch"><div class="v-swatch__color" style="background:#f7f7f7;border-bottom:1px solid #e6e7e9"></div><div class="v-swatch__info"><span class="v-swatch__name">025</span><span class="v-swatch__var">--ds-color-neutral-025</span></div></div>
+    </div>
+
+    <span class="v-label">Functional</span>
+    <div class="v-swatches">
+      <div class="v-swatch"><div class="v-swatch__color" style="background:#0e824c"></div><div class="v-swatch__info"><span class="v-swatch__name">Success</span><span class="v-swatch__var">--ds-color-success</span></div></div>
+      <div class="v-swatch"><div class="v-swatch__color" style="background:#ff3030"></div><div class="v-swatch__info"><span class="v-swatch__name">Error</span><span class="v-swatch__var">--ds-color-error</span></div></div>
+      <div class="v-swatch"><div class="v-swatch__color" style="background:#155ea0"></div><div class="v-swatch__info"><span class="v-swatch__name">Info</span><span class="v-swatch__var">--ds-color-info</span></div></div>
+      <div class="v-swatch"><div class="v-swatch__color" style="background:#f59e0b"></div><div class="v-swatch__info"><span class="v-swatch__name">Warn</span><span class="v-swatch__var">--ds-color-warn</span></div></div>
+    </div>
+    <span class="v-label" style="margin-top:16px;display:block">Functional — Dark bg variants</span>
+    <div class="v-swatches">
+      <div class="v-swatch"><div class="v-swatch__color" style="background:#34d399"></div><div class="v-swatch__info"><span class="v-swatch__name">Success Light</span><span class="v-swatch__var">--ds-color-success-light</span></div></div>
+      <div class="v-swatch"><div class="v-swatch__color" style="background:#ff6b6b"></div><div class="v-swatch__info"><span class="v-swatch__name">Error Light</span><span class="v-swatch__var">--ds-color-error-light</span></div></div>
+      <div class="v-swatch"><div class="v-swatch__color" style="background:#60a5fa"></div><div class="v-swatch__info"><span class="v-swatch__name">Info Light</span><span class="v-swatch__var">--ds-color-info-light</span></div></div>
+      <div class="v-swatch"><div class="v-swatch__color" style="background:#fbbf24"></div><div class="v-swatch__info"><span class="v-swatch__name">Warn Light</span><span class="v-swatch__var">--ds-color-warn-light</span></div></div>
+    </div>
+    <p class="v-note" style="margin-top:8px;border-radius:var(--ds-radius-sm)">다크 배경(neutral-900) 위에서 사용. .ds-code-block 내 줄별 강조 색상에 적용.</p>
+  </div></div>
+</section>
+
+<!-- Typography -->
+<section class="v-section" id="typography">
+  <h2 class="v-section__title">Typography</h2>
+  <p class="v-section__desc">3개 폰트 패밀리 + 10단계 타입 스케일</p>
+
+  <div class="v-card" style="margin-bottom:16px"><div class="v-card__body">
+    <span class="v-label">Font Families</span>
+    <div class="v-type-row"><span class="v-type-label">Base</span><span style="font-family:var(--ds-font-base);font-size:18px">DM Sans — The quick brown fox</span></div>
+    <div class="v-type-row"><span class="v-type-label">Brand</span><span style="font-family:var(--ds-font-brand);font-size:18px">Oxanium — 제품명 키워드 전용</span></div>
+    <div class="v-type-row"><span class="v-type-label">Code</span><span style="font-family:var(--ds-font-code);font-size:16px">Fragment Mono — The quick brown fox</span></div>
+  </div></div>
+
+  <div class="v-card"><div class="v-card__body">
+    <span class="v-label">Type Scale</span>
+    <div class="v-type-row"><span class="v-type-label">7xl · 64px</span><span style="font-family:var(--ds-font-base);font-size:48px;font-weight:700;line-height:1">Data</span></div>
+    <div class="v-type-row"><span class="v-type-label">5xl · 40px</span><span class="ds-h1" style="font-size:32px">Heading 1</span></div>
+    <div class="v-type-row"><span class="v-type-label">4xl · 36px</span><span class="ds-h2" style="font-size:28px">Heading 2</span></div>
+    <div class="v-type-row"><span class="v-type-label">3xl · 30px</span><span class="ds-h3" style="font-size:24px">Heading 3</span></div>
+    <div class="v-type-row"><span class="v-type-label">xl · 20px</span><span class="ds-body-l">Body Large</span></div>
+    <div class="v-type-row"><span class="v-type-label">md · 16px</span><span class="ds-body-m">Body Medium</span></div>
+    <div class="v-type-row"><span class="v-type-label">sm · 14px</span><span class="ds-body-s">Body Small</span></div>
+    <div class="v-type-row"><span class="v-type-label">xs · 12px</span><span class="ds-caption">Caption text</span></div>
+    <div style="margin-top:16px">
+      <span class="v-label">Text Emphasis</span>
+      <p style="font-size:var(--ds-text-lg)">핵심 키워드는 <span class="ds-text--brand">이렇게 강조</span>합니다.</p>
+    </div>
+    <div style="margin-top:16px">
+      <span class="v-label">Inline Code — code, .ds-code-inline</span>
+      <p style="font-size:var(--ds-text-sm);color:var(--ds-color-text-tertiary);margin-bottom:8px">문장 안에 삽입되는 코드 조각. 모노스페이스, 회색 배경, 3px radius, 0 4px padding.</p>
+      <p style="font-size:var(--ds-text-md);line-height:var(--ds-leading-relaxed)">배열에 항목을 추가할 때 <code>push()</code> 메서드를 사용합니다. 또는 <code class="ds-code-inline">Array.prototype.push(value)</code> 형태로도 호출 가능합니다.</p>
+    </div>
+    <div style="margin-top:16px">
+      <span class="v-label">Product Name (Oxanium) — .ds-text--product</span>
+      <p style="font-size:var(--ds-text-sm);color:var(--ds-color-text-tertiary);margin-bottom:8px">단독 키워드 표기 시에만 사용. 문장 내·제목·데이터 숫자에는 사용 금지.</p>
+      <div style="display:flex;gap:24px;flex-wrap:wrap">
+        <span class="ds-text--product" style="font-size:var(--ds-text-2xl)">SynTitan</span>
+        <span class="ds-text--product" style="font-size:var(--ds-text-2xl)">DTS</span>
+        <span class="ds-text--product" style="font-size:var(--ds-text-2xl)">LLM Capsule</span>
+        <span class="ds-text--product" style="font-size:var(--ds-text-2xl)">SynData</span>
+        <span class="ds-text--product" style="font-size:var(--ds-text-2xl)">SynConnect</span>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<!-- Spacing -->
+<section class="v-section" id="spacing">
+  <h2 class="v-section__title">Spacing & Shape</h2>
+  <p class="v-section__desc">8px 기반 스페이싱 + 라디우스 토큰</p>
+
+  <div class="v-card" style="margin-bottom:16px"><div class="v-card__body">
+    <span class="v-label">Spacing Scale</span>
+    <div class="v-space-bar"><span class="v-space-bar__label">2xs</span><div class="v-space-bar__fill" style="width:4px"></div><span class="v-space-bar__val">4px</span></div>
+    <div class="v-space-bar"><span class="v-space-bar__label">xs</span><div class="v-space-bar__fill" style="width:8px"></div><span class="v-space-bar__val">8px</span></div>
+    <div class="v-space-bar"><span class="v-space-bar__label">sm</span><div class="v-space-bar__fill" style="width:12px"></div><span class="v-space-bar__val">12px</span></div>
+    <div class="v-space-bar"><span class="v-space-bar__label">md</span><div class="v-space-bar__fill" style="width:16px"></div><span class="v-space-bar__val">16px</span></div>
+    <div class="v-space-bar"><span class="v-space-bar__label">lg</span><div class="v-space-bar__fill" style="width:24px"></div><span class="v-space-bar__val">24px</span></div>
+    <div class="v-space-bar"><span class="v-space-bar__label">xl</span><div class="v-space-bar__fill" style="width:32px"></div><span class="v-space-bar__val">32px</span></div>
+    <div class="v-space-bar"><span class="v-space-bar__label">2xl</span><div class="v-space-bar__fill" style="width:48px"></div><span class="v-space-bar__val">48px</span></div>
+    <div class="v-space-bar"><span class="v-space-bar__label">3xl</span><div class="v-space-bar__fill" style="width:64px"></div><span class="v-space-bar__val">64px</span></div>
+    <div class="v-space-bar"><span class="v-space-bar__label">4xl</span><div class="v-space-bar__fill" style="width:80px"></div><span class="v-space-bar__val">80px</span></div>
+  </div></div>
+
+  <div class="v-card"><div class="v-card__body">
+    <span class="v-label">Border Radius</span>
+    <div class="v-row">
+      <div style="width:48px;height:48px;background:var(--ds-color-brand-purple);opacity:0.15;border-radius:0"></div>
+      <div style="width:48px;height:48px;background:var(--ds-color-brand-purple);opacity:0.15;border-radius:5px"></div>
+      <div style="width:48px;height:48px;background:var(--ds-color-brand-purple);opacity:0.15;border-radius:8px"></div>
+      <div style="width:48px;height:48px;background:var(--ds-color-brand-purple);opacity:0.15;border-radius:18px"></div>
+      <div style="width:48px;height:48px;background:var(--ds-color-brand-purple);opacity:0.15;border-radius:24px"></div>
+      <div style="width:80px;height:36px;background:var(--ds-color-brand-purple);opacity:0.15;border-radius:9999px"></div>
+    </div>
+    <div class="v-row" style="margin-top:6px">
+      <span style="width:48px;text-align:center;font-size:9px;font-family:var(--ds-font-code);color:var(--ds-color-text-tertiary)">none</span>
+      <span style="width:48px;text-align:center;font-size:9px;font-family:var(--ds-font-code);color:var(--ds-color-text-tertiary)">xs 5</span>
+      <span style="width:48px;text-align:center;font-size:9px;font-family:var(--ds-font-code);color:var(--ds-color-text-tertiary)">sm 8</span>
+      <span style="width:48px;text-align:center;font-size:9px;font-family:var(--ds-font-code);color:var(--ds-color-text-tertiary)">md 18</span>
+      <span style="width:48px;text-align:center;font-size:9px;font-family:var(--ds-font-code);color:var(--ds-color-text-tertiary)">lg 24</span>
+      <span style="width:80px;text-align:center;font-size:9px;font-family:var(--ds-font-code);color:var(--ds-color-text-tertiary)">pill</span>
+    </div>
+  </div></div>
+</section>
+
+<!-- Iconography -->
+<section class="v-section" id="iconography">
+  <h2 class="v-section__title">Iconography</h2>
+  <p class="v-section__desc">Lucide Icons (MIT, 1500+) — 인라인 SVG 전용. img 태그 사용 금지.</p>
+
+  <!-- Library Info -->
+  <div class="v-card" style="margin-bottom:16px"><div class="v-card__body">
+    <span class="v-label">라이브러리</span>
+    <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start">
+      <div>
+        <div style="font-family:var(--ds-font-base);font-size:14px;font-weight:600;color:var(--ds-color-text-primary);margin-bottom:4px">Lucide Icons</div>
+        <div style="font-family:var(--ds-font-code);font-size:11px;color:var(--ds-color-text-tertiary)">MIT License · 1500+ icons</div>
+      </div>
+      <div style="flex:1;min-width:200px">
+        <div style="font-family:var(--ds-font-code);font-size:11px;color:var(--ds-color-text-tertiary);margin-bottom:4px">CDN 경로</div>
+        <code style="display:block;background:var(--ds-color-surface-light);border:1px solid var(--ds-color-border-default);border-radius:6px;padding:8px 12px;font-family:var(--ds-font-code);font-size:11px;color:var(--ds-color-text-secondary);word-break:break-all">https://unpkg.com/lucide-static@latest/icons/[icon-name].svg</code>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- Icon Size Demo -->
+  <div class="v-card" style="margin-bottom:16px"><div class="v-card__body">
+    <span class="v-label">Size Classes</span>
+    <div style="display:flex;gap:32px;align-items:flex-end;flex-wrap:wrap">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ds-color-brand-purple)">
+          <circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/>
+        </svg>
+        <div style="text-align:center">
+          <div style="font-family:var(--ds-font-code);font-size:10px;color:var(--ds-color-text-primary);font-weight:600">.ds-icon--sm</div>
+          <div style="font-family:var(--ds-font-code);font-size:10px;color:var(--ds-color-text-tertiary)">16px</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ds-color-brand-purple)">
+          <circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/>
+        </svg>
+        <div style="text-align:center">
+          <div style="font-family:var(--ds-font-code);font-size:10px;color:var(--ds-color-text-primary);font-weight:600">.ds-icon--md</div>
+          <div style="font-family:var(--ds-font-code);font-size:10px;color:var(--ds-color-text-tertiary)">24px (기본)</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ds-color-brand-purple)">
+          <circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/>
+        </svg>
+        <div style="text-align:center">
+          <div style="font-family:var(--ds-font-code);font-size:10px;color:var(--ds-color-text-primary);font-weight:600">.ds-icon--lg</div>
+          <div style="font-family:var(--ds-font-code);font-size:10px;color:var(--ds-color-text-tertiary)">32px</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ds-color-brand-purple)">
+          <circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/>
+        </svg>
+        <div style="text-align:center">
+          <div style="font-family:var(--ds-font-code);font-size:10px;color:var(--ds-color-text-primary);font-weight:600">.ds-icon--xl</div>
+          <div style="font-family:var(--ds-font-code);font-size:10px;color:var(--ds-color-text-tertiary)">48px</div>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- Core Attributes -->
+  <div class="v-card" style="margin-bottom:16px"><div class="v-card__body">
+    <span class="v-label">핵심 속성</span>
+    <div style="display:flex;gap:16px;flex-wrap:wrap">
+      <div style="background:var(--ds-color-surface-light);border:1px solid var(--ds-color-border-default);border-radius:8px;padding:12px 16px;flex:1;min-width:140px">
+        <div style="font-family:var(--ds-font-code);font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--ds-color-text-tertiary);margin-bottom:4px">stroke-width</div>
+        <div style="font-family:var(--ds-font-code);font-size:14px;color:var(--ds-color-text-primary);font-weight:600">1.5px</div>
+        <div style="font-family:var(--ds-font-code);font-size:10px;color:var(--ds-color-text-tertiary);margin-top:2px">Lucide 기본값 2 → 변경</div>
+      </div>
+      <div style="background:var(--ds-color-surface-light);border:1px solid var(--ds-color-border-default);border-radius:8px;padding:12px 16px;flex:1;min-width:140px">
+        <div style="font-family:var(--ds-font-code);font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--ds-color-text-tertiary);margin-bottom:4px">stroke-linecap</div>
+        <div style="font-family:var(--ds-font-code);font-size:14px;color:var(--ds-color-text-primary);font-weight:600">round</div>
+      </div>
+      <div style="background:var(--ds-color-surface-light);border:1px solid var(--ds-color-border-default);border-radius:8px;padding:12px 16px;flex:1;min-width:140px">
+        <div style="font-family:var(--ds-font-code);font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--ds-color-text-tertiary);margin-bottom:4px">stroke-linejoin</div>
+        <div style="font-family:var(--ds-font-code);font-size:14px;color:var(--ds-color-text-primary);font-weight:600">round</div>
+      </div>
+      <div style="background:var(--ds-color-surface-light);border:1px solid var(--ds-color-border-default);border-radius:8px;padding:12px 16px;flex:1;min-width:140px">
+        <div style="font-family:var(--ds-font-code);font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--ds-color-text-tertiary);margin-bottom:4px">fill</div>
+        <div style="font-family:var(--ds-font-code);font-size:14px;color:var(--ds-color-text-primary);font-weight:600">none</div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- Icon Categories -->
+  <div class="v-card"><div class="v-card__body">
+    <span class="v-label">카테고리별 아이콘</span>
+
+    <!-- Network / Connectivity -->
+    <div style="margin-bottom:24px">
+      <div style="font-family:var(--ds-font-code);font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--ds-color-brand-purple);margin-bottom:12px;font-weight:600">Network / Connectivity</div>
+      <div style="display:flex;gap:24px;flex-wrap:wrap">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;min-width:56px">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ds-color-text-primary)">
+            <circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/>
+          </svg>
+          <span style="font-family:var(--ds-font-code);font-size:9px;color:var(--ds-color-text-tertiary);text-align:center">globe</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;min-width:56px">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ds-color-text-primary)">
+            <rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/>
+          </svg>
+          <span style="font-family:var(--ds-font-code);font-size:9px;color:var(--ds-color-text-tertiary);text-align:center">network</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;min-width:56px">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ds-color-text-primary)">
+            <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
+          </svg>
+          <span style="font-family:var(--ds-font-code);font-size:9px;color:var(--ds-color-text-tertiary);text-align:center">cloud</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;min-width:56px">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ds-color-text-primary)">
+            <rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/>
+          </svg>
+          <span style="font-family:var(--ds-font-code);font-size:9px;color:var(--ds-color-text-tertiary);text-align:center">server</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Infrastructure / System -->
+    <div style="margin-bottom:24px">
+      <div style="font-family:var(--ds-font-code);font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--ds-color-brand-purple);margin-bottom:12px;font-weight:600">Infrastructure / System</div>
+      <div style="display:flex;gap:24px;flex-wrap:wrap">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;min-width:56px">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ds-color-text-primary)">
+            <rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/>
+          </svg>
+          <span style="font-family:var(--ds-font-code);font-size:9px;color:var(--ds-color-text-tertiary);text-align:center">server</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;min-width:56px">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ds-color-text-primary)">
+            <ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/>
+          </svg>
+          <span style="font-family:var(--ds-font-code);font-size:9px;color:var(--ds-color-text-tertiary);text-align:center">database</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;min-width:56px">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ds-color-text-primary)">
+            <path d="M12 20v2"/><path d="M12 2v2"/><path d="M17 20v2"/><path d="M17 2v2"/><path d="M2 12h2"/><path d="M2 17h2"/><path d="M2 7h2"/><path d="M20 12h2"/><path d="M20 17h2"/><path d="M20 7h2"/><path d="M7 20v2"/><path d="M7 2v2"/><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="8" y="8" width="8" height="8" rx="1"/>
+          </svg>
+          <span style="font-family:var(--ds-font-code);font-size:9px;color:var(--ds-color-text-tertiary);text-align:center">cpu</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;min-width:56px">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ds-color-text-primary)">
+            <rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/>
+          </svg>
+          <span style="font-family:var(--ds-font-code);font-size:9px;color:var(--ds-color-text-tertiary);text-align:center">monitor</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI / Machine Learning -->
+    <div style="margin-bottom:24px">
+      <div style="font-family:var(--ds-font-code);font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--ds-color-brand-purple);margin-bottom:12px;font-weight:600">AI / Machine Learning</div>
+      <div style="display:flex;gap:24px;flex-wrap:wrap">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;min-width:56px">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ds-color-text-primary)">
+            <path d="M12 18V5"/><path d="M15 13a4.17 4.17 0 0 1-3-4 4.17 4.17 0 0 1-3 4"/><path d="M17.598 6.5A3 3 0 1 0 12 5a3 3 0 1 0-5.598 1.5"/><path d="M17.997 5.125a4 4 0 0 1 2.526 5.77"/><path d="M18 18a4 4 0 0 0 2-7.464"/><path d="M19.967 17.483A4 4 0 1 1 12 18a4 4 0 1 1-7.967-.517"/><path d="M6 18a4 4 0 0 1-2-7.464"/><path d="M6.003 5.125a4 4 0 0 0-2.526 5.77"/>
+          </svg>
+          <span style="font-family:var(--ds-font-code);font-size:9px;color:var(--ds-color-text-tertiary);text-align:center">brain</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;min-width:56px">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ds-color-text-primary)">
+            <path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/>
+          </svg>
+          <span style="font-family:var(--ds-font-code);font-size:9px;color:var(--ds-color-text-tertiary);text-align:center">bot</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;min-width:56px">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ds-color-text-primary)">
+            <path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/><path d="M20 2v4"/><path d="M22 4h-4"/><circle cx="4" cy="20" r="2"/>
+          </svg>
+          <span style="font-family:var(--ds-font-code);font-size:9px;color:var(--ds-color-text-tertiary);text-align:center">sparkles</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Report / Analytics -->
+    <div style="margin-bottom:24px">
+      <div style="font-family:var(--ds-font-code);font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--ds-color-brand-purple);margin-bottom:12px;font-weight:600">Report / Analytics</div>
+      <div style="display:flex;gap:24px;flex-wrap:wrap">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;min-width:56px">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ds-color-text-primary)">
+            <path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M7 16h8"/><path d="M7 11h12"/><path d="M7 6h3"/>
+          </svg>
+          <span style="font-family:var(--ds-font-code);font-size:9px;color:var(--ds-color-text-tertiary);text-align:center">chart-bar</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;min-width:56px">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ds-color-text-primary)">
+            <path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="m19 9-5 5-4-4-3 3"/>
+          </svg>
+          <span style="font-family:var(--ds-font-code);font-size:9px;color:var(--ds-color-text-tertiary);text-align:center">chart-line</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;min-width:56px">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ds-color-text-primary)">
+            <path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/>
+          </svg>
+          <span style="font-family:var(--ds-font-code);font-size:9px;color:var(--ds-color-text-tertiary);text-align:center">file-text</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;min-width:56px">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ds-color-text-primary)">
+            <path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/>
+          </svg>
+          <span style="font-family:var(--ds-font-code);font-size:9px;color:var(--ds-color-text-tertiary);text-align:center">trending-up</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Processing / Workflow -->
+    <div style="margin-bottom:24px">
+      <div style="font-family:var(--ds-font-code);font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--ds-color-brand-purple);margin-bottom:12px;font-weight:600">Processing / Workflow</div>
+      <div style="display:flex;gap:24px;flex-wrap:wrap">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;min-width:56px">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ds-color-text-primary)">
+            <rect width="8" height="8" x="3" y="3" rx="2"/><path d="M7 11v4a2 2 0 0 0 2 2h4"/><rect width="8" height="8" x="13" y="13" rx="2"/>
+          </svg>
+          <span style="font-family:var(--ds-font-code);font-size:9px;color:var(--ds-color-text-tertiary);text-align:center">workflow</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;min-width:56px">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ds-color-text-primary)">
+            <path d="M11 10.27 7 3.34"/><path d="m11 13.73-4 6.93"/><path d="M12 22v-2"/><path d="M12 2v2"/><path d="M14 12h8"/><path d="m17 20.66-1-1.73"/><path d="m17 3.34-1 1.73"/><path d="M2 12h2"/><path d="m20.66 17-1.73-1"/><path d="m20.66 7-1.73 1"/><path d="m3.34 17 1.73-1"/><path d="m3.34 7 1.73 1"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="12" r="8"/>
+          </svg>
+          <span style="font-family:var(--ds-font-code);font-size:9px;color:var(--ds-color-text-tertiary);text-align:center">cog</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;min-width:56px">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ds-color-text-primary)">
+            <path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"/><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"/><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"/>
+          </svg>
+          <span style="font-family:var(--ds-font-code);font-size:9px;color:var(--ds-color-text-tertiary);text-align:center">layers</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;min-width:56px">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ds-color-text-primary)">
+            <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/>
+          </svg>
+          <span style="font-family:var(--ds-font-code);font-size:9px;color:var(--ds-color-text-tertiary);text-align:center">refresh-cw</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Security / Privacy -->
+    <div style="margin-bottom:24px">
+      <div style="font-family:var(--ds-font-code);font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--ds-color-brand-purple);margin-bottom:12px;font-weight:600">Security / Privacy</div>
+      <div style="display:flex;gap:24px;flex-wrap:wrap">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;min-width:56px">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ds-color-text-primary)">
+            <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>
+          </svg>
+          <span style="font-family:var(--ds-font-code);font-size:9px;color:var(--ds-color-text-tertiary);text-align:center">shield</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;min-width:56px">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ds-color-text-primary)">
+            <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/>
+          </svg>
+          <span style="font-family:var(--ds-font-code);font-size:9px;color:var(--ds-color-text-tertiary);text-align:center">shield-check</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;min-width:56px">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ds-color-text-primary)">
+            <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+          <span style="font-family:var(--ds-font-code);font-size:9px;color:var(--ds-color-text-tertiary);text-align:center">lock</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;min-width:56px">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ds-color-text-primary)">
+            <path d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49"/><path d="M14.084 14.158a3 3 0 0 1-4.242-4.242"/><path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143"/><path d="m2 2 20 20"/>
+          </svg>
+          <span style="font-family:var(--ds-font-code);font-size:9px;color:var(--ds-color-text-tertiary);text-align:center">eye-off</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- General UI -->
+    <div>
+      <div style="font-family:var(--ds-font-code);font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--ds-color-brand-purple);margin-bottom:12px;font-weight:600">General UI</div>
+      <div style="display:flex;gap:24px;flex-wrap:wrap">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;min-width:56px">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ds-color-text-primary)">
+            <path d="M20 6 9 17l-5-5"/>
+          </svg>
+          <span style="font-family:var(--ds-font-code);font-size:9px;color:var(--ds-color-text-tertiary);text-align:center">check</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;min-width:56px">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ds-color-text-primary)">
+            <path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/>
+          </svg>
+          <span style="font-family:var(--ds-font-code);font-size:9px;color:var(--ds-color-text-tertiary);text-align:center">search</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;min-width:56px">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ds-color-text-primary)">
+            <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+          </svg>
+          <span style="font-family:var(--ds-font-code);font-size:9px;color:var(--ds-color-text-tertiary);text-align:center">arrow-right</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;min-width:56px">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ds-color-text-primary)">
+            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+          </svg>
+          <span style="font-family:var(--ds-font-code);font-size:9px;color:var(--ds-color-text-tertiary);text-align:center">user</span>
+        </div>
+      </div>
+    </div>
+
+  </div></div>
+</section>
+
+<!-- Responsive System -->
+<section class="v-section" id="responsive">
+  <h2 class="v-section__title">Responsive System</h2>
+  <p class="v-section__desc">4단계 반응형. mobile / tablet / sm-desktop / desktop. wide(1920px) 단계 없음.</p>
+
+  <div class="v-card" style="margin-bottom:16px"><div class="v-card__body">
+    <span class="v-label">Breakpoints</span>
+    <table style="width:100%;border-collapse:collapse;font-size:13px">
+      <thead>
+        <tr style="border-bottom:1px solid var(--ds-color-border-default)">
+          <th style="text-align:left;padding:8px 12px;font-family:var(--ds-font-code);font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--ds-color-text-tertiary);font-weight:500">단계</th>
+          <th style="text-align:left;padding:8px 12px;font-family:var(--ds-font-code);font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--ds-color-text-tertiary);font-weight:500">min-width</th>
+          <th style="text-align:left;padding:8px 12px;font-family:var(--ds-font-code);font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--ds-color-text-tertiary);font-weight:500">container padding</th>
+          <th style="text-align:left;padding:8px 12px;font-family:var(--ds-font-code);font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--ds-color-text-tertiary);font-weight:500">변수</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid var(--ds-color-border-default)">
+          <td style="padding:10px 12px;font-weight:600">mobile</td>
+          <td style="padding:10px 12px;font-family:var(--ds-font-code);color:var(--ds-color-brand-purple)">375px</td>
+          <td style="padding:10px 12px">16px</td>
+          <td style="padding:10px 12px;font-family:var(--ds-font-code);font-size:11px;color:var(--ds-color-text-tertiary)">--ds-container-padding-mobile</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--ds-color-border-default)">
+          <td style="padding:10px 12px;font-weight:600">tablet</td>
+          <td style="padding:10px 12px;font-family:var(--ds-font-code);color:var(--ds-color-brand-purple)">768px</td>
+          <td style="padding:10px 12px">32px</td>
+          <td style="padding:10px 12px;font-family:var(--ds-font-code);font-size:11px;color:var(--ds-color-text-tertiary)">--ds-container-padding-tablet</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--ds-color-border-default)">
+          <td style="padding:10px 12px;font-weight:600">sm-desktop</td>
+          <td style="padding:10px 12px;font-family:var(--ds-font-code);color:var(--ds-color-brand-purple)">1024px</td>
+          <td style="padding:10px 12px">32px</td>
+          <td style="padding:10px 12px;font-family:var(--ds-font-code);font-size:11px;color:var(--ds-color-text-tertiary)">--ds-container-padding-sm-desktop</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 12px;font-weight:600">desktop</td>
+          <td style="padding:10px 12px;font-family:var(--ds-font-code);color:var(--ds-color-brand-purple)">1440px</td>
+          <td style="padding:10px 12px">120px</td>
+          <td style="padding:10px 12px;font-family:var(--ds-font-code);font-size:11px;color:var(--ds-color-text-tertiary)">--ds-container-padding-desktop</td>
+        </tr>
+      </tbody>
+    </table>
+  </div></div>
+
+  <div class="v-card"><div class="v-card__body">
+    <span class="v-label">ds-container 규칙</span>
+    <div style="font-family:var(--ds-font-code);font-size:12px;line-height:1.8;color:var(--ds-color-text-secondary);background:var(--ds-color-surface-light);padding:16px;border-radius:var(--ds-radius-sm)">
+      <div><span style="color:var(--ds-color-text-tertiary)">/* 기본 */</span></div>
+      <div>.ds-container { width: 100%; margin: 0 auto; padding: 0 <span style="color:var(--ds-color-brand-purple)">16px</span>; }</div>
+      <div style="margin-top:8px"><span style="color:var(--ds-color-brand-primary)">@media</span> (min-width: 768px) { padding: 0 <span style="color:var(--ds-color-brand-purple)">32px</span>; }</div>
+      <div><span style="color:var(--ds-color-brand-primary)">@media</span> (min-width: 1024px) { padding: 0 <span style="color:var(--ds-color-brand-purple)">32px</span>; }</div>
+      <div><span style="color:var(--ds-color-brand-primary)">@media</span> (min-width: 1440px) { padding: 0 <span style="color:var(--ds-color-brand-purple)">120px</span>; max-width: <span style="color:var(--ds-color-error)">1440px</span>; }</div>
+      <div style="margin-top:8px;color:var(--ds-color-text-tertiary);font-size:11px">/* wide(1920px) 단계 없음. 1440px 이상은 max-width: 1440px 고정 */</div>
+    </div>
+    <div class="v-note">--ds-content-max-width: 1200px (섹션 내 콘텐츠 최대폭) / ds-container max-width: 1440px (컨테이너 최대폭)</div>
+  </div></div>
+</section>
+
+</div><!-- /page-foundation -->
+
+<!-- ==================== PAGE: LAYOUT ==================== -->
+<div class="v-page" id="page-layout">
+
+<!-- Layout Sub Nav -->
+<nav class="v-subnav">
+  <a class="v-subnav__item" href="#buttons">Button</a>
+  <a class="v-subnav__item" href="#cards">Card</a>
+  <a class="v-subnav__item" href="#banners">Banner</a>
+  <a class="v-subnav__item" href="#badges">Badge</a>
+  <a class="v-subnav__item" href="#bullets">Bullet List</a>
+  <a class="v-subnav__item" href="#inline-code">Inline Code</a>
+  <a class="v-subnav__item" href="#lp-section-header">[A] Section Header</a>
+  <a class="v-subnav__item" href="#lp-hero">[B] Hero Text-only</a>
+  <a class="v-subnav__item" href="#lp-hero-screenshot">[B-2] Hero Screenshot</a>
+  <a class="v-subnav__item" href="#lp-kpi">[C] KPI Band</a>
+  <a class="v-subnav__item" href="#lp-card-grid">[D] Card Grid</a>
+  <a class="v-subnav__item" href="#lp-feature-grid">[E] Feature Grid</a>
+  <a class="v-subnav__item" href="#lp-cta">[F] CTA Band</a>
+  <a class="v-subnav__item" href="#lp-accordion">[G] Accordion Card</a>
+  <a class="v-subnav__item" href="#lp-banner">[H] Banner Variants</a>
+  <a class="v-subnav__item" href="#lp-product-split">[I] Product Split</a>
+  <a class="v-subnav__item" href="#lp-partner-grid">[K] Partner Logo Grid</a>
+  <a class="v-subnav__item" href="#lp-cert-grid">[L] Cert Grid</a>
+  <a class="v-subnav__item" href="#lp-case-study">[M] Case Study Card</a>
+  <a class="v-subnav__item" href="#lp-table">[J] Table</a>
+  <a class="v-subnav__item" href="#lp-step-tabs">[U] Step Tabs</a>
+  <a class="v-subnav__item" href="#lp-diagram">[W] Diagram</a>
+  <a class="v-subnav__item" href="#lp-code-block">[15] Code Block</a>
+</nav>
+
+<!-- Buttons -->
+<section class="v-section" id="buttons">
+  <h2 class="v-section__title">Button</h2>
+  <p class="v-section__desc">pill 형태. 4가지 variant × 3가지 size</p>
+  <div class="v-card"><div class="v-card__body">
+    <span class="v-label">Variants</span>
+    <div class="v-row" style="margin-bottom:20px">
+      <a class="ds-btn ds-btn--primary ds-btn--md">Primary</a>
+      <a class="ds-btn ds-btn--secondary ds-btn--md">Secondary</a>
+      <a class="ds-btn ds-btn--ghost ds-btn--md">Ghost Link →</a>
+      <a class="ds-btn ds-btn--dark ds-btn--md">Dark</a>
+    </div>
+    <span class="v-label">Sizes</span>
+    <div class="v-row" style="align-items:center">
+      <a class="ds-btn ds-btn--primary ds-btn--sm">Small</a>
+      <a class="ds-btn ds-btn--primary ds-btn--md">Medium</a>
+      <a class="ds-btn ds-btn--primary ds-btn--lg">Large</a>
+    </div>
+  </div></div>
+</section>
+
+<!-- Cards -->
+<section class="v-section" id="cards">
+  <h2 class="v-section__title">Card</h2>
+  <p class="v-section__desc">기본 배경은 반드시 white. 4가지 variant.</p>
+  <div class="v-card"><div class="v-card__body">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div class="ds-card">
+        <span class="ds-card__badge ds-card__badge--brand">Platform</span>
+        <h3 class="ds-card__title">Default Card</h3>
+        <p class="ds-card__description">White background, default border, card shadow.</p>
+      </div>
+      <div class="ds-card ds-card--dark">
+        <span class="ds-card__badge" style="color:var(--ds-color-text-muted);border-color:var(--ds-color-neutral-700)">Dark</span>
+        <h3 class="ds-card__title">Dark Card</h3>
+        <p style="font-size:var(--ds-text-sm);color:var(--ds-color-text-muted);line-height:var(--ds-leading-relaxed)">Dark background for contrast sections.</p>
+      </div>
+      <div class="ds-card ds-card--highlight">
+        <span class="ds-card__icon">🎯</span>
+        <h3 class="ds-card__title ds-card__title--sm">Highlight Card</h3>
+        <p class="ds-card__description">Larger radius and padding for emphasis.</p>
+      </div>
+      <div class="ds-card ds-card--flat">
+        <h3 class="ds-card__title ds-card__title--sm">Flat Card</h3>
+        <p class="ds-card__description">No background, border, or shadow. Transparent.</p>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<!-- Banners -->
+<section class="v-section" id="banners">
+  <h2 class="v-section__title">Banner</h2>
+  <p class="v-section__desc">상하 얇은 border만. 좌측 굵은 border 금지.</p>
+  <div class="v-card"><div class="v-card__body" style="display:flex;flex-direction:column;gap:12px">
+    <div class="ds-banner"><span class="ds-banner__label">Definition</span>Default banner with surface-light background.</div>
+    <div class="ds-banner ds-banner--brand"><span class="ds-banner__label">Brand</span>Brand variant with purple tint background.</div>
+    <div class="ds-banner ds-banner--info">Info variant — informational context.</div>
+    <div class="ds-banner ds-banner--success">Success variant — completion or positive state.</div>
+    <div class="ds-banner ds-banner--error">Error variant — warning or destructive context.</div>
+    <div class="ds-banner ds-banner--full" style="background-image:url('images/bg-wave-teal-blue.png')"><span>배경 이미지 강조 배너 — ds-bg--* 클래스로 이미지 적용</span></div>
+  </div></div>
+</section>
+
+<!-- Badges -->
+<section class="v-section" id="badges">
+  <h2 class="v-section__title">Badge</h2>
+  <p class="v-section__desc">인라인 라벨. 6가지 variant.</p>
+  <div class="v-card"><div class="v-card__body">
+    <div class="v-row">
+      <span class="ds-badge ds-badge--primary">Primary</span>
+      <span class="ds-badge ds-badge--purple">Purple</span>
+      <span class="ds-badge ds-badge--neutral">Neutral</span>
+      <span class="ds-badge ds-badge--success">Success</span>
+      <span class="ds-badge ds-badge--error">Error</span>
+      <span class="ds-badge ds-badge--dark">Dark</span>
+    </div>
+  </div></div>
+</section>
+
+<!-- Bullets -->
+<section class="v-section" id="bullets">
+  <h2 class="v-section__title">Bullet List</h2>
+  <p class="v-section__desc">check / dot variant</p>
+  <div class="v-card"><div class="v-card__body">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px">
+      <div>
+        <span class="v-label">Check</span>
+        <ul class="ds-bullet ds-bullet--check">
+          <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Data quality refinement</li>
+          <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Privacy-safe synthetic data</li>
+          <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Execution state tracking</li>
+        </ul>
+      </div>
+      <div>
+        <span class="v-label">Dot</span>
+        <ul class="ds-bullet ds-bullet--dot">
+          <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Release State management</li>
+          <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Schema fingerprint audit</li>
+          <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Runtime dependency log</li>
+        </ul>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<!-- Inline Code -->
+<section class="v-section" id="inline-code">
+  <h2 class="v-section__title">Inline Code</h2>
+  <p class="v-section__desc">문장 안에 삽입하는 코드 조각. <code>code</code> 태그 또는 <code>.ds-code-inline</code> 클래스 사용.</p>
+
+  <div class="v-card"><div class="v-card__body">
+    <span class="v-label">code, .ds-code-inline</span>
+    <p style="font-size:var(--ds-text-sm);color:var(--ds-color-text-tertiary);margin-bottom:12px">font-family: Fragment Mono · font-size: 0.875em · background: neutral-100 · border-radius: 3px · padding: 0 4px</p>
+    <p style="font-size:var(--ds-text-md);line-height:var(--ds-leading-relaxed)">배열에 항목을 추가할 때 <code>push()</code> 메서드를 사용합니다.</p>
+    <p style="font-size:var(--ds-text-md);line-height:var(--ds-leading-relaxed)">또는 <code class="ds-code-inline">Array.prototype.push(value)</code> 형태로 호출할 수 있습니다.</p>
+    <p style="font-size:var(--ds-text-md);line-height:var(--ds-leading-relaxed)">설정 파일 경로: <code class="ds-code-inline">/etc/config/ds-system.yml</code></p>
+    <div style="margin-top:16px">
+      <span class="v-label">Usage</span>
+      <div style="font-family:var(--ds-font-code);font-size:var(--ds-text-sm);color:var(--ds-color-text-secondary);background:var(--ds-color-neutral-050);border:1px solid var(--ds-color-border-default);border-radius:4px;padding:12px 16px;line-height:1.8">
+        <div>&lt;<span style="color:var(--ds-color-brand-purple)">code</span>&gt;push()&lt;/<span style="color:var(--ds-color-brand-purple)">code</span>&gt;</div>
+        <div>&lt;<span style="color:var(--ds-color-brand-purple)">code</span> class=<span style="color:var(--ds-color-success)">"ds-code-inline"</span>&gt;push()&lt;/<span style="color:var(--ds-color-brand-purple)">code</span>&gt;</div>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<!-- ==================== LAYOUT PATTERNS ==================== -->
+
+<!-- [A] Section Header -->
+<section class="v-section" id="lp-section-header">
+  <h2 class="v-section__title">[A] Section Header</h2>
+  <p class="v-section__desc">기본 중앙 정렬 + --underline. 아티클/문서형만 --left.</p>
+  <div class="v-card"><div class="v-card__body">
+    <div class="ds-section-header ds-section-header--underline">
+      <span class="ds-section-header__eyebrow">Section Label</span>
+      <h2 class="ds-section-header__title">타이틀 핵심 키워드는 <span class="ds-text--brand">이렇게 강조</span></h2>
+      <p class="ds-section-header__description">부가 설명 텍스트가 들어가는 자리입니다. 최대 640px 폭으로 중앙 정렬됩니다.</p>
+    </div>
+    <div class="ds-section-title-icon">
+      <span class="ds-section-title-icon__icon">🚧</span>
+      <h3 class="ds-section-title-icon__text">Icon Section Title</h3>
+    </div>
+  </div>
+  <div class="v-note">eyebrow에 "//" 접두사 사용 금지</div>
+  </div>
+</section>
+
+<!-- [B] Hero -->
+<section class="v-section" id="lp-hero">
+  <h2 class="v-section__title">[B] Hero Text-only</h2>
+  <p class="v-section__desc">페이지 최상단. 배경 이미지 사용 금지 — 흰색/밝은 배경만.</p>
+  <div class="v-card"><div class="v-card__body" style="background:var(--ds-color-bg-primary);border-radius:12px;padding:48px 32px">
+    <div style="max-width:560px">
+      <h1 style="font-family:var(--ds-font-base);font-size:var(--ds-text-4xl);font-weight:700;line-height:var(--ds-leading-tight);letter-spacing:-1px;margin-bottom:var(--ds-space-sm)">페이지 메인 <span class="ds-text--brand">타이틀</span></h1>
+      <p style="font-size:var(--ds-text-lg);color:var(--ds-color-text-secondary);line-height:var(--ds-leading-relaxed);margin-bottom:var(--ds-space-xl)">Every production AI failure has a root cause in data state drift. These cases show how to find it.</p>
+      <div style="display:flex;gap:12px">
+        <a class="ds-btn ds-btn--primary ds-btn--md">Primary CTA →</a>
+        <a class="ds-btn ds-btn--secondary ds-btn--md">Secondary →</a>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<!-- [B-2] Hero Screenshot -->
+<section class="v-section" id="lp-hero-screenshot">
+  <h2 class="v-section__title">[B-2] Hero Screenshot</h2>
+  <p class="v-section__desc">배경 이미지는 섹션이 아닌 스크린샷 프레임(ds-hero__screenshot-frame)에 적용. 이미지가 스크린샷을 감싸는 구조.</p>
+  <div class="v-card"><div class="v-card__body ds-hero-screenshot-section" style="border-radius:12px;padding:48px 32px 0">
+    <div style="text-align:center;max-width:660px;margin:0 auto">
+      <h1 style="font-family:var(--ds-font-base);font-size:var(--ds-text-4xl);font-weight:700;line-height:var(--ds-leading-tight);letter-spacing:-1px;margin-bottom:var(--ds-space-sm)">AI 데이터 <span class="ds-text--brand">품질 관리</span> 플랫폼</h1>
+      <p style="font-size:var(--ds-text-lg);color:var(--ds-color-text-secondary);line-height:var(--ds-leading-relaxed);margin-bottom:var(--ds-space-xl);max-width:660px;margin-left:auto;margin-right:auto;word-break:keep-all;overflow-wrap:break-word">생산부터 검증까지, 데이터 라이프사이클 전체를 한곳에서 관리하세요.</p>
+    </div>
+    <!-- 배경 이미지 프레임이 스크린샷을 감싸는 구조 -->
+    <div class="ds-hero__screenshot-frame" style="max-width:860px;margin:0 auto;background-image:url('images/bg-paint-blue-iridescent.png')">
+      <div class="ds-hero__screenshot" style="display:flex;align-items:center;justify-content:center;min-height:200px;color:var(--ds-color-text-tertiary);font-size:var(--ds-text-sm)">
+        스크린샷 이미지 영역
+      </div>
+    </div>
+    <div class="ds-hero__actions-below" style="display:flex;gap:12px;justify-content:center;margin-top:20px;padding-bottom:var(--ds-space-3xl)">
+      <a class="ds-btn ds-btn--primary ds-btn--md">무료 체험 →</a>
+      <a class="ds-btn ds-btn--secondary ds-btn--md">데모 요청</a>
+    </div>
+  </div></div>
+</section>
+
+<!-- [C] KPI Band -->
+<section class="v-section" id="lp-kpi">
+  <h2 class="v-section__title">[C] KPI Band</h2>
+  <p class="v-section__desc">배경은 ds-kpi-band 컴포넌트 자체에 적용 (섹션 X). 수치 색상은 text-primary (파란색 금지).</p>
+  <div class="v-card"><div class="v-card__body">
+    <div class="ds-kpi-band">
+      <div class="ds-kpi-band__item"><span class="ds-kpi-band__number">95%</span><p class="ds-kpi-band__label">reduction in root cause identification time</p></div>
+      <div class="ds-kpi-band__item"><span class="ds-kpi-band__number">+30pp</span><p class="ds-kpi-band__label">F1-score improvement via DTS</p></div>
+      <div class="ds-kpi-band__item"><span class="ds-kpi-band__number">−90%</span><p class="ds-kpi-band__label">time-to-deploy reduction</p></div>
+      <div class="ds-kpi-band__item"><span class="ds-kpi-band__number">15+</span><p class="ds-kpi-band__label">enterprise clients deployed</p></div>
+    </div>
+  </div>
+  <div class="v-note">배경 이미지: ds-bg--lavender 등 컴포넌트에 직접 적용</div>
+  </div>
+</section>
+
+<!-- [D] Card Grid -->
+<section class="v-section" id="lp-card-grid">
+  <h2 class="v-section__title">[D] Card Grid</h2>
+  <p class="v-section__desc">범용 카드 그리드. 2col / 3col / 4col 선택 가능. 제품·서비스·기능 등 어디든 사용.</p>
+  <div class="v-card"><div class="v-card__body">
+    <div class="ds-card-grid ds-card-grid--3col">
+      <div class="ds-card" style="display:flex;flex-direction:column">
+        <span class="ds-card__badge ds-card__badge--brand">Platform</span>
+        <h3 class="ds-card__title">SynTitan</h3>
+        <p class="ds-card__description">AI Data Operational Integrity Platform</p>
+        <div class="ds-card__button"><a class="ds-btn ds-btn--primary ds-btn--sm">Explore →</a></div>
+      </div>
+      <div class="ds-card" style="display:flex;flex-direction:column">
+        <span class="ds-card__badge ds-card__badge--teal">Capability</span>
+        <h3 class="ds-card__title">DTS</h3>
+        <p class="ds-card__description">Privacy-safe synthetic data generation engine</p>
+        <div class="ds-card__button"><a class="ds-btn ds-btn--secondary ds-btn--sm">Explore →</a></div>
+      </div>
+      <div class="ds-card" style="display:flex;flex-direction:column">
+        <span class="ds-card__badge ds-card__badge--red">Capability</span>
+        <h3 class="ds-card__title">LLM Capsule</h3>
+        <p class="ds-card__description">Secure LLM usage with inline PII anonymization</p>
+        <div class="ds-card__button"><a class="ds-btn ds-btn--secondary ds-btn--sm">Explore →</a></div>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<!-- [E] Feature Grid -->
+<section class="v-section" id="lp-feature-grid">
+  <h2 class="v-section__title">[E] Feature Grid</h2>
+  <p class="v-section__desc">4~6개 피처. 아이콘 + 설명.</p>
+  <div class="v-card"><div class="v-card__body">
+    <div class="ds-feature-grid">
+      <div class="ds-feature-item"><span class="ds-feature-item__icon">🔒</span><h3 class="ds-feature-item__title">Data Safety Controls</h3><p class="ds-feature-item__description">Access control, audit logging, and separation of duties built into the operational workflow.</p></div>
+      <div class="ds-feature-item"><span class="ds-feature-item__icon">📋</span><h3 class="ds-feature-item__title">Compliance & Certification</h3><p class="ds-feature-item__description">Designed to operate within regulated industries with enterprise-grade data handling.</p></div>
+      <div class="ds-feature-item"><span class="ds-feature-item__icon">🚀</span><h3 class="ds-feature-item__title">Deployment Options</h3><p class="ds-feature-item__description">On-premises, cloud, or enterprise marketplace deployment.</p></div>
+      <div class="ds-feature-item"><span class="ds-feature-item__icon">🔍</span><h3 class="ds-feature-item__title">Audit & Traceability</h3><p class="ds-feature-item__description">Every execution is traceable. Release State history and Change Logs.</p></div>
+    </div>
+  </div></div>
+</section>
+
+<!-- [F] CTA Band -->
+<section class="v-section" id="lp-cta">
+  <h2 class="v-section__title">[F] CTA Band</h2>
+  <p class="v-section__desc">전폭 배치. ds-container 밖에 위치. 텍스트는 흰색.</p>
+  <div class="v-card" style="padding:0;overflow:hidden">
+    <div class="ds-cta-band" style="border-radius:0">
+      <div class="ds-cta-band__inner">
+        <span style="font-family:var(--ds-font-code);font-size:var(--ds-text-xs);text-transform:uppercase;letter-spacing:var(--ds-tracking-wide);color:rgba(255,255,255,0.7)">From Evidence to Execution</span>
+        <h2 class="ds-cta-band__title">Make your AI runs <span class="ds-text--brand">reproducible.</span></h2>
+        <p class="ds-cta-band__description">Every production AI failure has a root cause. These cases show how to find it fast.</p>
+        <div class="ds-cta-band__actions">
+          <a class="ds-btn ds-btn--md">Start evaluation →</a>
+          <a class="ds-btn ds-btn--md">Run a technical demo →</a>
+        </div>
+        <p class="ds-cta-band__footnote">30-min architecture review · no sales pitch</p>
+      </div>
+    </div>
+    <div class="v-note">실제 사용: ds-container 밖에 전폭으로 배치. 배경 이미지 사용.</div>
+  </div>
+</section>
+
+<!-- [G] Accordion Card -->
+<section class="v-section" id="lp-accordion">
+  <h2 class="v-section__title">[G] Accordion Card</h2>
+  <p class="v-section__desc">industry 라벨이 타이틀 위에 위치. 토글 버튼은 회색조 박스.</p>
+  <div class="v-card"><div class="v-card__body">
+    <div class="ds-ac-list">
+      <article class="ds-ac-card ds-ac--open">
+        <div class="ds-ac-card__header" onclick="toggleAcCard(this)">
+          <div class="ds-ac-card__title-wrap">
+            <div class="ds-ac-card__industry"><span class="ds-ac-card__industry-dot" style="background-color:var(--ds-color-success)"></span>Manufacturing</div>
+            <div class="ds-ac-card__title">Quality inspection model — rare defect class coverage</div>
+          </div>
+          <div class="ds-ac-card__meta"><span class="ds-badge ds-badge--success">Data Usability</span></div>
+          <div class="ds-ac-card__toggle"><span class="ds-ac-card__toggle-icon"></span></div>
+        </div>
+        <div class="ds-ac-card__body">
+          <div class="ds-ac-metrics">
+            <div class="ds-ac-metric"><span class="ds-ac-metric__val ds-ac-metric__val--success">+34%</span><span class="ds-ac-metric__label">Defect Detection</span></div>
+            <div class="ds-ac-metric"><span class="ds-ac-metric__val">2.1x</span><span class="ds-ac-metric__label">Coverage</span></div>
+            <div class="ds-ac-metric"><span class="ds-ac-metric__val">3 days</span><span class="ds-ac-metric__label">Time to Deploy</span></div>
+          </div>
+          <p class="ds-body-s" style="color:var(--ds-color-text-secondary)">DTS generated 12,000 synthetic defect images covering 4 rare classes. Model retrained with augmented dataset achieved production-grade accuracy without additional real-world data collection.</p>
+        </div>
+      </article>
+      <article class="ds-ac-card">
+        <div class="ds-ac-card__header" onclick="toggleAcCard(this)">
+          <div class="ds-ac-card__title-wrap">
+            <div class="ds-ac-card__industry"><span class="ds-ac-card__industry-dot" style="background-color:var(--ds-color-brand-purple)"></span>Insurance</div>
+            <div class="ds-ac-card__title">LLM-assisted claims processing — PII leakage prevention</div>
+          </div>
+          <div class="ds-ac-card__meta"><span class="ds-badge ds-badge--purple">Secure LLM</span></div>
+          <div class="ds-ac-card__toggle"><span class="ds-ac-card__toggle-icon"></span></div>
+        </div>
+        <div class="ds-ac-card__body"><p class="ds-body-s" style="color:var(--ds-color-text-secondary)">Collapsed content. Click toggle to expand.</p></div>
+      </article>
+    </div>
+  </div></div>
+</section>
+
+<!-- [H] Banner Variants -->
+<section class="v-section" id="lp-banner">
+  <h2 class="v-section__title">[H] Banner Variants</h2>
+  <p class="v-section__desc">상하 얇은 border만. 좌측 굵은 border 금지. eyebrow "//" 금지.</p>
+  <div class="v-card"><div class="v-card__body" style="display:flex;flex-direction:column;gap:12px">
+    <div class="ds-banner"><span class="ds-banner__label">Definition</span>True AI-ready data means it is usable, privacy-safe, and stable for production execution.</div>
+    <div class="ds-banner ds-banner--brand"><span class="ds-banner__label">Why this matters</span>Neither Databricks nor MLflow versions the data state the model was bound to at run time.</div>
+    <div class="ds-banner ds-banner--info"><span class="ds-banner__label">Note</span>SynTitan produces structured artifacts that make execution conditions inspectable.</div>
+  </div></div>
+</section>
+
+<!-- [I] Product Split -->
+<section class="v-section" id="lp-product-split">
+  <h2 class="v-section__title">[I] Product Split</h2>
+  <p class="v-section__desc">이미지(bg-image + 로고 24px + 스크린샷 하단 정렬) + 텍스트 분할 레이아웃. 좌우 height 일치.</p>
+  <div class="v-card"><div class="v-card__body">
+    <div class="ds-product-split">
+      <div class="ds-product-split__visual" style="background-image:url('images/bg-paint-blue-iridescent.png')">
+        <img class="ds-product-split__visual-logo" src="images/logo-llmcapsule.avif" alt="LLM Capsule">
+        <div class="ds-product-split__visual-screenshot">
+          <img src="images/screenshot-llmcapsule.avif" alt="LLM Capsule Screenshot" style="width:100%;display:block">
+        </div>
+      </div>
+      <div class="ds-product-split__content">
+        <h2 class="ds-product-split__title">Use LLMs safely on <span class="ds-text--brand">enterprise data</span></h2>
+        <p class="ds-product-split__lead">Teams adopting external LLM APIs often discover that enterprise documents contain sensitive fields.</p>
+        <p class="ds-product-split__body">LLM Capsule removes that blocker by anonymizing sensitive data inline during LLM interaction.</p>
+        <div class="ds-product-split__actions">
+          <a class="ds-btn ds-btn--primary ds-btn--sm">MORE ↗</a>
+          <a class="ds-btn ds-btn--secondary ds-btn--sm">Available in AWS →</a>
+        </div>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<!-- [K] Partner Logo Grid -->
+<section class="v-section" id="lp-partner-grid">
+  <h2 class="v-section__title">[K] Partner Logo Grid</h2>
+  <p class="v-section__desc">전체 뷰포트 너비 마키 애니메이션. 로고 11개를 2벌 복제하여 seamless loop. 호버 시 일시정지.</p>
+  <div class="v-card"><div class="v-card__body" style="overflow:hidden">
+    <div class="ds-partner-grid">
+      <div class="ds-partner-grid__track">
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="images/partner-gartner.png" alt="Gartner"><span class="ds-partner-item__name">Gartner</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="images/partner-navercloud.avif" alt="Naver Cloud"><span class="ds-partner-item__name">Naver Cloud</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="images/partner-sktelecom.avif" alt="SK Telecom"><span class="ds-partner-item__name">SK Telecom</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="images/partner-kyobo.avif" alt="Kyobo"><span class="ds-partner-item__name">Kyobo</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="images/partner-korea army.avif" alt="ROK Army"><span class="ds-partner-item__name">ROK Army</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="images/partner-korea-airforce.avif" alt="ROK Air Force"><span class="ds-partner-item__name">ROK Air Force</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="images/partner-eumc.avif" alt="EUMC"><span class="ds-partner-item__name">EUMC</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="images/partner-deutsche-telekom.avif" alt="Deutsche Telekom"><span class="ds-partner-item__name">Deutsche Telekom</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="images/partner-claroty.png" alt="Claroty"><span class="ds-partner-item__name">Claroty</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="images/partner-korea-heritage-service.jpg" alt="Korea Heritage Service"><span class="ds-partner-item__name">Korea Heritage Service</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="images/partner-ministry-of-data-and-statistics.png" alt="Ministry of Data"><span class="ds-partner-item__name">Ministry of Data</span></div>
+        <!-- 2벌: seamless loop 복제 -->
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="images/partner-gartner.png" alt="Gartner"><span class="ds-partner-item__name">Gartner</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="images/partner-navercloud.avif" alt="Naver Cloud"><span class="ds-partner-item__name">Naver Cloud</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="images/partner-sktelecom.avif" alt="SK Telecom"><span class="ds-partner-item__name">SK Telecom</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="images/partner-kyobo.avif" alt="Kyobo"><span class="ds-partner-item__name">Kyobo</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="images/partner-korea army.avif" alt="ROK Army"><span class="ds-partner-item__name">ROK Army</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="images/partner-korea-airforce.avif" alt="ROK Air Force"><span class="ds-partner-item__name">ROK Air Force</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="images/partner-eumc.avif" alt="EUMC"><span class="ds-partner-item__name">EUMC</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="images/partner-deutsche-telekom.avif" alt="Deutsche Telekom"><span class="ds-partner-item__name">Deutsche Telekom</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="images/partner-claroty.png" alt="Claroty"><span class="ds-partner-item__name">Claroty</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="images/partner-korea-heritage-service.jpg" alt="Korea Heritage Service"><span class="ds-partner-item__name">Korea Heritage Service</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="images/partner-ministry-of-data-and-statistics.png" alt="Ministry of Data"><span class="ds-partner-item__name">Ministry of Data</span></div>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<!-- [L] Cert Grid -->
+<section class="v-section" id="lp-cert-grid">
+  <h2 class="v-section__title">[L] Cert Grid</h2>
+  <p class="v-section__desc">인증서/수상/인정 카드를 마키 애니메이션으로 가로 스크롤. Partner Grid와 동일 패턴. 호버 시 일시정지. JS로 seamless loop 복제.</p>
+  <div class="v-card"><div class="v-card__body" style="overflow:hidden;padding:0">
+    <div class="ds-cert-grid">
+      <div class="ds-cert-grid__track">
+        <!-- Certifications -->
+        <article class="ds-cert-card">
+          <span class="ds-cert-card__group">Certifications</span>
+          <div class="ds-cert-card__wreath">
+            <img class="ds-cert-card__wreath-left" src="graphics/cert-left.png" alt="">
+            <span class="ds-cert-card__wreath-text">Information Security Fast Track</span>
+            <img class="ds-cert-card__wreath-right" src="graphics/cert-right.png" alt="">
+          </div>
+          <span class="ds-cert-card__org">KISA</span>
+          <span class="ds-cert-card__year">2024</span>
+          <img class="ds-cert-card__logo" src="graphics/cert-kisa.png" alt="KISA">
+        </article>
+        <article class="ds-cert-card">
+          <span class="ds-cert-card__group">Certifications</span>
+          <div class="ds-cert-card__wreath">
+            <img class="ds-cert-card__wreath-left" src="graphics/cert-left.png" alt="">
+            <span class="ds-cert-card__wreath-text">GS Certification</span>
+            <img class="ds-cert-card__wreath-right" src="graphics/cert-right.png" alt="">
+          </div>
+          <span class="ds-cert-card__org">TTA</span>
+          <span class="ds-cert-card__year">2025</span>
+          <img class="ds-cert-card__logo" src="graphics/cert-gs.png" alt="GS Certification">
+        </article>
+        <article class="ds-cert-card">
+          <span class="ds-cert-card__group">Certifications</span>
+          <div class="ds-cert-card__wreath">
+            <img class="ds-cert-card__wreath-left" src="graphics/cert-left.png" alt="">
+            <span class="ds-cert-card__wreath-text">ISO/IEC 27001</span>
+            <img class="ds-cert-card__wreath-right" src="graphics/cert-right.png" alt="">
+          </div>
+          <span class="ds-cert-card__org">ISO</span>
+          <span class="ds-cert-card__year">2026</span>
+          <img class="ds-cert-card__logo" src="graphics/cert-iso.png" alt="ISO">
+        </article>
+        <article class="ds-cert-card">
+          <span class="ds-cert-card__group">Certifications</span>
+          <div class="ds-cert-card__wreath">
+            <img class="ds-cert-card__wreath-left" src="graphics/cert-left.png" alt="">
+            <span class="ds-cert-card__wreath-text">ISO/IEC 42001</span>
+            <img class="ds-cert-card__wreath-right" src="graphics/cert-right.png" alt="">
+          </div>
+          <span class="ds-cert-card__org">ISO</span>
+          <span class="ds-cert-card__year">2026</span>
+          <img class="ds-cert-card__logo" src="graphics/cert-iso.png" alt="ISO">
+        </article>
+        <!-- Awards -->
+        <article class="ds-cert-card">
+          <span class="ds-cert-card__group">Awards</span>
+          <div class="ds-cert-card__wreath">
+            <img class="ds-cert-card__wreath-left" src="graphics/cert-left.png" alt="">
+            <span class="ds-cert-card__wreath-text">Information Security Innovation Award</span>
+            <img class="ds-cert-card__wreath-right" src="graphics/cert-right.png" alt="">
+          </div>
+          <span class="ds-cert-card__org">Ministry of Science &amp; ICT</span>
+          <span class="ds-cert-card__year">2024</span>
+          <img class="ds-cert-card__logo" src="graphics/awards-ministry-of-science-and-ict.jpg" alt="Ministry of Science and ICT">
+        </article>
+        <article class="ds-cert-card">
+          <span class="ds-cert-card__group">Awards</span>
+          <div class="ds-cert-card__wreath">
+            <img class="ds-cert-card__wreath-left" src="graphics/cert-left.png" alt="">
+            <span class="ds-cert-card__wreath-text">Startup World Cup — Finalist</span>
+            <img class="ds-cert-card__wreath-right" src="graphics/cert-right.png" alt="">
+          </div>
+          <span class="ds-cert-card__org">Startup World Cup</span>
+          <span class="ds-cert-card__year">2025</span>
+          <img class="ds-cert-card__logo" src="graphics/cert-startupworldcup.png" alt="Startup World Cup">
+        </article>
+        <article class="ds-cert-card">
+          <span class="ds-cert-card__group">Awards</span>
+          <div class="ds-cert-card__wreath">
+            <img class="ds-cert-card__wreath-left" src="graphics/cert-left.png" alt="">
+            <span class="ds-cert-card__wreath-text">Next Rise — Global Innovator</span>
+            <img class="ds-cert-card__wreath-right" src="graphics/cert-right.png" alt="">
+          </div>
+          <span class="ds-cert-card__org">Next Rise</span>
+          <span class="ds-cert-card__year">2025</span>
+        </article>
+        <article class="ds-cert-card">
+          <span class="ds-cert-card__group">Awards</span>
+          <div class="ds-cert-card__wreath">
+            <img class="ds-cert-card__wreath-left" src="graphics/cert-left.png" alt="">
+            <span class="ds-cert-card__wreath-text">T Challenge 2026 — Finalist</span>
+            <img class="ds-cert-card__wreath-right" src="graphics/cert-right.png" alt="">
+          </div>
+          <span class="ds-cert-card__org">Deutsche Telekom</span>
+          <span class="ds-cert-card__year">2026</span>
+          <img class="ds-cert-card__logo" src="images/partner-deutsche-telekom.avif" alt="Deutsche Telekom">
+        </article>
+        <article class="ds-cert-card">
+          <span class="ds-cert-card__group">Awards</span>
+          <div class="ds-cert-card__wreath">
+            <img class="ds-cert-card__wreath-left" src="graphics/cert-left.png" alt="">
+            <span class="ds-cert-card__wreath-text">AI EXPO KOREA — AI Medical Innovation Award</span>
+            <img class="ds-cert-card__wreath-right" src="graphics/cert-right.png" alt="">
+          </div>
+          <span class="ds-cert-card__org">AI EXPO KOREA</span>
+          <span class="ds-cert-card__year">2025</span>
+          <img class="ds-cert-card__logo" src="graphics/awards-koreaia.png" alt="AI EXPO KOREA">
+        </article>
+        <!-- Recognition -->
+        <article class="ds-cert-card">
+          <span class="ds-cert-card__group">Recognition</span>
+          <div class="ds-cert-card__wreath">
+            <img class="ds-cert-card__wreath-left" src="graphics/cert-left.png" alt="">
+            <span class="ds-cert-card__wreath-text">Emerging AI+X Top 100</span>
+            <img class="ds-cert-card__wreath-right" src="graphics/cert-right.png" alt="">
+          </div>
+          <span class="ds-cert-card__org">—</span>
+          <span class="ds-cert-card__year">2026</span>
+        </article>
+        <article class="ds-cert-card">
+          <span class="ds-cert-card__group">Recognition</span>
+          <div class="ds-cert-card__wreath">
+            <img class="ds-cert-card__wreath-left" src="graphics/cert-left.png" alt="">
+            <span class="ds-cert-card__wreath-text">Representative Vendor, Hyper-Synthetic Data</span>
+            <img class="ds-cert-card__wreath-right" src="graphics/cert-right.png" alt="">
+          </div>
+          <span class="ds-cert-card__org">Gartner</span>
+          <span class="ds-cert-card__year">2025</span>
+          <img class="ds-cert-card__logo" src="graphics/cert-gartner.svg.png" alt="Gartner">
+        </article>
+      </div>
+    </div>
+  </div></div>
+  <script>
+    (function() {
+      var track = document.querySelector('#lp-cert-grid .ds-cert-grid__track');
+      if (track) {
+        Array.from(track.children).forEach(function(item) {
+          track.appendChild(item.cloneNode(true));
+        });
+      }
+    })();
+  </script>
+</section>
+
+<!-- [M] Case Study Card -->
+<section class="v-section" id="lp-case-study">
+  <h2 class="v-section__title">[M] Case Study Card</h2>
+  <p class="v-section__desc">좌측: 투명 배경 + border-right 구분선 + 실제 이미지. 우측: bullet-text gap 축소(space-xs). 1col/2col/3col 변형.</p>
+  <div class="v-card"><div class="v-card__body" style="display:flex;flex-direction:column;gap:16px">
+    <!-- 1col -->
+    <p style="font-size:var(--ds-text-xs);color:var(--ds-color-text-tertiary);margin:0">1col variant:</p>
+    <div class="ds-card--case-study">
+      <div class="ds-card__left">
+        <img class="ds-card__left-img" src="graphics/illustration-security.png" alt="Security">
+        <span class="ds-card__left-label">Finance</span>
+        <span class="ds-card__left-name">KB Financial</span>
+      </div>
+      <div class="ds-card__right">
+        <h3 style="font-size:var(--ds-text-md);font-weight:var(--ds-weight-bold);margin:0">Synthetic data for fraud detection model training</h3>
+        <ul class="ds-bullet ds-bullet--dot" style="margin:0">
+          <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Generated 50K+ synthetic fraud patterns</li>
+          <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Model accuracy improved by 23%</li>
+          <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Zero privacy incidents post-deployment</li>
+        </ul>
+      </div>
+    </div>
+    <!-- 2col -->
+    <p style="font-size:var(--ds-text-xs);color:var(--ds-color-text-tertiary);margin:var(--ds-space-md) 0 0">2col variant (ds-card-grid--2col):</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--ds-space-md)">
+      <div class="ds-card--case-study ds-card--case-study--compact">
+        <div class="ds-card__left">
+          <img class="ds-card__left-img" src="graphics/illustration-insurance.png" alt="Insurance">
+          <span class="ds-card__left-label">Insurance</span>
+          <span class="ds-card__left-name">Samsung Life</span>
+        </div>
+        <div class="ds-card__right">
+          <h3 style="font-size:var(--ds-text-sm);font-weight:var(--ds-weight-bold);margin:0">Claims processing automation</h3>
+          <ul class="ds-bullet ds-bullet--dot" style="margin:0;font-size:var(--ds-text-xs)">
+            <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>40% faster processing</li>
+            <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>PII fully anonymized</li>
+          </ul>
+        </div>
+      </div>
+      <div class="ds-card--case-study ds-card--case-study--compact">
+        <div class="ds-card__left">
+          <img class="ds-card__left-img" src="graphics/illustration-ecommerce.png" alt="E-commerce">
+          <span class="ds-card__left-label">Retail</span>
+          <span class="ds-card__left-name">Lotte ON</span>
+        </div>
+        <div class="ds-card__right">
+          <h3 style="font-size:var(--ds-text-sm);font-weight:var(--ds-weight-bold);margin:0">Product recommendation engine</h3>
+          <ul class="ds-bullet ds-bullet--dot" style="margin:0;font-size:var(--ds-text-xs)">
+            <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>15% CTR improvement</li>
+            <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Cold-start problem solved</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<!-- [J] Table -->
+<section class="v-section" id="lp-table">
+  <h2 class="v-section__title">[J] Table</h2>
+  <p class="v-section__desc">규정/스펙 비교표</p>
+  <div class="v-card"><div class="v-card__body">
+    <div class="ds-table-wrap">
+      <table class="ds-table">
+        <colgroup><col style="width:25%"><col style="width:40%"><col style="width:35%"></colgroup>
+        <thead><tr><th>Regulation</th><th>Protected Data</th><th>LLM Risk</th></tr></thead>
+        <tbody>
+          <tr><td>GDPR</td><td>Personal identifiers, location data</td><td>Data subject rights violations</td></tr>
+          <tr><td>HIPAA</td><td>Protected health information (PHI)</td><td>Patient data exposure via prompts</td></tr>
+          <tr><td>CCPA</td><td>Consumer personal information</td><td>Consumer rights violations</td></tr>
+          <tr><td>AI Act (EU)</td><td>High-risk AI system outputs</td><td>Transparency & accountability gaps</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div></div>
+</section>
+
+<!-- Step Tabs -->
+<section class="v-section" id="lp-step-tabs">
+  <h2 class="v-section__title">[U] Step Tabs</h2>
+  <p class="v-section__desc">상단 탭 내비게이션(Step 번호+명칭, pill 형태, active=bold border) + 하단 패널(Title + Description + Checklist + CTA + Screenshot). 탭 클릭 시 패널 전환. 흰색 배경에서 사용.</p>
+  <div class="v-card"><div class="v-card__body">
+    <div class="ds-step-tabs" data-step-tabs>
+      <!-- Tab Navigation -->
+      <div class="ds-step-tabs__nav" role="tablist">
+        <button class="ds-step-tabs__tab ds-step-tabs__tab--active" role="tab" aria-selected="true" data-tab="0">
+          <span class="ds-step-tabs__tab-number">1</span> Connect Data
+        </button>
+        <button class="ds-step-tabs__tab" role="tab" aria-selected="false" data-tab="1">
+          <span class="ds-step-tabs__tab-number">2</span> Configure Model
+        </button>
+        <button class="ds-step-tabs__tab" role="tab" aria-selected="false" data-tab="2">
+          <span class="ds-step-tabs__tab-number">3</span> Deploy & Monitor
+        </button>
+      </div>
+
+      <!-- Panel 1 -->
+      <div class="ds-step-tabs__panel ds-step-tabs__panel--active" role="tabpanel" data-panel="0">
+        <div class="ds-step-tabs__content">
+          <h3 class="ds-step-tabs__title">데이터 소스를 안전하게 연결하세요</h3>
+          <p class="ds-step-tabs__description">내부 데이터베이스, 클라우드 스토리지, API 엔드포인트를 몇 번의 클릭으로 연동합니다. 민감 정보는 자동으로 마스킹 처리됩니다.</p>
+          <ul class="ds-bullet ds-bullet--check">
+            <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>50+ 데이터 소스 커넥터 기본 제공</li>
+            <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>TLS 1.3 암호화 전송</li>
+            <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>실시간 데이터 파이프라인 자동 구성</li>
+          </ul>
+          <div class="ds-step-tabs__actions">
+            <a href="#" class="ds-btn ds-btn--primary ds-btn--md">시작하기</a>
+            <a href="#" class="ds-btn ds-btn--secondary ds-btn--md">문서 보기 →</a>
+          </div>
+        </div>
+        <div class="ds-step-tabs__screenshot">
+          <div class="v-screenshot-placeholder">
+            <div class="v-screenshot-placeholder__inner">
+              <div class="v-screenshot-placeholder__icon"></div>
+              <span class="v-screenshot-placeholder__text">Screenshot · Step 1</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel 2 -->
+      <div class="ds-step-tabs__panel" role="tabpanel" data-panel="1">
+        <div class="ds-step-tabs__content">
+          <h3 class="ds-step-tabs__title">모델을 목적에 맞게 구성하세요</h3>
+          <p class="ds-step-tabs__description">사전 학습된 베이스 모델을 선택하고, RAG 파이프라인과 프롬프트 가이드라인을 No-code UI로 설정합니다.</p>
+          <ul class="ds-bullet ds-bullet--check">
+            <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>GPT-4o, Claude 3, Gemini Ultra 지원</li>
+            <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>도메인 특화 파인튜닝 옵션</li>
+            <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>할루시네이션 자동 감지 필터</li>
+          </ul>
+          <div class="ds-step-tabs__actions">
+            <a href="#" class="ds-btn ds-btn--primary ds-btn--md">모델 선택하기</a>
+            <a href="#" class="ds-btn ds-btn--secondary ds-btn--md">비교표 보기 →</a>
+          </div>
+        </div>
+        <div class="ds-step-tabs__screenshot">
+          <div class="v-screenshot-placeholder">
+            <div class="v-screenshot-placeholder__inner">
+              <div class="v-screenshot-placeholder__icon"></div>
+              <span class="v-screenshot-placeholder__text">Screenshot · Step 2</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel 3 -->
+      <div class="ds-step-tabs__panel" role="tabpanel" data-panel="2">
+        <div class="ds-step-tabs__content">
+          <h3 class="ds-step-tabs__title">배포 후 성능을 실시간으로 모니터링하세요</h3>
+          <p class="ds-step-tabs__description">One-click 배포 후 응답 품질, 지연 시간, 토큰 비용을 통합 대시보드에서 확인합니다. 이상 감지 시 자동 알림을 보냅니다.</p>
+          <ul class="ds-bullet ds-bullet--check">
+            <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Kubernetes 기반 무중단 배포</li>
+            <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>토큰 비용 실시간 추적 및 예산 알림</li>
+            <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>A/B 테스트 자동화 지원</li>
+          </ul>
+          <div class="ds-step-tabs__actions">
+            <a href="#" class="ds-btn ds-btn--primary ds-btn--md">배포 시작</a>
+            <a href="#" class="ds-btn ds-btn--secondary ds-btn--md">데모 영상 →</a>
+          </div>
+        </div>
+        <div class="ds-step-tabs__screenshot">
+          <div class="v-screenshot-placeholder">
+            <div class="v-screenshot-placeholder__inner">
+              <div class="v-screenshot-placeholder__icon"></div>
+              <span class="v-screenshot-placeholder__text">Screenshot · Step 3</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<!-- [W] Diagram -->
+<section class="v-section" id="lp-diagram">
+  <h2 class="v-section__title">[W] Diagram</h2>
+  <p class="v-section__desc">시스템 아키텍처, 데이터 파이프라인, 프로세스 플로우를 시각화하는 OS 윈도우 프레임 기반 다이어그램. transform / activation / exchange / default 4가지 섹션 타입과 JS 런타임 화살표 연결을 제공한다.</p>
+
+  <div class="v-card"><div class="v-card__body">
+    <span class="v-label">3-col 다이어그램 — transform → activation → exchange</span>
+
+    <div class="ds-diagram" id="viewer-diagram-demo" style="margin-top:16px">
+      <div class="ds-diagram__window">
+        <div class="ds-diagram__titlebar">
+          <span class="ds-diagram__titlebar-dot ds-diagram__titlebar-dot--close"></span>
+          <span class="ds-diagram__titlebar-dot ds-diagram__titlebar-dot--min"></span>
+          <span class="ds-diagram__titlebar-dot ds-diagram__titlebar-dot--max"></span>
+        </div>
+        <div class="ds-diagram__content">
+          <div class="ds-diagram__card">
+            <div class="ds-diagram__card-title">Data Pipeline</div>
+            <div class="ds-diagram__headers" style="grid-template-columns: 1fr 1fr 1fr;">
+              <div class="ds-diagram__header">Ingestion</div>
+              <div class="ds-diagram__header">Processing</div>
+              <div class="ds-diagram__header">Output</div>
+            </div>
+            <div class="ds-diagram__body" style="grid-template-columns: 1fr 1fr 1fr;">
+
+              <!-- col 1: transform -->
+              <div class="ds-diagram__col">
+                <div class="ds-diagram__transform">
+                  <div class="ds-diagram__item-box" id="diag-demo-src-1">Raw Data</div>
+                  <div class="ds-diagram__arrow-down"></div>
+                  <div class="ds-diagram__item-box">Cleaned Data</div>
+                  <div class="ds-diagram__dashed-connector">
+                    <div class="ds-diagram__dashed-seg"></div>
+                    <div class="ds-diagram__dashed-seg"></div>
+                    <div class="ds-diagram__dashed-seg"></div>
+                  </div>
+                  <div class="ds-diagram__item-box" id="diag-demo-from-1">Schema Check</div>
+                </div>
+              </div>
+
+              <!-- col 2: activation -->
+              <div class="ds-diagram__col">
+                <div class="ds-diagram__act-card" id="diag-demo-from-2">
+                  <div class="ds-diagram__act-icon">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path d="M12 2L2 7l10 5 10-5-10-5z" stroke="#888" stroke-width="1.5" stroke-linejoin="round"/>
+                      <path d="M2 17l10 5 10-5" stroke="#888" stroke-width="1.5" stroke-linejoin="round"/>
+                      <path d="M2 12l10 5 10-5" stroke="#888" stroke-width="1.5" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                  <span style="font-size:var(--ds-text-sm);color:var(--ds-diag-text);font-weight:500">Validation</span>
+                  <span style="font-size:11px;color:var(--ds-diag-text-sub)">Rule Engine</span>
+                </div>
+                <div class="ds-diagram__act-card">
+                  <div class="ds-diagram__act-icon">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <circle cx="12" cy="12" r="9" stroke="#888" stroke-width="1.5"/>
+                      <path d="M12 7v5l3 3" stroke="#888" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                  </div>
+                  <span style="font-size:var(--ds-text-sm);color:var(--ds-diag-text);font-weight:500">Scheduling</span>
+                  <span style="font-size:11px;color:var(--ds-diag-text-sub)">Cron Trigger</span>
+                </div>
+              </div>
+
+              <!-- col 3: exchange -->
+              <div class="ds-diagram__col">
+                <div class="ds-diagram__exchange-wrap" id="diag-demo-to-1">
+                  <div class="ds-diagram__exchange-inner">
+                    <span class="ds-diagram__safe-badge">SAFE</span>
+                    <span style="font-size:var(--ds-text-sm);color:var(--ds-diag-text);font-weight:500;margin-top:6px">Data Sharing</span>
+                    <span style="font-size:11px;color:var(--ds-diag-text-sub)">Encrypted Channel</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- arrow overlay: JS가 채움 -->
+              <svg class="ds-diagram__arrow-layer" id="diag-demo-arrows">
+                <defs>
+                  <marker id="arrowhead-dark" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
+                    <polyline points="0,0 6,3.5 0,7" fill="none" stroke="#444444" stroke-width="1.5" stroke-linejoin="round"/>
+                  </marker>
+                  <marker id="arrowhead-accent" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
+                    <polyline points="0,0 6,3.5 0,7" fill="none" stroke="#4a9de0" stroke-width="1.5" stroke-linejoin="round"/>
+                  </marker>
+                </defs>
+              </svg>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <span class="v-label" style="margin-top:32px;display:block">섹션 타입 비교</span>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-top:12px">
+
+      <!-- transform -->
+      <div>
+        <p style="font-size:var(--ds-text-xs);color:var(--ds-color-text-tertiary);font-family:var(--ds-font-code);margin-bottom:8px">.ds-diagram__transform</p>
+        <div class="ds-diagram__transform" style="width:100%">
+          <div class="ds-diagram__item-box">Source Node</div>
+          <div class="ds-diagram__arrow-down"></div>
+          <div class="ds-diagram__item-box">Target Node</div>
+        </div>
+        <p style="font-size:11px;color:var(--ds-color-text-tertiary);margin-top:6px">dashed 컨테이너 + 수직 스택 — 변환/처리 단계</p>
+      </div>
+
+      <!-- activation -->
+      <div>
+        <p style="font-size:var(--ds-text-xs);color:var(--ds-color-text-tertiary);font-family:var(--ds-font-code);margin-bottom:8px">.ds-diagram__act-card</p>
+        <div class="ds-diagram__act-card" style="width:100%">
+          <div class="ds-diagram__act-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="3" stroke="#888" stroke-width="1.5"/>
+              <path d="M8 12h8M12 8v8" stroke="#888" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <span style="font-size:var(--ds-text-sm);color:var(--ds-diag-text);font-weight:500">Activation</span>
+        </div>
+        <p style="font-size:11px;color:var(--ds-color-text-tertiary);margin-top:6px">silver 카드 스택 — 모듈/서비스 단위</p>
+      </div>
+
+      <!-- exchange: accent -->
+      <div>
+        <p style="font-size:var(--ds-text-xs);color:var(--ds-color-text-tertiary);font-family:var(--ds-font-code);margin-bottom:8px">.ds-diagram__exchange-wrap</p>
+        <div class="ds-diagram__exchange-wrap" style="width:100%">
+          <div class="ds-diagram__exchange-inner">
+            <span class="ds-diagram__safe-badge">SAFE</span>
+            <span style="font-size:var(--ds-text-sm);color:var(--ds-diag-text);font-weight:500;margin-top:4px">Exchange</span>
+          </div>
+        </div>
+        <p style="font-size:11px;color:var(--ds-color-text-tertiary);margin-top:6px">accent glow 테두리 — 보안/교환 레이어</p>
+        <!-- gradient swatch -->
+        <div style="margin-top:8px;height:6px;border-radius:3px;background:var(--ds-diag-grad-accent)"></div>
+        <p style="font-size:10px;color:var(--ds-color-text-tertiary);margin-top:3px;font-family:var(--ds-font-code)">--ds-diag-grad-accent</p>
+      </div>
+
+      <!-- exchange: nature -->
+      <div>
+        <p style="font-size:var(--ds-text-xs);color:var(--ds-color-text-tertiary);font-family:var(--ds-font-code);margin-bottom:8px">.ds-diagram__exchange-wrap--nature</p>
+        <div class="ds-diagram__exchange-wrap--nature" style="width:100%">
+          <div class="ds-diagram__exchange-inner">
+            <span style="font-size:var(--ds-text-sm);color:var(--ds-diag-text);font-weight:500">Nature</span>
+            <span style="font-size:11px;color:var(--ds-diag-text-sub)">초록-노랑</span>
+          </div>
+        </div>
+        <p style="font-size:11px;color:var(--ds-color-text-tertiary);margin-top:6px">nature glow 테두리 — 자연/생태/친환경 레이어</p>
+        <!-- gradient swatch -->
+        <div style="margin-top:8px;height:6px;border-radius:3px;background:var(--ds-diag-grad-nature)"></div>
+        <p style="font-size:10px;color:var(--ds-color-text-tertiary);margin-top:3px;font-family:var(--ds-font-code)">--ds-diag-grad-nature</p>
+      </div>
+
+      <!-- exchange: warm -->
+      <div>
+        <p style="font-size:var(--ds-text-xs);color:var(--ds-color-text-tertiary);font-family:var(--ds-font-code);margin-bottom:8px">.ds-diagram__exchange-wrap--warm</p>
+        <div class="ds-diagram__exchange-wrap--warm" style="width:100%">
+          <div class="ds-diagram__exchange-inner">
+            <span style="font-size:var(--ds-text-sm);color:var(--ds-diag-text);font-weight:500">Warm</span>
+            <span style="font-size:11px;color:var(--ds-diag-text-sub)">주황-분홍</span>
+          </div>
+        </div>
+        <p style="font-size:11px;color:var(--ds-color-text-tertiary);margin-top:6px">warm glow 테두리 — 에너지/감성/경고 레이어</p>
+        <!-- gradient swatch -->
+        <div style="margin-top:8px;height:6px;border-radius:3px;background:var(--ds-diag-grad-warm)"></div>
+        <p style="font-size:10px;color:var(--ds-color-text-tertiary);margin-top:3px;font-family:var(--ds-font-code)">--ds-diag-grad-warm</p>
+      </div>
+
+      <!-- default -->
+      <div>
+        <p style="font-size:var(--ds-text-xs);color:var(--ds-color-text-tertiary);font-family:var(--ds-font-code);margin-bottom:8px">.ds-diagram__default-wrap</p>
+        <div class="ds-diagram__default-wrap" style="width:100%">
+          <div class="ds-diagram__default-inner">
+            <span style="font-weight:500">Output</span><br>
+            <span style="font-size:11px;color:var(--ds-diag-text-sub)">Normal gradient</span>
+          </div>
+        </div>
+        <p style="font-size:11px;color:var(--ds-color-text-tertiary);margin-top:6px">normal gradient 테두리 — 일반 출력 단계</p>
+      </div>
+
+    </div>
+
+    <span class="v-label" style="margin-top:32px;display:block">화살표 연결 규칙 (JS drawArrows)</span>
+    <ul style="font-size:var(--ds-text-sm);color:var(--ds-color-text-secondary);line-height:var(--ds-leading-relaxed);padding-left:20px;margin-top:8px">
+      <li>getBoundingClientRect()로 런타임 좌표 측정 — 하드코딩 금지</li>
+      <li>출발: 카드 right edge + 8px GAP / 도착: 카드 left edge − 8px GAP</li>
+      <li>높이 차이 &gt; 8px → L자 경로, ≤ 8px → 직선</li>
+      <li>마지막 화살표: accent (#4a9de0) · 나머지: dark (#444) · stroke-width: 1.5px</li>
+      <li>chevron 스타일 marker-end · resize 이벤트에 재계산</li>
+    </ul>
+
+    <span class="v-label" style="margin-top:24px;display:block">사용 시점</span>
+    <ul style="font-size:var(--ds-text-sm);color:var(--ds-color-text-secondary);line-height:var(--ds-leading-relaxed);padding-left:20px;margin-top:8px">
+      <li>시스템 아키텍처 다이어그램</li>
+      <li>데이터 파이프라인 시각화</li>
+      <li>프로세스 플로우 차트</li>
+      <li>제품 구성도</li>
+    </ul>
+  </div></div>
+</section>
+
+<!-- [15] Code Block -->
+<section class="v-section" id="lp-code-block">
+  <h2 class="v-section__title">[15] Code Block</h2>
+  <p class="v-section__desc">코드, diff, 로그 등 기술적 내용을 모노스페이스 블록으로 표시. 줄별 의미 강조를 위해 색상 클래스를 조합한다.</p>
+
+  <div class="v-card"><div class="v-card__body">
+    <span class="v-label">독립 코드 블록 — .ds-code-block</span>
+    <p style="font-size:var(--ds-text-sm);color:var(--ds-color-text-tertiary);margin-bottom:12px">배경: neutral-900 · 테두리: neutral-800 · 텍스트: neutral-300 · font: Fragment Mono · line-height: 1.9</p>
+    <div class="ds-code-block" aria-label="Release State diff">
+      <div class="ds-code--muted">// Release State diff: RS-0041 → RS-0042</div>
+      <div class="ds-code--remove">− schema.feature_col_7: dtype=int64</div>
+      <div class="ds-code--add">+ schema.feature_col_7: dtype=object</div>
+      <div class="ds-code--muted">// 1 schema fingerprint change detected</div>
+      <div class="ds-code--warn">! Run Binding: RS-0042 flagged before production</div>
+    </div>
+
+    <span class="v-label" style="margin-top:24px;display:block">줄별 색상 클래스</span>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:8px">
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--ds-color-neutral-900);border:1px solid var(--ds-color-neutral-800);border-radius:var(--ds-radius-sm)">
+        <span style="font-family:var(--ds-font-code);font-size:var(--ds-text-sm);color:var(--ds-color-error-light)">− .ds-code--remove</span>
+        <span style="font-family:var(--ds-font-code);font-size:var(--ds-text-xs);color:var(--ds-color-neutral-500)">error-light · 삭제</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--ds-color-neutral-900);border:1px solid var(--ds-color-neutral-800);border-radius:var(--ds-radius-sm)">
+        <span style="font-family:var(--ds-font-code);font-size:var(--ds-text-sm);color:var(--ds-color-success-light)">+ .ds-code--add</span>
+        <span style="font-family:var(--ds-font-code);font-size:var(--ds-text-xs);color:var(--ds-color-neutral-500)">success-light · 추가</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--ds-color-neutral-900);border:1px solid var(--ds-color-neutral-800);border-radius:var(--ds-radius-sm)">
+        <span style="font-family:var(--ds-font-code);font-size:var(--ds-text-sm);color:var(--ds-color-warn-light)">! .ds-code--warn</span>
+        <span style="font-family:var(--ds-font-code);font-size:var(--ds-text-xs);color:var(--ds-color-neutral-500)">warn-light · 경고</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--ds-color-neutral-900);border:1px solid var(--ds-color-neutral-800);border-radius:var(--ds-radius-sm)">
+        <span style="font-family:var(--ds-font-code);font-size:var(--ds-text-sm);color:var(--ds-color-neutral-500)">// .ds-code--muted</span>
+        <span style="font-family:var(--ds-font-code);font-size:var(--ds-text-xs);color:var(--ds-color-neutral-500)">neutral-500 · 주석</span>
+      </div>
+    </div>
+
+    <span class="v-label" style="margin-top:24px;display:block">카드 안에 코드 블록 삽입</span>
+    <div style="margin-top:8px;max-width:480px">
+      <div class="ds-card">
+        <span class="ds-card__badge ds-card__badge--brand">Release State Diff</span>
+        <h3 class="ds-card__title ds-card__title--sm">Release State Comparison</h3>
+        <p class="ds-card__description">RS-0041과 RS-0042 간 스키마 변경 내역입니다.</p>
+        <div class="ds-code-block" aria-label="코드 예시">
+          <div class="ds-code--muted">// 주석: 변경 항목 요약</div>
+          <div class="ds-code--remove">− schema.feature_col_7: dtype=int64</div>
+          <div class="ds-code--add">+ schema.feature_col_7: dtype=object</div>
+          <div class="ds-code--warn">! fingerprint 불일치 → 검토 필요</div>
+        </div>
+      </div>
+    </div>
+
+    <span class="v-label" style="margin-top:24px;display:block">사용 시점</span>
+    <ul style="font-size:var(--ds-text-sm);color:var(--ds-color-text-secondary);line-height:var(--ds-leading-relaxed);padding-left:20px;margin-top:8px">
+      <li>diff/변경사항 표시 (코드, 스키마, 설정)</li>
+      <li>로그 출력, 명령어 시퀀스</li>
+      <li>카드 안 기술 상세 — ds-card 내부에서도 독립 사용 가능</li>
+    </ul>
+  </div></div>
+</section>
+
+</div><!-- /page-layout -->
+
+<!-- ==================== PAGE: STYLE CONVERTER ==================== -->
+<div class="v-page" id="page-style-converter">
+  <div class="v-placeholder">
+    <span class="v-placeholder__label">Coming Soon</span>
+    <h2 class="v-placeholder__title">Style 변환기</h2>
+    <p class="v-placeholder__desc">A타입 HTML을 DS 클래스 기반 B타입으로 자동 변환하는 도구입니다.</p>
+  </div>
+</div><!-- /page-style-converter -->
+
+<!-- ==================== PAGE: DIAGRAM BUILDER ==================== -->
+<div class="v-page" id="page-diagram-builder">
+  <div class="v-placeholder">
+    <span class="v-placeholder__label">Coming Soon</span>
+    <h2 class="v-placeholder__title">Diagram 제작기</h2>
+    <p class="v-placeholder__desc">ds-diag 컴포넌트 기반의 시각 다이어그램을 인터랙티브하게 제작하는 도구입니다.</p>
+  </div>
+</div><!-- /page-diagram-builder -->
+
+</main>
+</div>
+
+<script>
+/* ===== drawArrows() — [W] Diagram 화살표 런타임 렌더 ===== */
+function drawArrows(config) {
+  var svgEl = document.getElementById(config.svgId);
+  if (!svgEl) return;
+  var svgRect = svgEl.getBoundingClientRect();
+
+  /* 기존 화살표 경로만 제거 (defs 보존) */
+  svgEl.querySelectorAll('path.diag-arrow').forEach(function(el) { el.remove(); });
+
+  var GAP = 8;
+  var pairs = config.pairs;
+  pairs.forEach(function(pair, idx) {
+    var fromEl = document.getElementById(pair.from);
+    var toEl   = document.getElementById(pair.to);
+    if (!fromEl || !toEl) return;
+
+    var fromR = fromEl.getBoundingClientRect();
+    var toR   = toEl.getBoundingClientRect();
+
+    var x1 = fromR.right  - svgRect.left + GAP;
+    var y1 = fromR.top    - svgRect.top  + fromR.height / 2;
+    var x2 = toR.left     - svgRect.left - GAP;
+    var y2 = toR.top      - svgRect.top  + toR.height  / 2;
+
+    var isLast  = (idx === pairs.length - 1);
+    var color   = isLast ? '#4a9de0' : '#444444';
+    var markerId = isLast ? 'arrowhead-accent' : 'arrowhead-dark';
+
+    var d;
+    if (Math.abs(y2 - y1) > 8) {
+      var mx = (x1 + x2) / 2;
+      d = 'M ' + x1 + ',' + y1 + ' L ' + mx + ',' + y1 + ' L ' + mx + ',' + y2 + ' L ' + x2 + ',' + y2;
+    } else {
+      d = 'M ' + x1 + ',' + y1 + ' L ' + x2 + ',' + y2;
+    }
+
+    var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('class', 'diag-arrow');
+    path.setAttribute('d', d);
+    path.setAttribute('stroke', color);
+    path.setAttribute('stroke-width', '1.5');
+    path.setAttribute('fill', 'none');
+    path.setAttribute('marker-end', 'url(#' + markerId + ')');
+    svgEl.appendChild(path);
+  });
+}
+
+var diagramDemoConfig = {
+  svgId: 'diag-demo-arrows',
+  pairs: [
+    { from: 'diag-demo-from-1', to: 'diag-demo-from-2' },
+    { from: 'diag-demo-from-2', to: 'diag-demo-to-1' }
+  ]
+};
+
+function runDiagramDemoArrows() {
+  drawArrows(diagramDemoConfig);
+}
+
+window.addEventListener('load', runDiagramDemoArrows);
+window.addEventListener('resize', runDiagramDemoArrows);
+
+function toggleAcCard(header) {
+  header.closest('.ds-ac-card').classList.toggle('ds-ac--open');
+}
+
+document.querySelectorAll('[data-step-tabs]').forEach(function(root) {
+  root.querySelectorAll('.ds-step-tabs__tab').forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      var idx = this.getAttribute('data-tab');
+      root.querySelectorAll('.ds-step-tabs__tab').forEach(function(t) {
+        t.classList.remove('ds-step-tabs__tab--active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      root.querySelectorAll('.ds-step-tabs__panel').forEach(function(p) {
+        p.classList.remove('ds-step-tabs__panel--active');
+      });
+      this.classList.add('ds-step-tabs__tab--active');
+      this.setAttribute('aria-selected', 'true');
+      root.querySelector('[data-panel="' + idx + '"]').classList.add('ds-step-tabs__panel--active');
+    });
+  });
+});
+
+/* ===== GNB 탭 전환 ===== */
+document.querySelectorAll('.v-gnb__item').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.v-gnb__item').forEach(function(b) {
+      b.classList.remove('v-gnb__item--active');
+    });
+    btn.classList.add('v-gnb__item--active');
+    var page = btn.dataset.page;
+    document.querySelectorAll('.v-page').forEach(function(p) {
+      p.classList.remove('v-page--active');
+    });
+    var target = document.getElementById('page-' + page);
+    if (target) {
+      target.classList.add('v-page--active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  });
+});
+</script>
+</body>
+</html>
