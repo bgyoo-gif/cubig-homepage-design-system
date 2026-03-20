@@ -177,6 +177,9 @@ grep -oP '--ds-[a-zA-Z0-9-]+' output/[파일명]-b-type.html | sort -u
 - [ ] 아티클형 페이지(Learn 등)에 `<main class="ds-article">` + 본문 860px 통일이 적용됐는가
 - [ ] `ds-section-header--left`가 spec에 명시되지 않은 섹션에 사용되지 않았는가 (기본 center)
 - [ ] 제목에 `text-wrap: balance`, 본문에 `text-wrap: pretty`가 적용됐는가
+- [ ] 외부 서비스 링크("View on AWS Marketplace", "llmcapsule.ai" 등)가 `ds-btn ds-btn--secondary` 버튼으로 구현됐는가 (인라인 텍스트 링크 금지)
+- [ ] "Step 1,2,3" / "How it works" 순차 프로세스가 `ds-step-tabs`로 구현됐는가
+- [ ] ISO, GS인증 등 인증/수상이 `ds-cert-grid` 마키 + 공식 이미지(reference/graphics/cert-*)로 구현됐는가
 
 ### [CAT-3] 코드 품질 (Medium)
 - [ ] 시맨틱 태그를 사용했는가 (div 남용 없는가)
@@ -282,6 +285,9 @@ grep -n "padding.*16px\|padding.*32px\|padding.*120px" output/[파일명]-b-type
 - 카드 내 코드블록 앞 divider 존재 (CAT-2 High)
 - 코드블록 border가 none이 아님 (CAT-2 High)
 - description max-width가 고정값만 사용 — 반응형 미적용 (CAT-4 High)
+- 외부 서비스 링크가 인라인 텍스트 링크로 구현됨 — ds-btn ds-btn--secondary 필수 (CAT-2 High)
+- 순차 프로세스("Step 1,2,3" / "How it works")가 ds-step-tabs 미사용 (CAT-2 High)
+- 인증/수상(ISO, GS인증 등)이 ds-cert-grid 미사용 (CAT-2 High)
 - FAQ 섹션이 아코디언(ds-ac-card)이 아닌 카드 나열로 구현 (CAT-2 High)
 
 아래 항목은 CONDITIONAL PASS 허용:

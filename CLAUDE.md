@@ -93,6 +93,9 @@ deploy (gh-pages push → GitHub Pages 자동 배포)
 - 텍스트 최소 명도 강화: `var(--ds-color-text-muted)` (#cacccf) 텍스트 사용 금지 — 텍스트 최소 `var(--ds-color-text-tertiary)` (#9c9c9c)
 - 아티클형 페이지 본문 860px 통일: `<main class="ds-article">` 적용 시 본문 폭 860px 통일 (전폭 예외: partner-grid, kpi-band)
 - 섹션 헤더 기본 center 정렬: `ds-section-header`는 기본 중앙 정렬. `--left`는 spec에 명시된 경우만 사용
+- 외부 서비스 링크는 버튼형: AWS Marketplace, 제품 사이트 등 외부 링크는 `ds-btn--secondary` 버튼으로 구현 (인라인 텍스트 링크 금지)
+- 단계별 프로세스는 Step Tabs: "Step 1,2,3" / "How it works" 형태는 반드시 `[U] ds-step-tabs` 사용. 스크린샷 필요 시 placeholder + 사용자 요청
+- 인증/수상은 Cert Grid: ISO, GS 등 인증 내용은 `[L] ds-cert-grid` 마키 + 공식 이미지 사용
 
 ---
 
