@@ -252,7 +252,7 @@
     .ds-hero__description,
     .ds-cta-band__description,
     .ds-body-l, .ds-body-m, .ds-body-s,
-    .ds-card__description { word-break: keep-all; overflow-wrap: break-word; }
+    .ds-card__description { word-break: keep-all; overflow-wrap: break-word; text-wrap: pretty; }
 
     /* ============================================================
        4. Typography Helpers
@@ -339,8 +339,11 @@
     }
     .ds-section-header__description {
       font-size: var(--ds-text-lg); color: var(--ds-color-text-secondary);
-      line-height: var(--ds-leading-relaxed); max-width: 640px; margin: 0 auto;
+      line-height: var(--ds-leading-relaxed); max-width: 100%; margin: 0 auto;
+      text-wrap: pretty;
     }
+    @media (min-width: 1024px) { .ds-section-header__description { max-width: 720px; } }
+    @media (min-width: 1440px) { .ds-section-header__description { max-width: 860px; } }
     .ds-section--bg-img .ds-section-header__description {
       color: var(--ds-color-text-primary);
     }
@@ -367,7 +370,9 @@
     .ds-hero__actions-below { display: flex; flex-wrap: wrap; gap: var(--ds-space-sm); justify-content: center; margin-top: var(--ds-space-lg); padding-bottom: var(--ds-space-3xl); }
     .ds-hero__eyebrow { font-family: var(--ds-font-code); font-size: var(--ds-text-xs); text-transform: uppercase; letter-spacing: var(--ds-tracking-wide); color: var(--ds-color-brand-purple); margin-bottom: var(--ds-space-md); display: block; }
     .ds-hero__title { font-family: var(--ds-font-base); font-size: var(--ds-text-7xl); font-weight: var(--ds-weight-bold); color: var(--ds-color-text-primary); line-height: var(--ds-leading-tight); letter-spacing: -2px; margin-bottom: var(--ds-space-sm); }
-    .ds-hero__description { font-size: var(--ds-text-lg); color: var(--ds-color-text-secondary); line-height: var(--ds-leading-relaxed); max-width: 860px; margin-bottom: var(--ds-space-xl); }
+    .ds-hero__description { font-size: var(--ds-text-lg); color: var(--ds-color-text-secondary); line-height: var(--ds-leading-relaxed); max-width: 100%; margin-bottom: var(--ds-space-xl); text-wrap: pretty; }
+    @media (min-width: 1024px) { .ds-hero__description { max-width: 720px; } }
+    @media (min-width: 1440px) { .ds-hero__description { max-width: 860px; } }
     .ds-hero__actions { display: flex; flex-wrap: wrap; gap: var(--ds-space-sm); }
     .ds-hero__badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: var(--ds-space-lg); }
 
@@ -451,12 +456,12 @@
     .ds-card__badge--brand { color: var(--ds-color-brand-purple);   border-color: var(--ds-color-brand-purple); }
     .ds-card__badge--teal  { color: var(--ds-color-success);          border-color: var(--ds-color-success); }
     .ds-card__badge--red   { color: var(--ds-color-error);           border-color: var(--ds-color-error); }
-    .ds-card__badge--gray  { color: var(--ds-color-text-muted);      border-color: var(--ds-color-border-default); }
+    .ds-card__badge--gray  { color: var(--ds-color-text-tertiary);    border-color: var(--ds-color-border-default); }
     .ds-card__title { font-family: var(--ds-font-base); font-size: var(--ds-text-2xl); font-weight: var(--ds-weight-bold); color: var(--ds-color-text-primary); line-height: var(--ds-leading-tight); margin-bottom: var(--ds-space-sm); }
     .ds-card__title--sm { font-size: var(--ds-text-lg); font-weight: var(--ds-weight-semibold); }
     .ds-card__description { font-size: var(--ds-text-sm); color: var(--ds-color-text-secondary); line-height: var(--ds-leading-relaxed); flex: 1; }
     .ds-card__tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: var(--ds-space-md); }
-    .ds-card__tag  { font-size: var(--ds-text-xs); color: var(--ds-color-text-muted); background: var(--ds-color-surface-mid); padding: 2px 10px; border-radius: var(--ds-radius-pill); }
+    .ds-card__tag  { font-size: var(--ds-text-xs); color: var(--ds-color-text-tertiary); background: var(--ds-color-surface-mid); padding: 2px 10px; border-radius: var(--ds-radius-pill); }
     .ds-card__button { margin-top: auto; padding-top: var(--ds-space-lg); }
     .ds-card--dark .ds-card__title { color: var(--ds-color-text-inverse); }
     .ds-card--dark .ds-card__description { color: var(--ds-color-text-muted); }
@@ -558,7 +563,7 @@
       font-size: var(--ds-text-xs);
       text-transform: uppercase;
       letter-spacing: var(--ds-tracking-wide);
-      color: var(--ds-color-text-muted);
+      color: var(--ds-color-text-tertiary);
       margin-bottom: var(--ds-space-xs);
       display: block;
     }
@@ -632,7 +637,9 @@
     .ds-cta-band:not([class*="ds-bg--"]) { background: linear-gradient(135deg, var(--ds-color-info), var(--ds-color-brand-purple)); }
     .ds-cta-band::before { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.15); z-index: 0; }
     .ds-cta-band > * { position: relative; z-index: 1; }
-    .ds-cta-band__inner { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: var(--ds-space-lg); }
+    .ds-cta-band__inner { max-width: 100%; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: var(--ds-space-lg); }
+    @media (min-width: 1024px) { .ds-cta-band__inner { max-width: 720px; } }
+    @media (min-width: 1440px) { .ds-cta-band__inner { max-width: 860px; } }
     .ds-cta-band__title { font-family: var(--ds-font-base); font-size: var(--ds-text-7xl); font-weight: var(--ds-weight-bold); color: var(--ds-color-white); line-height: var(--ds-leading-tight); letter-spacing: -2px; margin: 0; }
     .ds-cta-band__description { font-size: var(--ds-text-lg); color: rgba(255,255,255,0.85); line-height: var(--ds-leading-relaxed); margin: 0; }
     .ds-cta-band__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--ds-space-md); }
@@ -810,9 +817,9 @@
     /* ============================================================
        26. Typography — Mobile Base
     ============================================================ */
-    h1, .ds-h1 { font-family: var(--ds-font-base); font-size: 24px; font-weight: var(--ds-weight-bold); line-height: var(--ds-leading-tight); letter-spacing: var(--ds-tracking-tight); }
-    h2, .ds-h2 { font-family: var(--ds-font-base); font-size: 20px; font-weight: var(--ds-weight-bold); line-height: var(--ds-leading-tight); letter-spacing: var(--ds-tracking-tight); }
-    h3, .ds-h3 { font-family: var(--ds-font-base); font-size: 18px; font-weight: var(--ds-weight-semibold); line-height: var(--ds-leading-tight); }
+    h1, .ds-h1 { font-family: var(--ds-font-base); font-size: 24px; font-weight: var(--ds-weight-bold); line-height: var(--ds-leading-tight); letter-spacing: var(--ds-tracking-tight); text-wrap: balance; }
+    h2, .ds-h2 { font-family: var(--ds-font-base); font-size: 20px; font-weight: var(--ds-weight-bold); line-height: var(--ds-leading-tight); letter-spacing: var(--ds-tracking-tight); text-wrap: balance; }
+    h3, .ds-h3 { font-family: var(--ds-font-base); font-size: 18px; font-weight: var(--ds-weight-semibold); line-height: var(--ds-leading-tight); text-wrap: balance; }
     .ds-hero__title { font-size: var(--ds-text-5xl); letter-spacing: -1px; }
     .ds-section-header__title { font-size: 22px; }
     .ds-kpi-band__number { font-size: var(--ds-text-4xl); }
@@ -989,8 +996,7 @@
           </div>
         </div>
         <div class="ds-section-header ds-section-header--underline ds-section-header--inner">
-          <span class="ds-section-header__eyebrow">Certifications</span>
-          <h2 class="ds-section-header__title">Certified and <span class="ds-text--brand">Compliance-Ready</span></h2>
+<h2 class="ds-section-header__title">Certified and <span class="ds-text--brand">Compliance-Ready</span></h2>
         </div>
         <div class="ds-cert-grid">
           <article class="ds-cert-card">
@@ -1064,8 +1070,7 @@
     <section id="section-4" class="ds-section ds-section--light">
       <div class="ds-container">
         <div class="ds-section-header ds-section-header--underline">
-          <span class="ds-section-header__eyebrow">How It Works</span>
-          <h2 class="ds-section-header__title">Sensitive data never <span class="ds-text--brand">reaches the LLM.</span></h2>
+<h2 class="ds-section-header__title">Sensitive data never <span class="ds-text--brand">reaches the LLM.</span></h2>
           <p class="ds-section-header__description">LLM Capsule sits between your application and the LLM API. Every prompt is intercepted, inspected, and cleaned before transmission.</p>
         </div>
         <div class="ds-grid ds-grid--1">
@@ -1102,8 +1107,7 @@
     <section id="section-5" class="ds-section">
       <div class="ds-container">
         <div class="ds-section-header ds-section-header--underline">
-          <span class="ds-section-header__eyebrow">Availability</span>
-          <h2 class="ds-section-header__title">Available <span class="ds-text--brand">everywhere</span> you need it</h2>
+<h2 class="ds-section-header__title">Available <span class="ds-text--brand">everywhere</span> you need it</h2>
         </div>
         <div class="ds-card-grid ds-card-grid--2col">
           <div class="ds-card">
@@ -1132,8 +1136,7 @@
     <section id="section-6" class="ds-section ds-section--light">
       <div class="ds-container">
         <div class="ds-section-header ds-section-header--underline">
-          <span class="ds-section-header__eyebrow">Capabilities</span>
-          <h2 class="ds-section-header__title">Four steps to <span class="ds-text--brand">AI-ready data.</span></h2>
+<h2 class="ds-section-header__title">Four steps to <span class="ds-text--brand">AI-ready data.</span></h2>
         </div>
         <div class="ds-card-grid ds-card-grid--4col">
           <div class="ds-card">
@@ -1166,8 +1169,7 @@
     <section id="section-7" class="ds-section">
       <div class="ds-container">
         <div class="ds-section-header ds-section-header--underline">
-          <span class="ds-section-header__eyebrow">Detection Coverage</span>
-          <h2 class="ds-section-header__title">What was blocking your AI. <span class="ds-text--brand">Now removed.</span></h2>
+<h2 class="ds-section-header__title">What was blocking your AI. <span class="ds-text--brand">Now removed.</span></h2>
         </div>
         <div class="ds-feature-grid">
           <div class="ds-feature-item">
@@ -1248,8 +1250,7 @@
     <section id="section-8" class="ds-section ds-section--light">
       <div class="ds-container">
         <div class="ds-section-header ds-section-header--underline">
-          <span class="ds-section-header__eyebrow">Integration</span>
-          <h2 class="ds-section-header__title">Works with <span class="ds-text--product">SynTitan</span>. <span class="ds-text--brand">Works standalone too.</span></h2>
+<h2 class="ds-section-header__title">Works with <span class="ds-text--product">SynTitan</span>. <span class="ds-text--brand">Works standalone too.</span></h2>
         </div>
         <div class="ds-grid ds-grid--2 ds-grid--integration">
           <!-- Left: SynTitan Integration -->
@@ -1302,8 +1303,7 @@
     <section id="section-9" class="ds-section">
       <div class="ds-container">
         <div class="ds-section-header ds-section-header--underline">
-          <span class="ds-section-header__eyebrow">Comparison</span>
-          <h2 class="ds-section-header__title"><span class="ds-text--product">LLM Capsule</span> vs. <span class="ds-text--brand">doing nothing.</span> Or avoiding AI.</h2>
+<h2 class="ds-section-header__title"><span class="ds-text--product">LLM Capsule</span> vs. <span class="ds-text--brand">doing nothing.</span> Or avoiding AI.</h2>
         </div>
         <div class="ds-table-wrap">
           <table class="ds-table">
@@ -1364,8 +1364,7 @@
     <section id="section-10" class="ds-section ds-section--light">
       <div class="ds-container">
         <div class="ds-section-header ds-section-header--underline">
-          <span class="ds-section-header__eyebrow">Enterprise Deployments</span>
-          <h2 class="ds-section-header__title">Deployed across <span class="ds-text--brand">global regulated industries.</span></h2>
+<h2 class="ds-section-header__title">Deployed across <span class="ds-text--brand">global regulated industries.</span></h2>
           <p class="ds-section-header__description">LLM Capsule is in production across global telco, financial services, and healthcare — industries where AI adoption was previously blocked by sensitive internal data. Now it isn't.</p>
         </div>
         <div class="ds-card-grid ds-card-grid--3col">
@@ -1422,8 +1421,7 @@
     <section id="section-11" class="ds-section">
       <div class="ds-container">
         <div class="ds-section-header ds-section-header--underline">
-          <span class="ds-section-header__eyebrow">Partners</span>
-          <h2 class="ds-section-header__title">Trusted by <span class="ds-text--brand">Industry Leaders</span></h2>
+<h2 class="ds-section-header__title">Trusted by <span class="ds-text--brand">Industry Leaders</span></h2>
         </div>
       </div>
       <div class="ds-partner-grid">
@@ -1449,8 +1447,7 @@
     <section id="section-12" class="ds-section ds-section--bg-img ds-bg--green-wave">
       <div class="ds-container">
         <div class="ds-section-header ds-section-header--underline">
-          <span class="ds-section-header__eyebrow">When Teams Need LLM Capsule</span>
-          <h2 class="ds-section-header__title">Four situations where sensitive data <span class="ds-text--brand">blocks AI adoption.</span></h2>
+<h2 class="ds-section-header__title">Four situations where sensitive data <span class="ds-text--brand">blocks AI adoption.</span></h2>
           <p class="ds-section-header__description">Enterprise LLM adoption stalls when data contains fields that can't leave the perimeter. LLM Capsule was built for exactly these blockers.</p>
         </div>
         <div class="ds-card-grid ds-card-grid--2col">
@@ -1489,8 +1486,7 @@
     <section id="section-13" class="ds-section">
       <div class="ds-container">
         <div class="ds-section-header ds-section-header--underline">
-          <span class="ds-section-header__eyebrow">Key Concepts</span>
-          <h2 class="ds-section-header__title">LLM <span class="ds-text--brand">data security</span> fundamentals</h2>
+<h2 class="ds-section-header__title">LLM <span class="ds-text--brand">data security</span> fundamentals</h2>
         </div>
         <div class="ds-card-grid ds-card-grid--3col">
           <div class="ds-card">
@@ -1522,8 +1518,7 @@
     <section id="section-14" class="ds-section">
       <div class="ds-container">
         <div class="ds-section-header ds-section-header--underline">
-          <span class="ds-section-header__eyebrow">FAQ</span>
-          <h2 class="ds-section-header__title">Common <span class="ds-text--brand">questions</span></h2>
+<h2 class="ds-section-header__title">Common <span class="ds-text--brand">questions</span></h2>
         </div>
         <div>
           <article class="ds-ac-card ds-ac--open">
@@ -1605,8 +1600,7 @@
     <section id="section-16" class="ds-section">
       <div class="ds-container">
         <div class="ds-section-header ds-section-header--underline">
-          <span class="ds-section-header__eyebrow">Alternatives</span>
-          <h2 class="ds-section-header__title"><span class="ds-text--product">LLM Capsule</span> vs <span class="ds-text--brand">the alternatives</span></h2>
+<h2 class="ds-section-header__title"><span class="ds-text--product">LLM Capsule</span> vs <span class="ds-text--brand">the alternatives</span></h2>
           <p class="ds-section-header__description">You don't need to choose between frontier models and data safety.</p>
         </div>
         <div class="ds-card-grid ds-card-grid--3col">
@@ -1651,8 +1645,7 @@
   ============================================================ -->
   <section id="section-17" class="ds-cta-band">
     <div class="ds-cta-band__inner">
-      <span class="ds-section-header__eyebrow">Secure Your LLM Workflows</span>
-      <h2 class="ds-cta-band__title">Your LLMs are ready. Is your data <span class="ds-text--brand-light">protected?</span></h2>
+<h2 class="ds-cta-band__title">Your LLMs are ready. Is your data <span class="ds-text--brand-light">protected?</span></h2>
       <p class="ds-cta-band__description">Stop letting sensitive data block AI adoption. LLM Capsule intercepts PII in prompts before it reaches any LLM — 98.1% detection accuracy, full audit trail, on-premise or AWS Marketplace.</p>
       <div class="ds-cta-band__actions">
         <a href="/contact" class="ds-btn ds-btn--md">Run technical demo</a>
