@@ -2509,77 +2509,108 @@ var apiBase = (window.location.hostname === 'localhost' || window.location.hostn
   ? window.location.origin
   : 'https://localhost:3333';
 
-function renderOutputFiles(files) {
+function fileItem(f) {
+  return '<div class="v-output-item"><a class="v-output-item__name" onclick="openDetail(\'' + f.path + '\',\'' + f.name + '\')">' + f.name + '</a><span class="v-output-item__date">' + f.modified + '</span></div>';
+}
+
+function typeLabel(type) {
+  var labels = { html: 'HTML', tsx: 'TSX', md: 'Docs', preview: 'Preview' };
+  var colors = { html: '#3061f2', tsx: '#a617ff', md: '#0e824c', preview: '#636363' };
+  return '<span style="font-size:11px;font-weight:600;color:' + (colors[type]||'#636363') + ';font-family:var(--ds-font-code);letter-spacing:0.05em;text-transform:uppercase;">' + (labels[type]||type) + '</span>';
+}
+
+function renderTree(data) {
   var container = document.getElementById('output-file-list');
-  if (!files || files.length === 0) {
+  if (!data.tree || data.tree.length === 0) {
     container.innerHTML = '<div style="text-align:center;padding:48px 0;color:var(--ds-color-text-tertiary);font-size:14px;">output 파일이 없습니다.</div>';
     return;
   }
 
-  // Group by top-level dir (html, docs, framer)
-  var groups = {};
-  files.forEach(function(f) {
-    var parts = f.dir.replace(/^output\/?/, '').split('/');
-    var group = parts[0] || 'root';
-    if (!groups[group]) groups[group] = [];
-    groups[group].push(f);
-  });
-
-  var groupOrder = ['html', 'docs', 'framer'];
-  var groupLabels = { html: 'HTML', docs: 'Docs (Spec / QA Report)', framer: 'Framer', root: 'Other' };
-  var sortedKeys = Object.keys(groups).sort(function(a, b) {
-    var ia = groupOrder.indexOf(a), ib = groupOrder.indexOf(b);
-    if (ia === -1) ia = 99;
-    if (ib === -1) ib = 99;
-    return ia - ib;
-  });
-
   var html = '';
-  sortedKeys.forEach(function(group) {
-    var label = groupLabels[group] || group;
+
+  data.tree.forEach(function(item) {
+    var inp = item.input;
+    var out = item.output;
+    var totalCount = out.html.length + out.tsx.length + out.md.length + out.preview.length;
+
     html += '<div class="v-output-section">';
-    html += '<div class="v-output-section__title v-output-section__title--open" onclick="this.classList.toggle(\'v-output-section__title--open\');this.nextElementSibling.classList.toggle(\'v-output-list--open\')">' + label + ' <span style="font-size:12px;font-weight:400;color:var(--ds-color-text-tertiary);">(' + groups[group].length + ')</span></div>';
+    // Input header
+    html += '<div class="v-output-section__title v-output-section__title--open" onclick="this.classList.toggle(\'v-output-section__title--open\');this.nextElementSibling.classList.toggle(\'v-output-list--open\')">';
+    html += '<span style="font-size:11px;font-family:var(--ds-font-code);color:var(--ds-color-text-tertiary);margin-right:8px;">INPUT</span>';
+    html += inp.name;
+    html += ' <span style="font-size:12px;font-weight:400;color:var(--ds-color-text-tertiary);">(' + totalCount + ' files)</span>';
+    html += '</div>';
     html += '<div class="v-output-list v-output-list--open">';
 
-    // Sub-group by subdir for framer
-    if (group === 'framer') {
-      var subdirs = {};
-      groups[group].forEach(function(f) {
-        var sub = f.dir.replace(/^output\/framer\/?/, '') || 'root';
-        if (!subdirs[sub]) subdirs[sub] = [];
-        subdirs[sub].push(f);
-      });
-      Object.keys(subdirs).sort().forEach(function(sub) {
-        html += '<div style="padding:12px 0 4px 16px;font-size:12px;font-weight:600;color:var(--ds-color-text-tertiary);letter-spacing:0.08em;text-transform:uppercase;">' + sub + '</div>';
-        subdirs[sub].forEach(function(f) {
-          html += '<div class="v-output-item"><a class="v-output-item__name" onclick="openDetail(\'' + f.path + '\',\'' + f.name + '\')">' + f.name + '</a><span class="v-output-item__date">' + f.modified + '</span></div>';
-        });
-      });
-    } else {
-      groups[group].forEach(function(f) {
-        html += '<div class="v-output-item"><a class="v-output-item__name" onclick="openDetail(\'' + f.path + '\',\'' + f.name + '\')">' + f.name + '</a><span class="v-output-item__date">' + f.modified + '</span></div>';
-      });
+    // HTML outputs
+    if (out.html.length) {
+      html += '<div style="padding:12px 0 6px 16px;">' + typeLabel('html') + '</div>';
+      out.html.forEach(function(f) { html += fileItem(f); });
+    }
+    // TSX outputs
+    if (out.tsx.length) {
+      html += '<div style="padding:12px 0 6px 16px;">' + typeLabel('tsx') + '</div>';
+      out.tsx.forEach(function(f) { html += fileItem(f); });
+    }
+    // MD outputs
+    if (out.md.length) {
+      html += '<div style="padding:12px 0 6px 16px;">' + typeLabel('md') + '</div>';
+      out.md.forEach(function(f) { html += fileItem(f); });
+    }
+    // Preview outputs
+    if (out.preview.length) {
+      html += '<div style="padding:12px 0 6px 16px;">' + typeLabel('preview') + '</div>';
+      out.preview.forEach(function(f) { html += fileItem(f); });
     }
 
     html += '</div></div>';
   });
+
+  // Orphan files (매핑 안 된 독립 파일)
+  if (data.orphans) {
+    var orphanCount = (data.orphans.html||[]).length + (data.orphans.tsx||[]).length + (data.orphans.md||[]).length + (data.orphans.preview||[]).length;
+    if (orphanCount > 0) {
+      html += '<div class="v-output-section">';
+      html += '<div class="v-output-section__title" onclick="this.classList.toggle(\'v-output-section__title--open\');this.nextElementSibling.classList.toggle(\'v-output-list--open\')">';
+      html += '<span style="font-size:11px;font-family:var(--ds-font-code);color:var(--ds-color-text-tertiary);margin-right:8px;">OTHER</span>';
+      html += '미분류 파일 <span style="font-size:12px;font-weight:400;color:var(--ds-color-text-tertiary);">(' + orphanCount + ')</span>';
+      html += '</div>';
+      html += '<div class="v-output-list">';
+      ['html','tsx','md','preview'].forEach(function(type) {
+        if (data.orphans[type] && data.orphans[type].length) {
+          html += '<div style="padding:12px 0 6px 16px;">' + typeLabel(type) + '</div>';
+          data.orphans[type].forEach(function(f) { html += fileItem(f); });
+        }
+      });
+      html += '</div></div>';
+    }
+  }
 
   container.innerHTML = html;
 }
 
 function loadOutputFiles() {
   var status = document.getElementById('output-status');
-  fetch(apiBase + '/api/files')
+  fetch(apiBase + '/api/tree')
     .then(function(r) { return r.json(); })
-    .then(function(files) {
-      renderOutputFiles(files);
+    .then(function(data) {
+      renderTree(data);
       if (status) status.textContent = 'LIVE — ' + new Date().toLocaleTimeString();
     })
     .catch(function() {
-      if (status) status.textContent = 'OFFLINE — 서버 미연결';
-      // fallback: 정적 모드 안내
-      var container = document.getElementById('output-file-list');
-      container.innerHTML = '<div style="text-align:center;padding:48px 0;color:var(--ds-color-text-tertiary);font-size:14px;">서버에 연결할 수 없습니다.<br><code style="font-size:12px;">python3 server/app.py</code> 로 서버를 실행해주세요.</div>';
+      // fallback: /api/files
+      fetch(apiBase + '/api/files').then(function(r) { return r.json(); }).then(function(files) {
+        // flat list fallback
+        var container = document.getElementById('output-file-list');
+        var html = '';
+        files.forEach(function(f) { html += fileItem(f); });
+        container.innerHTML = html || '<div style="text-align:center;padding:48px 0;color:var(--ds-color-text-tertiary);">파일 없음</div>';
+        if (status) status.textContent = 'LIVE (flat) — ' + new Date().toLocaleTimeString();
+      }).catch(function() {
+        if (status) status.textContent = 'OFFLINE — 서버 미연결';
+        var container = document.getElementById('output-file-list');
+        container.innerHTML = '<div style="text-align:center;padding:48px 0;color:var(--ds-color-text-tertiary);font-size:14px;">서버에 연결할 수 없습니다.<br><code style="font-size:12px;">python3 server/app.py</code> 로 서버를 실행해주세요.</div>';
+      });
     });
 }
 
