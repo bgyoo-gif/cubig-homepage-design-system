@@ -2526,14 +2526,11 @@ var apiBase = (window.location.hostname === 'localhost' || window.location.hostn
   ? window.location.origin
   : 'https://localhost:3333';
 
-function fileItem(f) {
-  return '<div class="v-output-item"><a class="v-output-item__name" onclick="openDetail(\'' + f.path + '\',\'' + f.name + '\')">' + f.name + '</a><span class="v-output-item__date">' + f.modified + '</span></div>';
-}
-
-function typeLabel(type) {
+function typeBadge(type) {
   var labels = { html: 'HTML', tsx: 'TSX', md: 'Docs', preview: 'Preview' };
   var colors = { html: '#3061f2', tsx: '#a617ff', md: '#0e824c', preview: '#636363' };
-  return '<span style="font-size:11px;font-weight:600;color:' + (colors[type]||'#636363') + ';font-family:var(--ds-font-code);letter-spacing:0.05em;text-transform:uppercase;">' + (labels[type]||type) + '</span>';
+  var bgs = { html: 'rgba(48,97,242,0.08)', tsx: 'rgba(166,23,255,0.08)', md: 'rgba(14,130,76,0.08)', preview: 'rgba(99,99,99,0.08)' };
+  return '<span style="display:inline-block;font-size:10px;font-weight:600;color:' + (colors[type]||'#636363') + ';background:' + (bgs[type]||'#f2f2f2') + ';padding:2px 8px;border-radius:4px;font-family:var(--ds-font-code);letter-spacing:0.05em;text-transform:uppercase;">' + (labels[type]||type) + '</span>';
 }
 
 function renderTree(data) {
@@ -2543,66 +2540,61 @@ function renderTree(data) {
     return;
   }
 
-  var html = '';
+  var rows = [];
 
   data.tree.forEach(function(item) {
     var inp = item.input;
     var out = item.output;
-    var totalCount = out.html.length + out.tsx.length + out.md.length + out.preview.length;
+    var allOutputs = [];
+    ['html','tsx','md','preview'].forEach(function(type) {
+      (out[type]||[]).forEach(function(f) { allOutputs.push({ file: f, type: type }); });
+    });
+    if (allOutputs.length === 0) return;
 
-    html += '<div class="v-output-section">';
-    // Input header
-    html += '<div class="v-output-section__title v-output-section__title--open" onclick="this.classList.toggle(\'v-output-section__title--open\');this.nextElementSibling.classList.toggle(\'v-output-list--open\')">';
-    html += '<span style="font-size:11px;font-family:var(--ds-font-code);color:var(--ds-color-text-tertiary);margin-right:8px;">INPUT</span>';
-    html += inp.name;
-    html += ' <span style="font-size:12px;font-weight:400;color:var(--ds-color-text-tertiary);">(' + totalCount + ' files)</span>';
-    html += '</div>';
-    html += '<div class="v-output-list v-output-list--open">';
-
-    // HTML outputs
-    if (out.html.length) {
-      html += '<div style="padding:12px 0 6px 16px;">' + typeLabel('html') + '</div>';
-      out.html.forEach(function(f) { html += fileItem(f); });
-    }
-    // TSX outputs
-    if (out.tsx.length) {
-      html += '<div style="padding:12px 0 6px 16px;">' + typeLabel('tsx') + '</div>';
-      out.tsx.forEach(function(f) { html += fileItem(f); });
-    }
-    // MD outputs
-    if (out.md.length) {
-      html += '<div style="padding:12px 0 6px 16px;">' + typeLabel('md') + '</div>';
-      out.md.forEach(function(f) { html += fileItem(f); });
-    }
-    // Preview outputs
-    if (out.preview.length) {
-      html += '<div style="padding:12px 0 6px 16px;">' + typeLabel('preview') + '</div>';
-      out.preview.forEach(function(f) { html += fileItem(f); });
-    }
-
-    html += '</div></div>';
+    allOutputs.forEach(function(o, idx) {
+      rows.push({
+        inputName: idx === 0 ? inp.name : '',
+        inputDate: idx === 0 ? inp.modified : '',
+        inputRowspan: idx === 0 ? allOutputs.length : 0,
+        type: o.type,
+        outputName: o.file.name,
+        outputPath: o.file.path,
+        outputDate: o.file.modified
+      });
+    });
   });
 
-  // Orphan files (매핑 안 된 독립 파일)
+  // Orphans
   if (data.orphans) {
-    var orphanCount = (data.orphans.html||[]).length + (data.orphans.tsx||[]).length + (data.orphans.md||[]).length + (data.orphans.preview||[]).length;
-    if (orphanCount > 0) {
-      html += '<div class="v-output-section">';
-      html += '<div class="v-output-section__title" onclick="this.classList.toggle(\'v-output-section__title--open\');this.nextElementSibling.classList.toggle(\'v-output-list--open\')">';
-      html += '<span style="font-size:11px;font-family:var(--ds-font-code);color:var(--ds-color-text-tertiary);margin-right:8px;">OTHER</span>';
-      html += '미분류 파일 <span style="font-size:12px;font-weight:400;color:var(--ds-color-text-tertiary);">(' + orphanCount + ')</span>';
-      html += '</div>';
-      html += '<div class="v-output-list">';
-      ['html','tsx','md','preview'].forEach(function(type) {
-        if (data.orphans[type] && data.orphans[type].length) {
-          html += '<div style="padding:12px 0 6px 16px;">' + typeLabel(type) + '</div>';
-          data.orphans[type].forEach(function(f) { html += fileItem(f); });
-        }
+    ['html','tsx','md','preview'].forEach(function(type) {
+      (data.orphans[type]||[]).forEach(function(f) {
+        rows.push({ inputName: '—', inputDate: '', inputRowspan: 1, type: type, outputName: f.name, outputPath: f.path, outputDate: f.modified });
       });
-      html += '</div></div>';
-    }
+    });
   }
 
+  var html = '<table style="width:100%;border-collapse:collapse;font-size:13px;">';
+  html += '<thead><tr style="border-bottom:2px solid var(--ds-color-border-default);text-align:left;">';
+  html += '<th style="padding:10px 12px;font-size:11px;font-weight:600;color:var(--ds-color-text-tertiary);letter-spacing:0.08em;text-transform:uppercase;white-space:nowrap;">Input File</th>';
+  html += '<th style="padding:10px 12px;font-size:11px;font-weight:600;color:var(--ds-color-text-tertiary);letter-spacing:0.08em;text-transform:uppercase;white-space:nowrap;">Updated</th>';
+  html += '<th style="padding:10px 12px;font-size:11px;font-weight:600;color:var(--ds-color-text-tertiary);letter-spacing:0.08em;text-transform:uppercase;white-space:nowrap;">Type</th>';
+  html += '<th style="padding:10px 12px;font-size:11px;font-weight:600;color:var(--ds-color-text-tertiary);letter-spacing:0.08em;text-transform:uppercase;">Output File</th>';
+  html += '<th style="padding:10px 12px;font-size:11px;font-weight:600;color:var(--ds-color-text-tertiary);letter-spacing:0.08em;text-transform:uppercase;white-space:nowrap;">Updated</th>';
+  html += '</tr></thead><tbody>';
+
+  rows.forEach(function(r) {
+    html += '<tr style="border-bottom:1px solid var(--ds-color-surface-light);">';
+    if (r.inputRowspan > 0) {
+      html += '<td style="padding:8px 12px;font-weight:500;color:var(--ds-color-text-primary);vertical-align:top;white-space:nowrap;" rowspan="' + r.inputRowspan + '">' + r.inputName + '</td>';
+      html += '<td style="padding:8px 12px;font-family:var(--ds-font-code);font-size:12px;color:var(--ds-color-text-tertiary);vertical-align:top;white-space:nowrap;" rowspan="' + r.inputRowspan + '">' + r.inputDate + '</td>';
+    }
+    html += '<td style="padding:8px 12px;">' + typeBadge(r.type) + '</td>';
+    html += '<td style="padding:8px 12px;"><a style="color:var(--ds-color-brand-primary);cursor:pointer;text-decoration:none;" onmouseover="this.style.textDecoration=\'underline\'" onmouseout="this.style.textDecoration=\'none\'" onclick="openDetail(\'' + r.outputPath + '\',\'' + r.outputName + '\')">' + r.outputName + '</a></td>';
+    html += '<td style="padding:8px 12px;font-family:var(--ds-font-code);font-size:12px;color:var(--ds-color-text-tertiary);white-space:nowrap;">' + r.outputDate + '</td>';
+    html += '</tr>';
+  });
+
+  html += '</tbody></table>';
   container.innerHTML = html;
 }
 
@@ -2617,10 +2609,22 @@ function loadOutputFiles() {
     .catch(function() {
       // fallback: /api/files
       fetch(apiBase + '/api/files').then(function(r) { return r.json(); }).then(function(files) {
-        // flat list fallback
         var container = document.getElementById('output-file-list');
-        var html = '';
-        files.forEach(function(f) { html += fileItem(f); });
+        var html = '<table style="width:100%;border-collapse:collapse;font-size:13px;">';
+        html += '<thead><tr style="border-bottom:2px solid var(--ds-color-border-default);text-align:left;">';
+        html += '<th style="padding:10px 12px;font-size:11px;font-weight:600;color:var(--ds-color-text-tertiary);letter-spacing:0.08em;text-transform:uppercase;">File</th>';
+        html += '<th style="padding:10px 12px;font-size:11px;font-weight:600;color:var(--ds-color-text-tertiary);letter-spacing:0.08em;text-transform:uppercase;">Type</th>';
+        html += '<th style="padding:10px 12px;font-size:11px;font-weight:600;color:var(--ds-color-text-tertiary);letter-spacing:0.08em;text-transform:uppercase;">Updated</th>';
+        html += '</tr></thead><tbody>';
+        files.forEach(function(f) {
+          var ext = f.ext || f.name.split('.').pop();
+          html += '<tr style="border-bottom:1px solid var(--ds-color-surface-light);">';
+          html += '<td style="padding:8px 12px;"><a style="color:var(--ds-color-brand-primary);cursor:pointer;text-decoration:none;" onclick="openDetail(\'' + f.path + '\',\'' + f.name + '\')">' + f.name + '</a></td>';
+          html += '<td style="padding:8px 12px;">' + typeBadge(ext === '.html' ? 'html' : ext === '.tsx' ? 'tsx' : ext === '.md' ? 'md' : 'preview') + '</td>';
+          html += '<td style="padding:8px 12px;font-family:var(--ds-font-code);font-size:12px;color:var(--ds-color-text-tertiary);">' + f.modified + '</td>';
+          html += '</tr>';
+        });
+        html += '</tbody></table>';
         container.innerHTML = html || '<div style="text-align:center;padding:48px 0;color:var(--ds-color-text-tertiary);">파일 없음</div>';
         if (status) status.textContent = 'LIVE (flat) — ' + new Date().toLocaleTimeString();
       }).catch(function() {
