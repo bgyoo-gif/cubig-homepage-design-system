@@ -164,8 +164,24 @@ Low 결함만 남은 경우 CONDITIONAL PASS 선언 가능.
 ## 자동 연동 규칙
 - .claude/skills/design-system.md가 생성되거나 업데이트되면
   항상 design-system-viewer 에이전트를 호출해서
-  reference/design-system-viewer.html을 함께 업데이트하고
-  gh-pages 브랜치에 push하여 GitHub Pages에 자동 배포한다
+  reference/design-system-viewer.html을 함께 업데이트한다
 - 규칙성 변경이 발생하면 feedback-sync 에이전트를 호출해서
   모든 관련 파일에 전파하고 output/html/feedback-log.html에 이력을 남긴다
+
+## 필수 마무리 — 매 작업 완료 시 반드시 실행 (예외 없음)
+**파일을 수정/생성한 모든 작업이 끝나면 아래를 반드시 실행한다. 사용자가 요청하지 않아도 자동으로.**
+
+```bash
+# 1. 변경된 파일 stage
+git add output/ reference/design-system-viewer.html reference/graphics/ reference/images/
+
+# 2. commit
+git commit -m "Auto-deploy: [작업 요약]"
+
+# 3. push
+git push origin gh-pages
+```
+
+이 단계를 빠뜨리면 사용자가 GitHub Pages에서 최신 결과를 볼 수 없다.
+빠뜨리는 것은 작업 미완료와 동일하다.
 

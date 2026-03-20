@@ -288,6 +288,16 @@
     @media (min-width: 1024px) { .ds-container { padding: 0 var(--ds-container-padding-sm-desktop); } }
     @media (min-width: 1440px) { .ds-container { padding: 0 var(--ds-container-padding-desktop); max-width: 1440px; } }
 
+    /* Article layout — 본문 콘텐츠도 동일한 max-width로 통일 */
+    .ds-article .ds-container > * {
+      max-width: 860px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    /* 예외: 전폭이 필요한 컴포넌트 */
+    .ds-article .ds-container > .ds-partner-grid,
+    .ds-article .ds-container > .ds-kpi-band { max-width: none; margin-left: 0; margin-right: 0; }
+
     .ds-grid { display: grid; gap: var(--ds-space-lg); width: 100%; }
     .ds-grid--1 { grid-template-columns: 1fr; }
     .ds-grid--2 { grid-template-columns: 1fr; }
@@ -313,7 +323,7 @@
       border-bottom: var(--ds-border-default);
       margin-bottom: var(--ds-space-xl);
     }
-    .ds-section-header--left { text-align: left; max-width: 860px; margin-left: auto; margin-right: auto; }
+    .ds-section-header--left { text-align: left; }
     .ds-section-header--left .ds-section-header__description { margin: 0; }
 
     .ds-section-header__title {
@@ -335,8 +345,8 @@
       overflow-wrap: break-word;
     }
     @media (min-width: 768px)  { .ds-section-header__title { font-size: 22px; } }
-    @media (min-width: 1024px) { .ds-section-header__title { font-size: 24px; } .ds-section-header__description { max-width: 720px; } }
-    @media (min-width: 1440px) { .ds-section-header__title { font-size: 28px; } .ds-section-header__description { max-width: 860px; } }
+    @media (min-width: 1024px) { .ds-section-header__title { font-size: 24px; } }
+    @media (min-width: 1440px) { .ds-section-header__title { font-size: 28px; } }
 
     @media (max-width: 767px) { .ds-section-header { text-align: left; } }
 
@@ -344,7 +354,7 @@
        8. Hero
     ============================================================ */
     .ds-hero { padding: 0; display: grid; grid-template-columns: 1fr; gap: var(--ds-space-lg); }
-    .ds-hero--text-only { max-width: 860px; margin: 0 auto; }
+    .ds-hero--text-only { }
 
     .ds-hero__breadcrumb { margin-bottom: var(--ds-space-md); }
     .ds-hero__breadcrumb a { color: var(--ds-color-brand-purple); }
@@ -368,9 +378,9 @@
       word-break: keep-all;
       overflow-wrap: break-word;
     }
-    @media (min-width: 768px)  { .ds-hero__title { font-size: 28px; } .ds-hero__description { max-width: 720px; } }
-    @media (min-width: 1024px) { .ds-hero__title { font-size: 32px; } .ds-hero__description { max-width: 720px; } }
-    @media (min-width: 1440px) { .ds-hero__title { font-size: 36px; letter-spacing: -2px; } .ds-hero__description { max-width: 860px; } }
+    @media (min-width: 768px)  { .ds-hero__title { font-size: 28px; } }
+    @media (min-width: 1024px) { .ds-hero__title { font-size: 32px; } }
+    @media (min-width: 1440px) { .ds-hero__title { font-size: 36px; letter-spacing: -2px; } }
 
     /* ============================================================
        9. Banner
@@ -629,17 +639,6 @@
        19. Section-specific layout
     ============================================================ */
 
-    /* 아티클형 본문 — 컨테이너 내부 max-width + 중앙 정렬 */
-    .ds-section .ds-container > .ds-grid--1,
-    .ds-section .ds-container > .ds-bullet,
-    .ds-section .ds-container > .ds-body-l,
-    .ds-section .ds-container > .ds-body-m,
-    .ds-section .ds-container > .ds-table-wrap {
-      max-width: 860px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
     /* 섹션 2 리드 단락 간격 */
     .ds-body-l + .ds-body-m,
     .ds-body-m + .ds-body-m { margin-top: var(--ds-space-md); }
@@ -711,7 +710,7 @@
     </div>
   </nav>
 
-  <main id="main-content">
+  <main id="main-content" class="ds-article">
 
     <!-- =====================================================
          Section 1: Hero (Text-only)

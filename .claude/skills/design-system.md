@@ -2089,3 +2089,4 @@ drawArrows() 함수 규칙:
 21. CSS 변수는 design-system.md에 정의된 것만 사용: 임의로 새 변수(--ds-color-teal, --ds-bg-gradient-* 등)를 만들지 않는다. DS에 없는 색상이 필요하면 design-system-agent를 통해 추가한다.
 22. Case Study 열 타입 혼합 금지: 한 섹션 안에서 1col과 2col/3col을 섞지 않는다. 1col이면 전부 1col, 2col이면 전부 2col로 통일한다.
 23. FAQ는 반드시 아코디언 형태: "FAQ", "Frequently Asked Questions", "Common Questions" 등의 섹션은 반드시 `ds-ac-card` 아코디언으로 구현한다. `ds-grid--1 + ds-card` 카드 나열 금지.
+24. 아티클형 페이지(Learn 등) 본문 폭 통일: `<main class="ds-article">` 적용 시 `.ds-article .ds-container > *`에 `max-width: 860px; margin: 0 auto;`가 걸림. 헤더/본문/카드/테이블 모두 동일 폭. 전폭 예외: partner-grid, kpi-band.
