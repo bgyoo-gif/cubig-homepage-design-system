@@ -2554,6 +2554,7 @@ function renderTree(data) {
     allOutputs.forEach(function(o, idx) {
       rows.push({
         inputName: idx === 0 ? inp.name : '',
+        inputPath: idx === 0 ? inp.path : '',
         inputDate: idx === 0 ? inp.modified : '',
         inputRowspan: idx === 0 ? allOutputs.length : 0,
         type: o.type,
@@ -2585,7 +2586,8 @@ function renderTree(data) {
   rows.forEach(function(r) {
     html += '<tr style="border-bottom:1px solid var(--ds-color-surface-light);">';
     if (r.inputRowspan > 0) {
-      html += '<td style="padding:8px 12px;font-weight:500;color:var(--ds-color-text-primary);vertical-align:top;white-space:nowrap;" rowspan="' + r.inputRowspan + '">' + r.inputName + '</td>';
+      var dynInputLink = r.inputPath ? '<a href="' + r.inputPath + '" target="_blank" style="color:var(--ds-color-text-primary);text-decoration:none;" onmouseover="this.style.color=\'var(--ds-color-brand-primary)\'" onmouseout="this.style.color=\'var(--ds-color-text-primary)\'">' + r.inputName + '</a>' : r.inputName;
+      html += '<td style="padding:8px 12px;font-weight:500;vertical-align:top;white-space:nowrap;" rowspan="' + r.inputRowspan + '">' + dynInputLink + '</td>';
       html += '<td style="padding:8px 12px;font-family:var(--ds-font-code);font-size:12px;color:var(--ds-color-text-tertiary);vertical-align:top;white-space:nowrap;" rowspan="' + r.inputRowspan + '">' + r.inputDate + '</td>';
     }
     html += '<td style="padding:8px 12px;">' + typeBadge(r.type) + '</td>';
@@ -2637,7 +2639,7 @@ function loadOutputFiles() {
 function renderStaticTable() {
   var container = document.getElementById('output-file-list');
   var data = [
-    { input: 'A-cubig-llm-v3.html', idate: '2026-03-18', outputs: [
+    { input: 'A-cubig-llm-v3.html', ipath: '../input/A-cubig-llm-v3.html', idate: '2026-03-18', outputs: [
       { type: 'md', name: 'A-cubig-llm-v3-spec.md', date: '2026-03-18' },
       { type: 'html', name: 'A-cubig-llm-v3-b-type.html', date: '2026-03-19' },
       { type: 'md', name: 'A-cubig-llm-v3-qa-report.md', date: '2026-03-19' },
@@ -2659,17 +2661,17 @@ function renderStaticTable() {
       { type: 'tsx', name: 'Section16_Alternatives.tsx', date: '2026-03-18' },
       { type: 'tsx', name: 'Section17_CTA.tsx', date: '2026-03-18' },
     ]},
-    { input: 'A-cubig-proof-v3.html', idate: '2026-03-18', outputs: [
+    { input: 'A-cubig-proof-v3.html', ipath: '../input/A-cubig-proof-v3.html', idate: '2026-03-18', outputs: [
       { type: 'md', name: 'A-cubig-proof-v3-spec.md', date: '2026-03-18' },
       { type: 'html', name: 'A-cubig-proof-v3-b-type.html', date: '2026-03-20' },
       { type: 'md', name: 'A-cubig-proof-v3-qa-report.md', date: '2026-03-20' },
     ]},
-    { input: 'cubig-learn-prompt-data-leakage.html', idate: '2026-03-20', outputs: [
+    { input: 'cubig-learn-prompt-data-leakage.html', ipath: '../input/cubig-learn-prompt-data-leakage.html', idate: '2026-03-20', outputs: [
       { type: 'md', name: 'cubig-learn-prompt-data-leakage-spec.md', date: '2026-03-20' },
       { type: 'html', name: 'A-cubig-learn-prompt-data-leakage-b-type.html', date: '2026-03-20' },
       { type: 'md', name: 'cubig-learn-prompt-data-leakage-qa-report.md', date: '2026-03-20' },
     ]},
-    { input: '(standalone)', idate: '', outputs: [
+    { input: '(standalone)', ipath: '', idate: '', outputs: [
       { type: 'html', name: 'figure_cubig_architecture.html', date: '2026-03-20' },
       { type: 'tsx', name: 'ArchitectureDiagram.tsx', date: '2026-03-19' },
       { type: 'tsx', name: 'Figure_Architecture.tsx', date: '2026-03-19' },
@@ -2689,7 +2691,8 @@ function renderStaticTable() {
     group.outputs.forEach(function(o, idx) {
       html += '<tr style="border-bottom:1px solid var(--ds-color-surface-light);">';
       if (idx === 0) {
-        html += '<td style="padding:8px 12px;font-weight:500;color:var(--ds-color-text-primary);vertical-align:top;white-space:nowrap;" rowspan="' + group.outputs.length + '">' + group.input + '</td>';
+        var inputLink = group.ipath ? '<a href="' + group.ipath + '" target="_blank" style="color:var(--ds-color-text-primary);text-decoration:none;" onmouseover="this.style.color=\'var(--ds-color-brand-primary)\'" onmouseout="this.style.color=\'var(--ds-color-text-primary)\'">' + group.input + '</a>' : group.input;
+        html += '<td style="padding:8px 12px;font-weight:500;vertical-align:top;white-space:nowrap;" rowspan="' + group.outputs.length + '">' + inputLink + '</td>';
         html += '<td style="padding:8px 12px;font-family:var(--ds-font-code);font-size:12px;color:var(--ds-color-text-tertiary);vertical-align:top;white-space:nowrap;" rowspan="' + group.outputs.length + '">' + group.idate + '</td>';
       }
       html += '<td style="padding:8px 12px;">' + typeBadge(o.type) + '</td>';
