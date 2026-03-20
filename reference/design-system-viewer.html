@@ -2708,40 +2708,47 @@ function startConversion() {
         return;
       }
       addLog('upload', 'Job created: ' + data.job_id);
-      listenSSE(data.job_id);
+      pollJob(data.job_id);
     })
     .catch(function(err) {
-      addLog('error', 'Server not reachable. Start: python3 server/app.py');
+      addLog('error', 'Server not reachable. Start server: .venv/bin/python server/app.py');
       resetButton();
     });
 }
 
-function listenSSE(jobId) {
-  var source = new EventSource(SERVER_URL + '/api/sse/' + jobId);
-  source.onmessage = function(e) {
-    var data = JSON.parse(e.data);
-    addLog(data.stage, data.message);
-
-    var pct = STAGE_PROGRESS[data.stage] || 50;
-    var label = STAGE_LABELS[data.stage] || data.stage;
-    updateProgress(pct, label);
-
-    if (data.message === 'done' || data.message === 'error') {
-      source.close();
-      if (data.message === 'done') {
-        showResult(data.result);
-        updateProgress(100, 'Complete!');
-      } else {
-        updateProgress(100, 'Error occurred');
-      }
-      resetButton();
-    }
-  };
-  source.onerror = function() {
-    source.close();
-    addLog('error', 'SSE connection lost');
-    resetButton();
-  };
+var pollLastLogCount = 0;
+function pollJob(jobId) {
+  pollLastLogCount = 0;
+  var interval = setInterval(function() {
+    fetch(SERVER_URL + '/api/job/' + jobId)
+      .then(function(r) { return r.json(); })
+      .then(function(job) {
+        // Show new logs
+        if (job.logs && job.logs.length > pollLastLogCount) {
+          for (var i = pollLastLogCount; i < job.logs.length; i++) {
+            addLog(job.logs[i].stage, job.logs[i].message);
+            var pct = STAGE_PROGRESS[job.logs[i].stage] || 50;
+            var label = STAGE_LABELS[job.logs[i].stage] || job.logs[i].stage;
+            updateProgress(pct, label);
+          }
+          pollLastLogCount = job.logs.length;
+        }
+        // Check completion
+        if (job.status === 'done') {
+          clearInterval(interval);
+          updateProgress(100, 'Complete!');
+          if (job.result) showResult(job.result);
+          resetButton();
+        } else if (job.status === 'error') {
+          clearInterval(interval);
+          updateProgress(100, 'Error occurred');
+          resetButton();
+        }
+      })
+      .catch(function() {
+        // Server unreachable — keep polling
+      });
+  }, 2000);
 }
 
 function updateProgress(pct, label) {
