@@ -110,8 +110,57 @@ body { font-family: var(--ds-font-base); color: var(--ds-color-text-primary); ba
 .v-placeholder__title { font-family: var(--ds-font-brand); font-size: 32px; font-weight: 700; color: var(--ds-color-text-primary); }
 .v-placeholder__desc { font-size: 14px; color: var(--ds-color-text-secondary); }
 
+/* Output page */
+.v-output-section { margin-bottom: 48px; }
+.v-output-section__title {
+  font-family: var(--ds-font-brand); font-size: 18px; font-weight: 700;
+  color: var(--ds-color-text-primary); margin-bottom: 16px; padding-bottom: 8px;
+  border-bottom: 1px solid var(--ds-color-border-default); cursor: pointer; user-select: none;
+}
+.v-output-section__title::before { content: '▸ '; color: var(--ds-color-text-tertiary); }
+.v-output-section__title--open::before { content: '▾ '; }
+.v-output-list { display: none; }
+.v-output-list--open { display: block; }
+.v-output-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px; border-bottom: 1px solid var(--ds-color-surface-light);
+  transition: background 0.1s;
+}
+.v-output-item:hover { background: var(--ds-color-surface-light); }
+.v-output-item__name {
+  font-size: 14px; font-weight: 500; color: var(--ds-color-brand-primary);
+  text-decoration: none; cursor: pointer;
+}
+.v-output-item__name:hover { text-decoration: underline; }
+.v-output-item__date { font-size: 12px; color: var(--ds-color-text-tertiary); font-family: var(--ds-font-code); }
+/* Detail overlay */
+.v-detail-overlay {
+  display: none; position: fixed; inset: 0; z-index: 200;
+  background: rgba(0,0,0,0.4); backdrop-filter: blur(4px);
+}
+.v-detail-overlay--open { display: flex; align-items: center; justify-content: center; }
+.v-detail-panel {
+  background: #fff; border-radius: 16px; width: 90%; max-width: 1200px; max-height: 90vh;
+  display: flex; flex-direction: column; box-shadow: 0 24px 48px rgba(0,0,0,0.15);
+}
+.v-detail-header {
+  display: flex; align-items: center; padding: 16px 24px;
+  border-bottom: 1px solid var(--ds-color-border-default); flex-shrink: 0;
+}
+.v-detail-header__title { font-size: 16px; font-weight: 600; flex: 1; }
+.v-detail-header__btn {
+  padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 500;
+  cursor: pointer; border: none; transition: all 0.15s;
+}
+.v-detail-header__btn--download { background: var(--ds-color-neutral-900); color: #fff; margin-right: 8px; }
+.v-detail-header__btn--download:hover { opacity: 0.85; }
+.v-detail-header__btn--close { background: var(--ds-color-surface-light); color: var(--ds-color-text-primary); }
+.v-detail-header__btn--close:hover { background: var(--ds-color-surface-mid); }
+.v-detail-body { flex: 1; overflow: auto; }
+.v-detail-body iframe { width: 100%; height: 100%; min-height: 70vh; border: none; }
+
 /* Main */
-.v-main { padding: 0 40px 80px; max-width: 1000px; }
+.v-main { padding: 0 40px 80px; max-width: 1000px; margin: 0 auto; }
 .v-section { margin-bottom: 56px; padding-top: 32px; }
 .v-section__title { font-family: var(--ds-font-brand); font-size: 22px; font-weight: var(--ds-weight-bold); margin-bottom: 6px; }
 .v-section__desc { font-size: 13px; color: var(--ds-color-text-secondary); margin-bottom: 20px; }
@@ -664,6 +713,7 @@ code, .ds-code-inline {
     <button class="v-gnb__item" data-page="diagram-builder">Diagram Builder</button>
     <button class="v-gnb__item v-gnb__item--active" data-page="foundation">Foundation</button>
     <button class="v-gnb__item" data-page="layout">Layout</button>
+    <button class="v-gnb__item" data-page="output">Output</button>
   </div>
 </nav>
 
@@ -2181,7 +2231,92 @@ code, .ds-code-inline {
   </div>
 </div><!-- /page-diagram-builder -->
 
+<!-- ==================== PAGE: OUTPUT ==================== -->
+<div class="v-page" id="page-output">
+
+  <h2 style="font-family:var(--ds-font-brand);font-size:28px;font-weight:700;margin:32px 0 8px;">Output Files</h2>
+  <p style="font-size:14px;color:var(--ds-color-text-secondary);margin-bottom:32px;">변환된 B타입 HTML과 Framer Code Component 파일 목록</p>
+
+  <!-- Framer -->
+  <div class="v-output-section">
+    <div class="v-output-section__title v-output-section__title--open" onclick="this.classList.toggle('v-output-section__title--open');this.nextElementSibling.classList.toggle('v-output-list--open')">Framer</div>
+    <div class="v-output-list v-output-list--open">
+
+      <!-- llm-capsule/tsx -->
+      <div style="padding:8px 0 4px 16px;font-size:12px;font-weight:600;color:var(--ds-color-text-tertiary);letter-spacing:0.08em;text-transform:uppercase;">llm-capsule / tsx</div>
+      <div class="v-output-item"><a class="v-output-item__name" onclick="openDetail('../output/framer/llm-capsule/tsx/Section01_Hero.tsx','Section01_Hero.tsx')">Section01_Hero.tsx</a><span class="v-output-item__date">2026-03-18</span></div>
+      <div class="v-output-item"><a class="v-output-item__name" onclick="openDetail('../output/framer/llm-capsule/tsx/Section02_KpiBand.tsx','Section02_KpiBand.tsx')">Section02_KpiBand.tsx</a><span class="v-output-item__date">2026-03-18</span></div>
+      <div class="v-output-item"><a class="v-output-item__name" onclick="openDetail('../output/framer/llm-capsule/tsx/Section03_WhyNow.tsx','Section03_WhyNow.tsx')">Section03_WhyNow.tsx</a><span class="v-output-item__date">2026-03-18</span></div>
+      <div class="v-output-item"><a class="v-output-item__name" onclick="openDetail('../output/framer/llm-capsule/tsx/Section04_PromptFlow.tsx','Section04_PromptFlow.tsx')">Section04_PromptFlow.tsx</a><span class="v-output-item__date">2026-03-18</span></div>
+      <div class="v-output-item"><a class="v-output-item__name" onclick="openDetail('../output/framer/llm-capsule/tsx/Section05_Availability.tsx','Section05_Availability.tsx')">Section05_Availability.tsx</a><span class="v-output-item__date">2026-03-18</span></div>
+      <div class="v-output-item"><a class="v-output-item__name" onclick="openDetail('../output/framer/llm-capsule/tsx/Section06_Capabilities.tsx','Section06_Capabilities.tsx')">Section06_Capabilities.tsx</a><span class="v-output-item__date">2026-03-18</span></div>
+      <div class="v-output-item"><a class="v-output-item__name" onclick="openDetail('../output/framer/llm-capsule/tsx/Section07_DetectionCoverage.tsx','Section07_DetectionCoverage.tsx')">Section07_DetectionCoverage.tsx</a><span class="v-output-item__date">2026-03-18</span></div>
+      <div class="v-output-item"><a class="v-output-item__name" onclick="openDetail('../output/framer/llm-capsule/tsx/Section08_Integration.tsx','Section08_Integration.tsx')">Section08_Integration.tsx</a><span class="v-output-item__date">2026-03-18</span></div>
+      <div class="v-output-item"><a class="v-output-item__name" onclick="openDetail('../output/framer/llm-capsule/tsx/Section09_ComparisonTable.tsx','Section09_ComparisonTable.tsx')">Section09_ComparisonTable.tsx</a><span class="v-output-item__date">2026-03-18</span></div>
+      <div class="v-output-item"><a class="v-output-item__name" onclick="openDetail('../output/framer/llm-capsule/tsx/Section10_CaseStudies.tsx','Section10_CaseStudies.tsx')">Section10_CaseStudies.tsx</a><span class="v-output-item__date">2026-03-18</span></div>
+      <div class="v-output-item"><a class="v-output-item__name" onclick="openDetail('../output/framer/llm-capsule/tsx/Section11_Partners.tsx','Section11_Partners.tsx')">Section11_Partners.tsx</a><span class="v-output-item__date">2026-03-18</span></div>
+      <div class="v-output-item"><a class="v-output-item__name" onclick="openDetail('../output/framer/llm-capsule/tsx/Section12_Blockers.tsx','Section12_Blockers.tsx')">Section12_Blockers.tsx</a><span class="v-output-item__date">2026-03-18</span></div>
+      <div class="v-output-item"><a class="v-output-item__name" onclick="openDetail('../output/framer/llm-capsule/tsx/Section13_KeyConcepts.tsx','Section13_KeyConcepts.tsx')">Section13_KeyConcepts.tsx</a><span class="v-output-item__date">2026-03-18</span></div>
+      <div class="v-output-item"><a class="v-output-item__name" onclick="openDetail('../output/framer/llm-capsule/tsx/Section14_FAQ.tsx','Section14_FAQ.tsx')">Section14_FAQ.tsx</a><span class="v-output-item__date">2026-03-18</span></div>
+      <div class="v-output-item"><a class="v-output-item__name" onclick="openDetail('../output/framer/llm-capsule/tsx/Section15_OperationalBanner.tsx','Section15_OperationalBanner.tsx')">Section15_OperationalBanner.tsx</a><span class="v-output-item__date">2026-03-18</span></div>
+      <div class="v-output-item"><a class="v-output-item__name" onclick="openDetail('../output/framer/llm-capsule/tsx/Section16_Alternatives.tsx','Section16_Alternatives.tsx')">Section16_Alternatives.tsx</a><span class="v-output-item__date">2026-03-18</span></div>
+      <div class="v-output-item"><a class="v-output-item__name" onclick="openDetail('../output/framer/llm-capsule/tsx/Figure_Architecture.tsx','Figure_Architecture.tsx')">Figure_Architecture.tsx</a><span class="v-output-item__date">2026-03-19</span></div>
+
+      <!-- llm-capsule/html -->
+      <div style="padding:16px 0 4px 16px;font-size:12px;font-weight:600;color:var(--ds-color-text-tertiary);letter-spacing:0.08em;text-transform:uppercase;">llm-capsule / html (preview)</div>
+      <div class="v-output-item"><a class="v-output-item__name" onclick="openDetail('../output/framer/llm-capsule/html/_preview_section01.html','_preview_section01.html')">_preview_section01.html</a><span class="v-output-item__date">2026-03-18</span></div>
+      <div class="v-output-item"><a class="v-output-item__name" onclick="openDetail('../output/framer/llm-capsule/html/_preview_section02.html','_preview_section02.html')">_preview_section02.html</a><span class="v-output-item__date">2026-03-18</span></div>
+      <div class="v-output-item"><a class="v-output-item__name" onclick="openDetail('../output/framer/llm-capsule/html/_preview_section03.html','_preview_section03.html')">_preview_section03.html</a><span class="v-output-item__date">2026-03-18</span></div>
+      <div class="v-output-item"><a class="v-output-item__name" onclick="openDetail('../output/framer/llm-capsule/html/_preview_section04.html','_preview_section04.html')">_preview_section04.html</a><span class="v-output-item__date">2026-03-18</span></div>
+      <div class="v-output-item"><a class="v-output-item__name" onclick="openDetail('../output/framer/llm-capsule/html/_preview_section05.html','_preview_section05.html')">_preview_section05.html</a><span class="v-output-item__date">2026-03-18</span></div>
+      <div class="v-output-item"><a class="v-output-item__name" onclick="openDetail('../output/framer/llm-capsule/html/_preview_section06.html','_preview_section06.html')">_preview_section06.html</a><span class="v-output-item__date">2026-03-18</span></div>
+      <div class="v-output-item"><a class="v-output-item__name" onclick="openDetail('../output/framer/llm-capsule/html/_preview_section07.html','_preview_section07.html')">_preview_section07.html</a><span class="v-output-item__date">2026-03-18</span></div>
+      <div class="v-output-item"><a class="v-output-item__name" onclick="openDetail('../output/framer/llm-capsule/html/_preview_section08.html','_preview_section08.html')">_preview_section08.html</a><span class="v-output-item__date">2026-03-18</span></div>
+      <div class="v-output-item"><a class="v-output-item__name" onclick="openDetail('../output/framer/llm-capsule/html/_preview_section09.html','_preview_section09.html')">_preview_section09.html</a><span class="v-output-item__date">2026-03-18</span></div>
+      <div class="v-output-item"><a class="v-output-item__name" onclick="openDetail('../output/framer/llm-capsule/html/_preview_section10.html','_preview_section10.html')">_preview_section10.html</a><span class="v-output-item__date">2026-03-18</span></div>
+      <div class="v-output-item"><a class="v-output-item__name" onclick="openDetail('../output/framer/llm-capsule/html/_preview_section11.html','_preview_section11.html')">_preview_section11.html</a><span class="v-output-item__date">2026-03-18</span></div>
+      <div class="v-output-item"><a class="v-output-item__name" onclick="openDetail('../output/framer/llm-capsule/html/_preview_section12.html','_preview_section12.html')">_preview_section12.html</a><span class="v-output-item__date">2026-03-18</span></div>
+      <div class="v-output-item"><a class="v-output-item__name" onclick="openDetail('../output/framer/llm-capsule/html/_preview_section13.html','_preview_section13.html')">_preview_section13.html</a><span class="v-output-item__date">2026-03-18</span></div>
+      <div class="v-output-item"><a class="v-output-item__name" onclick="openDetail('../output/framer/llm-capsule/html/_preview_section14.html','_preview_section14.html')">_preview_section14.html</a><span class="v-output-item__date">2026-03-18</span></div>
+      <div class="v-output-item"><a class="v-output-item__name" onclick="openDetail('../output/framer/llm-capsule/html/_preview_section15.html','_preview_section15.html')">_preview_section15.html</a><span class="v-output-item__date">2026-03-18</span></div>
+      <div class="v-output-item"><a class="v-output-item__name" onclick="openDetail('../output/framer/llm-capsule/html/_preview_section16.html','_preview_section16.html')">_preview_section16.html</a><span class="v-output-item__date">2026-03-18</span></div>
+      <div class="v-output-item"><a class="v-output-item__name" onclick="openDetail('../output/framer/llm-capsule/html/_preview_figure_architecture.html','_preview_figure_architecture.html')">_preview_figure_architecture.html</a><span class="v-output-item__date">2026-03-19</span></div>
+
+      <!-- figure_cubig_architecture -->
+      <div style="padding:16px 0 4px 16px;font-size:12px;font-weight:600;color:var(--ds-color-text-tertiary);letter-spacing:0.08em;text-transform:uppercase;">figure_cubig_architecture</div>
+      <div class="v-output-item"><a class="v-output-item__name" onclick="openDetail('../output/framer/figure_cubig_architecture/tsx/ArchitectureDiagram.tsx','ArchitectureDiagram.tsx')">ArchitectureDiagram.tsx</a><span class="v-output-item__date">2026-03-19</span></div>
+    </div>
+  </div>
+
+  <!-- HTML -->
+  <div class="v-output-section">
+    <div class="v-output-section__title v-output-section__title--open" onclick="this.classList.toggle('v-output-section__title--open');this.nextElementSibling.classList.toggle('v-output-list--open')">HTML</div>
+    <div class="v-output-list v-output-list--open">
+      <div class="v-output-item"><a class="v-output-item__name" onclick="openDetail('../output/html/A-cubig-llm-v3-b-type.html','A-cubig-llm-v3-b-type.html')">A-cubig-llm-v3-b-type.html</a><span class="v-output-item__date">2026-03-19</span></div>
+      <div class="v-output-item"><a class="v-output-item__name" onclick="openDetail('../output/html/A-cubig-proof-v3-b-type.html','A-cubig-proof-v3-b-type.html')">A-cubig-proof-v3-b-type.html</a><span class="v-output-item__date">2026-03-20</span></div>
+      <div class="v-output-item"><a class="v-output-item__name" onclick="openDetail('../output/html/A-cubig-learn-prompt-data-leakage-b-type.html','A-cubig-learn-prompt-data-leakage-b-type.html')">A-cubig-learn-prompt-data-leakage-b-type.html</a><span class="v-output-item__date">2026-03-19</span></div>
+      <div class="v-output-item"><a class="v-output-item__name" onclick="openDetail('../output/html/figure_cubig_architecture.html','figure_cubig_architecture.html')">figure_cubig_architecture.html</a><span class="v-output-item__date">2026-03-20</span></div>
+    </div>
+  </div>
+
+</div><!-- /page-output -->
+
+<!-- Detail overlay -->
+<div class="v-detail-overlay" id="detail-overlay" onclick="if(event.target===this)closeDetail()">
+  <div class="v-detail-panel">
+    <div class="v-detail-header">
+      <span class="v-detail-header__title" id="detail-title"></span>
+      <button class="v-detail-header__btn v-detail-header__btn--download" id="detail-download" onclick="downloadFile()">Download</button>
+      <button class="v-detail-header__btn v-detail-header__btn--close" onclick="closeDetail()">Close</button>
+    </div>
+    <div class="v-detail-body">
+      <iframe id="detail-iframe"></iframe>
+    </div>
+  </div>
+</div>
+
 </main>
+</div>
 </div>
 
 <script>
@@ -2287,6 +2422,38 @@ document.querySelectorAll('.v-gnb__item').forEach(function(btn) {
     }
   });
 });
+
+/* ===== Output Detail ===== */
+var currentFilePath = '';
+function openDetail(path, name) {
+  currentFilePath = path;
+  document.getElementById('detail-title').textContent = name;
+  var iframe = document.getElementById('detail-iframe');
+  if (path.endsWith('.tsx') || path.endsWith('.ts') || path.endsWith('.js')) {
+    fetch(path).then(function(r) { return r.text(); }).then(function(text) {
+      iframe.srcdoc = '<html><head><style>body{margin:0;padding:24px;font-family:"Fragment Mono",monospace;font-size:13px;line-height:1.7;background:#0f0f0f;color:#bababa;white-space:pre-wrap;word-break:break-all;}</style></head><body>' + text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</body></html>';
+    });
+  } else {
+    iframe.src = path;
+    iframe.srcdoc = '';
+  }
+  document.getElementById('detail-overlay').classList.add('v-detail-overlay--open');
+}
+function closeDetail() {
+  document.getElementById('detail-overlay').classList.remove('v-detail-overlay--open');
+  var iframe = document.getElementById('detail-iframe');
+  iframe.src = '';
+  iframe.srcdoc = '';
+}
+function downloadFile() {
+  if (!currentFilePath) return;
+  var a = document.createElement('a');
+  a.href = currentFilePath;
+  a.download = currentFilePath.split('/').pop();
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
 </script>
 </body>
 </html>
