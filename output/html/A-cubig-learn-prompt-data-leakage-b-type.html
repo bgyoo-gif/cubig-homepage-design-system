@@ -448,6 +448,21 @@
       border-color: var(--ds-color-neutral-700);
       color: var(--ds-color-text-inverse);
     }
+    /* ── Accordion Card ── */
+    .ds-ac-list { display: flex; flex-direction: column; gap: 2px; }
+    .ds-ac-card { border: var(--ds-border-default); border-radius: var(--ds-radius-sm); background-color: var(--ds-color-surface-white); overflow: hidden; }
+    .ds-ac-card__header { display: grid; grid-template-columns: 1fr auto; gap: var(--ds-space-md); align-items: center; padding: var(--ds-space-lg); cursor: pointer; user-select: none; }
+    .ds-ac-card__title-wrap { display: flex; flex-direction: column; gap: var(--ds-space-2xs); }
+    .ds-ac-card__title { font-size: var(--ds-text-md); font-weight: var(--ds-weight-semibold); color: var(--ds-color-text-primary); word-break: keep-all; overflow-wrap: break-word; }
+    .ds-ac-card__toggle { width: 28px; height: 28px; border-radius: 6px; background: var(--ds-color-surface-light); border: 0.5px solid var(--ds-color-border-default); display: flex; align-items: center; justify-content: center; position: relative; flex-shrink: 0; }
+    .ds-ac-card__toggle-icon { width: 12px; height: 12px; position: relative; }
+    .ds-ac-card__toggle-icon::before, .ds-ac-card__toggle-icon::after { content: ''; position: absolute; background: var(--ds-color-text-muted); border-radius: 1px; transition: opacity 0.2s; }
+    .ds-ac-card__toggle-icon::before { width: 12px; height: 1.5px; top: 50%; left: 0; transform: translateY(-50%); }
+    .ds-ac-card__toggle-icon::after { width: 1.5px; height: 12px; top: 0; left: 50%; transform: translateX(-50%); }
+    .ds-ac-card__body { display: none; padding: 0 var(--ds-space-lg) var(--ds-space-lg); font-size: var(--ds-text-sm); color: var(--ds-color-text-secondary); line-height: var(--ds-leading-relaxed); }
+    .ds-ac--open .ds-ac-card__body { display: block; }
+    .ds-ac--open .ds-ac-card__toggle-icon::after { opacity: 0; }
+
     .ds-card__title { font-family: var(--ds-font-base); font-size: var(--ds-text-2xl); font-weight: var(--ds-weight-bold); color: var(--ds-color-text-primary); line-height: var(--ds-leading-tight); margin-bottom: var(--ds-space-sm); }
     .ds-card__title--sm { font-size: var(--ds-text-lg); font-weight: var(--ds-weight-semibold); }
     .ds-card__description { font-size: var(--ds-text-sm); color: var(--ds-color-text-secondary); line-height: var(--ds-leading-relaxed); }
@@ -939,35 +954,61 @@
           <h2 class="ds-section-header__title">Frequently Asked Questions</h2>
         </div>
 
-        <div class="ds-grid ds-grid--1" role="list">
-          <!-- FAQ 1 -->
-          <article class="ds-card" role="listitem">
-            <h3 class="ds-card__title ds-card__title--sm">What is prompt data leakage in enterprise LLM usage?</h3>
-            <p class="ds-card__description">Prompt data leakage occurs when sensitive fields — PII, PHI, financial identifiers, or regulated data — enter LLM prompts without detection or anonymization, reaching external model APIs that the organization does not control. It is often invisible from the inside and creates compliance exposure regardless of LLM provider policies.</p>
+        <div class="ds-ac-list">
+          <article class="ds-ac-card ds-ac--open">
+            <div class="ds-ac-card__header" onclick="toggleAcCard(this)">
+              <div class="ds-ac-card__title-wrap">
+                <div class="ds-ac-card__title">What is prompt data leakage in enterprise LLM usage?</div>
+              </div>
+              <div class="ds-ac-card__toggle"><span class="ds-ac-card__toggle-icon"></span></div>
+            </div>
+            <div class="ds-ac-card__body">
+              <p>Prompt data leakage occurs when sensitive fields — PII, PHI, financial identifiers, or regulated data — enter LLM prompts without detection or anonymization, reaching external model APIs that the organization does not control. It is often invisible from the inside and creates compliance exposure regardless of LLM provider policies.</p>
+            </div>
           </article>
-
-          <!-- FAQ 2 -->
-          <article class="ds-card" role="listitem">
-            <h3 class="ds-card__title ds-card__title--sm">Why do LLM API privacy policies not protect organizations from data leakage risk?</h3>
-            <p class="ds-card__description">Privacy policies describe how a vendor handles data they receive. They do not prevent the organization from transmitting data it shouldn't transmit, and they do not eliminate the organization's liability as the data controller. The exposure occurs at the point of transmission — before any vendor policy applies.</p>
+          <article class="ds-ac-card">
+            <div class="ds-ac-card__header" onclick="toggleAcCard(this)">
+              <div class="ds-ac-card__title-wrap">
+                <div class="ds-ac-card__title">Why do LLM API privacy policies not protect organizations from data leakage risk?</div>
+              </div>
+              <div class="ds-ac-card__toggle"><span class="ds-ac-card__toggle-icon"></span></div>
+            </div>
+            <div class="ds-ac-card__body">
+              <p>Privacy policies describe how a vendor handles data they receive. They do not prevent the organization from transmitting data it shouldn't transmit, and they do not eliminate the organization's liability as the data controller. The exposure occurs at the point of transmission — before any vendor policy applies.</p>
+            </div>
           </article>
-
-          <!-- FAQ 3 -->
-          <article class="ds-card" role="listitem">
-            <h3 class="ds-card__title ds-card__title--sm">What regulations are most relevant to LLM data leakage risk?</h3>
-            <p class="ds-card__description">GDPR Article 25 (data minimization and privacy by design), HIPAA (PHI in prompts to commercial APIs), CCPA, PIPA, and financial data regulations. In each case, the organization sending data to an external LLM API retains liability as the data controller.</p>
+          <article class="ds-ac-card">
+            <div class="ds-ac-card__header" onclick="toggleAcCard(this)">
+              <div class="ds-ac-card__title-wrap">
+                <div class="ds-ac-card__title">What regulations are most relevant to LLM data leakage risk?</div>
+              </div>
+              <div class="ds-ac-card__toggle"><span class="ds-ac-card__toggle-icon"></span></div>
+            </div>
+            <div class="ds-ac-card__body">
+              <p>GDPR Article 25 (data minimization and privacy by design), HIPAA (PHI in prompts to commercial APIs), CCPA, PIPA, and financial data regulations. In each case, the organization sending data to an external LLM API retains liability as the data controller.</p>
+            </div>
           </article>
-
-          <!-- FAQ 4 -->
-          <article class="ds-card" role="listitem">
-            <h3 class="ds-card__title ds-card__title--sm">How does anonymization for LLM usage differ from standard data masking?</h3>
-            <p class="ds-card__description">Standard data masking removes or replaces sensitive fields permanently, often destroying downstream usability. LLM anonymization must preserve semantic meaning — replacing a patient name with a consistent token that the LLM can refer to coherently — and must re-map those tokens in LLM outputs for downstream use within the secure perimeter.</p>
+          <article class="ds-ac-card">
+            <div class="ds-ac-card__header" onclick="toggleAcCard(this)">
+              <div class="ds-ac-card__title-wrap">
+                <div class="ds-ac-card__title">How does anonymization for LLM usage differ from standard data masking?</div>
+              </div>
+              <div class="ds-ac-card__toggle"><span class="ds-ac-card__toggle-icon"></span></div>
+            </div>
+            <div class="ds-ac-card__body">
+              <p>Standard data masking removes or replaces sensitive fields permanently, often destroying downstream usability. LLM anonymization must preserve semantic meaning — replacing a patient name with a consistent token that the LLM can refer to coherently — and must re-map those tokens in LLM outputs for downstream use within the secure perimeter.</p>
+            </div>
           </article>
-
-          <!-- FAQ 5 -->
-          <article class="ds-card" role="listitem">
-            <h3 class="ds-card__title ds-card__title--sm">What is the difference between <span class="ds-text--product">LLM Capsule</span> and traditional data anonymization?</h3>
-            <p class="ds-card__description"><span class="ds-text--product">LLM Capsule</span> operates inline at the point of LLM interaction — detecting sensitive fields in prompts, anonymizing before transmission, and re-mapping tokens in outputs. Traditional anonymization is a batch process applied before data storage. <span class="ds-text--product">LLM Capsule</span> is designed for real-time, workflow-integrated protection that preserves LLM output usability.</p>
+          <article class="ds-ac-card">
+            <div class="ds-ac-card__header" onclick="toggleAcCard(this)">
+              <div class="ds-ac-card__title-wrap">
+                <div class="ds-ac-card__title">What is the difference between LLM Capsule and traditional data anonymization?</div>
+              </div>
+              <div class="ds-ac-card__toggle"><span class="ds-ac-card__toggle-icon"></span></div>
+            </div>
+            <div class="ds-ac-card__body">
+              <p>LLM Capsule operates inline at the point of LLM interaction — detecting sensitive fields in prompts, anonymizing before transmission, and re-mapping tokens in outputs. Traditional anonymization is a batch process applied before data storage. LLM Capsule is designed for real-time, workflow-integrated protection that preserves LLM output usability.</p>
+            </div>
           </article>
         </div>
       </div>
@@ -979,7 +1020,6 @@
     <section class="ds-section ds-section--dark" id="section-7">
       <div class="ds-container">
         <div class="ds-section-header ds-section-header--underline ds-section-header--left">
-          <span class="ds-section-header__eyebrow">Where to go next</span>
         </div>
         <nav aria-label="Related resources" style="display:flex;flex-direction:column;gap:var(--ds-space-sm);">
           <a href="/llm-capsule" class="ds-card ds-card--dark">
@@ -1059,5 +1099,11 @@
     <p class="ds-footer__copy">© 2025 CUBIG Corp. All rights reserved.</p>
   </footer>
 
+<script>
+function toggleAcCard(header) {
+  var card = header.closest('.ds-ac-card');
+  card.classList.toggle('ds-ac--open');
+}
+</script>
 </body>
 </html>
