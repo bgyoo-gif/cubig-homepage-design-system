@@ -2507,7 +2507,7 @@ function downloadFile() {
 /* ===== Output: Dynamic File List + WebSocket ===== */
 var apiBase = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
   ? window.location.origin
-  : 'http://localhost:3333';
+  : 'https://localhost:3333';
 
 function renderOutputFiles(files) {
   var container = document.getElementById('output-file-list');
@@ -2626,7 +2626,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 /* ===== Style Converter ===== */
 var scFile = null;
-var SERVER_URL = 'http://localhost:3333';
+var SERVER_URL = 'https://localhost:3333';
 
 var STAGE_PROGRESS = {
   'upload': 5,

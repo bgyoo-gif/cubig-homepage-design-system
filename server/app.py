@@ -1,17 +1,22 @@
 #!/usr/bin/env python3
 """
-CUBIG DS — Local File Server
-파일 업로드 수신 + 작업 상태 관리 + 정적 파일 서빙
-실제 변환은 Claude Code가 로컬에서 직접 실행
+CUBIG DS — FastAPI Server
+파일 업로드 + 작업 상태 관리 + WebSocket 실시간 알림 + 정적 파일 서빙
+여러 사용자 동시 접근 가능 (async + WebSocket broadcast)
 """
 
-import http.server
+import asyncio
 import json
 import os
 import time
 import uuid
 from pathlib import Path
-from urllib.parse import urlparse
+from typing import Dict, List, Set
+
+from fastapi import FastAPI, UploadFile, File, WebSocket, WebSocketDisconnect
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 INPUT_DIR = PROJECT_ROOT / "input"
@@ -22,169 +27,247 @@ INPUT_DIR.mkdir(exist_ok=True)
 OUTPUT_DIR.mkdir(exist_ok=True)
 JOBS_DIR.mkdir(exist_ok=True)
 
+app = FastAPI(title="CUBIG DS Server")
 
-def create_job(filename, filepath):
-    """Create a job manifest file for Claude Code to pick up."""
+# CORS — 모든 origin 허용 (사내 다른 PC에서 접근)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+# ══════════════════════════════════════
+# WebSocket Connection Manager
+# ══════════════════════════════════════
+
+class ConnectionManager:
+    """여러 클라이언트에게 동시 broadcast"""
+
+    def __init__(self):
+        self.active: Set[WebSocket] = set()
+
+    async def connect(self, ws: WebSocket):
+        await ws.accept()
+        self.active.add(ws)
+
+    def disconnect(self, ws: WebSocket):
+        self.active.discard(ws)
+
+    async def broadcast(self, message: dict):
+        dead = set()
+        for ws in self.active:
+            try:
+                await ws.send_json(message)
+            except Exception:
+                dead.add(ws)
+        self.active -= dead
+
+
+manager = ConnectionManager()
+
+
+# ══════════════════════════════════════
+# Job Management
+# ══════════════════════════════════════
+
+def create_job(filename: str, filepath: Path) -> dict:
     job_id = str(uuid.uuid4())[:8]
     job = {
         "id": job_id,
         "filename": filename,
         "filepath": str(filepath),
-        "status": "pending",  # pending → running → done → error
+        "status": "pending",
         "logs": [{"time": time.strftime("%H:%M:%S"), "stage": "upload", "message": f"File received: {filename}"}],
         "result": None,
         "created_at": time.strftime("%Y-%m-%d %H:%M:%S"),
     }
-    job_path = JOBS_DIR / f"{job_id}.json"
-    job_path.write_text(json.dumps(job, ensure_ascii=False, indent=2), encoding="utf-8")
+    (JOBS_DIR / f"{job_id}.json").write_text(json.dumps(job, ensure_ascii=False, indent=2), encoding="utf-8")
     return job
 
 
-def load_job(job_id):
-    job_path = JOBS_DIR / f"{job_id}.json"
-    if not job_path.exists():
+def load_job(job_id: str) -> dict | None:
+    path = JOBS_DIR / f"{job_id}.json"
+    if not path.exists():
         return None
-    return json.loads(job_path.read_text(encoding="utf-8"))
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
-def list_jobs():
+def list_jobs() -> list:
     jobs = []
     for p in sorted(JOBS_DIR.glob("*.json"), key=lambda x: x.stat().st_mtime, reverse=True):
-        jobs.append(json.loads(p.read_text(encoding="utf-8")))
+        try:
+            jobs.append(json.loads(p.read_text(encoding="utf-8")))
+        except Exception:
+            pass
     return jobs
 
 
-class Handler(http.server.SimpleHTTPRequestHandler):
+# ══════════════════════════════════════
+# API Routes
+# ══════════════════════════════════════
 
-    def do_POST(self):
-        if self.path == "/api/upload":
-            self.handle_upload()
-        else:
-            self.send_error(404)
+@app.post("/api/upload")
+async def upload_file(file: UploadFile = File(...)):
+    content = await file.read()
+    filepath = INPUT_DIR / file.filename
+    filepath.write_bytes(content)
+    job = create_job(file.filename, filepath)
 
-    def do_GET(self):
-        parsed = urlparse(self.path)
+    # broadcast to all connected clients
+    await manager.broadcast({
+        "type": "job_created",
+        "job": job,
+    })
 
-        if parsed.path == "/api/jobs":
-            self.send_json(200, list_jobs())
-        elif parsed.path.startswith("/api/job/"):
-            job_id = parsed.path.split("/")[-1]
-            job = load_job(job_id)
-            if job:
-                self.send_json(200, job)
-            else:
-                self.send_json(404, {"error": "Job not found"})
-        elif parsed.path == "/api/files":
-            self.handle_list_files()
-        elif parsed.path.startswith("/api/sse/"):
-            self.handle_sse(parsed.path.split("/")[-1])
-        else:
-            self.directory = str(PROJECT_ROOT)
-            super().do_GET()
-
-    def handle_upload(self):
-        content_type = self.headers.get("Content-Type", "")
-        if "multipart/form-data" not in content_type:
-            self.send_json(400, {"error": "Expected multipart/form-data"})
-            return
-
-        boundary = content_type.split("boundary=")[1].encode()
-        content_length = int(self.headers.get("Content-Length", 0))
-        body = self.rfile.read(content_length)
-
-        parts = body.split(b"--" + boundary)
-        file_data = None
-        filename = None
-
-        for part in parts:
-            if b'filename="' in part:
-                header_end = part.find(b"\r\n\r\n")
-                header = part[:header_end].decode("utf-8", errors="replace")
-                fn_start = header.find('filename="') + 10
-                fn_end = header.find('"', fn_start)
-                filename = header[fn_start:fn_end]
-                file_data = part[header_end + 4:].rstrip(b"\r\n--")
-                break
-
-        if not filename or not file_data:
-            self.send_json(400, {"error": "No file found"})
-            return
-
-        filepath = INPUT_DIR / filename
-        filepath.write_bytes(file_data)
-
-        job = create_job(filename, filepath)
-
-        self.send_json(200, {"job_id": job["id"], "filename": filename, "message": "File uploaded. Waiting for Claude Code to process."})
-
-    def handle_sse(self, job_id):
-        """SSE stream — polls job file for updates."""
-        self.send_response(200)
-        self.send_header("Content-Type", "text/event-stream")
-        self.send_header("Cache-Control", "no-cache")
-        self.send_header("Connection", "keep-alive")
-        self.send_header("Access-Control-Allow-Origin", "*")
-        self.end_headers()
-
-        last_log_count = 0
-        while True:
-            try:
-                job = load_job(job_id)
-                if not job:
-                    break
-
-                if len(job["logs"]) > last_log_count:
-                    for entry in job["logs"][last_log_count:]:
-                        self.wfile.write(f"data: {json.dumps(entry)}\n\n".encode())
-                    self.wfile.flush()
-                    last_log_count = len(job["logs"])
-
-                if job["status"] in ("done", "error"):
-                    data = json.dumps({"stage": "status", "message": job["status"], "result": job.get("result")})
-                    self.wfile.write(f"data: {data}\n\n".encode())
-                    self.wfile.flush()
-                    break
-
-                time.sleep(1)
-            except (BrokenPipeError, ConnectionResetError):
-                break
-
-    def handle_list_files(self):
-        files = []
-        for p in sorted(OUTPUT_DIR.rglob("*")):
-            if p.is_file() and not p.name.startswith("."):
-                files.append({
-                    "path": str(p.relative_to(PROJECT_ROOT)),
-                    "name": p.name,
-                    "size": p.stat().st_size,
-                    "modified": time.strftime("%Y-%m-%d %H:%M", time.localtime(p.stat().st_mtime)),
-                })
-        self.send_json(200, files)
-
-    def send_json(self, code, data):
-        self.send_response(code)
-        self.send_header("Content-Type", "application/json")
-        self.send_header("Access-Control-Allow-Origin", "*")
-        self.end_headers()
-        self.wfile.write(json.dumps(data, ensure_ascii=False).encode("utf-8"))
-
-    def log_message(self, format, *args):
-        pass  # suppress access logs
+    return {"job_id": job["id"], "filename": file.filename, "message": "File uploaded. Waiting for processing."}
 
 
-def main():
-    import sys
-    port = int(sys.argv[1]) if len(sys.argv) > 1 else 3333
-    server = http.server.HTTPServer(("0.0.0.0", port), Handler)
-    print(f"\n  CUBIG DS File Server @ http://localhost:{port}")
-    print(f"  Viewer: http://localhost:{port}/reference/design-system-viewer.html")
-    print(f"  Jobs dir: {JOBS_DIR}")
-    print(f"  Ctrl+C to stop\n")
+@app.get("/api/jobs")
+async def get_jobs():
+    return list_jobs()
+
+
+@app.get("/api/job/{job_id}")
+async def get_job(job_id: str):
+    job = load_job(job_id)
+    if not job:
+        return JSONResponse(status_code=404, content={"error": "Job not found"})
+    return job
+
+
+@app.get("/api/files")
+async def list_files():
+    """output 디렉토리 실시간 스캔"""
+    files = []
+    for p in sorted(OUTPUT_DIR.rglob("*")):
+        if p.is_file() and not p.name.startswith("."):
+            rel = p.relative_to(PROJECT_ROOT)
+            files.append({
+                "path": str(rel),
+                "name": p.name,
+                "dir": str(rel.parent),
+                "ext": p.suffix,
+                "size": p.stat().st_size,
+                "modified": time.strftime("%Y-%m-%d %H:%M", time.localtime(p.stat().st_mtime)),
+            })
+    return files
+
+
+@app.get("/api/file-content")
+async def get_file_content(path: str):
+    """파일 내용을 텍스트로 반환 (보안: PROJECT_ROOT 내부만 허용)"""
+    target = (PROJECT_ROOT / path).resolve()
+    if not str(target).startswith(str(PROJECT_ROOT)):
+        return JSONResponse(status_code=403, content={"error": "Access denied"})
+    if not target.exists():
+        return JSONResponse(status_code=404, content={"error": "File not found"})
     try:
-        server.serve_forever()
-    except KeyboardInterrupt:
-        print("\nStopped.")
+        text = target.read_text(encoding="utf-8")
+        return {"path": path, "content": text}
+    except UnicodeDecodeError:
+        return JSONResponse(status_code=415, content={"error": "Binary file"})
+
+
+# ══════════════════════════════════════
+# WebSocket — 실시간 알림
+# ══════════════════════════════════════
+
+@app.websocket("/ws")
+async def websocket_endpoint(ws: WebSocket):
+    await manager.connect(ws)
+    try:
+        while True:
+            # 클라이언트에서 메시지를 보낼 수 있음 (ping 등)
+            data = await ws.receive_text()
+            if data == "ping":
+                await ws.send_json({"type": "pong"})
+    except WebSocketDisconnect:
+        manager.disconnect(ws)
+
+
+# ══════════════════════════════════════
+# File Watcher — output 변경 감지 → broadcast
+# ══════════════════════════════════════
+
+async def watch_output_dir():
+    """output 디렉토리를 주기적으로 스캔, 변경 시 broadcast"""
+    known: Dict[str, float] = {}
+
+    # 초기 스캔
+    for p in OUTPUT_DIR.rglob("*"):
+        if p.is_file() and not p.name.startswith("."):
+            known[str(p)] = p.stat().st_mtime
+
+    while True:
+        await asyncio.sleep(3)
+        current: Dict[str, float] = {}
+        for p in OUTPUT_DIR.rglob("*"):
+            if p.is_file() and not p.name.startswith("."):
+                current[str(p)] = p.stat().st_mtime
+
+        # 새 파일
+        new_files = set(current) - set(known)
+        # 수정된 파일
+        modified_files = {k for k in set(current) & set(known) if current[k] != known[k]}
+        # 삭제된 파일
+        deleted_files = set(known) - set(current)
+
+        if new_files or modified_files or deleted_files:
+            changes = []
+            for f in new_files:
+                rel = str(Path(f).relative_to(PROJECT_ROOT))
+                changes.append({"action": "created", "path": rel, "name": Path(f).name})
+            for f in modified_files:
+                rel = str(Path(f).relative_to(PROJECT_ROOT))
+                changes.append({"action": "modified", "path": rel, "name": Path(f).name})
+            for f in deleted_files:
+                rel = str(Path(f).relative_to(PROJECT_ROOT))
+                changes.append({"action": "deleted", "path": rel, "name": Path(f).name})
+
+            await manager.broadcast({
+                "type": "files_changed",
+                "changes": changes,
+                "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
+            })
+
+        known = current
+
+
+@app.on_event("startup")
+async def startup():
+    asyncio.create_task(watch_output_dir())
+
+
+# ══════════════════════════════════════
+# 정적 파일 서빙 (맨 마지막에 마운트)
+# ══════════════════════════════════════
+
+app.mount("/", StaticFiles(directory=str(PROJECT_ROOT), html=True), name="static")
 
 
 if __name__ == "__main__":
-    main()
+    import uvicorn
+    import sys
+
+    port = int(sys.argv[1]) if len(sys.argv) > 1 else 3333
+    cert_dir = Path(__file__).parent / "certs"
+    ssl_cert = cert_dir / "localhost+1.pem"
+    ssl_key = cert_dir / "localhost+1-key.pem"
+    use_ssl = ssl_cert.exists() and ssl_key.exists()
+
+    proto = "https" if use_ssl else "http"
+    ws_proto = "wss" if use_ssl else "ws"
+    print(f"\n  CUBIG DS Server @ {proto}://localhost:{port}")
+    print(f"  Viewer: {proto}://localhost:{port}/reference/design-system-viewer.html")
+    print(f"  API:    {proto}://localhost:{port}/api/files")
+    print(f"  WS:     {ws_proto}://localhost:{port}/ws")
+    print(f"  SSL:    {'ON' if use_ssl else 'OFF (run: mkcert -install && mkcert localhost 127.0.0.1)'}")
+    print(f"  Ctrl+C to stop\n")
+
+    kwargs = {"host": "0.0.0.0", "port": port, "log_level": "info"}
+    if use_ssl:
+        kwargs["ssl_certfile"] = str(ssl_cert)
+        kwargs["ssl_keyfile"] = str(ssl_key)
+    uvicorn.run(app, **kwargs)
