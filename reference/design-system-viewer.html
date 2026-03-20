@@ -111,28 +111,31 @@ body { font-family: var(--ds-font-base); color: var(--ds-color-text-primary); ba
 .v-placeholder__desc { font-size: 14px; color: var(--ds-color-text-secondary); }
 
 /* Output page */
-.v-output-section { margin-bottom: 48px; }
+.v-output-section { margin-bottom: 16px; }
 .v-output-section__title {
-  font-family: var(--ds-font-brand); font-size: 18px; font-weight: 700;
-  color: var(--ds-color-text-primary); margin-bottom: 16px; padding-bottom: 8px;
-  border-bottom: 1px solid var(--ds-color-border-default); cursor: pointer; user-select: none;
+  font-family: var(--ds-font-base); font-size: 15px; font-weight: 600;
+  color: var(--ds-color-text-primary); padding: 12px 16px;
+  background: var(--ds-color-surface-light); border-radius: 8px;
+  cursor: pointer; user-select: none; transition: background 0.12s;
 }
-.v-output-section__title::before { content: '▸ '; color: var(--ds-color-text-tertiary); }
+.v-output-section__title:hover { background: var(--ds-color-neutral-100); }
+.v-output-section__title::before { content: '▸ '; color: var(--ds-color-text-tertiary); font-size: 12px; }
 .v-output-section__title--open::before { content: '▾ '; }
-.v-output-list { display: none; }
+.v-output-list { display: none; padding: 0 0 0 16px; }
 .v-output-list--open { display: block; }
 .v-output-item {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 12px 16px; border-bottom: 1px solid var(--ds-color-surface-light);
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 8px 16px; border-bottom: 1px solid var(--ds-color-surface-light);
   transition: background 0.1s;
 }
 .v-output-item:hover { background: var(--ds-color-surface-light); }
 .v-output-item__name {
-  font-size: 14px; font-weight: 500; color: var(--ds-color-brand-primary);
+  font-size: 13px; font-weight: 500; color: var(--ds-color-brand-primary);
   text-decoration: none; cursor: pointer;
+  flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
 .v-output-item__name:hover { text-decoration: underline; }
-.v-output-item__date { font-size: 12px; color: var(--ds-color-text-tertiary); font-family: var(--ds-font-code); }
+.v-output-item__date { font-size: 11px; color: var(--ds-color-text-tertiary); font-family: var(--ds-font-code); white-space: nowrap; flex-shrink: 0; }
 /* Detail overlay */
 .v-detail-overlay {
   display: none; position: fixed; inset: 0; z-index: 200;
