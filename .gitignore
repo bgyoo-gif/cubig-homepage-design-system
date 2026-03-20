@@ -1,0 +1,5 @@
+.DS_Store
+.venv/
+server/jobs/*.json
+__pycache__/
+*.pyc
