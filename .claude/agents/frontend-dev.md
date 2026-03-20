@@ -333,6 +333,7 @@ CTA       → 배경 이미지 (전폭)
 - [ ] eyebrow성 라벨(ds-banner__label, ds-section-header__eyebrow 등)이 모두 제거됐는가
 - [ ] FAQ/Common Questions 섹션이 ds-ac-card 아코디언으로 구현됐는가 (카드 나열 금지)
 - [ ] 아티클형 페이지(Learn 등)에 `<main class="ds-article">` + 본문 860px 통일이 적용됐는가
+- [ ] 제목(h1~h3)에 `text-wrap: balance`, 본문(description, body, card 등)에 `text-wrap: pretty`가 적용됐는가
 
 **코드 품질**
 - [ ] 시맨틱 태그를 사용했는가 (div 남용 없는가)

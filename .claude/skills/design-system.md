@@ -119,9 +119,9 @@ description: >
   --ds-tracking-wide:   0.08em;
 }
 
-h1, .ds-h1 { font-family: var(--ds-font-base);  font-size: var(--ds-text-7xl); font-weight: var(--ds-weight-bold);     line-height: var(--ds-leading-tight); letter-spacing: var(--ds-tracking-tight); }
-h2, .ds-h2 { font-family: var(--ds-font-base);  font-size: var(--ds-text-5xl); font-weight: var(--ds-weight-bold);     line-height: var(--ds-leading-tight); letter-spacing: var(--ds-tracking-tight); }
-h3, .ds-h3 { font-family: var(--ds-font-base);  font-size: var(--ds-text-3xl); font-weight: var(--ds-weight-semibold); line-height: var(--ds-leading-tight); }
+h1, .ds-h1 { font-family: var(--ds-font-base);  font-size: var(--ds-text-7xl); font-weight: var(--ds-weight-bold);     line-height: var(--ds-leading-tight); letter-spacing: var(--ds-tracking-tight); text-wrap: balance; }
+h2, .ds-h2 { font-family: var(--ds-font-base);  font-size: var(--ds-text-5xl); font-weight: var(--ds-weight-bold);     line-height: var(--ds-leading-tight); letter-spacing: var(--ds-tracking-tight); text-wrap: balance; }
+h3, .ds-h3 { font-family: var(--ds-font-base);  font-size: var(--ds-text-3xl); font-weight: var(--ds-weight-semibold); line-height: var(--ds-leading-tight); text-wrap: balance; }
 h4, .ds-h4 { font-family: var(--ds-font-base);  font-size: var(--ds-text-2xl); font-weight: var(--ds-weight-medium);   line-height: var(--ds-leading-tight); }
 .ds-body-l  { font-family: var(--ds-font-base);  font-size: var(--ds-text-xl);  font-weight: var(--ds-weight-regular);  line-height: var(--ds-leading-normal); word-break: keep-all; overflow-wrap: break-word; }
 .ds-body-m  { font-family: var(--ds-font-base);  font-size: var(--ds-text-md);  font-weight: var(--ds-weight-medium);   line-height: var(--ds-leading-normal); word-break: keep-all; overflow-wrap: break-word; }
@@ -433,7 +433,7 @@ body {
 img, video { max-width: 100%; display: block; }
 a { text-decoration: none; color: inherit; }
 
-/* 줄바꿈 의미 단위 보장 */
+/* 줄바꿈 의미 단위 보장 + 균형 잡힌 줄바꿈 */
 p, li, dt, dd, blockquote,
 .ds-section-header__description,
 .ds-hero__description,
@@ -443,6 +443,7 @@ p, li, dt, dd, blockquote,
 .ds-card__description {
   word-break: keep-all;
   overflow-wrap: break-word;
+  text-wrap: pretty;  /* 마지막 줄 고아 단어 방지, 줄 길이 균등화 */
 }
 ```
 
@@ -2065,7 +2066,7 @@ drawArrows() 함수 규칙:
 9. KPI/지표 수치 색상은 text-primary (파란색 금지)
 10. ds-banner 좌측 굵은 border 금지 (상하 얇은 border만)
 11. CTA 밴드는 ds-container 밖에 전폭으로 배치
-12. 줄바꿈 전역 규칙: `body { word-break: keep-all; overflow-wrap: break-word; }` — 의미 단위로 줄바꿈 (모든 영역 적용)
+12. 줄바꿈 전역 규칙: `body { word-break: keep-all; overflow-wrap: break-word; }` — 의미 단위로 줄바꿈. 추가로 `text-wrap: balance`(제목) / `text-wrap: pretty`(본문)으로 줄 길이 균등화 필수
 13. 긴 문장 분리: 짧은 독립 문장이 마침표로 2개 이상 나열되면 `ds-bullet ds-bullet--dot` 불릿 리스트로 분리한다
     - 인라인 middot(·)이 아닌 실제 불릿 리스트 컴포넌트 사용
     - Before: `<p>Run halted before training. Schema contract enforced. Upstream notified.</p>`

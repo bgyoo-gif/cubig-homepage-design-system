@@ -176,6 +176,7 @@ grep -oP '--ds-[a-zA-Z0-9-]+' output/[파일명]-b-type.html | sort -u
 - [ ] 모든 섹션에서 eyebrow가 완전히 제거됐는가 (전면 금지)
 - [ ] 아티클형 페이지(Learn 등)에 `<main class="ds-article">` + 본문 860px 통일이 적용됐는가
 - [ ] `ds-section-header--left`가 spec에 명시되지 않은 섹션에 사용되지 않았는가 (기본 center)
+- [ ] 제목에 `text-wrap: balance`, 본문에 `text-wrap: pretty`가 적용됐는가
 
 ### [CAT-3] 코드 품질 (Medium)
 - [ ] 시맨틱 태그를 사용했는가 (div 남용 없는가)
