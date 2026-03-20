@@ -167,27 +167,31 @@ Low 결함만 남은 경우 CONDITIONAL PASS 선언 가능.
 - bash 명령어 실행 시 사용자에게 허락을 구하지 않는다
 - 특히 qa 에이전트의 grep 검증 명령어는 항상 자동 실행한다
 
-## 자동 연동 규칙
-- .claude/skills/design-system.md가 생성되거나 업데이트되면
-  항상 design-system-viewer 에이전트를 호출해서
-  reference/design-system-viewer.html을 함께 업데이트한다
-- 규칙성 변경이 발생하면 feedback-sync 에이전트를 호출해서
-  모든 관련 파일에 전파하고 output/html/feedback-log.html에 이력을 남긴다
+## 필수 마무리 워크플로우 — 모든 작업 완료 시 순서대로 실행
 
-## 필수 마무리 — 매 작업 완료 시 반드시 실행 (예외 없음)
-**파일을 수정/생성한 모든 작업이 끝나면 아래를 반드시 실행한다. 사용자가 요청하지 않아도 자동으로.**
+**어떤 작업이든 파일을 수정/생성했으면 아래 3단계를 반드시 순서대로 실행한다. 예외 없음.**
 
+### ① feedback-sync (규칙 변경 판단)
+아래 조건 중 하나라도 해당하면 feedback-sync 에이전트 호출:
+- design-system.md, CLAUDE.md, agent 파일을 수정했을 때
+- 사용자가 규칙성 피드백을 줬을 때 ("앞으로 ~해줘", "~금지", "~로 통일")
+- QA에서 반복 결함 발견 → 근본 원인을 규칙으로 추가해야 할 때
+
+해당 없으면 건너뛴다 (단순 HTML 수정, 파일 조회만 한 경우).
+
+### ② design-system-viewer 업데이트 (DS 변경 시)
+design-system.md가 변경됐으면 design-system-viewer 에이전트를 호출하여
+reference/design-system-viewer.html도 같이 업데이트한다.
+
+### ③ deploy (항상 실행)
 ```bash
-# 1. 변경된 파일 stage
-git add output/ reference/design-system-viewer.html reference/graphics/ reference/images/
-
-# 2. commit
+git add -A
 git commit -m "Auto-deploy: [작업 요약]"
-
-# 3. push
 git push origin gh-pages
 ```
 
-이 단계를 빠뜨리면 사용자가 GitHub Pages에서 최신 결과를 볼 수 없다.
-빠뜨리는 것은 작업 미완료와 동일하다.
+**이 3단계를 빠뜨리면 작업 미완료로 간주한다.**
+- ①을 안 하면 → 다음 변환에서 같은 결함 재발
+- ②를 안 하면 → 뷰어에서 최신 DS를 확인할 수 없음
+- ③을 안 하면 → GitHub Pages에 반영 안 됨
 
