@@ -90,9 +90,10 @@ grep -n 'word-break' output/[파일명]-b-type.html
 
 **폰트 색상 최소 명도 확인:**
 ```bash
-grep -n 'color.*neutral-150\|color.*neutral-050\|color.*neutral-025' output/[파일명]-b-type.html
+grep -n 'color.*neutral-150\|color.*neutral-050\|color.*neutral-025\|color.*text-muted' output/[파일명]-b-type.html
 ```
 → 텍스트 color에 neutral-150/050/025가 있으면 결함 (최소 neutral-400)
+→ text-muted(#cacccf)가 텍스트 color로 사용되면 결함 — 최소 text-tertiary(#9c9c9c)
 
 **배경 명도 vs 텍스트 색상 확인:**
 밝은 배경(밝은 이미지, 흰색 오버레이) 위에 흰색 텍스트가 있으면 결함 → 검정으로 변경
@@ -135,6 +136,12 @@ grep -A2 'description\|hero__description\|cta-band__inner' output/[파일명]-b-
 ```
 → 고정 px만 있고 반응형 미디어쿼리가 없으면 결함 (mobile 100% → 1024px 720px → 1440px 860px)
 
+**아티클형 페이지 ds-article 확인:**
+```bash
+grep -n 'ds-article' output/[파일명]-b-type.html
+```
+→ Learn/가이드 등 아티클형 페이지인데 `<main class="ds-article">`이 없으면 결함
+
 **DS에 없는 커스텀 CSS 변수 확인:**
 ```bash
 grep -oP '--ds-[a-zA-Z0-9-]+' output/[파일명]-b-type.html | sort -u
@@ -156,7 +163,7 @@ grep -oP '--ds-[a-zA-Z0-9-]+' output/[파일명]-b-type.html | sort -u
 - [ ] CTA 밴드가 ds-container 밖에 배치됐는가
 - [ ] body에 word-break: keep-all이 적용됐는가
 - [ ] 긴 문장(2개 이상 독립 의미 나열)이 `ds-bullet--dot` 불릿 리스트로 분리됐는가 (인라인 middot 금지)
-- [ ] 텍스트 color에 neutral-150/050/025가 사용되지 않았는가 (최소 neutral-400)
+- [ ] 텍스트 color에 neutral-150/050/025가 사용되지 않았는가 (최소 neutral-400). text-muted(#cacccf) 텍스트 사용도 금지 — 최소 text-tertiary(#9c9c9c)
 - [ ] 밝은 배경 위 텍스트가 검정이고, 어두운 배경 위 텍스트가 흰색인가
 - [ ] ds-banner--full이 다크 단색이 아닌 배경 이미지 + 오버레이인가
 - [ ] Brand 폰트(Oxanium)가 문장 속이 아닌 단독 키워드 제품명에만 사용됐는가
@@ -167,6 +174,8 @@ grep -oP '--ds-[a-zA-Z0-9-]+' output/[파일명]-b-type.html | sort -u
 - [ ] ds-section--light가 3개 이상 남용되지 않았는가 (기본 white, 변화는 bg 이미지로)
 - [ ] 모든 CSS 변수가 design-system.md에 정의된 것만 사용됐는가 (커스텀 변수 금지)
 - [ ] 모든 섹션에서 eyebrow가 완전히 제거됐는가 (전면 금지)
+- [ ] 아티클형 페이지(Learn 등)에 `<main class="ds-article">` + 본문 860px 통일이 적용됐는가
+- [ ] `ds-section-header--left`가 spec에 명시되지 않은 섹션에 사용되지 않았는가 (기본 center)
 
 ### [CAT-3] 코드 품질 (Medium)
 - [ ] 시맨틱 태그를 사용했는가 (div 남용 없는가)

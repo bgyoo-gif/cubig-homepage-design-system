@@ -86,7 +86,13 @@ deploy (gh-pages push → GitHub Pages 자동 배포)
 - 미색 배경(ds-section--light) 남용 금지 — 기본 white, 다양성 필요 시 배경 이미지 사용
 - CSS 변수는 design-system.md에 정의된 것만 사용 (임의 변수 생성 금지)
 - Case Study 열 타입 혼합 금지: 한 섹션 안에서 1col과 2col을 섞지 않는다. 1col이면 전부 1col, 2col이면 전부 2col로 통일
-- eyebrow 전면 금지: B타입 변환 시 모든 섹션에서 eyebrow(헤드라인 위 작은 텍스트) 삭제 — A타입에 있어도 B타입에서는 제거
+- eyebrow 전면 금지: B타입 변환 시 모든 섹션에서 eyebrow(헤드라인 위 작은 텍스트) 삭제 — A타입에 있어도 B타입에서는 제거 (banner label 포함)
+- 코드블록 다크 테마: `ds-code-block`은 `border: none`, `background: neutral-900`, 줄별 색상은 light variant 사용 (`success-light`, `error-light`, `warn-light`)
+- 카드 내 코드블록 앞 divider 금지: `<hr>` 대신 `margin-top`으로 간격 확보
+- description max-width 반응형: mobile 100% → 1024px 720px → 1440px 860px (섹션 헤더, 히어로, CTA 모두 적용)
+- 텍스트 최소 명도 강화: `var(--ds-color-text-muted)` (#cacccf) 텍스트 사용 금지 — 텍스트 최소 `var(--ds-color-text-tertiary)` (#9c9c9c)
+- 아티클형 페이지 본문 860px 통일: `<main class="ds-article">` 적용 시 본문 폭 860px 통일 (전폭 예외: partner-grid, kpi-band)
+- 섹션 헤더 기본 center 정렬: `ds-section-header`는 기본 중앙 정렬. `--left`는 spec에 명시된 경우만 사용
 
 ---
 

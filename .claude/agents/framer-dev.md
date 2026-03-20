@@ -102,7 +102,7 @@ const PALETTE = {
 ```
 
 ### 색상 사용 규칙
-- **텍스트 최소 명도**: `#9c9c9c` (neutral-400) 이상 — `#e6e7e9`, `#f2f2f2`, `#f7f7f7` 텍스트 금지
+- **텍스트 최소 명도**: `#9c9c9c` (neutral-400) 이상 — `#e6e7e9`, `#f2f2f2`, `#f7f7f7` 텍스트 금지. **`#cacccf`(text-muted)도 텍스트 사용 금지** — 최소 `#9c9c9c`(text-tertiary)
 - **어두운 배경 위 텍스트**: `#ffffff` 또는 `#000000`만 — secondary/tertiary/muted 금지
 - **카드 배경**: `#ffffff`(white)만 — `#f7f7f7`, `#f2f2f2` 배경 카드 금지
 - **KPI/지표 수치**: `#0f0f0f`(text-primary) — 파란색(`#3061f2`) 금지
@@ -111,6 +111,9 @@ const PALETTE = {
 - **코드 블록 앞 divider 금지**: 카드 내 코드블록 삽입 시 `<hr>` divider 사용 금지 — margin-top으로 간격 확보
 - **eyebrow 전면 금지**: 모든 섹션에서 eyebrow 삭제 (banner label 포함)
 - **description max-width 반응형**: mobile 100% → 1024px 720px → 1440px 860px
+- **FAQ 반드시 아코디언**: FAQ/Common Questions 등은 `ds-ac-card` 아코디언으로 구현 (카드 나열 금지)
+- **아티클형 페이지 본문 860px 통일**: Learn 등 아티클형은 `<main class="ds-article">` + 본문 max-width 860px
+- **섹션 헤더 기본 center 정렬**: `--left`는 spec에 명시된 경우만 (기본은 center)
 
 ---
 

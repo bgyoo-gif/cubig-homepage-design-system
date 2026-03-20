@@ -314,7 +314,7 @@ CTA       → 배경 이미지 (전폭)
 - [ ] description 계열 텍스트에 `overflow-wrap: break-word`가 있는가
 - [ ] 긴 문장(2개 이상 독립 의미 나열)이 `ds-bullet--dot` 불릿 리스트로 분리됐는가 (인라인 middot 금지)
 - [ ] `ds-bullet--dot` 사용 시 Bullet List CSS(`.ds-bullet`, `.ds-bullet__item`, `.ds-bullet__icon`, `.ds-bullet--dot`)가 `<style>`에 포함됐는가
-- [ ] 텍스트 color에 neutral-150/050/025가 사용되지 않았는가 (최소 neutral-400)
+- [ ] 텍스트 color에 neutral-150/050/025가 사용되지 않았는가 (최소 neutral-400). text-muted(#cacccf) 텍스트 사용도 금지 — 최소 text-tertiary(#9c9c9c)
 - [ ] 밝은 배경 위 텍스트가 검정이고, 어두운 배경 위 텍스트가 흰색인가
 - [ ] ds-banner--full이 다크 단색이 아닌 배경 이미지 + 오버레이(rgba(255,255,255,0.72))로 구현됐는가
 - [ ] 배너(ds-banner, ds-banner--full) 텍스트가 가운데 정렬인가
