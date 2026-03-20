@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CUBIG Architecture — AI-Ready Data Infrastructure</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@700&family=Fragment+Mono:wght@400;500&display=swap');
+
+  :root {
+    /* DS Tokens */
+    --ds-font-base:    "DM Sans", sans-serif;
+    --ds-font-brand:   "Oxanium", sans-serif;
+    --ds-font-code:    "Fragment Mono", monospace;
+
+    --ds-text-xs:  12px;
+    --ds-text-sm:  14px;
+    --ds-text-md:  16px;
+    --ds-text-lg:  18px;
+    --ds-text-2xl: 24px;
+
+    --ds-weight-regular:  400;
+    --ds-weight-medium:   500;
+    --ds-weight-semibold: 600;
+    --ds-weight-bold:     700;
+
+    --ds-space-2xs: 4px;
+    --ds-space-xs:  8px;
+    --ds-space-sm:  12px;
+    --ds-space-md:  16px;
+    --ds-space-lg:  24px;
+    --ds-space-xl:  32px;
+
+    --ds-radius-sm:   8px;
+    --ds-radius-md:   18px;
+    --ds-radius-pill: 9999px;
+
+    --ds-color-brand-primary:   #3061f2;
+    --ds-color-brand-purple:    #a617ff;
+    --ds-color-success:         #0e824c;
+    --ds-color-error:           #ff3030;
+    --ds-color-text-primary:    #0f0f0f;
+    --ds-color-text-secondary:  #636363;
+    --ds-color-text-tertiary:   #9c9c9c;
+    --ds-color-neutral-300:     #bababa;
+    --ds-color-border-default:  #e6e7e9;
+    --ds-color-surface-light:   #f7f7f7;
+    --ds-color-surface-white:   #ffffff;
+
+    /* Diagram Tokens */
+    --ds-diag-surface:       #fdfdfd;
+    --ds-diag-surface-inner: #f9f9f9;
+    --ds-diag-border:        #d0d0d0;
+    --ds-diag-border-light:  #e0e0e0;
+    --ds-diag-text:          #2a2a2a;
+    --ds-diag-text-sub:      #666666;
+    --ds-diag-arrow-dark:    #444444;
+    --ds-diag-arrow-accent:  #4a9de0;
+    --ds-diag-os-content:    linear-gradient(135deg, #dff0ea 0%, #eef3ff 40%, #f3eeff 70%, #fdeef8 100%);
+    --ds-diag-grad-accent:   linear-gradient(135deg, #7dd3fc 0%, #a78bfa 30%, #e879f9 65%, #67e8f9 100%);
+    --ds-diag-grad-nature:   linear-gradient(135deg, #6ee7b7 0%, #a3e635 35%, #fbbf24 70%, #34d399 100%);
+    --ds-diag-grad-warm:     linear-gradient(135deg, #fb923c 0%, #f472b6 35%, #e879f9 70%, #fda4af 100%);
+
+    /* Product Colors */
+    --ds-prod-dts:         #0e824c;
+    --ds-prod-dts-bg:      rgba(14, 130, 76, 0.04);
+    --ds-prod-dts-border:  rgba(14, 130, 76, 0.15);
+    --ds-prod-dts-pill:    rgba(14, 130, 76, 0.08);
+    --ds-prod-dts-step:    rgba(14, 130, 76, 0.06);
+    --ds-prod-dts-step-b:  rgba(14, 130, 76, 0.12);
+    --ds-prod-dts-out:     rgba(14, 130, 76, 0.08);
+    --ds-prod-dts-out-b:   rgba(14, 130, 76, 0.2);
+
+    --ds-prod-titan:         #3061f2;
+    --ds-prod-titan-bg:      rgba(48, 97, 242, 0.04);
+    --ds-prod-titan-border:  rgba(48, 97, 242, 0.15);
+    --ds-prod-titan-pill:    rgba(48, 97, 242, 0.08);
+    --ds-prod-titan-step:    rgba(48, 97, 242, 0.06);
+    --ds-prod-titan-step-b:  rgba(48, 97, 242, 0.12);
+    --ds-prod-titan-out:     rgba(48, 97, 242, 0.08);
+    --ds-prod-titan-out-b:   rgba(48, 97, 242, 0.2);
+
+    --ds-prod-capsule:         #a617ff;
+    --ds-prod-capsule-bg:      rgba(166, 23, 255, 0.04);
+    --ds-prod-capsule-border:  rgba(166, 23, 255, 0.15);
+    --ds-prod-capsule-pill:    rgba(166, 23, 255, 0.08);
+    --ds-prod-capsule-step:    rgba(166, 23, 255, 0.06);
+    --ds-prod-capsule-step-b:  rgba(166, 23, 255, 0.12);
+    --ds-prod-capsule-out:     rgba(166, 23, 255, 0.08);
+    --ds-prod-capsule-out-b:   rgba(166, 23, 255, 0.2);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--ds-color-surface-light);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: var(--ds-font-base);
+    padding: 40px 20px;
+  }
+
+  /* ── DS Diagram: OS Window ── */
+  .ds-diagram { width: 100%; max-width: 1440px; }
+  .ds-diagram__window {
+    background: #ffffff;
+    border-radius: var(--ds-radius-md);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.10);
+    overflow: hidden;
+    font-family: var(--ds-font-base);
+  }
+  .ds-diagram__titlebar {
+    background: linear-gradient(180deg, #e8e8e8 0%, #d8d8d8 100%);
+    height: 36px;
+    display: flex;
+    align-items: center;
+    padding: 0 14px;
+    gap: 8px;
+    border-bottom: 1px solid #c0c0c0;
+  }
+  .ds-diagram__titlebar-dot { width: 12px; height: 12px; border-radius: 50%; }
+  .ds-diagram__titlebar-dot--close { background: #ff5f57; }
+  .ds-diagram__titlebar-dot--min   { background: #ffbd2e; }
+  .ds-diagram__titlebar-dot--max   { background: #28ca41; }
+  .ds-diagram__content {
+    background: var(--ds-diag-os-content);
+    padding: var(--ds-space-xl);
+  }
+
+  /* ── DS Diagram: Main Card ── */
+  .ds-diagram__card {
+    background: linear-gradient(145deg, #ffffff 0%, #fcfcfc 40%, #f8f8f8 70%, #ffffff 100%);
+    border: 1px solid var(--ds-diag-border);
+    border-radius: var(--ds-radius-md);
+    overflow: hidden;
+    max-width: 1440px;
+  }
+  .ds-diagram__card-title {
+    text-align: center;
+    padding: var(--ds-space-lg) var(--ds-space-lg);
+    border-bottom: 1px solid var(--ds-diag-border-light);
+    background: linear-gradient(180deg, #ffffff 0%, #fbfbfb 100%);
+  }
+  .ds-diagram__card-title strong {
+    display: block;
+    font-family: var(--ds-font-base);
+    font-size: var(--ds-text-2xl);
+    font-weight: var(--ds-weight-bold);
+    color: var(--ds-diag-text);
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+    margin-bottom: var(--ds-space-2xs);
+  }
+  .ds-diagram__card-title span {
+    font-family: var(--ds-font-brand);
+    font-size: var(--ds-text-xs);
+    font-weight: var(--ds-weight-bold);
+    color: var(--ds-color-text-tertiary);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  /* ── Headers ── */
+  .ds-diagram__headers {
+    display: grid;
+    border-bottom: 1px solid var(--ds-diag-border-light);
+  }
+  .ds-diagram__header {
+    padding: 14px 16px;
+    font-family: var(--ds-font-base);
+    font-size: var(--ds-text-sm);
+    font-weight: var(--ds-weight-semibold);
+    letter-spacing: 0.02em;
+    color: var(--ds-diag-text);
+    text-align: center;
+    border-right: 1px dashed var(--ds-diag-border-light);
+    background: #ffffff;
+  }
+  .ds-diagram__header:last-child { border-right: none; }
+
+  /* ── Body Grid ── */
+  .ds-diagram__body {
+    display: grid;
+    position: relative;
+  }
+  .ds-diagram__col {
+    padding: var(--ds-space-lg) var(--ds-space-md);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .ds-diagram__col:not(:last-child) { border-right: 1px dashed var(--ds-diag-border); }
+
+  /* ── Source Cards (Col 1) ── */
+  .ds-diagram__source-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-space-xs);
+    width: 100%;
+  }
+  .ds-diagram__source-card {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-space-sm);
+    padding: 10px 14px;
+    background: var(--ds-color-surface-white);
+    border: 1px solid var(--ds-diag-border-light);
+    border-radius: var(--ds-radius-sm);
+    transition: border-color 0.2s;
+  }
+  .ds-diagram__source-card:hover { border-color: var(--ds-color-neutral-300); }
+  .ds-diagram__source-icon {
+    width: 32px; height: 32px;
+    border-radius: 6px;
+    background: var(--ds-diag-surface-inner);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .ds-diagram__source-icon svg { width: 16px; height: 16px; }
+  .ds-diagram__source-name {
+    font-size: 13px;
+    font-weight: var(--ds-weight-medium);
+    color: var(--ds-diag-text);
+    line-height: 1.3;
+  }
+  .ds-diagram__source-sub {
+    font-size: 10px;
+    color: var(--ds-color-text-tertiary);
+    margin-top: 1px;
+  }
+  .ds-diagram__source-footnote {
+    text-align: center;
+    font-size: 10px;
+    color: var(--ds-color-neutral-300);
+    font-style: italic;
+    margin-top: var(--ds-space-xs);
+  }
+
+  /* ── Product Cards (Col 2) ── */
+  .ds-diagram__product-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+  }
+  .ds-diagram__product-card {
+    border-radius: 8px;
+    padding: 20px;
+    position: relative;
+  }
+
+  /* Gradient border wrapper for product cards */
+  .ds-diagram__product-border {
+    padding: 2px;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #d0d0d0 0%, #ffffff 30%, #c8c8c8 50%, #ffffff 70%, #d0d0d0 100%);
+    background-size: 300% 100%;
+    animation: ds-diag-shimmer 4s linear infinite;
+    box-shadow: 0 0 8px rgba(180,200,230,0.3), 0 0 16px rgba(200,180,230,0.15);
+  }
+  .ds-diagram__product-border--dts {
+    background: var(--ds-diag-grad-nature);
+    animation: ds-diag-glow-nature 3s ease-in-out infinite;
+  }
+  .ds-diagram__product-border--syntitan {
+    background: var(--ds-diag-grad-warm);
+    animation: ds-diag-glow-warm 3s ease-in-out infinite;
+  }
+  .ds-diagram__product-border--capsule {
+    background: var(--ds-diag-grad-accent);
+    animation: ds-diag-glow 3s ease-in-out infinite;
+  }
+  @keyframes ds-diag-glow {
+    0%, 100% { box-shadow: 0 0 14px rgba(125,211,252,0.5), 0 0 28px rgba(167,139,250,0.35); }
+    50%      { box-shadow: 0 0 22px rgba(125,211,252,0.75), 0 0 42px rgba(167,139,250,0.55); }
+  }
+  @keyframes ds-diag-glow-nature {
+    0%, 100% { box-shadow: 0 0 14px rgba(110,231,183,0.5), 0 0 28px rgba(163,230,53,0.35); }
+    50%      { box-shadow: 0 0 22px rgba(110,231,183,0.75), 0 0 42px rgba(163,230,53,0.55); }
+  }
+  @keyframes ds-diag-glow-warm {
+    0%, 100% { box-shadow: 0 0 14px rgba(251,146,60,0.5), 0 0 28px rgba(244,114,182,0.35); }
+    50%      { box-shadow: 0 0 22px rgba(251,146,60,0.75), 0 0 42px rgba(244,114,182,0.55); }
+  }
+  .ds-diagram__product-card + .ds-diagram__dashed-connector { margin: 0; }
+  .ds-diagram__dashed-connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    margin: 5px 0;
+  }
+  .ds-diagram__dashed-seg {
+    width: 1.5px; height: 4px;
+    background: #bbb;
+    border-radius: 1px;
+  }
+
+  /* Product Card — 내부는 흰색, border는 gradient wrapper가 담당 */
+  .ds-diagram__product-card--dts,
+  .ds-diagram__product-card--syntitan,
+  .ds-diagram__product-card--capsule {
+    background: #ffffff;
+    border: none;
+  }
+  .ds-diagram__product-card--dts .ds-diagram__product-name { color: var(--ds-prod-dts); }
+  .ds-diagram__product-card--dts .ds-diagram__product-pill { background: var(--ds-prod-dts-pill); color: var(--ds-prod-dts); }
+  .ds-diagram__product-card--dts .ds-diagram__product-step { background: var(--ds-prod-dts-step); color: var(--ds-prod-dts); border: 1px solid var(--ds-prod-dts-step-b); }
+  .ds-diagram__product-card--dts .ds-diagram__product-output { background: var(--ds-prod-dts-out); border: 1px solid var(--ds-prod-dts-out-b); color: var(--ds-prod-dts); }
+
+  .ds-diagram__product-card--syntitan .ds-diagram__product-name { color: var(--ds-prod-titan); }
+  .ds-diagram__product-card--syntitan .ds-diagram__product-pill { background: var(--ds-prod-titan-pill); color: var(--ds-prod-titan); }
+  .ds-diagram__product-card--syntitan .ds-diagram__product-step { background: var(--ds-prod-titan-step); color: var(--ds-prod-titan); border: 1px solid var(--ds-prod-titan-step-b); }
+  .ds-diagram__product-card--syntitan .ds-diagram__product-output { background: var(--ds-prod-titan-out); border: 1px solid var(--ds-prod-titan-out-b); color: var(--ds-prod-titan); }
+
+  .ds-diagram__product-card--capsule .ds-diagram__product-name { color: var(--ds-prod-capsule); }
+  .ds-diagram__product-card--capsule .ds-diagram__product-pill { background: var(--ds-prod-capsule-pill); color: var(--ds-prod-capsule); }
+  .ds-diagram__product-card--capsule .ds-diagram__product-step { background: var(--ds-prod-capsule-step); color: var(--ds-prod-capsule); border: 1px solid var(--ds-prod-capsule-step-b); }
+  .ds-diagram__product-card--capsule .ds-diagram__product-output { background: var(--ds-prod-capsule-out); border: 1px solid var(--ds-prod-capsule-out-b); color: var(--ds-prod-capsule); }
+
+  /* Product Card Inner */
+  .ds-diagram__product-header {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-space-xs);
+    margin-bottom: 10px;
+  }
+  .ds-diagram__product-name {
+    font-family: var(--ds-font-brand);
+    font-size: var(--ds-text-md);
+    font-weight: var(--ds-weight-bold);
+  }
+  .ds-diagram__product-role {
+    font-size: 11px;
+    color: var(--ds-color-text-secondary);
+    margin-left: auto;
+  }
+  .ds-diagram__product-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: var(--ds-space-xs);
+  }
+  .ds-diagram__product-pill {
+    font-size: 10px;
+    font-weight: var(--ds-weight-medium);
+    padding: 3px 10px;
+    border-radius: var(--ds-radius-pill);
+  }
+  .ds-diagram__product-fix {
+    font-size: 10px;
+    color: var(--ds-color-text-tertiary);
+    margin-bottom: var(--ds-space-xs);
+  }
+  .ds-diagram__product-fix span { color: var(--ds-color-error); }
+  .ds-diagram__product-flow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .ds-diagram__product-step {
+    font-size: 10px;
+    font-weight: var(--ds-weight-medium);
+    padding: 3px 10px;
+    border-radius: 5px;
+  }
+  .ds-diagram__product-arrow {
+    font-size: 10px;
+    color: var(--ds-color-neutral-300);
+  }
+  .ds-diagram__product-output {
+    font-size: 10px;
+    font-weight: var(--ds-weight-semibold);
+    padding: 4px 12px;
+    border-radius: 5px;
+  }
+  .ds-diagram__product-mapper {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--ds-space-2xs);
+  }
+  .ds-diagram__product-mapper span {
+    font-size: 10px;
+    color: var(--ds-prod-capsule);
+    background: var(--ds-prod-capsule-step);
+    border: 1px solid var(--ds-prod-capsule-border);
+    padding: 2px 10px;
+    border-radius: 5px;
+  }
+
+  /* ── App Cards (Col 3) ── */
+  .ds-diagram__app-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-space-xs);
+    width: 100%;
+  }
+  .ds-diagram__app-card {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--ds-space-sm);
+    padding: 12px 14px;
+    background: var(--ds-color-surface-white);
+    border: 1px solid var(--ds-diag-border-light);
+    border-radius: var(--ds-radius-sm);
+    transition: border-color 0.2s;
+  }
+  .ds-diagram__app-card:hover { border-color: var(--ds-color-neutral-300); }
+  .ds-diagram__app-icon {
+    width: 32px; height: 32px;
+    border-radius: 6px;
+    background: var(--ds-diag-surface-inner);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .ds-diagram__app-icon svg { width: 16px; height: 16px; }
+  .ds-diagram__app-content { flex: 1; min-width: 0; }
+  .ds-diagram__app-name {
+    font-size: 13px;
+    font-weight: var(--ds-weight-semibold);
+    color: var(--ds-diag-text);
+    line-height: 1.3;
+  }
+  .ds-diagram__app-sub {
+    font-size: 10px;
+    color: var(--ds-color-text-tertiary);
+    margin-top: 2px;
+  }
+  .ds-diagram__app-tags {
+    display: flex;
+    gap: 4px;
+    margin-top: 6px;
+    flex-wrap: wrap;
+  }
+  .ds-diagram__app-tag {
+    font-size: 9px;
+    font-weight: var(--ds-weight-semibold);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: var(--ds-font-brand);
+  }
+  .ds-diagram__app-tag--dts      { background: var(--ds-prod-dts-pill);     color: var(--ds-prod-dts); }
+  .ds-diagram__app-tag--syntitan { background: var(--ds-prod-titan-pill);   color: var(--ds-prod-titan); }
+  .ds-diagram__app-tag--capsule  { background: var(--ds-prod-capsule-pill); color: var(--ds-prod-capsule); }
+
+  /* ── Footer ── */
+  .ds-diagram__footer {
+    text-align: center;
+    padding: var(--ds-space-md) var(--ds-space-lg);
+    border-top: 1px solid var(--ds-diag-border-light);
+    background: #ffffff;
+  }
+  .ds-diagram__footer span {
+    font-size: 10px;
+    font-weight: var(--ds-weight-medium);
+    letter-spacing: 2px;
+    color: var(--ds-color-neutral-300);
+    text-transform: uppercase;
+  }
+
+  /* ── Arrow Layer ── */
+  .ds-diagram__arrow-layer {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    overflow: visible;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 1200px) {
+    .ds-diagram__headers,
+    .ds-diagram__body { grid-template-columns: 1fr; }
+    .ds-diagram__col:not(:last-child) { border-right: none; border-bottom: 1px dashed var(--ds-diag-border); }
+    .ds-diagram__header:not(:last-child) { border-right: none; border-bottom: 1px dashed var(--ds-diag-border); }
+    .ds-diagram__content { padding: var(--ds-space-lg); }
+    .ds-diagram__arrow-layer { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="ds-diagram">
+  <div class="ds-diagram__window">
+    <div class="ds-diagram__titlebar">
+      <span class="ds-diagram__titlebar-dot ds-diagram__titlebar-dot--close"></span>
+      <span class="ds-diagram__titlebar-dot ds-diagram__titlebar-dot--min"></span>
+      <span class="ds-diagram__titlebar-dot ds-diagram__titlebar-dot--max"></span>
+    </div>
+    <div class="ds-diagram__content">
+      <div class="ds-diagram__card">
+
+        <!-- Title -->
+        <div class="ds-diagram__card-title">
+          <strong>AI-Ready Data Infrastructure</strong>
+          <span>CUBIG</span>
+        </div>
+
+        <!-- Headers -->
+        <div class="ds-diagram__headers" style="grid-template-columns: 200px 1fr 320px;">
+          <div class="ds-diagram__header">Data Sources</div>
+          <div class="ds-diagram__header">AI-Ready Platform</div>
+          <div class="ds-diagram__header">AI Applications</div>
+        </div>
+
+        <!-- Body -->
+        <div class="ds-diagram__body" style="grid-template-columns: 200px 1fr 320px;">
+
+          <!-- ══ Col 1: Data Sources ══ -->
+          <div class="ds-diagram__col">
+            <div class="ds-diagram__source-list">
+              <div class="ds-diagram__source-card">
+                <div class="ds-diagram__source-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#636363" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="ds-diagram__source-name">Databases</div>
+                  <div class="ds-diagram__source-sub">SQL · NoSQL</div>
+                </div>
+              </div>
+              <div class="ds-diagram__source-card">
+                <div class="ds-diagram__source-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#636363" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="ds-diagram__source-name">Documents</div>
+                  <div class="ds-diagram__source-sub">Contracts · Internal</div>
+                </div>
+              </div>
+              <div class="ds-diagram__source-card">
+                <div class="ds-diagram__source-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#636363" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="ds-diagram__source-name">CRM &amp; ERP</div>
+                  <div class="ds-diagram__source-sub">Salesforce · SAP</div>
+                </div>
+              </div>
+              <div class="ds-diagram__source-card">
+                <div class="ds-diagram__source-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#636363" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 12H2"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="ds-diagram__source-name">Object Storage</div>
+                  <div class="ds-diagram__source-sub">S3 · Data Lake</div>
+                </div>
+              </div>
+              <div class="ds-diagram__source-card">
+                <div class="ds-diagram__source-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#636363" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="ds-diagram__source-name">Logs &amp; IoT</div>
+                  <div class="ds-diagram__source-sub">Sensors · Streams</div>
+                </div>
+              </div>
+              <div class="ds-diagram__source-card">
+                <div class="ds-diagram__source-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#636363" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="ds-diagram__source-name">APIs &amp; Legacy</div>
+                  <div class="ds-diagram__source-sub">REST · SOAP</div>
+                </div>
+              </div>
+            </div>
+            <div class="ds-diagram__source-footnote">structured &amp; unstructured</div>
+          </div>
+
+          <!-- ══ Col 2: AI-Ready Platform ══ -->
+          <div class="ds-diagram__col">
+            <div class="ds-diagram__product-stack">
+
+              <!-- DTS -->
+              <div class="ds-diagram__product-border ds-diagram__product-border--dts">
+                <div class="ds-diagram__product-card ds-diagram__product-card--dts">
+                  <div class="ds-diagram__product-header">
+                    <span class="ds-diagram__product-name">DTS</span>
+                    <span class="ds-diagram__product-role">Data Usability &amp; Privacy</span>
+                  </div>
+                  <div class="ds-diagram__product-pills">
+                    <span class="ds-diagram__product-pill">synthetic augmentation</span>
+                    <span class="ds-diagram__product-pill">differential privacy</span>
+                    <span class="ds-diagram__product-pill">class balancing</span>
+                  </div>
+                  <div class="ds-diagram__product-fix"><span>→</span> fixes unusable data · data-level privacy</div>
+                  <div class="ds-diagram__product-flow">
+                    <span class="ds-diagram__product-step">Diagnose</span>
+                    <span class="ds-diagram__product-arrow">→</span>
+                    <span class="ds-diagram__product-step">Transform</span>
+                    <span class="ds-diagram__product-arrow">→</span>
+                    <span class="ds-diagram__product-step">Synthetic Data</span>
+                    <span class="ds-diagram__product-arrow">→</span>
+                    <span class="ds-diagram__product-output">Usable Data</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Connector -->
+              <div class="ds-diagram__dashed-connector">
+                <span class="ds-diagram__dashed-seg"></span>
+                <span class="ds-diagram__dashed-seg"></span>
+                <span class="ds-diagram__dashed-seg"></span>
+              </div>
+
+              <!-- SynTitan -->
+              <div class="ds-diagram__product-border ds-diagram__product-border--syntitan">
+                <div class="ds-diagram__product-card ds-diagram__product-card--syntitan">
+                  <div class="ds-diagram__product-header">
+                    <span class="ds-diagram__product-name">SynTitan</span>
+                    <span class="ds-diagram__product-role">Execution Stability</span>
+                  </div>
+                  <div class="ds-diagram__product-pills">
+                    <span class="ds-diagram__product-pill">state versioning</span>
+                    <span class="ds-diagram__product-pill">drift detection</span>
+                    <span class="ds-diagram__product-pill">Data Quality Refinement</span>
+                  </div>
+                  <div class="ds-diagram__product-fix"><span>→</span> fixes unstable execution</div>
+                  <div class="ds-diagram__product-flow">
+                    <span class="ds-diagram__product-step">Execution</span>
+                    <span class="ds-diagram__product-arrow">→</span>
+                    <span class="ds-diagram__product-step">Run Binding</span>
+                    <span class="ds-diagram__product-arrow">→</span>
+                    <span class="ds-diagram__product-step">Release State</span>
+                    <span class="ds-diagram__product-arrow">→</span>
+                    <span class="ds-diagram__product-output">Stable</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Connector -->
+              <div class="ds-diagram__dashed-connector">
+                <span class="ds-diagram__dashed-seg"></span>
+                <span class="ds-diagram__dashed-seg"></span>
+                <span class="ds-diagram__dashed-seg"></span>
+              </div>
+
+              <!-- LLM Capsule -->
+              <div class="ds-diagram__product-border ds-diagram__product-border--capsule">
+                <div class="ds-diagram__product-card ds-diagram__product-card--capsule">
+                  <div class="ds-diagram__product-header">
+                    <span class="ds-diagram__product-name">LLM Capsule</span>
+                    <span class="ds-diagram__product-role">Secure LLM Access</span>
+                  </div>
+                  <div class="ds-diagram__product-pills">
+                    <span class="ds-diagram__product-pill">PII detection</span>
+                    <span class="ds-diagram__product-pill">prompt anonymization</span>
+                    <span class="ds-diagram__product-pill">output remapping</span>
+                  </div>
+                  <div class="ds-diagram__product-fix"><span>→</span> fixes inference-level privacy</div>
+                  <div class="ds-diagram__product-flow">
+                    <span class="ds-diagram__product-step">Encapsulate</span>
+                    <span class="ds-diagram__product-arrow">→</span>
+                    <span class="ds-diagram__product-step">LLM Access</span>
+                    <span class="ds-diagram__product-arrow">→</span>
+                    <span class="ds-diagram__product-step">Restoration</span>
+                    <span class="ds-diagram__product-arrow">→</span>
+                    <span class="ds-diagram__product-output">Privacy-safe</span>
+                  </div>
+                  <div class="ds-diagram__product-mapper"><span>🔗 Mapper</span></div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- ══ Col 3: AI Applications ══ -->
+          <div class="ds-diagram__col">
+            <div class="ds-diagram__app-list">
+
+              <div class="ds-diagram__app-card">
+                <div class="ds-diagram__app-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#636363" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/><path d="M7 10l3 3 7-7" stroke="#0e824c" stroke-width="1.5"/>
+                  </svg>
+                </div>
+                <div class="ds-diagram__app-content">
+                  <div class="ds-diagram__app-name">Fraud Detection &amp; Monitoring</div>
+                  <div class="ds-diagram__app-sub">Stable production models · rare-event coverage</div>
+                  <div class="ds-diagram__app-tags">
+                    <span class="ds-diagram__app-tag ds-diagram__app-tag--dts">DTS</span>
+                    <span class="ds-diagram__app-tag ds-diagram__app-tag--syntitan">SynTitan</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="ds-diagram__app-card">
+                <div class="ds-diagram__app-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#636363" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                  </svg>
+                </div>
+                <div class="ds-diagram__app-content">
+                  <div class="ds-diagram__app-name">Customer Analytics</div>
+                  <div class="ds-diagram__app-sub">Privacy-safe insights · churn prediction</div>
+                  <div class="ds-diagram__app-tags">
+                    <span class="ds-diagram__app-tag ds-diagram__app-tag--dts">DTS</span>
+                    <span class="ds-diagram__app-tag ds-diagram__app-tag--capsule">LLM Capsule</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="ds-diagram__app-card">
+                <div class="ds-diagram__app-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#636363" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+                  </svg>
+                </div>
+                <div class="ds-diagram__app-content">
+                  <div class="ds-diagram__app-name">AI Agents</div>
+                  <div class="ds-diagram__app-sub">Survey · price strategy · instant research</div>
+                  <div class="ds-diagram__app-tags">
+                    <span class="ds-diagram__app-tag ds-diagram__app-tag--syntitan">SynTitan</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="ds-diagram__app-card">
+                <div class="ds-diagram__app-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#636363" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  </svg>
+                </div>
+                <div class="ds-diagram__app-content">
+                  <div class="ds-diagram__app-name">Policy &amp; Risk Simulation</div>
+                  <div class="ds-diagram__app-sub">What-if scenarios · regulatory impact</div>
+                  <div class="ds-diagram__app-tags">
+                    <span class="ds-diagram__app-tag ds-diagram__app-tag--dts">DTS</span>
+                    <span class="ds-diagram__app-tag ds-diagram__app-tag--syntitan">SynTitan</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="ds-diagram__app-card">
+                <div class="ds-diagram__app-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#636363" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                  </svg>
+                </div>
+                <div class="ds-diagram__app-content">
+                  <div class="ds-diagram__app-name">Enterprise Copilots</div>
+                  <div class="ds-diagram__app-sub">LLM on internal data · RAG · PII-safe</div>
+                  <div class="ds-diagram__app-tags">
+                    <span class="ds-diagram__app-tag ds-diagram__app-tag--capsule">LLM Capsule</span>
+                    <span class="ds-diagram__app-tag ds-diagram__app-tag--syntitan">SynTitan</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="ds-diagram__app-card">
+                <div class="ds-diagram__app-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#636363" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                  </svg>
+                </div>
+                <div class="ds-diagram__app-content">
+                  <div class="ds-diagram__app-name">Sensitive Document Access</div>
+                  <div class="ds-diagram__app-sub">Enterprise RAG · secure knowledge base</div>
+                  <div class="ds-diagram__app-tags">
+                    <span class="ds-diagram__app-tag ds-diagram__app-tag--capsule">LLM Capsule</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="ds-diagram__app-card">
+                <div class="ds-diagram__app-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#636363" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/>
+                  </svg>
+                </div>
+                <div class="ds-diagram__app-content">
+                  <div class="ds-diagram__app-name">Reproducible AI Execution</div>
+                  <div class="ds-diagram__app-sub">Schema fingerprinting · version-locked runs</div>
+                  <div class="ds-diagram__app-tags">
+                    <span class="ds-diagram__app-tag ds-diagram__app-tag--syntitan">SynTitan</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Arrow Layer -->
+          <svg class="ds-diagram__arrow-layer" id="arrow-layer"></svg>
+        </div>
+
+        <!-- Footer -->
+        <div class="ds-diagram__footer">
+          <span>ISO 27001 · ISO 42001 · GS Certified · AWS Marketplace · 10+ Patents</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  const GAP = 8;
+  const svg = document.getElementById('arrow-layer');
+  if (!svg) return;
+
+  function drawArrows() {
+    svg.innerHTML = '';
+    const body = svg.parentElement;
+    const rect = body.getBoundingClientRect();
+
+    // Define markers
+    const ns = 'http://www.w3.org/2000/svg';
+    const defs = document.createElementNS(ns, 'defs');
+    ['dark','accent'].forEach(type => {
+      const marker = document.createElementNS(ns, 'marker');
+      marker.setAttribute('id', 'arrow-' + type);
+      marker.setAttribute('viewBox', '0 0 10 10');
+      marker.setAttribute('refX', '9');
+      marker.setAttribute('refY', '5');
+      marker.setAttribute('markerWidth', '8');
+      marker.setAttribute('markerHeight', '8');
+      marker.setAttribute('orient', 'auto-start-reverse');
+      const path = document.createElementNS(ns, 'path');
+      path.setAttribute('d', 'M 1 2 L 9 5 L 1 8');
+      path.setAttribute('fill', 'none');
+      path.setAttribute('stroke', type === 'accent' ? '#4a9de0' : '#444');
+      path.setAttribute('stroke-width', '1.5');
+      path.setAttribute('stroke-linecap', 'round');
+      path.setAttribute('stroke-linejoin', 'round');
+      marker.appendChild(path);
+      defs.appendChild(marker);
+    });
+    svg.appendChild(defs);
+
+    const cols = body.querySelectorAll('.ds-diagram__col');
+    if (cols.length < 3) return;
+
+    // Col 1 → Col 2 arrow
+    const col1 = cols[0].getBoundingClientRect();
+    const col2 = cols[1].getBoundingClientRect();
+    const col3 = cols[2].getBoundingClientRect();
+
+    const x1 = col1.right - rect.left + GAP;
+    const y1 = col1.top + col1.height / 2 - rect.top;
+    const x2 = col2.left - rect.left - GAP;
+    const y2 = col2.top + col2.height / 2 - rect.top;
+
+    drawLine(x1, y1, x2, y2, 'dark');
+
+    // Col 2 → Col 3 arrow
+    const x3 = col2.right - rect.left + GAP;
+    const y3 = col2.top + col2.height / 2 - rect.top;
+    const x4 = col3.left - rect.left - GAP;
+    const y4 = col3.top + col3.height / 2 - rect.top;
+
+    drawLine(x3, y3, x4, y4, 'accent');
+  }
+
+  function drawLine(x1, y1, x2, y2, type) {
+    const ns = 'http://www.w3.org/2000/svg';
+    const path = document.createElementNS(ns, 'path');
+    const dy = Math.abs(y2 - y1);
+    let d;
+    if (dy <= 8) {
+      d = `M ${x1},${y1} L ${x2},${y2}`;
+    } else {
+      const mx = (x1 + x2) / 2;
+      d = `M ${x1},${y1} L ${mx},${y1} L ${mx},${y2} L ${x2},${y2}`;
+    }
+    path.setAttribute('d', d);
+    path.setAttribute('fill', 'none');
+    path.setAttribute('stroke', type === 'accent' ? '#4a9de0' : '#444');
+    path.setAttribute('stroke-width', '1.5');
+    path.setAttribute('marker-end', `url(#arrow-${type})`);
+    svg.appendChild(path);
+  }
+
+  drawArrows();
+  window.addEventListener('resize', drawArrows);
+})();
+</script>
+
+</body>
+</html>

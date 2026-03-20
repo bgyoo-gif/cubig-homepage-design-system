@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CUBIG Design System v5.0</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@400;600;700&family=Fragment+Mono&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ds-color-brand-primary: #3061f2;
+  --ds-color-brand-purple: #a617ff;
+  --ds-color-brand-purple-lt: #c6c5fa;
+  --ds-color-neutral-850: #141414;
+  --ds-color-neutral-800: #171719;
+  --ds-color-neutral-700: #303135;
+  --ds-color-neutral-025: #f7f7f7;
+  --ds-color-white: #fff;
+  --ds-color-text-primary: #0f0f0f;
+  --ds-color-text-secondary: #636363;
+  --ds-color-text-tertiary: #9c9c9c;
+  --ds-color-text-inverse: #fff;
+  --ds-color-text-muted: #cacccf;
+  --ds-color-success: #0e824c;
+  --ds-color-error: #ff3030;
+  --ds-color-info: #155ea0;
+  --ds-color-border-default: #e6e7e9;
+  --ds-color-border-brand: #a617ff;
+  --ds-color-surface-dark: #171719;
+  --ds-color-surface-mid: #f2f2f2;
+  --ds-color-surface-light: #f7f7f7;
+  --ds-color-surface-white: #fff;
+  --ds-gradient-brand: linear-gradient(130deg, #6C54A0, #b44fcc 50%, #ff266a);
+  --ds-font-base: "DM Sans", sans-serif;
+  --ds-font-brand: "Oxanium", sans-serif;
+  --ds-font-code: "Fragment Mono", monospace;
+  --ds-text-xs: 12px; --ds-text-sm: 14px; --ds-text-md: 16px; --ds-text-lg: 18px;
+  --ds-text-xl: 20px; --ds-text-2xl: 24px; --ds-text-3xl: 30px; --ds-text-4xl: 36px;
+  --ds-text-5xl: 40px; --ds-text-6xl: 50px; --ds-text-7xl: 64px;
+  --ds-weight-light: 300; --ds-weight-regular: 400; --ds-weight-medium: 500;
+  --ds-weight-semibold: 600; --ds-weight-bold: 700;
+  --ds-leading-tight: 1.2; --ds-leading-normal: 1.5; --ds-leading-relaxed: 1.7;
+  --ds-tracking-tight: -0.5px; --ds-tracking-wide: 0.08em;
+  --ds-space-2xs: 4px; --ds-space-xs: 8px; --ds-space-sm: 12px; --ds-space-md: 16px;
+  --ds-space-lg: 24px; --ds-space-xl: 32px; --ds-space-2xl: 48px; --ds-space-3xl: 64px;
+  --ds-space-4xl: 80px;
+  --ds-radius-xs: 5px; --ds-radius-sm: 8px; --ds-radius-md: 18px; --ds-radius-lg: 24px;
+  --ds-radius-xl: 40px; --ds-radius-pill: 9999px;
+  --ds-border-default: 1px solid var(--ds-color-border-default);
+  --ds-border-brand: 1px solid var(--ds-color-brand-purple);
+  --ds-shadow-card: 0px 24px 40px rgba(0,0,0,0.04);
+}
+
+/* ===== Viewer Layout ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--ds-font-base); color: var(--ds-color-text-primary); background: #f0f0f3; word-break: keep-all; overflow-wrap: break-word; }
+.v-shell { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+
+/* Sidebar */
+.v-sidebar { background: var(--ds-color-surface-white); border-right: var(--ds-border-default); position: fixed; top: 0; left: 0; width: 240px; height: 100vh; overflow-y: auto; z-index: 50; display: flex; flex-direction: column; }
+.v-logo { padding: 20px 20px 16px; border-bottom: var(--ds-border-default); }
+.v-logo h1 { font-family: var(--ds-font-brand); font-size: 15px; font-weight: var(--ds-weight-bold); letter-spacing: 0.12em; }
+.v-logo span { font-size: 11px; color: var(--ds-color-text-tertiary); font-family: var(--ds-font-code); }
+.v-nav { flex: 1; padding: 12px 0; overflow-y: auto; }
+.v-nav-group { padding: 0 16px; margin-bottom: 4px; }
+.v-nav-group__label { font-family: var(--ds-font-code); font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--ds-color-text-tertiary); padding: 8px 4px 6px; display: block; }
+.v-nav a { display: block; font-size: 13px; color: var(--ds-color-text-secondary); padding: 5px 8px; border-radius: 6px; text-decoration: none; transition: all 0.12s; }
+.v-nav a:hover { background: var(--ds-color-surface-light); color: var(--ds-color-text-primary); }
+
+/* Main */
+.v-main { grid-column: 2; padding: 32px 40px 80px; max-width: 960px; }
+.v-section { margin-bottom: 56px; }
+.v-section__title { font-family: var(--ds-font-brand); font-size: 22px; font-weight: var(--ds-weight-bold); margin-bottom: 6px; }
+.v-section__desc { font-size: 13px; color: var(--ds-color-text-secondary); margin-bottom: 20px; }
+.v-card { background: var(--ds-color-surface-white); border: var(--ds-border-default); border-radius: var(--ds-radius-md); overflow: hidden; }
+.v-card__body { padding: 24px; }
+.v-label { font-family: var(--ds-font-code); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ds-color-text-tertiary); margin-bottom: 12px; display: block; }
+.v-note { font-size: 11px; color: var(--ds-color-text-tertiary); padding: 10px 16px; background: var(--ds-color-surface-light); border-top: var(--ds-border-default); font-family: var(--ds-font-code); }
+.v-row { display: flex; flex-wrap: wrap; gap: 12px; }
+.v-spacer { height: 20px; }
+
+@media (max-width: 1023px) {
+  .v-shell { grid-template-columns: 1fr; }
+  .v-sidebar { display: none; }
+  .v-main { grid-column: 1; padding: 24px 16px 80px; }
+}
+
+/* ===== DS Components (inline) ===== */
+
+/* Typography helpers */
+.ds-h1 { font-family: var(--ds-font-base); font-size: var(--ds-text-4xl); font-weight: var(--ds-weight-bold); line-height: var(--ds-leading-tight); letter-spacing: var(--ds-tracking-tight); }
+.ds-h2 { font-family: var(--ds-font-base); font-size: var(--ds-text-3xl); font-weight: var(--ds-weight-bold); line-height: var(--ds-leading-tight); letter-spacing: var(--ds-tracking-tight); }
+.ds-h3 { font-family: var(--ds-font-base); font-size: var(--ds-text-2xl); font-weight: var(--ds-weight-semibold); line-height: var(--ds-leading-tight); }
+.ds-body-l { font-size: var(--ds-text-xl); line-height: var(--ds-leading-normal); }
+.ds-body-m { font-size: var(--ds-text-md); line-height: var(--ds-leading-normal); font-weight: var(--ds-weight-medium); }
+.ds-body-s { font-size: var(--ds-text-sm); line-height: var(--ds-leading-normal); font-weight: var(--ds-weight-medium); }
+.ds-caption { font-size: var(--ds-text-xs); line-height: var(--ds-leading-normal); }
+.ds-data { font-family: var(--ds-font-base); font-size: var(--ds-text-7xl); font-weight: var(--ds-weight-bold); line-height: 1; }
+.ds-text--brand { color: var(--ds-color-brand-purple); }
+.ds-text--product { font-family: var(--ds-font-brand); font-weight: var(--ds-weight-bold); }
+
+/* Hero Screenshot */
+.ds-hero-screenshot-section { padding-top: 48px; overflow: visible; }
+.ds-hero__screenshot-frame { margin-top: var(--ds-space-xl); border-radius: var(--ds-radius-xl); padding: var(--ds-space-2xl) var(--ds-space-2xl) 0; background-size: cover; background-position: center; overflow: hidden; }
+.ds-hero__screenshot { border-radius: var(--ds-radius-lg) var(--ds-radius-lg) 0 0; overflow: hidden; box-shadow: 0 -8px 40px rgba(0,0,0,0.12); background: var(--ds-color-surface-white); min-height: 180px; }
+
+/* Button */
+.ds-btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--ds-space-xs); border-radius: var(--ds-radius-pill); font-family: var(--ds-font-base); font-weight: var(--ds-weight-medium); cursor: pointer; border: none; transition: opacity 0.2s; white-space: nowrap; text-decoration: none; }
+.ds-btn--sm { padding: var(--ds-space-xs) var(--ds-space-md); font-size: var(--ds-text-sm); }
+.ds-btn--md { padding: var(--ds-space-sm) var(--ds-space-xl); font-size: var(--ds-text-md); }
+.ds-btn--lg { padding: var(--ds-space-md) var(--ds-space-2xl); font-size: var(--ds-text-lg); }
+.ds-btn--primary { background: var(--ds-gradient-brand); color: var(--ds-color-white); }
+.ds-btn--primary:hover { opacity: 0.88; }
+.ds-btn--secondary { background: transparent; color: var(--ds-color-text-primary); border: var(--ds-border-default); }
+.ds-btn--secondary:hover { background: var(--ds-color-surface-light); }
+.ds-btn--ghost { background: transparent; color: var(--ds-color-brand-primary); border: none; padding-left: 0; padding-right: 0; }
+.ds-btn--dark { background: var(--ds-color-neutral-800); color: var(--ds-color-text-inverse); border: 1px solid var(--ds-color-neutral-700); }
+
+/* Card */
+.ds-card { background: var(--ds-color-surface-white); border-radius: var(--ds-radius-md); border: var(--ds-border-default); padding: var(--ds-space-lg); box-shadow: var(--ds-shadow-card); }
+.ds-card--dark { background: var(--ds-color-neutral-850); border-color: var(--ds-color-neutral-700); color: var(--ds-color-text-inverse); }
+.ds-card--highlight { border-radius: var(--ds-radius-lg); padding: var(--ds-space-xl); }
+.ds-card--flat { background: transparent; border: none; padding: 0; box-shadow: none; }
+.ds-card__badge { display: inline-flex; width: fit-content; padding: 4px 12px; border-radius: var(--ds-radius-pill); font-size: var(--ds-text-xs); font-weight: var(--ds-weight-medium); font-family: var(--ds-font-code); text-transform: uppercase; letter-spacing: var(--ds-tracking-wide); border: 1px solid currentColor; margin-bottom: var(--ds-space-md); }
+.ds-card__badge--brand { color: var(--ds-color-brand-purple); }
+.ds-card__badge--teal { color: #0e9f8e; }
+.ds-card__badge--red { color: var(--ds-color-error); }
+.ds-card__title { font-size: var(--ds-text-2xl); font-weight: var(--ds-weight-bold); line-height: var(--ds-leading-tight); margin-bottom: var(--ds-space-sm); }
+.ds-card__title--lg { font-size: var(--ds-text-4xl); }
+.ds-card__title--sm { font-size: var(--ds-text-lg); font-weight: var(--ds-weight-semibold); }
+.ds-card__subtitle { font-size: var(--ds-text-sm); color: var(--ds-color-text-tertiary); margin-bottom: var(--ds-space-md); }
+.ds-card__description { font-size: var(--ds-text-sm); color: var(--ds-color-text-secondary); line-height: var(--ds-leading-relaxed); }
+.ds-card__icon { font-size: 24px; margin-bottom: var(--ds-space-sm); display: block; }
+.ds-card__button { margin-top: auto; padding-top: var(--ds-space-lg); }
+
+/* Banner */
+.ds-banner { padding: var(--ds-space-md) var(--ds-space-lg); border: none; border-top: 1px solid var(--ds-color-border-default); border-bottom: 1px solid var(--ds-color-border-default); background: var(--ds-banner-bg, var(--ds-color-surface-light)); font-size: var(--ds-text-sm); line-height: var(--ds-leading-relaxed); }
+.ds-banner__label { font-family: var(--ds-font-code); font-size: var(--ds-text-xs); text-transform: uppercase; letter-spacing: var(--ds-tracking-wide); color: var(--ds-color-text-tertiary); margin-bottom: var(--ds-space-xs); display: block; }
+.ds-banner--info { --ds-banner-bg: rgba(21,94,160,0.06); }
+.ds-banner--success { --ds-banner-bg: rgba(14,130,76,0.06); }
+.ds-banner--error { --ds-banner-bg: rgba(255,48,48,0.06); }
+.ds-banner--brand { --ds-banner-bg: rgba(166,23,255,0.06); }
+.ds-banner--full { width: 100%; text-align: center; padding: var(--ds-space-3xl) var(--ds-space-2xl); border-radius: var(--ds-radius-xl); background-size: cover; background-position: center; position: relative; overflow: hidden; isolation: isolate; color: var(--ds-color-text-primary); font-size: var(--ds-text-lg); font-weight: var(--ds-weight-medium); line-height: var(--ds-leading-relaxed); border: none; word-break: keep-all; }
+.ds-banner--full::before { content: ''; position: absolute; inset: 0; background: rgba(255,255,255,0.72); z-index: 0; }
+
+/* Badge */
+.ds-badge { display: inline-flex; align-items: center; gap: var(--ds-space-2xs); padding: var(--ds-space-2xs) var(--ds-space-xs); border-radius: var(--ds-radius-pill); font-size: var(--ds-text-xs); font-weight: var(--ds-weight-medium); line-height: 1; white-space: nowrap; }
+.ds-badge--primary { background: var(--ds-color-brand-primary); color: var(--ds-color-white); }
+.ds-badge--purple { background: var(--ds-color-brand-purple-lt); color: var(--ds-color-brand-purple); }
+.ds-badge--neutral { background: #e6e7e9; color: var(--ds-color-text-secondary); }
+.ds-badge--success { background: rgba(14,130,76,0.12); color: var(--ds-color-success); }
+.ds-badge--error { background: rgba(255,48,48,0.12); color: var(--ds-color-error); }
+.ds-badge--dark { background: var(--ds-color-neutral-700); color: var(--ds-color-text-inverse); }
+
+/* Bullet */
+.ds-bullet { list-style: none; display: flex; flex-direction: column; gap: var(--ds-space-sm); }
+.ds-bullet__item { display: flex; align-items: flex-start; gap: var(--ds-space-xs); font-size: var(--ds-text-md); line-height: var(--ds-leading-normal); }
+.ds-bullet__icon { width: 20px; height: 20px; flex-shrink: 0; margin-top: 2px; }
+.ds-bullet--dot .ds-bullet__icon::before { content: "•"; color: var(--ds-color-brand-purple); font-size: var(--ds-text-xl); line-height: 1; }
+.ds-bullet--check .ds-bullet__icon::before { content: "✓"; color: var(--ds-color-success); font-weight: var(--ds-weight-bold); }
+
+/* Section Header */
+.ds-section-header { margin-bottom: var(--ds-space-2xl); text-align: center; }
+.ds-section-header__eyebrow { font-family: var(--ds-font-code); font-size: var(--ds-text-xs); font-weight: var(--ds-weight-medium); text-transform: uppercase; letter-spacing: var(--ds-tracking-wide); color: var(--ds-color-brand-purple); margin-bottom: var(--ds-space-sm); display: block; }
+.ds-section-header__title { font-family: var(--ds-font-base); font-size: var(--ds-text-3xl); font-weight: var(--ds-weight-bold); color: var(--ds-color-text-primary); line-height: var(--ds-leading-tight); letter-spacing: var(--ds-tracking-tight); margin-bottom: var(--ds-space-md); }
+.ds-section-header__description { font-size: var(--ds-text-lg); color: var(--ds-color-text-secondary); line-height: var(--ds-leading-relaxed); max-width: 640px; margin: 0 auto; }
+.ds-section-header--underline { padding-bottom: var(--ds-space-lg); border-bottom: 1px solid var(--ds-color-border-default); margin-bottom: var(--ds-space-xl); }
+.ds-section-header--left { text-align: left; }
+.ds-section-header--left .ds-section-header__description { margin: 0; }
+
+/* Section Title Icon */
+.ds-section-title-icon { display: flex; align-items: center; gap: 12px; margin-bottom: var(--ds-space-xl); }
+.ds-section-title-icon__icon { font-size: 28px; line-height: 1; }
+.ds-section-title-icon__text { font-size: var(--ds-text-2xl); font-weight: var(--ds-weight-semibold); }
+
+/* KPI Band */
+.ds-kpi-band { border-radius: var(--ds-radius-xl); padding: 48px 40px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; background: linear-gradient(135deg, #1a6fe8, #0ea5a0); position: relative; overflow: hidden; justify-items: center; }
+.ds-kpi-band__item { display: flex; flex-direction: column; gap: 12px; text-align: center; }
+.ds-kpi-band__number { font-family: var(--ds-font-base); font-size: var(--ds-text-6xl); font-weight: var(--ds-weight-bold); line-height: 1; color: var(--ds-color-white); }
+.ds-kpi-band__label { font-size: var(--ds-text-sm); color: rgba(255,255,255,0.85); line-height: var(--ds-leading-normal); }
+
+/* Card Grid */
+.ds-card-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+.ds-card-grid .ds-card { display: flex; flex-direction: column; }
+.ds-card-grid--2col { grid-template-columns: repeat(2, 1fr); }
+.ds-card-grid--3col { grid-template-columns: repeat(3, 1fr); }
+.ds-card-grid--4col { grid-template-columns: repeat(4, 1fr); }
+
+/* Feature Grid */
+.ds-feature-grid { background: var(--ds-color-surface-white); border: 1px solid var(--ds-color-border-default); border-radius: var(--ds-radius-xl); padding: 40px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px 48px; }
+.ds-feature-item { display: flex; flex-direction: column; gap: 8px; }
+.ds-feature-item__icon { font-size: 28px; margin-bottom: 4px; }
+.ds-feature-item__title { font-size: var(--ds-text-lg); font-weight: var(--ds-weight-semibold); }
+.ds-feature-item__description { font-size: var(--ds-text-sm); color: var(--ds-color-text-secondary); line-height: var(--ds-leading-relaxed); }
+
+/* CTA Band */
+.ds-cta-band { width: 100%; position: relative; overflow: hidden; padding: 64px 24px; text-align: center; background: linear-gradient(135deg, #b2f0e8 0%, #7ecfea 40%, #4a9fd4 100%); }
+.ds-cta-band::before { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.15); z-index: 0; }
+.ds-cta-band > * { position: relative; z-index: 1; }
+.ds-cta-band__inner { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: var(--ds-space-lg); }
+.ds-cta-band__title { font-family: var(--ds-font-base); font-size: var(--ds-text-4xl); font-weight: var(--ds-weight-bold); color: #fff; line-height: var(--ds-leading-tight); letter-spacing: -1px; }
+.ds-cta-band__description { font-size: var(--ds-text-lg); color: rgba(255,255,255,0.85); line-height: var(--ds-leading-relaxed); }
+.ds-cta-band__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; }
+.ds-cta-band__actions .ds-btn { background: rgba(255,255,255,0.92); color: var(--ds-color-text-primary); border: 1px solid rgba(255,255,255,0.6); backdrop-filter: blur(8px); }
+.ds-cta-band__footnote { font-size: var(--ds-text-xs); color: rgba(255,255,255,0.6); font-family: var(--ds-font-code); letter-spacing: var(--ds-tracking-wide); }
+
+/* Accordion Card */
+.ds-ac-list { display: flex; flex-direction: column; gap: 2px; }
+.ds-ac-card { border: var(--ds-border-default); border-radius: var(--ds-radius-sm); background: var(--ds-color-surface-white); overflow: hidden; }
+.ds-ac-card:hover { background: var(--ds-color-neutral-025); }
+.ds-ac-card__header { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: var(--ds-space-md); padding: var(--ds-space-lg); cursor: pointer; user-select: none; }
+.ds-ac-card__title-wrap { display: flex; flex-direction: column; gap: 4px; }
+.ds-ac-card__industry { font-family: var(--ds-font-code); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ds-color-text-tertiary); display: flex; align-items: center; gap: var(--ds-space-2xs); }
+.ds-ac-card__industry-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.ds-ac-card__title { font-size: var(--ds-text-lg); font-weight: var(--ds-weight-medium); line-height: var(--ds-leading-tight); }
+.ds-ac-card__meta { display: flex; align-items: center; gap: var(--ds-space-xs); flex-wrap: wrap; }
+.ds-ac-card__toggle { width: 28px; height: 28px; border-radius: 6px; border: 0.5px solid var(--ds-color-border-default); background: var(--ds-color-surface-light); display: flex; align-items: center; justify-content: center; flex-shrink: 0; cursor: pointer; }
+.ds-ac-card__toggle-icon { width: 12px; height: 12px; position: relative; }
+.ds-ac-card__toggle-icon::before, .ds-ac-card__toggle-icon::after { content: ''; position: absolute; background: var(--ds-color-text-muted); border-radius: 1px; }
+.ds-ac-card__toggle-icon::before { width: 10px; height: 1.5px; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+.ds-ac-card__toggle-icon::after { width: 1.5px; height: 10px; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+.ds-ac-card.ds-ac--open .ds-ac-card__toggle-icon::after { opacity: 0; }
+.ds-ac-card__body { display: none; padding: var(--ds-space-lg); border-top: var(--ds-border-default); background: var(--ds-color-surface-light); }
+.ds-ac-card.ds-ac--open .ds-ac-card__body { display: block; }
+.ds-ac-metrics { display: flex; gap: var(--ds-space-xs); flex-wrap: wrap; margin-bottom: var(--ds-space-lg); }
+.ds-ac-metric { display: flex; flex-direction: column; padding: var(--ds-space-sm) var(--ds-space-md); border: var(--ds-border-default); border-radius: var(--ds-radius-sm); background: var(--ds-color-surface-white); min-width: 100px; flex: 1; }
+.ds-ac-metric__val { font-family: var(--ds-font-base); font-size: var(--ds-text-xl); font-weight: var(--ds-weight-bold); line-height: 1; }
+.ds-ac-metric__val--success { color: var(--ds-color-success); }
+.ds-ac-metric__label { font-family: var(--ds-font-code); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ds-color-text-tertiary); margin-top: var(--ds-space-2xs); }
+
+/* Table */
+.ds-table-wrap { overflow-x: auto; border-radius: var(--ds-radius-lg); border: 1px solid var(--ds-color-border-default); }
+.ds-table { width: 100%; border-collapse: collapse; font-size: var(--ds-text-sm); }
+.ds-table thead th { font-family: var(--ds-font-code); font-size: 11px; text-transform: uppercase; letter-spacing: var(--ds-tracking-wide); color: var(--ds-color-text-primary); font-weight: var(--ds-weight-semibold); padding: 12px 16px; border-bottom: 2px solid var(--ds-color-border-default); text-align: left; background: var(--ds-color-surface-light); }
+.ds-table tbody td { padding: 14px 16px; border-bottom: 1px solid var(--ds-color-border-default); color: var(--ds-color-text-primary); }
+.ds-table tbody tr:last-child td { border-bottom: none; }
+.ds-table tbody td:first-child { font-weight: var(--ds-weight-semibold); color: var(--ds-color-text-primary); }
+
+/* Product Split */
+.ds-product-split { display: grid; grid-template-columns: 4fr 6fr; gap: 48px; align-items: stretch; }
+.ds-product-split__visual { border-radius: var(--ds-radius-xl); overflow: hidden; background-size: cover; background-position: center; padding: var(--ds-space-lg) var(--ds-space-lg) 0; display: flex; flex-direction: column; justify-content: flex-end; gap: var(--ds-space-sm); }
+.ds-product-split__visual-logo { height: 24px; object-fit: contain; align-self: center; flex-shrink: 0; }
+.ds-product-split__visual-screenshot { border-radius: var(--ds-radius-md) var(--ds-radius-md) 0 0; overflow: hidden; box-shadow: 0 -4px 24px rgba(0,0,0,0.08); margin-top: auto; margin-bottom: -1px; }
+.ds-product-split__visual-screenshot img { width: 100%; display: block; }
+.ds-product-split__content { display: flex; flex-direction: column; gap: 16px; }
+.ds-product-split__title { font-size: var(--ds-text-2xl); font-weight: var(--ds-weight-bold); line-height: var(--ds-leading-tight); }
+.ds-product-split__lead { font-size: var(--ds-text-md); color: var(--ds-color-text-primary); line-height: var(--ds-leading-relaxed); font-weight: var(--ds-weight-medium); }
+.ds-product-split__body { font-size: var(--ds-text-sm); color: var(--ds-color-text-secondary); line-height: var(--ds-leading-relaxed); }
+.ds-product-split__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: var(--ds-space-sm); }
+
+/* Partner Grid — Marquee */
+.ds-partner-grid { width: 100vw; margin-left: calc(-50vw + 50%); overflow: hidden; padding: var(--ds-space-xl) 0; }
+.ds-partner-grid__track { display: flex; gap: var(--ds-space-3xl); align-items: center; width: max-content; animation: ds-marquee 30s linear infinite; }
+.ds-partner-grid__track:hover { animation-play-state: paused; }
+.ds-partner-item { display: flex; flex-direction: column; align-items: center; gap: var(--ds-space-xs); flex-shrink: 0; }
+.ds-partner-item__logo { width: 120px; height: 64px; object-fit: contain; }
+.ds-partner-item__name { font-size: var(--ds-text-xs); color: var(--ds-color-text-tertiary); text-align: center; white-space: nowrap; }
+@keyframes ds-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+/* Cert Grid */
+.ds-cert-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--ds-space-md); }
+.ds-cert-card { background: var(--ds-color-surface-white); border: 1px solid var(--ds-color-border-default); border-radius: var(--ds-radius-lg); padding: var(--ds-space-lg) var(--ds-space-md); display: flex; flex-direction: column; align-items: center; text-align: center; gap: var(--ds-space-sm); }
+.ds-cert-card__label { font-size: var(--ds-text-xs); color: var(--ds-color-text-tertiary); }
+.ds-cert-card__company { font-size: var(--ds-text-md); font-weight: var(--ds-weight-bold); color: var(--ds-color-text-primary); }
+.ds-cert-card__wreath { position: relative; width: 140px; height: 100px; display: flex; align-items: center; justify-content: center; }
+.ds-cert-card__wreath-left, .ds-cert-card__wreath-right { position: absolute; top: 0; height: 100%; width: 45%; object-fit: contain; }
+.ds-cert-card__wreath-left { left: -4px; object-position: right; }
+.ds-cert-card__wreath-right { right: -4px; object-position: left; }
+.ds-cert-card__wreath-center { position: relative; z-index: 1; max-width: 56px; max-height: 56px; object-fit: contain; }
+.ds-cert-card__wreath-text { position: relative; z-index: 1; font-size: var(--ds-text-sm); font-weight: var(--ds-weight-bold); color: var(--ds-color-text-primary); text-align: center; line-height: var(--ds-leading-tight); max-width: 80px; }
+.ds-cert-card__logo { width: 64px; height: 64px; object-fit: contain; margin-top: auto; }
+@media (max-width: 1280px) { .ds-cert-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 1024px) { .ds-cert-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 567px) { .ds-cert-grid { grid-template-columns: repeat(2, 1fr); gap: var(--ds-space-sm); } .ds-cert-card { padding: var(--ds-space-md) var(--ds-space-xs); } .ds-cert-card__wreath { width: 110px; height: 80px; } .ds-cert-card__wreath-text { font-size: var(--ds-text-xs); } .ds-cert-card__logo { width: 48px; height: 48px; } }
+
+/* Case Study Card */
+.ds-card--case-study { display: grid; grid-template-columns: 200px 1fr; border: 1px solid var(--ds-color-border-default); border-radius: var(--ds-radius-lg); overflow: hidden; background: var(--ds-color-surface-white); }
+.ds-card--case-study .ds-card__left { background: transparent; border-right: 1px solid var(--ds-color-border-default); padding: var(--ds-space-lg); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--ds-space-sm); text-align: center; }
+.ds-card--case-study .ds-card__left-img { width: 100%; max-height: 120px; object-fit: contain; border-radius: var(--ds-radius-sm); }
+.ds-card--case-study .ds-card__left-label { font-size: var(--ds-text-xs); color: var(--ds-color-text-tertiary); }
+.ds-card--case-study .ds-card__left-name { font-size: var(--ds-text-md); font-weight: var(--ds-weight-bold); color: var(--ds-color-text-primary); }
+.ds-card--case-study .ds-card__right { padding: var(--ds-space-lg); display: flex; flex-direction: column; gap: var(--ds-space-xs); }
+.ds-card--case-study--compact { grid-template-columns: 140px 1fr; }
+.ds-card--case-study--compact .ds-card__left { padding: var(--ds-space-md); }
+.ds-card--case-study--compact .ds-card__left-img { max-height: 80px; }
+.ds-card--case-study--compact .ds-card__left-name { font-size: var(--ds-text-sm); }
+.ds-card--case-study--compact .ds-card__right { padding: var(--ds-space-md); }
+
+/* Color swatches */
+.v-swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
+.v-swatch { border: var(--ds-border-default); border-radius: var(--ds-radius-sm); overflow: hidden; cursor: pointer; transition: box-shadow 0.15s; }
+.v-swatch:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+.v-swatch__color { height: 48px; }
+.v-swatch__info { padding: 8px 10px; }
+.v-swatch__name { font-size: 11px; font-weight: var(--ds-weight-semibold); display: block; margin-bottom: 2px; }
+.v-swatch__var { font-family: var(--ds-font-code); font-size: 9px; color: var(--ds-color-text-tertiary); display: block; }
+
+/* Type scale */
+.v-type-row { display: flex; align-items: baseline; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--ds-color-surface-light); }
+.v-type-row:last-child { border-bottom: none; }
+.v-type-label { font-family: var(--ds-font-code); font-size: 10px; color: var(--ds-color-text-tertiary); width: 80px; flex-shrink: 0; }
+
+/* Spacing */
+.v-space-bar { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+.v-space-bar__fill { height: 20px; background: var(--ds-color-brand-purple); opacity: 0.15; border-radius: 4px; }
+.v-space-bar__label { font-family: var(--ds-font-code); font-size: 10px; color: var(--ds-color-text-tertiary); width: 70px; flex-shrink: 0; }
+.v-space-bar__val { font-family: var(--ds-font-code); font-size: 10px; color: var(--ds-color-text-secondary); }
+</style>
+</head>
+<body>
+
+<div class="v-shell">
+
+<!-- Sidebar -->
+<aside class="v-sidebar">
+  <div class="v-logo">
+    <h1>CUBIG DS</h1>
+    <span>v5.0 · 2026-03-16</span>
+  </div>
+  <nav class="v-nav">
+    <div class="v-nav-group">
+      <span class="v-nav-group__label">Foundation</span>
+      <a href="#colors">Color System</a>
+      <a href="#typography">Typography</a>
+      <a href="#spacing">Spacing & Shape</a>
+    </div>
+    <div class="v-nav-group">
+      <span class="v-nav-group__label">Components</span>
+      <a href="#buttons">Button</a>
+      <a href="#cards">Card</a>
+      <a href="#banners">Banner</a>
+      <a href="#badges">Badge</a>
+      <a href="#bullets">Bullet List</a>
+    </div>
+    <div class="v-nav-group">
+      <span class="v-nav-group__label">Layout Patterns</span>
+      <a href="#lp-section-header">[A] Section Header</a>
+      <a href="#lp-hero">[B] Hero Text-only</a>
+      <a href="#lp-hero-screenshot">[B-2] Hero Screenshot</a>
+      <a href="#lp-kpi">[C] KPI Band</a>
+      <a href="#lp-card-grid">[D] Card Grid</a>
+      <a href="#lp-feature-grid">[E] Feature Grid</a>
+      <a href="#lp-cta">[F] CTA Band</a>
+      <a href="#lp-accordion">[G] Accordion Card</a>
+      <a href="#lp-banner">[H] Banner Variants</a>
+      <a href="#lp-product-split">[I] Product Split</a>
+      <a href="#lp-partner-grid">[K] Partner Logo Grid</a>
+      <a href="#lp-cert-grid">[L] Cert Grid</a>
+      <a href="#lp-case-study">[M] Case Study Card</a>
+      <a href="#lp-table">[J] Table</a>
+    </div>
+  </nav>
+</aside>
+
+<!-- Main Content -->
+<main class="v-main">
+
+<!-- ==================== FOUNDATION ==================== -->
+
+<!-- Colors -->
+<section class="v-section" id="colors">
+  <h2 class="v-section__title">Color System</h2>
+  <p class="v-section__desc">모든 색상은 :root CSS 변수로 정의. 하드코딩 금지.</p>
+
+  <div class="v-card"><div class="v-card__body">
+    <span class="v-label">Brand</span>
+    <div class="v-swatches" style="margin-bottom:20px">
+      <div class="v-swatch"><div class="v-swatch__color" style="background:#3061f2"></div><div class="v-swatch__info"><span class="v-swatch__name">Brand Primary</span><span class="v-swatch__var">--ds-color-brand-primary</span></div></div>
+      <div class="v-swatch"><div class="v-swatch__color" style="background:#a617ff"></div><div class="v-swatch__info"><span class="v-swatch__name">Brand Purple</span><span class="v-swatch__var">--ds-color-brand-purple</span></div></div>
+      <div class="v-swatch"><div class="v-swatch__color" style="background:#c6c5fa"></div><div class="v-swatch__info"><span class="v-swatch__name">Purple Light</span><span class="v-swatch__var">--ds-color-brand-purple-lt</span></div></div>
+      <div class="v-swatch"><div class="v-swatch__color" style="background:linear-gradient(130deg, #6C54A0, #b44fcc 50%, #ff266a)"></div><div class="v-swatch__info"><span class="v-swatch__name">Gradient Brand</span><span class="v-swatch__var">--ds-gradient-brand</span></div></div>
+    </div>
+
+    <span class="v-label">Neutral</span>
+    <div class="v-swatches" style="margin-bottom:20px">
+      <div class="v-swatch"><div class="v-swatch__color" style="background:#0f0f0f"></div><div class="v-swatch__info"><span class="v-swatch__name">900</span><span class="v-swatch__var">--ds-color-neutral-900</span></div></div>
+      <div class="v-swatch"><div class="v-swatch__color" style="background:#141414"></div><div class="v-swatch__info"><span class="v-swatch__name">850</span><span class="v-swatch__var">--ds-color-neutral-850</span></div></div>
+      <div class="v-swatch"><div class="v-swatch__color" style="background:#171719"></div><div class="v-swatch__info"><span class="v-swatch__name">800</span><span class="v-swatch__var">--ds-color-neutral-800</span></div></div>
+      <div class="v-swatch"><div class="v-swatch__color" style="background:#303135"></div><div class="v-swatch__info"><span class="v-swatch__name">700</span><span class="v-swatch__var">--ds-color-neutral-700</span></div></div>
+      <div class="v-swatch"><div class="v-swatch__color" style="background:#636363"></div><div class="v-swatch__info"><span class="v-swatch__name">500</span><span class="v-swatch__var">--ds-color-neutral-500</span></div></div>
+      <div class="v-swatch"><div class="v-swatch__color" style="background:#9c9c9c"></div><div class="v-swatch__info"><span class="v-swatch__name">400</span><span class="v-swatch__var">--ds-color-neutral-400</span></div></div>
+      <div class="v-swatch"><div class="v-swatch__color" style="background:#e6e7e9"></div><div class="v-swatch__info"><span class="v-swatch__name">150</span><span class="v-swatch__var">--ds-color-neutral-150</span></div></div>
+      <div class="v-swatch"><div class="v-swatch__color" style="background:#f2f2f2"></div><div class="v-swatch__info"><span class="v-swatch__name">050</span><span class="v-swatch__var">--ds-color-neutral-050</span></div></div>
+      <div class="v-swatch"><div class="v-swatch__color" style="background:#f7f7f7;border-bottom:1px solid #e6e7e9"></div><div class="v-swatch__info"><span class="v-swatch__name">025</span><span class="v-swatch__var">--ds-color-neutral-025</span></div></div>
+    </div>
+
+    <span class="v-label">Functional</span>
+    <div class="v-swatches">
+      <div class="v-swatch"><div class="v-swatch__color" style="background:#0e824c"></div><div class="v-swatch__info"><span class="v-swatch__name">Success</span><span class="v-swatch__var">--ds-color-success</span></div></div>
+      <div class="v-swatch"><div class="v-swatch__color" style="background:#ff3030"></div><div class="v-swatch__info"><span class="v-swatch__name">Error</span><span class="v-swatch__var">--ds-color-error</span></div></div>
+      <div class="v-swatch"><div class="v-swatch__color" style="background:#155ea0"></div><div class="v-swatch__info"><span class="v-swatch__name">Info</span><span class="v-swatch__var">--ds-color-info</span></div></div>
+    </div>
+  </div></div>
+</section>
+
+<!-- Typography -->
+<section class="v-section" id="typography">
+  <h2 class="v-section__title">Typography</h2>
+  <p class="v-section__desc">3개 폰트 패밀리 + 10단계 타입 스케일</p>
+
+  <div class="v-card" style="margin-bottom:16px"><div class="v-card__body">
+    <span class="v-label">Font Families</span>
+    <div class="v-type-row"><span class="v-type-label">Base</span><span style="font-family:var(--ds-font-base);font-size:18px">DM Sans — The quick brown fox</span></div>
+    <div class="v-type-row"><span class="v-type-label">Brand</span><span style="font-family:var(--ds-font-brand);font-size:18px">Oxanium — 제품명 키워드 전용</span></div>
+    <div class="v-type-row"><span class="v-type-label">Code</span><span style="font-family:var(--ds-font-code);font-size:16px">Fragment Mono — The quick brown fox</span></div>
+  </div></div>
+
+  <div class="v-card"><div class="v-card__body">
+    <span class="v-label">Type Scale</span>
+    <div class="v-type-row"><span class="v-type-label">7xl · 64px</span><span style="font-family:var(--ds-font-base);font-size:48px;font-weight:700;line-height:1">Data</span></div>
+    <div class="v-type-row"><span class="v-type-label">5xl · 40px</span><span class="ds-h1" style="font-size:32px">Heading 1</span></div>
+    <div class="v-type-row"><span class="v-type-label">4xl · 36px</span><span class="ds-h2" style="font-size:28px">Heading 2</span></div>
+    <div class="v-type-row"><span class="v-type-label">3xl · 30px</span><span class="ds-h3" style="font-size:24px">Heading 3</span></div>
+    <div class="v-type-row"><span class="v-type-label">xl · 20px</span><span class="ds-body-l">Body Large</span></div>
+    <div class="v-type-row"><span class="v-type-label">md · 16px</span><span class="ds-body-m">Body Medium</span></div>
+    <div class="v-type-row"><span class="v-type-label">sm · 14px</span><span class="ds-body-s">Body Small</span></div>
+    <div class="v-type-row"><span class="v-type-label">xs · 12px</span><span class="ds-caption">Caption text</span></div>
+    <div style="margin-top:16px">
+      <span class="v-label">Text Emphasis</span>
+      <p style="font-size:var(--ds-text-lg)">핵심 키워드는 <span class="ds-text--brand">이렇게 강조</span>합니다.</p>
+    </div>
+    <div style="margin-top:16px">
+      <span class="v-label">Product Name (Oxanium) — .ds-text--product</span>
+      <p style="font-size:var(--ds-text-sm);color:var(--ds-color-text-tertiary);margin-bottom:8px">단독 키워드 표기 시에만 사용. 문장 내·제목·데이터 숫자에는 사용 금지.</p>
+      <div style="display:flex;gap:24px;flex-wrap:wrap">
+        <span class="ds-text--product" style="font-size:var(--ds-text-2xl)">SynTitan</span>
+        <span class="ds-text--product" style="font-size:var(--ds-text-2xl)">DTS</span>
+        <span class="ds-text--product" style="font-size:var(--ds-text-2xl)">LLM Capsule</span>
+        <span class="ds-text--product" style="font-size:var(--ds-text-2xl)">SynData</span>
+        <span class="ds-text--product" style="font-size:var(--ds-text-2xl)">SynConnect</span>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<!-- Spacing -->
+<section class="v-section" id="spacing">
+  <h2 class="v-section__title">Spacing & Shape</h2>
+  <p class="v-section__desc">8px 기반 스페이싱 + 라디우스 토큰</p>
+
+  <div class="v-card" style="margin-bottom:16px"><div class="v-card__body">
+    <span class="v-label">Spacing Scale</span>
+    <div class="v-space-bar"><span class="v-space-bar__label">2xs</span><div class="v-space-bar__fill" style="width:4px"></div><span class="v-space-bar__val">4px</span></div>
+    <div class="v-space-bar"><span class="v-space-bar__label">xs</span><div class="v-space-bar__fill" style="width:8px"></div><span class="v-space-bar__val">8px</span></div>
+    <div class="v-space-bar"><span class="v-space-bar__label">sm</span><div class="v-space-bar__fill" style="width:12px"></div><span class="v-space-bar__val">12px</span></div>
+    <div class="v-space-bar"><span class="v-space-bar__label">md</span><div class="v-space-bar__fill" style="width:16px"></div><span class="v-space-bar__val">16px</span></div>
+    <div class="v-space-bar"><span class="v-space-bar__label">lg</span><div class="v-space-bar__fill" style="width:24px"></div><span class="v-space-bar__val">24px</span></div>
+    <div class="v-space-bar"><span class="v-space-bar__label">xl</span><div class="v-space-bar__fill" style="width:32px"></div><span class="v-space-bar__val">32px</span></div>
+    <div class="v-space-bar"><span class="v-space-bar__label">2xl</span><div class="v-space-bar__fill" style="width:48px"></div><span class="v-space-bar__val">48px</span></div>
+    <div class="v-space-bar"><span class="v-space-bar__label">3xl</span><div class="v-space-bar__fill" style="width:64px"></div><span class="v-space-bar__val">64px</span></div>
+    <div class="v-space-bar"><span class="v-space-bar__label">4xl</span><div class="v-space-bar__fill" style="width:80px"></div><span class="v-space-bar__val">80px</span></div>
+  </div></div>
+
+  <div class="v-card"><div class="v-card__body">
+    <span class="v-label">Border Radius</span>
+    <div class="v-row">
+      <div style="width:48px;height:48px;background:var(--ds-color-brand-purple);opacity:0.15;border-radius:0"></div>
+      <div style="width:48px;height:48px;background:var(--ds-color-brand-purple);opacity:0.15;border-radius:5px"></div>
+      <div style="width:48px;height:48px;background:var(--ds-color-brand-purple);opacity:0.15;border-radius:8px"></div>
+      <div style="width:48px;height:48px;background:var(--ds-color-brand-purple);opacity:0.15;border-radius:18px"></div>
+      <div style="width:48px;height:48px;background:var(--ds-color-brand-purple);opacity:0.15;border-radius:24px"></div>
+      <div style="width:80px;height:36px;background:var(--ds-color-brand-purple);opacity:0.15;border-radius:9999px"></div>
+    </div>
+    <div class="v-row" style="margin-top:6px">
+      <span style="width:48px;text-align:center;font-size:9px;font-family:var(--ds-font-code);color:var(--ds-color-text-tertiary)">none</span>
+      <span style="width:48px;text-align:center;font-size:9px;font-family:var(--ds-font-code);color:var(--ds-color-text-tertiary)">xs 5</span>
+      <span style="width:48px;text-align:center;font-size:9px;font-family:var(--ds-font-code);color:var(--ds-color-text-tertiary)">sm 8</span>
+      <span style="width:48px;text-align:center;font-size:9px;font-family:var(--ds-font-code);color:var(--ds-color-text-tertiary)">md 18</span>
+      <span style="width:48px;text-align:center;font-size:9px;font-family:var(--ds-font-code);color:var(--ds-color-text-tertiary)">lg 24</span>
+      <span style="width:80px;text-align:center;font-size:9px;font-family:var(--ds-font-code);color:var(--ds-color-text-tertiary)">pill</span>
+    </div>
+  </div></div>
+</section>
+
+<!-- ==================== COMPONENTS ==================== -->
+
+<!-- Buttons -->
+<section class="v-section" id="buttons">
+  <h2 class="v-section__title">Button</h2>
+  <p class="v-section__desc">pill 형태. 4가지 variant × 3가지 size</p>
+  <div class="v-card"><div class="v-card__body">
+    <span class="v-label">Variants</span>
+    <div class="v-row" style="margin-bottom:20px">
+      <a class="ds-btn ds-btn--primary ds-btn--md">Primary</a>
+      <a class="ds-btn ds-btn--secondary ds-btn--md">Secondary</a>
+      <a class="ds-btn ds-btn--ghost ds-btn--md">Ghost Link →</a>
+      <a class="ds-btn ds-btn--dark ds-btn--md">Dark</a>
+    </div>
+    <span class="v-label">Sizes</span>
+    <div class="v-row" style="align-items:center">
+      <a class="ds-btn ds-btn--primary ds-btn--sm">Small</a>
+      <a class="ds-btn ds-btn--primary ds-btn--md">Medium</a>
+      <a class="ds-btn ds-btn--primary ds-btn--lg">Large</a>
+    </div>
+  </div></div>
+</section>
+
+<!-- Cards -->
+<section class="v-section" id="cards">
+  <h2 class="v-section__title">Card</h2>
+  <p class="v-section__desc">기본 배경은 반드시 white. 4가지 variant.</p>
+  <div class="v-card"><div class="v-card__body">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div class="ds-card">
+        <span class="ds-card__badge ds-card__badge--brand">Platform</span>
+        <h3 class="ds-card__title">Default Card</h3>
+        <p class="ds-card__description">White background, default border, card shadow.</p>
+      </div>
+      <div class="ds-card ds-card--dark">
+        <span class="ds-card__badge" style="color:var(--ds-color-text-muted);border-color:var(--ds-color-neutral-700)">Dark</span>
+        <h3 class="ds-card__title">Dark Card</h3>
+        <p style="font-size:var(--ds-text-sm);color:var(--ds-color-text-muted);line-height:var(--ds-leading-relaxed)">Dark background for contrast sections.</p>
+      </div>
+      <div class="ds-card ds-card--highlight">
+        <span class="ds-card__icon">🎯</span>
+        <h3 class="ds-card__title ds-card__title--sm">Highlight Card</h3>
+        <p class="ds-card__description">Larger radius and padding for emphasis.</p>
+      </div>
+      <div class="ds-card ds-card--flat">
+        <h3 class="ds-card__title ds-card__title--sm">Flat Card</h3>
+        <p class="ds-card__description">No background, border, or shadow. Transparent.</p>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<!-- Banners -->
+<section class="v-section" id="banners">
+  <h2 class="v-section__title">Banner</h2>
+  <p class="v-section__desc">상하 얇은 border만. 좌측 굵은 border 금지.</p>
+  <div class="v-card"><div class="v-card__body" style="display:flex;flex-direction:column;gap:12px">
+    <div class="ds-banner"><span class="ds-banner__label">Definition</span>Default banner with surface-light background.</div>
+    <div class="ds-banner ds-banner--brand"><span class="ds-banner__label">Brand</span>Brand variant with purple tint background.</div>
+    <div class="ds-banner ds-banner--info">Info variant — informational context.</div>
+    <div class="ds-banner ds-banner--success">Success variant — completion or positive state.</div>
+    <div class="ds-banner ds-banner--error">Error variant — warning or destructive context.</div>
+    <div class="ds-banner ds-banner--full" style="background-image:url('images/bg-wave-teal-blue.png')"><span>배경 이미지 강조 배너 — ds-bg--* 클래스로 이미지 적용</span></div>
+  </div></div>
+</section>
+
+<!-- Badges -->
+<section class="v-section" id="badges">
+  <h2 class="v-section__title">Badge</h2>
+  <p class="v-section__desc">인라인 라벨. 6가지 variant.</p>
+  <div class="v-card"><div class="v-card__body">
+    <div class="v-row">
+      <span class="ds-badge ds-badge--primary">Primary</span>
+      <span class="ds-badge ds-badge--purple">Purple</span>
+      <span class="ds-badge ds-badge--neutral">Neutral</span>
+      <span class="ds-badge ds-badge--success">Success</span>
+      <span class="ds-badge ds-badge--error">Error</span>
+      <span class="ds-badge ds-badge--dark">Dark</span>
+    </div>
+  </div></div>
+</section>
+
+<!-- Bullets -->
+<section class="v-section" id="bullets">
+  <h2 class="v-section__title">Bullet List</h2>
+  <p class="v-section__desc">check / dot variant</p>
+  <div class="v-card"><div class="v-card__body">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px">
+      <div>
+        <span class="v-label">Check</span>
+        <ul class="ds-bullet ds-bullet--check">
+          <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Data quality refinement</li>
+          <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Privacy-safe synthetic data</li>
+          <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Execution state tracking</li>
+        </ul>
+      </div>
+      <div>
+        <span class="v-label">Dot</span>
+        <ul class="ds-bullet ds-bullet--dot">
+          <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Release State management</li>
+          <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Schema fingerprint audit</li>
+          <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Runtime dependency log</li>
+        </ul>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<!-- ==================== LAYOUT PATTERNS ==================== -->
+
+<!-- [A] Section Header -->
+<section class="v-section" id="lp-section-header">
+  <h2 class="v-section__title">[A] Section Header</h2>
+  <p class="v-section__desc">기본 중앙 정렬 + --underline. 아티클/문서형만 --left.</p>
+  <div class="v-card"><div class="v-card__body">
+    <div class="ds-section-header ds-section-header--underline">
+      <span class="ds-section-header__eyebrow">Section Label</span>
+      <h2 class="ds-section-header__title">타이틀 핵심 키워드는 <span class="ds-text--brand">이렇게 강조</span></h2>
+      <p class="ds-section-header__description">부가 설명 텍스트가 들어가는 자리입니다. 최대 640px 폭으로 중앙 정렬됩니다.</p>
+    </div>
+    <div class="ds-section-title-icon">
+      <span class="ds-section-title-icon__icon">🚧</span>
+      <h3 class="ds-section-title-icon__text">Icon Section Title</h3>
+    </div>
+  </div>
+  <div class="v-note">eyebrow에 "//" 접두사 사용 금지</div>
+  </div>
+</section>
+
+<!-- [B] Hero -->
+<section class="v-section" id="lp-hero">
+  <h2 class="v-section__title">[B] Hero Text-only</h2>
+  <p class="v-section__desc">페이지 최상단. 배경 이미지 사용 금지 — 흰색/밝은 배경만.</p>
+  <div class="v-card"><div class="v-card__body" style="background:var(--ds-color-bg-primary);border-radius:12px;padding:48px 32px">
+    <div style="max-width:560px">
+      <span style="font-family:var(--ds-font-code);font-size:var(--ds-text-xs);text-transform:uppercase;letter-spacing:var(--ds-tracking-wide);color:var(--ds-color-brand-purple);display:block;margin-bottom:var(--ds-space-md)">Secure LLM Usage</span>
+      <h1 style="font-family:var(--ds-font-base);font-size:var(--ds-text-4xl);font-weight:700;line-height:var(--ds-leading-tight);letter-spacing:-1px;margin-bottom:var(--ds-space-lg)">페이지 메인 <span class="ds-text--brand">타이틀</span></h1>
+      <p style="font-size:var(--ds-text-lg);color:var(--ds-color-text-secondary);line-height:var(--ds-leading-relaxed);margin-bottom:var(--ds-space-xl)">Every production AI failure has a root cause in data state drift. These cases show how to find it.</p>
+      <div style="display:flex;gap:12px">
+        <a class="ds-btn ds-btn--primary ds-btn--md">Primary CTA →</a>
+        <a class="ds-btn ds-btn--secondary ds-btn--md">Secondary →</a>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<!-- [B-2] Hero Screenshot -->
+<section class="v-section" id="lp-hero-screenshot">
+  <h2 class="v-section__title">[B-2] Hero Screenshot</h2>
+  <p class="v-section__desc">배경 이미지는 섹션이 아닌 스크린샷 프레임(ds-hero__screenshot-frame)에 적용. 이미지가 스크린샷을 감싸는 구조.</p>
+  <div class="v-card"><div class="v-card__body ds-hero-screenshot-section" style="border-radius:12px;padding:48px 32px 0">
+    <div style="text-align:center;max-width:660px;margin:0 auto">
+      <span style="font-family:var(--ds-font-code);font-size:var(--ds-text-xs);text-transform:uppercase;letter-spacing:var(--ds-tracking-wide);color:var(--ds-color-brand-purple);display:block;margin-bottom:var(--ds-space-md)">Data Quality Platform</span>
+      <h1 style="font-family:var(--ds-font-base);font-size:var(--ds-text-4xl);font-weight:700;line-height:var(--ds-leading-tight);letter-spacing:-1px;margin-bottom:var(--ds-space-lg)">AI 데이터 <span class="ds-text--brand">품질 관리</span> 플랫폼</h1>
+      <p style="font-size:var(--ds-text-lg);color:var(--ds-color-text-secondary);line-height:var(--ds-leading-relaxed);margin-bottom:var(--ds-space-xl);max-width:660px;margin-left:auto;margin-right:auto;word-break:keep-all;overflow-wrap:break-word">생산부터 검증까지, 데이터 라이프사이클 전체를 한곳에서 관리하세요.</p>
+      <div style="display:flex;gap:12px;justify-content:center;margin-bottom:var(--ds-space-3xl)">
+        <a class="ds-btn ds-btn--primary ds-btn--md">무료 체험 →</a>
+        <a class="ds-btn ds-btn--secondary ds-btn--md">데모 요청</a>
+      </div>
+    </div>
+    <!-- 배경 이미지 프레임이 스크린샷을 감싸는 구조 -->
+    <div class="ds-hero__screenshot-frame" style="max-width:860px;margin:0 auto;background-image:url('images/bg-paint-blue-iridescent.png')">
+      <div class="ds-hero__screenshot" style="display:flex;align-items:center;justify-content:center;min-height:200px;color:var(--ds-color-text-tertiary);font-size:var(--ds-text-sm)">
+        스크린샷 이미지 영역
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<!-- [C] KPI Band -->
+<section class="v-section" id="lp-kpi">
+  <h2 class="v-section__title">[C] KPI Band</h2>
+  <p class="v-section__desc">배경은 ds-kpi-band 컴포넌트 자체에 적용 (섹션 X). 수치 색상은 text-primary (파란색 금지).</p>
+  <div class="v-card"><div class="v-card__body">
+    <div class="ds-kpi-band">
+      <div class="ds-kpi-band__item"><span class="ds-kpi-band__number">95%</span><p class="ds-kpi-band__label">reduction in root cause identification time</p></div>
+      <div class="ds-kpi-band__item"><span class="ds-kpi-band__number">+30pp</span><p class="ds-kpi-band__label">F1-score improvement via DTS</p></div>
+      <div class="ds-kpi-band__item"><span class="ds-kpi-band__number">−90%</span><p class="ds-kpi-band__label">time-to-deploy reduction</p></div>
+      <div class="ds-kpi-band__item"><span class="ds-kpi-band__number">15+</span><p class="ds-kpi-band__label">enterprise clients deployed</p></div>
+    </div>
+  </div>
+  <div class="v-note">배경 이미지: ds-bg--lavender 등 컴포넌트에 직접 적용</div>
+  </div>
+</section>
+
+<!-- [D] Card Grid -->
+<section class="v-section" id="lp-card-grid">
+  <h2 class="v-section__title">[D] Card Grid</h2>
+  <p class="v-section__desc">범용 카드 그리드. 2col / 3col / 4col 선택 가능. 제품·서비스·기능 등 어디든 사용.</p>
+  <div class="v-card"><div class="v-card__body">
+    <div class="ds-card-grid ds-card-grid--3col">
+      <div class="ds-card" style="display:flex;flex-direction:column">
+        <span class="ds-card__badge ds-card__badge--brand">Platform</span>
+        <h3 class="ds-card__title">SynTitan</h3>
+        <p class="ds-card__description">AI Data Operational Integrity Platform</p>
+        <div class="ds-card__button"><a class="ds-btn ds-btn--primary ds-btn--sm">Explore →</a></div>
+      </div>
+      <div class="ds-card" style="display:flex;flex-direction:column">
+        <span class="ds-card__badge ds-card__badge--teal">Capability</span>
+        <h3 class="ds-card__title">DTS</h3>
+        <p class="ds-card__description">Privacy-safe synthetic data generation engine</p>
+        <div class="ds-card__button"><a class="ds-btn ds-btn--secondary ds-btn--sm">Explore →</a></div>
+      </div>
+      <div class="ds-card" style="display:flex;flex-direction:column">
+        <span class="ds-card__badge ds-card__badge--red">Capability</span>
+        <h3 class="ds-card__title">LLM Capsule</h3>
+        <p class="ds-card__description">Secure LLM usage with inline PII anonymization</p>
+        <div class="ds-card__button"><a class="ds-btn ds-btn--secondary ds-btn--sm">Explore →</a></div>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<!-- [E] Feature Grid -->
+<section class="v-section" id="lp-feature-grid">
+  <h2 class="v-section__title">[E] Feature Grid</h2>
+  <p class="v-section__desc">4~6개 피처. 아이콘 + 설명.</p>
+  <div class="v-card"><div class="v-card__body">
+    <div class="ds-feature-grid">
+      <div class="ds-feature-item"><span class="ds-feature-item__icon">🔒</span><h3 class="ds-feature-item__title">Data Safety Controls</h3><p class="ds-feature-item__description">Access control, audit logging, and separation of duties built into the operational workflow.</p></div>
+      <div class="ds-feature-item"><span class="ds-feature-item__icon">📋</span><h3 class="ds-feature-item__title">Compliance & Certification</h3><p class="ds-feature-item__description">Designed to operate within regulated industries with enterprise-grade data handling.</p></div>
+      <div class="ds-feature-item"><span class="ds-feature-item__icon">🚀</span><h3 class="ds-feature-item__title">Deployment Options</h3><p class="ds-feature-item__description">On-premises, cloud, or enterprise marketplace deployment.</p></div>
+      <div class="ds-feature-item"><span class="ds-feature-item__icon">🔍</span><h3 class="ds-feature-item__title">Audit & Traceability</h3><p class="ds-feature-item__description">Every execution is traceable. Release State history and Change Logs.</p></div>
+    </div>
+  </div></div>
+</section>
+
+<!-- [F] CTA Band -->
+<section class="v-section" id="lp-cta">
+  <h2 class="v-section__title">[F] CTA Band</h2>
+  <p class="v-section__desc">전폭 배치. ds-container 밖에 위치. 텍스트는 흰색.</p>
+  <div class="v-card" style="padding:0;overflow:hidden">
+    <div class="ds-cta-band" style="border-radius:0">
+      <div class="ds-cta-band__inner">
+        <span style="font-family:var(--ds-font-code);font-size:var(--ds-text-xs);text-transform:uppercase;letter-spacing:var(--ds-tracking-wide);color:rgba(255,255,255,0.7)">From Evidence to Execution</span>
+        <h2 class="ds-cta-band__title">Make your AI runs <span class="ds-text--brand">reproducible.</span></h2>
+        <p class="ds-cta-band__description">Every production AI failure has a root cause. These cases show how to find it fast.</p>
+        <div class="ds-cta-band__actions">
+          <a class="ds-btn ds-btn--md">Start evaluation →</a>
+          <a class="ds-btn ds-btn--md">Run a technical demo →</a>
+        </div>
+        <p class="ds-cta-band__footnote">30-min architecture review · no sales pitch</p>
+      </div>
+    </div>
+    <div class="v-note">실제 사용: ds-container 밖에 전폭으로 배치. 배경 이미지 사용.</div>
+  </div>
+</section>
+
+<!-- [G] Accordion Card -->
+<section class="v-section" id="lp-accordion">
+  <h2 class="v-section__title">[G] Accordion Card</h2>
+  <p class="v-section__desc">industry 라벨이 타이틀 위에 위치. 토글 버튼은 회색조 박스.</p>
+  <div class="v-card"><div class="v-card__body">
+    <div class="ds-ac-list">
+      <article class="ds-ac-card ds-ac--open">
+        <div class="ds-ac-card__header" onclick="toggleAcCard(this)">
+          <div class="ds-ac-card__title-wrap">
+            <div class="ds-ac-card__industry"><span class="ds-ac-card__industry-dot" style="background-color:var(--ds-color-success)"></span>Manufacturing</div>
+            <div class="ds-ac-card__title">Quality inspection model — rare defect class coverage</div>
+          </div>
+          <div class="ds-ac-card__meta"><span class="ds-badge ds-badge--success">Data Usability</span></div>
+          <div class="ds-ac-card__toggle"><span class="ds-ac-card__toggle-icon"></span></div>
+        </div>
+        <div class="ds-ac-card__body">
+          <div class="ds-ac-metrics">
+            <div class="ds-ac-metric"><span class="ds-ac-metric__val ds-ac-metric__val--success">+34%</span><span class="ds-ac-metric__label">Defect Detection</span></div>
+            <div class="ds-ac-metric"><span class="ds-ac-metric__val">2.1x</span><span class="ds-ac-metric__label">Coverage</span></div>
+            <div class="ds-ac-metric"><span class="ds-ac-metric__val">3 days</span><span class="ds-ac-metric__label">Time to Deploy</span></div>
+          </div>
+          <p class="ds-body-s" style="color:var(--ds-color-text-secondary)">DTS generated 12,000 synthetic defect images covering 4 rare classes. Model retrained with augmented dataset achieved production-grade accuracy without additional real-world data collection.</p>
+        </div>
+      </article>
+      <article class="ds-ac-card">
+        <div class="ds-ac-card__header" onclick="toggleAcCard(this)">
+          <div class="ds-ac-card__title-wrap">
+            <div class="ds-ac-card__industry"><span class="ds-ac-card__industry-dot" style="background-color:var(--ds-color-brand-purple)"></span>Insurance</div>
+            <div class="ds-ac-card__title">LLM-assisted claims processing — PII leakage prevention</div>
+          </div>
+          <div class="ds-ac-card__meta"><span class="ds-badge ds-badge--purple">Secure LLM</span></div>
+          <div class="ds-ac-card__toggle"><span class="ds-ac-card__toggle-icon"></span></div>
+        </div>
+        <div class="ds-ac-card__body"><p class="ds-body-s" style="color:var(--ds-color-text-secondary)">Collapsed content. Click toggle to expand.</p></div>
+      </article>
+    </div>
+  </div></div>
+</section>
+
+<!-- [H] Banner Variants -->
+<section class="v-section" id="lp-banner">
+  <h2 class="v-section__title">[H] Banner Variants</h2>
+  <p class="v-section__desc">상하 얇은 border만. 좌측 굵은 border 금지. eyebrow "//" 금지.</p>
+  <div class="v-card"><div class="v-card__body" style="display:flex;flex-direction:column;gap:12px">
+    <div class="ds-banner"><span class="ds-banner__label">Definition</span>True AI-ready data means it is usable, privacy-safe, and stable for production execution.</div>
+    <div class="ds-banner ds-banner--brand"><span class="ds-banner__label">Why this matters</span>Neither Databricks nor MLflow versions the data state the model was bound to at run time.</div>
+    <div class="ds-banner ds-banner--info"><span class="ds-banner__label">Note</span>SynTitan produces structured artifacts that make execution conditions inspectable.</div>
+  </div></div>
+</section>
+
+<!-- [I] Product Split -->
+<section class="v-section" id="lp-product-split">
+  <h2 class="v-section__title">[I] Product Split</h2>
+  <p class="v-section__desc">이미지(bg-image + 로고 24px + 스크린샷 하단 정렬) + 텍스트 분할 레이아웃. 좌우 height 일치.</p>
+  <div class="v-card"><div class="v-card__body">
+    <div class="ds-product-split">
+      <div class="ds-product-split__visual" style="background-image:url('images/bg-paint-blue-iridescent.png')">
+        <img class="ds-product-split__visual-logo" src="images/logo-llmcapsule.avif" alt="LLM Capsule">
+        <div class="ds-product-split__visual-screenshot">
+          <img src="images/screenshot-llmcapsule.avif" alt="LLM Capsule Screenshot" style="width:100%;display:block">
+        </div>
+      </div>
+      <div class="ds-product-split__content">
+        <h2 class="ds-product-split__title">Use LLMs safely on <span class="ds-text--brand">enterprise data</span></h2>
+        <p class="ds-product-split__lead">Teams adopting external LLM APIs often discover that enterprise documents contain sensitive fields.</p>
+        <p class="ds-product-split__body">LLM Capsule removes that blocker by anonymizing sensitive data inline during LLM interaction.</p>
+        <div class="ds-product-split__actions">
+          <a class="ds-btn ds-btn--primary ds-btn--sm">MORE ↗</a>
+          <a class="ds-btn ds-btn--secondary ds-btn--sm">Available in AWS →</a>
+        </div>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<!-- [K] Partner Logo Grid -->
+<section class="v-section" id="lp-partner-grid">
+  <h2 class="v-section__title">[K] Partner Logo Grid</h2>
+  <p class="v-section__desc">전체 뷰포트 너비 마키 애니메이션. 로고 11개를 2벌 복제하여 seamless loop. 호버 시 일시정지.</p>
+  <div class="v-card"><div class="v-card__body" style="overflow:hidden">
+    <div class="ds-partner-grid">
+      <div class="ds-partner-grid__track">
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="images/partner-gartner.png" alt="Gartner"><span class="ds-partner-item__name">Gartner</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="images/partner-navercloud.avif" alt="Naver Cloud"><span class="ds-partner-item__name">Naver Cloud</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="images/partner-sktelecom.avif" alt="SK Telecom"><span class="ds-partner-item__name">SK Telecom</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="images/partner-kyobo.avif" alt="Kyobo"><span class="ds-partner-item__name">Kyobo</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="images/partner-korea army.avif" alt="ROK Army"><span class="ds-partner-item__name">ROK Army</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="images/partner-korea-airforce.avif" alt="ROK Air Force"><span class="ds-partner-item__name">ROK Air Force</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="images/partner-eumc.avif" alt="EUMC"><span class="ds-partner-item__name">EUMC</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="images/partner-deutsche-telekom.avif" alt="Deutsche Telekom"><span class="ds-partner-item__name">Deutsche Telekom</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="images/partner-claroty.png" alt="Claroty"><span class="ds-partner-item__name">Claroty</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="images/partner-korea-heritage-service.jpg" alt="Korea Heritage Service"><span class="ds-partner-item__name">Korea Heritage Service</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="images/partner-ministry-of-data-and-statistics.png" alt="Ministry of Data"><span class="ds-partner-item__name">Ministry of Data</span></div>
+        <!-- 2벌: seamless loop 복제 -->
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="images/partner-gartner.png" alt="Gartner"><span class="ds-partner-item__name">Gartner</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="images/partner-navercloud.avif" alt="Naver Cloud"><span class="ds-partner-item__name">Naver Cloud</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="images/partner-sktelecom.avif" alt="SK Telecom"><span class="ds-partner-item__name">SK Telecom</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="images/partner-kyobo.avif" alt="Kyobo"><span class="ds-partner-item__name">Kyobo</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="images/partner-korea army.avif" alt="ROK Army"><span class="ds-partner-item__name">ROK Army</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="images/partner-korea-airforce.avif" alt="ROK Air Force"><span class="ds-partner-item__name">ROK Air Force</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="images/partner-eumc.avif" alt="EUMC"><span class="ds-partner-item__name">EUMC</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="images/partner-deutsche-telekom.avif" alt="Deutsche Telekom"><span class="ds-partner-item__name">Deutsche Telekom</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="images/partner-claroty.png" alt="Claroty"><span class="ds-partner-item__name">Claroty</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="images/partner-korea-heritage-service.jpg" alt="Korea Heritage Service"><span class="ds-partner-item__name">Korea Heritage Service</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="images/partner-ministry-of-data-and-statistics.png" alt="Ministry of Data"><span class="ds-partner-item__name">Ministry of Data</span></div>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<!-- [L] Cert Grid -->
+<section class="v-section" id="lp-cert-grid">
+  <h2 class="v-section__title">[L] Cert Grid</h2>
+  <p class="v-section__desc">인증서/수상 카드. 월계관 이미지로 인증 마크를 감싸는 구조. 반응형 3단계(4col→3col→2col).</p>
+  <div class="v-card"><div class="v-card__body">
+    <div class="ds-cert-grid">
+      <div class="ds-cert-card">
+        <span class="ds-cert-card__label">Software Quality</span>
+        <div class="ds-cert-card__wreath">
+          <img class="ds-cert-card__wreath-left" src="graphics/cert-left.png" alt="">
+          <span class="ds-cert-card__wreath-text">GS Certification</span>
+          <img class="ds-cert-card__wreath-right" src="graphics/cert-right.png" alt="">
+        </div>
+        <img class="ds-cert-card__logo" src="graphics/cert-gs.png" alt="GS Certification">
+      </div>
+      <div class="ds-cert-card">
+        <span class="ds-cert-card__label">Innovation</span>
+        <div class="ds-cert-card__wreath">
+          <img class="ds-cert-card__wreath-left" src="graphics/cert-left.png" alt="">
+          <span class="ds-cert-card__wreath-text">Startup World Cup</span>
+          <img class="ds-cert-card__wreath-right" src="graphics/cert-right.png" alt="">
+        </div>
+        <img class="ds-cert-card__logo" src="graphics/awards-startup-wroldcup.png" alt="Startup World Cup">
+      </div>
+      <div class="ds-cert-card">
+        <span class="ds-cert-card__label">Information Security</span>
+        <div class="ds-cert-card__wreath">
+          <img class="ds-cert-card__wreath-left" src="graphics/cert-left.png" alt="">
+          <span class="ds-cert-card__wreath-text">ISO 27001</span>
+          <img class="ds-cert-card__wreath-right" src="graphics/cert-right.png" alt="">
+        </div>
+      </div>
+      <div class="ds-cert-card">
+        <span class="ds-cert-card__label">AI Quality</span>
+        <div class="ds-cert-card__wreath">
+          <img class="ds-cert-card__wreath-left" src="graphics/cert-left.png" alt="">
+          <span class="ds-cert-card__wreath-text">ISO 42001</span>
+          <img class="ds-cert-card__wreath-right" src="graphics/cert-right.png" alt="">
+        </div>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<!-- [M] Case Study Card -->
+<section class="v-section" id="lp-case-study">
+  <h2 class="v-section__title">[M] Case Study Card</h2>
+  <p class="v-section__desc">좌측: 투명 배경 + border-right 구분선 + 실제 이미지. 우측: bullet-text gap 축소(space-xs). 1col/2col/3col 변형.</p>
+  <div class="v-card"><div class="v-card__body" style="display:flex;flex-direction:column;gap:16px">
+    <!-- 1col -->
+    <p style="font-size:var(--ds-text-xs);color:var(--ds-color-text-tertiary);margin:0">1col variant:</p>
+    <div class="ds-card--case-study">
+      <div class="ds-card__left">
+        <img class="ds-card__left-img" src="graphics/illustration-security.png" alt="Security">
+        <span class="ds-card__left-label">Finance</span>
+        <span class="ds-card__left-name">KB Financial</span>
+      </div>
+      <div class="ds-card__right">
+        <h3 style="font-size:var(--ds-text-md);font-weight:var(--ds-weight-bold);margin:0">Synthetic data for fraud detection model training</h3>
+        <ul class="ds-bullet ds-bullet--dot" style="margin:0">
+          <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Generated 50K+ synthetic fraud patterns</li>
+          <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Model accuracy improved by 23%</li>
+          <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Zero privacy incidents post-deployment</li>
+        </ul>
+      </div>
+    </div>
+    <!-- 2col -->
+    <p style="font-size:var(--ds-text-xs);color:var(--ds-color-text-tertiary);margin:var(--ds-space-md) 0 0">2col variant (ds-card-grid--2col):</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--ds-space-md)">
+      <div class="ds-card--case-study ds-card--case-study--compact">
+        <div class="ds-card__left">
+          <img class="ds-card__left-img" src="graphics/illustration-insurance.png" alt="Insurance">
+          <span class="ds-card__left-label">Insurance</span>
+          <span class="ds-card__left-name">Samsung Life</span>
+        </div>
+        <div class="ds-card__right">
+          <h3 style="font-size:var(--ds-text-sm);font-weight:var(--ds-weight-bold);margin:0">Claims processing automation</h3>
+          <ul class="ds-bullet ds-bullet--dot" style="margin:0;font-size:var(--ds-text-xs)">
+            <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>40% faster processing</li>
+            <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>PII fully anonymized</li>
+          </ul>
+        </div>
+      </div>
+      <div class="ds-card--case-study ds-card--case-study--compact">
+        <div class="ds-card__left">
+          <img class="ds-card__left-img" src="graphics/illustration-ecommerce.png" alt="E-commerce">
+          <span class="ds-card__left-label">Retail</span>
+          <span class="ds-card__left-name">Lotte ON</span>
+        </div>
+        <div class="ds-card__right">
+          <h3 style="font-size:var(--ds-text-sm);font-weight:var(--ds-weight-bold);margin:0">Product recommendation engine</h3>
+          <ul class="ds-bullet ds-bullet--dot" style="margin:0;font-size:var(--ds-text-xs)">
+            <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>15% CTR improvement</li>
+            <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Cold-start problem solved</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<!-- [J] Table -->
+<section class="v-section" id="lp-table">
+  <h2 class="v-section__title">[J] Table</h2>
+  <p class="v-section__desc">규정/스펙 비교표</p>
+  <div class="v-card"><div class="v-card__body">
+    <div class="ds-table-wrap">
+      <table class="ds-table">
+        <colgroup><col style="width:25%"><col style="width:40%"><col style="width:35%"></colgroup>
+        <thead><tr><th>Regulation</th><th>Protected Data</th><th>LLM Risk</th></tr></thead>
+        <tbody>
+          <tr><td>GDPR</td><td>Personal identifiers, location data</td><td>Data subject rights violations</td></tr>
+          <tr><td>HIPAA</td><td>Protected health information (PHI)</td><td>Patient data exposure via prompts</td></tr>
+          <tr><td>CCPA</td><td>Consumer personal information</td><td>Consumer rights violations</td></tr>
+          <tr><td>AI Act (EU)</td><td>High-risk AI system outputs</td><td>Transparency & accountability gaps</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div></div>
+</section>
+
+</main>
+</div>
+
+<script>
+function toggleAcCard(header) {
+  header.closest('.ds-ac-card').classList.toggle('ds-ac--open');
+}
+</script>
+</body>
+</html>

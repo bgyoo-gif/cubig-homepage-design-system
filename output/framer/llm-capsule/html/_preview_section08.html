@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 08 — Integration Preview</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; padding: 0; font-family: "DM Sans", sans-serif; background: #fff; }
+
+    .s8-section {
+      width: 100%;
+      padding: 80px 0;
+      font-family: "DM Sans", sans-serif;
+      color: #0f0f0f;
+      background-color: #f7f7f7;
+      -webkit-font-smoothing: antialiased;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+    .s8-container {
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+    .s8-section-header {
+      margin-bottom: 48px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid #e6e7e9;
+    }
+    .s8-eyebrow {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #636363;
+      margin-bottom: 12px;
+    }
+    .s8-section-title {
+      font-family: "DM Sans", sans-serif;
+      font-size: 36px;
+      font-weight: 700;
+      color: #0f0f0f;
+      line-height: 1.2;
+      letter-spacing: -1px;
+      margin: 0;
+    }
+    .s8-title-product { font-family: "Oxanium", sans-serif; font-weight: 700; }
+    .s8-title-brand {
+      background: linear-gradient(130deg, #6C54A0, #b44fcc 50%, #ff266a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .s8-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    .s8-card {
+      background: #ffffff;
+      border: 1px solid #e6e7e9;
+      border-radius: 16px;
+      padding: 28px;
+      margin-bottom: 16px;
+    }
+    .s8-card:last-child { margin-bottom: 0; }
+    .s8-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      width: fit-content;
+    }
+    .s8-badge--brand { background-color: #f0ecff; color: #6C54A0; }
+    .s8-badge--gray { background-color: #f2f2f2; color: #636363; }
+    .s8-card-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #0f0f0f;
+      margin: 0 0 10px;
+      line-height: 1.35;
+    }
+    .s8-card-title--sm { font-size: 15px; }
+    .s8-card-desc {
+      font-size: 14px;
+      color: #636363;
+      line-height: 1.7;
+      margin: 0 0 16px;
+    }
+    .s8-bullet-list {
+      list-style: none;
+      margin: 0 0 4px;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .s8-bullet-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      color: #636363;
+      line-height: 1.55;
+    }
+    .s8-bullet-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #a617ff;
+      flex-shrink: 0;
+      margin-top: 6px;
+    }
+    .s8-info-banner {
+      background: #e8f0fe;
+      border: 1px solid #c5d8fc;
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .s8-info-text {
+      font-size: 13px;
+      color: #3061f2;
+      line-height: 1.6;
+      margin: 0;
+    }
+    .s8-title-icon-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .s8-title-icon-emoji { font-size: 20px; }
+    .s8-title-icon-text {
+      font-size: 15px;
+      font-weight: 700;
+      color: #0f0f0f;
+      margin: 0;
+    }
+
+    @media (min-width: 768px) {
+      .s8-container { padding: 0 32px; }
+      .s8-section-title { font-size: 42px; }
+    }
+    @media (min-width: 1024px) {
+      .s8-container { padding: 0 32px; }
+      .s8-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 1440px) {
+      .s8-container { padding: 0 120px; max-width: 1440px; }
+    }
+  </style>
+</head>
+<body>
+  <section class="s8-section">
+    <div class="s8-container">
+      <div class="s8-section-header">
+        <span class="s8-eyebrow">Integration</span>
+        <h2 class="s8-section-title">Works with <span class="s8-title-product">SynTitan</span>. <span class="s8-title-brand">Works standalone too.</span></h2>
+      </div>
+      <div class="s8-grid">
+        <div>
+          <div class="s8-card">
+            <span class="s8-badge s8-badge--brand">WITHIN SYNTITAN</span>
+            <h3 class="s8-card-title">Full execution traceability for LLM workflows</h3>
+            <p class="s8-card-desc">When LLM Capsule runs within SynTitan, every anonymization run is bound to a Release State. LLM workflows become reproducible, auditable, and compliant.</p>
+            <ul class="s8-bullet-list">
+              <li class="s8-bullet-item"><span class="s8-bullet-dot"></span>Anonymization config versioned in Release State</li>
+              <li class="s8-bullet-item"><span class="s8-bullet-dot"></span>Each run linked via Run Binding</li>
+              <li class="s8-bullet-item"><span class="s8-bullet-dot"></span>Change Log records what was detected and replaced</li>
+              <li class="s8-bullet-item"><span class="s8-bullet-dot"></span>Re-run any prior LLM workflow under identical conditions</li>
+            </ul>
+          </div>
+          <div class="s8-info-banner">
+            <p class="s8-info-text">SynTitan performs data quality refinement as part of execution stability.</p>
+            <p class="s8-info-text">SynTitan can use a subset of DTS capabilities when privacy-safe synthetic data is needed, while DTS is a full standalone enterprise synthetic data engine.</p>
+          </div>
+        </div>
+        <div>
+          <div class="s8-title-icon-row">
+            <span class="s8-title-icon-emoji">🔒</span>
+            <h3 class="s8-title-icon-text">Blockers removed by industry</h3>
+          </div>
+          <div class="s8-card">
+            <span class="s8-badge s8-badge--gray">GDPR / CCPA</span>
+            <h4 class="s8-card-title s8-card-title--sm">Customer data no longer blocks LLM usage</h4>
+            <p class="s8-card-desc">Prevents personal data from being processed by external LLM providers without lawful basis. Supports data minimization requirements.</p>
+          </div>
+          <div class="s8-card">
+            <span class="s8-badge s8-badge--gray">HIPAA</span>
+            <h4 class="s8-card-title s8-card-title--sm">Clinical data no longer off-limits for AI</h4>
+            <p class="s8-card-desc">Healthcare teams couldn't use LLMs on patient data. LLM Capsule removes that blocker — clinical and insurance workflows are now fully AI-ready.</p>
+          </div>
+          <div class="s8-card">
+            <span class="s8-badge s8-badge--gray">SOC 2 / ENTERPRISE SECURITY</span>
+            <h4 class="s8-card-title s8-card-title--sm">Audit-ready LLM data handling</h4>
+            <p class="s8-card-desc">Every prompt and output is logged. Detection and anonymization decisions are traceable. Security teams have the records they need.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

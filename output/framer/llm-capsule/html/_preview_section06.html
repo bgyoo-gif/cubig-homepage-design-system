@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 06 — Four Capabilities Preview</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; padding: 0; font-family: "DM Sans", sans-serif; background: #fff; }
+
+    .s6-section {
+      width: 100%;
+      padding: 80px 0;
+      font-family: "DM Sans", sans-serif;
+      color: #0f0f0f;
+      background-color: #f7f7f7;
+      -webkit-font-smoothing: antialiased;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+    .s6-container {
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+    .s6-section-header {
+      margin-bottom: 48px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid #e6e7e9;
+    }
+    .s6-eyebrow {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #636363;
+      margin-bottom: 12px;
+    }
+    .s6-section-title {
+      font-family: "DM Sans", sans-serif;
+      font-size: 36px;
+      font-weight: 700;
+      color: #0f0f0f;
+      line-height: 1.2;
+      letter-spacing: -1px;
+      margin: 0;
+    }
+    .s6-title-brand {
+      background: linear-gradient(130deg, #6C54A0, #b44fcc 50%, #ff266a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .s6-card-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    .s6-card {
+      background: #ffffff;
+      border: 1px solid #e6e7e9;
+      border-radius: 16px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .s6-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background-color: #f0ecff;
+      color: #6C54A0;
+      width: fit-content;
+    }
+    .s6-card-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #0f0f0f;
+      margin: 0;
+    }
+    .s6-card-desc {
+      font-size: 14px;
+      color: #636363;
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    @media (min-width: 768px) {
+      .s6-container { padding: 0 32px; }
+      .s6-card-grid { grid-template-columns: repeat(2, 1fr); }
+      .s6-section-title { font-size: 42px; }
+    }
+    @media (min-width: 1024px) {
+      .s6-container { padding: 0 32px; }
+      .s6-card-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+    @media (min-width: 1440px) {
+      .s6-container { padding: 0 120px; max-width: 1440px; }
+    }
+  </style>
+</head>
+<body>
+  <section class="s6-section">
+    <div class="s6-container">
+      <div class="s6-section-header">
+        <span class="s6-eyebrow">Capabilities</span>
+        <h2 class="s6-section-title">Four steps to <span class="s6-title-brand">AI-ready data.</span></h2>
+      </div>
+      <div class="s6-card-grid">
+        <div class="s6-card">
+          <span class="s6-badge">DETECT</span>
+          <h3 class="s6-card-title">PII Detection</h3>
+          <p class="s6-card-desc">Detects sensitive fields in prompts and LLM outputs — including names, IDs, dates, addresses, medical terms, and financial identifiers — using pattern recognition and contextual analysis.</p>
+        </div>
+        <div class="s6-card">
+          <span class="s6-badge">ANONYMIZE</span>
+          <h3 class="s6-card-title">Prompt Anonymization</h3>
+          <p class="s6-card-desc">Detected sensitive tokens are replaced with structured placeholders before the prompt is transmitted to the LLM API. No real PII leaves the enterprise perimeter.</p>
+        </div>
+        <div class="s6-card">
+          <span class="s6-badge">RE-MAP</span>
+          <h3 class="s6-card-title">Output Re-mapping</h3>
+          <p class="s6-card-desc">LLM outputs referencing anonymized tokens are re-mapped for downstream use — preserving semantic structure and output usability without exposing any real data to the LLM.</p>
+        </div>
+        <div class="s6-card">
+          <span class="s6-badge">AUDIT</span>
+          <h3 class="s6-card-title">Audit &amp; Traceability</h3>
+          <p class="s6-card-desc">Each anonymization run is logged and — when used within SynTitan — bound to a Release State. Every LLM workflow becomes auditable, reproducible, and compliant.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

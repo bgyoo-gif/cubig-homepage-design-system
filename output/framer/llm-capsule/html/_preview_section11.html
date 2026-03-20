@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 11 — Partners | LLM Capsule Framer Preview</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "DM Sans", sans-serif; -webkit-font-smoothing: antialiased; word-break: keep-all; overflow-wrap: break-word; overflow-x: hidden; }
+
+    .s11-section {
+      width: 100%;
+      padding: 80px 0;
+      background-color: #ffffff;
+      overflow: hidden;
+    }
+    .s11-container {
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+    .s11-section-header {
+      margin-bottom: 48px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid #e6e7e9;
+    }
+    .s11-eyebrow {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #636363;
+      margin-bottom: 12px;
+    }
+    .s11-section-title {
+      font-size: 36px;
+      font-weight: 700;
+      color: #0f0f0f;
+      line-height: 1.2;
+      letter-spacing: -1px;
+    }
+    .s11-title-brand {
+      background: linear-gradient(130deg, #6C54A0, #b44fcc 50%, #ff266a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .s11-marquee-wrap {
+      width: 100%;
+      overflow: hidden;
+      mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+    }
+    @keyframes s11-marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .s11-marquee-track {
+      display: flex;
+      align-items: center;
+      width: max-content;
+      animation: s11-marquee 30s linear infinite;
+    }
+    .s11-marquee-track:hover { animation-play-state: paused; }
+    .s11-partner-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 16px 28px;
+      flex-shrink: 0;
+    }
+    .s11-partner-logo {
+      height: 32px;
+      width: auto;
+      max-width: 100px;
+      object-fit: contain;
+      filter: grayscale(1) opacity(0.55);
+      transition: filter 0.2s;
+    }
+    .s11-partner-item:hover .s11-partner-logo { filter: grayscale(0) opacity(1); }
+    .s11-partner-name {
+      font-size: 11px;
+      font-weight: 500;
+      color: #9c9c9c;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    @media (min-width: 768px) {
+      .s11-container { padding: 0 32px; }
+      .s11-section-title { font-size: 42px; }
+      .s11-partner-logo { height: 36px; max-width: 120px; }
+    }
+    @media (min-width: 1024px) { .s11-section-title { font-size: 48px; } }
+    @media (min-width: 1440px) { .s11-container { padding: 0 120px; max-width: 1440px; } }
+  </style>
+</head>
+<body>
+  <section class="s11-section">
+    <div class="s11-container">
+      <div class="s11-section-header">
+        <span class="s11-eyebrow">Partners</span>
+        <h2 class="s11-section-title">Trusted by <span class="s11-title-brand">Industry Leaders</span></h2>
+      </div>
+    </div>
+    <div class="s11-marquee-wrap">
+      <div class="s11-marquee-track">
+        <!-- Original set -->
+        <div class="s11-partner-item"><img class="s11-partner-logo" src="../../reference/images/partner-gartner.png" alt="Gartner"><span class="s11-partner-name">Gartner</span></div>
+        <div class="s11-partner-item"><img class="s11-partner-logo" src="../../reference/images/partner-navercloud.avif" alt="Naver Cloud"><span class="s11-partner-name">Naver Cloud</span></div>
+        <div class="s11-partner-item"><img class="s11-partner-logo" src="../../reference/images/partner-sktelecom.avif" alt="SK Telecom"><span class="s11-partner-name">SK Telecom</span></div>
+        <div class="s11-partner-item"><img class="s11-partner-logo" src="../../reference/images/partner-kyobo.avif" alt="Kyobo"><span class="s11-partner-name">Kyobo</span></div>
+        <div class="s11-partner-item"><img class="s11-partner-logo" src="../../reference/images/partner-korea army.avif" alt="ROK Army"><span class="s11-partner-name">ROK Army</span></div>
+        <div class="s11-partner-item"><img class="s11-partner-logo" src="../../reference/images/partner-korea-airforce.avif" alt="ROK Air Force"><span class="s11-partner-name">ROK Air Force</span></div>
+        <div class="s11-partner-item"><img class="s11-partner-logo" src="../../reference/images/partner-eumc.avif" alt="EUMC"><span class="s11-partner-name">EUMC</span></div>
+        <div class="s11-partner-item"><img class="s11-partner-logo" src="../../reference/images/partner-deutsche-telekom.avif" alt="Deutsche Telekom"><span class="s11-partner-name">Deutsche Telekom</span></div>
+        <div class="s11-partner-item"><img class="s11-partner-logo" src="../../reference/images/partner-claroty.png" alt="Claroty"><span class="s11-partner-name">Claroty</span></div>
+        <div class="s11-partner-item"><img class="s11-partner-logo" src="../../reference/images/partner-korea-heritage-service.jpg" alt="Korea Heritage Service"><span class="s11-partner-name">Korea Heritage Service</span></div>
+        <div class="s11-partner-item"><img class="s11-partner-logo" src="../../reference/images/partner-ministry-of-data-and-statistics.png" alt="Ministry of Data and Statistics"><span class="s11-partner-name">Ministry of Data</span></div>
+        <!-- Duplicate set for seamless loop -->
+        <div class="s11-partner-item"><img class="s11-partner-logo" src="../../reference/images/partner-gartner.png" alt="Gartner"><span class="s11-partner-name">Gartner</span></div>
+        <div class="s11-partner-item"><img class="s11-partner-logo" src="../../reference/images/partner-navercloud.avif" alt="Naver Cloud"><span class="s11-partner-name">Naver Cloud</span></div>
+        <div class="s11-partner-item"><img class="s11-partner-logo" src="../../reference/images/partner-sktelecom.avif" alt="SK Telecom"><span class="s11-partner-name">SK Telecom</span></div>
+        <div class="s11-partner-item"><img class="s11-partner-logo" src="../../reference/images/partner-kyobo.avif" alt="Kyobo"><span class="s11-partner-name">Kyobo</span></div>
+        <div class="s11-partner-item"><img class="s11-partner-logo" src="../../reference/images/partner-korea army.avif" alt="ROK Army"><span class="s11-partner-name">ROK Army</span></div>
+        <div class="s11-partner-item"><img class="s11-partner-logo" src="../../reference/images/partner-korea-airforce.avif" alt="ROK Air Force"><span class="s11-partner-name">ROK Air Force</span></div>
+        <div class="s11-partner-item"><img class="s11-partner-logo" src="../../reference/images/partner-eumc.avif" alt="EUMC"><span class="s11-partner-name">EUMC</span></div>
+        <div class="s11-partner-item"><img class="s11-partner-logo" src="../../reference/images/partner-deutsche-telekom.avif" alt="Deutsche Telekom"><span class="s11-partner-name">Deutsche Telekom</span></div>
+        <div class="s11-partner-item"><img class="s11-partner-logo" src="../../reference/images/partner-claroty.png" alt="Claroty"><span class="s11-partner-name">Claroty</span></div>
+        <div class="s11-partner-item"><img class="s11-partner-logo" src="../../reference/images/partner-korea-heritage-service.jpg" alt="Korea Heritage Service"><span class="s11-partner-name">Korea Heritage Service</span></div>
+        <div class="s11-partner-item"><img class="s11-partner-logo" src="../../reference/images/partner-ministry-of-data-and-statistics.png" alt="Ministry of Data and Statistics"><span class="s11-partner-name">Ministry of Data</span></div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

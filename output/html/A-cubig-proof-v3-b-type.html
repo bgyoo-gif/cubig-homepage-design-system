@@ -1,0 +1,1428 @@
+<!DOCTYPE html>
+<!-- cache-bust: 20260319-v2 -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proof | Operational Evidence of Reproducible AI Execution — Cubig</title>
+<meta name="description" content="See operational evidence of reproducible AI execution, including before/after outcomes, state comparison, and reproducible releases under production constraints.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://cubig.ai/proof">
+<meta property="og:title" content="Proof | Operational Evidence of Reproducible AI Execution">
+<meta property="og:description" content="Operational evidence of reproducible AI execution in production. Before/after outcomes, state comparison, reproducible runs.">
+<meta property="og:site_name" content="Cubig">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cubig.ai/proof">
+<meta property="og:image" content="https://cubig.ai/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cubig.ai/og-default.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://cubig.ai/#org",
+      "name": "Cubig",
+      "url": "https://cubig.ai"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://cubig.ai/proof#webpage",
+      "url": "https://cubig.ai/proof",
+      "name": "Proof | Operational Evidence of Reproducible AI Execution - Cubig",
+      "description": "Operational evidence of reproducible AI execution. Before/after outcomes, state comparison, and reproducible releases under production constraints.",
+      "isPartOf": { "@id": "https://cubig.ai/#org" },
+      "about": {
+        "@type": "Thing",
+        "name": "reproducible AI execution",
+        "description": "Reproducible AI execution means the same AI run produces the same result when run under the same execution state conditions."
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is operational evidence in AI systems?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Operational evidence in AI systems is concrete, verifiable documentation that shows how an AI system behaves in production — including what changed between runs, what caused behavioral differences, and whether the same conditions can reproduce the same results. It includes before/after outcomes, state comparisons (what changed), and re-run records."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is reproducible AI execution?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Reproducible AI execution means that given the same execution conditions — data state, schema, preprocessing logic, runtime dependencies — an AI system produces the same result. SynTitan achieves this through Release State (capturing and locking execution conditions), Run Binding (tying every run to a specific state), and Reproduce (re-running identical conditions to verify behavior)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is AI execution unstable in production?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "AI execution becomes unstable in production when execution conditions change after deployment — data schemas, preprocessing logic, dependencies, data windows. Any of these changes can cause AI results to drift without any change to the model itself. When execution state is not captured and fixed, there is no way to identify which change caused a production issue."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Oxanium:wght@700&family=Fragment+Mono:ital@0;1&display=swap" rel="stylesheet">
+<style>
+/* ── CSS Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+img, video { max-width: 100%; display: block; }
+a { text-decoration: none; color: inherit; }
+
+/* ── :root tokens ── */
+:root {
+  --ds-color-brand-primary:   #3061f2;
+  --ds-color-brand-purple:    #a617ff;
+  --ds-color-brand-purple-lt: #c6c5fa;
+  --ds-color-brand-purple-md: #ab2eff;
+  --ds-color-neutral-900: #0f0f0f;
+  --ds-color-neutral-850: #141414;
+  --ds-color-neutral-800: #171719;
+  --ds-color-neutral-700: #303135;
+  --ds-color-neutral-500: #636363;
+  --ds-color-neutral-400: #9c9c9c;
+  --ds-color-neutral-300: #bababa;
+  --ds-color-neutral-100: #ececec;
+  --ds-color-neutral-050: #f2f2f2;
+  --ds-color-neutral-025: #f7f7f7;
+  --ds-color-white: #ffffff;
+  --ds-color-black: #000000;
+  --ds-color-text-primary:   #0f0f0f;
+  --ds-color-text-secondary: #636363;
+  --ds-color-text-tertiary:  #9c9c9c;
+  --ds-color-text-inverse:   #ffffff;
+  --ds-color-text-muted:     #cacccf;
+  --ds-color-success: #0e824c;
+  --ds-color-error:   #ff3030;
+  --ds-color-border-default: #e6e7e9;
+  --ds-color-border-strong:  #171719;
+  --ds-color-surface-dark:  #171719;
+  --ds-color-surface-mid:   #f2f2f2;
+  --ds-color-surface-light: #f7f7f7;
+  --ds-color-surface-white: #ffffff;
+  --ds-gradient-brand: linear-gradient(130deg, #6C54A0, #b44fcc 50%, #ff266a);
+
+  --ds-font-base:  "DM Sans", sans-serif;
+  --ds-font-brand: "Oxanium", sans-serif;
+  --ds-font-code:  "Fragment Mono", monospace;
+
+  --ds-text-xs:  12px;
+  --ds-text-sm:  14px;
+  --ds-text-md:  16px;
+  --ds-text-lg:  18px;
+  --ds-text-xl:  20px;
+  --ds-text-2xl: 24px;
+  --ds-text-3xl: 30px;
+  --ds-text-4xl: 36px;
+  --ds-text-5xl: 40px;
+  --ds-text-6xl: 50px;
+  --ds-text-7xl: 64px;
+
+  --ds-weight-light:    300;
+  --ds-weight-regular:  400;
+  --ds-weight-medium:   500;
+  --ds-weight-semibold: 600;
+  --ds-weight-bold:     700;
+
+  --ds-leading-tight:   1.2;
+  --ds-leading-normal:  1.5;
+  --ds-leading-relaxed: 1.7;
+
+  --ds-tracking-tight: -0.5px;
+  --ds-tracking-wide:   0.08em;
+
+  --ds-space-2xs: 4px;
+  --ds-space-xs:  8px;
+  --ds-space-sm:  12px;
+  --ds-space-md:  16px;
+  --ds-space-lg:  24px;
+  --ds-space-xl:  32px;
+  --ds-space-2xl: 48px;
+  --ds-space-3xl: 64px;
+  --ds-space-4xl: 80px;
+  --ds-space-5xl: 100px;
+  --ds-space-6xl: 150px;
+
+  --ds-radius-xs:   5px;
+  --ds-radius-sm:   8px;
+  --ds-radius-md:   18px;
+  --ds-radius-lg:   24px;
+  --ds-radius-xl:   40px;
+  --ds-radius-pill: 9999px;
+
+  --ds-border-default: 1px solid var(--ds-color-border-default);
+  --ds-shadow-card:    0px 24px 40px rgba(0,0,0,0.04);
+
+  --ds-container-padding-mobile:     16px;
+  --ds-container-padding-tablet:     32px;
+  --ds-container-padding-sm-desktop: 32px;
+  --ds-container-padding-desktop:    120px;
+  --ds-container-padding-wide:       360px;
+  --ds-content-max-width:            1200px;
+
+  --ds-bg-img-lavender:   url('../reference/images/bg-lavender.png');
+  --ds-bg-img-paint-blue: url('../reference/images/bg-paint-blue-iridescent.png');
+  --ds-bg-img-wave-teal:  url('../reference/images/bg-wave-teal-blue.png');
+  --ds-bg-img-peach:      url('../reference/images/bg-peach.png');
+
+  --ds-ev-stable-color:  #C47A00;
+  --ds-ev-data-color:    var(--ds-color-success);
+  --ds-ev-secure-color:  #7B5CF5;
+  --ds-impact-brand-bg:  rgba(166,23,255,0.04);
+  --ds-color-warn:        #f59e0b;
+
+  /* Functional — Dark bg variants */
+  --ds-color-success-light: #34d399;
+  --ds-color-error-light:   #ff6b6b;
+  --ds-color-info-light:    #60a5fa;
+  --ds-color-warn-light:    #fbbf24;
+
+  /* Component tokens — overlay / transparency */
+  --ds-section-bg-overlay:      rgba(255,255,255,0.72);
+  --ds-nav-bg:                  rgba(255,255,255,0.92);
+  --ds-badge-success-bg:        rgba(14,130,76,0.12);
+  --ds-banner-brand-bg:         rgba(166,23,255,0.06);
+  --ds-kpi-overlay:             rgba(255,255,255,0.15);
+  --ds-kpi-label-color:         var(--ds-color-text-secondary);
+  --ds-cta-overlay:             rgba(0,0,0,0.15);
+  --ds-cta-eyebrow-color:       rgba(255,255,255,0.8);
+  --ds-cta-desc-color:          rgba(255,255,255,0.85);
+  --ds-cta-btn-bg:              rgba(255,255,255,0.92);
+  --ds-cta-btn-border:          rgba(255,255,255,0.6);
+  --ds-cta-footnote-color:      rgba(255,255,255,0.6);
+
+  /* Typography tokens */
+  --ds-hero-title-tracking:     -2px;
+  --ds-h1-base:                 var(--ds-text-2xl);
+  --ds-h2-base:                 var(--ds-text-xl);
+  --ds-h3-base:                 var(--ds-text-lg);
+
+  /* Nav logo tokens */
+  --ds-nav-logo-tracking:       0.18em;
+  --ds-nav-sub-size:            7.5px;
+  --ds-nav-sub-tracking:        0.14em;
+
+  /* Brand color token */
+  --ds-color-brand-deep:        #6C54A0;
+}
+
+/* ── Base ── */
+body {
+  font-family: var(--ds-font-base);
+  color: var(--ds-color-text-primary);
+  background-color: var(--ds-color-surface-white);
+  padding-top: 58px;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  -webkit-font-smoothing: antialiased;
+}
+p, li { word-break: keep-all; overflow-wrap: break-word; }
+
+/* ── Typography ── */
+h1 { font-family: var(--ds-font-base); font-size: var(--ds-h1-base); font-weight: var(--ds-weight-bold); line-height: var(--ds-leading-tight); letter-spacing: var(--ds-tracking-tight); }
+h2 { font-family: var(--ds-font-base); font-size: var(--ds-h2-base); font-weight: var(--ds-weight-bold); line-height: var(--ds-leading-tight); letter-spacing: var(--ds-tracking-tight); }
+h3 { font-family: var(--ds-font-base); font-size: var(--ds-h3-base); font-weight: var(--ds-weight-semibold); line-height: var(--ds-leading-tight); }
+.ds-text--brand   { color: var(--ds-color-brand-purple); }
+.ds-text--product { font-family: var(--ds-font-brand); font-weight: var(--ds-weight-bold); }
+
+@media (min-width: 768px)  { h1 { font-size: 28px; } h2 { font-size: 22px; } }
+@media (min-width: 1024px) { h1 { font-size: 32px; } h2 { font-size: 24px; } h3 { font-size: 20px; } }
+@media (min-width: 1440px) { h1 { font-size: 36px; } h2 { font-size: 28px; } h3 { font-size: 22px; } }
+@media (min-width: 1920px) { h1 { font-size: 40px; } h2 { font-size: 32px; } h3 { font-size: 24px; } }
+
+/* ── Container ── */
+.ds-container {
+  width: 100%;
+  max-width: var(--ds-content-max-width);
+  margin: 0 auto;
+  padding: 0 var(--ds-container-padding-mobile);
+  box-sizing: border-box;
+}
+@media (min-width: 768px)  { .ds-container { padding: 0 var(--ds-container-padding-tablet); } }
+@media (min-width: 1024px) { .ds-container { padding: 0 var(--ds-container-padding-sm-desktop); } }
+@media (min-width: 1440px) { .ds-container { max-width: none; padding: 0 var(--ds-container-padding-desktop); } }
+@media (min-width: 1920px) {
+  .ds-container {
+    max-width: calc(var(--ds-content-max-width) + var(--ds-container-padding-wide) * 2);
+    padding: 0 var(--ds-container-padding-wide);
+  }
+}
+
+/* ── Section ── */
+.ds-section { width: 100%; padding: var(--ds-space-4xl) 0; }
+.ds-section--hero { padding: 100px 0 var(--ds-space-5xl); }
+.ds-section--light { background-color: var(--ds-color-surface-light); }
+.ds-section--bg-img { position: relative; background-size: cover; background-position: center; overflow: hidden; }
+.ds-section--bg-img::before { content: ''; position: absolute; inset: 0; background: var(--ds-section-bg-overlay); z-index: 0; }
+.ds-section--bg-img > .ds-container { position: relative; z-index: 1; }
+.ds-bg--lavender   { background-image: var(--ds-bg-img-lavender); }
+.ds-bg--paint-blue { background-image: var(--ds-bg-img-paint-blue); }
+.ds-bg--wave-teal  { background-image: var(--ds-bg-img-wave-teal); }
+.ds-bg--peach      { background-image: var(--ds-bg-img-peach); }
+
+/* ── Nav ── */
+.ds-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: 58px; display: flex; align-items: center;
+  background: var(--ds-nav-bg);
+  backdrop-filter: blur(20px);
+  border-bottom: var(--ds-border-default);
+  padding: 0 var(--ds-container-padding-mobile);
+}
+@media (min-width: 1440px) { .ds-nav { padding: 0 var(--ds-container-padding-desktop); } }
+.ds-nav__inner { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: var(--ds-space-lg); }
+.ds-nav__logo { display: flex; align-items: center; gap: 10px; }
+.ds-nav__logo-text { display: flex; flex-direction: column; line-height: 1.1; }
+.ds-nav__logo-name { font-family: var(--ds-font-base); font-size: 13px; font-weight: var(--ds-weight-bold); letter-spacing: var(--ds-nav-logo-tracking); color: var(--ds-color-text-primary); }
+.ds-nav__logo-sub  { font-family: var(--ds-font-base); font-size: var(--ds-nav-sub-size); font-weight: var(--ds-weight-regular); letter-spacing: var(--ds-nav-sub-tracking); color: var(--ds-color-brand-purple); text-transform: uppercase; }
+.ds-nav__links { display: flex; align-items: center; gap: var(--ds-space-xl); list-style: none; padding: 0; margin: 0; }
+.ds-nav__link { font-size: var(--ds-text-sm); color: var(--ds-color-text-secondary); transition: color 0.15s; display: flex; align-items: center; gap: 4px; }
+.ds-nav__link:hover, .ds-nav__link--active { color: var(--ds-color-text-primary); }
+.ds-nav__link--active { font-weight: var(--ds-weight-medium); }
+.ds-nav__item { position: relative; }
+.ds-nav__item:hover .ds-nav__sub { display: block; }
+.ds-nav__sub { display: none; position: absolute; top: 100%; left: 0; background: var(--ds-color-surface-white); border: var(--ds-border-default); min-width: 180px; box-shadow: var(--ds-shadow-card); padding: 6px 0; z-index: 200; }
+.ds-nav__sub a { display: block; padding: 8px 16px; font-size: var(--ds-text-xs); color: var(--ds-color-text-secondary); }
+.ds-nav__sub a:hover { color: var(--ds-color-text-primary); }
+.ds-nav__chevron { font-size: 10px; opacity: 0.5; }
+.ds-nav__links { display: none; }
+@media (min-width: 768px) { .ds-nav__links { display: flex; } }
+
+/* ── Button ── */
+.ds-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--ds-space-xs);
+  border-radius: var(--ds-radius-pill);
+  font-family: var(--ds-font-base); font-weight: var(--ds-weight-medium); font-size: var(--ds-text-md);
+  cursor: pointer; border: none; transition: opacity 0.2s, background-color 0.2s;
+  white-space: nowrap; text-decoration: none;
+}
+.ds-btn--sm { padding: var(--ds-space-xs) var(--ds-space-md); font-size: var(--ds-text-sm); }
+.ds-btn--md { padding: var(--ds-space-sm) var(--ds-space-xl); font-size: var(--ds-text-md); }
+.ds-btn--primary   { background: var(--ds-gradient-brand); color: var(--ds-color-white); }
+.ds-btn--primary:hover { opacity: 0.88; }
+.ds-btn--secondary { background-color: transparent; color: var(--ds-color-text-primary); border: var(--ds-border-default); }
+.ds-btn--secondary:hover { background-color: var(--ds-color-surface-light); }
+.ds-btn--ghost { background-color: transparent; color: var(--ds-color-brand-primary); border: none; padding-left: 0; padding-right: 0; }
+
+/* ── Badge ── */
+.ds-badge {
+  display: inline-flex; align-items: center; gap: var(--ds-space-2xs);
+  padding: var(--ds-space-2xs) var(--ds-space-xs);
+  border-radius: var(--ds-radius-pill);
+  font-size: var(--ds-text-xs); font-weight: var(--ds-weight-medium);
+  line-height: 1; white-space: nowrap;
+}
+.ds-badge--neutral { background-color: var(--ds-color-neutral-100); color: var(--ds-color-text-secondary); }
+.ds-badge--purple  { background-color: var(--ds-color-brand-purple-lt); color: var(--ds-color-brand-purple); }
+.ds-badge--success { background-color: var(--ds-badge-success-bg); color: var(--ds-color-success); }
+
+/* ── Section Header ── */
+.ds-section-header { margin-bottom: var(--ds-space-2xl); text-align: center; }
+.ds-section-header__eyebrow {
+  font-family: var(--ds-font-code); font-size: var(--ds-text-xs); font-weight: var(--ds-weight-medium);
+  text-transform: uppercase; letter-spacing: var(--ds-tracking-wide);
+  color: var(--ds-color-brand-purple); margin-bottom: var(--ds-space-sm); display: block;
+}
+.ds-section-header__title {
+  font-family: var(--ds-font-base); font-size: var(--ds-text-5xl); font-weight: var(--ds-weight-bold);
+  color: var(--ds-color-text-primary); line-height: var(--ds-leading-tight);
+  letter-spacing: var(--ds-tracking-tight); margin-bottom: var(--ds-space-md);
+}
+.ds-section-header__description {
+  font-size: var(--ds-text-lg); color: var(--ds-color-text-secondary);
+  line-height: var(--ds-leading-relaxed); max-width: 100%; margin: 0 auto;
+  word-break: keep-all; overflow-wrap: break-word;
+}
+@media (min-width: 1024px) { .ds-section-header__description { max-width: 720px; } }
+@media (min-width: 1440px) { .ds-section-header__description { max-width: 860px; } }
+.ds-section-header--underline {
+  padding-bottom: var(--ds-space-lg);
+  border-bottom: var(--ds-border-default);
+  margin-bottom: var(--ds-space-xl);
+}
+.ds-section-header { text-align: left; }
+.ds-section-header__description { margin: 0; }
+@media (min-width: 768px) { .ds-section-header { text-align: center; } .ds-section-header__description { margin: 0 auto; } }
+
+/* ── Hero ── */
+.ds-hero__eyebrow { font-family: var(--ds-font-code); font-size: var(--ds-text-xs); text-transform: uppercase; letter-spacing: var(--ds-tracking-wide); color: var(--ds-color-brand-purple); margin-bottom: var(--ds-space-md); display: block; }
+.ds-hero__title { font-family: var(--ds-font-base); font-size: var(--ds-text-7xl); font-weight: var(--ds-weight-bold); color: var(--ds-color-text-primary); line-height: var(--ds-leading-tight); letter-spacing: var(--ds-hero-title-tracking); margin-bottom: var(--ds-space-lg); }
+.ds-hero__description { font-size: var(--ds-text-lg); color: var(--ds-color-text-secondary); line-height: var(--ds-leading-relaxed); max-width: 100%; margin-bottom: var(--ds-space-xl); word-break: keep-all; overflow-wrap: break-word; }
+@media (min-width: 1024px) { .ds-hero__description { max-width: 720px; } }
+@media (min-width: 1440px) { .ds-hero__description { max-width: 860px; } }
+.ds-hero__title { font-size: var(--ds-text-5xl); letter-spacing: -1px; }
+@media (min-width: 768px) { .ds-hero__title { font-size: var(--ds-text-7xl); letter-spacing: var(--ds-hero-title-tracking); } }
+
+/* ── Banner ── */
+.ds-banner {
+  padding: var(--ds-space-md) var(--ds-space-lg);
+  border-top: var(--ds-border-default);
+  border-bottom: var(--ds-border-default);
+  background-color: var(--ds-color-surface-light);
+  font-size: var(--ds-text-sm);
+  line-height: var(--ds-leading-relaxed);
+  text-align: center;
+  word-break: keep-all; overflow-wrap: break-word;
+}
+.ds-banner a, .ds-banner--full a { display: block; margin-top: var(--ds-space-sm); }
+.ds-banner--brand { background-color: var(--ds-banner-brand-bg); }
+.ds-banner__label {
+  font-family: var(--ds-font-code); font-size: var(--ds-text-xs);
+  text-transform: uppercase; letter-spacing: var(--ds-tracking-wide);
+  color: var(--ds-color-text-tertiary); margin-bottom: var(--ds-space-xs); display: block;
+}
+.ds-banner--full {
+  width: 100%; text-align: center;
+  padding: var(--ds-space-3xl) var(--ds-space-2xl);
+  border-radius: var(--ds-radius-xl);
+  background-size: cover; background-position: center;
+  position: relative; overflow: hidden; isolation: isolate;
+  color: var(--ds-color-text-primary);
+  font-size: var(--ds-text-lg); font-weight: var(--ds-weight-medium);
+  line-height: var(--ds-leading-relaxed);
+  border: none;
+  word-break: keep-all; overflow-wrap: break-word;
+}
+.ds-banner--full::before {
+  content: ''; position: absolute; inset: 0;
+  background: rgba(255,255,255,0.72); z-index: 0;
+}
+
+/* ── KPI Band ── */
+.ds-kpi-band {
+  border-radius: var(--ds-radius-xl);
+  padding: var(--ds-space-xl) var(--ds-space-md);
+  display: grid; grid-template-columns: 1fr; gap: var(--ds-space-xl);
+  background-size: cover; background-position: center;
+  position: relative; overflow: hidden;
+  margin-top: var(--ds-space-2xl);
+}
+.ds-kpi-band[class*="ds-bg--"]::before {
+  content: ''; position: absolute; inset: 0;
+  background: var(--ds-kpi-overlay); z-index: 0;
+}
+.ds-kpi-band > * { position: relative; z-index: 1; }
+.ds-kpi-band__item { display: flex; flex-direction: column; gap: var(--ds-space-sm); }
+.ds-kpi-band__number { font-family: var(--ds-font-base); font-size: var(--ds-text-6xl); font-weight: var(--ds-weight-bold); line-height: 1; color: var(--ds-color-text-primary); }
+.ds-kpi-band__label { font-size: var(--ds-text-sm); color: var(--ds-kpi-label-color); line-height: var(--ds-leading-normal); }
+@media (min-width: 768px)  { .ds-kpi-band { grid-template-columns: repeat(2, 1fr); padding: var(--ds-space-2xl) var(--ds-space-xl); } }
+@media (min-width: 1024px) { .ds-kpi-band { grid-template-columns: repeat(3, 1fr); padding: var(--ds-space-3xl) var(--ds-space-3xl); } }
+
+/* ── Card ── */
+.ds-card {
+  background-color: var(--ds-color-surface-white);
+  border-radius: var(--ds-radius-md);
+  border: var(--ds-border-default);
+  padding: var(--ds-space-lg);
+  box-shadow: var(--ds-shadow-card);
+  box-sizing: border-box;
+}
+.ds-card--highlight {
+  background-color: var(--ds-color-surface-white);
+  border: var(--ds-border-default);
+  border-radius: var(--ds-radius-lg);
+  padding: var(--ds-space-xl);
+  box-shadow: var(--ds-shadow-card);
+}
+.ds-card--highlight .ds-card__value {
+  font-family: var(--ds-font-base);
+  font-size: var(--ds-text-6xl);
+  font-weight: var(--ds-weight-bold);
+  color: var(--ds-color-text-primary);
+  line-height: var(--ds-leading-tight);
+  margin: var(--ds-space-xs) 0 var(--ds-space-sm);
+  letter-spacing: var(--ds-tracking-tight);
+}
+.ds-card__badge {
+  display: inline-flex; align-items: center; width: fit-content;
+  padding: 4px 12px; border-radius: var(--ds-radius-pill);
+  font-size: var(--ds-text-xs); font-weight: var(--ds-weight-medium);
+  font-family: var(--ds-font-code); text-transform: uppercase;
+  letter-spacing: var(--ds-tracking-wide);
+  border: 1px solid currentColor; margin-bottom: var(--ds-space-md);
+}
+.ds-card__badge--brand { color: var(--ds-color-brand-purple); border-color: var(--ds-color-brand-purple); }
+.ds-card__title { font-size: var(--ds-text-2xl); font-weight: var(--ds-weight-bold); color: var(--ds-color-text-primary); line-height: var(--ds-leading-tight); margin-bottom: var(--ds-space-sm); }
+.ds-card__title--sm { font-size: var(--ds-text-lg); font-weight: var(--ds-weight-semibold); }
+.ds-card__subtitle { font-size: var(--ds-text-xs); font-family: var(--ds-font-code); text-transform: uppercase; letter-spacing: var(--ds-tracking-wide); color: var(--ds-color-text-tertiary); margin-bottom: var(--ds-space-md); }
+.ds-card__description { font-size: var(--ds-text-sm); color: var(--ds-color-text-secondary); line-height: var(--ds-leading-relaxed); word-break: keep-all; overflow-wrap: break-word; }
+.ds-card__divider { border: none; border-top: var(--ds-border-default); margin: var(--ds-space-md) 0; }
+.ds-card__tags { display: flex; flex-wrap: wrap; gap: var(--ds-space-xs); margin-top: var(--ds-space-md); }
+.ds-card__tag { font-size: var(--ds-text-xs); color: var(--ds-color-text-tertiary); background: var(--ds-color-surface-mid); padding: 2px 10px; border-radius: var(--ds-radius-pill); }
+.ds-card--brand-tint {
+  background-color: var(--ds-impact-brand-bg);
+  border: var(--ds-border-default);
+  border-radius: var(--ds-radius-lg);
+  padding: var(--ds-space-xl);
+  display: flex; flex-direction: column; gap: var(--ds-space-md);
+}
+.ds-card--brand-tint p {
+  font-size: var(--ds-text-md);
+  color: var(--ds-color-text-primary);
+  line-height: var(--ds-leading-relaxed);
+}
+@media (min-width: 1440px) { .ds-card { padding: var(--ds-space-xl); } }
+
+/* ── Card Grid ── */
+.ds-card-grid { display: grid; grid-template-columns: 1fr; gap: var(--ds-space-lg); }
+.ds-card-grid .ds-card, .ds-card-grid .ds-card--highlight { display: flex; flex-direction: column; }
+@media (min-width: 768px) {
+  .ds-card-grid--2col { grid-template-columns: repeat(2, 1fr); }
+  .ds-card-grid--3col { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1024px) {
+  .ds-card-grid--3col { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ── Code Block — Dark Theme ── */
+.ds-code-block {
+  background-color: var(--ds-color-neutral-900); border: none;
+  border-radius: var(--ds-radius-sm); padding: var(--ds-space-md);
+  font-family: var(--ds-font-code); font-size: var(--ds-text-sm);
+  line-height: 1.9; color: var(--ds-color-neutral-300); overflow-x: auto;
+  margin-top: var(--ds-space-lg); margin-bottom: var(--ds-space-md);
+}
+.ds-code--remove { color: var(--ds-color-error-light); }
+.ds-code--add    { color: var(--ds-color-success-light); }
+.ds-code--warn   { color: var(--ds-color-warn-light); }
+.ds-code--muted  { color: var(--ds-color-neutral-500); }
+
+/* ── Accordion Card ── */
+.ds-ac-list { display: flex; flex-direction: column; gap: 2px; }
+.ds-ac-card { border: var(--ds-border-default); border-radius: var(--ds-radius-sm); background-color: var(--ds-color-surface-white); overflow: hidden; transition: background-color 0.2s; }
+.ds-ac-card:hover { background-color: var(--ds-color-neutral-025); }
+.ds-ac-card__header { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: var(--ds-space-md); padding: var(--ds-space-lg); cursor: pointer; user-select: none; }
+.ds-ac-card__title-wrap { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.ds-ac-card__industry { font-family: var(--ds-font-code); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ds-color-text-tertiary); display: flex; align-items: center; gap: var(--ds-space-2xs); }
+.ds-ac-card__industry-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.ds-ac-card__title { font-family: var(--ds-font-base); font-size: var(--ds-text-lg); font-weight: var(--ds-weight-medium); line-height: var(--ds-leading-tight); color: var(--ds-color-text-primary); word-break: keep-all; overflow-wrap: break-word; }
+.ds-ac-card__meta { display: flex; align-items: center; gap: var(--ds-space-xs); flex-wrap: wrap; flex-shrink: 0; }
+.ds-ac-card__toggle { width: 28px; height: 28px; border-radius: 6px; border: 0.5px solid var(--ds-color-border-default); background: var(--ds-color-surface-light); display: flex; align-items: center; justify-content: center; flex-shrink: 0; cursor: pointer; transition: border-color 0.15s, background 0.15s; }
+.ds-ac-card__toggle:hover { border-color: var(--ds-color-border-strong); background: var(--ds-color-surface-mid); }
+.ds-ac-card__toggle-icon { width: 12px; height: 12px; position: relative; flex-shrink: 0; }
+.ds-ac-card__toggle-icon::before,
+.ds-ac-card__toggle-icon::after { content: ''; position: absolute; background: var(--ds-color-text-muted); border-radius: 1px; transition: opacity 0.2s; }
+.ds-ac-card__toggle-icon::before { width: 10px; height: 1.5px; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+.ds-ac-card__toggle-icon::after  { width: 1.5px; height: 10px; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 1; }
+.ds-ac-card.ds-ac--open .ds-ac-card__toggle-icon::after { opacity: 0; }
+.ds-ac-card.ds-ac--open .ds-ac-card__toggle-icon::before { background: var(--ds-color-text-secondary); }
+.ds-ac-card__body { display: none; padding: var(--ds-space-lg); border-top: var(--ds-border-default); background: var(--ds-color-surface-light); }
+.ds-ac-card.ds-ac--open .ds-ac-card__body { display: block; }
+.ds-ac-card__meta { display: none; }
+.ds-ac-card__header { grid-template-columns: 1fr auto; }
+@media (min-width: 768px) { .ds-ac-card__meta { display: flex; } .ds-ac-card__header { grid-template-columns: 1fr auto auto; } }
+@media (min-width: 1024px) { .ds-ac-card__header { grid-template-columns: 1fr auto auto; } }
+
+/* Evidence rows */
+.ds-ac-card__rows { display: grid; grid-template-columns: 1fr; gap: 1px; background: var(--ds-color-border-default); margin-bottom: var(--ds-space-lg); border-radius: var(--ds-radius-sm); overflow: hidden; }
+@media (min-width: 480px) { .ds-ac-card__rows { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 768px) { .ds-ac-card__rows { grid-template-columns: repeat(4, 1fr); } }
+.ds-ac-card__row { background: var(--ds-color-surface-white); padding: var(--ds-space-md) var(--ds-space-lg); }
+.ds-ac-card__row-label { font-family: var(--ds-font-code); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: var(--ds-space-xs); padding-bottom: var(--ds-space-xs); border-bottom: var(--ds-border-default); }
+.ds-ac-card__row-label--before { color: var(--ds-color-error); }
+.ds-ac-card__row-label--after  { color: var(--ds-color-success); }
+.ds-ac-card__row-label--diff   { color: var(--ds-color-brand-purple); }
+.ds-ac-card__row-label--reproduce { color: var(--ds-ev-stable-color); }
+.ds-ac-card__row-text { font-size: var(--ds-text-sm); color: var(--ds-color-text-secondary); line-height: var(--ds-leading-relaxed); }
+
+/* Metrics */
+.ds-ac-metrics { display: flex; gap: var(--ds-space-xs); flex-wrap: wrap; margin-bottom: var(--ds-space-lg); }
+.ds-ac-metric { display: flex; flex-direction: column; padding: var(--ds-space-sm) var(--ds-space-md); border: var(--ds-border-default); border-radius: var(--ds-radius-sm); background-color: var(--ds-color-surface-white); min-width: 100px; flex: 1; }
+.ds-ac-metric__val { font-family: var(--ds-font-base); font-size: var(--ds-text-xl); font-weight: var(--ds-weight-bold); line-height: 1; color: var(--ds-color-text-primary); }
+.ds-ac-metric__val--success { color: var(--ds-color-success); }
+.ds-ac-metric__label { font-family: var(--ds-font-code); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ds-color-text-tertiary); margin-top: var(--ds-space-2xs); }
+
+/* ── Filter Bar ── */
+.ds-filter-bar { display: flex; align-items: center; gap: var(--ds-space-xs); flex-wrap: wrap; margin-bottom: var(--ds-space-md); justify-content: center; }
+.ds-filter-btn {
+  display: inline-flex; align-items: center; gap: var(--ds-space-2xs);
+  padding: var(--ds-space-xs) var(--ds-space-md);
+  border-radius: var(--ds-radius-pill); border: var(--ds-border-default);
+  background: var(--ds-color-surface-white);
+  font-family: var(--ds-font-code); font-size: var(--ds-text-xs);
+  letter-spacing: var(--ds-tracking-wide); text-transform: uppercase;
+  color: var(--ds-color-text-secondary); cursor: pointer; transition: all 0.15s;
+}
+.ds-filter-btn:hover { border-color: var(--ds-color-border-strong); }
+.ds-filter-btn.ds-filter--active { background: var(--ds-color-neutral-900); color: var(--ds-color-text-inverse); border-color: var(--ds-color-neutral-900); }
+.ds-filter-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.ds-filter-dot--brand  { background: var(--ds-color-brand-purple); }
+.ds-filter-dot--amber  { background: var(--ds-ev-stable-color); }
+.ds-filter-dot--green  { background: var(--ds-color-success); }
+.ds-filter-dot--purple { background: var(--ds-ev-secure-color); }
+
+/* ── FAQ ── */
+.ds-faq-list { display: flex; flex-direction: column; gap: 2px; }
+.ds-faq-item { background: var(--ds-color-surface-white); border: var(--ds-border-default); border-radius: var(--ds-radius-sm); overflow: hidden; }
+.ds-faq-q {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: var(--ds-space-lg); cursor: pointer; user-select: none;
+  font-family: var(--ds-font-base); font-size: var(--ds-text-lg);
+  font-weight: var(--ds-weight-medium); gap: var(--ds-space-md); transition: background 0.15s;
+}
+.ds-faq-q:hover { background: var(--ds-color-neutral-025); }
+.ds-faq-toggle { width: 28px; height: 28px; border-radius: 6px; border: 0.5px solid var(--ds-color-border-default); background: var(--ds-color-surface-light); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.ds-faq-toggle-icon { width: 12px; height: 12px; position: relative; flex-shrink: 0; }
+.ds-faq-toggle-icon::before,
+.ds-faq-toggle-icon::after { content: ''; position: absolute; background: var(--ds-color-text-muted); border-radius: 1px; transition: opacity 0.2s; }
+.ds-faq-toggle-icon::before { width: 10px; height: 1.5px; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+.ds-faq-toggle-icon::after  { width: 1.5px; height: 10px; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 1; }
+.ds-faq-item.ds-faq--open .ds-faq-toggle-icon::after { opacity: 0; }
+.ds-faq-a {
+  display: none; padding: 0 var(--ds-space-lg) var(--ds-space-lg);
+  font-size: var(--ds-text-md); color: var(--ds-color-text-secondary);
+  line-height: var(--ds-leading-relaxed); border-top: var(--ds-border-default);
+  padding-top: var(--ds-space-md);
+}
+.ds-faq-item.ds-faq--open .ds-faq-a { display: block; }
+
+/* ── CTA Band ── */
+.ds-cta-band {
+  width: 100%; position: relative; overflow: hidden;
+  padding: 80px var(--ds-container-padding-mobile);
+  text-align: center;
+  background-size: cover; background-position: center;
+}
+.ds-cta-band::before { content: ''; position: absolute; inset: 0; background: var(--ds-cta-overlay); z-index: 0; }
+.ds-cta-band > * { position: relative; z-index: 1; }
+.ds-cta-band__inner { max-width: 100%; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: var(--ds-space-lg); }
+@media (min-width: 1024px) { .ds-cta-band__inner { max-width: 720px; } }
+@media (min-width: 1440px) { .ds-cta-band__inner { max-width: 860px; } }
+.ds-cta-band__eyebrow { font-family: var(--ds-font-code); font-size: var(--ds-text-xs); text-transform: uppercase; letter-spacing: var(--ds-tracking-wide); color: var(--ds-cta-eyebrow-color); display: block; }
+.ds-cta-band__title { font-family: var(--ds-font-base); font-size: var(--ds-text-7xl); font-weight: var(--ds-weight-bold); color: var(--ds-color-white); line-height: var(--ds-leading-tight); letter-spacing: var(--ds-hero-title-tracking); margin: 0; }
+.ds-cta-band__description { font-size: var(--ds-text-lg); color: var(--ds-cta-desc-color); line-height: var(--ds-leading-relaxed); margin: 0; word-break: keep-all; overflow-wrap: break-word; }
+.ds-cta-band__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--ds-space-md); }
+.ds-cta-band__actions .ds-btn { background: var(--ds-cta-btn-bg); color: var(--ds-color-text-primary); border: 1px solid var(--ds-cta-btn-border); backdrop-filter: blur(8px); }
+.ds-cta-band__actions .ds-btn:hover { background: var(--ds-color-white); }
+.ds-cta-band__footnote { font-size: var(--ds-text-xs); color: var(--ds-cta-footnote-color); font-family: var(--ds-font-code); letter-spacing: var(--ds-tracking-wide); }
+.ds-cta-band__title { font-size: var(--ds-text-5xl); letter-spacing: -1px; }
+.ds-cta-band__actions { flex-direction: column; align-items: center; }
+.ds-cta-band__actions .ds-btn { width: 100%; max-width: 320px; }
+@media (min-width: 768px)  {
+  .ds-cta-band { padding: 100px var(--ds-container-padding-tablet); }
+  .ds-cta-band__title { font-size: var(--ds-text-7xl); letter-spacing: var(--ds-hero-title-tracking); }
+  .ds-cta-band__actions { flex-direction: row; align-items: initial; }
+  .ds-cta-band__actions .ds-btn { width: auto; max-width: none; }
+}
+@media (min-width: 1024px) { .ds-cta-band { padding: 100px var(--ds-container-padding-sm-desktop); } }
+@media (min-width: 1440px) { .ds-cta-band { padding: 120px var(--ds-container-padding-desktop); } }
+@media (min-width: 1920px) { .ds-cta-band { padding: 120px var(--ds-container-padding-wide); } }
+
+/* ── Partner Logo Grid — Marquee ── */
+.ds-partner-grid { width: 100vw; margin-left: calc(-50vw + 50%); overflow: hidden; padding: var(--ds-space-lg) 0; }
+.ds-partner-grid__track { display: flex; gap: var(--ds-space-3xl); align-items: center; width: max-content; animation: ds-marquee 30s linear infinite; }
+.ds-partner-grid__track:hover { animation-play-state: paused; }
+.ds-partner-item { display: flex; flex-direction: column; align-items: center; gap: var(--ds-space-xs); flex-shrink: 0; }
+.ds-partner-item__logo { width: 120px; height: 100px; object-fit: contain; }
+.ds-partner-item__name { font-size: var(--ds-text-xs); color: var(--ds-color-text-tertiary); text-align: center; white-space: nowrap; }
+@keyframes ds-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+@media (max-width: 767px) {
+  .ds-partner-item__logo { width: 100px; height: 75px; }
+  .ds-partner-grid__track { gap: var(--ds-space-2xl); animation-duration: 20s; }
+}
+
+/* ── SVG color helpers ── */
+.ds-svg--brand-deep      { fill: var(--ds-color-brand-deep); }
+.ds-svg--fill-primary    { fill: var(--ds-color-text-primary); }
+.ds-svg--stroke-primary  { stroke: var(--ds-color-text-primary); fill: none; }
+.ds-svg--text-primary    { fill: var(--ds-color-text-primary); stroke: var(--ds-color-text-primary); }
+
+/* ── Bullet List ── */
+.ds-bullet { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--ds-space-sm); }
+.ds-bullet__item { display: flex; align-items: flex-start; gap: var(--ds-space-xs); font-size: var(--ds-text-sm); line-height: var(--ds-leading-normal); color: var(--ds-color-text-secondary); }
+.ds-bullet__icon { width: 20px; height: 20px; flex-shrink: 0; margin-top: 2px; }
+.ds-bullet--dot .ds-bullet__icon::before { content: "•"; color: var(--ds-color-brand-purple); font-size: var(--ds-text-xl); line-height: 1; }
+
+/* ── Spacing utilities ── */
+.ds-mt-xs  { margin-top: var(--ds-space-xs); }
+.ds-mt-xl  { margin-top: var(--ds-space-xl); }
+.ds-mb-xl  { margin-bottom: var(--ds-space-xl); }
+.ds-link--tertiary { color: var(--ds-color-text-tertiary); }
+
+/* ── Misc ── */
+.ds-evidence-count { font-family: var(--ds-font-code); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ds-color-text-tertiary); margin-bottom: var(--ds-space-lg); }
+.ds-arch-cta-actions { display: flex; justify-content: center; gap: var(--ds-space-md); flex-wrap: wrap; }
+.ds-arch-cta-actions .ds-btn--secondary { background-color: var(--ds-color-surface-white); border: var(--ds-border-default); }
+.ds-arch-cta-actions .ds-btn--secondary:hover { background-color: var(--ds-color-surface-light); opacity: 0.92; }
+.ds-artifact-link { color: var(--ds-color-brand-purple); }
+.ds-artifact-link:hover { text-decoration: underline; }
+
+/* ── Footer ── */
+.ds-footer { background: var(--ds-color-surface-white); border-top: var(--ds-border-default); padding: 48px var(--ds-container-padding-mobile); }
+@media (min-width: 768px)  { .ds-footer { padding: 48px var(--ds-container-padding-tablet); } }
+@media (min-width: 1440px) { .ds-footer { padding: 48px var(--ds-container-padding-desktop); } }
+.ds-footer__inner { max-width: var(--ds-content-max-width); margin: 0 auto; display: flex; justify-content: space-between; align-items: flex-start; gap: var(--ds-space-2xl); flex-wrap: wrap; }
+.ds-footer__brand { font-family: var(--ds-font-code); font-size: 13px; display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-weight: var(--ds-weight-medium); color: var(--ds-color-text-primary); }
+.ds-footer__tagline { font-size: var(--ds-text-xs); color: var(--ds-color-text-tertiary); max-width: 240px; line-height: var(--ds-leading-relaxed); }
+.ds-footer__address { font-family: var(--ds-font-code); font-size: 10px; color: var(--ds-color-text-tertiary); margin-top: 10px; line-height: 1.7; }
+.ds-footer__col-title { font-family: var(--ds-font-code); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ds-color-text-tertiary); margin-bottom: 14px; }
+.ds-footer__links { list-style: none; display: flex; flex-direction: column; gap: var(--ds-space-xs); }
+.ds-footer__links a { font-size: 13px; color: var(--ds-color-text-secondary); transition: color 0.2s; }
+.ds-footer__links a:hover { color: var(--ds-color-text-primary); }
+.ds-footer__bottom { max-width: var(--ds-content-max-width); margin: 32px auto 0; padding-top: 20px; border-top: var(--ds-border-default); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+.ds-footer__copy { font-family: var(--ds-font-code); font-size: 11px; color: var(--ds-color-text-tertiary); }
+.ds-footer__inner { flex-direction: column; }
+@media (min-width: 768px) { .ds-footer__inner { flex-direction: row; } }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="ds-nav" aria-label="Main navigation">
+  <div class="ds-nav__inner">
+    <a href="/" class="ds-nav__logo" aria-label="CUBIG Home">
+      <svg width="20" height="31" viewBox="0 0 15.5 23.5" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path class="ds-svg--brand-deep" d="M 15.494 10.91 L 15.494 10.301 C 15.494 9.987 15.388 9.709 15.174 9.481 C 14.977 9.26 14.692 9.136 14.396 9.142 L 13.764 9.142 C 13.64 9.148 13.52 9.099 13.436 9.008 C 13.347 8.917 13.3 8.795 13.304 8.669 L 13.304 5.725 C 13.304 5.412 13.197 5.141 12.976 4.922 C 12.768 4.707 12.48 4.587 12.181 4.592 L 11.574 4.592 C 11.443 4.592 11.317 4.536 11.229 4.439 C 11.134 4.346 11.081 4.218 11.081 4.085 L 11.081 3.433 C 11.081 3.12 10.974 2.85 10.753 2.63 C 10.545 2.416 10.257 2.296 9.958 2.3 L 9.383 2.3 C 9.242 2.305 9.104 2.25 9.006 2.148 C 8.906 2.044 8.853 1.903 8.859 1.759 L 8.859 1.133 C 8.859 0.812 8.752 0.55 8.531 0.33 C 8.323 0.115 8.035 -0.004 7.735 0 C 7.423 0 7.169 0.109 6.955 0.33 C 6.744 0.543 6.628 0.833 6.636 1.133 L 6.636 1.724 C 6.636 1.886 6.586 2.021 6.488 2.122 C 6.393 2.23 6.255 2.289 6.111 2.283 L 5.536 2.283 C 5.233 2.283 4.962 2.393 4.741 2.613 C 4.524 2.823 4.405 3.114 4.413 3.416 L 4.413 4.068 C 4.413 4.201 4.36 4.329 4.265 4.422 C 4.177 4.519 4.052 4.575 3.92 4.575 L 3.313 4.575 C 3.014 4.571 2.726 4.69 2.518 4.905 C 2.297 5.124 2.19 5.395 2.19 5.708 L 2.19 8.652 C 2.194 8.778 2.147 8.9 2.058 8.991 C 1.974 9.082 1.854 9.131 1.73 9.125 L 1.098 9.125 C 0.802 9.119 0.517 9.243 0.32 9.464 C 0.106 9.692 0 9.97 0 10.284 L 0 13.175 C 0 13.489 0.106 13.767 0.32 13.995 C 0.517 14.216 0.802 14.34 1.098 14.334 L 1.73 14.334 C 1.854 14.328 1.974 14.377 2.058 14.468 C 2.147 14.559 2.194 14.681 2.19 14.807 L 2.19 17.751 C 2.19 18.064 2.297 18.335 2.518 18.554 C 2.726 18.769 3.014 18.888 3.313 18.884 L 3.92 18.884 C 4.052 18.884 4.177 18.94 4.265 19.037 C 4.36 19.13 4.413 19.258 4.413 19.391 L 4.413 20.034 C 4.405 20.336 4.524 20.627 4.741 20.837 C 4.949 21.051 5.237 21.171 5.536 21.167 L 6.111 21.167 C 6.255 21.161 6.393 21.22 6.488 21.328 C 6.586 21.429 6.636 21.564 6.636 21.726 L 6.636 22.326 C 6.628 22.626 6.744 22.916 6.955 23.129 C 7.169 23.35 7.423 23.459 7.735 23.459 C 8.035 23.462 8.323 23.343 8.531 23.129 C 8.752 22.909 8.859 22.638 8.859 22.326 L 8.859 21.7 C 8.853 21.556 8.906 21.415 9.006 21.311 C 9.104 21.209 9.242 21.153 9.383 21.159 L 9.958 21.159 C 10.257 21.163 10.545 21.043 10.753 20.829 C 10.974 20.608 11.081 20.338 11.081 20.025 L 11.081 19.373 C 11.081 19.24 11.134 19.112 11.229 19.019 C 11.317 18.922 11.443 18.866 11.574 18.866 L 12.181 18.866 C 12.48 18.872 12.768 18.752 12.976 18.537 C 13.197 18.317 13.304 18.047 13.304 17.734 L 13.304 14.807 C 13.3 14.681 13.347 14.559 13.436 14.468 C 13.52 14.377 13.64 14.328 13.764 14.334 L 14.396 14.334 C 14.692 14.34 14.977 14.216 15.174 13.995 C 15.388 13.767 15.494 13.489 15.494 13.175 Z"/>
+        <path d="M 7.024 9.113 L 5.515 11.895 C 5.416 12.072 5.416 12.286 5.515 12.462 L 7.024 15.244 C 7.12 15.424 7.307 15.536 7.512 15.536 C 7.716 15.536 7.904 15.424 8 15.244 L 9.51 12.462 C 9.608 12.286 9.608 12.072 9.51 11.895 L 8 9.113 C 7.904 8.934 7.716 8.821 7.512 8.821 C 7.307 8.821 7.12 8.934 7.024 9.113 Z" fill="white"/>
+      </svg>
+      <div class="ds-nav__logo-text">
+        <span class="ds-nav__logo-name">C U B I G</span>
+        <span class="ds-nav__logo-sub">Cure Bigdata</span>
+      </div>
+    </a>
+    <ul class="ds-nav__links" role="list">
+      <li class="ds-nav__item"><a href="/syntitan" class="ds-nav__link">Platform <span class="ds-nav__chevron">▾</span></a><div class="ds-nav__sub"><a href="/syntitan">SynTitan</a></div></li>
+      <li class="ds-nav__item"><a href="#" class="ds-nav__link">Capabilities <span class="ds-nav__chevron">▾</span></a><div class="ds-nav__sub"><a href="/dts">DTS</a><a href="/llm-capsule">LLM Capsule</a></div></li>
+      <li><a href="/proof" class="ds-nav__link ds-nav__link--active">Proof</a></li>
+      <li class="ds-nav__item"><a href="/learn" class="ds-nav__link">Learn <span class="ds-nav__chevron">▾</span></a><div class="ds-nav__sub"><a href="/learn/ai-ready-data-infrastructure">AI-Ready Data Infrastructure</a><a href="/learn/release-state">Release State</a><a href="/learn/articles">Articles</a><a href="/learn/glossary">Glossary</a></div></li>
+      <li><a href="/company" class="ds-nav__link">Company</a></li>
+      <li><a href="https://syntitan.ai" class="ds-btn ds-btn--sm ds-btn--primary" target="_blank" rel="noopener">Try SynTitan</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+
+<!-- ═══ SECTION 1: HERO ═══ -->
+<section class="ds-section ds-section--hero" id="section-hero">
+  <div class="ds-container">
+    <h1 class="ds-hero__title">Proof</h1>
+    <p class="ds-hero__description">PoC runs in controlled conditions · Production data changes · Pipelines update · Environments shift.<br>Here's the evidence that AI execution doesn't have to break.</p>
+
+    <div class="ds-banner ds-banner--brand ds-mb-xl" id="ai-ready-data-definition">
+      <p>True AI-ready data means it is <span class="ds-text--brand">usable</span>, <span class="ds-text--brand">privacy-safe</span>, and <span class="ds-text--brand">stable for production execution</span>.</p>
+    </div>
+
+    <div class="ds-partner-grid" aria-label="Partner logos">
+      <div class="ds-partner-grid__track" id="partner-track">
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="../reference/images/partner-gartner.png" alt="Gartner" loading="lazy"><span class="ds-partner-item__name">Gartner</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="../reference/images/partner-navercloud.avif" alt="Naver Cloud" loading="lazy"><span class="ds-partner-item__name">Naver Cloud</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="../reference/images/partner-sktelecom.avif" alt="SK Telecom" loading="lazy"><span class="ds-partner-item__name">SK Telecom</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="../reference/images/partner-kyobo.avif" alt="Kyobo" loading="lazy"><span class="ds-partner-item__name">Kyobo</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="../reference/images/partner-korea army.avif" alt="ROK Army" loading="lazy"><span class="ds-partner-item__name">ROK Army</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="../reference/images/partner-korea-airforce.avif" alt="ROK Air Force" loading="lazy"><span class="ds-partner-item__name">ROK Air Force</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="../reference/images/partner-eumc.avif" alt="EUMC" loading="lazy"><span class="ds-partner-item__name">EUMC</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="../reference/images/partner-deutsche-telekom.avif" alt="Deutsche Telekom" loading="lazy"><span class="ds-partner-item__name">Deutsche Telekom</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="../reference/images/partner-claroty.png" alt="Claroty" loading="lazy"><span class="ds-partner-item__name">Claroty</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="../reference/images/partner-korea-heritage-service.jpg" alt="Korea Heritage Service" loading="lazy"><span class="ds-partner-item__name">Korea Heritage Service</span></div>
+        <div class="ds-partner-item"><img class="ds-partner-item__logo" src="../reference/images/partner-ministry-of-data-and-statistics.png" alt="Ministry of Data and Statistics" loading="lazy"><span class="ds-partner-item__name">Ministry of Data and Statistics</span></div>
+      </div>
+    </div>
+    <script>
+      (function() {
+        var track = document.getElementById('partner-track');
+        if (track) { track.innerHTML += track.innerHTML; }
+      })();
+    </script>
+
+    <div class="ds-kpi-band ds-bg--lavender" aria-label="Key performance indicators">
+      <div class="ds-kpi-band__item">
+        <span class="ds-kpi-band__number">95%</span>
+        <p class="ds-kpi-band__label">reduction in root cause identification time (21 days → under 4 hours)</p>
+      </div>
+      <div class="ds-kpi-band__item">
+        <span class="ds-kpi-band__number">+30pp</span>
+        <p class="ds-kpi-band__label">F1-score improvement (58.55% → 88.55%) via DTS synthetic data augmentation</p>
+      </div>
+      <div class="ds-kpi-band__item">
+        <span class="ds-kpi-band__number">-90%</span>
+        <p class="ds-kpi-band__label">time-to-deploy: 4 weeks → 1 day on AI model production cycle</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SECTION 2: EVIDENCE RECORDS ═══ -->
+<section class="ds-section" id="section-evidence">
+  <div class="ds-container">
+    <div class="ds-section-header ds-section-header--underline">
+      <h2 class="ds-section-header__title">Operational <span class="ds-text--brand">case records</span></h2>
+      <p class="ds-section-header__description">Each record follows the same format: Before → After → What Changed → Reproduce.</p>
+    </div>
+
+    <div class="ds-filter-bar" role="navigation" aria-label="Evidence filter">
+      <button class="ds-filter-btn ds-filter--active" data-filter="all" onclick="setFilter('all',this)">
+        <span class="ds-filter-dot ds-filter-dot--brand"></span> All Evidence
+      </button>
+      <button class="ds-filter-btn" data-filter="stable" onclick="setFilter('stable',this)">
+        <span class="ds-filter-dot ds-filter-dot--amber"></span> Execution Stability
+      </button>
+      <button class="ds-filter-btn" data-filter="data" onclick="setFilter('data',this)">
+        <span class="ds-filter-dot ds-filter-dot--green"></span> Data Usability
+      </button>
+      <button class="ds-filter-btn" data-filter="secure" onclick="setFilter('secure',this)">
+        <span class="ds-filter-dot ds-filter-dot--purple"></span> Secure LLM Usage
+      </button>
+    </div>
+    <p class="ds-evidence-count" id="ev-count">6 records · filtered: all</p>
+
+    <div class="ds-ac-list" id="evidence-grid">
+
+      <!-- Card 1: Financial Services -->
+      <article class="ds-ac-card ds-ac--open" data-tag="stable">
+        <div class="ds-ac-card__header" onclick="toggleAcCard(this)">
+          <div class="ds-ac-card__title-wrap">
+            <div class="ds-ac-card__industry">
+              <span class="ds-ac-card__industry-dot" style="background-color: var(--ds-ev-stable-color)"></span>
+              Financial Services
+            </div>
+            <div class="ds-ac-card__title">Model retraining pipeline — schema drift detection</div>
+          </div>
+          <div class="ds-ac-card__meta">
+            <span class="ds-badge ds-badge--neutral">Execution Stability</span>
+            <span class="ds-badge ds-badge--purple">Fraud Detection</span>
+          </div>
+          <div class="ds-ac-card__toggle" aria-label="Toggle card"><span class="ds-ac-card__toggle-icon"></span></div>
+        </div>
+        <div class="ds-ac-card__body">
+          <div class="ds-ac-metrics">
+            <div class="ds-ac-metric"><span class="ds-ac-metric__val">3 wk</span><span class="ds-ac-metric__label">Root cause time (before)</span></div>
+            <div class="ds-ac-metric"><span class="ds-ac-metric__val ds-ac-metric__val--success">&lt; 1 run</span><span class="ds-ac-metric__label">Detection time (after)</span></div>
+            <div class="ds-ac-metric"><span class="ds-ac-metric__val">2</span><span class="ds-ac-metric__label">Feature columns removed</span></div>
+            <div class="ds-ac-metric"><span class="ds-ac-metric__val">1</span><span class="ds-ac-metric__label">Schema type coercion</span></div>
+          </div>
+          <div class="ds-ac-card__rows">
+            <div class="ds-ac-card__row">
+              <div class="ds-ac-card__row-label ds-ac-card__row-label--before">Before</div>
+              <p class="ds-ac-card__row-text">Schema change in upstream data caused silent model degradation. Root cause took <strong>21 days</strong> to identify — by which time downstream decisions had been affected.</p>
+            </div>
+            <div class="ds-ac-card__row">
+              <div class="ds-ac-card__row-label ds-ac-card__row-label--after">After</div>
+              <p class="ds-ac-card__row-text">SynTitan Release State detected the schema diff at ingestion · Issue flagged before the next training run triggered · No degraded model reached production.</p>
+            </div>
+            <div class="ds-ac-card__row">
+              <div class="ds-ac-card__row-label ds-ac-card__row-label--diff">What Changed</div>
+              <p class="ds-ac-card__row-text">2 feature columns removed from upstream feed. 1 schema type coercion introduced silently. Release State diff surfaced both in the change log.</p>
+            </div>
+            <div class="ds-ac-card__row">
+              <div class="ds-ac-card__row-label ds-ac-card__row-label--reproduce">Reproduce</div>
+              <p class="ds-ac-card__row-text">Prior run re-executed under locked Release State conditions · Model behavior verified against known-good baseline · Root cause identification time: <strong>21 days → under 4 hours (95% reduction)</strong>. · Incident response completed before next production run.</p>
+            </div>
+          </div>
+          <div class="ds-card__tags">
+            <span class="ds-card__tag">State Card</span>
+            <span class="ds-card__tag">Change Log</span>
+            <span class="ds-card__tag">Re-run Record</span>
+            <span class="ds-card__tag">Schema Diff</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 2: Telco -->
+      <article class="ds-ac-card" data-tag="stable">
+        <div class="ds-ac-card__header" onclick="toggleAcCard(this)">
+          <div class="ds-ac-card__title-wrap">
+            <div class="ds-ac-card__industry">
+              <span class="ds-ac-card__industry-dot" style="background-color: var(--ds-ev-stable-color)"></span>
+              Telco
+            </div>
+            <div class="ds-ac-card__title">Real-time inference service — pipeline version rollback</div>
+          </div>
+          <div class="ds-ac-card__meta">
+            <span class="ds-badge ds-badge--neutral">Execution Stability</span>
+            <span class="ds-badge ds-badge--purple">Customer Churn Prediction</span>
+          </div>
+          <div class="ds-ac-card__toggle" aria-label="Toggle card"><span class="ds-ac-card__toggle-icon"></span></div>
+        </div>
+        <div class="ds-ac-card__body">
+          <div class="ds-ac-metrics">
+            <div class="ds-ac-metric"><span class="ds-ac-metric__val">Unknown</span><span class="ds-ac-metric__label">Drift source (before)</span></div>
+            <div class="ds-ac-metric"><span class="ds-ac-metric__val ds-ac-metric__val--success">&lt; 2 hr</span><span class="ds-ac-metric__label">Rollback time (after)</span></div>
+            <div class="ds-ac-metric"><span class="ds-ac-metric__val">100%</span><span class="ds-ac-metric__label">Score distribution match</span></div>
+          </div>
+          <div class="ds-ac-card__rows">
+            <div class="ds-ac-card__row">
+              <div class="ds-ac-card__row-label ds-ac-card__row-label--before">Before</div>
+              <p class="ds-ac-card__row-text">Preprocessing pipeline update produced inconsistent scores in production · No way to trace which version caused the score drift · Engineers spent days reconstructing execution history manually.</p>
+            </div>
+            <div class="ds-ac-card__row">
+              <div class="ds-ac-card__row-label ds-ac-card__row-label--after">After</div>
+              <p class="ds-ac-card__row-text">Run Binding linked every score to its exact Release State · Rollback to stable state completed in under 2 hours · No manual reconstruction required.</p>
+            </div>
+            <div class="ds-ac-card__row">
+              <div class="ds-ac-card__row-label ds-ac-card__row-label--diff">What Changed</div>
+              <p class="ds-ac-card__row-text">Normalization logic updated across the preprocessing step · Feature scaling range shifted by 12% · Release State diff identified both changes with exact pipeline version reference.</p>
+            </div>
+            <div class="ds-ac-card__row">
+              <div class="ds-ac-card__row-label ds-ac-card__row-label--reproduce">Reproduce</div>
+              <p class="ds-ac-card__row-text">Stable release re-run confirmed · Score distribution matched baseline output · Run Binding record archived for future regression checks.</p>
+            </div>
+          </div>
+          <div class="ds-card__tags">
+            <span class="ds-card__tag">State Card</span>
+            <span class="ds-card__tag">Change Log</span>
+            <span class="ds-card__tag">Re-run Record</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 3: Manufacturing -->
+      <article class="ds-ac-card" data-tag="data">
+        <div class="ds-ac-card__header" onclick="toggleAcCard(this)">
+          <div class="ds-ac-card__title-wrap">
+            <div class="ds-ac-card__industry">
+              <span class="ds-ac-card__industry-dot" style="background-color: var(--ds-ev-data-color)"></span>
+              Manufacturing
+            </div>
+            <div class="ds-ac-card__title">Quality inspection model — rare defect class coverage</div>
+          </div>
+          <div class="ds-ac-card__meta">
+            <span class="ds-badge ds-badge--success">Data Usability</span>
+            <span class="ds-badge ds-badge--success">Imbalanced Dataset</span>
+            <span class="ds-badge ds-badge--success">AI-Ready Data</span>
+          </div>
+          <div class="ds-ac-card__toggle" aria-label="Toggle card"><span class="ds-ac-card__toggle-icon"></span></div>
+        </div>
+        <div class="ds-ac-card__body">
+          <div class="ds-ac-metrics">
+            <div class="ds-ac-metric"><span class="ds-ac-metric__val">3</span><span class="ds-ac-metric__label">Underrepresented classes</span></div>
+            <div class="ds-ac-metric"><span class="ds-ac-metric__val ds-ac-metric__val--success">Closed</span><span class="ds-ac-metric__label">Coverage gap (after DTS)</span></div>
+            <div class="ds-ac-metric"><span class="ds-ac-metric__val">↑ Recall</span><span class="ds-ac-metric__label">Defect detection</span></div>
+          </div>
+          <div class="ds-ac-card__rows">
+            <div class="ds-ac-card__row">
+              <div class="ds-ac-card__row-label ds-ac-card__row-label--before">Before</div>
+              <p class="ds-ac-card__row-text">Rare defect class underrepresented in training data. Model missed edge cases in production — the gap was invisible until incidents occurred on the line.</p>
+            </div>
+            <div class="ds-ac-card__row">
+              <div class="ds-ac-card__row-label ds-ac-card__row-label--after">After</div>
+              <p class="ds-ac-card__row-text">DTS generated privacy-safe synthetic samples for the 3 underrepresented classes using differential privacy. Coverage gap closed before next training cycle.</p>
+            </div>
+            <div class="ds-ac-card__row">
+              <div class="ds-ac-card__row-label ds-ac-card__row-label--diff">What Changed</div>
+              <p class="ds-ac-card__row-text">3 underrepresented defect classes augmented with DP-safe synthetic data · Class distribution rebalanced · Augmented dataset versioned within SynTitan Release State.</p>
+            </div>
+            <div class="ds-ac-card__row">
+              <div class="ds-ac-card__row-label ds-ac-card__row-label--reproduce">Reproduce</div>
+              <p class="ds-ac-card__row-text">Augmented dataset versioned and bound to Release State · Same training run reproducible on demand · Defect detection recall improved and verified against holdout.</p>
+            </div>
+          </div>
+          <div class="ds-card__tags">
+            <span class="ds-card__tag">State Card</span>
+            <span class="ds-card__tag">Dataset Version</span>
+            <span class="ds-card__tag">Re-run Record</span>
+            <span class="ds-card__tag">Class Dist. Log</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 4: Healthcare -->
+      <article class="ds-ac-card" data-tag="data">
+        <div class="ds-ac-card__header" onclick="toggleAcCard(this)">
+          <div class="ds-ac-card__title-wrap">
+            <div class="ds-ac-card__industry">
+              <span class="ds-ac-card__industry-dot" style="background-color: var(--ds-ev-data-color)"></span>
+              Healthcare
+            </div>
+            <div class="ds-ac-card__title">Clinical AI validation — restricted patient data replacement</div>
+          </div>
+          <div class="ds-ac-card__meta">
+            <span class="ds-badge ds-badge--success">Data Usability</span>
+          </div>
+          <div class="ds-ac-card__toggle" aria-label="Toggle card"><span class="ds-ac-card__toggle-icon"></span></div>
+        </div>
+        <div class="ds-ac-card__body">
+          <div class="ds-ac-metrics">
+            <div class="ds-ac-metric"><span class="ds-ac-metric__val">Blocked</span><span class="ds-ac-metric__label">Validation status (before)</span></div>
+            <div class="ds-ac-metric"><span class="ds-ac-metric__val ds-ac-metric__val--success">Unblocked</span><span class="ds-ac-metric__label">Validation status (after)</span></div>
+            <div class="ds-ac-metric"><span class="ds-ac-metric__val">DP</span><span class="ds-ac-metric__label">Differential privacy applied</span></div>
+          </div>
+          <div class="ds-ac-card__rows">
+            <div class="ds-ac-card__row">
+              <div class="ds-ac-card__row-label ds-ac-card__row-label--before">Before</div>
+              <p class="ds-ac-card__row-text">Real patient records required for model validation could not be accessed due to HIPAA compliance constraints · Validation pipeline stalled · No way to test model behavior on realistic distributions.</p>
+            </div>
+            <div class="ds-ac-card__row">
+              <div class="ds-ac-card__row-label ds-ac-card__row-label--after">After</div>
+              <p class="ds-ac-card__row-text">DTS generated differential-privacy synthetic patient records that matched real distribution characteristics without containing any real identifiable information. Validation unblocked.</p>
+            </div>
+            <div class="ds-ac-card__row">
+              <div class="ds-ac-card__row-label ds-ac-card__row-label--diff">What Changed</div>
+              <p class="ds-ac-card__row-text">Non-accessible real records replaced with DP-safe synthetic equivalents · Data distribution preserved · Compliance review passed · Validation pipeline resumed without modification.</p>
+            </div>
+            <div class="ds-ac-card__row">
+              <div class="ds-ac-card__row-label ds-ac-card__row-label--reproduce">Reproduce</div>
+              <p class="ds-ac-card__row-text">Synthetic dataset versioned in SynTitan · Validation run reproducible with same synthetic distribution on demand · Audit trail maintained throughout.</p>
+            </div>
+          </div>
+          <div class="ds-card__tags">
+            <span class="ds-card__tag">State Card</span>
+            <span class="ds-card__tag">DP Audit Log</span>
+            <span class="ds-card__tag">Dataset Version</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 5: Insurance — Secure LLM -->
+      <article class="ds-ac-card" data-tag="secure">
+        <div class="ds-ac-card__header" onclick="toggleAcCard(this)">
+          <div class="ds-ac-card__title-wrap">
+            <div class="ds-ac-card__industry">
+              <span class="ds-ac-card__industry-dot" style="background-color: var(--ds-ev-secure-color)"></span>
+              Insurance
+            </div>
+            <div class="ds-ac-card__title">LLM-assisted claims processing — PII leakage prevention</div>
+          </div>
+          <div class="ds-ac-card__meta">
+            <span class="ds-badge ds-badge--purple">Secure LLM Usage</span>
+            <span class="ds-badge ds-badge--purple">Enterprise LLM Search</span>
+            <span class="ds-badge ds-badge--purple">PII Protection</span>
+          </div>
+          <div class="ds-ac-card__toggle" aria-label="Toggle card"><span class="ds-ac-card__toggle-icon"></span></div>
+        </div>
+        <div class="ds-ac-card__body">
+          <div class="ds-ac-metrics">
+            <div class="ds-ac-metric"><span class="ds-ac-metric__val">Exposed</span><span class="ds-ac-metric__label">PII in LLM prompts (before)</span></div>
+            <div class="ds-ac-metric"><span class="ds-ac-metric__val ds-ac-metric__val--success">0</span><span class="ds-ac-metric__label">PII fields in prompts (after)</span></div>
+            <div class="ds-ac-metric"><span class="ds-ac-metric__val">Preserved</span><span class="ds-ac-metric__label">Output usability</span></div>
+          </div>
+          <div class="ds-ac-card__rows">
+            <div class="ds-ac-card__row">
+              <div class="ds-ac-card__row-label ds-ac-card__row-label--before">Before</div>
+              <p class="ds-ac-card__row-text">Claims documents containing policyholder names, ID numbers, and medical details were passed directly to an external LLM API. Compliance team blocked the workflow pending a PII solution.</p>
+            </div>
+            <div class="ds-ac-card__row">
+              <div class="ds-ac-card__row-label ds-ac-card__row-label--after">After</div>
+              <p class="ds-ac-card__row-text">LLM Capsule intercepted prompts, detected and anonymized all PII fields before submission to the LLM. Outputs returned with anonymized tokens re-mapped for downstream use.</p>
+            </div>
+            <div class="ds-ac-card__row">
+              <div class="ds-ac-card__row-label ds-ac-card__row-label--diff">What Changed</div>
+              <p class="ds-ac-card__row-text">LLM Capsule layer inserted into the workflow. PII detection covered names, IDs, dates, and medical field patterns. Zero identified PII fields reached the external API.</p>
+            </div>
+            <div class="ds-ac-card__row">
+              <div class="ds-ac-card__row-label ds-ac-card__row-label--reproduce">Reproduce</div>
+              <p class="ds-ac-card__row-text">Each anonymization run logged and bound to SynTitan Release State. Workflow reproducible with same anonymization logic for audit and regression verification.</p>
+            </div>
+          </div>
+          <div class="ds-card__tags">
+            <span class="ds-card__tag">State Card</span>
+            <span class="ds-card__tag">PII Detect Log</span>
+            <span class="ds-card__tag">Anonymization Map</span>
+            <span class="ds-card__tag">Re-run Record</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 6: Retail / E-commerce -->
+      <article class="ds-ac-card" data-tag="stable">
+        <div class="ds-ac-card__header" onclick="toggleAcCard(this)">
+          <div class="ds-ac-card__title-wrap">
+            <div class="ds-ac-card__industry">
+              <span class="ds-ac-card__industry-dot" style="background-color: var(--ds-ev-stable-color)"></span>
+              Retail / E-commerce
+            </div>
+            <div class="ds-ac-card__title">Recommendation engine — runtime environment drift</div>
+          </div>
+          <div class="ds-ac-card__meta">
+            <span class="ds-badge ds-badge--neutral">Execution Stability</span>
+            <span class="ds-badge ds-badge--purple">Personalization Systems</span>
+          </div>
+          <div class="ds-ac-card__toggle" aria-label="Toggle card"><span class="ds-ac-card__toggle-icon"></span></div>
+        </div>
+        <div class="ds-ac-card__body">
+          <div class="ds-ac-metrics">
+            <div class="ds-ac-metric"><span class="ds-ac-metric__val">Days</span><span class="ds-ac-metric__label">Debugging time (before)</span></div>
+            <div class="ds-ac-metric"><span class="ds-ac-metric__val ds-ac-metric__val--success">&lt; 3 hr</span><span class="ds-ac-metric__label">Root cause identified (after)</span></div>
+            <div class="ds-ac-metric"><span class="ds-ac-metric__val">Exact</span><span class="ds-ac-metric__label">Environment reproduced</span></div>
+          </div>
+          <div class="ds-ac-card__rows">
+            <div class="ds-ac-card__row">
+              <div class="ds-ac-card__row-label ds-ac-card__row-label--before">Before</div>
+              <p class="ds-ac-card__row-text">Recommendation scores degraded after a routine infrastructure upgrade. Engineers could not reproduce the pre-upgrade behavior — all runtime parameters had changed and were not recorded.</p>
+            </div>
+            <div class="ds-ac-card__row">
+              <div class="ds-ac-card__row-label ds-ac-card__row-label--after">After</div>
+              <p class="ds-ac-card__row-text">SynTitan's Run Binding captured every runtime parameter at execution time · Pre-upgrade Release State re-run in under 3 hours · Exact recommendation distribution confirmed and compared.</p>
+            </div>
+            <div class="ds-ac-card__row">
+              <div class="ds-ac-card__row-label ds-ac-card__row-label--diff">What Changed</div>
+              <p class="ds-ac-card__row-text">Library version bump changed default float precision handling · Embedding normalization behavior altered · Release State diff identified the exact library version delta.</p>
+            </div>
+            <div class="ds-ac-card__row">
+              <div class="ds-ac-card__row-label ds-ac-card__row-label--reproduce">Reproduce</div>
+              <p class="ds-ac-card__row-text">Pre-upgrade run reproduced exactly · Score distribution delta measured and confirmed · Infrastructure team patched and validated against reproduced baseline.</p>
+            </div>
+          </div>
+          <div class="ds-card__tags">
+            <span class="ds-card__tag">State Card</span>
+            <span class="ds-card__tag">Runtime Snapshot</span>
+            <span class="ds-card__tag">Change Log</span>
+            <span class="ds-card__tag">Re-run Record</span>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- Overlap Note -->
+    <div class="ds-banner ds-mt-xl">
+      <p>SynTitan performs data quality refinement as part of execution stability.</p>
+      <p class="ds-mt-xs">SynTitan can use a subset of DTS capabilities when privacy-safe synthetic data is needed, while DTS is a full standalone enterprise synthetic data engine.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ SECTION 3: TECHNICAL ARTIFACTS ═══ -->
+<section class="ds-section" id="section-artifacts">
+  <div class="ds-container">
+    <div class="ds-section-header ds-section-header--underline">
+      <h2 class="ds-section-header__title">What <span class="ds-text--brand">traceability</span> looks like in practice.</h2>
+      <p class="ds-section-header__description">Every SynTitan run produces structured artifacts — inspectable · comparable · reproducible.<br>These are the operational records teams use for incident response and regression verification.</p>
+    </div>
+
+    <div class="ds-card-grid ds-card-grid--2col">
+
+      <div class="ds-card">
+        <span class="ds-card__badge ds-card__badge--brand">Release State Diff</span>
+        <h3 class="ds-card__title ds-card__title--sm">Release State Comparison</h3>
+        <p class="ds-card__description">When output behavior changes between runs, SynTitan diffs the two Release States to surface exactly which execution condition changed.</p>
+        <div class="ds-code-block" aria-label="Release State diff code example">
+          <div class="ds-code--muted">// Release State diff: RS-0041 → RS-0042</div>
+          <div class="ds-code--remove">− schema.feature_col_7: dtype=int64</div>
+          <div class="ds-code--add">+ schema.feature_col_7: dtype=object</div>
+          <div class="ds-code--muted">// 1 schema fingerprint change detected</div>
+          <div class="ds-code--muted">// preprocessing.normalization_v: 1.2.1 → 1.3.0</div>
+          <div class="ds-code--warn">! Run Binding: RS-0042 flagged before production</div>
+        </div>
+        <p class="ds-card__description"><strong>Root cause:</strong></p>
+        <ul class="ds-bullet ds-bullet--dot ds-mt-xs">
+          <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Feature column type coerced from integer to string upstream</li>
+          <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Preprocessing normalization version updated in the same window</li>
+        </ul>
+        <p class="ds-card__description ds-mt-xs"><strong>Resolution:</strong></p>
+        <ul class="ds-bullet ds-bullet--dot ds-mt-xs">
+          <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Restored prior schema type constraint</li>
+          <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Pinned preprocessing version in Release State</li>
+        </ul>
+      </div>
+
+      <div class="ds-card">
+        <span class="ds-card__badge ds-card__badge--brand">Schema Fingerprint Log</span>
+        <h3 class="ds-card__title ds-card__title--sm">Schema Fingerprint Change</h3>
+        <p class="ds-card__description">SynTitan captures a schema fingerprint at each ingestion. When the fingerprint changes, it is logged in the Release State and surfaced in the Change Log before the run proceeds.</p>
+        <div class="ds-code-block" aria-label="Schema fingerprint log code example">
+          <div class="ds-code--muted">// Schema fingerprint audit log</div>
+          <div>run_id: r-20240318-084501</div>
+          <div>release_state: RS-0041</div>
+          <div class="ds-code--remove">schema_fingerprint: CHANGED</div>
+          <div class="ds-code--muted">prev: sha256:a4f2b...3c91</div>
+          <div class="ds-code--warn">curr: sha256:d9e7a...11fa</div>
+          <div class="ds-code--muted">// columns_added: 0</div>
+          <div class="ds-code--remove">// columns_removed: 2 [user_segment_v2, tenure_bucket]</div>
+          <div class="ds-code--muted">// type_changes: 1</div>
+        </div>
+        <p class="ds-card__description"><strong>Root cause:</strong></p>
+        <ul class="ds-bullet ds-bullet--dot ds-mt-xs">
+          <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Upstream data feed removed two feature columns without downstream notification</li>
+        </ul>
+        <p class="ds-card__description ds-mt-xs"><strong>Resolution:</strong></p>
+        <ul class="ds-bullet ds-bullet--dot ds-mt-xs">
+          <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Run halted before training</li>
+          <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Schema contract enforced</li>
+          <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Upstream notified within the same hour</li>
+        </ul>
+      </div>
+
+      <div class="ds-card">
+        <span class="ds-card__badge ds-card__badge--brand">Preprocessing Diff</span>
+        <h3 class="ds-card__title ds-card__title--sm">Preprocessing Logic Change</h3>
+        <p class="ds-card__description">Preprocessing steps are versioned inside each Release State. When logic changes — normalization, imputation, encoding — the diff shows exactly which step changed and what the expected effect is.</p>
+        <div class="ds-code-block" aria-label="Preprocessing diff code example">
+          <div class="ds-code--muted">// Preprocessing diff: RS-0042 → RS-0043</div>
+          <div class="ds-code--remove">− step: normalize_amount</div>
+          <div class="ds-code--remove">&nbsp;&nbsp;method: min-max&nbsp; range: [0, 1000]</div>
+          <div class="ds-code--add">+ step: normalize_amount</div>
+          <div class="ds-code--add">&nbsp;&nbsp;method: z-score&nbsp; params: μ=0, σ=1</div>
+          <div class="ds-code--warn">! normalization method changed</div>
+          <div class="ds-code--muted">// all downstream feature scores affected</div>
+        </div>
+        <p class="ds-card__description"><strong>Root cause:</strong></p>
+        <ul class="ds-bullet ds-bullet--dot ds-mt-xs">
+          <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Normalization method switched from min-max to z-score — changing the scale of all downstream feature inputs</li>
+        </ul>
+        <p class="ds-card__description ds-mt-xs"><strong>Resolution:</strong></p>
+        <ul class="ds-bullet ds-bullet--dot ds-mt-xs">
+          <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Reverted to prior Release State for immediate rollback</li>
+          <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>New method evaluated in staging before reintroduction</li>
+        </ul>
+      </div>
+
+      <div class="ds-card">
+        <span class="ds-card__badge ds-card__badge--brand">Runtime Dependency Log</span>
+        <h3 class="ds-card__title ds-card__title--sm">Runtime Dependency Change</h3>
+        <p class="ds-card__description">Runtime environment versions — libraries, Python runtime, inference server — are captured in each Release State. Unexpected version changes are surfaced as execution state drift events.</p>
+        <div class="ds-code-block" aria-label="Runtime dependency audit code example">
+          <div class="ds-code--muted">// Runtime dependency audit: RS-0043</div>
+          <div class="ds-code--remove">− sklearn: 1.2.2</div>
+          <div class="ds-code--add">+ sklearn: 1.4.0</div>
+          <div class="ds-code--remove">− pandas: 1.5.3</div>
+          <div class="ds-code--add">+ pandas: 2.1.0</div>
+          <div class="ds-code--warn">! 2 runtime dependencies changed</div>
+          <div class="ds-code--warn">! imputation behavior may differ</div>
+        </div>
+        <p class="ds-card__description"><strong>Root cause:</strong></p>
+        <ul class="ds-bullet ds-bullet--dot ds-mt-xs">
+          <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Container image updated in CI/CD pipeline without version-pinning the AI dependencies</li>
+        </ul>
+        <p class="ds-card__description ds-mt-xs"><strong>Resolution:</strong></p>
+        <ul class="ds-bullet ds-bullet--dot ds-mt-xs">
+          <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Dependency versions pinned in Release State manifest</li>
+          <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Container image rebuild triggered with verified versions</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="ds-banner ds-mt-xl">
+      <p>These artifact types are produced by SynTitan during every AI run.<br>State Cards · Change Logs · Schema Diffs · Preprocessing Diffs · Re-run Records — all standard outputs, not manual reports.</p>
+      <a href="/syntitan" class="ds-artifact-link">See execution state comparison →</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ SECTION 4: SaaS DIFFERENTIATOR ═══ -->
+<section class="ds-section" id="section-saas-diff">
+  <div class="ds-container">
+    <div class="ds-banner--full ds-bg--peach">
+      <p style="position:relative;z-index:1">Databricks versioned the data · MLflow tracked the model · The AI still broke in production.<br><strong>Because neither tool versions the data state the model was bound to at run time.</strong><br>SynTitan does. That's the difference these cases reflect.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SECTION 5: ARCHITECTURE CTA ═══ -->
+<section class="ds-section ds-section--bg-img ds-bg--paint-blue" id="section-arch-cta">
+  <div class="ds-container">
+    <div class="ds-section-header ds-section-header--underline">
+      <h2 class="ds-section-header__title">Want to see <span class="ds-text--brand">how it works</span> inside your stack?</h2>
+      <p class="ds-section-header__description">Schedule an architecture walkthrough. We'll map your current AI execution conditions against the Release State and Run Binding model — and show you exactly where reproducibility breaks down.</p>
+    </div>
+    <div class="ds-arch-cta-actions">
+      <a href="/cdn-cgi/l/email-protection#e3808c8d97828097a38096818a84cd828a" class="ds-btn ds-btn--primary ds-btn--md">Request Walkthrough →</a>
+      <a href="https://syntitan.ai" class="ds-btn ds-btn--secondary ds-btn--md">Try SynTitan →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SECTION 6: BUSINESS IMPACT ═══ -->
+<section class="ds-section" id="section-business-impact">
+  <div class="ds-container">
+    <div class="ds-section-header ds-section-header--underline">
+      <h2 class="ds-section-header__title">What changes when AI execution is <span class="ds-text--brand">reproducible.</span></h2>
+      <p class="ds-section-header__description">These are the business outcomes the operational evidence demonstrates — not theoretical capabilities, but changes documented in production deployments.</p>
+    </div>
+
+    <div class="ds-card-grid ds-card-grid--3col">
+
+      <div class="ds-card ds-card--highlight">
+        <p class="ds-card__subtitle">Incident Recovery</p>
+        <div class="ds-card__value">21 days → &lt;4h</div>
+        <p class="ds-card__description">Root cause identification time · Schema change detected at ingestion via Release State · Incident resolved before next training run.</p>
+      </div>
+
+      <div class="ds-card ds-card--highlight">
+        <p class="ds-card__subtitle">Data Usability Improvement</p>
+        <div class="ds-card__value">+30pp F1</div>
+        <p class="ds-card__description">Model accuracy improvement after DTS fixed class imbalance · Rare defect class augmented with privacy-safe synthetic data · Deploy time cut from 4 weeks to 1 day.</p>
+      </div>
+
+      <div class="ds-card ds-card--highlight">
+        <p class="ds-card__subtitle">LLM Adoption Unblocked</p>
+        <div class="ds-card__value">98.1%</div>
+        <p class="ds-card__description">PII detection accuracy in enterprise prompts. Compliance-blocked LLM projects unblocked without sacrificing data usability or audit requirements.</p>
+      </div>
+
+      <div class="ds-card ds-card--highlight">
+        <p class="ds-card__subtitle">Rollback Speed</p>
+        <div class="ds-card__value">&lt;2h rollback</div>
+        <p class="ds-card__description">Run Binding enabled stable-state re-execution after preprocessing drift caused inference inconsistency · Prior Release State re-run confirmed · Score distribution matched baseline.</p>
+      </div>
+
+      <div class="ds-card ds-card--highlight">
+        <p class="ds-card__subtitle">Compliance-safe AI Data</p>
+        <div class="ds-card__value">277K records</div>
+        <p class="ds-card__description">DP-safe synthetic records generated to replace retention-deleted data · F1 churn model reached 0.92 · Zero real customer data accessed or exported · Full regulatory compliance.</p>
+      </div>
+
+      <div class="ds-card--brand-tint">
+        <p class="ds-card__subtitle">Common Thread</p>
+        <p>Each case reduced <strong>deployment risk</strong>, <strong>incident investigation time</strong>, or <strong>AI adoption blockers</strong> — without replacing existing data infrastructure.</p>
+        <a href="/cdn-cgi/l/email-protection#6f0c00011b0e0c1b2f0c1a0d0608410e06" class="ds-btn ds-btn--ghost">Talk to our engineers →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SECTION 7: FAQ ═══ -->
+<section class="ds-section" id="section-faq">
+  <div class="ds-container">
+    <div class="ds-section-header ds-section-header--underline">
+      <h2 class="ds-section-header__title">Common <span class="ds-text--brand">questions</span></h2>
+    </div>
+
+    <div class="ds-faq-list">
+
+      <div class="ds-faq-item ds-faq--open">
+        <div class="ds-faq-q" onclick="toggleFaq(this)">
+          What does "reproducible AI execution" mean in production?
+          <div class="ds-faq-toggle" aria-label="Toggle answer"><span class="ds-faq-toggle-icon"></span></div>
+        </div>
+        <div class="ds-faq-a">
+          Reproducible AI execution means that any past AI run can be re-executed under the exact same data, environment, and pipeline conditions — returning the same result. SynTitan achieves this through Release State and Run Binding, which lock execution conditions at every run. When something breaks in production, you don't debug blind — you diff the states and reproduce the last known-good run.
+        </div>
+      </div>
+
+      <div class="ds-faq-item">
+        <div class="ds-faq-q" onclick="toggleFaq(this)">
+          What is a Release State in SynTitan?
+          <div class="ds-faq-toggle" aria-label="Toggle answer"><span class="ds-faq-toggle-icon"></span></div>
+        </div>
+        <div class="ds-faq-a">
+          A Release State is a versioned snapshot of all execution conditions at the time of an AI run — including data schema, pipeline configuration, feature set, and runtime parameters. It enables diff between states to trace what changed and re-run the same conditions for incident response and regression verification.
+        </div>
+      </div>
+
+      <div class="ds-faq-item">
+        <div class="ds-faq-q" onclick="toggleFaq(this)">
+          How does DTS solve the unusable data problem?
+          <div class="ds-faq-toggle" aria-label="Toggle answer"><span class="ds-faq-toggle-icon"></span></div>
+        </div>
+        <div class="ds-faq-a">
+          DTS generates privacy-safe synthetic data using differential privacy to fill coverage gaps, fix class imbalance, and replace non-accessible data. It operates as a standalone engine or integrates with SynTitan for end-to-end execution stability.
+        </div>
+      </div>
+
+      <div class="ds-faq-item">
+        <div class="ds-faq-q" onclick="toggleFaq(this)">
+          How does LLM Capsule protect sensitive data during LLM usage?
+          <div class="ds-faq-toggle" aria-label="Toggle answer"><span class="ds-faq-toggle-icon"></span></div>
+        </div>
+        <div class="ds-faq-a">
+          LLM Capsule detects sensitive fields including PII in prompts and outputs, anonymizes or shields them before LLM interaction, and preserves output usability for downstream workflows — all within SynTitan execution workflows.
+        </div>
+      </div>
+
+      <div class="ds-faq-item">
+        <div class="ds-faq-q" onclick="toggleFaq(this)">
+          What is the difference between SynTitan and DTS?
+          <div class="ds-faq-toggle" aria-label="Toggle answer"><span class="ds-faq-toggle-icon"></span></div>
+        </div>
+        <div class="ds-faq-a">
+          SynTitan performs data quality refinement as part of execution stability. SynTitan can use a subset of DTS capabilities when privacy-safe synthetic data is needed, while DTS is a full standalone enterprise synthetic data engine.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ═══ SECTION 8: FINAL CTA ═══ -->
+<section class="ds-cta-band ds-bg--wave-teal" id="section-final-cta">
+  <div class="ds-cta-band__inner">
+    <h2 class="ds-cta-band__title">Make your AI runs <span class="ds-text--brand">reproducible.</span></h2>
+    <p class="ds-cta-band__description">Every production AI failure has a root cause.<br>Find it fast · Fix it correctly · Prevent recurrence — the same infrastructure is available now.</p>
+    <div class="ds-cta-band__actions">
+      <a href="https://syntitan.ai" class="ds-btn ds-btn--md">Start evaluation →</a>
+      <a href="/cdn-cgi/l/email-protection#32515d5c46535146725147505b551c535b" class="ds-btn ds-btn--md">Run a technical demo →</a>
+      <a href="/learn/why-ai-fails-after-deployment" class="ds-btn ds-btn--md">Explore concept: Why AI fails →</a>
+    </div>
+    <p class="ds-cta-band__footnote">30-min architecture review · engineers-first · no sales pitch</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="ds-footer">
+  <div class="ds-footer__inner">
+    <div>
+      <div class="ds-footer__brand">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M10 0.5L19.5 10L10 19.5L0.5 10Z" class="ds-svg--stroke-primary" stroke-width="1.2"/><path d="M10 4L16 10L10 16L4 10Z" class="ds-svg--stroke-primary" stroke-width="0.9"/><path d="M10 7L12.5 10L10 13L7.5 10Z" class="ds-svg--fill-primary"/></svg>
+        CUBIG
+      </div>
+      <p class="ds-footer__tagline">AI-ready data infrastructure for enterprise AI.</p>
+      <p class="ds-footer__address">Korea: 4F, NAVER 1784, 95 Jeongjail-ro,<br>Bundang-gu, Seongnam-si<br>UK: 21 Arthur Street, Belfast BT1 4GA</p>
+    </div>
+    <div>
+      <div class="ds-footer__col-title">Platform</div>
+      <ul class="ds-footer__links"><li><a href="/syntitan">SynTitan</a></li></ul>
+    </div>
+    <div>
+      <div class="ds-footer__col-title">Capabilities</div>
+      <ul class="ds-footer__links"><li><a href="/dts">DTS</a></li><li><a href="/llm-capsule">LLM Capsule</a></li></ul>
+    </div>
+    <div>
+      <div class="ds-footer__col-title">Learn</div>
+      <ul class="ds-footer__links">
+        <li><a href="/learn/ai-ready-data-infrastructure">AI-Ready Data Infrastructure</a></li>
+        <li><a href="/learn/release-state">Release State</a></li>
+        <li><a href="/learn/articles">Articles</a></li>
+        <li><a href="/learn/glossary">Glossary</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="ds-footer__col-title">Company</div>
+      <ul class="ds-footer__links">
+        <li><a href="/company">About</a></li>
+        <li><a href="/proof">Proof</a></li>
+        <li><a href="/cdn-cgi/l/email-protection#385b57564c595b4c785b4d5a515f165951">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ds-footer__bottom">
+    <span class="ds-footer__copy">© 2026 CUBIG Corp. All rights reserved.</span>
+    <span class="ds-footer__copy"><a href="/cdn-cgi/l/email-protection#492a26273d282a3d092a3c2b202e672820" class="ds-link--tertiary"><span class="__cf_email__" data-cfemail="ee8d81809a8f8d9aae8d9b8c8789c08f87">[email&#160;protected]</span></a></span>
+  </div>
+</footer>
+
+<script>
+function toggleAcCard(header) {
+  const card = header.closest('.ds-ac-card');
+  card.classList.toggle('ds-ac--open');
+}
+function toggleFaq(q) {
+  const item = q.closest('.ds-faq-item');
+  item.classList.toggle('ds-faq--open');
+}
+function setFilter(tag, btn) {
+  document.querySelectorAll('.ds-filter-btn').forEach(b => b.classList.remove('ds-filter--active'));
+  btn.classList.add('ds-filter--active');
+  const cards = document.querySelectorAll('.ds-ac-card[data-tag]');
+  let count = 0;
+  cards.forEach(card => {
+    if (tag === 'all' || card.dataset.tag === tag) {
+      card.style.display = '';
+      count++;
+    } else {
+      card.style.display = 'none';
+    }
+  });
+  const el = document.getElementById('ev-count');
+  if (el) el.textContent = count + ' records · filtered: ' + tag;
+}
+</script>
+</body>
+</html>

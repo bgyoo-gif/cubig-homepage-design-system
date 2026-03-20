@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 04 — Prompt Flow (How It Works) Preview</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@700&family=Fragment+Mono&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; padding: 0; font-family: "DM Sans", sans-serif; background: #fff; }
+
+    .s4-section {
+      width: 100%;
+      padding: 80px 0;
+      font-family: "DM Sans", sans-serif;
+      color: #0f0f0f;
+      background-color: #f7f7f7;
+      -webkit-font-smoothing: antialiased;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+    .s4-container {
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 16px;
+      box-sizing: border-box;
+    }
+    .s4-section-header {
+      margin-bottom: 48px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid #e6e7e9;
+    }
+    .s4-eyebrow {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #636363;
+      margin-bottom: 12px;
+    }
+    .s4-section-title {
+      font-family: "DM Sans", sans-serif;
+      font-size: 36px;
+      font-weight: 700;
+      color: #0f0f0f;
+      line-height: 1.2;
+      letter-spacing: -1px;
+      margin: 0 0 16px;
+    }
+    .s4-title-brand {
+      background: linear-gradient(130deg, #6C54A0, #b44fcc 50%, #ff266a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .s4-section-desc {
+      font-size: 16px;
+      color: #636363;
+      line-height: 1.7;
+      margin: 0;
+      max-width: 640px;
+    }
+    .s4-flow {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+    .s4-card {
+      background: #ffffff;
+      border: 1px solid #e6e7e9;
+      border-radius: 16px;
+      padding: 32px;
+    }
+    .s4-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .s4-badge--red { background-color: #ffeaea; color: #c0392b; }
+    .s4-badge--brand { background-color: #f0ecff; color: #6C54A0; }
+    .s4-badge--teal { background-color: #e6f9f5; color: #0d7a5f; }
+    .s4-card-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #0f0f0f;
+      margin: 0 0 16px;
+    }
+    .s4-code-block {
+      background: #f7f7f7;
+      border: 1px solid #e6e7e9;
+      border-radius: 10px;
+      padding: 20px;
+      font-family: "Fragment Mono", monospace;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #0f0f0f;
+    }
+    .s4-code-pii {
+      background: #ffeaea;
+      color: #c0392b;
+      border-radius: 4px;
+      padding: 1px 5px;
+    }
+    .s4-code-masked {
+      background: #e6f0ff;
+      color: #3061f2;
+      border-radius: 4px;
+      padding: 1px 5px;
+    }
+    .s4-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 20px 16px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #636363;
+      text-align: center;
+    }
+    .s4-arrow-icon {
+      font-size: 18px;
+      color: #a617ff;
+    }
+
+    @media (min-width: 768px) {
+      .s4-container { padding: 0 32px; }
+      .s4-section-title { font-size: 42px; }
+    }
+    @media (min-width: 1024px) {
+      .s4-container { padding: 0 32px; }
+      .s4-section-title { font-size: 48px; }
+    }
+    @media (min-width: 1440px) {
+      .s4-container { padding: 0 120px; max-width: 1440px; }
+    }
+  </style>
+</head>
+<body>
+  <section class="s4-section">
+    <div class="s4-container">
+      <div class="s4-section-header">
+        <span class="s4-eyebrow">How It Works</span>
+        <h2 class="s4-section-title">Sensitive data never <span class="s4-title-brand">reaches the LLM.</span></h2>
+        <p class="s4-section-desc">LLM Capsule sits between your application and the LLM API. Every prompt is intercepted, inspected, and cleaned before transmission.</p>
+      </div>
+      <div class="s4-flow">
+        <div class="s4-card">
+          <span class="s4-badge s4-badge--red">RAW PROMPT</span>
+          <h3 class="s4-card-title">Input — before LLM Capsule</h3>
+          <div class="s4-code-block">
+            Summarize the claim filed by <span class="s4-code-pii">John Martinez</span> (ID: <span class="s4-code-pii">P-8847211</span>) on <span class="s4-code-pii">March 3, 2025</span>. The patient's address is <span class="s4-code-pii">42 Elm Street, Chicago, IL 60601</span>. Diagnosis code: <span class="s4-code-pii">ICD-10: J45.20</span>.
+          </div>
+        </div>
+        <div class="s4-arrow"><span class="s4-arrow-icon">↓</span> LLM Capsule removes blockers / anonymizes / enables AI</div>
+        <div class="s4-card">
+          <span class="s4-badge s4-badge--brand">ANONYMIZED PROMPT</span>
+          <h3 class="s4-card-title">Sent to LLM — PII replaced with tokens</h3>
+          <div class="s4-code-block">
+            Summarize the claim filed by <span class="s4-code-masked">[PERSON_01]</span> (ID: <span class="s4-code-masked">[ID_01]</span>) on <span class="s4-code-masked">[DATE_01]</span>. The patient's address is <span class="s4-code-masked">[ADDRESS_01]</span>. Diagnosis code: <span class="s4-code-masked">[MED_CODE_01]</span>.
+          </div>
+        </div>
+        <div class="s4-arrow"><span class="s4-arrow-icon">↓</span> LLM processes anonymized prompt / returns response</div>
+        <div class="s4-card">
+          <span class="s4-badge s4-badge--teal">RE-MAPPED OUTPUT</span>
+          <h3 class="s4-card-title">Output — tokens re-mapped for downstream use</h3>
+          <div class="s4-code-block">
+            The claim filed by <span class="s4-code-masked">[PERSON_01]</span> on <span class="s4-code-masked">[DATE_01]</span> relates to a respiratory condition. The case is pending review. All PII tokens are preserved in the anonymization map for authorized downstream access.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

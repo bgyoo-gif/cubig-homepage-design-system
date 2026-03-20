@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 07 — Detection Coverage Preview</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; padding: 0; font-family: "DM Sans", sans-serif; background: #fff; }
+
+    .s7-section {
+      width: 100%;
+      padding: 80px 0;
+      font-family: "DM Sans", sans-serif;
+      color: #0f0f0f;
+      background-color: #ffffff;
+      -webkit-font-smoothing: antialiased;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+    .s7-container {
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+    .s7-section-header {
+      margin-bottom: 48px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid #e6e7e9;
+    }
+    .s7-eyebrow {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #636363;
+      margin-bottom: 12px;
+    }
+    .s7-section-title {
+      font-family: "DM Sans", sans-serif;
+      font-size: 36px;
+      font-weight: 700;
+      color: #0f0f0f;
+      line-height: 1.2;
+      letter-spacing: -1px;
+      margin: 0;
+    }
+    .s7-title-brand {
+      background: linear-gradient(130deg, #6C54A0, #b44fcc 50%, #ff266a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .s7-feature-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    .s7-feature-item {
+      background: #f7f7f7;
+      border: 1px solid #e6e7e9;
+      border-radius: 16px;
+      padding: 24px;
+    }
+    .s7-feature-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: #f0ecff;
+      font-family: "DM Sans", sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #6C54A0;
+      margin-bottom: 12px;
+    }
+    .s7-feature-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #0f0f0f;
+      margin: 0 0 12px;
+    }
+    .s7-tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .s7-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 10px;
+      background: #ffffff;
+      border: 1px solid #e6e7e9;
+      border-radius: 9999px;
+      font-size: 12px;
+      color: #636363;
+      font-weight: 500;
+    }
+
+    @media (min-width: 768px) {
+      .s7-container { padding: 0 32px; }
+      .s7-feature-grid { grid-template-columns: repeat(2, 1fr); }
+      .s7-section-title { font-size: 42px; }
+    }
+    @media (min-width: 1024px) {
+      .s7-container { padding: 0 32px; }
+      .s7-feature-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (min-width: 1440px) {
+      .s7-container { padding: 0 120px; max-width: 1440px; }
+    }
+  </style>
+</head>
+<body>
+  <section class="s7-section">
+    <div class="s7-container">
+      <div class="s7-section-header">
+        <span class="s7-eyebrow">Detection Coverage</span>
+        <h2 class="s7-section-title">What was blocking your AI. <span class="s7-title-brand">Now removed.</span></h2>
+      </div>
+      <div class="s7-feature-grid">
+        <div class="s7-feature-item">
+          <span class="s7-feature-icon" aria-label="Identity">ID</span>
+          <h3 class="s7-feature-title">Personal Identifiers</h3>
+          <div class="s7-tag-list">
+            <span class="s7-tag">Full Name</span>
+            <span class="s7-tag">Date of Birth</span>
+            <span class="s7-tag">National ID</span>
+            <span class="s7-tag">Passport No.</span>
+            <span class="s7-tag">Email Address</span>
+            <span class="s7-tag">Phone Number</span>
+            <span class="s7-tag">Home Address</span>
+          </div>
+        </div>
+        <div class="s7-feature-item">
+          <span class="s7-feature-icon" aria-label="Financial">$</span>
+          <h3 class="s7-feature-title">Financial Data</h3>
+          <div class="s7-tag-list">
+            <span class="s7-tag">Account Number</span>
+            <span class="s7-tag">Credit Card</span>
+            <span class="s7-tag">Routing Number</span>
+            <span class="s7-tag">Tax ID</span>
+            <span class="s7-tag">Transaction ID</span>
+            <span class="s7-tag">Policy Number</span>
+          </div>
+        </div>
+        <div class="s7-feature-item">
+          <span class="s7-feature-icon" aria-label="Medical">+</span>
+          <h3 class="s7-feature-title">Health &amp; Clinical</h3>
+          <div class="s7-tag-list">
+            <span class="s7-tag">Patient ID</span>
+            <span class="s7-tag">ICD Codes</span>
+            <span class="s7-tag">Diagnosis Terms</span>
+            <span class="s7-tag">Provider Name</span>
+            <span class="s7-tag">Clinical Dates</span>
+            <span class="s7-tag">Prescription Data</span>
+          </div>
+        </div>
+        <div class="s7-feature-item">
+          <span class="s7-feature-icon" aria-label="Organizational">B</span>
+          <h3 class="s7-feature-title">Enterprise Data</h3>
+          <div class="s7-tag-list">
+            <span class="s7-tag">Employee ID</span>
+            <span class="s7-tag">Internal Codes</span>
+            <span class="s7-tag">Customer ID</span>
+            <span class="s7-tag">Contract Number</span>
+            <span class="s7-tag">Project Code</span>
+          </div>
+        </div>
+        <div class="s7-feature-item">
+          <span class="s7-feature-icon" aria-label="Location">P</span>
+          <h3 class="s7-feature-title">Geographic Data</h3>
+          <div class="s7-tag-list">
+            <span class="s7-tag">Street Address</span>
+            <span class="s7-tag">Postcode / ZIP</span>
+            <span class="s7-tag">GPS Coordinates</span>
+            <span class="s7-tag">Region / State</span>
+          </div>
+        </div>
+        <div class="s7-feature-item">
+          <span class="s7-feature-icon" aria-label="Custom">*</span>
+          <h3 class="s7-feature-title">Enterprise-Defined Fields</h3>
+          <div class="s7-tag-list">
+            <span class="s7-tag">Custom Patterns</span>
+            <span class="s7-tag">Domain-Specific IDs</span>
+            <span class="s7-tag">Regex Rules</span>
+            <span class="s7-tag">Industry Codes</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

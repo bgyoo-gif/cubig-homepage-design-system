@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 14 — FAQ | LLM Capsule Framer Preview</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "DM Sans", sans-serif; -webkit-font-smoothing: antialiased; word-break: keep-all; overflow-wrap: break-word; }
+
+    .s14-section { width: 100%; padding: 80px 0; background-color: #ffffff; color: #0f0f0f; }
+    .s14-container { width: 100%; margin: 0 auto; padding: 0 16px; }
+    .s14-section-header { margin-bottom: 48px; padding-bottom: 24px; border-bottom: 1px solid #e6e7e9; }
+    .s14-eyebrow { display: block; font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #636363; margin-bottom: 12px; }
+    .s14-section-title { font-size: 36px; font-weight: 700; color: #0f0f0f; line-height: 1.2; letter-spacing: -1px; }
+    .s14-title-brand {
+      background: linear-gradient(130deg, #6C54A0, #b44fcc 50%, #ff266a);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .s14-ac-card { border-bottom: 1px solid #e6e7e9; overflow: hidden; }
+    .s14-ac-card:first-child { border-top: 1px solid #e6e7e9; }
+    .s14-ac-header {
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      padding: 20px 0; cursor: pointer; user-select: none; background: transparent; border: none; width: 100%; text-align: left;
+    }
+    .s14-ac-title { font-size: 16px; font-weight: 600; color: #0f0f0f; line-height: 1.4; }
+    .s14-ac-toggle {
+      display: flex; align-items: center; justify-content: center;
+      width: 28px; height: 28px; min-width: 28px; border-radius: 50%;
+      background: #f2f2f2; border: none; cursor: pointer; flex-shrink: 0;
+    }
+    .s14-ac-toggle-icon { display: block; width: 12px; height: 12px; position: relative; }
+    .s14-ac-toggle-icon::before,
+    .s14-ac-toggle-icon::after {
+      content: ''; position: absolute; background: #0f0f0f; border-radius: 2px; transition: transform 0.2s, opacity 0.2s;
+    }
+    .s14-ac-toggle-icon::before { width: 12px; height: 2px; top: 5px; left: 0; }
+    .s14-ac-toggle-icon::after { width: 2px; height: 12px; top: 0; left: 5px; }
+    .s14-ac-card.open .s14-ac-toggle-icon::after { opacity: 0; transform: rotate(90deg); }
+    .s14-ac-card.open .s14-ac-toggle { background: #eeebf9; }
+    .s14-ac-body { padding: 0 0 20px; display: none; }
+    .s14-ac-card.open .s14-ac-body { display: block; }
+    .s14-ac-answer { font-size: 15px; color: #636363; line-height: 1.7; max-width: 720px; }
+
+    @media (min-width: 768px) { .s14-container { padding: 0 32px; } .s14-section-title { font-size: 42px; } .s14-ac-title { font-size: 17px; } }
+    @media (min-width: 1024px) { .s14-container { padding: 0 32px; } .s14-section-title { font-size: 48px; } }
+    @media (min-width: 1440px) { .s14-container { padding: 0 120px; max-width: 1440px; } }
+  </style>
+</head>
+<body>
+  <section class="s14-section">
+    <div class="s14-container">
+      <div class="s14-section-header">
+        <span class="s14-eyebrow">FAQ</span>
+        <h2 class="s14-section-title">Common <span class="s14-title-brand">questions</span></h2>
+      </div>
+      <div>
+        <div class="s14-ac-card open">
+          <button class="s14-ac-header" onclick="toggleAc(this)" aria-expanded="true">
+            <span class="s14-ac-title">What is LLM Capsule?</span>
+            <span class="s14-ac-toggle" aria-hidden="true"><span class="s14-ac-toggle-icon"></span></span>
+          </button>
+          <div class="s14-ac-body">
+            <p class="s14-ac-answer">LLM Capsule is a security capability that protects sensitive data including PII during LLM usage. It detects sensitive fields in prompts and outputs, anonymizes or shields them before LLM interaction, and preserves output usability for downstream workflows — all within SynTitan execution workflows.</p>
+          </div>
+        </div>
+        <div class="s14-ac-card">
+          <button class="s14-ac-header" onclick="toggleAc(this)" aria-expanded="false">
+            <span class="s14-ac-title">What types of sensitive data does LLM Capsule detect?</span>
+            <span class="s14-ac-toggle" aria-hidden="true"><span class="s14-ac-toggle-icon"></span></span>
+          </button>
+          <div class="s14-ac-body">
+            <p class="s14-ac-answer">LLM Capsule detects PII including names, ID numbers, dates, addresses, medical terms, financial identifiers, and other sensitive field patterns in both prompts and LLM outputs. Enterprise-defined custom detection rules are also supported.</p>
+          </div>
+        </div>
+        <div class="s14-ac-card">
+          <button class="s14-ac-header" onclick="toggleAc(this)" aria-expanded="false">
+            <span class="s14-ac-title">Does LLM Capsule affect LLM output quality?</span>
+            <span class="s14-ac-toggle" aria-hidden="true"><span class="s14-ac-toggle-icon"></span></span>
+          </button>
+          <div class="s14-ac-body">
+            <p class="s14-ac-answer">No. LLM Capsule anonymizes sensitive tokens before submission and re-maps them in the output — preserving the semantic structure and usability of LLM responses for downstream workflows.</p>
+          </div>
+        </div>
+        <div class="s14-ac-card">
+          <button class="s14-ac-header" onclick="toggleAc(this)" aria-expanded="false">
+            <span class="s14-ac-title">Does LLM Capsule work with external LLM APIs?</span>
+            <span class="s14-ac-toggle" aria-hidden="true"><span class="s14-ac-toggle-icon"></span></span>
+          </button>
+          <div class="s14-ac-body">
+            <p class="s14-ac-answer">Yes. LLM Capsule is designed to intercept prompts before they reach external LLM APIs — ensuring no sensitive data leaves the enterprise perimeter.</p>
+          </div>
+        </div>
+        <div class="s14-ac-card">
+          <button class="s14-ac-header" onclick="toggleAc(this)" aria-expanded="false">
+            <span class="s14-ac-title">Does LLM Capsule support on-premise deployment?</span>
+            <span class="s14-ac-toggle" aria-hidden="true"><span class="s14-ac-toggle-icon"></span></span>
+          </button>
+          <div class="s14-ac-body">
+            <p class="s14-ac-answer">Yes. LLM Capsule supports full on-premise deployment for air-gapped, regulated, and security-restricted environments. No data leaves the enterprise perimeter. Also available on AWS Marketplace for cloud procurement.</p>
+          </div>
+        </div>
+        <div class="s14-ac-card">
+          <button class="s14-ac-header" onclick="toggleAc(this)" aria-expanded="false">
+            <span class="s14-ac-title">How does LLM Capsule relate to SynTitan?</span>
+            <span class="s14-ac-toggle" aria-hidden="true"><span class="s14-ac-toggle-icon"></span></span>
+          </button>
+          <div class="s14-ac-body">
+            <p class="s14-ac-answer">LLM Capsule works within SynTitan execution workflows. Each anonymization run is logged and bound to a Release State — making LLM workflows reproducible, auditable, and compliant. It also runs standalone without SynTitan.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script>
+    function toggleAc(btn) {
+      const card = btn.closest('.s14-ac-card');
+      const isOpen = card.classList.contains('open');
+      document.querySelectorAll('.s14-ac-card').forEach(c => c.classList.remove('open'));
+      if (!isOpen) card.classList.add('open');
+      btn.setAttribute('aria-expanded', !isOpen);
+    }
+  </script>
+</body>
+</html>

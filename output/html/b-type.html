@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prompt Data Leakage in Enterprise LLM Usage — PII and Compliance Risk | Cubig Learn</title>
+<meta name="description" content="Enterprise documents contain PII and regulated data. When they enter LLM prompts without protection, sensitive information reaches external APIs the organization doesn't control. Learn what prompt data leakage is and what effective protection requires.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://cubig.ai/learn/prompt-data-leakage">
+<meta property="og:title" content="Prompt Data Leakage in Enterprise LLM Usage — PII and Compliance Risk | Cubig Learn">
+<meta property="og:description" content="Enterprise documents contain PII and regulated data. When they enter LLM prompts without protection, sensitive information reaches external APIs the organization doesn't control. Learn what prompt data leakage is and what effective protection requires.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://cubig.ai/learn/prompt-data-leakage">
+<meta property="og:image" content="https://cubig.ai/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cubig.ai/og-default.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://cubig.ai/#org",
+      "name": "Cubig",
+      "url": "https://cubig.ai"
+    },
+    {
+      "@type": "Article",
+      "@id": "https://cubig.ai/learn/prompt-data-leakage#article",
+      "url": "https://cubig.ai/learn/prompt-data-leakage",
+      "headline": "Prompt Data Leakage in Enterprise LLM Usage: PII, Compliance, and the Inline Protection Gap",
+      "description": "Enterprise documents contain PII and regulated data. When they enter LLM prompts without protection, sensitive information reaches external APIs the organization doesn't control. Learn what prompt data leakage is and what effective protection requires.",
+      "keywords": "prompt data leakage, PII protection LLM enterprise, GDPR LLM compliance, HIPAA LLM, LLM data anonymization, secure LLM usage enterprise",
+      "author": {"@id": "https://cubig.ai/#org"},
+      "publisher": {"@id": "https://cubig.ai/#org"},
+      "isPartOf": {"@type": "WebSite", "url": "https://cubig.ai"}
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is prompt data leakage in enterprise LLM usage?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Prompt data leakage occurs when sensitive fields — PII, PHI, financial identifiers, or regulated data — enter LLM prompts without detection or anonymization, reaching external model APIs that the organization does not control. It is often invisible from the inside and creates compliance exposure regardless of LLM provider policies."}
+    }
+    {
+      "@type": "Question",
+      "name": "Why do LLM API privacy policies not protect organizations from data leakage risk?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Privacy policies describe how a vendor handles data they receive. They do not prevent the organization from transmitting data it shouldn't transmit, and they do not eliminate the organization's liability as the data controller. The exposure occurs at the point of transmission — before any vendor policy applies."}
+    }
+    {
+      "@type": "Question",
+      "name": "What regulations are most relevant to LLM data leakage risk?",
+      "acceptedAnswer": {"@type": "Answer", "text": "GDPR Article 25 (data minimization and privacy by design), HIPAA (PHI in prompts to commercial APIs), CCPA, PIPA, and financial data regulations. In each case, the organization sending data to an external LLM API retains liability as the data controller."}
+    }
+    {
+      "@type": "Question",
+      "name": "How does anonymization for LLM usage differ from standard data masking?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Standard data masking removes or replaces sensitive fields permanently, often destroying downstream usability. LLM anonymization must preserve semantic meaning — replacing a patient name with a consistent token that the LLM can refer to coherently — and must re-map those tokens in LLM outputs for downstream use within the secure perimeter."}
+    }
+    {
+      "@type": "Question",
+      "name": "What is the difference between LLM Capsule and traditional data anonymization?",
+      "acceptedAnswer": {"@type": "Answer", "text": "LLM Capsule operates inline at the point of LLM interaction — detecting sensitive fields in prompts, anonymizing before transmission, and re-mapping tokens in outputs. Traditional anonymization is a batch process applied before data storage. LLM Capsule is designed for real-time, workflow-integrated protection that preserves LLM output usability."}
+    }
+      ]
+    }
+  ]
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,700&family=Oxanium:wght@600;700&display=swap" rel="stylesheet">
+<style>
+
+/* ============================================================
+   1. CSS Reset
+   ============================================================ */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+ul, ol { list-style: none; }
+a { text-decoration: none; color: inherit; }
+
+/* ============================================================
+   2. :root CSS Variables (사용하는 것만)
+   ============================================================ */
+:root {
+  /* Font */
+  --ds-font-base: 'DM Sans', 'Inter', system-ui, sans-serif;
+  --ds-font-brand: 'Oxanium', sans-serif;
+  --ds-font-code: 'Fragment Mono', 'Courier New', monospace;
+
+  /* Brand Colors */
+  --ds-color-brand-400: #8A72C8;
+  --ds-color-brand-500: #6C54A0;
+  --ds-color-brand-600: #5B4490;
+
+  /* Neutral */
+  --ds-color-gray-900: #111827;
+  --ds-color-gray-700: #374151;
+  --ds-color-gray-600: #4B5563;
+  --ds-color-gray-400: #9CA3AF;
+  --ds-color-gray-200: #E5E7EB;
+  --ds-color-gray-100: #F3F4F6;
+  --ds-color-white:    #FFFFFF;
+
+  /* Functional */
+  --ds-color-success:  #10B981;
+
+  /* Badge */
+  --ds-color-badge-primary-bg: #EDE9F7;
+  --ds-color-badge-primary-fg: #5B4490;
+
+  /* Banner */
+  --ds-color-banner-info-bg: #F5F3FA;
+
+  /* Spacing (8px grid) */
+  --ds-space-xs:  4px;
+  --ds-space-sm:  8px;
+  --ds-space-md:  16px;
+  --ds-space-lg:  24px;
+  --ds-space-xl:  32px;
+  --ds-space-2xl: 48px;
+  --ds-space-3xl: 64px;
+
+  /* Border Radius */
+  --ds-radius-sm:   4px;
+  --ds-radius-md:   8px;
+  --ds-radius-lg:   16px;
+  --ds-radius-full: 9999px;
+
+  /* Shadow */
+  --ds-shadow-s: 0 1px 3px rgba(0,0,0,0.08);
+  --ds-shadow-m: 0 4px 12px rgba(0,0,0,0.10);
+
+  /* Container Padding */
+  --ds-container-padding-mobile:     16px;
+  --ds-container-padding-tablet:     32px;
+  --ds-container-padding-sm-desktop: 32px;
+  --ds-container-padding-desktop:    120px;
+  --ds-container-padding-wide:       360px;
+
+  /* Content Max Width */
+  --ds-content-max-width: 1200px;
+
+  /* Brand Gradient */
+  --ds-gradient-brand: linear-gradient(130deg, #6C54A0, #b44fcc 50%, #ff266a);
+
+  /* Nav */
+  --ds-nav-bg: rgba(255,255,255,0.92);
+
+  /* On-Dark (Bridge section) */
+  --ds-bridge-label-color:       rgba(255,255,255,0.4);
+  --ds-bridge-border:            rgba(255,255,255,0.12);
+  --ds-bridge-border-hover:      rgba(255,255,255,0.3);
+  --ds-bridge-bg-hover:          rgba(255,255,255,0.04);
+}
+
+/* ============================================================
+   3. Base 스타일
+   ============================================================ */
+html {
+  scroll-behavior: smooth;
+}
+body {
+  font-family: var(--ds-font-base);
+  background: var(--ds-color-white);
+  color: var(--ds-color-gray-900);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-thumb { background: var(--ds-color-brand-500); }
+
+/* ============================================================
+   4. 컴포넌트 스타일 (Design System)
+   ============================================================ */
+
+/* --- Container --- */
+.ds-container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 var(--ds-container-padding-mobile);
+  box-sizing: border-box;
+}
+@media (min-width: 768px) {
+  .ds-container { padding: 0 var(--ds-container-padding-tablet); }
+}
+@media (min-width: 1024px) {
+  .ds-container { padding: 0 var(--ds-container-padding-sm-desktop); }
+}
+@media (min-width: 1440px) {
+  .ds-container { padding: 0 var(--ds-container-padding-desktop); }
+}
+@media (min-width: 1920px) {
+  .ds-container {
+    max-width: calc(var(--ds-content-max-width) + var(--ds-container-padding-wide) * 2);
+    padding: 0 var(--ds-container-padding-wide);
+  }
+}
+
+/* --- Typography --- */
+.ds-h1 {
+  font-family: var(--ds-font-base);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--ds-color-gray-900);
+}
+.ds-h2 {
+  font-family: var(--ds-font-base);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--ds-color-gray-900);
+}
+.ds-h4 {
+  font-family: var(--ds-font-base);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--ds-color-gray-900);
+}
+.ds-body-l {
+  font-family: var(--ds-font-base);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.7;
+}
+.ds-body-m {
+  font-family: var(--ds-font-base);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.7;
+}
+.ds-body-s {
+  font-family: var(--ds-font-base);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+}
+.ds-caption {
+  font-family: var(--ds-font-code);
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+@media (min-width: 768px) {
+  .ds-h1 { font-size: 28px; }
+  .ds-h2 { font-size: 22px; }
+  .ds-h4 { font-size: 16px; }
+  .ds-body-l { font-size: 16px; }
+  .ds-body-m { font-size: 15px; }
+}
+@media (min-width: 1024px) {
+  .ds-h1 { font-size: 32px; }
+  .ds-h2 { font-size: 24px; }
+  .ds-h4 { font-size: 18px; }
+  .ds-body-l { font-size: 18px; }
+  .ds-body-m { font-size: 16px; }
+  .ds-body-s { font-size: 14px; }
+}
+@media (min-width: 1440px) {
+  .ds-h1 { font-size: 36px; }
+  .ds-h2 { font-size: 28px; }
+  .ds-body-s { font-size: 14px; }
+}
+@media (min-width: 1920px) {
+  .ds-h1 { font-size: 40px; }
+  .ds-h2 { font-size: 32px; }
+}
+
+/* --- Badge --- */
+.ds-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px var(--ds-space-sm);
+  border-radius: var(--ds-radius-full);
+  font-size: 12px;
+  font-weight: 600;
+  font-family: var(--ds-font-base);
+}
+.ds-badge--primary {
+  background: var(--ds-color-badge-primary-bg);
+  color: var(--ds-color-badge-primary-fg);
+}
+.ds-badge__dot {
+  width: 5px;
+  height: 5px;
+  border-radius: var(--ds-radius-full);
+  background: var(--ds-color-brand-500);
+  margin-right: var(--ds-space-xs);
+  animation: ds-pulse 2s infinite;
+}
+@keyframes ds-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+/* --- Banner --- */
+.ds-banner {
+  padding: var(--ds-space-sm) var(--ds-space-md);
+  border-radius: var(--ds-radius-md);
+  border-left: 4px solid var(--ds-banner-color, var(--ds-color-brand-500));
+  background: var(--ds-banner-bg, var(--ds-color-banner-info-bg));
+  font-family: var(--ds-font-base);
+}
+@media (min-width: 768px) {
+  .ds-banner { padding: var(--ds-space-md) var(--ds-space-lg); }
+}
+.ds-banner__label {
+  font-family: var(--ds-font-code);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ds-color-brand-500);
+  margin-bottom: var(--ds-space-sm);
+}
+.ds-banner__body {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--ds-color-gray-600);
+}
+.ds-banner__body strong {
+  color: var(--ds-color-gray-900);
+  font-weight: 600;
+}
+.ds-banner__emphasis {
+  color: var(--ds-color-brand-500);
+  font-style: normal;
+}
+
+/* --- Card (FAQ 용) --- */
+.ds-card {
+  background: var(--ds-color-white);
+  border-radius: var(--ds-radius-md);
+  padding: var(--ds-space-md);
+  border: 1px solid var(--ds-color-gray-200);
+  font-family: var(--ds-font-base);
+}
+@media (min-width: 768px) {
+  .ds-card { padding: var(--ds-space-lg); }
+}
+@media (min-width: 1440px) {
+  .ds-card { padding: var(--ds-space-xl); }
+}
+
+/* --- Bullet Check --- */
+.ds-bullet--check {
+  display: flex;
+  gap: var(--ds-space-sm);
+  align-items: flex-start;
+  padding: var(--ds-space-sm) 0;
+  border-bottom: 1px solid var(--ds-color-gray-200);
+  font-family: var(--ds-font-base);
+}
+.ds-bullet--check:last-child {
+  border-bottom: none;
+}
+.ds-bullet__icon--check {
+  color: var(--ds-color-success);
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 2px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.ds-bullet__text {
+  font-size: 14px;
+  color: var(--ds-color-gray-600);
+  line-height: 1.6;
+}
+.ds-bullet__text strong {
+  font-weight: 600;
+  color: var(--ds-color-gray-900);
+}
+@media (min-width: 768px) {
+  .ds-bullet__text { font-size: 15px; }
+}
+@media (min-width: 1024px) {
+  .ds-bullet__text { font-size: 16px; }
+}
+
+/* --- Button --- */
+.ds-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ds-space-xs);
+  border: none;
+  cursor: pointer;
+  font-family: var(--ds-font-base);
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: var(--ds-radius-full);
+  padding: 10px var(--ds-space-lg);
+  transition: background 0.2s, border-color 0.2s, transform 0.1s;
+  text-decoration: none;
+}
+.ds-btn--primary {
+  background: var(--ds-gradient-brand);
+  color: var(--ds-color-white);
+}
+.ds-btn--primary:hover {
+  opacity: 0.9;
+}
+.ds-btn--secondary {
+  background: transparent;
+  color: var(--ds-color-gray-900);
+  border: 1px solid var(--ds-color-gray-200);
+}
+.ds-btn--secondary:hover {
+  border-color: var(--ds-color-gray-400);
+}
+
+/* --- Table --- */
+.ds-table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.ds-table {
+  width: 100%;
+  min-width: 560px;
+  border-collapse: collapse;
+  font-family: var(--ds-font-base);
+}
+.ds-table thead tr {
+  border-bottom: 2px solid var(--ds-color-gray-200);
+}
+.ds-table th {
+  font-family: var(--ds-font-code);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ds-color-gray-400);
+  padding: var(--ds-space-sm) var(--ds-space-md);
+  text-align: left;
+}
+.ds-table td {
+  font-size: 14px;
+  color: var(--ds-color-gray-600);
+  padding: var(--ds-space-md);
+  border-bottom: 1px solid var(--ds-color-gray-200);
+  vertical-align: top;
+  line-height: 1.5;
+}
+.ds-table td:first-child {
+  font-weight: 600;
+  color: var(--ds-color-gray-900);
+}
+.ds-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* --- Grid --- */
+.ds-grid { display: grid; gap: var(--ds-space-md); }
+.ds-grid--1 { grid-template-columns: 1fr; }
+
+/* ============================================================
+   5. 레이아웃 스타일
+   ============================================================ */
+
+/* --- Nav --- */
+.ds-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--ds-space-xl);
+  background: var(--ds-nav-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--ds-color-gray-200);
+}
+.ds-nav__logo {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-sm);
+  text-decoration: none;
+}
+.ds-nav__logo-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+.ds-nav__logo-name {
+  font-family: var(--ds-font-brand);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--ds-color-gray-900);
+}
+.ds-nav__logo-sub {
+  font-family: var(--ds-font-brand);
+  font-size: 7.5px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  color: var(--ds-color-brand-500);
+  text-transform: uppercase;
+}
+.ds-nav__links {
+  display: none;
+  align-items: center;
+  gap: var(--ds-space-xs);
+}
+.ds-nav__links a {
+  font-size: 13px;
+  color: var(--ds-color-gray-600);
+  padding: 6px var(--ds-space-md);
+  transition: color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-xs);
+}
+.ds-nav__links a:hover,
+.ds-nav__links a.ds-nav__link--active {
+  color: var(--ds-color-gray-900);
+}
+.ds-nav__chevron {
+  font-size: 9px;
+  opacity: 0.5;
+}
+.ds-nav__item--sub {
+  position: relative;
+}
+.ds-nav__item--sub:hover .ds-nav__dropdown {
+  display: block;
+}
+.ds-nav__dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: var(--ds-color-white);
+  border: 1px solid var(--ds-color-gray-200);
+  min-width: 160px;
+  box-shadow: var(--ds-shadow-m);
+  padding: 6px 0;
+  border-radius: var(--ds-radius-sm);
+}
+.ds-nav__dropdown a {
+  display: block;
+  padding: var(--ds-space-sm) var(--ds-space-md);
+  font-size: 12.5px;
+  color: var(--ds-color-gray-600);
+}
+.ds-nav__dropdown a:hover {
+  color: var(--ds-color-gray-900);
+}
+.ds-nav__cta {
+  background: var(--ds-color-brand-500);
+  color: var(--ds-color-white);
+  padding: var(--ds-space-sm) 18px;
+  font-weight: 500;
+  font-size: 13px;
+  transition: background 0.2s;
+  border-radius: var(--ds-radius-sm);
+}
+.ds-nav__cta:hover {
+  background: var(--ds-color-brand-400);
+  color: var(--ds-color-white);
+}
+@media (min-width: 768px) {
+  .ds-nav__links { display: flex; }
+  .ds-nav { padding: 0 var(--ds-space-xl); }
+}
+
+/* --- Hero Section --- */
+.ds-hero {
+  min-height: 52vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--ds-color-gray-200);
+  padding-top: 80px;
+  background: var(--ds-color-white);
+}
+.ds-hero__inner {
+  max-width: 860px;
+  margin: 0 auto;
+  width: 100%;
+  padding: var(--ds-space-2xl) var(--ds-container-padding-mobile) var(--ds-space-xl);
+}
+.ds-hero__breadcrumb {
+  font-family: var(--ds-font-code);
+  font-size: 11px;
+  color: var(--ds-color-gray-400);
+  margin-bottom: 18px;
+}
+.ds-hero__breadcrumb a {
+  color: var(--ds-color-brand-400);
+}
+.ds-hero__breadcrumb span {
+  margin: 0 6px;
+  opacity: 0.4;
+}
+.ds-hero__badge {
+  margin-bottom: var(--ds-space-lg);
+}
+.ds-hero__title {
+  margin-bottom: 20px;
+}
+.ds-hero__title em {
+  font-style: italic;
+  color: var(--ds-color-brand-400);
+}
+.ds-hero__sub {
+  color: var(--ds-color-gray-600);
+  max-width: 660px;
+  font-weight: 300;
+  margin-bottom: var(--ds-space-lg);
+}
+.ds-hero__def {
+  max-width: 660px;
+  font-family: var(--ds-font-code);
+  font-size: 13px;
+}
+
+@media (min-width: 768px) {
+  .ds-hero__inner {
+    padding: var(--ds-space-2xl) var(--ds-container-padding-tablet) var(--ds-space-xl);
+  }
+}
+@media (min-width: 1440px) {
+  .ds-hero__inner {
+    padding: 60px var(--ds-container-padding-desktop) var(--ds-space-2xl);
+  }
+}
+
+/* --- Article Layout --- */
+.ds-article {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: var(--ds-space-2xl) var(--ds-container-padding-mobile);
+}
+@media (min-width: 768px) {
+  .ds-article { padding: 72px var(--ds-container-padding-tablet); }
+}
+@media (min-width: 1440px) {
+  .ds-article { padding: 72px var(--ds-container-padding-desktop); }
+}
+
+/* --- Article Section --- */
+.ds-article__section {
+  margin-bottom: var(--ds-space-3xl);
+}
+.ds-article__section-title {
+  margin-bottom: 20px;
+}
+.ds-article__lead {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--ds-color-gray-900);
+  line-height: 1.5;
+  margin-bottom: var(--ds-space-lg);
+}
+@media (min-width: 768px) {
+  .ds-article__lead { font-size: 17px; }
+}
+@media (min-width: 1024px) {
+  .ds-article__lead { font-size: 18px; }
+}
+.ds-article__body {
+  font-size: 15px;
+  color: var(--ds-color-gray-600);
+  line-height: 1.75;
+  margin-bottom: 18px;
+}
+.ds-article__body strong {
+  color: var(--ds-color-gray-900);
+  font-weight: 600;
+}
+@media (min-width: 1024px) {
+  .ds-article__body { font-size: 16px; }
+}
+.ds-article__body-intro {
+  font-size: 15px;
+  color: var(--ds-color-gray-600);
+  line-height: 1.75;
+  margin-bottom: var(--ds-space-md);
+}
+@media (min-width: 1024px) {
+  .ds-article__body-intro { font-size: 16px; }
+}
+.ds-article__callout {
+  margin: var(--ds-space-xl) 0;
+}
+
+/* --- FAQ Section --- */
+.ds-faq {
+  background: var(--ds-color-gray-100);
+  border-top: 1px solid var(--ds-color-gray-200);
+}
+.ds-faq__inner {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: var(--ds-space-2xl) var(--ds-container-padding-mobile);
+}
+@media (min-width: 768px) {
+  .ds-faq__inner { padding: 72px var(--ds-container-padding-tablet); }
+}
+@media (min-width: 1440px) {
+  .ds-faq__inner { padding: 72px var(--ds-container-padding-desktop); }
+}
+.ds-faq__eyebrow {
+  color: var(--ds-color-brand-500);
+  margin-bottom: var(--ds-space-xl);
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-md);
+}
+.ds-faq__eyebrow::before {
+  content: '';
+  width: 20px;
+  height: 1px;
+  background: var(--ds-color-brand-500);
+  flex-shrink: 0;
+}
+.ds-faq__item {
+  border-bottom: 1px solid var(--ds-color-gray-200);
+  padding: 22px 0;
+}
+.ds-faq__item:last-child {
+  border-bottom: none;
+}
+.ds-faq__question {
+  font-weight: 600;
+  color: var(--ds-color-gray-900);
+  margin-bottom: var(--ds-space-sm);
+}
+.ds-faq__answer {
+  color: var(--ds-color-gray-600);
+  line-height: 1.7;
+}
+@media (min-width: 1024px) {
+  .ds-faq__answer { font-size: 14px; }
+}
+
+/* --- Bridge Links Section --- */
+.ds-bridge {
+  background: var(--ds-color-gray-900);
+}
+.ds-bridge__inner {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: var(--ds-space-2xl) var(--ds-container-padding-mobile);
+}
+@media (min-width: 768px) {
+  .ds-bridge__inner { padding: 56px var(--ds-container-padding-tablet); }
+}
+@media (min-width: 1440px) {
+  .ds-bridge__inner { padding: 56px var(--ds-container-padding-desktop); }
+}
+.ds-bridge__label {
+  font-family: var(--ds-font-code);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ds-bridge-label-color);
+  margin-bottom: var(--ds-space-lg);
+}
+.ds-bridge__links {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-sm);
+}
+.ds-bridge__link {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-md);
+  color: var(--ds-color-white);
+  font-size: 15px;
+  font-weight: 500;
+  padding: var(--ds-space-md) 20px;
+  border: 1px solid var(--ds-bridge-border);
+  border-radius: var(--ds-radius-md);
+  transition: border-color 0.2s, background 0.2s;
+  font-family: var(--ds-font-base);
+}
+.ds-bridge__link:hover {
+  border-color: var(--ds-bridge-border-hover);
+  background: var(--ds-bridge-bg-hover);
+}
+.ds-bridge__arrow {
+  font-family: var(--ds-font-code);
+  font-size: 14px;
+  color: var(--ds-color-brand-400);
+  flex-shrink: 0;
+}
+
+/* --- CUBIG Fits Banner --- */
+.ds-cubig-fits {
+  padding: var(--ds-space-2xl) var(--ds-container-padding-mobile);
+}
+@media (min-width: 768px) {
+  .ds-cubig-fits { padding: var(--ds-space-2xl) var(--ds-container-padding-tablet); }
+}
+@media (min-width: 1440px) {
+  .ds-cubig-fits { padding: var(--ds-space-2xl) var(--ds-container-padding-desktop); }
+}
+.ds-cubig-fits__inner {
+  max-width: 860px;
+  margin: 0 auto;
+}
+.ds-cubig-fits__banner {
+  --ds-banner-color: var(--ds-color-brand-500);
+  --ds-banner-bg: var(--ds-color-gray-100);
+}
+.ds-cubig-fits__label {
+  font-family: var(--ds-font-code);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ds-color-gray-400);
+  margin-bottom: var(--ds-space-sm);
+}
+.ds-cubig-fits__body {
+  font-size: 13.5px;
+  color: var(--ds-color-gray-600);
+  line-height: 1.7;
+}
+.ds-cubig-fits__body strong {
+  color: var(--ds-color-gray-900);
+}
+.ds-cubig-fits__link {
+  color: var(--ds-color-brand-500);
+}
+.ds-cubig-fits__link:hover {
+  color: var(--ds-color-brand-600);
+}
+
+/* --- Bottom CTA Section --- */
+.ds-cta {
+  border-top: 1px solid var(--ds-color-gray-200);
+  padding: var(--ds-space-2xl) var(--ds-container-padding-mobile);
+}
+@media (min-width: 768px) {
+  .ds-cta { padding: 56px var(--ds-container-padding-tablet); }
+}
+@media (min-width: 1440px) {
+  .ds-cta { padding: 56px var(--ds-container-padding-desktop); }
+}
+.ds-cta__inner {
+  max-width: 760px;
+  margin: 0 auto;
+}
+.ds-cta__eyebrow {
+  color: var(--ds-color-brand-500);
+  margin-bottom: var(--ds-space-md);
+}
+.ds-cta__title {
+  margin-bottom: var(--ds-space-sm);
+}
+.ds-cta__desc {
+  color: var(--ds-color-gray-600);
+  margin-bottom: var(--ds-space-xl);
+  max-width: 560px;
+}
+.ds-cta__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  gap: var(--ds-space-sm);
+}
+.ds-cta__buttons .ds-btn {
+  width: 100%;
+  justify-content: center;
+}
+@media (min-width: 768px) {
+  .ds-cta__buttons {
+    flex-direction: row;
+  }
+  .ds-cta__buttons .ds-btn {
+    width: auto;
+  }
+}
+
+/* --- Footer --- */
+.ds-footer {
+  background: var(--ds-color-white);
+  border-top: 1px solid var(--ds-color-gray-200);
+  padding: var(--ds-space-2xl) var(--ds-container-padding-mobile);
+}
+@media (min-width: 768px) {
+  .ds-footer { padding: var(--ds-space-2xl) var(--ds-container-padding-tablet); }
+}
+@media (min-width: 1440px) {
+  .ds-footer { padding: var(--ds-space-2xl) var(--ds-container-padding-desktop); }
+}
+.ds-footer__inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-xl);
+  flex-wrap: wrap;
+}
+@media (min-width: 768px) {
+  .ds-footer__inner {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+}
+.ds-footer__brand {
+  font-family: var(--ds-font-code);
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-sm);
+  margin-bottom: var(--ds-space-sm);
+}
+.ds-footer__brand-mark {
+  width: 20px;
+  height: 20px;
+  background: var(--ds-color-brand-500);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: var(--ds-color-white);
+  border-radius: var(--ds-radius-sm);
+}
+.ds-footer__tagline {
+  font-size: 12.5px;
+  color: var(--ds-color-gray-400);
+  max-width: 220px;
+  line-height: 1.6;
+}
+.ds-footer__col-title {
+  font-family: var(--ds-font-code);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ds-color-gray-400);
+  margin-bottom: 14px;
+}
+.ds-footer__links {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-sm);
+}
+.ds-footer__links a {
+  font-size: 13px;
+  color: var(--ds-color-gray-600);
+  transition: color 0.2s;
+}
+.ds-footer__links a:hover {
+  color: var(--ds-color-gray-900);
+}
+.ds-footer__copy {
+  border-top: 1px solid var(--ds-color-gray-200);
+  margin-top: var(--ds-space-xl);
+  padding-top: var(--ds-space-lg);
+  font-size: 12px;
+  color: var(--ds-color-gray-400);
+  max-width: 1120px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ============================================================
+   6. 반응형 (5단계 breakpoint 완성)
+      Mobile: 375px (기본)
+      Tablet: 768px
+      sm-desktop: 1024px
+      Desktop: 1440px
+      Wide: 1920px
+   ============================================================ */
+
+/* sm-desktop (1024px~) 추가 조정 */
+@media (min-width: 1024px) {
+  .ds-article {
+    padding: 72px var(--ds-container-padding-sm-desktop);
+  }
+  .ds-faq__inner {
+    padding: 72px var(--ds-container-padding-sm-desktop);
+  }
+  .ds-bridge__inner {
+    padding: 56px var(--ds-container-padding-sm-desktop);
+  }
+  .ds-cubig-fits {
+    padding: var(--ds-space-2xl) var(--ds-container-padding-sm-desktop);
+  }
+  .ds-cta {
+    padding: 56px var(--ds-container-padding-sm-desktop);
+  }
+  .ds-footer {
+    padding: var(--ds-space-2xl) var(--ds-container-padding-sm-desktop);
+  }
+}
+
+/* Wide (1920px~) 추가 조정 */
+@media (min-width: 1920px) {
+  .ds-hero__inner { padding: 60px var(--ds-container-padding-wide) var(--ds-space-2xl); }
+}
+
+/* Fade-up animation */
+@keyframes ds-fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.ds-anim--fade-up {
+  animation: ds-fadeUp 0.7s ease both;
+}
+.ds-anim--fade-up--delay-1 {
+  animation: ds-fadeUp 0.7s 0.1s ease both;
+}
+.ds-anim--fade-up--delay-2 {
+  animation: ds-fadeUp 0.7s 0.2s ease both;
+}
+.ds-anim--fade-up--delay-3 {
+  animation: ds-fadeUp 0.7s 0.3s ease both;
+}
+
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     Navigation
+     ============================================================ -->
+<header role="banner">
+  <nav class="ds-nav" aria-label="Main navigation">
+    <a href="/" class="ds-nav__logo" aria-label="CUBIG 홈으로 이동">
+      <svg width="20" height="31" viewBox="0 0 15.5 23.5" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="color: var(--ds-color-brand-500)">
+        <path d="M 15.494 10.91 L 15.494 10.301 C 15.494 9.987 15.388 9.709 15.174 9.481 C 14.977 9.26 14.692 9.136 14.396 9.142 L 13.764 9.142 C 13.64 9.148 13.52 9.099 13.436 9.008 C 13.347 8.917 13.3 8.795 13.304 8.669 L 13.304 5.725 C 13.304 5.412 13.197 5.141 12.976 4.922 C 12.768 4.707 12.48 4.587 12.181 4.592 L 11.574 4.592 C 11.443 4.592 11.317 4.536 11.229 4.439 C 11.134 4.346 11.081 4.218 11.081 4.085 L 11.081 3.433 C 11.081 3.12 10.974 2.85 10.753 2.63 C 10.545 2.416 10.257 2.296 9.958 2.3 L 9.383 2.3 C 9.242 2.305 9.104 2.25 9.006 2.148 C 8.906 2.044 8.853 1.903 8.859 1.759 L 8.859 1.133 C 8.859 0.812 8.752 0.55 8.531 0.33 C 8.323 0.115 8.035 -0.004 7.735 0 C 7.423 0 7.169 0.109 6.955 0.33 C 6.744 0.543 6.628 0.833 6.636 1.133 L 6.636 1.724 C 6.636 1.886 6.586 2.021 6.488 2.122 C 6.393 2.23 6.255 2.289 6.111 2.283 L 5.536 2.283 C 5.233 2.283 4.962 2.393 4.741 2.613 C 4.524 2.823 4.405 3.114 4.413 3.416 L 4.413 4.068 C 4.413 4.201 4.36 4.329 4.265 4.422 C 4.177 4.519 4.052 4.575 3.92 4.575 L 3.313 4.575 C 3.014 4.571 2.726 4.69 2.518 4.905 C 2.297 5.124 2.19 5.395 2.19 5.708 L 2.19 8.652 C 2.194 8.778 2.147 8.9 2.058 8.991 C 1.974 9.082 1.854 9.131 1.73 9.125 L 1.098 9.125 C 0.802 9.119 0.517 9.243 0.32 9.464 C 0.106 9.692 0 9.97 0 10.284 L 0 13.175 C 0 13.489 0.106 13.767 0.32 13.995 C 0.517 14.216 0.802 14.34 1.098 14.334 L 1.73 14.334 C 1.854 14.328 1.974 14.377 2.058 14.468 C 2.147 14.559 2.194 14.681 2.19 14.807 L 2.19 17.751 C 2.19 18.064 2.297 18.335 2.518 18.554 C 2.726 18.769 3.014 18.888 3.313 18.884 L 3.92 18.884 C 4.052 18.884 4.177 18.94 4.265 19.037 C 4.36 19.13 4.413 19.258 4.413 19.391 L 4.413 20.034 C 4.405 20.336 4.524 20.627 4.741 20.837 C 4.949 21.051 5.237 21.171 5.536 21.167 L 6.111 21.167 C 6.255 21.161 6.393 21.22 6.488 21.328 C 6.586 21.429 6.636 21.564 6.636 21.726 L 6.636 22.326 C 6.628 22.626 6.744 22.916 6.955 23.129 C 7.169 23.35 7.423 23.459 7.735 23.459 C 8.035 23.462 8.323 23.343 8.531 23.129 C 8.752 22.909 8.859 22.638 8.859 22.326 L 8.859 21.7 C 8.853 21.556 8.906 21.415 9.006 21.311 C 9.104 21.209 9.242 21.153 9.383 21.159 L 9.958 21.159 C 10.257 21.163 10.545 21.043 10.753 20.829 C 10.974 20.608 11.081 20.338 11.081 20.025 L 11.081 19.373 C 11.081 19.24 11.134 19.112 11.229 19.019 C 11.317 18.922 11.443 18.866 11.574 18.866 L 12.181 18.866 C 12.48 18.872 12.768 18.752 12.976 18.537 C 13.197 18.317 13.304 18.047 13.304 17.734 L 13.304 14.807 C 13.3 14.681 13.347 14.559 13.436 14.468 C 13.52 14.377 13.64 14.328 13.764 14.334 L 14.396 14.334 C 14.692 14.34 14.977 14.216 15.174 13.995 C 15.388 13.767 15.494 13.489 15.494 13.175 Z" fill="currentColor"/>
+        <path d="M 7.024 9.113 L 5.515 11.895 C 5.416 12.072 5.416 12.286 5.515 12.462 L 7.024 15.244 C 7.12 15.424 7.307 15.536 7.512 15.536 C 7.716 15.536 7.904 15.424 8 15.244 L 9.51 12.462 C 9.608 12.286 9.608 12.072 9.51 11.895 L 8 9.113 C 7.904 8.934 7.716 8.821 7.512 8.821 C 7.307 8.821 7.12 8.934 7.024 9.113 Z" fill="white"/>
+      </svg>
+      <div class="ds-nav__logo-text">
+        <span class="ds-nav__logo-name">C U B I G</span>
+        <span class="ds-nav__logo-sub">Cure Bigdata</span>
+      </div>
+    </a>
+    <ul class="ds-nav__links" role="list">
+      <li class="ds-nav__item--sub">
+        <a href="/llm-capsule">Platform <span class="ds-nav__chevron" aria-hidden="true">▾</span></a>
+        <div class="ds-nav__dropdown" role="menu">
+          <a href="/llm-capsule" role="menuitem">SynTitan</a>
+        </div>
+      </li>
+      <li class="ds-nav__item--sub">
+        <a href="#">Capabilities <span class="ds-nav__chevron" aria-hidden="true">▾</span></a>
+        <div class="ds-nav__dropdown" role="menu">
+          <a href="/dts" role="menuitem">DTS</a>
+          <a href="/llm-capsule" role="menuitem">LLM Capsule</a>
+        </div>
+      </li>
+      <li><a href="/proof">Proof</a></li>
+      <li class="ds-nav__item--sub">
+        <a href="/learn" class="ds-nav__link--active" aria-current="page">Learn <span class="ds-nav__chevron" aria-hidden="true">▾</span></a>
+        <div class="ds-nav__dropdown" role="menu">
+          <a href="/learn/ai-ready-data-infrastructure" role="menuitem">AI-Ready Data Infrastructure</a>
+          <a href="/learn/release-state" role="menuitem">Release State</a>
+          <a href="/learn/articles" role="menuitem">Articles</a>
+          <a href="/learn/glossary" role="menuitem">Glossary</a>
+        </div>
+      </li>
+      <li><a href="/company">Company</a></li>
+      <li><a href="https://syntitan.ai/signup" class="ds-nav__cta">Start free &rarr;</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main-content">
+
+  <!-- ============================================================
+       Section 1: Hero
+       ============================================================ -->
+  <section id="section-1" class="ds-hero" aria-labelledby="hero-title">
+    <div class="ds-hero__inner">
+      <nav class="ds-hero__breadcrumb" aria-label="Breadcrumb">
+        <a href="/learn">Learn</a><span aria-hidden="true">&rsaquo;</span>Secure LLM Usage &middot; P2
+      </nav>
+      <div class="ds-hero__badge ds-anim--fade-up">
+        <span class="ds-badge ds-badge--primary">
+          <span class="ds-badge__dot" aria-hidden="true"></span>Secure LLM Usage &middot; P2
+        </span>
+      </div>
+      <h1 id="hero-title" class="ds-h1 ds-hero__title ds-anim--fade-up--delay-1">
+        Prompt Data Leakage in Enterprise LLM Usage:<br>
+        <em>PII, Compliance, and the Inline Protection Gap</em>
+      </h1>
+      <p class="ds-body-l ds-hero__sub ds-anim--fade-up--delay-2">
+        Enterprise documents contain PII and regulated data. When they enter LLM prompts without protection, sensitive information reaches external APIs the organization doesn't control. Learn what prompt data leakage is and what effective protection requires.
+      </p>
+      <div class="ds-banner ds-hero__def ds-anim--fade-up--delay-3" style="--ds-banner-color: var(--ds-color-brand-500);" role="note">
+        True AI-ready data means it is <em class="ds-banner__emphasis">usable</em>, <em class="ds-banner__emphasis">privacy-safe</em>, and <em class="ds-banner__emphasis">stable for production execution</em>.
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       Article Body (Sections 2–5)
+       ============================================================ -->
+  <article class="ds-article">
+
+    <!-- Section 2: Introduction -->
+    <section id="section-2" class="ds-article__section">
+      <p class="ds-article__lead">You built an enterprise AI workflow. Then you discovered it was sending internal data to an external API.</p>
+      <p class="ds-article__lead">Your team built an enterprise AI workflow. Then someone noticed internal customer records were reaching an external API.</p>
+      <p class="ds-article__body">Enterprise LLM usage has a fundamental tension: the documents and data that make LLM responses useful are often the same data that should never leave the organization. Customer records, financial data, clinical notes, legal contracts — all contain PII and sensitive fields that compliance teams prohibit from reaching external APIs.</p>
+      <p class="ds-article__body">Without an inline protection layer, every LLM interaction involving enterprise documents is a potential data exposure event.</p>
+      <div class="ds-banner ds-article__callout" style="--ds-banner-color: var(--ds-color-brand-500); --ds-banner-bg: var(--ds-color-banner-info-bg);" role="note">
+        <div>
+          <p class="ds-banner__label">// What prompt data leakage means</p>
+          <p class="ds-banner__body">Prompt data leakage occurs when <strong>sensitive fields — PII, financial identifiers, health information, or regulated data</strong> — enter LLM prompts without detection or anonymization, reaching external model APIs that the organization does not control. The exposure may be invisible from the inside.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Where sensitive data enters LLM workflows -->
+    <section id="section-3" class="ds-article__section" aria-labelledby="section-3-title">
+      <h2 id="section-3-title" class="ds-h2 ds-article__section-title">Where sensitive data enters LLM workflows</h2>
+      <p class="ds-article__body-intro">Sensitive data enters LLM prompts through multiple paths — most of them unintentional:</p>
+      <ul class="ds-grid ds-grid--1" role="list" aria-label="Data entry paths">
+        <li class="ds-bullet--check">
+          <span class="ds-bullet__icon--check" aria-hidden="true">&#10003;</span>
+          <span class="ds-bullet__text"><strong>Document embedding:</strong> Full document content sent as context includes embedded PII</span>
+        </li>
+        <li class="ds-bullet--check">
+          <span class="ds-bullet__icon--check" aria-hidden="true">&#10003;</span>
+          <span class="ds-bullet__text"><strong>RAG pipelines:</strong> Retrieval-augmented generation pulls relevant chunks that may contain sensitive fields</span>
+        </li>
+        <li class="ds-bullet--check">
+          <span class="ds-bullet__icon--check" aria-hidden="true">&#10003;</span>
+          <span class="ds-bullet__text"><strong>User-provided context:</strong> End users paste content from enterprise systems directly into prompts</span>
+        </li>
+        <li class="ds-bullet--check">
+          <span class="ds-bullet__icon--check" aria-hidden="true">&#10003;</span>
+          <span class="ds-bullet__text"><strong>Automated workflows:</strong> LLM-powered automation processes documents without field-level filtering</span>
+        </li>
+        <li class="ds-bullet--check">
+          <span class="ds-bullet__icon--check" aria-hidden="true">&#10003;</span>
+          <span class="ds-bullet__text"><strong>Log and audit data:</strong> System logs containing user identifiers passed as context for analysis</span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Section 4: Compliance exposure by regulation -->
+    <section id="section-4" class="ds-article__section" aria-labelledby="section-4-title">
+      <h2 id="section-4-title" class="ds-h2 ds-article__section-title">Compliance exposure by regulation</h2>
+      <div class="ds-table-wrapper">
+        <table class="ds-table" aria-label="Compliance exposure by regulation">
+          <thead>
+            <tr>
+              <th scope="col">Regulation</th>
+              <th scope="col">Protected data category</th>
+              <th scope="col">LLM risk</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>GDPR (Article 25)</td>
+              <td>EU personal data — names, identifiers, location</td>
+              <td>Transmission to non-EU processor without consent</td>
+            </tr>
+            <tr>
+              <td>HIPAA</td>
+              <td>Protected Health Information (PHI)</td>
+              <td>PHI in prompts to commercial LLM APIs</td>
+            </tr>
+            <tr>
+              <td>CCPA</td>
+              <td>California consumer personal information</td>
+              <td>Unauthorized sharing with third-party processors</td>
+            </tr>
+            <tr>
+              <td>PIPA (Korea)</td>
+              <td>Personal information including behavioral data</td>
+              <td>Cross-border transmission without data subject consent</td>
+            </tr>
+            <tr>
+              <td>Financial regulations</td>
+              <td>Account numbers, transaction data, credit information</td>
+              <td>Financial data in external LLM API calls</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="ds-article__body">In each case, the organization sending data to a commercial LLM API is the data controller. They remain liable for how that data is processed — even if the LLM provider has privacy policies in place.</p>
+    </section>
+
+    <!-- Section 5: What effective PII protection for LLM workflows requires -->
+    <section id="section-5" class="ds-article__section" aria-labelledby="section-5-title">
+      <h2 id="section-5-title" class="ds-h2 ds-article__section-title">What effective PII protection for LLM workflows requires</h2>
+      <p class="ds-article__body">Effective protection requires more than an API policy or end-user training. It requires an <strong>inline detection and anonymization layer</strong> that operates at the point of LLM interaction.</p>
+      <ul class="ds-grid ds-grid--1" role="list" aria-label="PII protection requirements">
+        <li class="ds-bullet--check">
+          <span class="ds-bullet__icon--check" aria-hidden="true">&#10003;</span>
+          <span class="ds-bullet__text"><strong>Detection before transmission:</strong> Sensitive fields identified and flagged before the prompt reaches the external API</span>
+        </li>
+        <li class="ds-bullet--check">
+          <span class="ds-bullet__icon--check" aria-hidden="true">&#10003;</span>
+          <span class="ds-bullet__text"><strong>Anonymization that preserves usability:</strong> Fields replaced with tokens or pseudonyms — not simply redacted — so LLM output remains actionable</span>
+        </li>
+        <li class="ds-bullet--check">
+          <span class="ds-bullet__icon--check" aria-hidden="true">&#10003;</span>
+          <span class="ds-bullet__text"><strong>Output re-mapping:</strong> Anonymized tokens in LLM outputs mapped back to real identifiers for downstream use — within the organization's secure perimeter</span>
+        </li>
+        <li class="ds-bullet--check">
+          <span class="ds-bullet__icon--check" aria-hidden="true">&#10003;</span>
+          <span class="ds-bullet__text"><strong>Audit trail:</strong> Every anonymization operation logged for compliance and incident response</span>
+        </li>
+        <li class="ds-bullet--check">
+          <span class="ds-bullet__icon--check" aria-hidden="true">&#10003;</span>
+          <span class="ds-bullet__text"><strong>Context preservation:</strong> The semantic meaning of anonymized content preserved so LLM performance is not degraded</span>
+        </li>
+      </ul>
+    </section>
+
+  </article>
+
+  <!-- ============================================================
+       Section 6: FAQ
+       ============================================================ -->
+  <section id="section-6" class="ds-faq" aria-labelledby="faq-title">
+    <div class="ds-faq__inner">
+      <p id="faq-title" class="ds-caption ds-faq__eyebrow">Frequently Asked Questions</p>
+
+      <article class="ds-faq__item">
+        <h3 class="ds-h4 ds-faq__question">What is prompt data leakage in enterprise LLM usage?</h3>
+        <p class="ds-body-s ds-faq__answer">Prompt data leakage occurs when sensitive fields — PII, PHI, financial identifiers, or regulated data — enter LLM prompts without detection or anonymization, reaching external model APIs that the organization does not control. It is often invisible from the inside and creates compliance exposure regardless of LLM provider policies.</p>
+      </article>
+
+      <article class="ds-faq__item">
+        <h3 class="ds-h4 ds-faq__question">Why do LLM API privacy policies not protect organizations from data leakage risk?</h3>
+        <p class="ds-body-s ds-faq__answer">Privacy policies describe how a vendor handles data they receive. They do not prevent the organization from transmitting data it shouldn't transmit, and they do not eliminate the organization's liability as the data controller. The exposure occurs at the point of transmission — before any vendor policy applies.</p>
+      </article>
+
+      <article class="ds-faq__item">
+        <h3 class="ds-h4 ds-faq__question">What regulations are most relevant to LLM data leakage risk?</h3>
+        <p class="ds-body-s ds-faq__answer">GDPR Article 25 (data minimization and privacy by design), HIPAA (PHI in prompts to commercial APIs), CCPA, PIPA, and financial data regulations. In each case, the organization sending data to an external LLM API retains liability as the data controller.</p>
+      </article>
+
+      <article class="ds-faq__item">
+        <h3 class="ds-h4 ds-faq__question">How does anonymization for LLM usage differ from standard data masking?</h3>
+        <p class="ds-body-s ds-faq__answer">Standard data masking removes or replaces sensitive fields permanently, often destroying downstream usability. LLM anonymization must preserve semantic meaning — replacing a patient name with a consistent token that the LLM can refer to coherently — and must re-map those tokens in LLM outputs for downstream use within the secure perimeter.</p>
+      </article>
+
+      <article class="ds-faq__item">
+        <h3 class="ds-h4 ds-faq__question">What is the difference between LLM Capsule and traditional data anonymization?</h3>
+        <p class="ds-body-s ds-faq__answer">LLM Capsule operates inline at the point of LLM interaction — detecting sensitive fields in prompts, anonymizing before transmission, and re-mapping tokens in outputs. Traditional anonymization is a batch process applied before data storage. LLM Capsule is designed for real-time, workflow-integrated protection that preserves LLM output usability.</p>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       Section 7: Bridge Links (Where to go next)
+       ============================================================ -->
+  <section id="section-7" class="ds-bridge" aria-labelledby="bridge-title">
+    <div class="ds-bridge__inner">
+      <p id="bridge-title" class="ds-bridge__label">// Where to go next</p>
+      <nav class="ds-bridge__links" aria-label="Related resources">
+        <a href="/llm-capsule" class="ds-bridge__link">
+          <span class="ds-bridge__arrow" aria-hidden="true">&rarr;</span>
+          Explore LLM Capsule — inline PII protection for enterprise LLM usage
+        </a>
+        <a href="/llm-capsule" class="ds-bridge__link">
+          <span class="ds-bridge__arrow" aria-hidden="true">&rarr;</span>
+          Explore SynTitan — secure LLM workflows within execution stability
+        </a>
+        <a href="/dts" class="ds-bridge__link">
+          <span class="ds-bridge__arrow" aria-hidden="true">&rarr;</span>
+          Explore DTS — for dataset-level restricted data replacement
+        </a>
+        <a href="/learn/why-ai-fails-after-deployment" class="ds-bridge__link">
+          <span class="ds-bridge__arrow" aria-hidden="true">&rarr;</span>
+          Read: Why AI Fails After Deployment
+        </a>
+      </nav>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       Section 8: Where CUBIG fits
+       ============================================================ -->
+  <section id="section-8" class="ds-cubig-fits">
+    <div class="ds-cubig-fits__inner">
+      <div class="ds-banner ds-cubig-fits__banner" style="--ds-banner-color: var(--ds-color-brand-500); --ds-banner-bg: var(--ds-color-gray-100);" role="note">
+        <div>
+          <p class="ds-cubig-fits__label">// Where CUBIG fits</p>
+          <p class="ds-cubig-fits__body">Databricks and Snowflake store your data. MLflow tracks your models. <strong>CUBIG is the layer between them and your AI</strong> — making data usable, reproducible, and blocker-free in production. <a href="/" class="ds-cubig-fits__link">See how &rarr;</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       Section 9: Bottom CTA
+       ============================================================ -->
+  <section id="section-9" class="ds-cta" aria-labelledby="cta-title">
+    <div class="ds-cta__inner">
+      <p class="ds-caption ds-cta__eyebrow">// Remove this blocker from your stack</p>
+      <h2 id="cta-title" class="ds-h2 ds-cta__title">Enterprise AI doesn't have to break here.</h2>
+      <p class="ds-body-m ds-cta__desc">CUBIG builds the infrastructure layer that removes these exact problems — restricted data, unusable data, unstable execution — from production AI.</p>
+      <div class="ds-cta__buttons" role="group" aria-label="Call to action buttons">
+        <a href="/llm-capsule" class="ds-btn ds-btn--primary">
+          Explore LLM Capsule <span aria-hidden="true">&rarr;</span>
+        </a>
+        <a href="/cdn-cgi/l/email-protection#0b6864657f6a687f4b687e69626c256a62" class="ds-btn ds-btn--secondary">
+          Talk to our engineers <span aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================================================
+     Footer
+     ============================================================ -->
+<footer class="ds-footer" role="contentinfo">
+  <div class="ds-footer__inner">
+    <div>
+      <div class="ds-footer__brand">
+        <div class="ds-footer__brand-mark" aria-hidden="true">C</div>
+        CUBIG
+      </div>
+      <p class="ds-footer__tagline">AI-Ready Data Infrastructure for Enterprise AI.</p>
+    </div>
+    <div>
+      <p class="ds-footer__col-title">Platform</p>
+      <ul class="ds-footer__links" role="list">
+        <li><a href="/llm-capsule">SynTitan</a></li>
+        <li><a href="/proof">Proof</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="ds-footer__col-title">Capabilities</p>
+      <ul class="ds-footer__links" role="list">
+        <li><a href="/dts">DTS</a></li>
+        <li><a href="/llm-capsule">LLM Capsule</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="ds-footer__col-title">Learn</p>
+      <ul class="ds-footer__links" role="list">
+        <li><a href="/learn/ai-ready-data-infrastructure">AI-Ready Data Infrastructure</a></li>
+        <li><a href="/learn/release-state">Release State</a></li>
+        <li><a href="/learn/articles">Articles</a></li>
+        <li><a href="/learn/glossary">Glossary</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="ds-footer__col-title">Company</p>
+      <ul class="ds-footer__links" role="list">
+        <li><a href="/company">About</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ds-footer__copy">
+    &copy; 2025 CUBIG Corp. All rights reserved.
+  </div>
+</footer>
+
+</body>
+</html>

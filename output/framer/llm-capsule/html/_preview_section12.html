@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 12 — Blockers | LLM Capsule Framer Preview</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "DM Sans", sans-serif; -webkit-font-smoothing: antialiased; word-break: keep-all; overflow-wrap: break-word; }
+
+    .s12-section {
+      width: 100%;
+      padding: 80px 0;
+      color: #ffffff;
+      background-color: #171719;
+      background-image: url('../../reference/images/bg-green-wave.png');
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+    .s12-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 15, 15, 0.72);
+      pointer-events: none;
+    }
+    .s12-container {
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 16px;
+      position: relative;
+      z-index: 1;
+    }
+    .s12-section-header {
+      margin-bottom: 48px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+    }
+    .s12-eyebrow {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 12px;
+    }
+    .s12-section-title {
+      font-size: 36px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.2;
+      letter-spacing: -1px;
+      margin: 0 0 16px;
+    }
+    .s12-title-brand {
+      background: linear-gradient(130deg, #6C54A0, #b44fcc 50%, #ff266a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .s12-section-desc { font-size: 16px; color: rgba(255,255,255,0.75); line-height: 1.7; max-width: 720px; }
+    .s12-card-grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin-bottom: 40px; }
+    .s12-card {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      backdrop-filter: blur(8px);
+    }
+    .s12-badge--red {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      background: rgba(255, 48, 48, 0.18);
+      color: #ff3030;
+      border: 1px solid rgba(255, 48, 48, 0.3);
+    }
+    .s12-card__title { font-size: 16px; font-weight: 700; color: #ffffff; line-height: 1.4; }
+    .s12-card__description { font-size: 14px; color: rgba(255,255,255,0.7); line-height: 1.7; }
+    .s12-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+    .s12-btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      border-radius: 9999px; font-family: "DM Sans", sans-serif; font-weight: 500; font-size: 15px;
+      cursor: pointer; transition: opacity 0.2s; white-space: nowrap; text-decoration: none; padding: 11px 28px;
+    }
+    .s12-btn--primary { background: linear-gradient(130deg, #6C54A0, #b44fcc 50%, #ff266a); color: #ffffff; border: none; }
+    .s12-btn--secondary { background: rgba(255,255,255,0.08); color: #ffffff; border: 1px solid rgba(255,255,255,0.25); }
+
+    @media (min-width: 768px) {
+      .s12-container { padding: 0 32px; }
+      .s12-section-title { font-size: 42px; }
+      .s12-card-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (min-width: 1024px) { .s12-section-title { font-size: 48px; } .s12-container { padding: 0 32px; } }
+    @media (min-width: 1440px) { .s12-container { padding: 0 120px; max-width: 1440px; } }
+  </style>
+</head>
+<body>
+  <section class="s12-section">
+    <div class="s12-container">
+      <div class="s12-section-header">
+        <span class="s12-eyebrow">When Teams Need LLM Capsule</span>
+        <h2 class="s12-section-title">Four situations where sensitive data <span class="s12-title-brand">blocks AI adoption.</span></h2>
+        <p class="s12-section-desc">Enterprise LLM adoption stalls when data contains fields that can't leave the perimeter. LLM Capsule was built for exactly these blockers.</p>
+      </div>
+      <div class="s12-card-grid">
+        <div class="s12-card">
+          <span class="s12-badge--red">BLOCKER: PII IN PROMPTS</span>
+          <h3 class="s12-card__title">Employees want to use LLMs on enterprise data, but prompts contain PII.</h3>
+          <p class="s12-card__description">Names, customer IDs, account numbers, health records — all appear naturally in enterprise text. When employees paste this into ChatGPT, Claude, or any external LLM, it creates a prompt data leakage risk. LLM Capsule intercepts, anonymizes, and re-maps — so LLM usage can proceed safely.</p>
+        </div>
+        <div class="s12-card">
+          <span class="s12-badge--red">BLOCKER: COMPLIANCE</span>
+          <h3 class="s12-card__title">Compliance blocks LLM usage entirely, even for internal tools.</h3>
+          <p class="s12-card__description">Legal and compliance teams block LLM adoption because no safe-use policy exists for data containing regulated fields. LLM Capsule gives compliance teams a technical control layer — inline anonymization with audit logs — that makes AI-use policies enforceable and demonstrable.</p>
+        </div>
+        <div class="s12-card">
+          <span class="s12-badge--red">BLOCKER: OUTPUT EXPOSURE</span>
+          <h3 class="s12-card__title">LLM outputs may contain or infer sensitive information from prompts.</h3>
+          <p class="s12-card__description">Anonymizing the input alone isn't enough. LLMs can reflect, restructure, or infer sensitive patterns in their output. LLM Capsule applies detection and shield on both directions — input and output — so downstream workflows receive safe, usable responses.</p>
+        </div>
+        <div class="s12-card">
+          <span class="s12-badge--red">BLOCKER: USABILITY</span>
+          <h3 class="s12-card__title">Existing masking tools destroy data usability, making LLM output meaningless.</h3>
+          <p class="s12-card__description">Simple string replacement (replacing "John Smith" with "XXXX") breaks the semantic meaning that LLMs rely on. LLM Capsule maps sensitive tokens to coherent anonymized substitutes, and re-maps them in the output — preserving both safety and usability for downstream AI workflows.</p>
+        </div>
+      </div>
+      <div class="s12-actions">
+        <a href="/contact" class="s12-btn s12-btn--primary">Run technical walkthrough</a>
+        <a href="https://llmcapsule.ai" target="_blank" rel="noopener" class="s12-btn s12-btn--secondary">Explore LLM Capsule</a>
+        <a href="/learn/prompt-data-leakage" class="s12-btn s12-btn--secondary">Explore concept: Prompt data leakage</a>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

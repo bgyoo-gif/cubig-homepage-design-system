@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 02 — KPI Band + Certifications Preview</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@700&family=Fragment+Mono&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; padding: 0; font-family: "DM Sans", sans-serif; background: #fff; }
+
+    .s2-section {
+      width: 100%;
+      padding: 80px 0;
+      font-family: "DM Sans", sans-serif;
+      color: #0f0f0f;
+      background-color: #ffffff;
+      -webkit-font-smoothing: antialiased;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+    .s2-container {
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 16px;
+      box-sizing: border-box;
+    }
+    .s2-kpi-band {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background-color: #e6e7e9;
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 80px;
+    }
+    .s2-kpi-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px;
+      text-align: center;
+      background: linear-gradient(135deg, #f0ecff 0%, #ede9ff 100%);
+      gap: 8px;
+    }
+    .s2-kpi-number {
+      font-family: "DM Sans", sans-serif;
+      font-size: 48px;
+      font-weight: 700;
+      color: #3061f2;
+      line-height: 1;
+      letter-spacing: -2px;
+    }
+    .s2-kpi-label {
+      font-size: 14px;
+      color: #636363;
+      line-height: 1.4;
+      margin: 0;
+    }
+    .s2-section-header {
+      margin-bottom: 48px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid #e6e7e9;
+    }
+    .s2-eyebrow {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #636363;
+      margin-bottom: 12px;
+    }
+    .s2-section-title {
+      font-family: "DM Sans", sans-serif;
+      font-size: 40px;
+      font-weight: 700;
+      color: #0f0f0f;
+      line-height: 1.2;
+      letter-spacing: -1px;
+      margin: 0;
+    }
+    .s2-title-brand {
+      background: linear-gradient(130deg, #6C54A0, #b44fcc 50%, #ff266a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .s2-cert-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .s2-cert-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 24px;
+      border: 1px solid #e6e7e9;
+      border-radius: 16px;
+      text-align: center;
+      gap: 8px;
+      background-color: #ffffff;
+    }
+    .s2-cert-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #9c9c9c;
+    }
+    .s2-cert-company {
+      font-size: 14px;
+      font-weight: 600;
+      color: #0f0f0f;
+    }
+    .s2-cert-company-product {
+      font-family: "Oxanium", sans-serif;
+      font-weight: 700;
+    }
+    .s2-cert-wreath {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 120px;
+      height: 60px;
+      margin: 4px auto;
+    }
+    .s2-cert-wreath-left,
+    .s2-cert-wreath-right {
+      position: absolute;
+      width: 36px;
+      height: auto;
+      object-fit: contain;
+    }
+    .s2-cert-wreath-left { left: 0; }
+    .s2-cert-wreath-right { right: 0; }
+    .s2-cert-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #0f0f0f;
+      z-index: 1;
+    }
+    .s2-cert-year {
+      font-size: 12px;
+      color: #9c9c9c;
+    }
+    .s2-cert-award-logo {
+      width: 48px;
+      height: auto;
+      object-fit: contain;
+      z-index: 1;
+    }
+    .s2-badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .s2-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 1;
+    }
+    .s2-badge--success { background-color: #e6f4ea; color: #1a7c3a; }
+    .s2-badge--purple { background-color: #f0ecff; color: #6C54A0; }
+
+    @media (min-width: 768px) {
+      .s2-container { padding: 0 32px; }
+      .s2-kpi-band { grid-template-columns: repeat(4, 1fr); }
+      .s2-cert-grid { grid-template-columns: repeat(4, 1fr); }
+      .s2-section-title { font-size: 48px; }
+    }
+    @media (min-width: 1440px) {
+      .s2-container { padding: 0 120px; max-width: 1440px; }
+    }
+  </style>
+</head>
+<body>
+  <section class="s2-section">
+    <div class="s2-container">
+      <div class="s2-kpi-band">
+        <div class="s2-kpi-item">
+          <span class="s2-kpi-number">98.1%</span>
+          <p class="s2-kpi-label">PII Detection Accuracy</p>
+        </div>
+        <div class="s2-kpi-item">
+          <span class="s2-kpi-number">99.14%</span>
+          <p class="s2-kpi-label">Workflow Accuracy</p>
+        </div>
+        <div class="s2-kpi-item">
+          <span class="s2-kpi-number">100%</span>
+          <p class="s2-kpi-label">Structured PII Coverage</p>
+        </div>
+        <div class="s2-kpi-item">
+          <span class="s2-kpi-number">98%</span>
+          <p class="s2-kpi-label">Response Similarity</p>
+        </div>
+      </div>
+      <div class="s2-section-header">
+        <span class="s2-eyebrow">Certifications</span>
+        <h2 class="s2-section-title">Certified and <span class="s2-title-brand">Compliance-Ready</span></h2>
+      </div>
+      <div class="s2-cert-grid">
+        <article class="s2-cert-card">
+          <span class="s2-cert-label">Cert</span>
+          <span class="s2-cert-company"><span class="s2-cert-company-product">LLM Capsule</span></span>
+          <div class="s2-cert-wreath">
+            <img class="s2-cert-wreath-left" src="../../reference/graphics/cert-left.png" alt="">
+            <img class="s2-cert-wreath-right" src="../../reference/graphics/cert-right.png" alt="">
+            <span class="s2-cert-name">GS Certified</span>
+          </div>
+          <span class="s2-cert-year">2024.07</span>
+        </article>
+        <article class="s2-cert-card">
+          <span class="s2-cert-label">Cert</span>
+          <span class="s2-cert-company">Cubig</span>
+          <div class="s2-cert-wreath">
+            <img class="s2-cert-wreath-left" src="../../reference/graphics/cert-left.png" alt="">
+            <img class="s2-cert-wreath-right" src="../../reference/graphics/cert-right.png" alt="">
+            <span class="s2-cert-name">ISO/IEC 27001:2022</span>
+          </div>
+        </article>
+        <article class="s2-cert-card">
+          <span class="s2-cert-label">Cert</span>
+          <span class="s2-cert-company">Cubig</span>
+          <div class="s2-cert-wreath">
+            <img class="s2-cert-wreath-left" src="../../reference/graphics/cert-left.png" alt="">
+            <img class="s2-cert-wreath-right" src="../../reference/graphics/cert-right.png" alt="">
+            <span class="s2-cert-name">ISO/IEC 42001:2023</span>
+          </div>
+        </article>
+        <article class="s2-cert-card">
+          <span class="s2-cert-label">Awards</span>
+          <span class="s2-cert-company">Cubig</span>
+          <div class="s2-cert-wreath">
+            <img class="s2-cert-wreath-left" src="../../reference/graphics/cert-left.png" alt="">
+            <img class="s2-cert-wreath-right" src="../../reference/graphics/cert-right.png" alt="">
+            <img src="../../reference/graphics/awards-startup-wroldcup.png" alt="NextRise Global Innovator" class="s2-cert-award-logo">
+          </div>
+          <span class="s2-cert-name">NextRise Global Innovator</span>
+        </article>
+      </div>
+      <div class="s2-badge-row">
+        <span class="s2-badge s2-badge--success">GDPR Article 25 Data Minimization</span>
+        <span class="s2-badge s2-badge--success">HIPAA PHI Protection</span>
+        <span class="s2-badge s2-badge--purple">Available on AWS Marketplace</span>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

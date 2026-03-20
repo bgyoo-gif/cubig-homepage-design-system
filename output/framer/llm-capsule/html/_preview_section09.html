@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 09 — Comparison Table Preview</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; padding: 0; font-family: "DM Sans", sans-serif; background: #fff; }
+
+    .s9-section {
+      width: 100%;
+      padding: 80px 0;
+      font-family: "DM Sans", sans-serif;
+      color: #0f0f0f;
+      background-color: #ffffff;
+      -webkit-font-smoothing: antialiased;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+    .s9-container {
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+    .s9-section-header {
+      margin-bottom: 48px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid #e6e7e9;
+    }
+    .s9-eyebrow {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #636363;
+      margin-bottom: 12px;
+    }
+    .s9-section-title {
+      font-family: "DM Sans", sans-serif;
+      font-size: 36px;
+      font-weight: 700;
+      color: #0f0f0f;
+      line-height: 1.2;
+      letter-spacing: -1px;
+      margin: 0;
+    }
+    .s9-title-product { font-family: "Oxanium", sans-serif; font-weight: 700; }
+    .s9-title-brand {
+      background: linear-gradient(130deg, #6C54A0, #b44fcc 50%, #ff266a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .s9-table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      border-radius: 16px;
+      border: 1px solid #e6e7e9;
+    }
+    .s9-table {
+      width: 100%;
+      min-width: 640px;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    .s9-table thead tr { background: #f7f7f7; }
+    .s9-table th {
+      padding: 14px 16px;
+      text-align: left;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #636363;
+      border-bottom: 1px solid #e6e7e9;
+    }
+    .s9-table td {
+      padding: 14px 16px;
+      border-bottom: 1px solid #f2f2f2;
+      vertical-align: top;
+      color: #0f0f0f;
+      line-height: 1.5;
+    }
+    .s9-table tr:last-child td { border-bottom: none; }
+    .s9-col-highlight { background: #faf7ff; font-weight: 500; }
+    .s9-table th.s9-col-highlight { background: #f0ecff; color: #6C54A0; }
+    .s9-capability { font-weight: 600; color: #0f0f0f; }
+    .s9-check { color: #0d7a5f; font-weight: 700; }
+    .s9-partial { color: #b45309; font-weight: 700; }
+    .s9-cross { color: #c0392b; font-weight: 700; }
+
+    @media (min-width: 768px) {
+      .s9-container { padding: 0 32px; }
+      .s9-section-title { font-size: 42px; }
+    }
+    @media (min-width: 1440px) {
+      .s9-container { padding: 0 120px; max-width: 1440px; }
+    }
+  </style>
+</head>
+<body>
+  <section class="s9-section">
+    <div class="s9-container">
+      <div class="s9-section-header">
+        <span class="s9-eyebrow">Comparison</span>
+        <h2 class="s9-section-title"><span class="s9-title-product">LLM Capsule</span> vs. <span class="s9-title-brand">doing nothing.</span> Or avoiding AI.</h2>
+      </div>
+      <div class="s9-table-wrap">
+        <table class="s9-table">
+          <thead>
+            <tr>
+              <th>Capability</th>
+              <th class="s9-col-highlight">LLM Capsule</th>
+              <th>Manual Prompt Review</th>
+              <th>Static Data Masking</th>
+              <th>No Protection</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="s9-capability">Real-time PII detection</td>
+              <td class="s9-col-highlight"><span class="s9-check">✓</span> Automated, in-line</td>
+              <td><span class="s9-partial">△</span> Slow, error-prone</td>
+              <td><span class="s9-cross">✗</span> Pre-processing only</td>
+              <td><span class="s9-cross">✗</span></td>
+            </tr>
+            <tr>
+              <td class="s9-capability">Output usability preserved</td>
+              <td class="s9-col-highlight"><span class="s9-check">✓</span> Token re-mapping</td>
+              <td><span class="s9-partial">△</span> Context dependent</td>
+              <td><span class="s9-cross">✗</span> Masked data lost</td>
+              <td><span class="s9-check">✓</span> But exposed</td>
+            </tr>
+            <tr>
+              <td class="s9-capability">Blocks external PII transmission</td>
+              <td class="s9-col-highlight"><span class="s9-check">✓</span> Before API call</td>
+              <td><span class="s9-partial">△</span> Human dependent</td>
+              <td><span class="s9-partial">△</span> Partial</td>
+              <td><span class="s9-cross">✗</span></td>
+            </tr>
+            <tr>
+              <td class="s9-capability">Audit trail</td>
+              <td class="s9-col-highlight"><span class="s9-check">✓</span> Full log + Release State</td>
+              <td><span class="s9-cross">✗</span></td>
+              <td><span class="s9-partial">△</span> Limited</td>
+              <td><span class="s9-cross">✗</span></td>
+            </tr>
+            <tr>
+              <td class="s9-capability">Custom enterprise field detection</td>
+              <td class="s9-col-highlight"><span class="s9-check">✓</span> Configurable rules</td>
+              <td><span class="s9-partial">△</span> Manual only</td>
+              <td><span class="s9-partial">△</span> Schema-bound</td>
+              <td><span class="s9-cross">✗</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

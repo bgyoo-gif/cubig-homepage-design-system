@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 15 — Operational Banner | LLM Capsule Framer Preview</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "DM Sans", sans-serif; -webkit-font-smoothing: antialiased; word-break: keep-all; overflow-wrap: break-word; }
+
+    .s15-section {
+      width: 100%; padding: 80px 0; color: #ffffff;
+      background-color: #0a1a0a;
+      background-image: url('../../reference/images/bg-lime.png');
+      background-size: cover; background-position: center; position: relative;
+    }
+    .s15-section::before { content: ''; position: absolute; inset: 0; background: rgba(5, 25, 5, 0.78); pointer-events: none; }
+    .s15-container { width: 100%; margin: 0 auto; padding: 0 16px; position: relative; z-index: 1; }
+    .s15-banner { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; text-align: center; align-items: center; }
+    .s15-banner__label {
+      display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      color: rgba(255,255,255,0.55); padding: 5px 14px; border: 1px solid rgba(255,255,255,0.2); border-radius: 9999px;
+    }
+    .s15-banner__body { font-size: 16px; color: rgba(255,255,255,0.85); line-height: 1.75; }
+    .s15-banner__body-highlight { font-size: 17px; font-weight: 500; color: #ffffff; line-height: 1.7; }
+    .s15-banner__muted { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.6; }
+    .s15-btn-ghost {
+      display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.85);
+      text-decoration: none; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 9999px; padding: 10px 24px; margin-top: 4px;
+    }
+
+    @media (min-width: 768px) { .s15-container { padding: 0 32px; } .s15-banner__body { font-size: 17px; } .s15-banner__body-highlight { font-size: 18px; } }
+    @media (min-width: 1024px) { .s15-container { padding: 0 32px; } }
+    @media (min-width: 1440px) { .s15-container { padding: 0 120px; max-width: 1440px; } }
+  </style>
+</head>
+<body>
+  <section class="s15-section">
+    <div class="s15-container">
+      <div class="s15-banner">
+        <span class="s15-banner__label">OPERATIONAL EXAMPLE</span>
+        <p class="s15-banner__body">An enterprise team building an internal LLM search system over contracts, policy documents, and HR records found that every document contained PII, internal identifiers, and regulated fields that could not leave the enterprise boundary.</p>
+        <p class="s15-banner__body-highlight">LLM Capsule anonymized all sensitive fields at the prompt layer before each LLM interaction and remapped outputs back to the original context. The RAG system went live using frontier LLM capabilities — without any sensitive data crossing the enterprise perimeter.</p>
+        <p class="s15-banner__muted">Blocker removed: restricted data (PII and regulated fields blocking enterprise LLM adoption)</p>
+        <a href="/#enterprise-use-cases" class="s15-btn-ghost">See enterprise use cases</a>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

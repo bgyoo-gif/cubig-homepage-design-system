@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 05 — Availability Preview</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; padding: 0; font-family: "DM Sans", sans-serif; background: #fff; }
+
+    .s5-section {
+      width: 100%;
+      padding: 80px 0;
+      font-family: "DM Sans", sans-serif;
+      color: #0f0f0f;
+      background-color: #ffffff;
+      -webkit-font-smoothing: antialiased;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+    .s5-container {
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+    .s5-section-header {
+      margin-bottom: 48px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid #e6e7e9;
+    }
+    .s5-eyebrow {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #636363;
+      margin-bottom: 12px;
+    }
+    .s5-section-title {
+      font-family: "DM Sans", sans-serif;
+      font-size: 36px;
+      font-weight: 700;
+      color: #0f0f0f;
+      line-height: 1.2;
+      letter-spacing: -1px;
+      margin: 0;
+    }
+    .s5-title-brand {
+      background: linear-gradient(130deg, #6C54A0, #b44fcc 50%, #ff266a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .s5-card-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    .s5-card {
+      background: #ffffff;
+      border: 1px solid #e6e7e9;
+      border-radius: 16px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .s5-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      width: fit-content;
+    }
+    .s5-badge--teal { background-color: #e6f9f5; color: #0d7a5f; }
+    .s5-badge--brand { background-color: #f0ecff; color: #6C54A0; }
+    .s5-card-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #0f0f0f;
+      margin: 0;
+      letter-spacing: -0.5px;
+    }
+    .s5-card-desc {
+      font-size: 15px;
+      color: #636363;
+      line-height: 1.7;
+      margin: 0;
+    }
+    .s5-btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #3061f2;
+      font-size: 15px;
+      font-weight: 500;
+      text-decoration: none;
+      border: 1px solid #e6e7e9;
+      border-radius: 9999px;
+      padding: 10px 24px;
+    }
+
+    @media (min-width: 768px) {
+      .s5-container { padding: 0 32px; }
+      .s5-card-grid { grid-template-columns: repeat(2, 1fr); }
+      .s5-section-title { font-size: 42px; }
+    }
+    @media (min-width: 1440px) {
+      .s5-container { padding: 0 120px; max-width: 1440px; }
+    }
+  </style>
+</head>
+<body>
+  <section class="s5-section">
+    <div class="s5-container">
+      <div class="s5-section-header">
+        <span class="s5-eyebrow">Availability</span>
+        <h2 class="s5-section-title">Available <span class="s5-title-brand">everywhere</span> you need it</h2>
+      </div>
+      <div class="s5-card-grid">
+        <div class="s5-card">
+          <span class="s5-badge s5-badge--teal">AVAILABLE NOW</span>
+          <h3 class="s5-card-title">AWS Marketplace</h3>
+          <p class="s5-card-desc">LLM Capsule is available on the AWS Marketplace for enterprise procurement, consolidated billing, and streamlined deployment into existing AWS infrastructure.</p>
+          <div>
+            <a href="https://aws.amazon.com/marketplace" target="_blank" rel="noopener" class="s5-btn-ghost">View on AWS Marketplace</a>
+          </div>
+        </div>
+        <div class="s5-card">
+          <span class="s5-badge s5-badge--brand">DEDICATED PRODUCT SITE</span>
+          <h3 class="s5-card-title">llmcapsule.ai</h3>
+          <p class="s5-card-desc">LLM Capsule also operates its own dedicated domain. Visit llmcapsule.ai to learn more about removing AI data blockers, deployment options, and enterprise coverage.</p>
+          <div>
+            <a href="https://llmcapsule.ai" target="_blank" rel="noopener" class="s5-btn-ghost">Visit llmcapsule.ai</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

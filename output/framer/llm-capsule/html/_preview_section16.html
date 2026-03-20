@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 16 — Alternatives | LLM Capsule Framer Preview</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "DM Sans", sans-serif; -webkit-font-smoothing: antialiased; word-break: keep-all; overflow-wrap: break-word; }
+
+    .s16-section { width: 100%; padding: 80px 0; background-color: #ffffff; color: #0f0f0f; }
+    .s16-container { width: 100%; margin: 0 auto; padding: 0 16px; }
+    .s16-section-header { margin-bottom: 48px; padding-bottom: 24px; border-bottom: 1px solid #e6e7e9; }
+    .s16-eyebrow { display: block; font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #636363; margin-bottom: 12px; }
+    .s16-section-title { font-size: 36px; font-weight: 700; color: #0f0f0f; line-height: 1.2; letter-spacing: -1px; margin: 0 0 12px; }
+    .s16-title-product { font-family: "Oxanium", sans-serif; font-weight: 700; }
+    .s16-title-brand {
+      background: linear-gradient(130deg, #6C54A0, #b44fcc 50%, #ff266a);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .s16-section-desc { font-size: 16px; color: #636363; line-height: 1.7; }
+    .s16-card-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+    .s16-card { background: #ffffff; border: 1px solid #e6e7e9; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 16px; }
+    .s16-card--dark { background: #0f0f0f; border-color: #0f0f0f; color: #ffffff; }
+    .s16-card__title { font-size: 17px; font-weight: 700; color: #0f0f0f; line-height: 1.3; }
+    .s16-card--dark .s16-card__title { color: #ffffff; }
+    .s16-card__title-product { font-family: "Oxanium", sans-serif; font-weight: 700; }
+    .s16-bullet { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+    .s16-bullet__item { display: flex; align-items: flex-start; gap: 8px; font-size: 14px; color: #636363; line-height: 1.6; }
+    .s16-card--dark .s16-bullet__item { color: rgba(255,255,255,0.75); }
+    .s16-bullet__icon { display: inline-block; width: 6px; height: 6px; min-width: 6px; border-radius: 50%; background: #9c9c9c; margin-top: 7px; }
+    .s16-card--dark .s16-bullet__icon { background: rgba(255,255,255,0.4); }
+    .s16-text-linethrough { text-decoration: line-through; opacity: 0.55; }
+
+    @media (min-width: 768px) { .s16-container { padding: 0 32px; } .s16-section-title { font-size: 42px; } .s16-card-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 1024px) { .s16-container { padding: 0 32px; } .s16-section-title { font-size: 48px; } .s16-card-grid { grid-template-columns: 1fr 1fr 1fr; } }
+    @media (min-width: 1440px) { .s16-container { padding: 0 120px; max-width: 1440px; } }
+  </style>
+</head>
+<body>
+  <section class="s16-section">
+    <div class="s16-container">
+      <div class="s16-section-header">
+        <span class="s16-eyebrow">Alternatives</span>
+        <h2 class="s16-section-title"><span class="s16-title-product">LLM Capsule</span> vs <span class="s16-title-brand">the alternatives</span></h2>
+        <p class="s16-section-desc">You don't need to choose between frontier models and data safety.</p>
+      </div>
+      <div class="s16-card-grid">
+        <div class="s16-card">
+          <h3 class="s16-card__title">Private / On-prem LLM</h3>
+          <ul class="s16-bullet">
+            <li class="s16-bullet__item"><span class="s16-bullet__icon"></span>Data stays inside firewall</li>
+            <li class="s16-bullet__item"><span class="s16-bullet__icon"></span><span class="s16-text-linethrough">Access to frontier models</span></li>
+            <li class="s16-bullet__item"><span class="s16-bullet__icon"></span><span class="s16-text-linethrough">Real-time PII detection</span></li>
+            <li class="s16-bullet__item"><span class="s16-bullet__icon"></span><span class="s16-text-linethrough">Output re-mapping</span></li>
+            <li class="s16-bullet__item"><span class="s16-bullet__icon"></span>High infra cost</li>
+          </ul>
+        </div>
+        <div class="s16-card">
+          <h3 class="s16-card__title">Manual Data Sanitization</h3>
+          <ul class="s16-bullet">
+            <li class="s16-bullet__item"><span class="s16-bullet__icon"></span>Works for simple cases</li>
+            <li class="s16-bullet__item"><span class="s16-bullet__icon"></span><span class="s16-text-linethrough">Scales to production volume</span></li>
+            <li class="s16-bullet__item"><span class="s16-bullet__icon"></span><span class="s16-text-linethrough">Handles unstructured text</span></li>
+            <li class="s16-bullet__item"><span class="s16-bullet__icon"></span><span class="s16-text-linethrough">Output re-mapping</span></li>
+            <li class="s16-bullet__item"><span class="s16-bullet__icon"></span>Slow, error-prone at scale</li>
+          </ul>
+        </div>
+        <div class="s16-card s16-card--dark">
+          <h3 class="s16-card__title"><span class="s16-card__title-product">LLM Capsule</span></h3>
+          <ul class="s16-bullet">
+            <li class="s16-bullet__item"><span class="s16-bullet__icon"></span>Use any LLM incl. frontier</li>
+            <li class="s16-bullet__item"><span class="s16-bullet__icon"></span>Real-time PII detection</li>
+            <li class="s16-bullet__item"><span class="s16-bullet__icon"></span>Sensitive tokens anonymized</li>
+            <li class="s16-bullet__item"><span class="s16-bullet__icon"></span>Output re-mapped automatically</li>
+            <li class="s16-bullet__item"><span class="s16-bullet__icon"></span>Deploys as a layer, no infra</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
