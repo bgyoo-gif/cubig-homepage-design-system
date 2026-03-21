@@ -319,7 +319,7 @@ TSX에서는 CSS 변수 대신 하드코딩 색상을 사용하지만, **DS 팔�
 
 **허용 색상 목록:**
 ```
-#3061f2, #a617ff, #c6c5fa, #ab2eff                    (Brand)
+#3061f2, #0e5bea, #c6c5fa, #ab2eff                    (Brand)
 #0f0f0f, #141414, #171719, #303135, #636363, #9c9c9c  (Neutral dark)
 #adadad, #bababa, #c4c4c4, #e0e0e0, #e6e7e9           (Neutral mid)
 #ececec, #f2f2f2, #f7f7f7, #ffffff, #000000            (Neutral light)
@@ -335,7 +335,7 @@ rgba(...)                                              (오버레이 목적만 �
 ```bash
 # 팔레트 외 hex 색상 검출
 grep -rn '#[0-9a-fA-F]\{3,8\}' output/framer/[페이지명]/tsx/ | grep -v \
-  '#3061f2\|#a617ff\|#c6c5fa\|#ab2eff\|#0f0f0f\|#141414\|#171719\|#303135\|#636363\|#9c9c9c\|#adadad\|#bababa\|#c4c4c4\|#e0e0e0\|#e6e7e9\|#ececec\|#f2f2f2\|#f7f7f7\|#ffffff\|#000000\|#cacccf\|#0e824c\|#ff3030\|#155ea0\|#f59e0b\|#34d399\|#ff6b6b\|#60a5fa\|#fbbf24\|#6C54A0\|#b44fcc\|#ff266a'
+  '#3061f2\|#0e5bea\|#c6c5fa\|#ab2eff\|#0f0f0f\|#141414\|#171719\|#303135\|#636363\|#9c9c9c\|#adadad\|#bababa\|#c4c4c4\|#e0e0e0\|#e6e7e9\|#ececec\|#f2f2f2\|#f7f7f7\|#ffffff\|#000000\|#cacccf\|#0e824c\|#ff3030\|#155ea0\|#f59e0b\|#34d399\|#ff6b6b\|#60a5fa\|#fbbf24\|#6C54A0\|#b44fcc\|#ff266a'
 
 # 텍스트 color에 neutral-150 이하 사용 (가독성 결함)
 grep -rn 'color.*#e6e7e9\|color.*#f2f2f2\|color.*#f7f7f7\|color.*#ececec' output/framer/[페이지명]/tsx/

@@ -17,7 +17,7 @@ description: >
 :root {
   /* Primary / Brand */
   --ds-color-brand-primary:   #3061f2;
-  --ds-color-brand-purple:    #a617ff;
+  --ds-color-brand-purple:    #0e5bea;
   --ds-color-brand-purple-lt: #c6c5fa;
   --ds-color-brand-purple-md: #ab2eff;
 
@@ -61,7 +61,7 @@ description: >
   /* Border */
   --ds-color-border-default: #e6e7e9;
   --ds-color-border-strong:  #171719;
-  --ds-color-border-brand:   #a617ff;
+  --ds-color-border-brand:   #0e5bea;
 
   /* Surface */
   --ds-color-surface-dark:  #171719;

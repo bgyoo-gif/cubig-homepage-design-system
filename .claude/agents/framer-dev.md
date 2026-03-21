@@ -43,7 +43,7 @@ TSX에서는 CSS 변수 대신 실제 값을 사용하되, **반드시 아래 �
 const PALETTE = {
   // Brand
   brandPrimary:   "#3061f2",
-  brandPurple:    "#a617ff",
+  brandPurple:    "#0e5bea",
   brandPurpleLt:  "#c6c5fa",
   brandPurpleMd:  "#ab2eff",
 
@@ -87,7 +87,7 @@ const PALETTE = {
   // Border
   borderDefault: "#e6e7e9",
   borderStrong:  "#171719",
-  borderBrand:   "#a617ff",
+  borderBrand:   "#0e5bea",
 
   // Surface
   surfaceDark:  "#171719",
@@ -106,7 +106,7 @@ const PALETTE = {
 - **어두운 배경 위 텍스트**: `#ffffff` 또는 `#000000`만 — secondary/tertiary/muted 금지
 - **카드 배경**: `#ffffff`(white)만 — `#f7f7f7`, `#f2f2f2` 배경 카드 금지
 - **KPI/지표 수치**: `#0f0f0f`(text-primary) — 파란색(`#3061f2`) 금지
-- **강조 키워드**: `#a617ff`(brandPurple) — 남용 금지, spec에 명시된 것만
+- **강조 키워드**: `#0e5bea`(brandPurple) — 남용 금지, spec에 명시된 것만
 - **코드 블록**: 다크 배경(`#0f0f0f`) + border 없음 + light variant 색상 — `#34d399`(add), `#ff6b6b`(remove), `#fbbf24`(warn), `#636363`(muted)
 - **코드 블록 앞 divider 금지**: 카드 내 코드블록 삽입 시 `<hr>` divider 사용 금지 — margin-top으로 간격 확보
 - **eyebrow 전면 금지**: 모든 섹션에서 eyebrow 삭제 (banner label 포함)
@@ -315,7 +315,7 @@ const IMAGE_BASE = "https://cubig.ai/assets"
 
 ```bash
 # 1. 팔레트 외 색상 사용 확인 (허용: 팔레트 값, rgba 오버레이, transparent, inherit, currentColor)
-grep -n 'color:' output/framer/[페이지명]/tsx/SectionNN_*.tsx | grep -v '#0f0f0f\|#636363\|#9c9c9c\|#ffffff\|#000000\|#171719\|#303135\|#3061f2\|#a617ff\|#e6e7e9\|#f7f7f7\|#f2f2f2\|#0e824c\|#ff3030\|currentColor\|inherit\|transparent'
+grep -n 'color:' output/framer/[페이지명]/tsx/SectionNN_*.tsx | grep -v '#0f0f0f\|#636363\|#9c9c9c\|#ffffff\|#000000\|#171719\|#303135\|#3061f2\|#0e5bea\|#e6e7e9\|#f7f7f7\|#f2f2f2\|#0e824c\|#ff3030\|currentColor\|inherit\|transparent'
 
 # 2. green/orange/teal 등 DS에 없는 색상
 grep -ni 'green\|#00[89a-f]\|#[0-9a-f]*[89a-f]0[0-9a-f]0\|teal\|orange' output/framer/[페이지명]/tsx/SectionNN_*.tsx
