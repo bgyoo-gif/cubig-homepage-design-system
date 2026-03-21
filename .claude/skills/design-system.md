@@ -70,8 +70,22 @@ description: >
   --ds-color-surface-white: #ffffff;
 
   /* Gradient */
-  --ds-gradient-brand: linear-gradient(130deg, #6C54A0, #b44fcc 50%, #ff266a);
+  --ds-gradient-brand: linear-gradient(130deg, #673AFF 0%, #D932FF 50%, #FF266A 100%);
   --ds-gradient-dark:  linear-gradient(180deg, #0f0f0f 0%, #171719 100%);
+
+  /* Gradient Card Border — 109deg shimmer (Framer 실측) */
+  --ds-gradient-card-purple: linear-gradient(109deg, #FCD6FF 0%, #fff 17%, #FFEDFA 38%, #D48AFF 51%, #fff 73%, #FCD6FF 100%);
+  --ds-gradient-card-blue:   linear-gradient(109deg, #BFE1FB 0%, #fff 17%, #FFEDFA 38%, #81B8FB 51%, #E2E3F0 73%, #BFE1FB 100%);
+  --ds-gradient-card-green:  linear-gradient(109deg, #01CA51 0%, #FFEFF5 17%, #9AE6AD 43%, #C9FFE1 65%, #01CA51 84%, #01CA51 100%);
+  --ds-gradient-card-silver: linear-gradient(109deg, #898989 0%, #fff 17%, #D5D5D5 63%, #F6F5F6 84%, #898989 100%);
+
+  /* Gradient Card Inner Background — 99deg tint-to-white */
+  --ds-gradient-inner-purple: linear-gradient(99deg, #F8EDFF 0%, #FCFCFE 58%, #fff 100%);
+  --ds-gradient-inner-blue:   linear-gradient(99deg, #E9EEFB 0%, #FCFCFE 58%, #fff 100%);
+  --ds-gradient-inner-green:  linear-gradient(99deg, #F0FDF5 0%, #FCFCFE 58%, #fff 100%);
+
+  /* Diagram Architecture Section — gradient background */
+  --ds-gradient-arch-header: linear-gradient(115deg, #94A6FF 0%, #60CFC7 50%, #B2E0C5 100%);
 }
 ```
 
@@ -1648,6 +1662,64 @@ HTML:
 
 ---
 
+### 16. Gradient Card (.ds-card--gradient)
+
+gradient border + tinted inner background를 가진 카드. 제품/기능 강조 시 사용.
+Framer 홈페이지 "Databricks stores your data" 섹션 스타일에서 실측.
+
+```css
+/* Gradient Card — border wrapper */
+.ds-card--gradient {
+  padding: 2px;
+  border-radius: var(--ds-radius-md);
+  box-shadow: rgba(113, 141, 176, 0.25) 0px 1px 20px 0px;
+}
+.ds-card--gradient-purple { background: var(--ds-gradient-card-purple); }
+.ds-card--gradient-blue   { background: var(--ds-gradient-card-blue); }
+.ds-card--gradient-green  { background: var(--ds-gradient-card-green); }
+.ds-card--gradient-silver { background: var(--ds-gradient-card-silver); }
+
+/* Gradient Card — inner content */
+.ds-card--gradient__inner {
+  background: var(--ds-color-surface-white);
+  border-radius: calc(var(--ds-radius-md) - 2px);
+  padding: var(--ds-space-xl);
+}
+.ds-card--gradient-purple .ds-card--gradient__inner { background: var(--ds-gradient-inner-purple); }
+.ds-card--gradient-blue .ds-card--gradient__inner   { background: var(--ds-gradient-inner-blue); }
+.ds-card--gradient-green .ds-card--gradient__inner   { background: var(--ds-gradient-inner-green); }
+
+/* Brand accent glow variant (CTA/결과 카드) */
+.ds-card--gradient-brand {
+  background: var(--ds-gradient-brand);
+  box-shadow: rgba(94, 167, 255, 0.25) 0px 1px 40px 0px, rgba(215, 94, 255, 0.15) 0px 2px 24px 0px;
+}
+```
+
+HTML:
+```html
+<div class="ds-card--gradient ds-card--gradient-purple">
+  <div class="ds-card--gradient__inner">
+    <h3>Card Title</h3>
+    <p>Card content</p>
+  </div>
+</div>
+
+<!-- Brand accent (glow) -->
+<div class="ds-card--gradient ds-card--gradient-brand">
+  <div class="ds-card--gradient__inner">
+    <h3>Highlighted Card</h3>
+  </div>
+</div>
+```
+
+사용 시점:
+- 제품별 기능 카드 (purple: LLM Capsule, blue: SynTitan, green: DTS)
+- brand: 최종 결과/CTA 강조 카드
+- silver: 일반 정보 카드
+
+---
+
 ## [W] Diagram (.ds-diagram)
 
 시스템 아키텍처, 데이터 플로우, 프로세스 다이어그램을 위한 레이아웃.
@@ -1675,6 +1747,8 @@ HTML:
   --ds-diag-grad-warm:    linear-gradient(135deg, #fb923c 0%, #f472b6 35%, #e879f9 70%, #fda4af 100%);  /* 주황-분홍 */
   /* Diagram OS Window content bg */
   --ds-diag-os-content: linear-gradient(135deg, #dff0ea 0%, #eef3ff 40%, #f3eeff 70%, #fdeef8 100%);
+  /* Diagram Architecture header gradient (Framer 실측) */
+  --ds-diag-arch-header: linear-gradient(115deg, #94A6FF 0%, #60CFC7 50%, #B2E0C5 100%);
 }
 ```
 

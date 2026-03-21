@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CUBIG Design System v5.0</title>
-<!-- last-updated: 20260320145342 -->
+<!-- last-updated: 20260322013954 -->
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@400;600;700&family=Fragment+Mono&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -39,7 +39,17 @@
   --ds-color-surface-mid: #f2f2f2;
   --ds-color-surface-light: #f7f7f7;
   --ds-color-surface-white: #fff;
-  --ds-gradient-brand: linear-gradient(130deg, #6C54A0, #b44fcc 50%, #ff266a);
+  --ds-gradient-brand: linear-gradient(130deg, #673AFF 0%, #D932FF 50%, #FF266A 100%);
+  --ds-gradient-dark:  linear-gradient(180deg, #0f0f0f 0%, #171719 100%);
+  --ds-gradient-card-purple: linear-gradient(109deg, #FCD6FF 0%, #fff 17%, #FFEDFA 38%, #D48AFF 51%, #fff 73%, #FCD6FF 100%);
+  --ds-gradient-card-blue:   linear-gradient(109deg, #BFE1FB 0%, #fff 17%, #FFEDFA 38%, #81B8FB 51%, #E2E3F0 73%, #BFE1FB 100%);
+  --ds-gradient-card-green:  linear-gradient(109deg, #01CA51 0%, #FFEFF5 17%, #9AE6AD 43%, #C9FFE1 65%, #01CA51 84%, #01CA51 100%);
+  --ds-gradient-card-silver: linear-gradient(109deg, #898989 0%, #fff 17%, #D5D5D5 63%, #F6F5F6 84%, #898989 100%);
+  --ds-gradient-inner-purple: linear-gradient(99deg, #F8EDFF 0%, #FCFCFE 58%, #fff 100%);
+  --ds-gradient-inner-blue:   linear-gradient(99deg, #E9EEFB 0%, #FCFCFE 58%, #fff 100%);
+  --ds-gradient-inner-green:  linear-gradient(99deg, #F0FDF5 0%, #FCFCFE 58%, #fff 100%);
+  --ds-gradient-arch-header: linear-gradient(115deg, #94A6FF 0%, #60CFC7 50%, #B2E0C5 100%);
+  --ds-diag-arch-header: linear-gradient(115deg, #94A6FF 0%, #60CFC7 50%, #B2E0C5 100%);
   --ds-font-base: "DM Sans", sans-serif;
   --ds-font-brand: "Oxanium", sans-serif;
   --ds-font-code: "Fragment Mono", monospace;
@@ -483,6 +493,66 @@ code, .ds-code-inline {
 .ds-code--warn   { color: var(--ds-color-warn-light); }
 .ds-code--muted  { color: var(--ds-color-neutral-500); }
 
+/* ===== [V-2] Gradient Card ===== */
+.ds-card--gradient {
+  padding: 2px;
+  border-radius: var(--ds-radius-md);
+  box-shadow: rgba(113, 141, 176, 0.25) 0px 1px 20px 0px;
+}
+.ds-card--gradient-purple { background: var(--ds-gradient-card-purple); }
+.ds-card--gradient-blue   { background: var(--ds-gradient-card-blue); }
+.ds-card--gradient-green  { background: var(--ds-gradient-card-green); }
+.ds-card--gradient-silver { background: var(--ds-gradient-card-silver); }
+.ds-card--gradient__inner {
+  background: var(--ds-color-surface-white);
+  border-radius: calc(var(--ds-radius-md) - 2px);
+  padding: var(--ds-space-xl);
+  height: 100%;
+  box-sizing: border-box;
+}
+.ds-card--gradient-purple .ds-card--gradient__inner { background: var(--ds-gradient-inner-purple); }
+.ds-card--gradient-blue   .ds-card--gradient__inner { background: var(--ds-gradient-inner-blue); }
+.ds-card--gradient-green  .ds-card--gradient__inner { background: var(--ds-gradient-inner-green); }
+.ds-card--gradient-brand {
+  background: var(--ds-gradient-brand);
+  box-shadow: rgba(94, 167, 255, 0.25) 0px 1px 40px 0px, rgba(215, 94, 255, 0.15) 0px 2px 24px 0px;
+}
+.v-gradient-card-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 16px;
+}
+.v-gradient-card-grid .ds-card--gradient__inner h4 {
+  font-size: var(--ds-text-sm);
+  font-weight: var(--ds-weight-semibold);
+  color: var(--ds-color-text-primary);
+  margin: 0 0 6px 0;
+}
+.v-gradient-card-grid .ds-card--gradient__inner p {
+  font-size: var(--ds-text-xs);
+  color: var(--ds-color-text-secondary);
+  margin: 0;
+  line-height: var(--ds-leading-relaxed);
+}
+.ds-card--gradient-brand .ds-card--gradient__inner {
+  background: transparent;
+}
+.ds-card--gradient-brand .ds-card--gradient__inner h4,
+.ds-card--gradient-brand .ds-card--gradient__inner p {
+  color: #fff;
+}
+.v-gradient-card-label {
+  font-size: var(--ds-text-xs);
+  font-weight: var(--ds-weight-medium);
+  color: var(--ds-color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 12px;
+  display: block;
+  text-align: center;
+}
+
 /* ===== [W] Diagram ===== */
 .ds-diagram__window {
   background: var(--ds-diag-surface);
@@ -747,7 +817,28 @@ code, .ds-code-inline {
       <div class="v-swatch"><div class="v-swatch__color" style="background:#3061f2"></div><div class="v-swatch__info"><span class="v-swatch__name">Brand Primary</span><span class="v-swatch__var">--ds-color-brand-primary</span></div></div>
       <div class="v-swatch"><div class="v-swatch__color" style="background:#a617ff"></div><div class="v-swatch__info"><span class="v-swatch__name">Brand Purple</span><span class="v-swatch__var">--ds-color-brand-purple</span></div></div>
       <div class="v-swatch"><div class="v-swatch__color" style="background:#c6c5fa"></div><div class="v-swatch__info"><span class="v-swatch__name">Purple Light</span><span class="v-swatch__var">--ds-color-brand-purple-lt</span></div></div>
-      <div class="v-swatch"><div class="v-swatch__color" style="background:linear-gradient(130deg, #6C54A0, #b44fcc 50%, #ff266a)"></div><div class="v-swatch__info"><span class="v-swatch__name">Gradient Brand</span><span class="v-swatch__var">--ds-gradient-brand</span></div></div>
+      <div class="v-swatch"><div class="v-swatch__color" style="background:linear-gradient(130deg, #673AFF 0%, #D932FF 50%, #FF266A 100%)"></div><div class="v-swatch__info"><span class="v-swatch__name">Gradient Brand</span><span class="v-swatch__var">--ds-gradient-brand</span></div></div>
+    </div>
+
+    <span class="v-label">Gradient Card Border</span>
+    <div class="v-swatches" style="margin-bottom:20px">
+      <div class="v-swatch"><div class="v-swatch__color" style="background:linear-gradient(109deg, #FCD6FF 0%, #fff 17%, #FFEDFA 38%, #D48AFF 51%, #fff 73%, #FCD6FF 100%)"></div><div class="v-swatch__info"><span class="v-swatch__name">Card Purple</span><span class="v-swatch__var">--ds-gradient-card-purple</span></div></div>
+      <div class="v-swatch"><div class="v-swatch__color" style="background:linear-gradient(109deg, #BFE1FB 0%, #fff 17%, #FFEDFA 38%, #81B8FB 51%, #E2E3F0 73%, #BFE1FB 100%)"></div><div class="v-swatch__info"><span class="v-swatch__name">Card Blue</span><span class="v-swatch__var">--ds-gradient-card-blue</span></div></div>
+      <div class="v-swatch"><div class="v-swatch__color" style="background:linear-gradient(109deg, #01CA51 0%, #FFEFF5 17%, #9AE6AD 43%, #C9FFE1 65%, #01CA51 84%, #01CA51 100%)"></div><div class="v-swatch__info"><span class="v-swatch__name">Card Green</span><span class="v-swatch__var">--ds-gradient-card-green</span></div></div>
+      <div class="v-swatch"><div class="v-swatch__color" style="background:linear-gradient(109deg, #898989 0%, #fff 17%, #D5D5D5 63%, #F6F5F6 84%, #898989 100%)"></div><div class="v-swatch__info"><span class="v-swatch__name">Card Silver</span><span class="v-swatch__var">--ds-gradient-card-silver</span></div></div>
+    </div>
+
+    <span class="v-label">Gradient Card Inner</span>
+    <div class="v-swatches" style="margin-bottom:20px">
+      <div class="v-swatch"><div class="v-swatch__color" style="background:linear-gradient(99deg, #F8EDFF 0%, #FCFCFE 58%, #fff 100%)"></div><div class="v-swatch__info"><span class="v-swatch__name">Inner Purple</span><span class="v-swatch__var">--ds-gradient-inner-purple</span></div></div>
+      <div class="v-swatch"><div class="v-swatch__color" style="background:linear-gradient(99deg, #E9EEFB 0%, #FCFCFE 58%, #fff 100%)"></div><div class="v-swatch__info"><span class="v-swatch__name">Inner Blue</span><span class="v-swatch__var">--ds-gradient-inner-blue</span></div></div>
+      <div class="v-swatch"><div class="v-swatch__color" style="background:linear-gradient(99deg, #F0FDF5 0%, #FCFCFE 58%, #fff 100%)"></div><div class="v-swatch__info"><span class="v-swatch__name">Inner Green</span><span class="v-swatch__var">--ds-gradient-inner-green</span></div></div>
+    </div>
+
+    <span class="v-label">Gradient Arch / Diagram</span>
+    <div class="v-swatches" style="margin-bottom:20px">
+      <div class="v-swatch"><div class="v-swatch__color" style="background:linear-gradient(115deg, #94A6FF 0%, #60CFC7 50%, #B2E0C5 100%)"></div><div class="v-swatch__info"><span class="v-swatch__name">Arch Header</span><span class="v-swatch__var">--ds-gradient-arch-header</span></div></div>
+      <div class="v-swatch"><div class="v-swatch__color" style="background:linear-gradient(115deg, #94A6FF 0%, #60CFC7 50%, #B2E0C5 100%)"></div><div class="v-swatch__info"><span class="v-swatch__name">Diag Arch Header</span><span class="v-swatch__var">--ds-diag-arch-header</span></div></div>
     </div>
 
     <span class="v-label">Neutral</span>
@@ -1392,6 +1483,7 @@ code, .ds-code-inline {
   <a class="v-subnav__item" href="#lp-case-study">[M] Case Study Card</a>
   <a class="v-subnav__item" href="#lp-table">[J] Table</a>
   <a class="v-subnav__item" href="#lp-step-tabs">[U] Step Tabs</a>
+  <a class="v-subnav__item" href="#lp-gradient-card">[V-2] Gradient Card</a>
   <a class="v-subnav__item" href="#lp-diagram">[W] Diagram</a>
   <a class="v-subnav__item" href="#lp-code-block">[15] Code Block</a>
 </nav>
@@ -1960,6 +2052,71 @@ code, .ds-code-inline {
       </div>
     </div>
   </div></div>
+</section>
+
+<!-- [V-2] Gradient Card -->
+<section class="v-section" id="lp-gradient-card">
+  <h2 class="v-section__title">[V-2] Gradient Card</h2>
+  <p class="v-section__desc">109deg shimmer gradient border + tinted inner background 조합 카드. 제품별 기능 카드(purple: LLM Capsule, blue: SynTitan, green: DTS), brand glow: 최종 결과/CTA 강조 카드, silver: 일반 정보 카드.</p>
+
+  <div class="v-gradient-card-grid">
+    <!-- Purple -->
+    <div>
+      <div class="ds-card--gradient ds-card--gradient-purple">
+        <div class="ds-card--gradient__inner">
+          <h4>LLM Capsule</h4>
+          <p>Purple border shimmer + tinted inner background variant.</p>
+        </div>
+      </div>
+      <span class="v-gradient-card-label">purple</span>
+    </div>
+    <!-- Blue -->
+    <div>
+      <div class="ds-card--gradient ds-card--gradient-blue">
+        <div class="ds-card--gradient__inner">
+          <h4>SynTitan</h4>
+          <p>Blue border shimmer + tinted inner background variant.</p>
+        </div>
+      </div>
+      <span class="v-gradient-card-label">blue</span>
+    </div>
+    <!-- Green -->
+    <div>
+      <div class="ds-card--gradient ds-card--gradient-green">
+        <div class="ds-card--gradient__inner">
+          <h4>DTS</h4>
+          <p>Green border shimmer + tinted inner background variant.</p>
+        </div>
+      </div>
+      <span class="v-gradient-card-label">green</span>
+    </div>
+    <!-- Brand glow -->
+    <div>
+      <div class="ds-card--gradient ds-card--gradient-brand">
+        <div class="ds-card--gradient__inner">
+          <h4>Highlighted Card</h4>
+          <p>Brand gradient glow — CTA / 결과 강조 카드.</p>
+        </div>
+      </div>
+      <span class="v-gradient-card-label">brand (glow)</span>
+    </div>
+  </div>
+
+  <div style="margin-top:24px">
+    <span class="v-label">CSS 토큰</span>
+    <ul style="font-size:var(--ds-text-sm);color:var(--ds-color-text-secondary);line-height:var(--ds-leading-relaxed);padding-left:20px;margin-top:8px">
+      <li><code>--ds-gradient-card-purple / blue / green / silver</code> — 109deg border shimmer</li>
+      <li><code>--ds-gradient-inner-purple / blue / green</code> — 99deg tint-to-white inner</li>
+      <li><code>--ds-gradient-brand</code> — 130deg brand glow (updated)</li>
+    </ul>
+    <span class="v-label" style="margin-top:16px;display:block">구조</span>
+    <pre style="font-size:var(--ds-text-xs);background:var(--ds-color-surface-mid);border-radius:var(--ds-radius-sm);padding:12px 16px;overflow-x:auto;margin-top:8px">&lt;div class="ds-card--gradient ds-card--gradient-purple"&gt;
+  &lt;div class="ds-card--gradient__inner"&gt;
+    &lt;h3&gt;Card Title&lt;/h3&gt;
+    &lt;p&gt;Card content&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+  </div>
 </section>
 
 <!-- [W] Diagram -->

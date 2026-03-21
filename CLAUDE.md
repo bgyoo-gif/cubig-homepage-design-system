@@ -128,6 +128,7 @@ deploy (gh-pages push → GitHub Pages 자동 배포)
 | [S] Accordion list | ds-ac-card | 케이스/항목 5개+ 상세 내용 아코디언 |
 | [U] Step tabs | ds-step-tabs | 제품 이용 단계별 설명, Use Case 탭 전환 — 상단 탭 + 하단 [텍스트+스크린샷] |
 | [V] Code block | ds-code-block | diff, 로그, CLI 출력, 기술 스펙 등 코드 스타일 콘텐츠 — 카드 안/독립 사용 가능 |
+| [V-2] Gradient card | ds-card--gradient | gradient border + tinted inner — 제품별 강조 카드 (purple/blue/green/silver/brand) |
 | [W] Diagram | ds-diagram | 시스템 아키텍처, 데이터 파이프라인, 프로세스 플로우 다이어그램 — OS 윈도우 프레임 + 섹션 그리드 + SVG 화살표 |
 
 ---
