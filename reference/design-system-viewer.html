@@ -9,7 +9,7 @@
 <style>
 :root {
   --ds-color-brand-primary: #3061f2;
-  --ds-color-brand-purple: #0e5bea;
+  --ds-color-brand-purple: #725bea;
   --ds-color-brand-purple-lt: #c6c5fa;
   --ds-color-neutral-900: #0f0f0f;
   --ds-color-neutral-850: #141414;
@@ -34,7 +34,7 @@
   --ds-color-info-light: #60a5fa;
   --ds-color-warn-light: #fbbf24;
   --ds-color-border-default: #e6e7e9;
-  --ds-color-border-brand: #0e5bea;
+  --ds-color-border-brand: #725bea;
   --ds-color-surface-dark: #171719;
   --ds-color-surface-mid: #f2f2f2;
   --ds-color-surface-light: #f7f7f7;
@@ -815,7 +815,7 @@ code, .ds-code-inline {
     <span class="v-label">Brand</span>
     <div class="v-swatches" style="margin-bottom:20px">
       <div class="v-swatch"><div class="v-swatch__color" style="background:#3061f2"></div><div class="v-swatch__info"><span class="v-swatch__name">Brand Primary</span><span class="v-swatch__var">--ds-color-brand-primary</span></div></div>
-      <div class="v-swatch"><div class="v-swatch__color" style="background:#0e5bea"></div><div class="v-swatch__info"><span class="v-swatch__name">Brand Purple</span><span class="v-swatch__var">--ds-color-brand-purple</span></div></div>
+      <div class="v-swatch"><div class="v-swatch__color" style="background:#725bea"></div><div class="v-swatch__info"><span class="v-swatch__name">Brand Purple</span><span class="v-swatch__var">--ds-color-brand-purple</span></div></div>
       <div class="v-swatch"><div class="v-swatch__color" style="background:#c6c5fa"></div><div class="v-swatch__info"><span class="v-swatch__name">Purple Light</span><span class="v-swatch__var">--ds-color-brand-purple-lt</span></div></div>
       <div class="v-swatch"><div class="v-swatch__color" style="background:linear-gradient(130deg, #673AFF 0%, #D932FF 50%, #FF266A 100%)"></div><div class="v-swatch__info"><span class="v-swatch__name">Gradient Brand</span><span class="v-swatch__var">--ds-gradient-brand</span></div></div>
     </div>
@@ -2685,7 +2685,7 @@ var apiBase = (window.location.hostname === 'localhost' || window.location.hostn
 
 function typeBadge(type) {
   var labels = { html: 'HTML', tsx: 'TSX', md: 'Docs', preview: 'Preview' };
-  var colors = { html: '#3061f2', tsx: '#0e5bea', md: '#0e824c', preview: '#636363' };
+  var colors = { html: '#3061f2', tsx: '#725bea', md: '#0e824c', preview: '#636363' };
   var bgs = { html: 'rgba(48,97,242,0.08)', tsx: 'rgba(166,23,255,0.08)', md: 'rgba(14,130,76,0.08)', preview: 'rgba(99,99,99,0.08)' };
   return '<span style="display:inline-block;font-size:10px;font-weight:600;color:' + (colors[type]||'#636363') + ';background:' + (bgs[type]||'#f2f2f2') + ';padding:2px 8px;border-radius:4px;font-family:var(--ds-font-code);letter-spacing:0.05em;text-transform:uppercase;">' + (labels[type]||type) + '</span>';
 }
@@ -3045,7 +3045,7 @@ function addLog(stage, message) {
   var time = new Date().toLocaleTimeString('en-US', { hour12: false });
   var colors = {
     'upload': '#60a5fa',
-    'product-designer': '#0e5bea',
+    'product-designer': '#725bea',
     'frontend-dev': '#3061f2',
     'qa': '#0e824c',
     'framer-dev': '#f59e0b',
