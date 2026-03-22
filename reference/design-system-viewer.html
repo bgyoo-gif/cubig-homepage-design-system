@@ -2678,12 +2678,35 @@ function closeDetail() {
 }
 function downloadFile() {
   if (!currentFilePath) return;
+  var fileName = currentFilePath.split('/').pop();
+
+  // iframe의 srcdoc에서 직접 Blob 생성 (API/fetch 불필요)
+  var iframe = document.getElementById('detail-iframe');
+  var content = iframe.srcdoc || '';
+  if (!content) {
+    // srcdoc가 없으면 src에서 fetch 시도
+    var url = (currentFilePath.startsWith('../') ? '' : '../') + currentFilePath;
+    fetch(apiBase + '/api/file-content?path=' + encodeURIComponent(currentFilePath))
+      .then(function(r) { return r.ok ? r.json() : Promise.reject(); })
+      .then(function(data) { triggerDownload(data.content, fileName); })
+      .catch(function() {
+        fetch(url).then(function(r) { return r.text(); }).then(function(t) { triggerDownload(t, fileName); });
+      });
+    return;
+  }
+  triggerDownload(content, fileName);
+}
+
+function triggerDownload(text, fileName) {
+  var blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+  var url = URL.createObjectURL(blob);
   var a = document.createElement('a');
-  a.href = currentFilePath;
-  a.download = currentFilePath.split('/').pop();
+  a.href = url;
+  a.download = fileName;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 }
 
 /* ===== Output: Dynamic File List + WebSocket ===== */
