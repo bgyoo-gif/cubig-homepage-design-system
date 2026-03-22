@@ -165,6 +165,8 @@ body { font-family: var(--ds-font-base); color: var(--ds-color-text-primary); ba
   padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 500;
   cursor: pointer; border: none; transition: all 0.15s;
 }
+.v-detail-header__btn--refresh { background: var(--ds-color-surface-light); color: var(--ds-color-text-primary); margin-right: 8px; }
+.v-detail-header__btn--refresh:hover { background: var(--ds-color-neutral-100); }
 .v-detail-header__btn--download { background: var(--ds-color-neutral-900); color: #fff; margin-right: 8px; }
 .v-detail-header__btn--download:hover { opacity: 0.85; }
 .v-detail-header__btn--close { background: var(--ds-color-surface-light); color: var(--ds-color-text-primary); }
@@ -2494,6 +2496,7 @@ code, .ds-code-inline {
   <div class="v-detail-panel">
     <div class="v-detail-header">
       <span class="v-detail-header__title" id="detail-title"></span>
+      <button class="v-detail-header__btn v-detail-header__btn--refresh" onclick="refreshDetail()">Refresh</button>
       <button class="v-detail-header__btn v-detail-header__btn--download" id="detail-download" onclick="downloadFile()">Download</button>
       <button class="v-detail-header__btn v-detail-header__btn--close" onclick="closeDetail()">Close</button>
     </div>
@@ -2661,6 +2664,11 @@ function renderInIframe(iframe, path, text) {
   } else {
     iframe.srcdoc = text;
   }
+}
+function refreshDetail() {
+  if (!currentFilePath) return;
+  var name = document.getElementById('detail-title').textContent;
+  openDetail(currentFilePath, name);
 }
 function closeDetail() {
   document.getElementById('detail-overlay').classList.remove('v-detail-overlay--open');
