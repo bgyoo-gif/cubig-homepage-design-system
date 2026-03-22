@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DTS | Make Enterprise Data AI-Ready — Fix Imbalance, Restricted Data &amp; Coverage Gaps | Cubig</title>
+<meta name="description" content="Enterprise synthetic data engine based on differential privacy. Generate privacy-safe datasets, expand coverage, reduce bias, and augment data at scale. DTS can operate independently.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://cubig.ai/dts">
+<meta property="og:title" content="DTS | Privacy-Safe Data for AI Training — Cubig">
+<meta property="og:description" content="Make restricted and unusable data AI-ready at enterprise scale. DTS generates privacy-safe synthetic datasets using differential privacy — fixing compliance blockers and coverage gaps for AI training.">
+<meta property="og:site_name" content="Cubig">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cubig.ai/dts">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://cubig.ai/#org",
+      "name": "Cubig",
+      "url": "https://cubig.ai"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://cubig.ai/dts#product",
+      "name": "DTS",
+      "url": "https://cubig.ai/dts",
+      "applicationCategory": "Synthetic Data Engine",
+      "description": "DTS is Cubig's enterprise synthetic data engine based on differential privacy. It generates privacy-safe synthetic datasets, expands data coverage, reduces bias and imbalance, and augments training data at scale. DTS can operate independently without SynTitan.",
+      "keywords": [
+        "enterprise synthetic data engine",
+        "differential privacy synthetic data",
+        "privacy-safe datasets",
+        "synthetic data for AI training",
+        "data augmentation",
+        "restricted data AI"
+      ],
+      "provider": {
+        "@id": "https://cubig.ai/#org"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://cubig.ai/dts#webpage",
+      "url": "https://cubig.ai/dts",
+      "name": "DTS | Data Privacy & Quality Capability - Enterprise Synthetic Data Engine | Cubig",
+      "isPartOf": {
+        "@id": "https://cubig.ai/#org"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is DTS?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "DTS is Cubig's enterprise synthetic data engine based on differential privacy. It generates privacy-safe synthetic datasets to solve data problems that block enterprise AI: restricted data (creating safe replacements), unusable data (expanding coverage, fixing imbalance, augmenting training sets), and access restrictions (generating usable data when original data cannot be accessed). DTS can operate independently without SynTitan."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is differential privacy in synthetic data?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Differential privacy is a mathematical framework that adds controlled noise during synthetic generation, providing a formal guarantee that individual records cannot be re-identified from the synthetic output. DTS uses differential privacy as the foundation of its synthetic data generation, making it suitable for regulated industries."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can DTS operate without SynTitan?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. DTS can operate independently without SynTitan. Organizations that need privacy-safe synthetic datasets for training, validation, or testing can use DTS as a standalone capability. SynTitan can use a subset of DTS capabilities when needed, but DTS is not dependent on SynTitan."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How is DTS different from LLM Capsule?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "DTS generates privacy-safe datasets for training, validation, and testing. LLM Capsule secures sensitive data during LLM usage and interaction at runtime. DTS operates at the dataset level; LLM Capsule operates at the interaction level."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<meta property="og:image" content="https://cubig.ai/og-default.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cubig.ai/og-default.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Fragment+Mono:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.bunny.net/css?family=geist:400,500,600,700,800">
+<style>
+:root {
+
+  /* ── CUBIG REAL BRAND COLORS ── */
+  --brand-purple: #6C54A0;
+  --brand-purple-mid: #d932ff;
+  --brand-accent: #ff266a;
+  --brand-orange: #ffa66f;
+  --brand-soft: #8A72C8;
+  --brand-gradient: linear-gradient(130deg, #6C54A0 0%, #b44fcc 50%, #ff266a 100%);
+  --brand-text-gradient: linear-gradient(270deg, #ffa66f 7%, #8A72C8 80%);
+  --blue: #6C54A0;
+  --blue-hi: #8A72C8;
+  --blue-dim: rgba(108,84,160,0.08);
+  --blue-glow: rgba(108,84,160,0.2);
+  --green: #1a7a4a;
+  --green-dim: rgba(26,122,74,0.09);
+
+  --bg:#ffffff;--bg2:#F8F8F8;--bg3:#F2F2F4;
+  --line:rgba(0,0,0,0.08);--line2:rgba(0,0,0,0.14);
+  --text:#141414;--text2:#4A4A52;--text3:#8A8A94;
+  --blue: #6C54A0;--blue-hi: #8A72C8;--blue-dim: rgba(108,84,160,0.08);--blue-glow: rgba(108,84,160,0.2);
+  --green:#1a7a4a;--green-dim:rgba(26,122,74,0.09);
+  --amber:#C47A00;--red:#C13535;
+  --purple:#7B5CF5;--purple-dim:rgba(123,92,245,0.08);
+  --mono:'Fragment Mono',monospace;--serif:'Geist','DM Sans',sans-serif;--body:'DM Sans',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--body);background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+
+a{text-decoration:none;color:inherit;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* nav: see v3 */
+
+.section{padding:100px 40px;max-width:1120px;margin:0 auto;}
+/* eyebrow: see v3 */
+/* h: see v3 */
+/* btn: see v3 */
+
+/* HERO */
+.hero-wrap{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden;border-bottom:1px solid var(--line);}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(108,84,160,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(108,84,160,.05) 1px,transparent 1px);background-size:60px 60px;}
+.hero-grid::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 40% 100%,rgba(13,190,124,.05) 0%,transparent 70%);}
+.hero-bg-word{position:absolute;right:-20px;top:50%;transform:translateY(-50%);font-family:var(--serif);font-size:clamp(180px,25vw,360px);font-weight:500;color:rgba(13,190,124,.05);line-height:1;pointer-events:none;user-select:none;}
+.hero-inner{max-width:1120px;margin:0 auto;padding:150px 40px 90px;position:relative;z-index:2;width:100%;}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--green);border:1px solid rgba(13,190,124,.3);padding:5px 12px;margin-bottom:32px;animation:fadeUp .6s ease both;}
+.hero-tag-dot{width:5px;height:5px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;}
+.hero-sub{font-size:clamp(15px,1.8vw,18px);color:var(--text2);line-height:1.6;max-width:560px;margin-top:20px;font-weight:300;animation:fadeUp .7s .2s ease both;}
+.hero-oneliner{font-family:var(--mono);font-size:12px;color:var(--text3);max-width:500px;margin-top:14px;margin-bottom:40px;padding-left:14px;border-left:2px solid rgba(13,190,124,.3);line-height:1.6;animation:fadeUp .7s .3s ease both;}
+.hero-ctas{display:flex;align-items:center;gap:14px;flex-wrap:wrap;animation:fadeUp .7s .4s ease both;}
+.geo-def{margin-top:52px;padding:16px 20px;border:1px solid var(--line2);border-left:3px solid var(--blue);background:var(--blue-dim);font-family:var(--mono);font-size:12px;color:var(--text2);line-height:1.65;max-width:680px;animation:fadeUp .7s .5s ease both;}
+.geo-def em{color:var(--brand-purple);font-style:normal;}
+
+/* THREE USE CASES */
+.use-wrap{background:var(--bg2);border-bottom:1px solid var(--line);}
+.use-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);margin-top:48px;}
+.use-card{background:#fff;padding:32px 28px;}
+.use-card::before{content:'';display:block;height:2px;background:var(--line2);margin-bottom:24px;}
+.use-card.green::before{background:var(--green);}
+.use-card.amber::before{background:var(--amber);}
+.use-card.red::before{background:var(--red);}
+.use-num{font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--text3);margin-bottom:14px;}
+.use-problem{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;padding:3px 8px;display:inline-block;}
+.use-problem.restricted{color:var(--red);border:1px solid rgba(232,64,64,.2);background:rgba(232,64,64,.07);}
+.use-problem.unusable{color:var(--amber);border:1px solid rgba(232,160,32,.2);background:rgba(232,160,32,.07);}
+.use-problem.restricted2{color:var(--red);border:1px solid rgba(232,64,64,.2);background:rgba(232,64,64,.07);}
+.use-title{font-family:var(--serif);font-size:22px;font-weight:500;margin-bottom:10px;margin-top:10px;}
+.use-body{font-size:13.5px;color:var(--text2);line-height:1.65;}
+.use-points{list-style:none;margin-top:16px;display:flex;flex-direction:column;gap:7px;}
+.use-points li{font-size:13px;color:var(--text2);display:flex;gap:8px;line-height:1.5;}
+.use-points li::before{content:'→';color:var(--green);font-family:var(--mono);font-size:11px;flex-shrink:0;margin-top:1px;}
+
+/* DP EXPLAINER */
+.dp-wrap{background:var(--bg);border-bottom:1px solid var(--line);}
+.dp-layout{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);margin-top:48px;}
+.dp-left{background:var(--bg2);padding:36px 32px;}
+.dp-right{background:#fff;padding:36px 32px;}
+.dp-title{font-family:var(--serif);font-size:22px;font-weight:500;margin-bottom:10px;}
+.dp-body{font-size:14px;color:var(--text2);line-height:1.7;}
+.dp-guarantee{margin-top:24px;padding:18px 20px;border:1px solid rgba(13,190,124,.2);background:var(--green-dim);}
+.dp-guarantee-label{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:8px;}
+.dp-guarantee-text{font-size:13.5px;color:var(--text2);line-height:1.6;}
+.dp-steps{display:flex;flex-direction:column;gap:2px;}
+.dp-step{padding:18px 20px;border:1px solid var(--line);background:var(--bg);display:flex;gap:16px;align-items:flex-start;}
+.dp-step-num{font-family:var(--mono);font-size:11px;color:var(--brand-purple);flex-shrink:0;width:24px;}
+.dp-step-title{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--text);margin-bottom:4px;}
+.dp-step-body{font-size:13px;color:var(--text2);line-height:1.55;}
+
+/* COMPARE TABLE */
+.compare-wrap{background:var(--bg2);border-bottom:1px solid var(--line);}
+.compare-table{width:100%;margin-top:48px;border-collapse:collapse;border:1px solid var(--line);}
+.compare-table th{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);padding:14px 20px;text-align:left;background:var(--bg2);border-bottom:1px solid var(--line);border-right:1px solid var(--line);}
+.compare-table th:last-child{border-right:none;}
+.compare-table th.hl{color:var(--green);background:rgba(13,190,124,.06);}
+.compare-table td{font-size:13.5px;color:var(--text2);padding:14px 20px;border-bottom:1px solid var(--line);border-right:1px solid var(--line);vertical-align:top;line-height:1.55;}
+.compare-table td:last-child{border-right:none;}
+.compare-table td.hl{background:rgba(13,190,124,.04);color:var(--text);}
+.compare-table tr:last-child td{border-bottom:none;}
+.compare-table .row-label{font-family:var(--mono);font-size:11px;color:var(--text);font-weight:500;}
+.check{color:var(--green);}
+.cross{color:var(--red);}
+.partial{color:var(--amber);}
+
+/* INTEGRATION */
+.int-wrap{background:var(--bg);border-bottom:1px solid var(--line);}
+.int-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:48px;margin-top:48px;align-items:start;}
+.int-modes{display:flex;flex-direction:column;gap:1px;background:var(--line);}
+.int-mode{background:#fff;padding:24px 26px;}
+.int-mode-label{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:8px;}
+.int-mode-title{font-family:var(--serif);font-size:19px;font-weight:500;margin-bottom:8px;}
+.int-mode-body{font-size:13.5px;color:var(--text2);line-height:1.6;}
+.int-mode.highlight{background:rgba(108,84,160,0.06);}
+.overlap-note{margin-top:28px;padding:18px 20px;background:var(--bg2);border:1px solid var(--line);border-left:2px solid rgba(108,84,160,.3);}
+.overlap-note p{font-family:var(--mono);font-size:11.5px;color:var(--text3);line-height:1.7;}
+.overlap-note p+p{margin-top:4px;}
+.int-usecases{display:flex;flex-direction:column;gap:12px;}
+.int-uc{padding:18px 20px;border:1px solid var(--line);background:var(--bg2);}
+.int-uc-label{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:6px;}
+.int-uc-title{font-size:15px;font-weight:500;margin-bottom:4px;}
+.int-uc-body{font-size:13px;color:var(--text2);line-height:1.55;}
+
+/* FAQ */
+.faq-wrap{background:var(--bg2);border-bottom:1px solid var(--line);}
+.faq-list{margin-top:40px;display:flex;flex-direction:column;gap:1px;background:var(--line);}
+.faq-item{background:#fff;}
+.faq-q{display:flex;justify-content:space-between;align-items:center;padding:20px 24px;cursor:pointer;font-family:var(--serif);font-size:17px;font-weight:500;gap:16px;user-select:none;transition:background .15s;}
+.faq-q:hover{background:#F8F8F8;}
+.faq-icon{font-family:var(--mono);font-size:16px;color:var(--text3);flex-shrink:0;transition:transform .2s,color .2s;}
+.faq-item.open .faq-icon{transform:rotate(45deg);color:var(--brand-purple);}
+.faq-a{display:none;padding:18px 24px 20px;font-size:14px;color:var(--text2);line-height:1.75;border-top:1px solid var(--line);}
+.faq-item.open .faq-a{display:block;}
+
+/* FINAL CTA */
+.final-wrap{background:var(--bg3);border-top:1px solid var(--line);position:relative;overflow:hidden;}
+.final-wrap::before{content:'';position:absolute;bottom:-100px;left:50%;transform:translateX(-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(108,84,160,.10) 0%,transparent 70%);pointer-events:none;}
+.final-bg-text{position:absolute;bottom:-30px;left:50%;transform:translateX(-50%);font-family:var(--serif);font-size:clamp(120px,18vw,240px);font-weight:500;color:rgba(108,84,160,.06);white-space:nowrap;pointer-events:none;user-select:none;line-height:1;}
+.final-inner{position:relative;z-index:2;text-align:center;}
+.final-h{font-family:var(--serif);font-size:clamp(32px,5vw,56px);font-weight:500;line-height:1.1;margin-bottom:14px;}
+.final-h em{font-style:normal;color:var(--brand-purple);}
+.final-sub{font-size:15px;color:var(--text2);margin-bottom:36px;font-weight:300;}
+.final-ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+
+footer{background:var(--bg);border-top:1px solid var(--line);padding:48px 40px;}
+.footer-inner{max-width:1120px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;}
+.footer-brand{font-family:var(--mono);font-size:13px;display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.footer-brand-mark{width:22px;height:22px;background:var(--blue);display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;}
+.footer-tagline{font-size:12.5px;color:var(--text3);max-width:240px;line-height:1.6;}
+.footer-col-title{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:14px;}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.footer-links a{font-size:13px;color:var(--text2);transition:color .2s;}
+.footer-links a:hover{color:var(--text);}
+.footer-bottom{max-width:1120px;margin:32px auto 0;padding-top:20px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+.footer-copy{font-family:var(--mono);font-size:11px;color:var(--text3);}
+
+@media(max-width:900px){
+  nav{padding:0 20px;}.nav-links{display:none;}
+  .section{padding:72px 20px;}
+  .hero-inner{padding:120px 20px 64px;}
+  .use-grid{grid-template-columns:1fr;}
+  .dp-layout{grid-template-columns:1fr;}
+  .int-grid{grid-template-columns:1fr;}
+  footer{padding:40px 20px;}.footer-inner{flex-direction:column;}
+  .final-bg-text{display:none;}
+}
+
+/* ── v3 shared styles ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;background:rgba(255,255,255,0.96);backdrop-filter:blur(20px) saturate(160%);border-bottom:1px solid var(--line);}
+.nav-logo{display:flex;align-items:center;gap:9px;font-family:var(--serif);font-size:14px;font-weight:700;letter-spacing:.04em;color:var(--text);}
+.nav-logo-mark{display:none;}
+.nav-links{display:flex;align-items:center;gap:2px;list-style:none;}
+.nav-links li{position:relative;}
+.nav-links a{font-family:var(--body);font-size:13.5px;font-weight:400;color:var(--text2);padding:7px 12px;border-radius:6px;transition:color .15s,background .15s;display:flex;align-items:center;gap:4px;}
+.nav-links a:hover,.nav-links a.active{color:var(--text);background:var(--bg2);}
+.nav-links .has-sub:hover .nav-sub{display:block;}
+.nav-sub{display:none;position:absolute;top:calc(100% + 4px);left:0;background:#fff;border:1px solid var(--line2);min-width:190px;box-shadow:0 8px 32px rgba(0,0,0,0.08);padding:6px 0;border-radius:10px;z-index:200;}
+.nav-sub a{display:block;padding:9px 16px;font-size:13px;color:var(--text2);border-radius:0;background:transparent;}
+.nav-sub a:hover{color:var(--brand-purple);background:var(--blue-dim);}
+.nav-cta{background:linear-gradient(130deg, #6C54A0 0%, #b44fcc 50%, #ff266a 100%)!important;color:#fff!important;padding:8px 20px!important;font-weight:500!important;font-size:13.5px!important;border-radius:100px!important;transition:background .15s!important;}
+.nav-cta:hover{background:#141414!important;}
+.nav-chevron{font-size:9px;opacity:.4;}
+.btn-primary{display:inline-flex;align-items:center;gap:8px;background: linear-gradient(130deg, #6C54A0 0%, #b44fcc 50%, #ff266a 100%); color: #fff;color:#fff;padding:13px 28px;font-family:var(--body);font-size:14px;font-weight:500;border:none;cursor:pointer;border-radius:100px;transition:background .15s;text-decoration:none;}
+.btn-primary:hover{background:#141414;}
+.btn-secondary{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--text);padding:12px 26px;font-family:var(--body);font-size:14px;border:1px solid var(--line2);cursor:pointer;border-radius:100px;transition:border-color .15s,color .15s;text-decoration:none;}
+.btn-secondary:hover{border-color:var(--text3);color:var(--brand-purple);}
+.btn-arrow{transition:transform .2s;}
+.btn-primary:hover .btn-arrow,.btn-secondary:hover .btn-arrow{transform:translateX(4px);}
+.eyebrow{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--brand-purple);margin-bottom:18px;}
+.eyebrow::before{content:'';width:20px;height:1px;background:var(--blue);}
+.h1{font-family:var(--serif);font-size:clamp(40px,5.5vw,72px);font-weight:800;line-height:1.0;letter-spacing:-.03em;}
+.h1 em,.h2 em,.final-h em{font-style:normal;color:var(--brand-purple);}
+.h2{font-family:var(--serif);font-size:clamp(28px,3.5vw,44px);font-weight:700;line-height:1.1;letter-spacing:-.022em;}
+
+</style>
+</head>
+<body>
+
+<nav aria-label="Main navigation">
+  <a href="/" class="nav-logo" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+  <svg width="20" height="31" viewBox="0 0 15.5 23.5" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M 15.494 10.91 L 15.494 10.301 C 15.494 9.987 15.388 9.709 15.174 9.481 C 14.977 9.26 14.692 9.136 14.396 9.142 L 13.764 9.142 C 13.64 9.148 13.52 9.099 13.436 9.008 C 13.347 8.917 13.3 8.795 13.304 8.669 L 13.304 5.725 C 13.304 5.412 13.197 5.141 12.976 4.922 C 12.768 4.707 12.48 4.587 12.181 4.592 L 11.574 4.592 C 11.443 4.592 11.317 4.536 11.229 4.439 C 11.134 4.346 11.081 4.218 11.081 4.085 L 11.081 3.433 C 11.081 3.12 10.974 2.85 10.753 2.63 C 10.545 2.416 10.257 2.296 9.958 2.3 L 9.383 2.3 C 9.242 2.305 9.104 2.25 9.006 2.148 C 8.906 2.044 8.853 1.903 8.859 1.759 L 8.859 1.133 C 8.859 0.812 8.752 0.55 8.531 0.33 C 8.323 0.115 8.035 -0.004 7.735 0 C 7.423 0 7.169 0.109 6.955 0.33 C 6.744 0.543 6.628 0.833 6.636 1.133 L 6.636 1.724 C 6.636 1.886 6.586 2.021 6.488 2.122 C 6.393 2.23 6.255 2.289 6.111 2.283 L 5.536 2.283 C 5.233 2.283 4.962 2.393 4.741 2.613 C 4.524 2.823 4.405 3.114 4.413 3.416 L 4.413 4.068 C 4.413 4.201 4.36 4.329 4.265 4.422 C 4.177 4.519 4.052 4.575 3.92 4.575 L 3.313 4.575 C 3.014 4.571 2.726 4.69 2.518 4.905 C 2.297 5.124 2.19 5.395 2.19 5.708 L 2.19 8.652 C 2.194 8.778 2.147 8.9 2.058 8.991 C 1.974 9.082 1.854 9.131 1.73 9.125 L 1.098 9.125 C 0.802 9.119 0.517 9.243 0.32 9.464 C 0.106 9.692 0 9.97 0 10.284 L 0 13.175 C 0 13.489 0.106 13.767 0.32 13.995 C 0.517 14.216 0.802 14.34 1.098 14.334 L 1.73 14.334 C 1.854 14.328 1.974 14.377 2.058 14.468 C 2.147 14.559 2.194 14.681 2.19 14.807 L 2.19 17.751 C 2.19 18.064 2.297 18.335 2.518 18.554 C 2.726 18.769 3.014 18.888 3.313 18.884 L 3.92 18.884 C 4.052 18.884 4.177 18.94 4.265 19.037 C 4.36 19.13 4.413 19.258 4.413 19.391 L 4.413 20.034 C 4.405 20.336 4.524 20.627 4.741 20.837 C 4.949 21.051 5.237 21.171 5.536 21.167 L 6.111 21.167 C 6.255 21.161 6.393 21.22 6.488 21.328 C 6.586 21.429 6.636 21.564 6.636 21.726 L 6.636 22.326 C 6.628 22.626 6.744 22.916 6.955 23.129 C 7.169 23.35 7.423 23.459 7.735 23.459 C 8.035 23.462 8.323 23.343 8.531 23.129 C 8.752 22.909 8.859 22.638 8.859 22.326 L 8.859 21.7 C 8.853 21.556 8.906 21.415 9.006 21.311 C 9.104 21.209 9.242 21.153 9.383 21.159 L 9.958 21.159 C 10.257 21.163 10.545 21.043 10.753 20.829 C 10.974 20.608 11.081 20.338 11.081 20.025 L 11.081 19.373 C 11.081 19.24 11.134 19.112 11.229 19.019 C 11.317 18.922 11.443 18.866 11.574 18.866 L 12.181 18.866 C 12.48 18.872 12.768 18.752 12.976 18.537 C 13.197 18.317 13.304 18.047 13.304 17.734 L 13.304 14.807 C 13.3 14.681 13.347 14.559 13.436 14.468 C 13.52 14.377 13.64 14.328 13.764 14.334 L 14.396 14.334 C 14.692 14.34 14.977 14.216 15.174 13.995 C 15.388 13.767 15.494 13.489 15.494 13.175 Z" fill="#6C54A0"/>
+    <path d="M 7.024 9.113 L 5.515 11.895 C 5.416 12.072 5.416 12.286 5.515 12.462 L 7.024 15.244 C 7.12 15.424 7.307 15.536 7.512 15.536 C 7.716 15.536 7.904 15.424 8 15.244 L 9.51 12.462 C 9.608 12.286 9.608 12.072 9.51 11.895 L 8 9.113 C 7.904 8.934 7.716 8.821 7.512 8.821 C 7.307 8.821 7.12 8.934 7.024 9.113 Z" fill="white"/>
+  </svg>
+  <div style="display:flex;flex-direction:column;line-height:1.1;">
+    <span style="font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;letter-spacing:.18em;color:#141414;">C U B I G</span>
+    <span style="font-family:'DM Sans',sans-serif;font-size:7.5px;font-weight:400;letter-spacing:.14em;color:#6C54A0;text-transform:uppercase;">Cure Bigdata</span>
+  </div>
+</a>
+  <ul class="nav-links" role="list">
+    <li class="has-sub"><a href="/syntitan">Platform <span class="nav-chevron">▾</span></a><div class="nav-sub"><a href="/syntitan">SynTitan</a></div></li>
+    <li class="has-sub"><a href="#" class="active">Capabilities <span class="nav-chevron">▾</span></a><div class="nav-sub"><a href="/dts">DTS</a><a href="/llm-capsule">LLM Capsule</a></div></li>
+    <li><a href="/proof">Proof</a></li>
+    <li class="has-sub"><a href="/learn">Learn <span class="nav-chevron">▾</span></a><div class="nav-sub"><a href="/learn/ai-ready-data-infrastructure">AI-Ready Data Infrastructure</a><a href="/learn/release-state">Release State</a><a href="/learn/articles">Articles</a><a href="/learn/glossary">Glossary</a></div></li>
+    <li><a href="/company">Company</a></li>
+    <li><a href="https://syntitan.ai" class="nav-cta" target="_blank" rel="noopener">Try SynTitan</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero-wrap">
+  <div class="hero-grid"></div>
+  <div class="hero-bg-word" aria-hidden="true">DTS</div>
+  <div class="hero-inner">
+    <div class="hero-tag"><span class="hero-tag-dot"></span>Capability · Data Privacy &amp; Quality · Available on AWS Marketplace</div>
+    <h1 class="h1" style="animation:fadeUp .7s .1s ease both;">DTS</h1>
+    <p class="hero-sub">
+      Your AI is only as good as the data it trains on — and most enterprise data is not AI-ready.<br>
+      DTS solves <strong>unusable data for AI</strong>: whether it's restricted by privacy rules, imbalanced, or missing the coverage your model needs. The result is an AI-ready dataset you can actually use.
+    </p>
+    <p class="hero-oneliner">
+      Restricted data → privacy-safe replacement &nbsp;·&nbsp; Imbalanced datasets → augmentation &amp; balance fix &nbsp;·&nbsp; Coverage gaps → AI-ready dataset generation
+    </p>
+    <div class="hero-ctas">
+      <a href="/cdn-cgi/l/email-protection#32515d5c46535146725147505b551c535b" class="btn-primary">Run technical demo <span class="btn-arrow">→</span></a>
+      <a href="https://aws.amazon.com/marketplace" target="_blank" class="btn-secondary" style="border-color:rgba(255,153,0,.4);color:#ff9900;">AWS Marketplace <span class="btn-arrow">↗</span></a>
+      <a href="/syntitan" class="btn-secondary">See SynTitan Platform <span class="btn-arrow">→</span></a>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);margin-top:32px;">
+      <div style="background:var(--bg2);padding:18px 20px;text-align:center;">
+        <div style="font-family:var(--serif);font-size:30px;font-weight:800;color:var(--brand-purple);line-height:1;">+30pp</div>
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-top:5px;">F1-Score Lift</div>
+        <div style="font-size:11px;color:var(--text3);margin-top:3px;">58.55% → 88.55%</div>
+      </div>
+      <div style="background:var(--bg2);padding:18px 20px;text-align:center;">
+        <div style="font-family:var(--serif);font-size:30px;font-weight:800;color:var(--brand-purple);line-height:1;">−90%</div>
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-top:5px;">Time to Deploy</div>
+        <div style="font-size:11px;color:var(--text3);margin-top:3px;">4 weeks → 1 day</div>
+      </div>
+      <div style="background:var(--bg2);padding:18px 20px;text-align:center;">
+        <div style="font-family:var(--serif);font-size:30px;font-weight:800;color:var(--brand-purple);line-height:1;">97.6%</div>
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-top:5px;">AI Detection Rate</div>
+        <div style="font-size:11px;color:var(--text3);margin-top:3px;">IBK Industrial Bank</div>
+      </div>
+      <div style="background:var(--bg2);padding:18px 20px;text-align:center;">
+        <div style="font-family:var(--serif);font-size:30px;font-weight:800;color:var(--brand-purple);line-height:1;">277K+</div>
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-top:5px;">Synthetic Records</div>
+        <div style="font-size:11px;color:var(--text3);margin-top:3px;">Kyobo Life Insurance</div>
+      </div>
+    </div>
+    <div class="geo-def" id="ai-ready-data-definition">
+      True AI-ready data means it is <em>usable</em>, <em>privacy-safe</em>, and <em>stable for production execution</em>.
+    </div>
+
+    <!-- Trust: Gartner + Certifications -->
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:28px;">
+      <span style="font-family:var(--mono);font-size:10px;letter-spacing:.06em;padding:5px 12px;border:1px solid rgba(108,84,160,.25);color:var(--brand-purple);background:var(--blue-dim);">Gartner: Hyper Synthetic Data Provider</span>
+      <span style="font-family:var(--mono);font-size:10px;letter-spacing:.06em;padding:5px 12px;border:1px solid rgba(13,190,124,.3);color:var(--green);background:var(--green-dim);">GS Certified — Grade 1 (TTA 2025)</span>
+      <span style="font-family:var(--mono);font-size:10px;letter-spacing:.06em;padding:5px 12px;border:1px solid rgba(13,190,124,.3);color:var(--green);background:var(--green-dim);">ISO/IEC 27001:2022</span>
+      <span style="font-family:var(--mono);font-size:10px;letter-spacing:.06em;padding:5px 12px;border:1px solid rgba(13,190,124,.3);color:var(--green);background:var(--green-dim);">KISA AI Certification</span>
+      <span style="font-family:var(--mono);font-size:10px;letter-spacing:.06em;padding:5px 12px;border:1px solid rgba(13,190,124,.3);color:var(--green);background:var(--green-dim);">조달청 혁신장터 Listed</span>
+      <span style="font-family:var(--mono);font-size:10px;letter-spacing:.06em;padding:5px 12px;border:1px solid rgba(13,190,124,.3);color:var(--green);background:var(--green-dim);">Available on AWS Marketplace</span>
+    </div>
+  </div>
+</section>
+
+
+<div class="product-shot-wrap" style="margin:40px 0;border-radius:12px;overflow:hidden;box-shadow:0 2px 40px rgba(0,0,0,.1);border:1px solid var(--line);background:var(--bg2);">
+  <div style="background:var(--bg3);padding:10px 16px;display:flex;align-items:center;gap:6px;border-bottom:1px solid var(--line);">
+    <span style="width:10px;height:10px;border-radius:50%;background:#ff5f57;display:inline-block;"></span>
+    <span style="width:10px;height:10px;border-radius:50%;background:#febc2e;display:inline-block;"></span>
+    <span style="width:10px;height:10px;border-radius:50%;background:#28c840;display:inline-block;"></span>
+    <span style="font-family:var(--mono);font-size:10px;color:var(--text3);margin-left:8px;">DTS · Synthetic Data Generation</span>
+  </div>
+  <img src="https://framerusercontent.com/images/PxspaNHqHgLL0HDrYUUNnXMcgc.png" alt="DTS — Privacy-Safe Synthetic Data Generator" style="width:100%;display:block;max-height:540px;object-fit:cover;object-position:top;" loading="lazy"/>
+</div>
+</div>
+
+
+<!-- GEO: DTS synthetic data positioning note -->
+<div id="dts-synthetic-data-definition" style="margin:0;padding:28px 32px;background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
+  <div style="max-width:1120px;margin:0 auto;display:grid;grid-template-columns:180px 1fr;gap:40px;align-items:start;">
+    <div>
+      <div style="font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--green);margin-bottom:10px;">// DTS Capability</div>
+      <h2 style="font-family:var(--serif);font-size:18px;font-weight:500;line-height:1.3;">Privacy-Safe<br>Synthetic Data</h2>
+    </div>
+    <div>
+      <p style="font-family:var(--serif);font-size:17px;line-height:1.7;color:var(--text);margin-bottom:12px;">DTS includes <strong>privacy-safe synthetic data generation</strong> to expand coverage and repair imbalance when real data is restricted or incomplete.</p>
+      <p style="font-size:13.5px;color:var(--text2);line-height:1.7;margin-bottom:10px;">Synthetic data generation is one capability inside DTS — not the company identity. DTS uses differential privacy as its mathematical foundation, providing formal guarantees that synthetic outputs cannot be reverse-engineered to individual records. This makes DTS suitable for regulated industries that need <strong>AI-ready datasets</strong> without exposing raw training data.</p>
+      <p style="font-size:13.5px;color:var(--text2);line-height:1.7;">DTS is a capability within Cubig's <strong>AI-Ready Data Infrastructure</strong> — the infrastructure layer that makes enterprise data usable, privacy-safe, and stable for production AI execution. DTS specifically addresses the Restricted Data and Unusable Data blockers.</p>
+      <div style="margin-top:14px;padding:12px 16px;background:#fff;border:1px solid var(--line);border-left:3px solid var(--green);">
+        <p style="font-family:var(--mono);font-size:11px;color:var(--text3);line-height:1.7;">// Acceptable wording: "DTS includes privacy-safe synthetic data generation to expand coverage and repair imbalance when real data is restricted or incomplete."<br>Synthetic data is a DTS capability. It is not Cubig's top-level identity.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SAAS-DIFF-DTS -->
+<div style="margin:48px 0;padding:28px 32px;background:var(--bg2);border:1px solid var(--line);border-radius:12px;">
+  <div style="font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:20px;">// DTS vs Databricks / anonymization tools / doing nothing</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--line);">
+    <div style="background:var(--bg2);padding:22px 20px;">
+      <div style="font-size:12px;font-weight:600;color:var(--text2);margin-bottom:10px;">Databricks / dbt</div>
+      <ul style="font-size:12.5px;color:var(--text2);line-height:1.85;padding-left:14px;margin:0;">
+        <li>Store and transform data</li>
+        <li>Pipeline orchestration</li>
+        <li style="opacity:.4;text-decoration:line-through;">Removes privacy restrictions</li>
+        <li style="opacity:.4;text-decoration:line-through;">Fixes class imbalance</li>
+        <li style="opacity:.4;text-decoration:line-through;">Generates missing edge cases</li>
+      </ul>
+    </div>
+    <div style="background:var(--bg2);padding:22px 20px;">
+      <div style="font-size:12px;font-weight:600;color:var(--text2);margin-bottom:10px;">Masking / anonymization</div>
+      <ul style="font-size:12.5px;color:var(--text2);line-height:1.85;padding-left:14px;margin:0;">
+        <li>Removes sensitive fields</li>
+        <li>Reduces data utility</li>
+        <li style="opacity:.4;text-decoration:line-through;">Preserves distributions</li>
+        <li style="opacity:.4;text-decoration:line-through;">Generates net-new data</li>
+        <li style="opacity:.4;text-decoration:line-through;">Fixes coverage gaps</li>
+      </ul>
+    </div>
+    <div style="background:var(--green);padding:22px 20px;">
+      <div style="font-size:12px;font-weight:600;color:#fff;margin-bottom:10px;">DTS</div>
+      <ul style="font-size:12.5px;color:#fff;line-height:1.85;padding-left:14px;margin:0;">
+        <li>Generates privacy-safe synthetic data</li>
+        <li>Differential privacy — mathematically proven</li>
+        <li>Fixes imbalance, gaps, rare events</li>
+        <li>Replaces restricted or unusable data</li>
+        <li>Multimodal: tabular, image, text</li>
+      </ul>
+    </div>
+  </div>
+  <p style="font-family:var(--mono);font-size:11px;color:var(--text3);margin-top:16px;margin-bottom:0;">// Databricks stores your data. Masking removes it. DTS makes it AI-ready — without removing or exposing it.</p>
+</div>
+
+<!-- THREE USE CASES -->
+<div class="use-wrap">
+  <div class="section">
+    <div class="eyebrow">What DTS Solves</div>
+    <h2 class="h2">Three data problems.<br><em>One engine.</em></h2>
+    <p style="font-size:15px;color:var(--text2);margin-top:12px;max-width:560px;line-height:1.65;">
+      Data that can't be used, can't be shared, or doesn't exist in sufficient volume — DTS resolves all three.
+    </p>
+    <div class="use-grid">
+      <div class="use-card red">
+        <div class="use-num">01 / 03</div>
+        <span class="use-problem restricted">Restricted Data</span>
+        <div class="use-title">Privacy-Safe Replacement</div>
+        <p class="use-body">Sensitive or regulated data blocked by compliance rules. DTS generates a statistically equivalent synthetic dataset — with no real personal information.</p>
+        <ul class="use-points">
+          <li>Replace GDPR, PIPA, HIPAA, or CCPA-restricted data with DP-safe synthetic equivalents</li>
+          <li>Differential privacy guarantee on all synthetic output</li>
+          <li>Safe for cross-team, cross-border, and external use</li>
+          <li>Full distribution fidelity preserved</li>
+        </ul>
+      </div>
+      <div class="use-card amber">
+        <div class="use-num">02 / 03</div>
+        <span class="use-problem unusable">Unusable Data</span>
+        <div class="use-title">Coverage &amp; Balance Expansion</div>
+        <p class="use-body">Data exists but is unfit for AI — missing rare classes, biased distributions, or insufficient volume for reliable training.</p>
+        <ul class="use-points">
+          <li>Augment underrepresented classes at scale</li>
+          <li>Fix class imbalance without overfitting</li>
+          <li>Generate edge case and rare event samples</li>
+          <li>Expand small datasets to production-grade volumes</li>
+        </ul>
+      </div>
+      <div class="use-card red">
+        <div class="use-num">03 / 03</div>
+        <span class="use-problem restricted2">Non-Accessible Data</span>
+        <div class="use-title">Safe Dataset Generation</div>
+        <p class="use-body">Data exists in a silo — restricted by access controls, third-party agreements, or geographic regulations — and can't reach training pipelines.</p>
+        <ul class="use-points">
+          <li>Generate safe replacement datasets from inaccessible sources</li>
+          <li>Unblock stalled validation and testing workflows</li>
+          <li>Remove data access bottlenecks in regulated environments</li>
+          <li>Maintain statistical characteristics without data transfer</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DP EXPLAINER -->
+<div class="dp-wrap">
+  <div class="section">
+    <div class="eyebrow">Differential Privacy</div>
+    <h2 class="h2">Mathematically guaranteed<br><em>privacy protection.</em></h2>
+
+    <div class="dp-layout">
+      <div class="dp-left">
+        <div class="dp-title">What differential privacy means</div>
+        <p class="dp-body">
+          Differential privacy (DP) is a mathematical framework that guarantees any single individual's data cannot be identified from the synthetic output — regardless of what an attacker already knows.
+        </p>
+        <p class="dp-body" style="margin-top:14px;">
+          DTS applies DP during the generation process itself — not as a post-processing anonymization step. This means the privacy guarantee is structural, not dependent on data masking or field removal.
+        </p>
+        <div class="dp-guarantee">
+          <div class="dp-guarantee-label">// Guarantee</div>
+          <p class="dp-guarantee-text">
+            The probability of any inference about an individual from the synthetic dataset is bounded by a mathematically defined epsilon (ε) — regardless of external knowledge.
+          </p>
+        </div>
+      </div>
+      <div class="dp-right">
+        <div class="dp-title" style="margin-bottom:20px;">How DTS generates synthetic data</div>
+        <div class="dp-steps">
+          <div class="dp-step">
+            <div class="dp-step-num">01</div>
+            <div><div class="dp-step-title">Statistical profiling</div><p class="dp-step-body">DTS analyzes the real dataset's statistical properties — distributions, correlations, marginals — without storing raw records.</p></div>
+          </div>
+          <div class="dp-step">
+            <div class="dp-step-num">02</div>
+            <div><div class="dp-step-title">DP noise injection</div><p class="dp-step-body">Calibrated noise is injected into the statistical model according to DP bounds. Individual data points become mathematically unidentifiable.</p></div>
+          </div>
+          <div class="dp-step">
+            <div class="dp-step-num">03</div>
+            <div><div class="dp-step-title">Synthetic generation</div><p class="dp-step-body">New records are sampled from the DP-protected model. Output is statistically representative but contains no real personal information.</p></div>
+          </div>
+          <div class="dp-step">
+            <div class="dp-step-num">04</div>
+            <div><div class="dp-step-title">Fidelity validation</div><p class="dp-step-body">Generated data is validated against the original distribution. Quality and utility metrics confirm suitability for training and validation use.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- COMPARISON -->
+<div class="compare-wrap">
+  <div class="section">
+    <div class="eyebrow">Comparison</div>
+    <h2 class="h2">DTS vs.<br><em>other approaches to restricted data.</em></h2>
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Capability</th>
+          <th class="hl">DTS</th>
+          <th>Data Masking / Anonymization</th>
+          <th>Data Sampling</th>
+          <th>Manual Labeling</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="row-label">Privacy guarantee</td>
+          <td class="hl"><span class="check">✓</span> Mathematical DP bound</td>
+          <td><span class="partial">△</span> Re-identification risk remains</td>
+          <td><span class="cross">✗</span> No privacy guarantee</td>
+          <td><span class="cross">✗</span></td>
+        </tr>
+        <tr>
+          <td class="row-label">Coverage expansion</td>
+          <td class="hl"><span class="check">✓</span> Generate at any scale</td>
+          <td><span class="cross">✗</span> Can't create new data</td>
+          <td><span class="partial">△</span> Bounded by real data volume</td>
+          <td><span class="partial">△</span> Expensive &amp; slow</td>
+        </tr>
+        <tr>
+          <td class="row-label">Rare class augmentation</td>
+          <td class="hl"><span class="check">✓</span> Targeted generation</td>
+          <td><span class="cross">✗</span></td>
+          <td><span class="cross">✗</span> Can't create rare events</td>
+          <td><span class="partial">△</span> Very high cost</td>
+        </tr>
+        <tr>
+          <td class="row-label">Distribution fidelity</td>
+          <td class="hl"><span class="check">✓</span> Validated against real stats</td>
+          <td><span class="partial">△</span> Distorted by masking</td>
+          <td><span class="partial">△</span> Sampling bias risk</td>
+          <td><span class="partial">△</span> Annotator variance</td>
+        </tr>
+        <tr>
+          <td class="row-label">Cross-border / external use</td>
+          <td class="hl"><span class="check">✓</span> No real data transferred</td>
+          <td><span class="cross">✗</span> Residual risk</td>
+          <td><span class="cross">✗</span></td>
+          <td><span class="cross">✗</span></td>
+        </tr>
+        <tr>
+          <td class="row-label">SynTitan integration</td>
+          <td class="hl"><span class="check">✓</span> Native versioning &amp; binding</td>
+          <td><span class="cross">✗</span></td>
+          <td><span class="cross">✗</span></td>
+          <td><span class="cross">✗</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- INTEGRATION -->
+<div class="int-wrap">
+  <div class="section">
+    <div class="eyebrow">Deployment</div>
+    <h2 class="h2">Standalone or<br><em>integrated with SynTitan.</em></h2>
+
+    <div class="int-grid">
+      <div>
+        <div class="int-modes">
+          <div class="int-mode highlight">
+            <div class="int-mode-label">Mode A · Independent</div>
+            <div class="int-mode-title">DTS Standalone</div>
+            <p class="int-mode-body">Use DTS without SynTitan — directly against your data sources. Available on AWS Marketplace for enterprise procurement. The primary use cases: fixing AI training data quality problems. Class imbalance that makes models fail on rare events. Missing values that distort distributions. Sparse data that prevents reliable training. Edge cases your model has never seen. DTS generates what's missing, at scale, without touching real data.</p>
+            <ul style="font-size:12.5px;color:var(--text2);line-height:1.85;padding-left:16px;margin:10px 0 0;">
+              <li>Fix class imbalance — oversample minority classes with distribution fidelity</li>
+              <li>Augment sparse datasets to production-grade volume</li>
+              <li>Generate edge cases and rare event samples</li>
+              <li>Replace missing values with statistically valid equivalents</li>
+              <li>Expand narrow training sets without data collection overhead</li>
+            </ul>
+          </div>
+          <div class="int-mode">
+            <div class="int-mode-label">Mode B · Integrated</div>
+            <div class="int-mode-title">DTS + SynTitan</div>
+            <p class="int-mode-body">When privacy or compliance is the blocker — regulated data that can't reach models — DTS runs inside SynTitan to generate privacy-safe replacements. The synthetic dataset is automatically versioned, bound to a Release State, and tracked in the Change Log. Full traceability from data generation through production AI run.</p>
+            <ul style="font-size:12.5px;color:var(--text2);line-height:1.85;padding-left:16px;margin:10px 0 0;">
+              <li>Replace GDPR, PIPA, HIPAA-restricted data — no original data leaves the perimeter</li>
+              <li>Synthetic datasets versioned and bound to execution states</li>
+              <li>Change log tracks every data generation event</li>
+            </ul>
+          </div>
+        </div>
+        <div class="overlap-note" style="margin-top:16px;">
+          <p>SynTitan performs data quality refinement as part of execution stability.</p>
+          <p>SynTitan can use a subset of DTS capabilities when privacy-safe synthetic data is needed, while DTS is a full standalone enterprise synthetic data engine.</p>
+        </div>
+      </div>
+      <div class="int-usecases">
+        <p style="font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:14px;">// Common deployment scenarios</p>
+        <div class="int-uc">
+          <div class="int-uc-label">Finance · IBK Industrial Bank</div>
+          <div class="int-uc-title">97.6% AI detection rate · 79 patterns → 1,000 records</div>
+          <p class="int-uc-body">IBK expanded 79 fraud/transaction patterns into 1,000+ DP-safe synthetic records using DTS. AI detection rate reached 97.6%. Full PIPA compliance — zero real customer data accessed or exported. Passed internal audit with no data sovereignty issues.</p>
+        </div>
+        <div class="int-uc">
+          <div class="int-uc-label">Finance · Kyobo Life Insurance</div>
+          <div class="int-uc-title">F1 0.92 churn model · 277,249 synthetic records · 6-month deletion policy bypassed legally</div>
+          <p class="int-uc-body">Kyobo's churn AI was blocked by a 6-month data retention policy. DTS generated 277,249 DP-safe synthetic records from historical data — legally usable after deletion. Churn F1 reached 0.92. Separately, a top-3 life insurer's VoC AI improved from F1 58.55% → 88.55% (+30pp); deploy time cut from 4 weeks to 1 day.</p>
+        </div>
+        <div class="int-uc">
+          <div class="int-uc-label">Marketing / Sales</div>
+          <div class="int-uc-title">90% time reduction · 70% cost saving on trend research</div>
+          <p class="int-uc-body">Annual consumer trend surveys replaced with AI persona agents trained on synthetic behavioral data. Key insights delivered in 1–2 days (vs. 1+ month), with 70% cost savings by eliminating field collection, incentives, and anonymization steps.</p>
+        </div>
+        <div class="int-uc">
+          <div class="int-uc-label">Defense · Ministry of National Defense (Korea)</div>
+          <div class="int-uc-title">Zero data exports · Classified imagery → AI-ready</div>
+          <p class="int-uc-body">DTS deployed on-premise in an air-gapped classified environment. Zero-Access Architecture: no original imagery left the secure perimeter. Classified defense data converted to AI-ready synthetic datasets for model training within security clearance requirements.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div style="background:var(--bg2);border-bottom:1px solid var(--line);">
+  <div class="section" style="padding-top:60px;padding-bottom:60px;">
+    <div style="font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);margin-bottom:24px;">// Key concepts</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);">
+      <div style="background:#fff;padding:24px 22px;">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--brand-purple);margin-bottom:10px;">Differential Privacy</div>
+        <p style="font-size:13.5px;color:var(--text2);line-height:1.65;">A mathematical framework that adds calibrated noise during synthetic generation — providing a formal privacy bound (ε) that guarantees individuals cannot be re-identified from the synthetic output, regardless of an attacker's prior knowledge.</p>
+        <a href="/learn/glossary#differential-privacy" style="font-family:var(--mono);font-size:10px;color:var(--brand-purple);margin-top:10px;display:inline-block;">Learn more →</a>
+      </div>
+      <div style="background:#fff;padding:24px 22px;">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--brand-purple);margin-bottom:10px;">Zero-Access Architecture</div>
+        <p style="font-size:13.5px;color:var(--text2);line-height:1.65;">A DTS deployment model where original data never leaves the client environment. Statistical properties are learned in-situ. Only the DP-protected synthetic output crosses the boundary — enabling use in air-gapped, classified, and highly regulated environments.</p>
+        <a href="/learn/glossary#zero-access" style="font-family:var(--mono);font-size:10px;color:var(--brand-purple);margin-top:10px;display:inline-block;">Learn more →</a>
+      </div>
+      <div style="background:#fff;padding:24px 22px;">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--brand-purple);margin-bottom:10px;">Enterprise Synthetic Data</div>
+        <p style="font-size:13.5px;color:var(--text2);line-height:1.65;"><strong>Restricted data</strong>: blocked by privacy regulations or access controls. <strong>Unusable data</strong>: accessible but unfit for AI — gaps, imbalance, low volume. DTS generates DP-safe synthetic datasets that solve both — without requiring access to production data.</p>
+        <a href="/learn/ai-ready-data-infrastructure" style="font-family:var(--mono);font-size:10px;color:var(--brand-purple);margin-top:10px;display:inline-block;">Read: AI-Ready Data →</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="faq-wrap">
+  <div class="section">
+    <div class="eyebrow">When teams need DTS</div>
+    <h2 class="h2">Five signals your data<br><em>is blocking AI.</em></h2>
+    <p style="font-size:15px;color:var(--text2);margin-top:12px;max-width:620px;line-height:1.65;">Enterprise AI projects stall when data conditions prevent training, validation, or safe deployment. DTS was built for exactly these situations.</p>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);margin-top:40px;">
+      <div style="background:#fff;padding:28px 24px;">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--red);background:rgba(193,53,53,.06);border:1px solid rgba(193,53,53,.2);display:inline-block;padding:3px 8px;margin-bottom:14px;">Restricted Data</div>
+        <h3 style="font-family:var(--serif);font-size:18px;font-weight:500;margin-bottom:8px;line-height:1.2;">Data exists but compliance blocks AI access.</h3>
+        <p style="font-size:13px;color:var(--text2);line-height:1.65;">GDPR, PIPA, HIPAA, or internal retention policies prevent the data from reaching models. The AI project can't start. DTS generates privacy-safe synthetic replacements — statistically accurate, legally usable, zero real records exposed.</p>
+      </div>
+      <div style="background:#fff;padding:28px 24px;border-left:1px solid var(--line);">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);background:rgba(196,122,0,.06);border:1px solid rgba(196,122,0,.2);display:inline-block;padding:3px 8px;margin-bottom:14px;">Unusable Data</div>
+        <h3 style="font-family:var(--serif);font-size:18px;font-weight:500;margin-bottom:8px;line-height:1.2;"><a href="/learn/imbalanced-datasets" style="color:inherit;">Imbalanced datasets</a> or coverage gaps distort model behavior.</h3>
+        <p style="font-size:13px;color:var(--text2);line-height:1.65;">Rare classes are underrepresented. Fraud patterns are too sparse to learn from. Edge cases never appear in training data. Models fail on the exact conditions they were built to catch. DTS fixes class distribution and generates targeted rare-class coverage.</p>
+      </div>
+      <div style="background:#fff;padding:28px 24px;border-left:1px solid var(--line);">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);background:rgba(196,122,0,.06);border:1px solid rgba(196,122,0,.2);display:inline-block;padding:3px 8px;margin-bottom:14px;">Unusable Data</div>
+        <h3 style="font-family:var(--serif);font-size:18px;font-weight:500;margin-bottom:8px;line-height:1.2;">Data retention policies delete what AI needs.</h3>
+        <p style="font-size:13px;color:var(--text2);line-height:1.65;">Historical data was deleted per retention policy. The patterns that trained the previous model no longer exist. DTS generates synthetic equivalents from surviving statistical patterns — without requiring the original data to still be present.</p>
+      </div>
+      <div style="background:#fff;padding:28px 24px;border-top:1px solid var(--line);">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--red);background:rgba(193,53,53,.06);border:1px solid rgba(193,53,53,.2);display:inline-block;padding:3px 8px;margin-bottom:14px;">Restricted Data</div>
+        <h3 style="font-family:var(--serif);font-size:18px;font-weight:500;margin-bottom:8px;line-height:1.2;">Sensitive records can't leave the security perimeter.</h3>
+        <p style="font-size:13px;color:var(--text2);line-height:1.65;">Classified, patient, or customer data cannot be exported for AI training — even internally. DTS's Zero-Access Architecture learns statistical properties in-situ. Only the DP-protected synthetic output crosses the boundary. Used in air-gapped defense deployments.</p>
+      </div>
+      <div style="background:#fff;padding:28px 24px;border-top:1px solid var(--line);border-left:1px solid var(--line);">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);background:rgba(196,122,0,.06);border:1px solid rgba(196,122,0,.2);display:inline-block;padding:3px 8px;margin-bottom:14px;">Unusable Data</div>
+        <h3 style="font-family:var(--serif);font-size:18px;font-weight:500;margin-bottom:8px;line-height:1.2;">Training data volume is too low for reliable AI.</h3>
+        <p style="font-size:13px;color:var(--text2);line-height:1.65;">The original dataset is too small to train a robust model. Collecting more real data takes months and significant cost. DTS augments existing datasets to production-grade volume — preserving statistical fidelity while adding the volume AI training requires.</p>
+      </div>
+      <div style="background:var(--blue-dim);padding:28px 24px;border-top:1px solid var(--line);border-left:1px solid var(--line);">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--brand-purple);margin-bottom:14px;">// Outcome</div>
+        <p style="font-size:15px;font-family:var(--serif);line-height:1.6;margin-bottom:16px;">In each case, DTS turns data that is <strong>restricted or unusable</strong> into an <em>AI-ready dataset</em> — without exposing real records.</p>
+        <a href="/proof" style="display:block;font-family:var(--mono);font-size:11px;color:var(--brand-purple);margin-bottom:8px;">See production cases → +30pp F1 improvement</a>
+        <a href="/cdn-cgi/l/email-protection#fd9e9293899c9e89bd9e889f949ad39c94" style="display:block;font-family:var(--mono);font-size:11px;color:var(--brand-purple);">Start data evaluation →</a>
+      </div>
+    </div>
+
+    <div style="margin-top:32px;display:flex;gap:14px;flex-wrap:wrap;">
+      <a href="/cdn-cgi/l/email-protection#43202c2d37222037032036212a246d222a" class="btn-primary">Start evaluation <span class="btn-arrow">→</span></a>
+      <a href="/proof" class="btn-secondary">See production case records <span class="btn-arrow">→</span></a>
+      <a href="/learn/ai-ready-data-infrastructure" class="btn-secondary">Learn: AI-Ready Data Infrastructure <span class="btn-arrow">→</span></a>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="faq-wrap">
+  <div class="section">
+    <div class="eyebrow">FAQ</div>
+    <h2 class="h2">Common questions</h2>
+    <div class="faq-list">
+      <div class="faq-item open">
+        <div class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">What is DTS?<span class="faq-icon">+</span></div>
+        <div class="faq-a">DTS is CUBIG's enterprise synthetic data engine. It generates privacy-safe datasets using differential privacy to fix class imbalance, fill coverage gaps, expand training data, and replace restricted or non-accessible data. DTS runs as a standalone engine or integrates with the SynTitan platform.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">What is differential privacy in DTS?<span class="faq-icon">+</span></div>
+        <div class="faq-a">Differential privacy (DP) is a mathematical framework that guarantees any single individual's data cannot be identified from the synthetic output — regardless of what an attacker already knows. DTS applies DP during generation to produce datasets that are statistically representative but contain no real personal information.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">Can DTS run without SynTitan?<span class="faq-icon">+</span></div>
+        <div class="faq-a">Yes. DTS is a full standalone enterprise synthetic data engine. It can be deployed and used independently of SynTitan. When used alongside SynTitan, DTS-generated datasets are versioned and bound to Release States for full execution traceability.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">What data problems does DTS solve?<span class="faq-icon">+</span></div>
+        <div class="faq-a">DTS addresses three categories: restricted data that cannot be shared due to privacy or compliance rules; data with coverage gaps or class imbalance that make models unreliable; and non-accessible data that exists but cannot reach training pipelines.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">What is Zero-Access Architecture?<span class="faq-icon">+</span></div>
+        <div class="faq-a">Zero-Access Architecture means original data never leaves the client environment. DTS analyzes statistical properties in-situ, generates a DP-protected synthetic model, and only the synthetic output is used downstream. Raw data is never transferred or accessed externally — suitable for classified, regulated, and air-gapped environments.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.closest('.faq-item').classList.toggle('open')">How is DTS different from SynTitan?<span class="faq-icon">+</span></div>
+        <div class="faq-a">SynTitan performs data quality refinement as part of execution stability. SynTitan can use a subset of DTS capabilities when privacy-safe synthetic data is needed, while DTS is a full standalone enterprise synthetic data engine.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- OPERATIONAL EXAMPLE -->
+<div style="background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
+  <div class="section" style="padding-top:52px;padding-bottom:52px;">
+    <div style="max-width:760px;">
+      <div style="font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--green);margin-bottom:14px;">// Operational Example · Fraud Detection with Rare Events</div>
+      <p style="font-family:var(--serif);font-size:18px;line-height:1.65;color:var(--text);margin-bottom:14px;">A financial services team building a fraud detection model found that rare anomaly events were severely underrepresented in training data — real fraud cases were too few to train a reliable classifier.</p>
+      <p style="font-size:13.5px;color:var(--text2);line-height:1.75;margin-bottom:14px;">DTS generated synthetic fraud scenarios using differential privacy, expanding the rare-event class to statistically meaningful coverage. The resulting dataset could not be reverse-engineered to individual records — satisfying both compliance requirements and model training needs.</p>
+      <p style="font-family:var(--mono);font-size:11px;color:var(--text3);line-height:1.7;">Blocker removed: <strong>unusable data</strong> (imbalanced dataset / rare class underrepresentation)</p>
+      <a href="/#enterprise-use-cases" style="display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:12px;font-weight:700;color:var(--green);letter-spacing:.04em;margin-top:16px;">→ See enterprise use cases</a>
+    </div>
+  </div>
+</div>
+
+<!-- FINAL CTA -->
+<div class="final-wrap">
+  <div class="section final-inner">
+    <div class="final-bg-text" aria-hidden="true">DTS</div>
+    <div class="eyebrow" style="justify-content:center;">Your data exists. Make it work.</div>
+    <h2 class="final-h">Restricted data.<br><em>Usable AI.</em></h2>
+    <p class="final-sub">DTS turns restricted, unusable, and inaccessible enterprise data into privacy-safe synthetic datasets — without ever moving the original data. GS Certified. KISA approved. Available on AWS Marketplace.</p>
+    <div class="final-ctas">
+      <a href="/cdn-cgi/l/email-protection#5e3d31302a3f3d2a1e3d2b3c3739703f37" class="btn-primary">Run technical demo <span class="btn-arrow">→</span></a>
+      <a href="/proof" class="btn-secondary">See production cases <span class="btn-arrow">→</span></a>
+      <a href="/syntitan" class="btn-secondary">Explore SynTitan <span class="btn-arrow">→</span></a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 0.5L19.5 10L10 19.5L0.5 10Z" stroke="#141414" stroke-width="1.2"/><path d="M10 4L16 10L10 16L4 10Z" stroke="#141414" stroke-width="0.9"/><path d="M10 7L12.5 10L10 13L7.5 10Z" fill="#141414"/></svg>CUBIG</div>
+      <p class="footer-tagline">AI-ready data infrastructure for enterprise AI.</p>
+      <p style="font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:10px;line-height:1.7;">Korea: 4F, NAVER 1784, 95 Jeongjail-ro,<br>Bundang-gu, Seongnam-si<br>UK: 21 Arthur Street, Belfast BT1 4GA</p>
+    </div>
+    <div><div class="footer-col-title">Platform</div><ul class="footer-links"><li><a href="/syntitan">SynTitan</a></li></ul></div>
+    <div><div class="footer-col-title">Capabilities</div><ul class="footer-links"><li><a href="/dts">DTS</a></li><li><a href="/llm-capsule">LLM Capsule</a></li></ul></div>
+    <div><div class="footer-col-title">Learn</div><ul class="footer-links"><li><a href="/learn/ai-ready-data-infrastructure">AI-Ready Data Infrastructure</a></li><li><a href="/learn/release-state">Release State</a></li><li><a href="/learn/articles">Articles</a></li><li><a href="/learn/glossary">Glossary</a></li></ul></div>
+    <div><div class="footer-col-title">Company</div><ul class="footer-links"><li><a href="/company">About</a></li><li><a href="/proof">Proof</a></li><li><a href="/cdn-cgi/l/email-protection#7f1c10110b1e1c0b3f1c0a1d1618511e16">Contact</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 CUBIG Corp. All rights reserved.</span>
+    <span class="footer-copy"><a href

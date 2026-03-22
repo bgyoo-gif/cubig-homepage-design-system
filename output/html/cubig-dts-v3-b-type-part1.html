@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DTS | Make Enterprise Data AI-Ready — Fix Imbalance, Restricted Data &amp; Coverage Gaps | Cubig</title>
+  <meta name="description" content="Enterprise synthetic data engine based on differential privacy. Generate privacy-safe datasets, expand coverage, reduce bias, and augment data at scale. DTS can operate independently.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://cubig.ai/dts">
+  <meta property="og:title" content="DTS | Privacy-Safe Data for AI Training — Cubig">
+  <meta property="og:description" content="Make restricted and unusable data AI-ready at enterprise scale. DTS generates privacy-safe synthetic datasets using differential privacy — fixing compliance blockers and coverage gaps for AI training.">
+  <meta property="og:site_name" content="Cubig">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://cubig.ai/dts">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://cubig.ai/#org",
+        "name": "Cubig",
+        "url": "https://cubig.ai"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://cubig.ai/dts#product",
+        "name": "DTS",
+        "url": "https://cubig.ai/dts",
+        "applicationCategory": "Synthetic Data Engine",
+        "description": "DTS is Cubig's enterprise synthetic data engine based on differential privacy. It generates privacy-safe synthetic datasets, expands data coverage, reduces bias and imbalance, and augments training data at scale. DTS can operate independently without SynTitan.",
+        "keywords": [
+          "enterprise synthetic data engine",
+          "differential privacy synthetic data",
+          "privacy-safe datasets",
+          "synthetic data for AI training",
+          "data augmentation",
+          "restricted data AI"
+        ],
+        "provider": {
+          "@id": "https://cubig.ai/#org"
+        }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://cubig.ai/dts#webpage",
+        "url": "https://cubig.ai/dts",
+        "name": "DTS | Data Privacy & Quality Capability - Enterprise Synthetic Data Engine | Cubig",
+        "isPartOf": {
+          "@id": "https://cubig.ai/#org"
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Oxanium:wght@700&family=Fragment+Mono:ital@0;1&display=swap" rel="stylesheet">
+
+  <style>
+    /* ========================================================
+       1. CSS Reset + 전역 기본값
+    ======================================================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--ds-font-base);
+      color: var(--ds-color-text-primary);
+      background-color: var(--ds-color-surface-white);
+      padding-top: 58px;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+      -webkit-font-smoothing: antialiased;
+    }
+    img, video { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+
+    p, li, dt, dd, blockquote,
+    .ds-section-header__description,
+    .ds-hero__description,
+    .ds-cta-band__description,
+    .ds-body-l, .ds-body-m, .ds-body-s,
+    .ds-ac-card__title,
+    .ds-card__description {
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      text-wrap: pretty;
+    }
+
+    /* ========================================================
+       2. :root — CSS 변수
+    ======================================================== */
+    :root {
+      /* Brand */
+      --ds-color-brand-primary:   #3061f2;
+      --ds-color-brand-purple:    #725bea;
+      --ds-color-brand-purple-lt: #c6c5fa;
+      --ds-color-brand-purple-md: #ab2eff;
+
+      /* Neutral */
+      --ds-color-neutral-900: #0f0f0f;
+      --ds-color-neutral-850: #141414;
+      --ds-color-neutral-800: #171719;
+      --ds-color-neutral-700: #303135;
+      --ds-color-neutral-500: #636363;
+      --ds-color-neutral-400: #9c9c9c;
+      --ds-color-neutral-350: #adadad;
+      --ds-color-neutral-300: #bababa;
+      --ds-color-neutral-250: #c4c4c4;
+      --ds-color-neutral-200: #e0e0e0;
+      --ds-color-neutral-150: #e6e7e9;
+      --ds-color-neutral-100: #ececec;
+      --ds-color-neutral-050: #f2f2f2;
+      --ds-color-neutral-025: #f7f7f7;
+      --ds-color-white:       #ffffff;
+      --ds-color-black:       #000000;
+
+      /* Text */
+      --ds-color-text-primary:   #0f0f0f;
+      --ds-color-text-secondary: #636363;
+      --ds-color-text-tertiary:  #9c9c9c;
+      --ds-color-text-inverse:   #ffffff;
+      --ds-color-text-muted:     #cacccf;
+
+      /* Functional */
+      --ds-color-success: #0e824c;
+      --ds-color-error:   #ff3030;
+      --ds-color-info:    #155ea0;
+      --ds-color-warn:    #f59e0b;
+
+      /* Functional Dark bg variants */
+      --ds-color-success-light: #34d399;
+      --ds-color-error-light:   #ff6b6b;
+      --ds-color-info-light:    #60a5fa;
+      --ds-color-warn-light:    #fbbf24;
+
+      /* Border */
+      --ds-color-border-default: #e6e7e9;
+      --ds-color-border-strong:  #171719;
+      --ds-color-border-brand:   #725bea;
+
+      /* Surface */
+      --ds-color-surface-dark:  #171719;
+      --ds-color-surface-mid:   #f2f2f2;
+      --ds-color-surface-light: #f7f7f7;
+      --ds-color-surface-white: #ffffff;
+
+      /* Gradient */
+      --ds-gradient-brand: linear-gradient(130deg, #673AFF 0%, #D932FF 50%, #FF266A 100%);
+      --ds-gradient-dark:  linear-gradient(180deg, #0f0f0f 0%, #171719 100%);
+
+      /* Gradient Card Border */
+      --ds-gradient-card-purple: linear-gradient(109deg, #FCD6FF 0%, #fff 17%, #FFEDFA 38%, #D48AFF 51%, #fff 73%, #FCD6FF 100%);
+      --ds-gradient-card-green:  linear-gradient(109deg, #01CA51 0%, #FFEFF5 17%, #9AE6AD 43%, #C9FFE1 65%, #01CA51 84%, #01CA51 100%);
+
+      /* Gradient Card Inner Background */
+      --ds-gradient-inner-purple: linear-gradient(99deg, #F8EDFF 0%, #FCFCFE 58%, #fff 100%);
+      --ds-gradient-inner-green:  linear-gradient(99deg, #F0FDF5 0%, #FCFCFE 58%, #fff 100%);
+
+      /* Typography */
+      --ds-font-base:    "DM Sans", sans-serif;
+      --ds-font-brand:   "Oxanium", sans-serif;
+      --ds-font-code:    "Fragment Mono", "Geist Mono", monospace;
+
+      /* Font sizes */
+      --ds-text-xs:   12px;
+      --ds-text-sm:   14px;
+      --ds-text-md:   16px;
+      --ds-text-lg:   18px;
+      --ds-text-xl:   20px;
+      --ds-text-2xl:  24px;
+      --ds-text-3xl:  30px;
+      --ds-text-4xl:  36px;
+      --ds-text-5xl:  40px;
+      --ds-text-6xl:  50px;
+      --ds-text-7xl:  64px;
+      --ds-text-8xl:  90px;
+
+      /* Font weights */
+      --ds-weight-light:    300;
+      --ds-weight-regular:  400;
+      --ds-weight-medium:   500;
+      --ds-weight-semibold: 600;
+      --ds-weight-bold:     700;
+
+      /* Line heights */
+      --ds-leading-tight:   1.2;
+      --ds-leading-normal:  1.5;
+      --ds-leading-relaxed: 1.7;
+
+      /* Letter spacing */
+      --ds-tracking-tight:  -0.5px;
+      --ds-tracking-normal: 0px;
+      --ds-tracking-wide:   0.08em;
+
+      /* Spacing */
+      --ds-space-2xs:  4px;
+      --ds-space-xs:   8px;
+      --ds-space-sm:   12px;
+      --ds-space-md:   16px;
+      --ds-space-lg:   24px;
+      --ds-space-xl:   32px;
+      --ds-space-2xl:  48px;
+      --ds-space-3xl:  64px;
+      --ds-space-4xl:  80px;
+      --ds-space-5xl: 100px;
+      --ds-space-6xl: 150px;
+
+      /* Radii */
+      --ds-radius-none: 0px;
+      --ds-radius-xs:   5px;
+      --ds-radius-sm:   8px;
+      --ds-radius-md:   18px;
+      --ds-radius-lg:   24px;
+      --ds-radius-xl:   40px;
+      --ds-radius-2xl:  56px;
+      --ds-radius-pill: 9999px;
+
+      /* Border */
+      --ds-border-width:      1px;
+      --ds-border-width-bold: 2px;
+      --ds-border-default:    1px solid var(--ds-color-border-default);
+      --ds-border-brand:      1px solid var(--ds-color-brand-purple);
+
+      /* Shadow */
+      --ds-shadow-card:  0px 24px 40px rgba(0, 0, 0, 0.04);
+      --ds-shadow-modal: 0px 24px 40px rgba(0, 0, 0, 0.10);
+
+      /* Container padding */
+      --ds-container-padding-mobile:     16px;
+      --ds-container-padding-tablet:     32px;
+      --ds-container-padding-sm-desktop: 32px;
+      --ds-container-padding-desktop:    120px;
+      --ds-content-max-width:            1200px;
+
+      /* Background images */
+      --ds-bg-img-green-wave: url('../../reference/images/bg-green-wave.png');
+      --ds-bg-img-lavender:   url('../../reference/images/bg-lavender.png');
+      --ds-bg-img-pink:       url('../../reference/images/bg-pink.png');
+      --ds-bg-img-peach:      url('../../reference/images/bg-peach.png');
+      --ds-bg-img-lime:       url('../../reference/images/bg-lime.png');
+      --ds-bg-img-paint-blue: url('../../reference/images/bg-paint-blue-iridescent.png');
+      --ds-bg-img-wave-teal:  url('../../reference/images/bg-wave-teal-blue.png');
+    }
+
+    /* ========================================================
+       3. Typography Base
+    ======================================================== */
+    h1, .ds-h1 {
+      font-family: var(--ds-font-base);
+      font-size: 24px;
+      font-weight: var(--ds-weight-bold);
+      line-height: var(--ds-leading-tight);
+      letter-spacing: var(--ds-tracking-tight);
+      text-wrap: balance;
+    }
+    h2, .ds-h2 {
+      font-family: var(--ds-font-base);
+      font-size: 20px;
+      font-weight: var(--ds-weight-bold);
+      line-height: var(--ds-leading-tight);
+      letter-spacing: var(--ds-tracking-tight);
+      text-wrap: balance;
+    }
+    h3, .ds-h3 {
+      font-family: var(--ds-font-base);
+      font-size: 18px;
+      font-weight: var(--ds-weight-semibold);
+      line-height: var(--ds-leading-tight);
+      text-wrap: balance;
+    }
+    .ds-body-l { font-family: var(--ds-font-base); font-size: var(--ds-text-xl); font-weight: var(--ds-weight-regular); line-height: var(--ds-leading-normal); }
+    .ds-body-m { font-family: var(--ds-font-base); font-size: var(--ds-text-md); font-weight: var(--ds-weight-medium); line-height: var(--ds-leading-normal); }
+    .ds-body-s { font-family: var(--ds-font-base); font-size: var(--ds-text-sm); font-weight: var(--ds-weight-medium); line-height: var(--ds-leading-normal); }
+    .ds-caption { font-family: var(--ds-font-base); font-size: var(--ds-text-xs); font-weight: var(--ds-weight-medium); line-height: var(--ds-leading-normal); }
+
+    .ds-text--brand       { color: var(--ds-color-brand-purple); }
+    .ds-text--brand-light { color: var(--ds-color-brand-purple-lt); }
+    .ds-text--product     { font-family: var(--ds-font-brand); font-weight: var(--ds-weight-bold); }
+
+    @media (min-width: 768px)  {
+      h1, .ds-h1 { font-size: 28px; }
+      h2, .ds-h2 { font-size: 22px; }
+    }
+    @media (min-width: 1024px) {
+      h1, .ds-h1 { font-size: 32px; }
+      h2, .ds-h2 { font-size: 24px; }
+      h3, .ds-h3 { font-size: 20px; }
+    }
+    @media (min-width: 1440px) {
+      h1, .ds-h1 { font-size: 36px; }
+      h2, .ds-h2 { font-size: 28px; }
+      h3, .ds-h3 { font-size: 22px; }
+    }
+
+    /* ========================================================
+       4. Layout System
+    ======================================================== */
+    .ds-container {
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 var(--ds-container-padding-mobile);
+      box-sizing: border-box;
+    }
+    @media (min-width: 768px)  { .ds-container { padding: 0 var(--ds-container-padding-tablet); } }
+    @media (min-width: 1024px) { .ds-container { padding: 0 var(--ds-container-padding-sm-desktop); } }
+    @media (min-width: 1440px) { .ds-container { padding: 0 var(--ds-container-padding-desktop); max-width: 1440px; } }
+
+    .ds-section { width: 100%; padding: var(--ds-space-4xl) 0; }
+    .ds-section--hero { padding: 100px 0 var(--ds-space-5xl); }
+    .ds-section--light { background-color: var(--ds-color-surface-light); }
+
+    /* Background images */
+    .ds-bg--green-wave { background-image: var(--ds-bg-img-green-wave); }
+    .ds-bg--lavender   { background-image: var(--ds-bg-img-lavender); }
+    .ds-bg--peach      { background-image: var(--ds-bg-img-peach); }
+    .ds-bg--wave-teal  { background-image: var(--ds-bg-img-wave-teal); }
+
+    /* ========================================================
+       5. Navigation
+    ======================================================== */
+    .ds-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: 58px;
+      display: flex; align-items: center;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--ds-color-border-default);
+      padding: 0 var(--ds-container-padding-mobile);
+    }
+    @media (min-width: 1440px) { .ds-nav { padding: 0 var(--ds-container-padding-desktop); } }
+    .ds-nav__inner { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .ds-nav__logo { font-family: var(--ds-font-base); font-weight: var(--ds-weight-bold); font-size: var(--ds-text-lg); color: var(--ds-color-text-primary); }
+    .ds-nav__links { display: flex; align-items: center; gap: 32px; list-style: none; }
+    @media (max-width: 767px) { .ds-nav__links { display: none; } }
+    .ds-nav__link { font-size: var(--ds-text-sm); color: var(--ds-color-text-secondary); }
+    .ds-nav__link:hover { color: var(--ds-color-text-primary); }
+
+    /* ========================================================
+       6. Section Header
+    ======================================================== */
+    .ds-section-header { margin-bottom: var(--ds-space-2xl); text-align: center; }
+    .ds-section-header__title {
+      font-family: var(--ds-font-base);
+      font-size: var(--ds-text-5xl);
+      font-weight: var(--ds-weight-bold);
+      color: var(--ds-color-text-primary);
+      line-height: var(--ds-leading-tight);
+      letter-spacing: var(--ds-tracking-tight);
+      margin-bottom: var(--ds-space-md);
+      text-wrap: balance;
+    }
+    .ds-section-header__description {
+      font-size: var(--ds-text-lg);
+      color: var(--ds-color-text-secondary);
+      line-height: var(--ds-leading-relaxed);
+      max-width: 100%;
+      margin: 0 auto;
+    }
+    @media (min-width: 1024px) { .ds-section-header__description { max-width: 720px; } }
+    @media (min-width: 1440px) { .ds-section-header__description { max-width: 860px; } }
+    .ds-section-header--underline {
+      padding-bottom: var(--ds-space-lg);
+      border-bottom: 1px solid var(--ds-color-border-default);
+      margin-bottom: var(--ds-space-xl);
+    }
+    @media (max-width: 767px) { .ds-section-header { text-align: left; } }
+
+    /* ========================================================
+       7. Hero
+    ======================================================== */
+    .ds-hero { display: grid; grid-template-columns: 1fr; gap: var(--ds-space-lg); align-items: center; }
+    .ds-hero--text-only { max-width: 860px; }
+    .ds-hero__title {
+      font-family: var(--ds-font-base);
+      font-size: 24px;
+      font-weight: var(--ds-weight-bold);
+      color: var(--ds-color-text-primary);
+      line-height: var(--ds-leading-tight);
+      letter-spacing: -2px;
+      margin-bottom: var(--ds-space-sm);
+      text-wrap: balance;
+    }
+    .ds-hero__description {
+      font-size: var(--ds-text-lg);
+      color: var(--ds-color-text-secondary);
+      line-height: var(--ds-leading-relaxed);
+      max-width: 100%;
+      margin-bottom: var(--ds-space-md);
+    }
+    @media (min-width: 1024px) { .ds-hero__description { max-width: 720px; } }
+    @media (min-width: 1440px) { .ds-hero__description { max-width: 860px; } }
+    .ds-hero__actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    @media (max-width: 767px) {
+      .ds-hero__title { font-size: 24px; letter-spacing: -1px; }
+      .ds-hero__actions { flex-direction: column; }
+    }
+    @media (min-width: 768px)  { .ds-hero__title { font-size: 28px; } }
+    @media (min-width: 1024px) { .ds-hero__title { font-size: 32px; } }
+    @media (min-width: 1440px) { .ds-hero__title { font-size: 36px; } }
+
+    /* ========================================================
+       8. Buttons
+    ======================================================== */
+    .ds-btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: var(--ds-space-xs);
+      border-radius: var(--ds-radius-pill);
+      font-family: var(--ds-font-base); font-weight: var(--ds-weight-medium); font-size: var(--ds-text-md);
+      cursor: pointer; border: none; transition: opacity 0.2s, background-color 0.2s;
+      white-space: nowrap; text-decoration: none;
+    }
+    .ds-btn--sm { padding: var(--ds-space-xs) var(--ds-space-md);  font-size: var(--ds-text-sm); }
+    .ds-btn--md { padding: var(--ds-space-sm) var(--ds-space-xl);  font-size: var(--ds-text-md); }
+    .ds-btn--lg { padding: var(--ds-space-md) var(--ds-space-2xl); font-size: var(--ds-text-lg); }
+    .ds-btn--primary   { background: var(--ds-gradient-brand); color: var(--ds-color-white); }
+    .ds-btn--primary:hover { opacity: 0.88; }
+    .ds-btn--secondary { background-color: transparent; color: var(--ds-color-text-primary); border: var(--ds-border-default); }
+    .ds-btn--secondary:hover { background-color: var(--ds-color-surface-light); }
+
+    /* ========================================================
+       9. Bullet List
+    ======================================================== */
+    .ds-bullet { list-style: none; display: flex; flex-direction: column; gap: var(--ds-space-sm); }
+    .ds-bullet__item {
+      display: flex; align-items: flex-start; gap: var(--ds-space-xs);
+      font-size: var(--ds-text-md); line-height: var(--ds-leading-normal);
+      color: var(--ds-color-text-primary);
+    }
+    .ds-bullet__icon { width: 20px; height: 20px; flex-shrink: 0; margin-top: 2px; display: flex; align-items: center; justify-content: center; }
+    .ds-bullet--dot .ds-bullet__icon::before { content: "•"; color: var(--ds-color-brand-purple); font-size: var(--ds-text-xl); line-height: 1; }
+    .ds-bullet--check .ds-bullet__icon::before { content: "✓"; color: var(--ds-color-success); font-weight: var(--ds-weight-bold); font-size: var(--ds-text-md); line-height: 1; }
+    .ds-bullet--number { counter-reset: bullet; }
+    .ds-bullet--number .ds-bullet__icon::before {
+      counter-increment: bullet; content: counter(bullet);
+      font-size: var(--ds-text-sm); font-weight: var(--ds-weight-bold); color: var(--ds-color-brand-primary);
+    }
+
+    /* ========================================================
+       10. Badge
+    ======================================================== */
+    .ds-badge {
+      display: inline-flex; align-items: center; gap: var(--ds-space-2xs);
+      padding: var(--ds-space-2xs) var(--ds-space-xs);
+      border-radius: var(--ds-radius-pill);
+      font-size: var(--ds-text-xs); font-weight: var(--ds-weight-medium);
+      line-height: 1; white-space: nowrap;
+    }
+    .ds-badge--primary { background-color: var(--ds-color-brand-primary); color: var(--ds-color-white); }
+    .ds-badge--purple  { background-color: var(--ds-color-brand-purple-lt); color: var(--ds-color-brand-purple); }
+    .ds-badge--success { background-color: rgba(14, 130, 76, 0.12); color: var(--ds-color-success); }
+    .ds-badge--error   { background-color: rgba(255, 48, 48, 0.12); color: var(--ds-color-error); }
+    .ds-badge--neutral { background-color: var(--ds-color-neutral-150); color: var(--ds-color-text-secondary); }
+
+    /* ========================================================
+       11. Card
+    ======================================================== */
+    .ds-card {
+      background-color: var(--ds-color-surface-white);
+      border-radius: var(--ds-radius-md);
+      border: var(--ds-border-default);
+      padding: var(--ds-space-lg);
+      box-shadow: var(--ds-shadow-card);
+      box-sizing: border-box;
+    }
+    .ds-card__badge {
+      display: inline-flex; align-items: center; width: fit-content;
+      padding: 4px 12px; border-radius: var(--ds-radius-pill);
+      font-size: var(--ds-text-xs); font-weight: var(--ds-weight-medium);
+      font-family: var(--ds-font-code); text-transform: uppercase;
+      letter-spacing: var(--ds-tracking-wide);
+      border: 1px solid currentColor; margin-bottom: var(--ds-space-md);
+    }
+    .ds-card__badge--brand { color: var(--ds-color-brand-purple); border-color: var(--ds-color-brand-purple); }
+    .ds-card__badge--teal  { color: #0e9f8e; border-color: #0e9f8e; }
+    .ds-card__badge--red   { color: var(--ds-color-error); border-color: var(--ds-color-error); }
+    .ds-card__badge--gray  { color: var(--ds-color-text-tertiary); border-color: var(--ds-color-border-default); }
+    .ds-card__title {
+      font-family: var(--ds-font-base); font-size: var(--ds-text-2xl); font-weight: var(--ds-weight-bold);
+      color: var(--ds-color-text-primary); line-height: var(--ds-leading-tight);
+      margin-bottom: var(--ds-space-sm); text-wrap: balance;
+    }
+    .ds-card__subtitle { font-size: var(--ds-text-sm); color: var(--ds-color-text-tertiary); margin-bottom: var(--ds-space-md); }
+    .ds-card__description {
+      font-size: var(--ds-text-sm); color: var(--ds-color-text-secondary);
+      line-height: var(--ds-leading-relaxed); flex: 1;
+    }
+    .ds-card__button { margin-top: auto; padding-top: var(--ds-space-lg); }
+
+    /* Card Grid */
+    .ds-card-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+    .ds-card-grid .ds-card { display: flex; flex-direction: column; }
+    @media (min-width: 768px) {
+      .ds-card-grid--2col { grid-template-columns: repeat(2, 1fr); }
+      .ds-card-grid--3col { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 1024px) {
+      .ds-card-grid--3col { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    /* Gradient Card */
+    .ds-card--gradient {
+      padding: 2px;
+      border-radius: var(--ds-radius-md);
+      box-shadow: rgba(113, 141, 176, 0.25) 0px 1px 20px 0px;
+    }
+    .ds-card--gradient-purple { background: var(--ds-gradient-card-purple); }
+    .ds-card--gradient-green  { background: var(--ds-gradient-card-green); }
+    .ds-card--gradient__inner {
+      background: var(--ds-color-surface-white);
+      border-radius: calc(var(--ds-radius-md) - 2px);
+      padding: var(--ds-space-xl);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    .ds-card--gradient-purple .ds-card--gradient__inner { background: var(--ds-gradient-inner-purple); }
+    .ds-card--gradient-green .ds-card--gradient__inner  { background: var(--ds-gradient-inner-green); }
+
+    /* ========================================================
+       12. KPI Band
+    ======================================================== */
+    .ds-kpi-band {
+      border-radius: var(--ds-radius-xl); padding: 48px 40px;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px;
+      justify-items: center;
+      background-size: cover; background-position: center;
+      position: relative; overflow: hidden;
+    }
+    .ds-kpi-band:not([class*="ds-bg--"]) {
+      background: linear-gradient(135deg, #1a6fe8, #0ea5a0);
+    }
+    .ds-kpi-band[class*="ds-bg--"]::before {
+      content: ''; position: absolute; inset: 0;
+      background: rgba(255,255,255,0.15); z-index: 0;
+    }
+    .ds-kpi-band > * { position: relative; z-index: 1; }
+    .ds-kpi-band__item { display: flex; flex-direction: column; gap: 12px; text-align: center; }
+    .ds-kpi-band__number {
+      font-family: var(--ds-font-base); font-size: var(--ds-text-6xl);
+      font-weight: var(--ds-weight-bold); line-height: 1;
+      color: var(--ds-color-white);
+    }
+    .ds-kpi-band__label { font-size: var(--ds-text-sm); color: rgba(255,255,255,0.85); line-height: var(--ds-leading-normal); }
+    .ds-kpi-band__sub { font-size: var(--ds-text-xs); color: rgba(255,255,255,0.65); font-family: var(--ds-font-code); margin-top: 2px; }
+    @media (max-width: 1023px) { .ds-kpi-band { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 767px)  { .ds-kpi-band { grid-template-columns: 1fr; padding: 32px 20px; } }
+
+    /* ========================================================
+       13. Banner
+    ======================================================== */
+    .ds-banner {
+      padding: var(--ds-space-md) var(--ds-space-lg);
+      border-radius: 0;
+      border: none;
+      border-top: 1px solid var(--ds-color-border-default);
+      border-bottom: 1px solid var(--ds-color-border-default);
+      background-color: var(--ds-banner-bg, var(--ds-color-surface-light));
+      font-size: var(--ds-text-sm);
+      line-height: var(--ds-leading-relaxed);
+      text-align: center;
+    }
+    .ds-banner a, .ds-banner--full a { display: block; margin-top: var(--ds-space-sm); }
+    .ds-banner--info  { --ds-banner-bg: rgba(21, 94, 160, 0.06); }
+    .ds-banner--brand { --ds-banner-bg: rgba(166, 23, 255, 0.06); }
+
+    .ds-banner--full {
+      width: 100%; text-align: center;
+      padding: var(--ds-space-3xl) var(--ds-space-2xl);
+      border-radius: var(--ds-radius-xl);
+      background-size: cover; background-position: center;
+      position: relative; overflow: hidden;
+      color: var(--ds-color-text-primary);
+      font-size: var(--ds-text-lg); font-weight: var(--ds-weight-medium);
+      line-height: var(--ds-leading-relaxed);
+      border: none;
+      isolation: isolate;
+    }
+    .ds-banner--full::before {
+      content: ''; position: absolute; inset: 0;
+      background: rgba(255,255,255,0.72); z-index: 0;
+    }
+    .ds-banner--full > * { position: relative; z-index: 1; }
+
+    /* ========================================================
+       14. Table
+    ======================================================== */
+    .ds-table-wrap {
+      overflow-x: auto;
+      border-radius: var(--ds-radius-lg);
+      border: 1px solid var(--ds-color-border-default);
+    }
+    .ds-table { width: 100%; border-collapse: collapse; font-size: var(--ds-text-sm); }
+    .ds-table thead th {
+      font-family: var(--ds-font-code); font-size: 11px; text-transform: uppercase;
+      letter-spacing: var(--ds-tracking-wide); color: var(--ds-color-text-primary);
+      font-weight: var(--ds-weight-semibold); padding: 12px 16px;
+      border-bottom: 2px solid var(--ds-color-border-default); text-align: left;
+      background: var(--ds-color-surface-light);
+    }
+    .ds-table tbody td {
+      padding: 14px 16px; border-bottom: 1px solid var(--ds-color-border-default);
+      color: var(--ds-color-text-primary); vertical-align: top;
+      line-height: var(--ds-leading-normal);
+    }
+    .ds-table tbody tr:last-child td { border-bottom: none; }
+    .ds-table tbody td:first-child { font-weight: var(--ds-weight-semibold); }
+    .ds-table tbody tr:hover td { background: var(--ds-color-surface-light); }
+    .ds-table__check    { color: var(--ds-color-success); font-weight: var(--ds-weight-bold); }
+    .ds-table__partial  { color: var(--ds-color-warn); }
+    .ds-table__cross    { color: var(--ds-color-error); }
+    .ds-table__cell-note { font-size: var(--ds-text-xs); color: var(--ds-color-text-tertiary); display: block; margin-top: 2px; }
+    .ds-table__highlight { background-color: rgba(114, 91, 234, 0.04); }
+
+    /* ========================================================
+       15. Accordion Card (.ds-ac-card)
+    ======================================================== */
+    .ds-ac-list { display: flex; flex-direction: column; gap: 2px; }
+    .ds-ac-card {
+      border: var(--ds-border-default); border-radius: var(--ds-radius-sm);
+      background-color: var(--ds-color-surface-white); overflow: hidden;
+      transition: background-color 0.2s;
+    }
+    .ds-ac-card:hover { background-color: var(--ds-color-neutral-025); }
+    .ds-ac-card__header {
+      display: grid; grid-template-columns: 1fr auto auto;
+      align-items: center; gap: var(--ds-space-md);
+      padding: var(--ds-space-lg); cursor: pointer; user-select: none;
+    }
+    .ds-ac-card__title-wrap { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+    .ds-ac-card__industry {
+      font-family: var(--ds-font-code); font-size: 10px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--ds-color-text-tertiary);
+      display: flex; align-items: center; gap: var(--ds-space-2xs);
+    }
+    .ds-ac-card__industry-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .ds-ac-card__title {
+      font-family: var(--ds-font-base); font-size: var(--ds-text-lg);
+      font-weight: var(--ds-weight-medium); line-height: var(--ds-leading-tight);
+      color: var(--ds-color-text-primary); word-break: keep-all; overflow-wrap: break-word;
+    }
+    .ds-ac-card__meta { display: flex; align-items: center; gap: var(--ds-space-xs); flex-wrap: wrap; flex-shrink: 0; }
+    .ds-ac-card__toggle {
+      width: 28px; height: 28px; border-radius: 6px;
+      border: 0.5px solid var(--ds-color-border-default);
+      background: var(--ds-color-surface-light);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; cursor: pointer; transition: border-color 0.15s, background 0.15s;
+    }
+    .ds-ac-card__toggle:hover { border-color: var(--ds-color-border-strong); background: var(--ds-color-surface-mid); }
+    .ds-ac-card__toggle-icon { width: 12px; height: 12px; position: relative; flex-shrink: 0; }
+    .ds-ac-card__toggle-icon::before,
+    .ds-ac-card__toggle-icon::after {
+      content: ''; position: absolute;
+      background: var(--ds-color-text-muted);
+      border-radius: 1px; transition: opacity 0.2s;
+    }
+    .ds-ac-card__toggle-icon::before { width: 10px; height: 1.5px; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+    .ds-ac-card__toggle-icon::after  { width: 1.5px; height: 10px; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 1; }
+    .ds-ac-card.ds-ac--open .ds-ac-card__toggle-icon::after { opacity: 0; }
+    .ds-ac-card.ds-ac--open .ds-ac-card__toggle-icon::before { background: var(--ds-color-text-secondary); }
+    .ds-ac-card__body {
+      display: none; padding: var(--ds-space-lg);
+      border-top: var(--ds-border-default); background: var(--ds-color-surface-light);
+    }
+    .ds-ac-card.ds-ac--open .ds-ac-card__body { display: block; }
+
+    .ds-ac-metrics { display: flex; gap: var(--ds-space-xs); flex-wrap: wrap; margin-bottom: var(--ds-space-lg); }
+    .ds-ac-metric {
+      display: flex; flex-direction: column; padding: var(--ds-space-sm) var(--ds-space-md);
+      border: var(--ds-border-default); border-radius: var(--ds-radius-sm);
+      background-color: var(--ds-color-surface-white); min-width: 100px; flex: 1;
+    }
+    .ds-ac-metric__val { font-family: var(--ds-font-base); font-size: var(--ds-text-xl); font-weight: var(--ds-weight-bold); line-height: 1; color: var(--ds-color-text-primary); }
+    .ds-ac-metric__val--success { color: var(--ds-color-success); }
+    .ds-ac-metric__label { font-family: var(--ds-font-code); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ds-color-text-tertiary); margin-top: var(--ds-space-2xs); }
+
+    @media (max-width: 767px) {
+      .ds-ac-card__header { grid-template-columns: 1fr auto; align-items: start; }
+      .ds-ac-card__meta { display: none; }
+    }
+    @media (min-width: 1024px) {
+      .ds-ac-card__header { grid-template-columns: 160px 1fr auto auto; }
+    }
+
+    /* ========================================================
+       16. Step Tabs (.ds-step-tabs)
+    ======================================================== */
+    .ds-step-tabs__nav {
+      display: flex; justify-content: center; gap: var(--ds-space-sm);
+      flex-wrap: wrap; margin-bottom: var(--ds-space-3xl);
+    }
+    .ds-step-tabs__tab {
+      display: inline-flex; align-items: center; gap: var(--ds-space-xs);
+      padding: var(--ds-space-xs) var(--ds-space-lg);
+      border-radius: var(--ds-radius-pill); border: var(--ds-border-default);
+      background-color: var(--ds-color-surface-white);
+      font-family: var(--ds-font-base); font-size: var(--ds-text-sm); font-weight: var(--ds-weight-medium);
+      color: var(--ds-color-text-secondary); cursor: pointer; transition: all 0.2s; white-space: nowrap;
+    }
+    .ds-step-tabs__tab-number {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 22px; height: 22px; border-radius: 50%;
+      background-color: var(--ds-color-neutral-100); border: 1px solid var(--ds-color-border-default);
+      font-size: var(--ds-text-xs); font-weight: var(--ds-weight-bold);
+      color: var(--ds-color-text-secondary); flex-shrink: 0; transition: all 0.2s;
+    }
+    .ds-step-tabs__tab:hover {
+      background-color: var(--ds-color-neutral-900); border-color: var(--ds-color-neutral-900);
+      color: var(--ds-color-white);
+    }
+    .ds-step-tabs__tab:hover .ds-step-tabs__tab-number {
+      background-color: var(--ds-color-white); border-color: var(--ds-color-white);
+      color: var(--ds-color-neutral-900);
+    }
+    .ds-step-tabs__tab--active {
+      background-color: var(--ds-color-neutral-900); border-color: var(--ds-color-neutral-900);
+      color: var(--ds-color-white); font-weight: var(--ds-weight-semibold);
+    }
+    .ds-step-tabs__tab--active .ds-step-tabs__tab-number {
+      background-color: var(--ds-color-white); border-color: var(--ds-color-white);
+      color: var(--ds-color-neutral-900);
+    }
+    .ds-step-tabs__panel { display: none; }
+    .ds-step-tabs__panel--active {
+      display: grid; grid-template-columns: 1fr; gap: var(--ds-space-2xl); align-items: center;
+    }
+    @media (min-width: 1024px) { .ds-step-tabs__panel--active { grid-template-columns: 5fr 7fr; gap: var(--ds-space-3xl); } }
+    @media (min-width: 1440px) { .ds-step-tabs__panel--active { gap: var(--ds-space-4xl); } }
+    .ds-step-tabs__content { display: flex; flex-direction: column; gap: var(--ds-space-lg); }
+    .ds-step-tabs__title {
+      font-family: var(--ds-font-base); font-size: var(--ds-text-3xl); font-weight: var(--ds-weight-bold);
+      color: var(--ds-color-text-primary); line-height: var(--ds-leading-tight); text-wrap: balance;
+    }
+    .ds-step-tabs__description {
+      font-size: var(--ds-text-md); color: var(--ds-color-text-secondary);
+      line-height: var(--ds-leading-relaxed);
+    }
+    .ds-step-tabs__screenshot {
+      border-radius: var(--ds-radius-lg); overflow: hidden;
+      border: var(--ds-border-default); box-shadow: var(--ds-shadow-card);
+      background-color: var(--ds-color-surface-light);
+    }
+    .ds-step-tabs__screenshot img { width: 100%; display: block; }
+    @media (min-width: 768px) { .ds-step-tabs__title { font-size: var(--ds-text-4xl); } }
+    @media (max-width: 767px) {
+      .ds-step-tabs__nav {
+        justify-content: flex-start; flex-wrap: nowrap; overflow-x: auto;
+        -webkit-overflow-scrolling: touch; scrollbar-width: none; padding-bottom: var(--ds-space-xs);
+      }
+      .ds-step-tabs__nav::-webkit-scrollbar { display: none; }
+    }
+
+    /* ========================================================
+       17. Section 1 Hero-specific
+    ======================================================== */
+    .ds-hero-text-subtitle {
+      font-size: var(--ds-text-md);
+      color: var(--ds-color-text-tertiary);
+      margin-bottom: var(--ds-space-xl);
+    }
+
+    /* ========================================================
+       18. Section 3 Body text container
+    ======================================================== */
+    .ds-body-wrap {
+      max-width: 100%;
+    }
+    @media (min-width: 1024px) { .ds-body-wrap { max-width: 860px; margin: 0 auto; } }
+
+    .ds-body-wrap p + p { margin-top: var(--ds-space-lg); }
+    .ds-body-wrap .ds-banner { margin-top: var(--ds-space-xl); }
+
+    /* ========================================================
+       19. Section 4 Table — DTS column highlight
+    ======================================================== */
+    .ds-table .ds-table__highlight { background-color: rgba(114, 91, 234, 0.04); }
+    .ds-table th.ds-table__highlight { background-color: rgba(114, 91, 234, 0.08); }
+
+    /* ========================================================
+       20. Section 6 Banner before step tabs
+    ======================================================== */
+    .ds-step-banner-wrap { margin-bottom: var(--ds-space-2xl); }
+
+    /* ========================================================
+       21. Section 7 Gradient card grid
+    ======================================================== */
+    .ds-card-grid--gradient { display: grid; grid-template-columns: 1fr; gap: 24px; }
+    @media (min-width: 768px) { .ds-card-grid--gradient { grid-template-columns: repeat(2, 1fr); } }
+
+    .ds-card--gradient .ds-card__badge { margin-bottom: var(--ds-space-md); }
+    .ds-card--gradient .ds-card__title { font-size: var(--ds-text-2xl); font-weight: var(--ds-weight-bold); margin-bottom: var(--ds-space-sm); text-wrap: balance; }
+    .ds-card--gradient .ds-card__description { font-size: var(--ds-text-sm); color: var(--ds-color-text-secondary); line-height: var(--ds-leading-relaxed); margin-bottom: var(--ds-space-lg); }
+    .ds-card--gradient .ds-bullet { margin-bottom: var(--ds-space-lg); }
+    .ds-card--gradient .ds-card__button { margin-top: auto; }
+
+    /* Overlap note banner in section 7 */
+    .ds-section-note { margin-top: var(--ds-space-xl); }
+
+    /* ========================================================
+       22. Responsive grid overrides
+    ======================================================== */
+    .ds-grid--2 { display: grid; grid-template-columns: 1fr; gap: var(--ds-space-lg); }
+    @media (min-width: 768px) { .ds-grid--2 { grid-template-columns: repeat(2, 1fr); } }
+
+    /* ========================================================
+       23. Screenshot placeholder
+    ======================================================== */
+    .ds-screenshot-placeholder {
+      background: var(--ds-color-neutral-050);
+      border-radius: var(--ds-radius-sm);
+      height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ds-color-text-tertiary);
+      font-size: var(--ds-text-sm);
+    }
+
+    /* ========================================================
+       24. Card caption / section number
+    ======================================================== */
+    .ds-card-number {
+      color: var(--ds-color-text-tertiary);
+      margin-bottom: var(--ds-space-xs);
+    }
+    .ds-card-checklist {
+      margin-top: var(--ds-space-md);
+    }
+
+    /* ========================================================
+       25. KPI sub label
+    ======================================================== */
+    .ds-kpi-band-wrap { margin-top: var(--ds-space-xl); }
+
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="ds-nav" aria-label="Main navigation">
+    <div class="ds-nav__inner">
+      <a href="/" class="ds-nav__logo">Cubig</a>
+      <ul class="ds-nav__links">
+        <li><a href="/syntitan" class="ds-nav__link">SynTitan</a></li>
+        <li><a href="/dts" class="ds-nav__link">DTS</a></li>
+        <li><a href="/llm-capsule" class="ds-nav__link">LLM Capsule</a></li>
+        <li><a href="/proof" class="ds-nav__link">Case Records</a></li>
+        <li><a href="/contact" class="ds-nav__link">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- =====================================================
+         SECTION 1: Hero (DTS)
+    ====================================================== -->
+    <section class="ds-section ds-section--hero" id="section-1">
+      <div class="ds-container">
+        <div class="ds-hero ds-hero--text-only">
+          <h1 class="ds-hero__title"><span class="ds-text--product">DTS</span></h1>
+          <p class="ds-hero__description">Your AI is only as good as the data it trains on -- and most enterprise data is not AI-ready. DTS solves unusable data for AI: whether it's restricted by privacy rules, imbalanced, or missing the coverage your model needs. The result is an AI-ready dataset you can actually use.</p>
+
+          <ul class="ds-bullet ds-bullet--dot ds-hero-text-subtitle" aria-label="DTS capabilities">
+            <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Restricted data → privacy-safe replacement</li>
+            <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Imbalanced datasets → augmentation &amp; balance fix</li>
+            <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Coverage gaps → AI-ready dataset generation</li>
+          </ul>
+
+          <div class="ds-hero__actions">
+            <a href="/contact" class="ds-btn ds-btn--primary ds-btn--md">Run technical demo</a>
+            <a href="https://aws.amazon.com/marketplace" class="ds-btn ds-btn--secondary ds-btn--md" target="_blank" rel="noopener noreferrer">AWS Marketplace</a>
+            <a href="/syntitan" class="ds-btn ds-btn--secondary ds-btn--md">See SynTitan Platform</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         SECTION 2: KPI Band + AI-Ready Definition
+    ====================================================== -->
+    <section class="ds-section" id="section-2">
+      <div class="ds-container">
+        <!-- KPI Band — background image applied to component, not section -->
+        <div class="ds-kpi-band ds-bg--lavender">
+          <div class="ds-kpi-band__item">
+            <span class="ds-kpi-band__number">+30pp</span>
+            <p class="ds-kpi-band__label">F1-Score Lift</p>
+            <span class="ds-kpi-band__sub">58.55% → 88.55%</span>
+          </div>
+          <div class="ds-kpi-band__item">
+            <span class="ds-kpi-band__number">-90%</span>
+            <p class="ds-kpi-band__label">Time to Deploy</p>
+            <span class="ds-kpi-band__sub">4 weeks → 1 day</span>
+          </div>
+          <div class="ds-kpi-band__item">
+            <span class="ds-kpi-band__number">97.6%</span>
+            <p class="ds-kpi-band__label">AI Detection Rate</p>
+            <span class="ds-kpi-band__sub">IBK Industrial Bank</span>
+          </div>
+          <div class="ds-kpi-band__item">
+            <span class="ds-kpi-band__number">277K+</span>
+            <p class="ds-kpi-band__label">Synthetic Records</p>
+            <span class="ds-kpi-band__sub">Kyobo Life Insurance</span>
+          </div>
+        </div>
+
+        <!-- AI-Ready Definition Banner -->
+        <div class="ds-kpi-band-wrap">
+          <div class="ds-banner--full ds-bg--green-wave">
+            <p>True AI-ready data means it is <em>usable</em>, <em>privacy-safe</em>, and <em>stable for production execution</em>.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         SECTION 3: Privacy-Safe Synthetic Data (DTS Positioning)
+    ====================================================== -->
+    <section class="ds-section" id="section-3">
+      <div class="ds-container">
+        <div class="ds-section-header ds-section-header--underline">
+          <h2 class="ds-section-header__title">Privacy-Safe <span class="ds-text--brand">Synthetic Data</span></h2>
+          <p class="ds-section-header__description">DTS includes privacy-safe synthetic data generation to expand coverage and repair imbalance when real data is restricted or incomplete.</p>
+        </div>
+
+        <div class="ds-body-wrap">
+          <p class="ds-body-m">Synthetic data generation is one capability inside DTS -- not the company identity. DTS uses differential privacy as its mathematical foundation, providing formal guarantees that synthetic outputs cannot be reverse-engineered to individual records. This makes DTS suitable for regulated industries that need AI-ready datasets without exposing raw training data.</p>
+          <p class="ds-body-m">DTS is a capability within Cubig's AI-Ready Data Infrastructure -- the infrastructure layer that makes enterprise data usable, privacy-safe, and stable for production AI execution. DTS specifically addresses the Restricted Data and Unusable Data blockers.</p>
+
+          <div class="ds-banner ds-banner--info" role="note">
+            Synthetic data is a DTS capability. It is not Cubig's top-level identity.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         SECTION 4: DTS vs Other Approaches (Comparison)
+    ====================================================== -->
+    <section class="ds-section ds-section--light" id="section-4">
+      <div class="ds-container">
+        <div class="ds-section-header ds-section-header--underline">
+          <h2 class="ds-section-header__title"><span class="ds-text--product">DTS</span> vs. Other Approaches to <span class="ds-text--brand">Restricted Data</span></h2>
+          <p class="ds-section-header__description">Databricks stores your data. Masking removes it. DTS makes it AI-ready -- without removing or exposing it.</p>
+        </div>
+
+        <div class="ds-table-wrap" role="region" aria-label="DTS comparison table">
+          <table class="ds-table">
+            <thead>
+              <tr>
+                <th>Capability</th>
+                <th class="ds-table__highlight"><span class="ds-text--product">DTS</span></th>
+                <th>Data Masking / Anonymization</th>
+                <th>Data Sampling</th>
+                <th>Manual Labeling</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Privacy guarantee</td>
+                <td class="ds-table__highlight"><span class="ds-table__check">✓</span> Mathematical DP bound</td>
+                <td><span class="ds-table__partial">△</span> Re-identification risk remains</td>
+                <td><span class="ds-table__cross">✕</span> No privacy guarantee</td>
+                <td><span class="ds-table__cross">✕</span></td>
+              </tr>
+              <tr>
+                <td>Coverage expansion</td>
+                <td class="ds-table__highlight"><span class="ds-table__check">✓</span> Generate at any scale</td>
+                <td><span class="ds-table__cross">✕</span> Can't create new data</td>
+                <td><span class="ds-table__partial">△</span> Bounded by real data volume</td>
+                <td><span class="ds-table__partial">△</span> Expensive &amp; slow</td>
+              </tr>
+              <tr>
+                <td>Rare class augmentation</td>
+                <td class="ds-table__highlight"><span class="ds-table__check">✓</span> Targeted generation</td>
+                <td><span class="ds-table__cross">✕</span></td>
+                <td><span class="ds-table__cross">✕</span> Can't create rare events</td>
+                <td><span class="ds-table__partial">△</span> Very high cost</td>
+              </tr>
+              <tr>
+                <td>Distribution fidelity</td>
+                <td class="ds-table__highlight"><span class="ds-table__check">✓</span> Validated against real stats</td>
+                <td><span class="ds-table__partial">△</span> Distorted by masking</td>
+                <td><span class="ds-table__partial">△</span> Sampling bias risk</td>
+                <td><span class="ds-table__partial">△</span> Annotator variance</td>
+              </tr>
+              <tr>
+                <td>Cross-border / external use</td>
+                <td class="ds-table__highlight"><span class="ds-table__check">✓</span> No real data transferred</td>
+                <td><span class="ds-table__cross">✕</span> Residual risk</td>
+                <td><span class="ds-table__cross">✕</span></td>
+                <td><span class="ds-table__cross">✕</span></td>
+              </tr>
+              <tr>
+                <td>SynTitan integration</td>
+                <td class="ds-table__highlight"><span class="ds-table__check">✓</span> Native versioning &amp; binding</td>
+                <td><span class="ds-table__cross">✕</span></td>
+                <td><span class="ds-table__cross">✕</span></td>
+                <td><span class="ds-table__cross">✕</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         SECTION 5: What DTS Solves (Three Use Cases)
+    ====================================================== -->
+    <section class="ds-section" id="section-5">
+      <div class="ds-container">
+        <div class="ds-section-header ds-section-header--underline">
+          <h2 class="ds-section-header__title">Three Data Problems. <span class="ds-text--brand">One Engine.</span></h2>
+          <p class="ds-section-header__description">Data that can't be used, can't be shared, or doesn't exist in sufficient volume -- DTS resolves all three.</p>
+        </div>
+
+        <div class="ds-card-grid ds-card-grid--3col">
+
+          <!-- Card 1: Restricted Data -->
+          <article class="ds-card">
+            <span class="ds-card__badge ds-card__badge--red">RESTRICTED DATA</span>
+            <p class="ds-caption ds-card-number">01 / 03</p>
+            <h3 class="ds-card__title">Privacy-Safe Replacement</h3>
+            <p class="ds-card__description">Sensitive or regulated data blocked by compliance rules. DTS generates a statistically equivalent synthetic dataset -- with no real personal information.</p>
+            <ul class="ds-bullet ds-bullet--check ds-card-checklist">
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Replace GDPR, PIPA, HIPAA, or CCPA-restricted data with DP-safe synthetic equivalents</li>
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Differential privacy guarantee on all synthetic output</li>
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Safe for cross-team, cross-border, and external use</li>
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Full distribution fidelity preserved</li>
+            </ul>
+          </article>
+
+          <!-- Card 2: Unusable Data -->
+          <article class="ds-card">
+            <span class="ds-card__badge ds-card__badge--teal">UNUSABLE DATA</span>
+            <p class="ds-caption ds-card-number">02 / 03</p>
+            <h3 class="ds-card__title">Coverage &amp; Balance Expansion</h3>
+            <p class="ds-card__description">Data exists but is unfit for AI -- missing rare classes, biased distributions, or insufficient volume for reliable training.</p>
+            <ul class="ds-bullet ds-bullet--check ds-card-checklist">
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Augment underrepresented classes at scale</li>
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Fix class imbalance without overfitting</li>
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Generate edge case and rare event samples</li>
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Expand small datasets to production-grade volumes</li>
+            </ul>
+          </article>
+
+          <!-- Card 3: Non-Accessible Data -->
+          <article class="ds-card">
+            <span class="ds-card__badge ds-card__badge--red">NON-ACCESSIBLE DATA</span>
+            <p class="ds-caption ds-card-number">03 / 03</p>
+            <h3 class="ds-card__title">Safe Dataset Generation</h3>
+            <p class="ds-card__description">Data exists in a silo -- restricted by access controls, third-party agreements, or geographic regulations -- and can't reach training pipelines.</p>
+            <ul class="ds-bullet ds-bullet--check ds-card-checklist">
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Generate safe replacement datasets from inaccessible sources</li>
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Unblock stalled validation and testing workflows</li>
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Remove data access bottlenecks in regulated environments</li>
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Maintain statistical characteristics without data transfer</li>
+            </ul>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         SECTION 6: Differential Privacy (How DTS Works)
+    ====================================================== -->
+    <section class="ds-section" id="section-6">
+      <div class="ds-container">
+        <div class="ds-section-header ds-section-header--underline">
+          <h2 class="ds-section-header__title">Mathematically Guaranteed <span class="ds-text--brand">Privacy Protection</span></h2>
+          <p class="ds-section-header__description">Differential privacy (DP) is a mathematical framework that guarantees any single individual's data cannot be identified from the synthetic output -- regardless of what an attacker already knows.</p>
+        </div>
+
+        <!-- DP Guarantee Banner -->
+        <div class="ds-step-banner-wrap">
+          <div class="ds-banner ds-banner--brand" role="note">
+            The probability of any inference about an individual from the synthetic dataset is bounded by a mathematically defined epsilon -- regardless of external knowledge.
+          </div>
+        </div>
+
+        <!-- Step Tabs: 4 steps -->
+        <div class="ds-step-tabs" data-step-tabs>
+          <div class="ds-step-tabs__nav" role="tablist" aria-label="DP process steps">
+            <button class="ds-step-tabs__tab ds-step-tabs__tab--active" role="tab" aria-selected="true" data-tab="0">
+              <span class="ds-step-tabs__tab-number">1</span> Statistical Profiling
+            </button>
+            <button class="ds-step-tabs__tab" role="tab" aria-selected="false" data-tab="1">
+              <span class="ds-step-tabs__tab-number">2</span> DP Noise Injection
+            </button>
+            <button class="ds-step-tabs__tab" role="tab" aria-selected="false" data-tab="2">
+              <span class="ds-step-tabs__tab-number">3</span> Synthetic Generation
+            </button>
+            <button class="ds-step-tabs__tab" role="tab" aria-selected="false" data-tab="3">
+              <span class="ds-step-tabs__tab-number">4</span> Fidelity Validation
+            </button>
+          </div>
+
+          <!-- Panel 1: Statistical Profiling -->
+          <div class="ds-step-tabs__panel ds-step-tabs__panel--active" role="tabpanel" data-panel="0">
+            <div class="ds-step-tabs__content">
+              <h3 class="ds-step-tabs__title">Statistical Profiling</h3>
+              <p class="ds-step-tabs__description">DTS analyzes the real dataset's statistical properties -- distributions, correlations, marginals -- without storing raw records.</p>
+            </div>
+            <div class="ds-step-tabs__screenshot">
+              <div class="ds-screenshot-placeholder" aria-label="Screenshot placeholder">[Screenshot placeholder]</div>
+            </div>
+          </div>
+
+          <!-- Panel 2: DP Noise Injection -->
+          <div class="ds-step-tabs__panel" role="tabpanel" data-panel="1">
+            <div class="ds-step-tabs__content">
+              <h3 class="ds-step-tabs__title">DP Noise Injection</h3>
+              <p class="ds-step-tabs__description">Calibrated noise is injected into the statistical model according to DP bounds. Individual data points become mathematically unidentifiable.</p>
+            </div>
+            <div class="ds-step-tabs__screenshot">
+              <div class="ds-screenshot-placeholder" aria-label="Screenshot placeholder">[Screenshot placeholder]</div>
+            </div>
+          </div>
+
+          <!-- Panel 3: Synthetic Generation -->
+          <div class="ds-step-tabs__panel" role="tabpanel" data-panel="2">
+            <div class="ds-step-tabs__content">
+              <h3 class="ds-step-tabs__title">Synthetic Generation</h3>
+              <p class="ds-step-tabs__description">New records are sampled from the DP-protected model. Output is statistically representative but contains no real personal information.</p>
+            </div>
+            <div class="ds-step-tabs__screenshot">
+              <div class="ds-screenshot-placeholder" aria-label="Screenshot placeholder">[Screenshot placeholder]</div>
+            </div>
+          </div>
+
+          <!-- Panel 4: Fidelity Validation -->
+          <div class="ds-step-tabs__panel" role="tabpanel" data-panel="3">
+            <div class="ds-step-tabs__content">
+              <h3 class="ds-step-tabs__title">Fidelity Validation</h3>
+              <p class="ds-step-tabs__description">Generated data is validated against the original distribution. Quality and utility metrics confirm suitability for training and validation use.</p>
+            </div>
+            <div class="ds-step-tabs__screenshot">
+              <div class="ds-screenshot-placeholder" aria-label="Screenshot placeholder">[Screenshot placeholder]</div>
+            </div>
+          </div>
+
+        </div><!-- /ds-step-tabs -->
+      </div>
+    </section>
+
+    <!-- =====================================================
+         SECTION 7: Deployment (Standalone or Integrated)
+    ====================================================== -->
+    <section class="ds-section ds-section--light" id="section-7">
+      <div class="ds-container">
+        <div class="ds-section-header ds-section-header--underline">
+          <h2 class="ds-section-header__title">Standalone or Integrated with <span class="ds-text--product">SynTitan</span></h2>
+        </div>
+
+        <div class="ds-card-grid--gradient">
+
+          <!-- Card A: DTS Standalone -->
+          <div class="ds-card--gradient ds-card--gradient-green">
+            <div class="ds-card--gradient__inner">
+              <span class="ds-card__badge ds-card__badge--brand">MODE A - INDEPENDENT</span>
+              <h3 class="ds-card__title">DTS Standalone</h3>
+              <p class="ds-card__description">Use <span class="ds-text--product">DTS</span> without <span class="ds-text--product">SynTitan</span> -- directly against your data sources. Available on AWS Marketplace for enterprise procurement.</p>
+              <ul class="ds-bullet ds-bullet--check">
+                <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Fix class imbalance -- oversample minority classes with distribution fidelity</li>
+                <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Augment sparse datasets to production-grade volume</li>
+                <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Generate edge cases and rare event samples</li>
+                <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Replace missing values with statistically valid equivalents</li>
+                <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Expand narrow training sets without data collection overhead</li>
+              </ul>
+              <div class="ds-card__button">
+                <a href="https://aws.amazon.com/marketplace" class="ds-btn ds-btn--secondary ds-btn--md" target="_blank" rel="noopener noreferrer">AWS Marketplace</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card B: DTS + SynTitan -->
+          <div class="ds-card--gradient ds-card--gradient-purple">
+            <div class="ds-card--gradient__inner">
+              <span class="ds-card__badge ds-card__badge--brand">MODE B - INTEGRATED</span>
+              <h3 class="ds-card__title"><span class="ds-text--product">DTS</span> + <span class="ds-text--product">SynTitan</span></h3>
+              <p class="ds-card__description">When privacy or compliance is the blocker -- regulated data that can't reach models -- <span class="ds-text--product">DTS</span> runs inside <span class="ds-text--product">SynTitan</span> to generate privacy-safe replacements. The synthetic dataset is automatically versioned, bound to a Release State, and tracked in the Change Log.</p>
+              <ul class="ds-bullet ds-bullet--check">
+                <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Replace GDPR, PIPA, HIPAA-restricted data -- no original data leaves the perimeter</li>
+                <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Synthetic datasets versioned and bound to execution states</li>
+                <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Change log tracks every data generation event</li>
+              </ul>
+              <div class="ds-card__button">
+                <a href="/syntitan" class="ds-btn ds-btn--secondary ds-btn--md">See <span class="ds-text--product">SynTitan</span> Platform</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Overlap Note Banner -->
+        <div class="ds-section-note">
+          <div class="ds-banner ds-banner--info" role="note">
+            <span class="ds-text--product">SynTitan</span> performs data quality refinement as part of execution stability. <span class="ds-text--product">SynTitan</span> can use a subset of <span class="ds-text--product">DTS</span> capabilities when privacy-safe synthetic data is needed, while <span class="ds-text--product">DTS</span> is a full standalone enterprise synthetic data engine.
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =====================================================
+         PART 2 CONTINUES HERE
+    ====================================================== -->
+    <!-- PART 2 CONTINUES HERE -->
+
+  </main>
+
+  <script>
+    // Step Tabs
+    document.querySelectorAll('[data-step-tabs]').forEach(function(root) {
+      root.querySelectorAll('.ds-step-tabs__tab').forEach(function(tab) {
+        tab.addEventListener('click', function() {
+          var idx = this.getAttribute('data-tab');
+          root.querySelectorAll('.ds-step-tabs__tab').forEach(function(t) {
+            t.classList.remove('ds-step-tabs__tab--active');
+            t.setAttribute('aria-selected', 'false');
+          });
+          root.querySelectorAll('.ds-step-tabs__panel').forEach(function(p) {
+            p.classList.remove('ds-step-tabs__panel--active');
+          });
+          this.classList.add('ds-step-tabs__tab--active');
+          this.setAttribute('aria-selected', 'true');
+          root.querySelector('[data-panel="' + idx + '"]').classList.add('ds-step-tabs__panel--active');
+        });
+      });
+    });
+
+    // Accordion
+    function toggleAcCard(header) {
+      var card = header.closest('.ds-ac-card');
+      card.classList.toggle('ds-ac--open');
+    }
+  </script>
+</body>
+</html>
