@@ -2499,9 +2499,38 @@ code, .ds-code-inline {
 
   <div id="output-toast" style="display:none;padding:10px 16px;background:rgba(14,130,76,0.06);border:1px solid rgba(14,130,76,0.15);border-radius:8px;font-size:13px;color:#0e824c;margin-bottom:16px;"></div>
 
-  <div id="output-file-list">
-    <div style="text-align:center;padding:48px 0;color:var(--ds-color-text-tertiary);font-size:14px;">파일 목록을 불러오는 중...</div>
-  </div>
+  <div id="output-file-list"></div>
+  <script>
+  (function(){
+    var thS='padding:10px 12px;font-size:11px;font-weight:600;color:#9c9c9c;letter-spacing:0.08em;text-transform:uppercase;white-space:nowrap;';
+    var D=[
+      {i:'A-cubig-llm-v3.html',d:'2026-03-18',h:['A-cubig-llm-v3-spec.md','A-cubig-llm-v3-b-type.html','A-cubig-llm-v3-qa-report.md'],t:['Section01_Hero.tsx','Section02_KpiBand.tsx','Section03_WhyNow.tsx','Section04_PromptFlow.tsx','Section05_Availability.tsx','Section06_Capabilities.tsx','Section07_DetectionCoverage.tsx','Section08_Integration.tsx','Section09_ComparisonTable.tsx','Section10_CaseStudies.tsx','Section11_Partners.tsx','Section12_Blockers.tsx','Section13_KeyConcepts.tsx','Section14_FAQ.tsx','Section15_OperationalBanner.tsx','Section16_Alternatives.tsx','Section17_CTA.tsx']},
+      {i:'A-cubig-proof-v3.html',d:'2026-03-18',h:['A-cubig-proof-v3-spec.md','A-cubig-proof-v3-b-type.html','A-cubig-proof-v3-qa-report.md'],t:[]},
+      {i:'cubig-learn-prompt-data-leakage.html',d:'2026-03-20',h:['cubig-learn-prompt-data-leakage-spec.md','A-cubig-learn-prompt-data-leakage-b-type.html','cubig-learn-prompt-data-leakage-qa-report.md'],t:[]},
+      {i:'cubig-dts-v3.html',d:'2026-03-22',h:['cubig-dts-v3-spec.md','cubig-dts-v3-b-type.html','cubig-dts-v3-qa-report.md'],t:['Section01_Hero.tsx','Section02_KpiBand.tsx','Section03_SyntheticData.tsx','Section04_ComparisonTable.tsx','Section05_ThreeProblems.tsx','Section06_DifferentialPrivacy.tsx','Section07_Deployment.tsx','Section08_CaseRecords.tsx','Section09_FiveSignals.tsx','Section10_Certs.tsx','Section11_Banner.tsx','Section12_FAQ.tsx','Section13_CTA.tsx']},
+      {i:'(standalone)',d:'',h:['figure_cubig_architecture.html'],t:['ArchitectureDiagram.tsx','Figure_Architecture.tsx']}
+    ];
+    var o='<table style="width:100%;border-collapse:collapse;font-size:13px;"><thead><tr style="border-bottom:2px solid #e6e7e9;text-align:left;">';
+    o+='<th style="'+thS+'">Input File</th><th style="'+thS+'">Updated</th>';
+    o+='<th style="'+thS+'"><span style="font-size:10px;font-weight:600;color:#3061f2;background:rgba(48,97,242,0.08);padding:2px 8px;border-radius:4px;">HTML / Docs</span></th>';
+    o+='<th style="'+thS+'"><span style="font-size:10px;font-weight:600;color:#725bea;background:rgba(114,91,234,0.08);padding:2px 8px;border-radius:4px;">TSX</span></th>';
+    o+='</tr></thead><tbody>';
+    D.forEach(function(g){
+      o+='<tr style="border-bottom:1px solid #f7f7f7;">';
+      o+='<td style="padding:10px 12px;font-weight:500;vertical-align:top;white-space:nowrap;">'+g.i+'</td>';
+      o+='<td style="padding:10px 12px;font-size:12px;color:#9c9c9c;vertical-align:top;white-space:nowrap;">'+g.d+'</td>';
+      o+='<td style="padding:10px 12px;vertical-align:top;line-height:1.8;">';
+      g.h.forEach(function(f){o+='<div style="font-size:12px;color:#0f0f0f;">'+f+'</div>';});
+      if(!g.h.length)o+='<span style="color:#9c9c9c;">—</span>';
+      o+='</td><td style="padding:10px 12px;vertical-align:top;line-height:1.8;">';
+      g.t.forEach(function(f){o+='<div style="font-size:12px;color:#0f0f0f;">'+f+'</div>';});
+      if(!g.t.length)o+='<span style="color:#9c9c9c;">—</span>';
+      o+='</td></tr>';
+    });
+    o+='</tbody></table><p style="margin-top:16px;font-size:12px;color:#9c9c9c;text-align:center;">로컬 서버 실행 시 실시간 업데이트됩니다.</p>';
+    document.getElementById('output-file-list').innerHTML=o;
+  })();
+  </script>
 
 </div><!-- /page-output -->
 
