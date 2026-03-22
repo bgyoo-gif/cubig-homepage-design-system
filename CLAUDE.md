@@ -189,6 +189,7 @@ reference/design-system-viewer.html도 같이 업데이트한다.
 
 ### ③ deploy (항상 실행)
 ```bash
+python3 server/manifest.py   # Output manifest 자동 생성
 git add -A
 git commit -m "Auto-deploy: [작업 요약]"
 git push origin gh-pages

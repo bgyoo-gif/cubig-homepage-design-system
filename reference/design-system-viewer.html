@@ -2499,46 +2499,50 @@ code, .ds-code-inline {
 
   <div id="output-toast" style="display:none;padding:10px 16px;background:rgba(14,130,76,0.06);border:1px solid rgba(14,130,76,0.15);border-radius:8px;font-size:13px;color:#0e824c;margin-bottom:16px;"></div>
 
-  <div id="output-file-list"></div>
+  <div id="output-file-list"><div style="text-align:center;padding:48px 0;color:#9c9c9c;font-size:14px;">Loading...</div></div>
   <script>
   (function(){
     var thS='padding:10px 12px;font-size:11px;font-weight:600;color:#9c9c9c;letter-spacing:0.08em;text-transform:uppercase;white-space:nowrap;';
-    var B='https://bgyoo-gif.github.io/cubig-homepage-design-system/';
-    var D=[
-      {i:'A-cubig-llm-v3.html',ip:'input/A-cubig-llm-v3.html',d:'2026-03-18',
-       h:[{n:'A-cubig-llm-v3-spec.md',p:'output/docs/A-cubig-llm-v3-spec.md'},{n:'A-cubig-llm-v3-b-type.html',p:'output/html/A-cubig-llm-v3-b-type.html'},{n:'A-cubig-llm-v3-qa-report.md',p:'output/docs/A-cubig-llm-v3-qa-report.md'}],
-       t:[{n:'Section01_Hero.tsx',p:'output/framer/llm-capsule/tsx/Section01_Hero.tsx'},{n:'Section02_KpiBand.tsx',p:'output/framer/llm-capsule/tsx/Section02_KpiBand.tsx'},{n:'Section03_WhyNow.tsx',p:'output/framer/llm-capsule/tsx/Section03_WhyNow.tsx'},{n:'Section04_PromptFlow.tsx',p:'output/framer/llm-capsule/tsx/Section04_PromptFlow.tsx'},{n:'Section05_Availability.tsx',p:'output/framer/llm-capsule/tsx/Section05_Availability.tsx'},{n:'Section06_Capabilities.tsx',p:'output/framer/llm-capsule/tsx/Section06_Capabilities.tsx'},{n:'Section07_DetectionCoverage.tsx',p:'output/framer/llm-capsule/tsx/Section07_DetectionCoverage.tsx'},{n:'Section08_Integration.tsx',p:'output/framer/llm-capsule/tsx/Section08_Integration.tsx'},{n:'Section09_ComparisonTable.tsx',p:'output/framer/llm-capsule/tsx/Section09_ComparisonTable.tsx'},{n:'Section10_CaseStudies.tsx',p:'output/framer/llm-capsule/tsx/Section10_CaseStudies.tsx'},{n:'Section11_Partners.tsx',p:'output/framer/llm-capsule/tsx/Section11_Partners.tsx'},{n:'Section12_Blockers.tsx',p:'output/framer/llm-capsule/tsx/Section12_Blockers.tsx'},{n:'Section13_KeyConcepts.tsx',p:'output/framer/llm-capsule/tsx/Section13_KeyConcepts.tsx'},{n:'Section14_FAQ.tsx',p:'output/framer/llm-capsule/tsx/Section14_FAQ.tsx'},{n:'Section15_OperationalBanner.tsx',p:'output/framer/llm-capsule/tsx/Section15_OperationalBanner.tsx'},{n:'Section16_Alternatives.tsx',p:'output/framer/llm-capsule/tsx/Section16_Alternatives.tsx'},{n:'Section17_CTA.tsx',p:'output/framer/llm-capsule/tsx/Section17_CTA.tsx'}]},
-      {i:'A-cubig-proof-v3.html',ip:'input/A-cubig-proof-v3.html',d:'2026-03-18',
-       h:[{n:'A-cubig-proof-v3-spec.md',p:'output/docs/A-cubig-proof-v3-spec.md'},{n:'A-cubig-proof-v3-b-type.html',p:'output/html/A-cubig-proof-v3-b-type.html'},{n:'A-cubig-proof-v3-qa-report.md',p:'output/docs/A-cubig-proof-v3-qa-report.md'}],t:[]},
-      {i:'cubig-learn-prompt-data-leakage.html',ip:'input/cubig-learn-prompt-data-leakage.html',d:'2026-03-20',
-       h:[{n:'cubig-learn-prompt-data-leakage-spec.md',p:'output/docs/cubig-learn-prompt-data-leakage-spec.md'},{n:'A-cubig-learn-prompt-data-leakage-b-type.html',p:'output/html/A-cubig-learn-prompt-data-leakage-b-type.html'},{n:'cubig-learn-prompt-data-leakage-qa-report.md',p:'output/docs/cubig-learn-prompt-data-leakage-qa-report.md'}],t:[]},
-      {i:'cubig-dts-v3.html',ip:'input/cubig-dts-v3.html',d:'2026-03-22',
-       h:[{n:'cubig-dts-v3-spec.md',p:'output/docs/cubig-dts-v3-spec.md'},{n:'cubig-dts-v3-b-type.html',p:'output/html/cubig-dts-v3-b-type.html'},{n:'cubig-dts-v3-qa-report.md',p:'output/docs/cubig-dts-v3-qa-report.md'}],
-       t:[{n:'Section01_Hero.tsx',p:'output/framer/dts/tsx/Section01_Hero.tsx'},{n:'Section02_KpiBand.tsx',p:'output/framer/dts/tsx/Section02_KpiBand.tsx'},{n:'Section03_SyntheticData.tsx',p:'output/framer/dts/tsx/Section03_SyntheticData.tsx'},{n:'Section04_ComparisonTable.tsx',p:'output/framer/dts/tsx/Section04_ComparisonTable.tsx'},{n:'Section05_ThreeProblems.tsx',p:'output/framer/dts/tsx/Section05_ThreeProblems.tsx'},{n:'Section06_DifferentialPrivacy.tsx',p:'output/framer/dts/tsx/Section06_DifferentialPrivacy.tsx'},{n:'Section07_Deployment.tsx',p:'output/framer/dts/tsx/Section07_Deployment.tsx'},{n:'Section08_CaseRecords.tsx',p:'output/framer/dts/tsx/Section08_CaseRecords.tsx'},{n:'Section09_FiveSignals.tsx',p:'output/framer/dts/tsx/Section09_FiveSignals.tsx'},{n:'Section10_Certs.tsx',p:'output/framer/dts/tsx/Section10_Certs.tsx'},{n:'Section11_Banner.tsx',p:'output/framer/dts/tsx/Section11_Banner.tsx'},{n:'Section12_FAQ.tsx',p:'output/framer/dts/tsx/Section12_FAQ.tsx'},{n:'Section13_CTA.tsx',p:'output/framer/dts/tsx/Section13_CTA.tsx'}]},
-      {i:'(standalone)',ip:'',d:'',
-       h:[{n:'figure_cubig_architecture.html',p:'output/html/figure_cubig_architecture.html'}],
-       t:[{n:'ArchitectureDiagram.tsx',p:'output/framer/figure_cubig_architecture/tsx/ArchitectureDiagram.tsx'},{n:'Figure_Architecture.tsx',p:'output/framer/llm-capsule/tsx/Figure_Architecture.tsx'}]}
-    ];
-    var o='<table style="width:100%;border-collapse:collapse;font-size:13px;"><thead><tr style="border-bottom:2px solid #e6e7e9;text-align:left;">';
-    o+='<th style="'+thS+'">Input File</th><th style="'+thS+'">Updated</th>';
-    o+='<th style="'+thS+'"><span style="font-size:10px;font-weight:600;color:#3061f2;background:rgba(48,97,242,0.08);padding:2px 8px;border-radius:4px;">HTML / Docs</span></th>';
-    o+='<th style="'+thS+'"><span style="font-size:10px;font-weight:600;color:#725bea;background:rgba(114,91,234,0.08);padding:2px 8px;border-radius:4px;">TSX</span></th>';
-    o+='</tr></thead><tbody>';
-    function lnk(f){return '<a href="'+B+f.p+'" target="_blank" style="color:#3061f2;text-decoration:none;cursor:pointer;" onmouseover="this.style.textDecoration=\'underline\'" onmouseout="this.style.textDecoration=\'none\'" download="'+f.n+'">'+f.n+'</a>';}
-    D.forEach(function(g){
-      o+='<tr style="border-bottom:1px solid #f7f7f7;">';
-      var il=g.ip?'<a href="'+B+g.ip+'" target="_blank" style="color:#0f0f0f;text-decoration:none;" onmouseover="this.style.color=\'#725bea\'" onmouseout="this.style.color=\'#0f0f0f\'">'+g.i+'</a>':g.i;
-      o+='<td style="padding:10px 12px;font-weight:500;vertical-align:top;white-space:nowrap;">'+il+'</td>';
-      o+='<td style="padding:10px 12px;font-size:12px;color:#9c9c9c;vertical-align:top;white-space:nowrap;">'+g.d+'</td>';
-      o+='<td style="padding:10px 12px;vertical-align:top;line-height:1.8;">';
-      g.h.forEach(function(f){o+='<div style="font-size:12px;">'+lnk(f)+'</div>';});
-      if(!g.h.length)o+='<span style="color:#9c9c9c;">—</span>';
-      o+='</td><td style="padding:10px 12px;vertical-align:top;line-height:1.8;">';
-      g.t.forEach(function(f){o+='<div style="font-size:12px;">'+lnk(f)+'</div>';});
-      if(!g.t.length)o+='<span style="color:#9c9c9c;">—</span>';
-      o+='</td></tr>';
-    });
-    o+='</tbody></table><p style="margin-top:16px;font-size:12px;color:#9c9c9c;text-align:center;">로컬 서버 실행 시 실시간 업데이트됩니다.</p>';
+
+    function lnk(f){return '<a href="'+f.path+'" target="_blank" download="'+f.name+'" style="color:#3061f2;text-decoration:none;cursor:pointer;" onmouseover="this.style.textDecoration=\'underline\'" onmouseout="this.style.textDecoration=\'none\'">'+f.name+'</a>';}
+
+    function renderManifest(m) {
+      var o='<table style="width:100%;border-collapse:collapse;font-size:13px;"><thead><tr style="border-bottom:2px solid #e6e7e9;text-align:left;">';
+      o+='<th style="'+thS+'">Input File</th><th style="'+thS+'">Updated</th>';
+      o+='<th style="'+thS+'"><span style="font-size:10px;font-weight:600;color:#3061f2;background:rgba(48,97,242,0.08);padding:2px 8px;border-radius:4px;">HTML / Docs</span></th>';
+      o+='<th style="'+thS+'"><span style="font-size:10px;font-weight:600;color:#725bea;background:rgba(114,91,234,0.08);padding:2px 8px;border-radius:4px;">TSX</span></th>';
+      o+='</tr></thead><tbody>';
+
+      m.groups.forEach(function(g){
+        var inp = g.input;
+        var allHtml = (g.html||[]).concat(g.docs||[]);
+        var allTsx = g.tsx||[];
+
+        o+='<tr style="border-bottom:1px solid #f7f7f7;">';
+        var il = inp.path ? '<a href="'+inp.path+'" target="_blank" style="color:#0f0f0f;text-decoration:none;" onmouseover="this.style.color=\'#725bea\'" onmouseout="this.style.color=\'#0f0f0f\'">'+inp.name+'</a>' : inp.name;
+        o+='<td style="padding:10px 12px;font-weight:500;vertical-align:top;white-space:nowrap;">'+il+'</td>';
+        o+='<td style="padding:10px 12px;font-size:12px;color:#9c9c9c;vertical-align:top;white-space:nowrap;">'+inp.modified+'</td>';
+        o+='<td style="padding:10px 12px;vertical-align:top;line-height:1.8;">';
+        allHtml.forEach(function(f){o+='<div style="font-size:12px;">'+lnk(f)+'</div>';});
+        if(!allHtml.length)o+='<span style="color:#9c9c9c;">—</span>';
+        o+='</td><td style="padding:10px 12px;vertical-align:top;line-height:1.8;">';
+        allTsx.forEach(function(f){o+='<div style="font-size:12px;">'+lnk(f)+'</div>';});
+        if(!allTsx.length)o+='<span style="color:#9c9c9c;">—</span>';
+        o+='</td></tr>';
+      });
+
+      o+='</tbody></table>';
+      o+='<p style="margin-top:12px;font-size:11px;color:#9c9c9c;text-align:right;">Generated: '+m.generated+'</p>';
+      document.getElementById('output-file-list').innerHTML=o;
+    }
+
+    // Fetch manifest.json (same origin — no CORS, no server needed)
+    fetch('../output/manifest.json')
+      .then(function(r){return r.json();})
+      .then(renderManifest)
+      .catch(function(){
+        document.getElementById('output-file-list').innerHTML='<div style="text-align:center;padding:48px 0;color:#9c9c9c;font-size:14px;">manifest.json을 찾을 수 없습니다.<br><code style="font-size:12px;">python3 server/manifest.py</code> 실행 후 deploy해주세요.</div>';
+      });
     document.getElementById('output-file-list').innerHTML=o;
   })();
   </script>

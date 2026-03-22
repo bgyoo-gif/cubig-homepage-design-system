@@ -78,6 +78,7 @@ def update_job(job_id, stage, message, status=None, result=None):
   │
   ▼
 [③ deploy] 항상 실행
+  │  python3 server/manifest.py  ← Output manifest 자동 생성
   │  git add -A && git commit && git push origin gh-pages
   │
   ▼
