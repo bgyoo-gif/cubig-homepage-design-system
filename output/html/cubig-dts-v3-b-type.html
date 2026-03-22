@@ -317,6 +317,7 @@
     .ds-bg--lavender   { background-image: var(--ds-bg-img-lavender); }
     .ds-bg--peach      { background-image: var(--ds-bg-img-peach); }
     .ds-bg--wave-teal  { background-image: var(--ds-bg-img-wave-teal); }
+    .ds-bg--paint-blue { background-image: var(--ds-bg-img-paint-blue); }
 
     /* ========================================================
        5. Navigation
@@ -373,6 +374,34 @@
     ======================================================== */
     .ds-hero { display: grid; grid-template-columns: 1fr; gap: var(--ds-space-lg); align-items: center; }
     .ds-hero--text-only { max-width: 860px; }
+    .ds-hero-screenshot-section { padding: 100px 0 0; overflow: visible; }
+    .ds-hero--screenshot { text-align: center; max-width: 860px; margin: 0 auto; }
+    .ds-hero__screenshot-frame {
+      margin-top: var(--ds-space-xl);
+      border-radius: var(--ds-radius-xl);
+      padding: var(--ds-space-2xl) var(--ds-space-2xl) 0;
+      background-size: cover; background-position: center;
+      overflow: hidden;
+    }
+    .ds-hero__screenshot {
+      border-radius: var(--ds-radius-lg) var(--ds-radius-lg) 0 0;
+      overflow: hidden;
+      box-shadow: 0 -8px 40px rgba(0,0,0,0.12);
+      background: var(--ds-color-surface-white);
+      min-height: 320px;
+    }
+    .ds-hero__screenshot img { width: 100%; display: block; }
+    .ds-hero__actions-below {
+      display: flex; flex-wrap: wrap; gap: var(--ds-space-sm);
+      justify-content: center;
+      margin-top: var(--ds-space-lg);
+      padding-bottom: var(--ds-space-3xl);
+    }
+    @media (max-width: 767px) {
+      .ds-hero__screenshot-frame { padding: var(--ds-space-xl) var(--ds-space-xl) 0; border-radius: var(--ds-radius-lg); }
+      .ds-hero__screenshot { min-height: 180px; border-radius: var(--ds-radius-md) var(--ds-radius-md) 0 0; }
+      .ds-hero__actions-below { flex-direction: column; align-items: center; }
+    }
     .ds-hero__title {
       font-family: var(--ds-font-base);
       font-size: 24px;
@@ -1060,23 +1089,21 @@
     <!-- =====================================================
          SECTION 1: Hero (DTS)
     ====================================================== -->
-    <section class="ds-section ds-section--hero" id="section-1">
+    <section class="ds-section ds-hero-screenshot-section" id="section-1">
       <div class="ds-container">
-        <div class="ds-hero ds-hero--text-only">
+        <div class="ds-hero ds-hero--screenshot">
           <h1 class="ds-hero__title"><span class="ds-text--product">DTS</span></h1>
-          <p class="ds-hero__description">Your AI is only as good as the data it trains on -- and most enterprise data is not AI-ready. DTS solves unusable data for AI: whether it's restricted by privacy rules, imbalanced, or missing the coverage your model needs. The result is an AI-ready dataset you can actually use.</p>
-
-          <ul class="ds-bullet ds-bullet--dot ds-hero-text-subtitle" aria-label="DTS capabilities">
-            <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Restricted data → privacy-safe replacement</li>
-            <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Imbalanced datasets → augmentation &amp; balance fix</li>
-            <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Coverage gaps → AI-ready dataset generation</li>
-          </ul>
-
-          <div class="ds-hero__actions">
-            <a href="/contact" class="ds-btn ds-btn--primary ds-btn--md">Run technical demo</a>
-            <a href="https://aws.amazon.com/marketplace" class="ds-btn ds-btn--secondary ds-btn--md" target="_blank" rel="noopener noreferrer">AWS Marketplace</a>
-            <a href="/syntitan" class="ds-btn ds-btn--secondary ds-btn--md">See SynTitan Platform</a>
+          <p class="ds-hero__description">Your AI is only as good as the data it trains on — and most enterprise data is not AI-ready. DTS solves unusable data for AI: whether it's restricted by privacy rules, imbalanced, or missing the coverage your model needs. The result is an AI-ready dataset you can actually use.</p>
+        </div>
+        <div class="ds-hero__screenshot-frame ds-bg--paint-blue">
+          <div class="ds-hero__screenshot">
+            <img src="/cubig-homepage-design-system/reference/images/screenshot-dts.avif" alt="DTS — Enterprise Synthetic Data Engine" loading="lazy">
           </div>
+        </div>
+        <div class="ds-hero__actions-below">
+          <a href="/contact" class="ds-btn ds-btn--primary ds-btn--md">Run technical demo</a>
+          <a href="https://aws.amazon.com/marketplace" class="ds-btn ds-btn--secondary ds-btn--md" target="_blank" rel="noopener noreferrer">AWS Marketplace</a>
+          <a href="/syntitan" class="ds-btn ds-btn--secondary ds-btn--md">See SynTitan Platform</a>
         </div>
       </div>
     </section>
