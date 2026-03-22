@@ -339,6 +339,7 @@ CTA       → 배경 이미지 (전폭)
 - [ ] 외부 서비스 링크("View on AWS Marketplace", "llmcapsule.ai" 등)가 `ds-btn ds-btn--secondary` 버튼으로 구현됐는가 (인라인 텍스트 링크 금지)
 - [ ] "Step 1,2,3" / "How it works" 순차 프로세스가 `ds-step-tabs`로 구현됐는가 (스크린샷 필요 시 placeholder + 사용자 요청)
 - [ ] ISO, GS인증 등 인증/수상이 `ds-cert-grid` 마키 + 공식 이미지(reference/graphics/cert-*)로 구현됐는가
+- [ ] 모든 이미지 경로가 `/cubig-homepage-design-system/reference/` 절대경로인가 (상대경로 `../../reference/` 금지)
 
 **코드 품질**
 - [ ] 시맨틱 태그를 사용했는가 (div 남용 없는가)
