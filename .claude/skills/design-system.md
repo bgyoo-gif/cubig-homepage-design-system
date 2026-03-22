@@ -1391,7 +1391,7 @@ industry 라벨이 타이틀 위에 위치. 토글 버튼은 회색조 박스.
 .ds-ac-metric__label { font-family: var(--ds-font-code); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ds-color-text-tertiary); margin-top: var(--ds-space-2xs); }
 
 @media (max-width: 767px) { .ds-ac-card__header { grid-template-columns: 1fr auto; align-items: start; } .ds-ac-card__meta { display: none; } }
-@media (min-width: 1024px) { .ds-ac-card__header { grid-template-columns: 160px 1fr auto auto; } }
+@media (min-width: 1024px) { .ds-ac-card__header { grid-template-columns: 1fr auto auto; } }
 ```
 
 JavaScript:
