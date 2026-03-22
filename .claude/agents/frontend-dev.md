@@ -340,6 +340,10 @@ CTA       → 배경 이미지 (전폭)
 - [ ] "Step 1,2,3" / "How it works" 순차 프로세스가 `ds-step-tabs`로 구현됐는가 (스크린샷 필요 시 placeholder + 사용자 요청)
 - [ ] ISO, GS인증 등 인증/수상이 `ds-cert-grid` 마키 + 공식 이미지(reference/graphics/cert-*)로 구현됐는가
 - [ ] 모든 이미지 경로가 `/cubig-homepage-design-system/reference/` 절대경로인가 (상대경로 `../../reference/` 금지)
+- [ ] Partner 로고가 `ds-partner-grid` 마키 + DS 공식 11개 로고로 구현됐는가 (A타입 목록 무시, DS 공식 목록만 사용)
+- [ ] KPI band 배경 이미지 오버레이가 `rgba(0,0,0,0.35)` 어두운 오버레이인가 (흰 텍스트 가독성)
+- [ ] banner-full padding이 `space-xl`인가 (`space-3xl` 금지 — 과도한 여백 방지)
+- [ ] cert-grid/partner-grid가 DS 공식 컴포넌트만 사용했는가 (커스텀 마키 금지)
 
 **코드 품질**
 - [ ] 시맨틱 태그를 사용했는가 (div 남용 없는가)

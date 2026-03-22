@@ -136,6 +136,30 @@ grep -A2 'description\|hero__description\|cta-band__inner' output/[파일명]-b-
 ```
 → 고정 px만 있고 반응형 미디어쿼리가 없으면 결함 (mobile 100% → 1024px 720px → 1440px 860px)
 
+**KPI band 오버레이 확인:**
+```bash
+grep -A5 'ds-kpi-band' output/[파일명]-b-type.html | grep 'rgba'
+```
+→ rgba(0,0,0,0.35) 어두운 오버레이여야 함 (밝은 오버레이 결함)
+
+**아코디언 header grid 확인:**
+```bash
+grep -A3 'ds-ac-card__header' output/[파일명]-b-type.html | grep 'grid-template-columns'
+```
+→ 1fr auto auto 여야 함 (160px 고정 결함)
+
+**banner-full padding 확인:**
+```bash
+grep -A5 'ds-banner--full' output/[파일명]-b-type.html | grep 'padding'
+```
+→ space-xl (32px) 이어야 함 (space-3xl/64px이면 결함)
+
+**Partner grid 공식 로고 확인:**
+```bash
+grep -c 'ds-partner-grid' output/[파일명]-b-type.html
+```
+→ partner 언급 시 ds-partner-grid 사용 필수, DS 공식 11개 로고만 허용
+
 **아티클형 페이지 ds-article 확인:**
 ```bash
 grep -n 'ds-article' output/[파일명]-b-type.html
@@ -180,6 +204,11 @@ grep -oP '--ds-[a-zA-Z0-9-]+' output/[파일명]-b-type.html | sort -u
 - [ ] 외부 서비스 링크("View on AWS Marketplace", "llmcapsule.ai" 등)가 `ds-btn ds-btn--secondary` 버튼으로 구현됐는가 (인라인 텍스트 링크 금지)
 - [ ] "Step 1,2,3" / "How it works" 순차 프로세스가 `ds-step-tabs`로 구현됐는가
 - [ ] ISO, GS인증 등 인증/수상이 `ds-cert-grid` 마키 + 공식 이미지(reference/graphics/cert-*)로 구현됐는가
+- [ ] Partner 로고가 `ds-partner-grid` 마키 + DS 공식 11개 로고로 구현됐는가 (A타입 목록 무시)
+- [ ] KPI band 배경 이미지 오버레이가 `rgba(0,0,0,0.35)` 어두운 오버레이인가 (흰 텍스트 가독성)
+- [ ] 아코디언 header grid가 `1fr auto auto`인가 (160px 고정 금지 — 1024px+에서도 동일)
+- [ ] banner-full padding이 `space-xl`인가 (`space-3xl` 금지 — 과도한 여백 방지)
+- [ ] cert-grid/partner-grid가 DS 공식 컴포넌트만 사용했는가 (커스텀 마키 금지)
 
 ### [CAT-3] 코드 품질 (Medium)
 - [ ] 시맨틱 태그를 사용했는가 (div 남용 없는가)
@@ -290,6 +319,11 @@ grep -n "padding.*16px\|padding.*32px\|padding.*120px" output/[파일명]-b-type
 - 인증/수상(ISO, GS인증 등)이 ds-cert-grid 미사용 (CAT-2 High)
 - FAQ 섹션이 아코디언(ds-ac-card)이 아닌 카드 나열로 구현 (CAT-2 High)
 - 이미지 경로가 상대경로(../../reference/) — `/cubig-homepage-design-system/reference/` 절대경로 필수 (CAT-2 High)
+- KPI band 배경 이미지 오버레이가 rgba(0,0,0,0.35)가 아님 (CAT-2 High)
+- 아코디언 header grid가 1fr auto auto가 아님 — 160px 고정 (CAT-2 High)
+- banner-full padding이 space-3xl (space-xl이어야 함) (CAT-2 High)
+- Partner 로고가 ds-partner-grid 미사용 또는 커스텀 마키 사용 (CAT-2 High)
+- cert-grid/partner-grid에 커스텀 마키 사용 — DS 공식 컴포넌트 필수 (CAT-2 High)
 
 아래 항목은 CONDITIONAL PASS 허용:
 - CTA container 안에 배치 (CAT-3 Medium)

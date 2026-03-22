@@ -532,6 +532,11 @@ JS 필수: `data-step-tabs` / `data-tab` / `data-panel` 속성으로 탭 전환
 - description max-width 반응형: mobile 100% → 1024px 720px → 1440px 860px (섹션 헤더, 히어로, CTA 모두 적용)
 - 아티클형 페이지(Learn 등) 본문 860px 통일: `<main class="ds-article">` 적용 — 헤더/본문/카드/테이블 모두 동일 폭 (전폭 예외: partner-grid, kpi-band)
 - 섹션 헤더 기본 center 정렬: `--left`는 spec에 명시된 경우만 사용 (기본값은 center)
+- text-wrap 적용: 제목(h1~h3)에 `text-wrap: balance`, 본문(description, body, card 등)에 `text-wrap: pretty`
+- 이미지 경로: `/cubig-homepage-design-system/reference/` 절대경로 필수 (상대경로 `../../reference/` 금지)
+- KPI band 배경 이미지 오버레이: `rgba(0,0,0,0.35)` 어두운 오버레이 적용 (흰 텍스트 가독성 확보)
+- banner-full padding: `space-xl` 사용 (`space-3xl` 금지 — 과도한 여백 방지)
+- cert-grid/partner-grid는 DS 공식 컴포넌트만 사용 (커스텀 마키 금지)
 
 ## 절대 규칙
 - 원문 내용을 임의로 수정하거나 축약하지 않는다

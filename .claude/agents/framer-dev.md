@@ -114,6 +114,16 @@ const PALETTE = {
 - **FAQ 반드시 아코디언**: FAQ/Common Questions 등은 `ds-ac-card` 아코디언으로 구현 (카드 나열 금지)
 - **아티클형 페이지 본문 860px 통일**: Learn 등 아티클형은 `<main class="ds-article">` + 본문 max-width 860px
 - **섹션 헤더 기본 center 정렬**: `--left`는 spec에 명시된 경우만 (기본은 center)
+- **text-wrap 적용**: 제목(h1~h3)에 `text-wrap: balance`, 본문(description, body, card 등)에 `text-wrap: pretty`
+- **외부 서비스 링크는 버튼형**: "View on AWS Marketplace", "llmcapsule.ai" 등 외부 링크는 버튼(`ds-btn--secondary` 스타일) 구현 (인라인 텍스트 링크 금지)
+- **단계별 프로세스는 Step Tabs**: "Step 1,2,3" / "How it works" 순차 프로세스는 `ds-step-tabs` 스타일로 구현 (스크린샷 필요 시 placeholder)
+- **인증/수상은 Cert Grid**: ISO, GS인증 등은 `ds-cert-grid` 마키 + 공식 이미지(reference/graphics/cert-*) 사용
+- **Partner는 ds-partner-grid 마키 + 공식 11개 로고**: A타입 목록 무시, DS 공식 목록만 사용
+- **이미지 경로**: TSX는 `IMAGE_BASE` 상수 경유, 프리뷰 HTML도 `/cubig-homepage-design-system/reference/` 절대경로 권장
+- **KPI band 배경 이미지 오버레이**: `rgba(0,0,0,0.35)` 어두운 오버레이 적용 (흰 텍스트 가독성)
+- **아코디언 header grid**: `1fr auto auto` (160px 고정 금지 — 1024px+에서도 동일)
+- **banner-full padding**: `space-xl` (32px) 사용 (`space-3xl`/64px 금지 — 과도한 여백 방지)
+- **cert-grid/partner-grid는 DS 공식 컴포넌트만 사용** (커스텀 마키 금지)
 
 ---
 
