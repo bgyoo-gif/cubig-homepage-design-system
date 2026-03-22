@@ -949,7 +949,7 @@ HTML (Hero Screenshot 구조 — 순서: 타이틀 → 설명 → 스크린샷 �
 }
 .ds-kpi-band[class*="ds-bg--"]::before {
   content: ''; position: absolute; inset: 0;
-  background: rgba(255,255,255,0.15); z-index: 0;
+  background: rgba(0,0,0,0.35); z-index: 0;  /* 어두운 오버레이 — 흰색 텍스트 가독성 */
 }
 .ds-kpi-band > * { position: relative; z-index: 1; }
 .ds-kpi-band__item { display: flex; flex-direction: column; gap: 12px; text-align: center; }
