@@ -920,81 +920,57 @@
     }
 
     /* ========================================================
-       28. Section 10 — Cert Grid (Marquee)
+       28. Section 10 — Cert Grid + Partner Grid (DS Official)
     ======================================================== */
-    .ds-marquee-outer {
-      overflow: hidden; width: 100vw; margin-left: calc(-50vw + 50%); position: relative;
-    }
-    .ds-marquee-track {
-      display: flex; gap: var(--ds-space-lg); width: max-content;
-      animation: ds-marquee-scroll 32s linear infinite;
-      will-change: transform;
-    }
-    .ds-marquee-outer:hover .ds-marquee-track { animation-play-state: paused; }
-    @keyframes ds-marquee-scroll {
-      0%   { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
+    @keyframes ds-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-    /* Cert card */
+    /* Cert Grid */
+    .ds-cert-grid { width: 100vw; margin-left: calc(-50vw + 50%); overflow: hidden; padding: var(--ds-space-xl) 0; }
+    .ds-cert-grid__track { display: flex; gap: var(--ds-space-lg); align-items: stretch; width: max-content; animation: ds-marquee 40s linear infinite; }
+    .ds-cert-grid__track:hover { animation-play-state: paused; }
+
+    /* Cert Card */
     .ds-cert-card {
-      flex-shrink: 0;
-      width: 200px;
-      display: flex; flex-direction: column; align-items: center;
-      gap: var(--ds-space-sm);
-      padding: var(--ds-space-lg);
-      background-color: var(--ds-color-surface-white);
-      border: var(--ds-border-default);
-      border-radius: var(--ds-radius-md);
-      text-align: center;
+      background: var(--ds-color-surface-white); border: 1px solid var(--ds-color-border-default);
+      border-radius: var(--ds-radius-lg); padding: var(--ds-space-lg) var(--ds-space-xl);
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+      gap: var(--ds-space-xs); flex-shrink: 0; width: 200px;
     }
-    .ds-cert-card__img {
-      height: 56px; width: auto; object-fit: contain; display: block;
+    .ds-cert-card__group {
+      font-family: var(--ds-font-code); font-size: 10px; font-weight: var(--ds-weight-medium);
+      text-transform: uppercase; letter-spacing: var(--ds-tracking-wide);
+      color: var(--ds-color-brand-purple); margin-bottom: var(--ds-space-2xs);
     }
-    .ds-cert-card__name {
-      font-size: var(--ds-text-xs); font-weight: var(--ds-weight-semibold);
-      color: var(--ds-color-text-primary); line-height: var(--ds-leading-tight);
+    .ds-cert-card__wreath { position: relative; width: 160px; height: 120px; display: flex; align-items: center; justify-content: center; }
+    .ds-cert-card__wreath-left,
+    .ds-cert-card__wreath-right { position: absolute; top: 0; height: 100%; width: 34%; object-fit: contain; }
+    .ds-cert-card__wreath-left { left: -6px; object-position: right; }
+    .ds-cert-card__wreath-right { right: -6px; object-position: left; }
+    .ds-cert-card__wreath-text {
+      position: relative; z-index: 1; font-size: var(--ds-text-sm); font-weight: var(--ds-weight-bold);
+      color: var(--ds-color-text-primary); text-align: center; line-height: var(--ds-leading-tight); max-width: 90px;
     }
-    .ds-cert-card__issuer {
-      font-size: var(--ds-text-xs); color: var(--ds-color-text-tertiary);
-    }
-    .ds-cert-card__year {
-      font-family: var(--ds-font-code); font-size: 10px;
-      color: var(--ds-color-text-tertiary); letter-spacing: 0.05em;
-    }
+    .ds-cert-card__org { font-size: var(--ds-text-xs); color: var(--ds-color-text-secondary); }
+    .ds-cert-card__year { font-size: var(--ds-text-xs); color: var(--ds-color-text-tertiary); font-family: var(--ds-font-code); }
+    .ds-cert-card__logo { width: 60px; height: 60px; object-fit: contain; margin-top: auto; margin-bottom: -10px; }
 
-    /* Laurel decoration */
-    .ds-cert-marquee-header {
-      display: flex; align-items: center; justify-content: center;
-      gap: var(--ds-space-md); margin-bottom: var(--ds-space-xl);
-    }
-    .ds-cert-laurel { height: 40px; width: auto; }
-
-    /* Partner logos marquee */
-    .ds-partner-track {
-      display: flex; gap: var(--ds-space-xl); width: max-content;
-      animation: ds-marquee-scroll 28s linear infinite;
-      will-change: transform;
-    }
-    .ds-marquee-outer:hover .ds-partner-track { animation-play-state: paused; }
-    .ds-partner-logo {
-      flex-shrink: 0;
-      height: 48px; width: auto; object-fit: contain; display: block;
-      filter: grayscale(1) opacity(0.6);
-      transition: filter 0.2s;
-    }
-    .ds-partner-logo:hover { filter: grayscale(0) opacity(1); }
-
-    .ds-partner-marquee-wrap { margin-top: var(--ds-space-2xl); }
-    .ds-partner-marquee-label {
-      text-align: center; margin-bottom: var(--ds-space-lg);
-      font-family: var(--ds-font-code); font-size: 10px; letter-spacing: 0.12em;
-      text-transform: uppercase; color: var(--ds-color-text-tertiary);
-    }
+    /* Partner Grid */
+    .ds-partner-grid { width: 100vw; margin-left: calc(-50vw + 50%); overflow: hidden; padding: var(--ds-space-xl) 0; }
+    .ds-partner-grid__track { display: flex; gap: var(--ds-space-3xl); align-items: center; width: max-content; animation: ds-marquee 30s linear infinite; }
+    .ds-partner-grid__track:hover { animation-play-state: paused; }
+    .ds-partner-item { display: flex; flex-direction: column; align-items: center; gap: var(--ds-space-xs); flex-shrink: 0; }
+    .ds-partner-item__logo { width: 120px; height: 100px; object-fit: contain; }
+    .ds-partner-item__name { font-size: var(--ds-text-xs); color: var(--ds-color-text-tertiary); text-align: center; white-space: nowrap; }
+    .ds-partner-grid__label { font-family: var(--ds-font-code); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ds-color-text-tertiary); text-align: center; margin-bottom: var(--ds-space-lg); margin-top: var(--ds-space-2xl); }
 
     @media (max-width: 767px) {
-      .ds-cert-card { width: 170px; }
-      .ds-partner-logo { height: 36px; }
+      .ds-cert-card { width: 170px; padding: var(--ds-space-md) var(--ds-space-md); }
+      .ds-cert-card__wreath { width: 130px; height: 96px; }
+      .ds-cert-card__wreath-text { font-size: var(--ds-text-xs); max-width: 72px; }
+      .ds-cert-card__logo { width: 48px; height: 48px; }
+      .ds-cert-grid__track { gap: var(--ds-space-md); animation-duration: 25s; }
+      .ds-partner-item__logo { width: 100px; height: 75px; }
+      .ds-partner-grid__track { gap: var(--ds-space-2xl); animation-duration: 20s; }
     }
 
     /* ========================================================
@@ -1681,115 +1657,201 @@
         <div class="ds-section-header ds-section-header--underline">
           <h2 class="ds-section-header__title">Certified and <span class="ds-text--brand">Trusted</span></h2>
         </div>
-
-        <!-- Cert Laurel Header -->
-        <div class="ds-cert-marquee-header">
-          <img src="/cubig-homepage-design-system/reference/graphics/cert-left.png" alt="" class="ds-cert-laurel" aria-hidden="true">
-          <span class="ds-caption" style="color: var(--ds-color-text-tertiary)">Certifications &amp; Recognition</span>
-          <img src="/cubig-homepage-design-system/reference/graphics/cert-right.png" alt="" class="ds-cert-laurel" aria-hidden="true">
-        </div>
-
-        <!-- Cert Marquee -->
-        <div class="ds-marquee-outer" aria-label="Certifications and awards">
-          <div class="ds-marquee-track" id="cert-track">
-
-            <!-- Set 1 -->
-            <div class="ds-cert-card">
-              <img src="/cubig-homepage-design-system/reference/graphics/cert-kisa.png" alt="KISA" class="ds-cert-card__img">
-              <span class="ds-cert-card__name">Information Security Fast Track</span>
-              <span class="ds-cert-card__issuer">KISA</span>
-              <span class="ds-cert-card__year">2024</span>
-            </div>
-            <div class="ds-cert-card">
-              <img src="/cubig-homepage-design-system/reference/graphics/cert-gs.png" alt="TTA GS Certification" class="ds-cert-card__img">
-              <span class="ds-cert-card__name">GS Certification</span>
-              <span class="ds-cert-card__issuer">TTA</span>
-              <span class="ds-cert-card__year">2025</span>
-            </div>
-            <div class="ds-cert-card">
-              <img src="/cubig-homepage-design-system/reference/graphics/cert-iso.png" alt="ISO/IEC 27001" class="ds-cert-card__img">
-              <span class="ds-cert-card__name">ISO/IEC 27001 (ISMS)</span>
-              <span class="ds-cert-card__issuer">ISO</span>
-              <span class="ds-cert-card__year">2026</span>
-            </div>
-            <div class="ds-cert-card">
-              <img src="/cubig-homepage-design-system/reference/graphics/cert-iso.png" alt="ISO/IEC 42001" class="ds-cert-card__img">
-              <span class="ds-cert-card__name">ISO/IEC 42001 (AIMS)</span>
-              <span class="ds-cert-card__issuer">ISO</span>
-              <span class="ds-cert-card__year">2026</span>
-            </div>
-            <div class="ds-cert-card">
-              <img src="/cubig-homepage-design-system/reference/graphics/awards-ministry-of-science-and-ict.jpg" alt="Ministry of Science &amp; ICT" class="ds-cert-card__img">
-              <span class="ds-cert-card__name">Information Security Innovation Award</span>
-              <span class="ds-cert-card__issuer">Ministry of Science &amp; ICT</span>
-              <span class="ds-cert-card__year">2024</span>
-            </div>
-            <div class="ds-cert-card">
-              <img src="/cubig-homepage-design-system/reference/graphics/cert-startupworldcup.png" alt="Startup World Cup" class="ds-cert-card__img">
-              <span class="ds-cert-card__name">Startup World Cup — Finalist</span>
-              <span class="ds-cert-card__issuer">Startup World Cup</span>
-              <span class="ds-cert-card__year">2025</span>
-            </div>
-            <div class="ds-cert-card">
-              <span class="ds-cert-card__name">Next Rise — Global Innovator</span>
-              <span class="ds-cert-card__issuer">Next Rise</span>
-              <span class="ds-cert-card__year">2025</span>
-            </div>
-            <div class="ds-cert-card">
-              <img src="/cubig-homepage-design-system/reference/images/partner-deutsche-telekom.avif" alt="Deutsche Telekom" class="ds-cert-card__img">
-              <span class="ds-cert-card__name">T Challenge 2026 — Finalist</span>
-              <span class="ds-cert-card__issuer">Deutsche Telekom</span>
-              <span class="ds-cert-card__year">2026</span>
-            </div>
-            <div class="ds-cert-card">
-              <img src="/cubig-homepage-design-system/reference/graphics/awards-koreaia.png" alt="AI EXPO KOREA" class="ds-cert-card__img">
-              <span class="ds-cert-card__name">AI Medical Innovation Award</span>
-              <span class="ds-cert-card__issuer">AI EXPO KOREA</span>
-              <span class="ds-cert-card__year">2025</span>
-            </div>
-            <div class="ds-cert-card">
-              <span class="ds-cert-card__name">Emerging AI+X Top 100</span>
-              <span class="ds-cert-card__issuer"></span>
-              <span class="ds-cert-card__year">2026</span>
-            </div>
-            <div class="ds-cert-card">
-              <img src="/cubig-homepage-design-system/reference/graphics/cert-gartner.svg.png" alt="Gartner" class="ds-cert-card__img">
-              <span class="ds-cert-card__name">Representative Vendor, Hyper-Synthetic Data</span>
-              <span class="ds-cert-card__issuer">Gartner</span>
-              <span class="ds-cert-card__year">2025</span>
-            </div>
-
-            <!-- Set 2 (clone — populated by JS) -->
-
-          </div>
-        </div>
-
-        <!-- Partner Grid Marquee -->
-        <div class="ds-partner-marquee-wrap">
-          <p class="ds-partner-marquee-label">Trusted by enterprise &amp; government</p>
-          <div class="ds-marquee-outer" aria-label="Partner logos">
-            <div class="ds-partner-track" id="partner-track">
-
-              <!-- Set 1 -->
-              <img src="/cubig-homepage-design-system/reference/images/partner-gartner.png" alt="Gartner" class="ds-partner-logo">
-              <img src="/cubig-homepage-design-system/reference/images/partner-navercloud.avif" alt="Naver Cloud" class="ds-partner-logo">
-              <img src="/cubig-homepage-design-system/reference/images/partner-sktelecom.avif" alt="SK Telecom" class="ds-partner-logo">
-              <img src="/cubig-homepage-design-system/reference/images/partner-kyobo.avif" alt="Kyobo" class="ds-partner-logo">
-              <img src="/cubig-homepage-design-system/reference/images/partner-korea army.avif" alt="ROK Army" class="ds-partner-logo">
-              <img src="/cubig-homepage-design-system/reference/images/partner-korea-airforce.avif" alt="ROK Air Force" class="ds-partner-logo">
-              <img src="/cubig-homepage-design-system/reference/images/partner-eumc.avif" alt="EUMC" class="ds-partner-logo">
-              <img src="/cubig-homepage-design-system/reference/images/partner-deutsche-telekom.avif" alt="Deutsche Telekom" class="ds-partner-logo">
-              <img src="/cubig-homepage-design-system/reference/images/partner-claroty.png" alt="Claroty" class="ds-partner-logo">
-              <img src="/cubig-homepage-design-system/reference/images/partner-korea-heritage-service.jpg" alt="Korea Heritage Service" class="ds-partner-logo">
-              <img src="/cubig-homepage-design-system/reference/images/partner-ministry-of-data-and-statistics.png" alt="Ministry of Data and Statistics" class="ds-partner-logo">
-
-              <!-- Set 2 (clone — populated by JS) -->
-
-            </div>
-          </div>
-        </div>
-
       </div>
+
+      <!-- Cert Grid — DS Official (.ds-cert-grid) -->
+      <div class="ds-cert-grid" aria-label="Certifications and awards">
+        <div class="ds-cert-grid__track">
+
+          <!-- Certifications -->
+          <article class="ds-cert-card">
+            <span class="ds-cert-card__group">Certifications</span>
+            <div class="ds-cert-card__wreath">
+              <img class="ds-cert-card__wreath-left" src="/cubig-homepage-design-system/reference/graphics/cert-left.png" alt="">
+              <span class="ds-cert-card__wreath-text">Information Security Fast Track</span>
+              <img class="ds-cert-card__wreath-right" src="/cubig-homepage-design-system/reference/graphics/cert-right.png" alt="">
+            </div>
+            <span class="ds-cert-card__org">KISA</span>
+            <span class="ds-cert-card__year">2024</span>
+            <img class="ds-cert-card__logo" src="/cubig-homepage-design-system/reference/graphics/cert-kisa.png" alt="KISA">
+          </article>
+
+          <article class="ds-cert-card">
+            <span class="ds-cert-card__group">Certifications</span>
+            <div class="ds-cert-card__wreath">
+              <img class="ds-cert-card__wreath-left" src="/cubig-homepage-design-system/reference/graphics/cert-left.png" alt="">
+              <span class="ds-cert-card__wreath-text">GS Certification</span>
+              <img class="ds-cert-card__wreath-right" src="/cubig-homepage-design-system/reference/graphics/cert-right.png" alt="">
+            </div>
+            <span class="ds-cert-card__org">TTA</span>
+            <span class="ds-cert-card__year">2025</span>
+            <img class="ds-cert-card__logo" src="/cubig-homepage-design-system/reference/graphics/cert-gs.png" alt="GS Certification">
+          </article>
+
+          <article class="ds-cert-card">
+            <span class="ds-cert-card__group">Certifications</span>
+            <div class="ds-cert-card__wreath">
+              <img class="ds-cert-card__wreath-left" src="/cubig-homepage-design-system/reference/graphics/cert-left.png" alt="">
+              <span class="ds-cert-card__wreath-text">ISO/IEC 27001 (ISMS)</span>
+              <img class="ds-cert-card__wreath-right" src="/cubig-homepage-design-system/reference/graphics/cert-right.png" alt="">
+            </div>
+            <span class="ds-cert-card__org">ISO</span>
+            <span class="ds-cert-card__year">2026</span>
+            <img class="ds-cert-card__logo" src="/cubig-homepage-design-system/reference/graphics/cert-iso.png" alt="ISO/IEC 27001">
+          </article>
+
+          <article class="ds-cert-card">
+            <span class="ds-cert-card__group">Certifications</span>
+            <div class="ds-cert-card__wreath">
+              <img class="ds-cert-card__wreath-left" src="/cubig-homepage-design-system/reference/graphics/cert-left.png" alt="">
+              <span class="ds-cert-card__wreath-text">ISO/IEC 42001 (AIMS)</span>
+              <img class="ds-cert-card__wreath-right" src="/cubig-homepage-design-system/reference/graphics/cert-right.png" alt="">
+            </div>
+            <span class="ds-cert-card__org">ISO</span>
+            <span class="ds-cert-card__year">2026</span>
+            <img class="ds-cert-card__logo" src="/cubig-homepage-design-system/reference/graphics/cert-iso.png" alt="ISO/IEC 42001">
+          </article>
+
+          <!-- Awards -->
+          <article class="ds-cert-card">
+            <span class="ds-cert-card__group">Awards</span>
+            <div class="ds-cert-card__wreath">
+              <img class="ds-cert-card__wreath-left" src="/cubig-homepage-design-system/reference/graphics/cert-left.png" alt="">
+              <span class="ds-cert-card__wreath-text">Information Security Innovation Award</span>
+              <img class="ds-cert-card__wreath-right" src="/cubig-homepage-design-system/reference/graphics/cert-right.png" alt="">
+            </div>
+            <span class="ds-cert-card__org">Ministry of Science &amp; ICT</span>
+            <span class="ds-cert-card__year">2024</span>
+            <img class="ds-cert-card__logo" src="/cubig-homepage-design-system/reference/graphics/awards-ministry-of-science-and-ict.jpg" alt="Ministry of Science & ICT">
+          </article>
+
+          <article class="ds-cert-card">
+            <span class="ds-cert-card__group">Awards</span>
+            <div class="ds-cert-card__wreath">
+              <img class="ds-cert-card__wreath-left" src="/cubig-homepage-design-system/reference/graphics/cert-left.png" alt="">
+              <span class="ds-cert-card__wreath-text">Startup World Cup — Finalist</span>
+              <img class="ds-cert-card__wreath-right" src="/cubig-homepage-design-system/reference/graphics/cert-right.png" alt="">
+            </div>
+            <span class="ds-cert-card__org">Startup World Cup</span>
+            <span class="ds-cert-card__year">2025</span>
+            <img class="ds-cert-card__logo" src="/cubig-homepage-design-system/reference/graphics/cert-startupworldcup.png" alt="Startup World Cup">
+          </article>
+
+          <article class="ds-cert-card">
+            <span class="ds-cert-card__group">Awards</span>
+            <div class="ds-cert-card__wreath">
+              <img class="ds-cert-card__wreath-left" src="/cubig-homepage-design-system/reference/graphics/cert-left.png" alt="">
+              <span class="ds-cert-card__wreath-text">Next Rise — Global Innovator</span>
+              <img class="ds-cert-card__wreath-right" src="/cubig-homepage-design-system/reference/graphics/cert-right.png" alt="">
+            </div>
+            <span class="ds-cert-card__org">Next Rise</span>
+            <span class="ds-cert-card__year">2025</span>
+          </article>
+
+          <article class="ds-cert-card">
+            <span class="ds-cert-card__group">Awards</span>
+            <div class="ds-cert-card__wreath">
+              <img class="ds-cert-card__wreath-left" src="/cubig-homepage-design-system/reference/graphics/cert-left.png" alt="">
+              <span class="ds-cert-card__wreath-text">T Challenge 2026 — Finalist</span>
+              <img class="ds-cert-card__wreath-right" src="/cubig-homepage-design-system/reference/graphics/cert-right.png" alt="">
+            </div>
+            <span class="ds-cert-card__org">Deutsche Telekom</span>
+            <span class="ds-cert-card__year">2026</span>
+            <img class="ds-cert-card__logo" src="/cubig-homepage-design-system/reference/images/partner-deutsche-telekom.avif" alt="Deutsche Telekom">
+          </article>
+
+          <article class="ds-cert-card">
+            <span class="ds-cert-card__group">Awards</span>
+            <div class="ds-cert-card__wreath">
+              <img class="ds-cert-card__wreath-left" src="/cubig-homepage-design-system/reference/graphics/cert-left.png" alt="">
+              <span class="ds-cert-card__wreath-text">AI EXPO KOREA — AI Medical Innovation Award</span>
+              <img class="ds-cert-card__wreath-right" src="/cubig-homepage-design-system/reference/graphics/cert-right.png" alt="">
+            </div>
+            <span class="ds-cert-card__org">AI EXPO KOREA</span>
+            <span class="ds-cert-card__year">2025</span>
+            <img class="ds-cert-card__logo" src="/cubig-homepage-design-system/reference/graphics/awards-koreaia.png" alt="AI EXPO KOREA">
+          </article>
+
+          <!-- Recognition -->
+          <article class="ds-cert-card">
+            <span class="ds-cert-card__group">Recognition</span>
+            <div class="ds-cert-card__wreath">
+              <img class="ds-cert-card__wreath-left" src="/cubig-homepage-design-system/reference/graphics/cert-left.png" alt="">
+              <span class="ds-cert-card__wreath-text">Emerging AI+X Top 100</span>
+              <img class="ds-cert-card__wreath-right" src="/cubig-homepage-design-system/reference/graphics/cert-right.png" alt="">
+            </div>
+            <span class="ds-cert-card__org">—</span>
+            <span class="ds-cert-card__year">2026</span>
+          </article>
+
+          <article class="ds-cert-card">
+            <span class="ds-cert-card__group">Recognition</span>
+            <div class="ds-cert-card__wreath">
+              <img class="ds-cert-card__wreath-left" src="/cubig-homepage-design-system/reference/graphics/cert-left.png" alt="">
+              <span class="ds-cert-card__wreath-text">Representative Vendor, Hyper-Synthetic Data</span>
+              <img class="ds-cert-card__wreath-right" src="/cubig-homepage-design-system/reference/graphics/cert-right.png" alt="">
+            </div>
+            <span class="ds-cert-card__org">Gartner</span>
+            <span class="ds-cert-card__year">2025</span>
+            <img class="ds-cert-card__logo" src="/cubig-homepage-design-system/reference/graphics/cert-gartner.svg.png" alt="Gartner">
+          </article>
+
+        </div>
+      </div>
+
+      <!-- Partner Grid — DS Official (.ds-partner-grid) -->
+      <div class="ds-container">
+        <p class="ds-partner-grid__label">Trusted by enterprise &amp; government</p>
+      </div>
+      <div class="ds-partner-grid" aria-label="Partner logos">
+        <div class="ds-partner-grid__track">
+          <div class="ds-partner-item">
+            <img class="ds-partner-item__logo" src="/cubig-homepage-design-system/reference/images/partner-gartner.png" alt="Gartner">
+            <span class="ds-partner-item__name">Gartner</span>
+          </div>
+          <div class="ds-partner-item">
+            <img class="ds-partner-item__logo" src="/cubig-homepage-design-system/reference/images/partner-navercloud.avif" alt="Naver Cloud">
+            <span class="ds-partner-item__name">Naver Cloud</span>
+          </div>
+          <div class="ds-partner-item">
+            <img class="ds-partner-item__logo" src="/cubig-homepage-design-system/reference/images/partner-sktelecom.avif" alt="SK Telecom">
+            <span class="ds-partner-item__name">SK Telecom</span>
+          </div>
+          <div class="ds-partner-item">
+            <img class="ds-partner-item__logo" src="/cubig-homepage-design-system/reference/images/partner-kyobo.avif" alt="Kyobo">
+            <span class="ds-partner-item__name">Kyobo</span>
+          </div>
+          <div class="ds-partner-item">
+            <img class="ds-partner-item__logo" src="/cubig-homepage-design-system/reference/images/partner-korea army.avif" alt="ROK Army">
+            <span class="ds-partner-item__name">ROK Army</span>
+          </div>
+          <div class="ds-partner-item">
+            <img class="ds-partner-item__logo" src="/cubig-homepage-design-system/reference/images/partner-korea-airforce.avif" alt="ROK Air Force">
+            <span class="ds-partner-item__name">ROK Air Force</span>
+          </div>
+          <div class="ds-partner-item">
+            <img class="ds-partner-item__logo" src="/cubig-homepage-design-system/reference/images/partner-eumc.avif" alt="EUMC">
+            <span class="ds-partner-item__name">EUMC</span>
+          </div>
+          <div class="ds-partner-item">
+            <img class="ds-partner-item__logo" src="/cubig-homepage-design-system/reference/images/partner-deutsche-telekom.avif" alt="Deutsche Telekom">
+            <span class="ds-partner-item__name">Deutsche Telekom</span>
+          </div>
+          <div class="ds-partner-item">
+            <img class="ds-partner-item__logo" src="/cubig-homepage-design-system/reference/images/partner-claroty.png" alt="Claroty">
+            <span class="ds-partner-item__name">Claroty</span>
+          </div>
+          <div class="ds-partner-item">
+            <img class="ds-partner-item__logo" src="/cubig-homepage-design-system/reference/images/partner-korea-heritage-service.jpg" alt="Korea Heritage Service">
+            <span class="ds-partner-item__name">Korea Heritage Service</span>
+          </div>
+          <div class="ds-partner-item">
+            <img class="ds-partner-item__logo" src="/cubig-homepage-design-system/reference/images/partner-ministry-of-data-and-statistics.png" alt="Ministry of Data and Statistics">
+            <span class="ds-partner-item__name">Ministry of Data and Statistics</span>
+          </div>
+        </div>
+      </div>
+
     </section>
 
     <!-- =====================================================
@@ -1976,32 +2038,26 @@
     }
 
     // =====================================================
-    // Cert Marquee — clone track for infinite loop
+    // Cert Grid — seamless loop (DS official pattern)
     // =====================================================
-    (function() {
-      var certTrack = document.getElementById('cert-track');
-      if (!certTrack) return;
-      var cards = Array.from(certTrack.querySelectorAll('.ds-cert-card'));
-      cards.forEach(function(card) {
-        var clone = card.cloneNode(true);
+    document.querySelectorAll('.ds-cert-grid__track').forEach(function(track) {
+      Array.from(track.children).forEach(function(item) {
+        var clone = item.cloneNode(true);
         clone.setAttribute('aria-hidden', 'true');
-        certTrack.appendChild(clone);
+        track.appendChild(clone);
       });
-    })();
+    });
 
     // =====================================================
-    // Partner Marquee — clone track for infinite loop
+    // Partner Grid — seamless loop (DS official pattern)
     // =====================================================
-    (function() {
-      var partnerTrack = document.getElementById('partner-track');
-      if (!partnerTrack) return;
-      var logos = Array.from(partnerTrack.querySelectorAll('.ds-partner-logo'));
-      logos.forEach(function(logo) {
-        var clone = logo.cloneNode(true);
+    document.querySelectorAll('.ds-partner-grid__track').forEach(function(track) {
+      Array.from(track.children).forEach(function(item) {
+        var clone = item.cloneNode(true);
         clone.setAttribute('aria-hidden', 'true');
-        partnerTrack.appendChild(clone);
+        track.appendChild(clone);
       });
-    })();
+    });
   </script>
 </body>
 </html>
