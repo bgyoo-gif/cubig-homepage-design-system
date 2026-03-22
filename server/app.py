@@ -121,7 +121,17 @@ async def upload_file(file: UploadFile = File(...)):
         "job": job,
     })
 
-    return {"job_id": job["id"], "filename": file.filename, "message": "File uploaded. Waiting for processing."}
+    # Auto-run pipeline in background
+    import threading
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("pipeline", Path(__file__).parent / "pipeline.py")
+    pipeline_mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(pipeline_mod)
+    run_pipeline = pipeline_mod.run_pipeline
+    thread = threading.Thread(target=run_pipeline, args=(job["id"],), daemon=True)
+    thread.start()
+
+    return {"job_id": job["id"], "filename": file.filename, "message": "Pipeline started automatically."}
 
 
 @app.get("/api/jobs")
