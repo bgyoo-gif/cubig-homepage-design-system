@@ -52,7 +52,7 @@
   1. h1 타이틀 (중앙 정렬)
   2. description (중앙 정렬, max-width 반응형)
   3. 보조 텍스트: "Secure LLM usage / Prompt data leakage prevention / Enterprise LLM privacy / PII anonymization at runtime" -- ds-body-s, color text-tertiary
-  4. 스크린샷 프레임 (ds-bg--paint-blue-iridescent) > 스크린샷 이미지 (reference/images/screenshot-llmcapsule.avif)
+  4. 스크린샷 프레임 (ds-bg--paint-blue-iridescent) > 스크린샷 이미지 (https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/screenshot-llmcapsule.avif)
   5. CTA 버튼 (ds-hero__actions-below, 중앙 정렬):
      - "See it remove a PII blocker live" -- ds-btn--primary ds-btn--md (mailto 링크)
      - "llmcapsule.ai" -- ds-btn--secondary ds-btn--md (외부 링크, target="_blank")
@@ -272,8 +272,8 @@
 **9-A: Product Split (SynTitan 연동)**
 - **사용 컴포넌트**: ds-product-split
 - **좌측 visual**:
-  - 로고: reference/images/logo-syntitan.png
-  - 스크린샷: reference/images/screenshot-syntitan.webp
+  - 로고: https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/logo-syntitan.png
+  - 스크린샷: https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/screenshot-syntitan.webp
   - 배경: ds-bg--gradient-cream-jade (visual 영역에 적용)
 - **우측 content**:
   - 타이틀: "Full execution traceability for LLM workflows"
@@ -313,21 +313,21 @@
 - **사용 컴포넌트**: ds-section-header--underline, ds-card-grid--3col, ds-card--case-study
 - **케이스 3개** (graphic 세트 통일):
   1. **Deutsche Telekom** (Global Telco)
-     - 이미지: reference/graphics/graphic-telecom.png
+     - 이미지: https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/graphic-telecom.png
      - 카테고리: Global Telco
      - 타이틀: Deutsche Telekom
      - badge: "T Challenge 2026 -- Top 12" (ds-card__badge--teal)
      - 설명 불릿(ds-bullet--dot): "Top 12 finalist in T Challenge 2026 for enterprise LLM data protection. Evaluated across telco-scale sensitive data workflows -- customer care, network ops, billing AI."
      - tags: #LLM Capsule
   2. **Claroty** (Global OT Security)
-     - 이미지: reference/graphics/graphic-ai-intelligence.png
+     - 이미지: https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/graphic-ai-intelligence.png
      - 카테고리: Global OT Security
      - 타이틀: Claroty
      - badge: "OT Infrastructure AI" (ds-card__badge--brand)
      - 설명 불릿: "OT infrastructure AI without exposing critical operational technology data. LLM Capsule anonymizes sensitive OT network identifiers at the interaction layer."
      - tags: #LLM Capsule
   3. **DB Insurance / EUMC / Shin&Kim** (Finance / Health / Legal)
-     - 이미지: reference/graphics/graphic-shopping.png
+     - 이미지: https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/graphic-shopping.png
      - 카테고리: Finance / Health / Legal
      - 타이틀: DB Insurance / EUMC / Shin&Kim
      - badge: "Finance / Health / Legal" (ds-card__badge--teal)

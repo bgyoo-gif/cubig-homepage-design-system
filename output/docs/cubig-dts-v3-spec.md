@@ -213,7 +213,7 @@
 | 3. Synthetic Generation | Synthetic Generation | New records are sampled from the DP-protected model. Output is statistically representative but contains no real personal information. | - |
 | 4. Fidelity Validation | Fidelity Validation | Generated data is validated against the original distribution. Quality and utility metrics confirm suitability for training and validation use. | - |
 
-- 각 탭 우측: 스크린샷 placeholder `<img src="reference/images/screenshot-placeholder.svg" alt="Step N: [Tab Name] screenshot">`
+- 각 탭 우측: 스크린샷 placeholder `<img src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/screenshot-placeholder.svg" alt="Step N: [Tab Name] screenshot">`
 - 추가 텍스트 (DTS applies DP during the generation process itself...): ds-step-tabs 패널 내 description에 포함
 - JS: data-step-tabs / data-tab / data-panel 탭 전환 필수
 
@@ -392,12 +392,12 @@ DS 공식 인증 목록 전체 사용:
 11. Representative Vendor, Hyper-Synthetic Data / Gartner / 2025 / cert-gartner.svg.png
 
 - 마키: 우->좌 무한 스크롤, 2벌 복제, hover 시 일시정지
-- 이미지: reference/graphics/cert-left.png, cert-right.png (월계관)
+- 이미지: https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-left.png, cert-right.png (월계관)
 
 **[I] Partner Grid (마키, Cert Grid 아래):**
 DS 공식 파트너 11개 전체 사용 (A타입 목록 무시):
 - Gartner, Naver Cloud, SK Telecom, Kyobo, ROK Army, ROK Air Force, EUMC, Deutsche Telekom, Claroty, Korea Heritage Service, Ministry of Data and Statistics
-- 이미지: reference/images/partner-*.avif|png|jpg
+- 이미지: https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-*.avif|png|jpg
 - 마키: 우->좌 무한 스크롤, 2벌 복제
 
 - 반응형:

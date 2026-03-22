@@ -93,7 +93,7 @@ grep 결과 (라인 325, 434, 480, 496, 521, 534, 728, 752, 761, 763, 765)
 | 1243 | `style="background:var(--ds-color-neutral-050);border-radius:12px;..."` (placeholder) | **결함** — CSS 클래스 분리 필요 |
 | 1260 | (동일 패턴) | **결함** |
 | 1277 | (동일 패턴) | **결함** |
-| 1517 | `style="background-image:url('reference/images/bg-gradient-cream-jade.jpg');"` | **결함** — ds-bg-- 클래스로 분리 필요 |
+| 1517 | `style="background-image:url('https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/bg-gradient-cream-jade.jpg');"` | **결함** — ds-bg-- 클래스로 분리 필요 |
 
 ### ds-text--brand 적용 여부
 
@@ -310,7 +310,7 @@ CAT-4 반응형 breakpoint: 전항목 PASS
 - line 1187: `.ds-section--banner-wrapper { padding: 0; }` 클래스 생성
 - line 1201: `.ds-banner__secondary-text { margin-top: var(--ds-space-md); font-size: var(--ds-text-sm); color: var(--ds-color-text-secondary); }` 클래스 생성
 - lines 1243·1260·1277: `.ds-screenshot-placeholder { ... }` 클래스 생성
-- line 1517: `.ds-bg--gradient-cream-jade { background-image: url('reference/images/bg-gradient-cream-jade.jpg'); }` CSS 클래스로 이동
+- line 1517: `.ds-bg--gradient-cream-jade { background-image: url('https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/bg-gradient-cream-jade.jpg'); }` CSS 클래스로 이동
 
 **Q05**: line 2053 수정
 ```css

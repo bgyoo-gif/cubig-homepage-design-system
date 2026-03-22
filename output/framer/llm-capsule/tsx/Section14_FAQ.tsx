@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { addPropertyControls, ControlType } from "framer"
 
-const IMAGE_BASE = "https://cubig.ai/assets"
+const IMAGE_BASE = "https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images"
 
 interface FaqItem {
   question: string
