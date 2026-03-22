@@ -2813,37 +2813,24 @@ function renderTree(data) {
 
 function loadOutputFiles() {
   var status = document.getElementById('output-status');
-  fetch(apiBase + '/api/tree')
-    .then(function(r) { return r.json(); })
+
+  // 먼저 정적 테이블을 즉시 렌더링 (깜빡임 방지)
+  renderStaticTable();
+  if (status) status.textContent = '정적 목록';
+
+  // 서버 연결 시도 — 성공하면 실시간 데이터로 교체
+  var controller = new AbortController();
+  var timeout = setTimeout(function() { controller.abort(); }, 3000);
+
+  fetch(apiBase + '/api/tree', { signal: controller.signal })
+    .then(function(r) { clearTimeout(timeout); return r.json(); })
     .then(function(data) {
       renderTree(data);
       if (status) status.textContent = 'LIVE — ' + new Date().toLocaleTimeString();
     })
     .catch(function() {
-      // fallback: /api/files
-      fetch(apiBase + '/api/files').then(function(r) { return r.json(); }).then(function(files) {
-        var container = document.getElementById('output-file-list');
-        var html = '<table style="width:100%;border-collapse:collapse;font-size:13px;">';
-        html += '<thead><tr style="border-bottom:2px solid var(--ds-color-border-default);text-align:left;">';
-        html += '<th style="padding:10px 12px;font-size:11px;font-weight:600;color:var(--ds-color-text-tertiary);letter-spacing:0.08em;text-transform:uppercase;">File</th>';
-        html += '<th style="padding:10px 12px;font-size:11px;font-weight:600;color:var(--ds-color-text-tertiary);letter-spacing:0.08em;text-transform:uppercase;">Type</th>';
-        html += '<th style="padding:10px 12px;font-size:11px;font-weight:600;color:var(--ds-color-text-tertiary);letter-spacing:0.08em;text-transform:uppercase;">Updated</th>';
-        html += '</tr></thead><tbody>';
-        files.forEach(function(f) {
-          var ext = f.ext || f.name.split('.').pop();
-          html += '<tr style="border-bottom:1px solid var(--ds-color-surface-light);">';
-          html += '<td style="padding:8px 12px;"><a style="color:var(--ds-color-brand-primary);cursor:pointer;text-decoration:none;" onclick="openDetail(\'' + f.path + '\',\'' + f.name + '\')">' + f.name + '</a></td>';
-          html += '<td style="padding:8px 12px;">' + typeBadge(ext === '.html' ? 'html' : ext === '.tsx' ? 'tsx' : ext === '.md' ? 'md' : 'preview') + '</td>';
-          html += '<td style="padding:8px 12px;font-family:var(--ds-font-code);font-size:12px;color:var(--ds-color-text-tertiary);">' + f.modified + '</td>';
-          html += '</tr>';
-        });
-        html += '</tbody></table>';
-        container.innerHTML = html || '<div style="text-align:center;padding:48px 0;color:var(--ds-color-text-tertiary);">파일 없음</div>';
-        if (status) status.textContent = 'LIVE (flat) — ' + new Date().toLocaleTimeString();
-      }).catch(function() {
-        if (status) status.textContent = 'OFFLINE — 정적 목록 표시 중';
-        renderStaticTable();
-      });
+      clearTimeout(timeout);
+      // 서버 미연결 — 정적 테이블 유지
     });
 }
 
