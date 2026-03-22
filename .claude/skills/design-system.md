@@ -607,7 +607,7 @@ p, li, dt, dd, blockquote,
    사용법: <div class="ds-banner--full ds-bg--wave-teal"> */
 .ds-banner--full {
   width: 100%; text-align: center;
-  padding: var(--ds-space-3xl) var(--ds-space-2xl);
+  padding: var(--ds-space-xl) var(--ds-space-2xl);
   border-radius: var(--ds-radius-xl);
   background-size: cover; background-position: center;
   position: relative; overflow: hidden;
