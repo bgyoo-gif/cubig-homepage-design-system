@@ -121,6 +121,22 @@ body { font-family: var(--ds-font-base); color: var(--ds-color-text-primary); ba
 .v-placeholder__desc { font-size: 14px; color: var(--ds-color-text-secondary); }
 
 /* Output page */
+/* Output table */
+.v-output-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.v-output-table th { text-align: left; padding: 10px 12px; font-size: 11px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ds-color-text-tertiary); background: var(--ds-color-surface-light); border-bottom: 2px solid var(--ds-color-border-default); white-space: nowrap; }
+.v-output-table td { padding: 8px 12px; border-bottom: 1px solid var(--ds-color-surface-light); vertical-align: top; }
+.v-output-table tr:hover td { background: rgba(48,97,242,0.02); }
+.v-output-table .v-ot-input { font-weight: 600; color: var(--ds-color-text-primary); }
+.v-output-table .v-ot-link { color: var(--ds-color-brand-primary); cursor: pointer; text-decoration: none; font-weight: 500; }
+.v-output-table .v-ot-link:hover { text-decoration: underline; }
+.v-output-table .v-ot-date { font-family: var(--ds-font-code); font-size: 11px; color: var(--ds-color-text-tertiary); white-space: nowrap; }
+.v-output-table .v-ot-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 3px; }
+.v-output-table .v-ot-empty { color: var(--ds-color-neutral-300); }
+.v-ot-orphan-toggle { font-size: 13px; font-weight: 500; color: var(--ds-color-text-tertiary); cursor: pointer; padding: 12px 0; user-select: none; }
+.v-ot-orphan-toggle:hover { color: var(--ds-color-text-secondary); }
+.v-ot-orphan-toggle::before { content: '▸ '; }
+.v-ot-orphan-toggle--open::before { content: '▾ '; }
+
 .v-output-section { margin-bottom: 16px; }
 .v-output-section__title {
   font-family: var(--ds-font-base); font-size: 15px; font-weight: 600;
@@ -2473,18 +2489,16 @@ code, .ds-code-inline {
 </div><!-- /page-diagram-builder -->
 
 <!-- ==================== PAGE: OUTPUT ==================== -->
-<div class="v-page" id="page-output">
+<div class="v-page" id="page-output" style="max-width:1400px;margin:0 auto;">
 
   <div style="display:flex;align-items:center;justify-content:space-between;margin:32px 0 8px;">
     <h2 style="font-family:var(--ds-font-brand);font-size:28px;font-weight:700;">Output Files</h2>
     <span id="output-status" style="font-size:12px;font-family:var(--ds-font-code);color:var(--ds-color-text-tertiary);"></span>
   </div>
-  <p style="font-size:14px;color:var(--ds-color-text-secondary);margin-bottom:24px;">변환된 B타입 HTML과 Framer Code Component 파일 목록 — 서버 연결 시 실시간 업데이트</p>
+  <p style="font-size:14px;color:var(--ds-color-text-secondary);margin-bottom:24px;">Input 파일 기준 산출물 매핑 — 서버 연결 시 실시간 업데이트</p>
 
-  <!-- 실시간 알림 배너 (WebSocket으로 파일 변경 시 표시) -->
   <div id="output-toast" style="display:none;padding:10px 16px;background:rgba(14,130,76,0.06);border:1px solid rgba(14,130,76,0.15);border-radius:8px;font-size:13px;color:#0e824c;margin-bottom:16px;"></div>
 
-  <!-- 동적 파일 목록 컨테이너 -->
   <div id="output-file-list">
     <div style="text-align:center;padding:48px 0;color:var(--ds-color-text-tertiary);font-size:14px;">파일 목록을 불러오는 중...</div>
   </div>
@@ -2714,11 +2728,19 @@ var apiBase = (window.location.hostname === 'localhost' || window.location.hostn
   ? window.location.origin
   : 'https://localhost:3333';
 
-function typeBadge(type) {
-  var labels = { html: 'HTML', tsx: 'TSX', md: 'Docs', preview: 'Preview' };
-  var colors = { html: '#3061f2', tsx: '#725bea', md: '#0e824c', preview: '#636363' };
-  var bgs = { html: 'rgba(48,97,242,0.08)', tsx: 'rgba(166,23,255,0.08)', md: 'rgba(14,130,76,0.08)', preview: 'rgba(99,99,99,0.08)' };
-  return '<span style="display:inline-block;font-size:10px;font-weight:600;color:' + (colors[type]||'#636363') + ';background:' + (bgs[type]||'#f2f2f2') + ';padding:2px 8px;border-radius:4px;font-family:var(--ds-font-code);letter-spacing:0.05em;text-transform:uppercase;">' + (labels[type]||type) + '</span>';
+function fileLink(f) {
+  return '<a class="v-ot-link" onclick="openDetail(\'' + f.path + '\',\'' + f.name + '\')">' + f.name + '</a>';
+}
+function fileList(arr) {
+  if (!arr || arr.length === 0) return '<span class="v-ot-empty">—</span>';
+  return '<ul class="v-ot-list">' + arr.map(function(f) {
+    return '<li>' + fileLink(f) + '</li>';
+  }).join('') + '</ul>';
+}
+function latestDate(arr) {
+  if (!arr || arr.length === 0) return '';
+  var dates = arr.map(function(f) { return f.modified || ''; }).sort().reverse();
+  return dates[0] || '';
 }
 
 function renderTree(data) {
@@ -2728,63 +2750,64 @@ function renderTree(data) {
     return;
   }
 
-  var rows = [];
+  // Input의 updated 최신순 정렬
+  data.tree.sort(function(a, b) {
+    return (b.input.modified || '').localeCompare(a.input.modified || '');
+  });
+
+  var html = '<table class="v-output-table">';
+  html += '<thead><tr>';
+  html += '<th>Input File</th><th>Updated</th>';
+  html += '<th>Output HTML</th><th>Updated</th>';
+  html += '<th>Output TSX</th><th>Updated</th>';
+  html += '<th>Output Etc</th><th>Updated</th>';
+  html += '</tr></thead><tbody>';
 
   data.tree.forEach(function(item) {
     var inp = item.input;
     var out = item.output;
-    var allOutputs = [];
-    ['html','tsx','md','preview'].forEach(function(type) {
-      (out[type]||[]).forEach(function(f) { allOutputs.push({ file: f, type: type }); });
-    });
-    if (allOutputs.length === 0) return;
+    var etc = (out.md || []).concat(out.preview || []);
 
-    allOutputs.forEach(function(o, idx) {
-      rows.push({
-        inputName: idx === 0 ? inp.name : '',
-        inputPath: idx === 0 ? inp.path : '',
-        inputDate: idx === 0 ? inp.modified : '',
-        inputRowspan: idx === 0 ? allOutputs.length : 0,
-        type: o.type,
-        outputName: o.file.name,
-        outputPath: o.file.path,
-        outputDate: o.file.modified
-      });
-    });
-  });
-
-  // Orphans
-  if (data.orphans) {
-    ['html','tsx','md','preview'].forEach(function(type) {
-      (data.orphans[type]||[]).forEach(function(f) {
-        rows.push({ inputName: '—', inputDate: '', inputRowspan: 1, type: type, outputName: f.name, outputPath: f.path, outputDate: f.modified });
-      });
-    });
-  }
-
-  var html = '<table style="width:100%;border-collapse:collapse;font-size:13px;">';
-  html += '<thead><tr style="border-bottom:2px solid var(--ds-color-border-default);text-align:left;">';
-  html += '<th style="padding:10px 12px;font-size:11px;font-weight:600;color:var(--ds-color-text-tertiary);letter-spacing:0.08em;text-transform:uppercase;white-space:nowrap;">Input File</th>';
-  html += '<th style="padding:10px 12px;font-size:11px;font-weight:600;color:var(--ds-color-text-tertiary);letter-spacing:0.08em;text-transform:uppercase;white-space:nowrap;">Updated</th>';
-  html += '<th style="padding:10px 12px;font-size:11px;font-weight:600;color:var(--ds-color-text-tertiary);letter-spacing:0.08em;text-transform:uppercase;white-space:nowrap;">Type</th>';
-  html += '<th style="padding:10px 12px;font-size:11px;font-weight:600;color:var(--ds-color-text-tertiary);letter-spacing:0.08em;text-transform:uppercase;">Output File</th>';
-  html += '<th style="padding:10px 12px;font-size:11px;font-weight:600;color:var(--ds-color-text-tertiary);letter-spacing:0.08em;text-transform:uppercase;white-space:nowrap;">Updated</th>';
-  html += '</tr></thead><tbody>';
-
-  rows.forEach(function(r) {
-    html += '<tr style="border-bottom:1px solid var(--ds-color-surface-light);">';
-    if (r.inputRowspan > 0) {
-      var dynInputLink = r.inputPath ? '<a href="' + r.inputPath + '" target="_blank" style="color:var(--ds-color-text-primary);text-decoration:none;" onmouseover="this.style.color=\'var(--ds-color-brand-primary)\'" onmouseout="this.style.color=\'var(--ds-color-text-primary)\'">' + r.inputName + '</a>' : r.inputName;
-      html += '<td style="padding:8px 12px;font-weight:500;vertical-align:top;white-space:nowrap;" rowspan="' + r.inputRowspan + '">' + dynInputLink + '</td>';
-      html += '<td style="padding:8px 12px;font-family:var(--ds-font-code);font-size:12px;color:var(--ds-color-text-tertiary);vertical-align:top;white-space:nowrap;" rowspan="' + r.inputRowspan + '">' + r.inputDate + '</td>';
-    }
-    html += '<td style="padding:8px 12px;">' + typeBadge(r.type) + '</td>';
-    html += '<td style="padding:8px 12px;"><a style="color:var(--ds-color-brand-primary);cursor:pointer;text-decoration:none;" onmouseover="this.style.textDecoration=\'underline\'" onmouseout="this.style.textDecoration=\'none\'" onclick="openDetail(\'' + r.outputPath + '\',\'' + r.outputName + '\')">' + r.outputName + '</a></td>';
-    html += '<td style="padding:8px 12px;font-family:var(--ds-font-code);font-size:12px;color:var(--ds-color-text-tertiary);white-space:nowrap;">' + r.outputDate + '</td>';
+    html += '<tr>';
+    html += '<td class="v-ot-input">' + inp.name + '</td>';
+    html += '<td class="v-ot-date">' + (inp.modified || '') + '</td>';
+    html += '<td>' + fileList(out.html) + '</td>';
+    html += '<td class="v-ot-date">' + latestDate(out.html) + '</td>';
+    html += '<td>' + fileList(out.tsx) + '</td>';
+    html += '<td class="v-ot-date">' + latestDate(out.tsx) + '</td>';
+    html += '<td>' + fileList(etc) + '</td>';
+    html += '<td class="v-ot-date">' + latestDate(etc) + '</td>';
     html += '</tr>';
   });
 
   html += '</tbody></table>';
+
+  // Orphans — 접기/펼치기
+  if (data.orphans) {
+    var orphanEtc = (data.orphans.md || []).concat(data.orphans.preview || []);
+    var hasOrphans = (data.orphans.html || []).length + (data.orphans.tsx || []).length + orphanEtc.length;
+    if (hasOrphans > 0) {
+      html += '<div class="v-ot-orphan-toggle" onclick="this.classList.toggle(\'v-ot-orphan-toggle--open\');this.nextElementSibling.style.display=this.nextElementSibling.style.display===\'none\'?\'block\':\'none\'">미분류 파일 (' + hasOrphans + ')</div>';
+      html += '<table class="v-output-table" style="display:none;">';
+      html += '<thead><tr>';
+      html += '<th>Source</th><th></th>';
+      html += '<th>Output HTML</th><th>Updated</th>';
+      html += '<th>Output TSX</th><th>Updated</th>';
+      html += '<th>Output Etc</th><th>Updated</th>';
+      html += '</tr></thead><tbody>';
+      html += '<tr>';
+      html += '<td class="v-ot-input" style="color:var(--ds-color-text-tertiary);">—</td><td></td>';
+      html += '<td>' + fileList(data.orphans.html) + '</td>';
+      html += '<td class="v-ot-date">' + latestDate(data.orphans.html) + '</td>';
+      html += '<td>' + fileList(data.orphans.tsx) + '</td>';
+      html += '<td class="v-ot-date">' + latestDate(data.orphans.tsx) + '</td>';
+      html += '<td>' + fileList(orphanEtc) + '</td>';
+      html += '<td class="v-ot-date">' + latestDate(orphanEtc) + '</td>';
+      html += '</tr>';
+      html += '</tbody></table>';
+    }
+  }
+
   container.innerHTML = html;
 }
 
