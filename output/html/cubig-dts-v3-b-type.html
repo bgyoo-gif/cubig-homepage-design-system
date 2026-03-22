@@ -417,7 +417,8 @@
       color: var(--ds-color-text-secondary);
       line-height: var(--ds-leading-relaxed);
       max-width: 100%;
-      margin-bottom: var(--ds-space-md);
+      margin: 0 auto var(--ds-space-md);
+      text-wrap: pretty;
     }
     @media (min-width: 1024px) { .ds-hero__description { max-width: 720px; } }
     @media (min-width: 1440px) { .ds-hero__description { max-width: 860px; } }
@@ -922,10 +923,10 @@
        28. Section 10 — Cert Grid (Marquee)
     ======================================================== */
     .ds-marquee-outer {
-      overflow: hidden; width: 100%; position: relative;
+      overflow: hidden; width: 100vw; margin-left: calc(-50vw + 50%); position: relative;
     }
     .ds-marquee-track {
-      display: flex; gap: var(--ds-space-lg);
+      display: flex; gap: var(--ds-space-lg); width: max-content;
       animation: ds-marquee-scroll 32s linear infinite;
       will-change: transform;
     }
@@ -971,7 +972,7 @@
 
     /* Partner logos marquee */
     .ds-partner-track {
-      display: flex; gap: var(--ds-space-xl);
+      display: flex; gap: var(--ds-space-xl); width: max-content;
       animation: ds-marquee-scroll 28s linear infinite;
       will-change: transform;
     }
