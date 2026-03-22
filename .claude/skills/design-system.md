@@ -619,7 +619,7 @@ p, li, dt, dd, blockquote,
 }
 .ds-banner--full::before {
   content: ''; position: absolute; inset: 0;
-  background: rgba(255,255,255,0.72); z-index: 0;
+  background: rgba(255,255,255,0.45); z-index: 0;
 }
 .ds-banner--full > * { position: relative; z-index: 1; }
 /* 인라인 텍스트도 z-index 확보 (자식 요소 없이 직접 텍스트일 때) */
@@ -2113,9 +2113,9 @@ drawArrows() 함수 규칙:
 }
 
 .ds-section--bg-img { position: relative; background-size: cover; background-position: center; overflow: hidden; }
-.ds-section--bg-img::before { content: ''; position: absolute; inset: 0; background: rgba(255,255,255,0.72); z-index: 0; }
+.ds-section--bg-img::before { content: ''; position: absolute; inset: 0; background: rgba(255,255,255,0.45); z-index: 0; }
 .ds-section--bg-img > * { position: relative; z-index: 1; }
-.ds-section--bg-img-dark::before { background: rgba(0,0,0,0.55); }
+.ds-section--bg-img-dark::before { background: rgba(0,0,0,0.35); }
 
 .ds-bg--green-wave { background-image: var(--ds-bg-img-green-wave); }
 .ds-bg--lavender   { background-image: var(--ds-bg-img-lavender); }
