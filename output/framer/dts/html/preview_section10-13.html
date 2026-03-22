@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DTS Section 10–13 — Framer Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Oxanium:wght@700&family=Fragment+Mono:ital@0;1&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "DM Sans", sans-serif;
+      color: #0f0f0f;
+      background: #ffffff;
+      -webkit-font-smoothing: antialiased;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+    img, video { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── Container ── */
+    .container {
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 16px;
+      box-sizing: border-box;
+    }
+    @media (min-width: 768px)  { .container { padding: 0 32px; } }
+    @media (min-width: 1440px) { .container { padding: 0 120px; max-width: 1440px; } }
+
+    /* ── Section base ── */
+    .ds-section { width: 100%; padding: 80px 0; overflow: hidden; }
+
+    /* ── Section Header ── */
+    .section-header {
+      text-align: center;
+      padding-bottom: 24px;
+      border-bottom: 1px solid #e6e7e9;
+      margin-bottom: 32px;
+    }
+    .section-title {
+      font-family: "DM Sans", sans-serif;
+      font-size: 40px;
+      font-weight: 700;
+      color: #0f0f0f;
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+      margin: 0;
+      text-wrap: balance;
+    }
+    .brand   { color: #725bea; }
+    @media (max-width: 767px) {
+      .section-header { text-align: left; }
+      .section-title  { font-size: 28px; }
+    }
+    @media (min-width: 768px)  { .section-title { font-size: 36px; } }
+    @media (min-width: 1024px) { .section-title { font-size: 40px; } }
+
+    /* ========================================================
+       SECTION 10 — Cert Grid + Partner Grid
+    ======================================================== */
+    @keyframes marquee {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* Cert Grid */
+    .cert-grid {
+      width: 100vw;
+      margin-left: calc(-50vw + 50%);
+      overflow: hidden;
+      padding: 32px 0;
+    }
+    .cert-track {
+      display: flex;
+      gap: 24px;
+      align-items: stretch;
+      width: max-content;
+      animation: marquee 40s linear infinite;
+    }
+    .cert-track:hover { animation-play-state: paused; }
+    @media (max-width: 767px) {
+      .cert-track { gap: 16px; animation-duration: 25s; }
+    }
+
+    .cert-card {
+      background: #ffffff;
+      border: 1px solid #e6e7e9;
+      border-radius: 24px;
+      padding: 24px 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 8px;
+      flex-shrink: 0;
+      width: 200px;
+    }
+    @media (max-width: 767px) { .cert-card { width: 170px; padding: 16px; } }
+
+    .cert-group {
+      font-family: "Fragment Mono", monospace;
+      font-size: 10px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #725bea;
+      margin-bottom: 4px;
+    }
+    .cert-wreath {
+      position: relative;
+      width: 160px;
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    @media (max-width: 767px) { .cert-wreath { width: 130px; height: 96px; } }
+    .cert-wreath-left,
+    .cert-wreath-right {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      width: 34%;
+      object-fit: contain;
+    }
+    .cert-wreath-left  { left: -6px;  object-position: right; }
+    .cert-wreath-right { right: -6px; object-position: left;  }
+    .cert-wreath-text {
+      position: relative;
+      z-index: 1;
+      font-size: 14px;
+      font-weight: 700;
+      color: #0f0f0f;
+      text-align: center;
+      line-height: 1.2;
+      max-width: 90px;
+    }
+    @media (max-width: 767px) { .cert-wreath-text { font-size: 12px; max-width: 72px; } }
+    .cert-org  { font-size: 12px; color: #636363; }
+    .cert-year { font-size: 12px; color: #9c9c9c; font-family: "Fragment Mono", monospace; }
+    .cert-logo {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+      margin-top: auto;
+      margin-bottom: -10px;
+    }
+    @media (max-width: 767px) { .cert-logo { width: 48px; height: 48px; } }
+
+    /* Partner Grid */
+    .partner-label {
+      font-family: "Fragment Mono", monospace;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #9c9c9c;
+      text-align: center;
+      margin-bottom: 24px;
+      margin-top: 48px;
+    }
+    .partner-grid {
+      width: 100vw;
+      margin-left: calc(-50vw + 50%);
+      overflow: hidden;
+      padding: 32px 0;
+    }
+    .partner-track {
+      display: flex;
+      gap: 64px;
+      align-items: center;
+      width: max-content;
+      animation: marquee 30s linear infinite;
+    }
+    .partner-track:hover { animation-play-state: paused; }
+    @media (max-width: 767px) { .partner-track { gap: 48px; animation-duration: 20s; } }
+    .partner-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .partner-logo { width: 120px; height: 100px; object-fit: contain; }
+    @media (max-width: 767px) { .partner-logo { width: 100px; height: 75px; } }
+    .partner-name { font-size: 12px; color: #9c9c9c; text-align: center; white-space: nowrap; }
+
+    /* ========================================================
+       SECTION 11 — Operational Example Banner
+    ======================================================== */
+    .s11-banner {
+      width: 100%;
+      text-align: center;
+      padding: 32px 48px;
+      border-radius: 40px;
+      background-image: url('https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/bg-peach.png');
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      overflow: hidden;
+      color: #0f0f0f;
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 1.7;
+      isolation: isolate;
+    }
+    .s11-banner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.45);
+      z-index: 0;
+    }
+    .s11-banner-text {
+      position: relative;
+      z-index: 1;
+      margin: 0;
+      text-wrap: pretty;
+    }
+    @media (max-width: 767px) {
+      .s11-banner { padding: 24px 20px; border-radius: 24px; font-size: 16px; }
+    }
+    .s11-operational-body { max-width: 860px; margin: 32px auto 0; }
+    .s11-body-text {
+      font-size: 16px;
+      font-weight: 500;
+      color: #0f0f0f;
+      line-height: 1.5;
+      margin: 0;
+      text-wrap: pretty;
+    }
+    .s11-tagline {
+      font-size: 12px;
+      font-weight: 500;
+      color: #9c9c9c;
+      line-height: 1.5;
+      margin-top: 16px;
+      text-align: center;
+    }
+    .s11-cta { margin-top: 24px; text-align: center; }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border-radius: 9999px;
+      font-family: "DM Sans", sans-serif;
+      font-weight: 500;
+      font-size: 14px;
+      cursor: pointer;
+      border: 1px solid #e6e7e9;
+      background-color: transparent;
+      color: #0f0f0f;
+      padding: 8px 16px;
+      text-decoration: none;
+      transition: background-color 0.2s;
+      white-space: nowrap;
+    }
+    .btn-secondary:hover { background-color: #f7f7f7; }
+
+    /* ========================================================
+       SECTION 12 — FAQ Accordion
+    ======================================================== */
+    .ac-list { display: flex; flex-direction: column; gap: 2px; }
+    .ac-card {
+      border: 1px solid #e6e7e9;
+      border-radius: 8px;
+      background-color: #ffffff;
+      overflow: hidden;
+      transition: background-color 0.2s;
+    }
+    .ac-card:hover { background-color: #f7f7f7; }
+    .ac-header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 16px;
+      padding: 24px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .ac-title {
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 1.2;
+      color: #0f0f0f;
+      word-break: keep-all;
+    }
+    @media (max-width: 767px) {
+      .ac-title  { font-size: 16px; }
+      .ac-header { padding: 16px; }
+    }
+    .ac-toggle {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      border: 0.5px solid #e6e7e9;
+      background: #f7f7f7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      position: relative;
+    }
+    .ac-toggle:hover { border-color: #171719; background: #f2f2f2; }
+    .ac-icon {
+      width: 12px;
+      height: 12px;
+      position: relative;
+      flex-shrink: 0;
+      display: block;
+    }
+    .ac-icon::before,
+    .ac-icon::after {
+      content: '';
+      position: absolute;
+      background: #cacccf;
+      border-radius: 1px;
+      transition: opacity 0.2s;
+    }
+    .ac-icon::before {
+      width: 10px; height: 1.5px;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .ac-icon::after {
+      width: 1.5px; height: 10px;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .ac-card.is-open .ac-icon::after  { opacity: 0; }
+    .ac-card.is-open .ac-icon::before { background: #636363; }
+    .ac-body {
+      display: none;
+      padding: 24px;
+      border-top: 1px solid #e6e7e9;
+      background: #f7f7f7;
+    }
+    .ac-card.is-open .ac-body { display: block; }
+    .ac-body-text {
+      font-size: 16px;
+      color: #636363;
+      line-height: 1.7;
+      margin: 0;
+      text-wrap: pretty;
+      word-break: keep-all;
+    }
+    @media (max-width: 767px) {
+      .ac-body { padding: 16px; }
+      .ac-body-text { font-size: 14px; }
+    }
+
+    /* ========================================================
+       SECTION 13 — CTA Band
+    ======================================================== */
+    .cta-band {
+      width: 100%;
+      background-image: url('https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/bg-wave-teal-blue.png');
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      overflow: hidden;
+      padding: 80px 16px;
+      text-align: center;
+    }
+    .cta-band::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(10, 10, 20, 0.62);
+      z-index: 0;
+    }
+    .cta-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+    .cta-title {
+      font-size: 40px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+      text-wrap: balance;
+      margin: 0;
+    }
+    .cta-title-highlight { color: #c6c5fa; }
+    .cta-description {
+      font-size: 18px;
+      color: #ffffff;
+      line-height: 1.7;
+      opacity: 0.9;
+      margin: 0;
+      text-wrap: pretty;
+    }
+    .cta-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
+    .btn-white {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border-radius: 9999px;
+      font-family: "DM Sans", sans-serif;
+      font-weight: 500;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      background-color: #ffffff;
+      color: #0f0f0f;
+      padding: 12px 32px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+      white-space: nowrap;
+    }
+    .btn-white:hover { opacity: 0.9; }
+    .cta-footnote { font-size: 12px; color: rgba(255, 255, 255, 0.55); margin: 0; }
+    @media (min-width: 768px) {
+      .cta-band  { padding: 100px 32px; }
+      .cta-title { font-size: 50px; }
+    }
+    @media (min-width: 1024px) { .cta-title { font-size: 56px; } }
+    @media (min-width: 1440px) {
+      .cta-band  { padding: 120px 120px; }
+      .cta-title { font-size: 64px; }
+      .cta-inner { max-width: 1440px; }
+    }
+    @media (max-width: 767px) {
+      .cta-actions { flex-direction: column; align-items: center; max-width: 320px; margin: 0 auto; }
+      .btn-white   { width: 100%; }
+      .cta-title   { font-size: 40px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =====================================================
+       SECTION 10: Certified and Trusted
+       → Section10_Certs.tsx
+  ====================================================== -->
+  <section class="ds-section" id="section-10" style="overflow:hidden;">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Certified and <span class="brand">Trusted</span></h2>
+      </div>
+    </div>
+
+    <!-- Cert Grid — manual 2x duplication for seamless CSS marquee -->
+    <div class="cert-grid" aria-label="Certifications and awards">
+      <div class="cert-track" id="cert-track">
+
+        <!-- SET 1 -->
+        <article class="cert-card">
+          <span class="cert-group">Certifications</span>
+          <div class="cert-wreath">
+            <img class="cert-wreath-left" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-left.png" alt="">
+            <span class="cert-wreath-text">Information Security Fast Track</span>
+            <img class="cert-wreath-right" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-right.png" alt="">
+          </div>
+          <span class="cert-org">KISA</span>
+          <span class="cert-year">2024</span>
+          <img class="cert-logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-kisa.png" alt="KISA">
+        </article>
+
+        <article class="cert-card">
+          <span class="cert-group">Certifications</span>
+          <div class="cert-wreath">
+            <img class="cert-wreath-left" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-left.png" alt="">
+            <span class="cert-wreath-text">GS Certification</span>
+            <img class="cert-wreath-right" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-right.png" alt="">
+          </div>
+          <span class="cert-org">TTA</span>
+          <span class="cert-year">2025</span>
+          <img class="cert-logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-gs.png" alt="GS Certification">
+        </article>
+
+        <article class="cert-card">
+          <span class="cert-group">Certifications</span>
+          <div class="cert-wreath">
+            <img class="cert-wreath-left" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-left.png" alt="">
+            <span class="cert-wreath-text">ISO/IEC 27001 (ISMS)</span>
+            <img class="cert-wreath-right" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-right.png" alt="">
+          </div>
+          <span class="cert-org">ISO</span>
+          <span class="cert-year">2026</span>
+          <img class="cert-logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-iso.png" alt="ISO/IEC 27001">
+        </article>
+
+        <article class="cert-card">
+          <span class="cert-group">Certifications</span>
+          <div class="cert-wreath">
+            <img class="cert-wreath-left" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-left.png" alt="">
+            <span class="cert-wreath-text">ISO/IEC 42001 (AIMS)</span>
+            <img class="cert-wreath-right" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-right.png" alt="">
+          </div>
+          <span class="cert-org">ISO</span>
+          <span class="cert-year">2026</span>
+          <img class="cert-logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-iso.png" alt="ISO/IEC 42001">
+        </article>
+
+        <article class="cert-card">
+          <span class="cert-group">Awards</span>
+          <div class="cert-wreath">
+            <img class="cert-wreath-left" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-left.png" alt="">
+            <span class="cert-wreath-text">Information Security Innovation Award</span>
+            <img class="cert-wreath-right" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-right.png" alt="">
+          </div>
+          <span class="cert-org">Ministry of Science &amp; ICT</span>
+          <span class="cert-year">2024</span>
+          <img class="cert-logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/awards-ministry-of-science-and-ict.jpg" alt="Ministry of Science & ICT">
+        </article>
+
+        <article class="cert-card">
+          <span class="cert-group">Awards</span>
+          <div class="cert-wreath">
+            <img class="cert-wreath-left" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-left.png" alt="">
+            <span class="cert-wreath-text">Startup World Cup — Finalist</span>
+            <img class="cert-wreath-right" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-right.png" alt="">
+          </div>
+          <span class="cert-org">Startup World Cup</span>
+          <span class="cert-year">2025</span>
+          <img class="cert-logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-startupworldcup.png" alt="Startup World Cup">
+        </article>
+
+        <article class="cert-card">
+          <span class="cert-group">Awards</span>
+          <div class="cert-wreath">
+            <img class="cert-wreath-left" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-left.png" alt="">
+            <span class="cert-wreath-text">Next Rise — Global Innovator</span>
+            <img class="cert-wreath-right" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-right.png" alt="">
+          </div>
+          <span class="cert-org">Next Rise</span>
+          <span class="cert-year">2025</span>
+        </article>
+
+        <article class="cert-card">
+          <span class="cert-group">Awards</span>
+          <div class="cert-wreath">
+            <img class="cert-wreath-left" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-left.png" alt="">
+            <span class="cert-wreath-text">T Challenge 2026 — Finalist</span>
+            <img class="cert-wreath-right" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-right.png" alt="">
+          </div>
+          <span class="cert-org">Deutsche Telekom</span>
+          <span class="cert-year">2026</span>
+          <img class="cert-logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-deutsche-telekom.avif" alt="Deutsche Telekom">
+        </article>
+
+        <article class="cert-card">
+          <span class="cert-group">Awards</span>
+          <div class="cert-wreath">
+            <img class="cert-wreath-left" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-left.png" alt="">
+            <span class="cert-wreath-text">AI EXPO KOREA — AI Medical Innovation Award</span>
+            <img class="cert-wreath-right" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-right.png" alt="">
+          </div>
+          <span class="cert-org">AI EXPO KOREA</span>
+          <span class="cert-year">2025</span>
+          <img class="cert-logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/awards-koreaia.png" alt="AI EXPO KOREA">
+        </article>
+
+        <article class="cert-card">
+          <span class="cert-group">Recognition</span>
+          <div class="cert-wreath">
+            <img class="cert-wreath-left" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-left.png" alt="">
+            <span class="cert-wreath-text">Emerging AI+X Top 100</span>
+            <img class="cert-wreath-right" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-right.png" alt="">
+          </div>
+          <span class="cert-org">—</span>
+          <span class="cert-year">2026</span>
+        </article>
+
+        <article class="cert-card">
+          <span class="cert-group">Recognition</span>
+          <div class="cert-wreath">
+            <img class="cert-wreath-left" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-left.png" alt="">
+            <span class="cert-wreath-text">Representative Vendor, Hyper-Synthetic Data</span>
+            <img class="cert-wreath-right" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-right.png" alt="">
+          </div>
+          <span class="cert-org">Gartner</span>
+          <span class="cert-year">2025</span>
+          <img class="cert-logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-gartner.svg.png" alt="Gartner">
+        </article>
+
+        <!-- SET 2 (duplicate — aria-hidden) -->
+        <article class="cert-card" aria-hidden="true">
+          <span class="cert-group">Certifications</span>
+          <div class="cert-wreath">
+            <img class="cert-wreath-left" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-left.png" alt="">
+            <span class="cert-wreath-text">Information Security Fast Track</span>
+            <img class="cert-wreath-right" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-right.png" alt="">
+          </div>
+          <span class="cert-org">KISA</span>
+          <span class="cert-year">2024</span>
+          <img class="cert-logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-kisa.png" alt="">
+        </article>
+
+        <article class="cert-card" aria-hidden="true">
+          <span class="cert-group">Certifications</span>
+          <div class="cert-wreath">
+            <img class="cert-wreath-left" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-left.png" alt="">
+            <span class="cert-wreath-text">GS Certification</span>
+            <img class="cert-wreath-right" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-right.png" alt="">
+          </div>
+          <span class="cert-org">TTA</span>
+          <span class="cert-year">2025</span>
+          <img class="cert-logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-gs.png" alt="">
+        </article>
+
+        <article class="cert-card" aria-hidden="true">
+          <span class="cert-group">Certifications</span>
+          <div class="cert-wreath">
+            <img class="cert-wreath-left" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-left.png" alt="">
+            <span class="cert-wreath-text">ISO/IEC 27001 (ISMS)</span>
+            <img class="cert-wreath-right" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-right.png" alt="">
+          </div>
+          <span class="cert-org">ISO</span>
+          <span class="cert-year">2026</span>
+          <img class="cert-logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-iso.png" alt="">
+        </article>
+
+        <article class="cert-card" aria-hidden="true">
+          <span class="cert-group">Certifications</span>
+          <div class="cert-wreath">
+            <img class="cert-wreath-left" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-left.png" alt="">
+            <span class="cert-wreath-text">ISO/IEC 42001 (AIMS)</span>
+            <img class="cert-wreath-right" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-right.png" alt="">
+          </div>
+          <span class="cert-org">ISO</span>
+          <span class="cert-year">2026</span>
+          <img class="cert-logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-iso.png" alt="">
+        </article>
+
+        <article class="cert-card" aria-hidden="true">
+          <span class="cert-group">Awards</span>
+          <div class="cert-wreath">
+            <img class="cert-wreath-left" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-left.png" alt="">
+            <span class="cert-wreath-text">Information Security Innovation Award</span>
+            <img class="cert-wreath-right" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-right.png" alt="">
+          </div>
+          <span class="cert-org">Ministry of Science &amp; ICT</span>
+          <span class="cert-year">2024</span>
+          <img class="cert-logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/awards-ministry-of-science-and-ict.jpg" alt="">
+        </article>
+
+        <article class="cert-card" aria-hidden="true">
+          <span class="cert-group">Awards</span>
+          <div class="cert-wreath">
+            <img class="cert-wreath-left" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-left.png" alt="">
+            <span class="cert-wreath-text">Startup World Cup — Finalist</span>
+            <img class="cert-wreath-right" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-right.png" alt="">
+          </div>
+          <span class="cert-org">Startup World Cup</span>
+          <span class="cert-year">2025</span>
+          <img class="cert-logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-startupworldcup.png" alt="">
+        </article>
+
+        <article class="cert-card" aria-hidden="true">
+          <span class="cert-group">Awards</span>
+          <div class="cert-wreath">
+            <img class="cert-wreath-left" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-left.png" alt="">
+            <span class="cert-wreath-text">Next Rise — Global Innovator</span>
+            <img class="cert-wreath-right" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-right.png" alt="">
+          </div>
+          <span class="cert-org">Next Rise</span>
+          <span class="cert-year">2025</span>
+        </article>
+
+        <article class="cert-card" aria-hidden="true">
+          <span class="cert-group">Awards</span>
+          <div class="cert-wreath">
+            <img class="cert-wreath-left" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-left.png" alt="">
+            <span class="cert-wreath-text">T Challenge 2026 — Finalist</span>
+            <img class="cert-wreath-right" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-right.png" alt="">
+          </div>
+          <span class="cert-org">Deutsche Telekom</span>
+          <span class="cert-year">2026</span>
+          <img class="cert-logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-deutsche-telekom.avif" alt="">
+        </article>
+
+        <article class="cert-card" aria-hidden="true">
+          <span class="cert-group">Awards</span>
+          <div class="cert-wreath">
+            <img class="cert-wreath-left" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-left.png" alt="">
+            <span class="cert-wreath-text">AI EXPO KOREA — AI Medical Innovation Award</span>
+            <img class="cert-wreath-right" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-right.png" alt="">
+          </div>
+          <span class="cert-org">AI EXPO KOREA</span>
+          <span class="cert-year">2025</span>
+          <img class="cert-logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/awards-koreaia.png" alt="">
+        </article>
+
+        <article class="cert-card" aria-hidden="true">
+          <span class="cert-group">Recognition</span>
+          <div class="cert-wreath">
+            <img class="cert-wreath-left" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-left.png" alt="">
+            <span class="cert-wreath-text">Emerging AI+X Top 100</span>
+            <img class="cert-wreath-right" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-right.png" alt="">
+          </div>
+          <span class="cert-org">—</span>
+          <span class="cert-year">2026</span>
+        </article>
+
+        <article class="cert-card" aria-hidden="true">
+          <span class="cert-group">Recognition</span>
+          <div class="cert-wreath">
+            <img class="cert-wreath-left" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-left.png" alt="">
+            <span class="cert-wreath-text">Representative Vendor, Hyper-Synthetic Data</span>
+            <img class="cert-wreath-right" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-right.png" alt="">
+          </div>
+          <span class="cert-org">Gartner</span>
+          <span class="cert-year">2025</span>
+          <img class="cert-logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/cert-gartner.svg.png" alt="">
+        </article>
+
+      </div>
+    </div>
+
+    <!-- Partner Grid — manual 2x duplication -->
+    <div class="container">
+      <p class="partner-label">Trusted by enterprise &amp; government</p>
+    </div>
+    <div class="partner-grid" aria-label="Partner logos">
+      <div class="partner-track">
+
+        <!-- SET 1 -->
+        <div class="partner-item"><img class="partner-logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-gartner.png" alt="Gartner"><span class="partner-name">Gartner</span></div>
+        <div class="partner-item"><img class="partner-logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-navercloud.avif" alt="Naver Cloud"><span class="partner-name">Naver Cloud</span></div>
+        <div class="partner-item"><img class="partner-logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-sktelecom.avif" alt="SK Telecom"><span class="partner-name">SK Telecom</span></div>
+        <div class="partner-item"><img class="partner-logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-kyobo.avif" alt="Kyobo"><span class="partner-name">Kyobo</span></div>
+        <div class="partner-item"><img class="partner-logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-korea army.avif" alt="ROK Army"><span class="partner-name">ROK Army</span></div>
+        <div class="partner-item"><img class="partner-logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-korea-airforce.avif" alt="ROK Air Force"><span class="partner-name">ROK Air Force</span></div>
+        <div class="partner-item"><img class="partner-logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-eumc.avif" alt="EUMC"><span class="partner-name">EUMC</span></div>
+        <div class="partner-item"><img class="partner-logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-deutsche-telekom.avif" alt="Deutsche Telekom"><span class="partner-name">Deutsche Telekom</span></div>
+        <div class="partner-item"><img class="partner-logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-claroty.png" alt="Claroty"><span class="partner-name">Claroty</span></div>
+        <div class="partner-item"><img class="partner-logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-korea-heritage-service.jpg" alt="Korea Heritage Service"><span class="partner-name">Korea Heritage Service</span></div>
+        <div class="partner-item"><img class="partner-logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-ministry-of-data-and-statistics.png" alt="Ministry of Data and Statistics"><span class="partner-name">Ministry of Data and Statistics</span></div>
+
+        <!-- SET 2 (duplicate — aria-hidden) -->
+        <div class="partner-item" aria-hidden="true"><img class="partner-logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-gartner.png" alt=""><span class="partner-name">Gartner</span></div>
+        <div class="partner-item" aria-hidden="true"><img class="partner-logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-navercloud.avif" alt=""><span class="partner-name">Naver Cloud</span></div>
+        <div class="partner-item" aria-hidden="true"><img class="partner-logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-sktelecom.avif" alt=""><span class="partner-name">SK Telecom</span></div>
+        <div class="partner-item" aria-hidden="true"><img class="partner-logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-kyobo.avif" alt=""><span class="partner-name">Kyobo</span></div>
+        <div class="partner-item" aria-hidden="true"><img class="partner-logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-korea army.avif" alt=""><span class="partner-name">ROK Army</span></div>
+        <div class="partner-item" aria-hidden="true"><img class="partner-logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-korea-airforce.avif" alt=""><span class="partner-name">ROK Air Force</span></div>
+        <div class="partner-item" aria-hidden="true"><img class="partner-logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-eumc.avif" alt=""><span class="partner-name">EUMC</span></div>
+        <div class="partner-item" aria-hidden="true"><img class="partner-logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-deutsche-telekom.avif" alt=""><span class="partner-name">Deutsche Telekom</span></div>
+        <div class="partner-item" aria-hidden="true"><img class="partner-logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-claroty.png" alt=""><span class="partner-name">Claroty</span></div>
+        <div class="partner-item" aria-hidden="true"><img class="partner-logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-korea-heritage-service.jpg" alt=""><span class="partner-name">Korea Heritage Service</span></div>
+        <div class="partner-item" aria-hidden="true"><img class="partner-logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-ministry-of-data-and-statistics.png" alt=""><span class="partner-name">Ministry of Data and Statistics</span></div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       SECTION 11: Operational Example: Fraud Detection with Rare Events
+       → Section11_Banner.tsx
+  ====================================================== -->
+  <section class="ds-section" id="section-11">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Operational Example: <span class="brand">Fraud Detection</span> with Rare Events</h2>
+      </div>
+
+      <div class="s11-banner">
+        <p class="s11-banner-text">A financial services team building a fraud detection model found that rare anomaly events were severely underrepresented in training data -- real fraud cases were too few to train a reliable classifier.</p>
+      </div>
+
+      <div class="s11-operational-body">
+        <p class="s11-body-text">DTS generated synthetic fraud scenarios using differential privacy, expanding the rare-event class to statistically meaningful coverage. The resulting dataset could not be reverse-engineered to individual records -- satisfying both compliance requirements and model training needs.</p>
+        <p class="s11-tagline">Blocker removed: unusable data (imbalanced dataset / rare class underrepresentation)</p>
+        <div class="s11-cta">
+          <a href="/#enterprise-use-cases" class="btn-secondary">See enterprise use cases</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       SECTION 12: Common Questions (FAQ Accordion)
+       → Section12_FAQ.tsx
+  ====================================================== -->
+  <section class="ds-section" id="section-12">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Common <span class="brand">Questions</span></h2>
+      </div>
+
+      <div class="ac-list" role="list">
+
+        <!-- FAQ 1 — open by default -->
+        <article class="ac-card is-open" role="listitem">
+          <div class="ac-header" onclick="toggleAc(this)" aria-expanded="true">
+            <div class="ac-title">What is DTS?</div>
+            <div class="ac-toggle" role="button" aria-label="Toggle accordion">
+              <span class="ac-icon ac-icon--open"></span>
+            </div>
+          </div>
+          <div class="ac-body">
+            <p class="ac-body-text">DTS is CUBIG's enterprise synthetic data engine. It generates privacy-safe datasets using differential privacy to fix class imbalance, fill coverage gaps, expand training data, and replace restricted or non-accessible data. DTS runs as a standalone engine or integrates with the SynTitan platform.</p>
+          </div>
+        </article>
+
+        <article class="ac-card" role="listitem">
+          <div class="ac-header" onclick="toggleAc(this)" aria-expanded="false">
+            <div class="ac-title">What is differential privacy in DTS?</div>
+            <div class="ac-toggle" role="button" aria-label="Toggle accordion">
+              <span class="ac-icon"></span>
+            </div>
+          </div>
+          <div class="ac-body">
+            <p class="ac-body-text">Differential privacy (DP) is a mathematical framework that guarantees any single individual's data cannot be identified from the synthetic output -- regardless of what an attacker already knows. DTS applies DP during generation to produce datasets that are statistically representative but contain no real personal information.</p>
+          </div>
+        </article>
+
+        <article class="ac-card" role="listitem">
+          <div class="ac-header" onclick="toggleAc(this)" aria-expanded="false">
+            <div class="ac-title">Can DTS run without SynTitan?</div>
+            <div class="ac-toggle" role="button" aria-label="Toggle accordion">
+              <span class="ac-icon"></span>
+            </div>
+          </div>
+          <div class="ac-body">
+            <p class="ac-body-text">Yes. DTS is a full standalone enterprise synthetic data engine. It can be deployed and used independently of SynTitan. When used alongside SynTitan, DTS-generated datasets are versioned and bound to Release States for full execution traceability.</p>
+          </div>
+        </article>
+
+        <article class="ac-card" role="listitem">
+          <div class="ac-header" onclick="toggleAc(this)" aria-expanded="false">
+            <div class="ac-title">What data problems does DTS solve?</div>
+            <div class="ac-toggle" role="button" aria-label="Toggle accordion">
+              <span class="ac-icon"></span>
+            </div>
+          </div>
+          <div class="ac-body">
+            <p class="ac-body-text">DTS addresses three categories: restricted data that cannot be shared due to privacy or compliance rules; data with coverage gaps or class imbalance that make models unreliable; and non-accessible data that exists but cannot reach training pipelines.</p>
+          </div>
+        </article>
+
+        <article class="ac-card" role="listitem">
+          <div class="ac-header" onclick="toggleAc(this)" aria-expanded="false">
+            <div class="ac-title">What is Zero-Access Architecture?</div>
+            <div class="ac-toggle" role="button" aria-label="Toggle accordion">
+              <span class="ac-icon"></span>
+            </div>
+          </div>
+          <div class="ac-body">
+            <p class="ac-body-text">Zero-Access Architecture means original data never leaves the client environment. DTS analyzes statistical properties in-situ, generates a DP-protected synthetic model, and only the synthetic output is used downstream. Raw data is never transferred or accessed externally -- suitable for classified, regulated, and air-gapped environments.</p>
+          </div>
+        </article>
+
+        <article class="ac-card" role="listitem">
+          <div class="ac-header" onclick="toggleAc(this)" aria-expanded="false">
+            <div class="ac-title">How is DTS different from SynTitan?</div>
+            <div class="ac-toggle" role="button" aria-label="Toggle accordion">
+              <span class="ac-icon"></span>
+            </div>
+          </div>
+          <div class="ac-body">
+            <p class="ac-body-text">SynTitan performs data quality refinement as part of execution stability. SynTitan can use a subset of DTS capabilities when privacy-safe synthetic data is needed, while DTS is a full standalone enterprise synthetic data engine.</p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       SECTION 13: CTA Band
+       → Section13_CTA.tsx
+  ====================================================== -->
+  <section class="cta-band" id="section-13" aria-label="Call to action">
+    <div class="cta-inner">
+      <h2 class="cta-title">Restricted Data. <span class="cta-title-highlight">Usable AI.</span></h2>
+      <p class="cta-description">DTS turns restricted, unusable, and inaccessible enterprise data into privacy-safe synthetic datasets -- without ever moving the original data. GS Certified. KISA approved. Available on AWS Marketplace.</p>
+      <div class="cta-actions">
+        <a href="/contact" class="btn-white">Run technical demo</a>
+        <a href="/proof"   class="btn-white">See production cases</a>
+        <a href="/syntitan" class="btn-white">Explore SynTitan</a>
+      </div>
+      <p class="cta-footnote">30-min review / no sales pitch</p>
+    </div>
+  </section>
+
+  <script>
+    function toggleAc(header) {
+      var card   = header.closest('.ac-card');
+      var isOpen = card.classList.contains('is-open');
+      card.classList.toggle('is-open');
+      header.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+      var icon = header.querySelector('.ac-icon');
+      if (icon) icon.classList.toggle('ac-icon--open');
+    }
+  </script>
+</body>
+</html>

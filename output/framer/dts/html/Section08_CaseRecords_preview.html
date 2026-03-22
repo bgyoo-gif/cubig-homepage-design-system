@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 08 — Production Case Records | DTS Framer Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@700&family=Fragment+Mono&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "DM Sans", sans-serif;
+      color: #0f0f0f;
+      background-color: #ffffff;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .s8-section {
+      width: 100%;
+      padding: 80px 0;
+      background-color: #ffffff;
+    }
+    .s8-container {
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 16px;
+      box-sizing: border-box;
+    }
+
+    /* Section Header */
+    .s8-header {
+      margin-bottom: 48px;
+      text-align: center;
+      padding-bottom: 24px;
+      border-bottom: 1px solid #e6e7e9;
+    }
+    .s8-header__title {
+      font-size: 40px;
+      font-weight: 700;
+      color: #0f0f0f;
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+      margin-bottom: 16px;
+    }
+    .s8-brand { color: #725bea; }
+    .s8-header__description {
+      font-size: 18px;
+      color: #636363;
+      line-height: 1.7;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    /* Accordion */
+    .s8-ac-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .s8-ac-card {
+      border: 1px solid #e6e7e9;
+      border-radius: 8px;
+      background-color: #ffffff;
+      overflow: hidden;
+      transition: background-color 0.2s;
+    }
+    .s8-ac-card:hover { background-color: #f7f7f7; }
+    .s8-ac-header {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      align-items: center;
+      gap: 16px;
+      padding: 24px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .s8-ac-title-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .s8-ac-industry {
+      font-family: "Fragment Mono", monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #9c9c9c;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .s8-ac-industry-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .s8-ac-title {
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 1.2;
+      color: #0f0f0f;
+    }
+    .s8-ac-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      flex-shrink: 0;
+    }
+    .s8-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 8px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 1;
+      white-space: nowrap;
+    }
+    .s8-badge--success { background-color: rgba(14,130,76,0.12); color: #0e824c; }
+    .s8-badge--purple  { background-color: #c6c5fa; color: #725bea; }
+    .s8-badge--error   { background-color: rgba(255,48,48,0.12); color: #ff3030; }
+
+    /* Toggle */
+    .s8-ac-toggle {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      border: 0.5px solid #e6e7e9;
+      background: #f7f7f7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      position: relative;
+    }
+    .s8-ac-toggle::before,
+    .s8-ac-toggle::after {
+      content: '';
+      position: absolute;
+      background: #cacccf;
+      border-radius: 1px;
+      transition: opacity 0.2s;
+    }
+    .s8-ac-toggle::before { width: 10px; height: 1.5px; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+    .s8-ac-toggle::after  { width: 1.5px; height: 10px; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+    .s8-ac-card.s8-ac--open .s8-ac-toggle::after { opacity: 0; }
+    .s8-ac-card.s8-ac--open .s8-ac-toggle::before { background: #636363; }
+
+    /* Accordion Body */
+    .s8-ac-body {
+      display: none;
+      padding: 24px;
+      border-top: 1px solid #e6e7e9;
+      background: #f7f7f7;
+    }
+    .s8-ac-card.s8-ac--open .s8-ac-body { display: block; }
+
+    /* Metrics */
+    .s8-ac-metrics {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .s8-ac-metric {
+      display: flex;
+      flex-direction: column;
+      padding: 12px 16px;
+      border: 1px solid #e6e7e9;
+      border-radius: 8px;
+      background-color: #ffffff;
+      min-width: 100px;
+      flex: 1;
+    }
+    .s8-ac-metric__val {
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1;
+      color: #0f0f0f;
+    }
+    .s8-ac-metric__label {
+      font-family: "Fragment Mono", monospace;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #9c9c9c;
+      margin-top: 4px;
+    }
+    .s8-ac-body-text {
+      font-size: 14px;
+      color: #636363;
+      line-height: 1.7;
+    }
+
+    /* Responsive */
+    @media (max-width: 767px) {
+      .s8-header { text-align: left; }
+      .s8-header__title { font-size: 28px; }
+      .s8-ac-header { grid-template-columns: 1fr auto; align-items: start; }
+      .s8-ac-meta { display: none; }
+    }
+    @media (min-width: 768px) {
+      .s8-container { padding: 0 32px; }
+      .s8-header__description { max-width: 720px; }
+    }
+    @media (min-width: 1024px) {
+      .s8-container { padding: 0 32px; }
+    }
+    @media (min-width: 1440px) {
+      .s8-container { padding: 0 120px; max-width: 1440px; }
+      .s8-header__description { max-width: 860px; }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="s8-section" id="section-8">
+    <div class="s8-container">
+
+      <div class="s8-header">
+        <h2 class="s8-header__title">Production <span class="s8-brand">Case Records</span></h2>
+        <p class="s8-header__description">Enterprise AI projects stall when data conditions prevent training, validation, or safe deployment. DTS was built for exactly these situations.</p>
+      </div>
+
+      <div class="s8-ac-list" role="list">
+
+        <!-- Accordion 1: IBK Industrial Bank — open by default -->
+        <article class="s8-ac-card s8-ac--open" role="listitem">
+          <div class="s8-ac-header" onclick="toggleAc(this)" aria-expanded="true">
+            <div class="s8-ac-title-wrap">
+              <div class="s8-ac-industry">
+                <span class="s8-ac-industry-dot" style="background-color: #725bea"></span>
+                Finance
+              </div>
+              <div class="s8-ac-title">97.6% AI detection rate -- 79 patterns expanded to 1,000 records</div>
+            </div>
+            <div class="s8-ac-meta">
+              <span class="s8-badge s8-badge--success">Privacy-Safe</span>
+              <span class="s8-badge s8-badge--purple">DTS Standalone</span>
+            </div>
+            <div class="s8-ac-toggle" role="button" aria-label="Toggle accordion"></div>
+          </div>
+          <div class="s8-ac-body">
+            <div class="s8-ac-metrics">
+              <div class="s8-ac-metric">
+                <span class="s8-ac-metric__val">97.6%</span>
+                <span class="s8-ac-metric__label">AI Detection Rate</span>
+              </div>
+              <div class="s8-ac-metric">
+                <span class="s8-ac-metric__val">79 → 1,000</span>
+                <span class="s8-ac-metric__label">Records Expanded</span>
+              </div>
+            </div>
+            <p class="s8-ac-body-text">IBK expanded 79 fraud/transaction patterns into 1,000+ DP-safe synthetic records using DTS. AI detection rate reached 97.6%. Full PIPA compliance -- zero real customer data accessed or exported. Passed internal audit with no data sovereignty issues.</p>
+          </div>
+        </article>
+
+        <!-- Accordion 2: Kyobo Life Insurance -->
+        <article class="s8-ac-card" role="listitem">
+          <div class="s8-ac-header" onclick="toggleAc(this)" aria-expanded="false">
+            <div class="s8-ac-title-wrap">
+              <div class="s8-ac-industry">
+                <span class="s8-ac-industry-dot" style="background-color: #725bea"></span>
+                Finance
+              </div>
+              <div class="s8-ac-title">F1 0.92 churn model -- 277,249 synthetic records, 6-month deletion policy bypassed</div>
+            </div>
+            <div class="s8-ac-meta">
+              <span class="s8-badge s8-badge--success">Privacy-Safe</span>
+              <span class="s8-badge s8-badge--purple">Compliance</span>
+            </div>
+            <div class="s8-ac-toggle" role="button" aria-label="Toggle accordion"></div>
+          </div>
+          <div class="s8-ac-body">
+            <div class="s8-ac-metrics">
+              <div class="s8-ac-metric">
+                <span class="s8-ac-metric__val">F1 0.92</span>
+                <span class="s8-ac-metric__label">Churn Prediction</span>
+              </div>
+              <div class="s8-ac-metric">
+                <span class="s8-ac-metric__val">277,249</span>
+                <span class="s8-ac-metric__label">Synthetic Records</span>
+              </div>
+              <div class="s8-ac-metric">
+                <span class="s8-ac-metric__val">+30pp</span>
+                <span class="s8-ac-metric__label">F1 Improvement</span>
+              </div>
+            </div>
+            <p class="s8-ac-body-text">Kyobo's churn AI was blocked by a 6-month data retention policy. DTS generated 277,249 DP-safe synthetic records from historical data -- legally usable after deletion. Churn F1 reached 0.92. Separately, a top-3 life insurer's VoC AI improved from F1 58.55% to 88.55% (+30pp); deploy time cut from 4 weeks to 1 day.</p>
+          </div>
+        </article>
+
+        <!-- Accordion 3: Marketing / Sales -->
+        <article class="s8-ac-card" role="listitem">
+          <div class="s8-ac-header" onclick="toggleAc(this)" aria-expanded="false">
+            <div class="s8-ac-title-wrap">
+              <div class="s8-ac-industry">
+                <span class="s8-ac-industry-dot" style="background-color: #0e824c"></span>
+                Marketing
+              </div>
+              <div class="s8-ac-title">90% time reduction -- 70% cost saving on trend research</div>
+            </div>
+            <div class="s8-ac-meta">
+              <span class="s8-badge s8-badge--success">Cost Reduction</span>
+            </div>
+            <div class="s8-ac-toggle" role="button" aria-label="Toggle accordion"></div>
+          </div>
+          <div class="s8-ac-body">
+            <div class="s8-ac-metrics">
+              <div class="s8-ac-metric">
+                <span class="s8-ac-metric__val">90%</span>
+                <span class="s8-ac-metric__label">Time Reduction</span>
+              </div>
+              <div class="s8-ac-metric">
+                <span class="s8-ac-metric__val">70%</span>
+                <span class="s8-ac-metric__label">Cost Saving</span>
+              </div>
+            </div>
+            <p class="s8-ac-body-text">Annual consumer trend surveys replaced with AI persona agents trained on synthetic behavioral data. Key insights delivered in 1-2 days (vs. 1+ month), with 70% cost savings by eliminating field collection, incentives, and anonymization steps.</p>
+          </div>
+        </article>
+
+        <!-- Accordion 4: Ministry of National Defense -->
+        <article class="s8-ac-card" role="listitem">
+          <div class="s8-ac-header" onclick="toggleAc(this)" aria-expanded="false">
+            <div class="s8-ac-title-wrap">
+              <div class="s8-ac-industry">
+                <span class="s8-ac-industry-dot" style="background-color: #ff3030"></span>
+                Defense
+              </div>
+              <div class="s8-ac-title">Zero data exports -- Classified imagery converted to AI-ready synthetic datasets</div>
+            </div>
+            <div class="s8-ac-meta">
+              <span class="s8-badge s8-badge--error">Classified</span>
+              <span class="s8-badge s8-badge--purple">Zero-Access</span>
+            </div>
+            <div class="s8-ac-toggle" role="button" aria-label="Toggle accordion"></div>
+          </div>
+          <div class="s8-ac-body">
+            <div class="s8-ac-metrics">
+              <div class="s8-ac-metric">
+                <span class="s8-ac-metric__val">0</span>
+                <span class="s8-ac-metric__label">Data Exports</span>
+              </div>
+            </div>
+            <p class="s8-ac-body-text">DTS deployed on-premise in an air-gapped classified environment. Zero-Access Architecture: no original imagery left the secure perimeter. Classified defense data converted to AI-ready synthetic datasets for model training within security clearance requirements.</p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function toggleAc(header) {
+      const card = header.closest('.s8-ac-card')
+      const isOpen = card.classList.contains('s8-ac--open')
+      card.classList.toggle('s8-ac--open', !isOpen)
+      header.setAttribute('aria-expanded', !isOpen)
+    }
+  </script>
+
+</body>
+</html>

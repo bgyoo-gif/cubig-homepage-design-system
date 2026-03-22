@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DTS — Framer Preview (Sections 01–05)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Oxanium:wght@700&family=Fragment+Mono:ital@0;1&display=swap" rel="stylesheet">
+
+  <style>
+    /* ---- Reset ---- */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "DM Sans", sans-serif;
+      color: #0f0f0f;
+      background-color: #ffffff;
+      -webkit-font-smoothing: antialiased;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+    img, video { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+    p, li { word-break: keep-all; overflow-wrap: break-word; text-wrap: pretty; }
+
+    /* ---- Shared Container ---- */
+    .preview-container {
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 16px;
+      box-sizing: border-box;
+    }
+    @media (min-width: 768px)  { .preview-container { padding: 0 32px; } }
+    @media (min-width: 1024px) { .preview-container { padding: 0 32px; } }
+    @media (min-width: 1440px) { .preview-container { padding: 0 120px; max-width: 1440px; } }
+
+    /* ==============================================================
+       SECTION 1 — Hero
+    ============================================================== */
+    .s1-section {
+      width: 100%;
+      padding: 100px 0 0;
+      overflow: visible;
+      background-color: #ffffff;
+    }
+    .s1-hero {
+      text-align: center;
+      max-width: 860px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    .s1-title {
+      font-family: "DM Sans", sans-serif;
+      font-size: 40px;
+      font-weight: 700;
+      color: #0f0f0f;
+      line-height: 1.2;
+      letter-spacing: -2px;
+      margin: 0 0 12px;
+      text-wrap: balance;
+    }
+    .s1-title-product { font-family: "Oxanium", sans-serif; font-weight: 700; }
+    .s1-description {
+      font-size: 18px;
+      color: #636363;
+      line-height: 1.7;
+      max-width: 860px;
+      margin: 0 auto;
+      text-wrap: pretty;
+    }
+    .s1-screenshot-frame {
+      margin-top: 32px;
+      border-radius: 40px;
+      padding: 48px 48px 0;
+      background-image: url('https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/bg-paint-blue-iridescent.png');
+      background-size: cover;
+      background-position: center;
+      overflow: hidden;
+    }
+    .s1-screenshot {
+      border-radius: 24px 24px 0 0;
+      overflow: hidden;
+      box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.12);
+      background: #ffffff;
+      min-height: 320px;
+    }
+    .s1-screenshot img { width: 100%; display: block; }
+    .s1-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 24px;
+      padding-bottom: 64px;
+    }
+    .s1-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border-radius: 9999px;
+      font-family: "DM Sans", sans-serif;
+      font-weight: 500;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      transition: opacity 0.2s, background-color 0.2s;
+      white-space: nowrap;
+      text-decoration: none;
+      padding: 12px 32px;
+    }
+    .s1-btn--primary { background: linear-gradient(130deg, #673AFF 0%, #D932FF 50%, #FF266A 100%); color: #ffffff; }
+    .s1-btn--primary:hover { opacity: 0.88; }
+    .s1-btn--secondary { background-color: transparent; color: #0f0f0f; border: 1px solid #e6e7e9; }
+    .s1-btn--secondary:hover { background-color: #f7f7f7; }
+
+    @media (min-width: 768px)  { .s1-title { font-size: 50px; } }
+    @media (min-width: 1024px) { .s1-title { font-size: 64px; } }
+    @media (max-width: 767px) {
+      .s1-title { font-size: 36px; letter-spacing: -1px; }
+      .s1-actions { flex-direction: column; align-items: center; }
+      .s1-btn { width: 100%; max-width: 320px; }
+      .s1-screenshot-frame { padding: 32px 24px 0; border-radius: 24px; }
+      .s1-screenshot { min-height: 180px; border-radius: 18px 18px 0 0; }
+    }
+
+    /* ==============================================================
+       SECTION 2 — KPI Band + Banner
+    ============================================================== */
+    .s2-section {
+      width: 100%;
+      padding: 80px 0;
+      background-color: #ffffff;
+    }
+    .s2-kpi-band {
+      border-radius: 40px;
+      padding: 48px 32px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+      justify-items: center;
+      background-image: url('https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/bg-lavender.png');
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .s2-kpi-band::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.35);
+      z-index: 0;
+    }
+    .s2-kpi-band > * { position: relative; z-index: 1; }
+    .s2-kpi-item { display: flex; flex-direction: column; gap: 12px; text-align: center; }
+    .s2-kpi-number { font-family: "DM Sans", sans-serif; font-size: 50px; font-weight: 700; line-height: 1; color: #ffffff; }
+    .s2-kpi-label { font-size: 14px; color: rgba(255,255,255,0.85); line-height: 1.5; }
+    .s2-kpi-sub { font-size: 12px; color: rgba(255,255,255,0.65); font-family: "Fragment Mono", monospace; margin-top: 2px; }
+    .s2-banner-wrap { margin-top: 24px; }
+    .s2-banner {
+      width: 100%;
+      text-align: center;
+      padding: 32px 48px;
+      border-radius: 40px;
+      background-image: url('https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/bg-green-wave.png');
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      overflow: hidden;
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 1.7;
+      color: #0f0f0f;
+      isolation: isolate;
+    }
+    .s2-banner::before { content: ''; position: absolute; inset: 0; background: rgba(255,255,255,0.45); z-index: 0; }
+    .s2-banner p { position: relative; z-index: 1; margin: 0; }
+    .s2-banner em { font-style: italic; font-weight: 600; }
+
+    @media (max-width: 1023px) { .s2-kpi-band { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 767px) {
+      .s2-kpi-band { padding: 32px 20px; grid-template-columns: 1fr; }
+      .s2-kpi-number { font-size: 40px; }
+      .s2-banner { padding: 24px 20px; font-size: 16px; border-radius: 24px; }
+    }
+
+    /* ==============================================================
+       SECTION 3 — Privacy-Safe Synthetic Data
+    ============================================================== */
+    .s3-section {
+      width: 100%;
+      padding: 80px 0;
+      background-color: #ffffff;
+    }
+    .s3-header {
+      margin-bottom: 48px;
+      text-align: center;
+      padding-bottom: 24px;
+      border-bottom: 1px solid #e6e7e9;
+    }
+    .s3-header__title {
+      font-family: "DM Sans", sans-serif;
+      font-size: 40px;
+      font-weight: 700;
+      color: #0f0f0f;
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+      margin-bottom: 16px;
+      text-wrap: balance;
+    }
+    .s3-title-highlight { color: #725bea; }
+    .s3-header__description { font-size: 18px; color: #636363; line-height: 1.7; max-width: 720px; margin: 0 auto; text-wrap: pretty; }
+    .s3-body { max-width: 860px; margin: 0 auto; }
+    .s3-body-text { font-family: "DM Sans", sans-serif; font-size: 16px; font-weight: 500; color: #0f0f0f; line-height: 1.5; margin: 0; text-wrap: pretty; }
+    .s3-body-text + .s3-body-text { margin-top: 24px; }
+    .s3-banner {
+      padding: 16px 24px;
+      border-top: 1px solid #e6e7e9;
+      border-bottom: 1px solid #e6e7e9;
+      background-color: rgba(21, 94, 160, 0.06);
+      font-size: 14px;
+      line-height: 1.7;
+      text-align: center;
+      margin-top: 32px;
+    }
+
+    @media (max-width: 767px) {
+      .s3-header { text-align: left; }
+      .s3-header__title { font-size: 28px; }
+      .s3-header__description { font-size: 16px; }
+    }
+
+    /* ==============================================================
+       SECTION 4 — Comparison Table
+    ============================================================== */
+    .s4-section {
+      width: 100%;
+      padding: 80px 0;
+      background-color: #f7f7f7;
+    }
+    .s4-header {
+      margin-bottom: 48px;
+      text-align: center;
+      padding-bottom: 24px;
+      border-bottom: 1px solid #e6e7e9;
+    }
+    .s4-header__title {
+      font-family: "DM Sans", sans-serif;
+      font-size: 40px;
+      font-weight: 700;
+      color: #0f0f0f;
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+      margin-bottom: 16px;
+      text-wrap: balance;
+    }
+    .s4-title-product { font-family: "Oxanium", sans-serif; font-weight: 700; }
+    .s4-title-highlight { color: #725bea; }
+    .s4-header__description { font-size: 18px; color: #636363; line-height: 1.7; max-width: 720px; margin: 0 auto; text-wrap: pretty; }
+    .s4-table-wrap { overflow-x: auto; border-radius: 24px; border: 1px solid #e6e7e9; }
+    .s4-table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 600px; }
+    .s4-table thead th {
+      font-family: "Fragment Mono", monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #0f0f0f;
+      font-weight: 600;
+      padding: 12px 16px;
+      border-bottom: 2px solid #e6e7e9;
+      text-align: left;
+      background: #f7f7f7;
+    }
+    .s4-table tbody td { padding: 14px 16px; border-bottom: 1px solid #e6e7e9; color: #0f0f0f; vertical-align: top; line-height: 1.5; }
+    .s4-table tbody tr:last-child td { border-bottom: none; }
+    .s4-table tbody td:first-child { font-weight: 600; }
+    .s4-table tbody tr:hover td { background: #f7f7f7; }
+    .s4-table__highlight { background-color: rgba(114, 91, 234, 0.04); }
+    .s4-table thead th.s4-table__highlight { background-color: rgba(114, 91, 234, 0.08); }
+    .s4-check { color: #0e824c; font-weight: 700; }
+    .s4-partial { color: #f59e0b; }
+    .s4-cross { color: #ff3030; }
+
+    @media (max-width: 767px) {
+      .s4-header { text-align: left; }
+      .s4-header__title { font-size: 28px; }
+    }
+
+    /* ==============================================================
+       SECTION 5 — Three Data Problems
+    ============================================================== */
+    .s5-section {
+      width: 100%;
+      padding: 80px 0;
+      background-color: #ffffff;
+    }
+    .s5-header {
+      margin-bottom: 48px;
+      text-align: center;
+      padding-bottom: 24px;
+      border-bottom: 1px solid #e6e7e9;
+    }
+    .s5-header__title {
+      font-family: "DM Sans", sans-serif;
+      font-size: 40px;
+      font-weight: 700;
+      color: #0f0f0f;
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+      margin-bottom: 16px;
+      text-wrap: balance;
+    }
+    .s5-title-highlight { color: #725bea; }
+    .s5-header__description { font-size: 18px; color: #636363; line-height: 1.7; max-width: 720px; margin: 0 auto; text-wrap: pretty; }
+    .s5-card-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+    .s5-card {
+      background-color: #ffffff;
+      border-radius: 18px;
+      border: 1px solid #e6e7e9;
+      padding: 24px;
+      box-shadow: 0px 24px 40px rgba(0,0,0,0.04);
+      display: flex;
+      flex-direction: column;
+    }
+    .s5-card__badge {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 500;
+      font-family: "Fragment Mono", monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border: 1px solid currentColor;
+      margin-bottom: 16px;
+    }
+    .s5-card__badge--red { color: #ff3030; border-color: #ff3030; }
+    .s5-card__badge--teal { color: #0e824c; border-color: #0e824c; }
+    .s5-card__number { font-size: 12px; font-weight: 500; color: #9c9c9c; margin-bottom: 8px; line-height: 1.5; }
+    .s5-card__title { font-size: 24px; font-weight: 700; color: #0f0f0f; line-height: 1.2; margin-bottom: 12px; text-wrap: balance; }
+    .s5-card__description { font-size: 14px; color: #636363; line-height: 1.7; flex: 1; text-wrap: pretty; }
+    .s5-checklist { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-top: 16px; padding: 0; }
+    .s5-check-item { display: flex; align-items: flex-start; gap: 8px; font-size: 16px; line-height: 1.5; color: #0f0f0f; }
+    .s5-check-icon { width: 20px; height: 20px; flex-shrink: 0; margin-top: 2px; display: flex; align-items: center; justify-content: center; color: #0e824c; font-weight: 700; font-size: 16px; line-height: 1; }
+
+    @media (min-width: 768px) {
+      .s5-card-grid { grid-template-columns: repeat(2, 1fr); }
+      .s5-header__description { max-width: 720px; }
+    }
+    @media (min-width: 1024px) {
+      .s5-card-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 767px) {
+      .s5-header { text-align: left; }
+      .s5-header__title { font-size: 28px; }
+      .s5-header__description { font-size: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =====================================================
+       SECTION 1: Hero (DTS)
+  ====================================================== -->
+  <section class="s1-section" id="section-1">
+    <div class="preview-container">
+      <div class="s1-hero">
+        <h1 class="s1-title"><span class="s1-title-product">DTS</span></h1>
+        <p class="s1-description">Your AI is only as good as the data it trains on — and most enterprise data is not AI-ready. DTS solves unusable data for AI: whether it's restricted by privacy rules, imbalanced, or missing the coverage your model needs. The result is an AI-ready dataset you can actually use.</p>
+      </div>
+      <div class="s1-screenshot-frame">
+        <div class="s1-screenshot">
+          <img src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/screenshot-dts.avif" alt="DTS — Enterprise Synthetic Data Engine" loading="lazy">
+        </div>
+      </div>
+      <div class="s1-actions">
+        <a href="/contact" class="s1-btn s1-btn--primary">Run technical demo</a>
+        <a href="https://aws.amazon.com/marketplace" class="s1-btn s1-btn--secondary" target="_blank" rel="noopener noreferrer">AWS Marketplace</a>
+        <a href="/syntitan" class="s1-btn s1-btn--secondary">See SynTitan Platform</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       SECTION 2: KPI Band + AI-Ready Definition
+  ====================================================== -->
+  <section class="s2-section" id="section-2">
+    <div class="preview-container">
+      <div class="s2-kpi-band">
+        <div class="s2-kpi-item">
+          <span class="s2-kpi-number">+30pp</span>
+          <p class="s2-kpi-label">F1-Score Lift</p>
+          <span class="s2-kpi-sub">58.55% → 88.55%</span>
+        </div>
+        <div class="s2-kpi-item">
+          <span class="s2-kpi-number">-90%</span>
+          <p class="s2-kpi-label">Time to Deploy</p>
+          <span class="s2-kpi-sub">4 weeks → 1 day</span>
+        </div>
+        <div class="s2-kpi-item">
+          <span class="s2-kpi-number">97.6%</span>
+          <p class="s2-kpi-label">AI Detection Rate</p>
+          <span class="s2-kpi-sub">IBK Industrial Bank</span>
+        </div>
+        <div class="s2-kpi-item">
+          <span class="s2-kpi-number">277K+</span>
+          <p class="s2-kpi-label">Synthetic Records</p>
+          <span class="s2-kpi-sub">Kyobo Life Insurance</span>
+        </div>
+      </div>
+      <div class="s2-banner-wrap">
+        <div class="s2-banner">
+          <p>True AI-ready data means it is <em>usable</em>, <em>privacy-safe</em>, and <em>stable for production execution</em>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       SECTION 3: Privacy-Safe Synthetic Data (DTS Positioning)
+  ====================================================== -->
+  <section class="s3-section" id="section-3">
+    <div class="preview-container">
+      <div class="s3-header">
+        <h2 class="s3-header__title">Privacy-Safe <span class="s3-title-highlight">Synthetic Data</span></h2>
+        <p class="s3-header__description">DTS includes privacy-safe synthetic data generation to expand coverage and repair imbalance when real data is restricted or incomplete.</p>
+      </div>
+      <div class="s3-body">
+        <p class="s3-body-text">Synthetic data generation is one capability inside DTS -- not the company identity. DTS uses differential privacy as its mathematical foundation, providing formal guarantees that synthetic outputs cannot be reverse-engineered to individual records. This makes DTS suitable for regulated industries that need AI-ready datasets without exposing raw training data.</p>
+        <p class="s3-body-text">DTS is a capability within Cubig's AI-Ready Data Infrastructure -- the infrastructure layer that makes enterprise data usable, privacy-safe, and stable for production AI execution. DTS specifically addresses the Restricted Data and Unusable Data blockers.</p>
+        <div class="s3-banner" role="note">
+          Synthetic data is a DTS capability. It is not Cubig's top-level identity.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       SECTION 4: DTS vs Other Approaches (Comparison)
+  ====================================================== -->
+  <section class="s4-section" id="section-4">
+    <div class="preview-container">
+      <div class="s4-header">
+        <h2 class="s4-header__title"><span class="s4-title-product">DTS</span> vs. Other Approaches to <span class="s4-title-highlight">Restricted Data</span></h2>
+        <p class="s4-header__description">Databricks stores your data. Masking removes it. DTS makes it AI-ready -- without removing or exposing it.</p>
+      </div>
+      <div class="s4-table-wrap" role="region" aria-label="DTS comparison table">
+        <table class="s4-table">
+          <thead>
+            <tr>
+              <th>Capability</th>
+              <th class="s4-table__highlight"><span class="s4-title-product">DTS</span></th>
+              <th>Data Masking / Anonymization</th>
+              <th>Data Sampling</th>
+              <th>Manual Labeling</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Privacy guarantee</td>
+              <td class="s4-table__highlight"><span class="s4-check">✓</span> Mathematical DP bound</td>
+              <td><span class="s4-partial">△</span> Re-identification risk remains</td>
+              <td><span class="s4-cross">✕</span> No privacy guarantee</td>
+              <td><span class="s4-cross">✕</span></td>
+            </tr>
+            <tr>
+              <td>Coverage expansion</td>
+              <td class="s4-table__highlight"><span class="s4-check">✓</span> Generate at any scale</td>
+              <td><span class="s4-cross">✕</span> Can't create new data</td>
+              <td><span class="s4-partial">△</span> Bounded by real data volume</td>
+              <td><span class="s4-partial">△</span> Expensive &amp; slow</td>
+            </tr>
+            <tr>
+              <td>Rare class augmentation</td>
+              <td class="s4-table__highlight"><span class="s4-check">✓</span> Targeted generation</td>
+              <td><span class="s4-cross">✕</span></td>
+              <td><span class="s4-cross">✕</span> Can't create rare events</td>
+              <td><span class="s4-partial">△</span> Very high cost</td>
+            </tr>
+            <tr>
+              <td>Distribution fidelity</td>
+              <td class="s4-table__highlight"><span class="s4-check">✓</span> Validated against real stats</td>
+              <td><span class="s4-partial">△</span> Distorted by masking</td>
+              <td><span class="s4-partial">△</span> Sampling bias risk</td>
+              <td><span class="s4-partial">△</span> Annotator variance</td>
+            </tr>
+            <tr>
+              <td>Cross-border / external use</td>
+              <td class="s4-table__highlight"><span class="s4-check">✓</span> No real data transferred</td>
+              <td><span class="s4-cross">✕</span> Residual risk</td>
+              <td><span class="s4-cross">✕</span></td>
+              <td><span class="s4-cross">✕</span></td>
+            </tr>
+            <tr>
+              <td>SynTitan integration</td>
+              <td class="s4-table__highlight"><span class="s4-check">✓</span> Native versioning &amp; binding</td>
+              <td><span class="s4-cross">✕</span></td>
+              <td><span class="s4-cross">✕</span></td>
+              <td><span class="s4-cross">✕</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       SECTION 5: What DTS Solves (Three Use Cases)
+  ====================================================== -->
+  <section class="s5-section" id="section-5">
+    <div class="preview-container">
+      <div class="s5-header">
+        <h2 class="s5-header__title">Three Data Problems. <span class="s5-title-highlight">One Engine.</span></h2>
+        <p class="s5-header__description">Data that can't be used, can't be shared, or doesn't exist in sufficient volume -- DTS resolves all three.</p>
+      </div>
+      <div class="s5-card-grid">
+
+        <!-- Card 1: Restricted Data -->
+        <article class="s5-card">
+          <span class="s5-card__badge s5-card__badge--red">RESTRICTED DATA</span>
+          <p class="s5-card__number">01 / 03</p>
+          <h3 class="s5-card__title">Privacy-Safe Replacement</h3>
+          <p class="s5-card__description">Sensitive or regulated data blocked by compliance rules. DTS generates a statistically equivalent synthetic dataset -- with no real personal information.</p>
+          <ul class="s5-checklist">
+            <li class="s5-check-item"><span class="s5-check-icon">✓</span>Replace GDPR, PIPA, HIPAA, or CCPA-restricted data with DP-safe synthetic equivalents</li>
+            <li class="s5-check-item"><span class="s5-check-icon">✓</span>Differential privacy guarantee on all synthetic output</li>
+            <li class="s5-check-item"><span class="s5-check-icon">✓</span>Safe for cross-team, cross-border, and external use</li>
+            <li class="s5-check-item"><span class="s5-check-icon">✓</span>Full distribution fidelity preserved</li>
+          </ul>
+        </article>
+
+        <!-- Card 2: Unusable Data -->
+        <article class="s5-card">
+          <span class="s5-card__badge s5-card__badge--teal">UNUSABLE DATA</span>
+          <p class="s5-card__number">02 / 03</p>
+          <h3 class="s5-card__title">Coverage &amp; Balance Expansion</h3>
+          <p class="s5-card__description">Data exists but is unfit for AI -- missing rare classes, biased distributions, or insufficient volume for reliable training.</p>
+          <ul class="s5-checklist">
+            <li class="s5-check-item"><span class="s5-check-icon">✓</span>Augment underrepresented classes at scale</li>
+            <li class="s5-check-item"><span class="s5-check-icon">✓</span>Fix class imbalance without overfitting</li>
+            <li class="s5-check-item"><span class="s5-check-icon">✓</span>Generate edge case and rare event samples</li>
+            <li class="s5-check-item"><span class="s5-check-icon">✓</span>Expand small datasets to production-grade volumes</li>
+          </ul>
+        </article>
+
+        <!-- Card 3: Non-Accessible Data -->
+        <article class="s5-card">
+          <span class="s5-card__badge s5-card__badge--red">NON-ACCESSIBLE DATA</span>
+          <p class="s5-card__number">03 / 03</p>
+          <h3 class="s5-card__title">Safe Dataset Generation</h3>
+          <p class="s5-card__description">Data exists in a silo -- restricted by access controls, third-party agreements, or geographic regulations -- and can't reach training pipelines.</p>
+          <ul class="s5-checklist">
+            <li class="s5-check-item"><span class="s5-check-icon">✓</span>Generate safe replacement datasets from inaccessible sources</li>
+            <li class="s5-check-item"><span class="s5-check-icon">✓</span>Unblock stalled validation and testing workflows</li>
+            <li class="s5-check-item"><span class="s5-check-icon">✓</span>Remove data access bottlenecks in regulated environments</li>
+            <li class="s5-check-item"><span class="s5-check-icon">✓</span>Maintain statistical characteristics without data transfer</li>
+          </ul>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>
