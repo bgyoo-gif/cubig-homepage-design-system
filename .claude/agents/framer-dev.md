@@ -370,10 +370,14 @@ const [isTablet, setIsTablet] = React.useState(false)
 React.useEffect(() => {
   const el = containerRef.current
   if (!el) return
+  let prevMobile = false
+  let prevTablet = false
   const ro = new ResizeObserver(([entry]) => {
     const w = entry.contentRect.width
-    setIsMobile(w < 768)
-    setIsTablet(w >= 768 && w < 1024)
+    const m = w < 768
+    const t = w >= 768 && w < 1024
+    if (m !== prevMobile) { prevMobile = m; setIsMobile(m) }
+    if (t !== prevTablet) { prevTablet = t; setIsTablet(t) }
   })
   ro.observe(el)
   return () => ro.disconnect()
@@ -381,6 +385,7 @@ React.useEffect(() => {
 // return 최상위 div에 ref 연결:
 return <div ref={containerRef}>...</div>
 ```
+**주의:** `setState`를 값 변경 시에만 호출해야 함. 매번 호출하면 리렌더링 → padding 변경 → width 변경 → ResizeObserver 재트리거 → **무한 루프 깜빡임** 발생.
 적용 방식: `isMobile ? 모바일값 : isTablet ? 태블릿값 : 데스크톱값`
 - 컨테이너 padding: mobile `"0 16px"` / tablet `"0 32px"` / desktop `"0 120px"`
 - 그리드: 2col/3col → mobile 1col
