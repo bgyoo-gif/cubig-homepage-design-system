@@ -114,7 +114,7 @@ export default function Section04_Comparison({
           }}>
             <h2 style={{
               fontFamily: '"DM Sans", sans-serif',
-              fontSize: isMobile ? 20 : isTablet ? 22 : 28,
+              fontSize: isMobile ? 20 : isTablet ? 22 : 40,
               fontWeight: 700,
               color: "#0f0f0f",
               lineHeight: 1.2,
@@ -169,7 +169,7 @@ export default function Section04_Comparison({
                     fontWeight: 600,
                     padding: isMobile ? "10px 10px" : "12px 16px",
                     borderBottom: "2px solid #e6e7e9",
-                    textAlign: "left",
+                    textAlign: "center",
                     backgroundColor: "rgba(114, 91, 234, 0.08)",
                     minWidth: isMobile ? 80 : "auto",
                   }}><span style={{ fontFamily: '"Oxanium", sans-serif', fontWeight: 700 }}>DTS</span></th>

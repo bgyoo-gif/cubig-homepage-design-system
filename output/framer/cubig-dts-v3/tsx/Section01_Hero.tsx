@@ -70,7 +70,7 @@ export default function Section01_Hero({
           }}>
             <h1 style={{
               fontFamily: '"Oxanium", sans-serif',
-              fontSize: isMobile ? 48 : isTablet ? 56 : 64,
+              fontSize: isMobile ? 24 : isTablet ? 50 : 64,
               fontWeight: 700,
               color: "#0f0f0f",
               lineHeight: 1.2,

@@ -82,13 +82,13 @@ export default function Section06_DifferentialPrivacy({
           {/* Section Header */}
           <div style={{
             marginBottom: 32,
-            textAlign: "left",
+            textAlign: "center",
             paddingBottom: 24,
             borderBottom: "1px solid #e6e7e9",
           }}>
             <h2 style={{
               fontFamily: '"DM Sans", sans-serif',
-              fontSize: isMobile ? 20 : isTablet ? 22 : 28,
+              fontSize: isMobile ? 20 : isTablet ? 22 : 40,
               fontWeight: 700,
               color: "#0f0f0f",
               lineHeight: 1.2,

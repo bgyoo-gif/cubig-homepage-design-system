@@ -99,7 +99,7 @@ export default function Section13_CTABand({
         }}>
           <h2 style={{
             fontFamily: '"DM Sans", sans-serif',
-            fontSize: isMobile ? 36 : isTablet ? 48 : 64,
+            fontSize: isMobile ? 40 : isTablet ? 50 : 64,
             fontWeight: 700,
             color: "#ffffff",
             lineHeight: 1.2,
