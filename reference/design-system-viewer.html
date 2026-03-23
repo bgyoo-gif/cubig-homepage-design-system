@@ -2689,6 +2689,7 @@ document.querySelectorAll('.v-gnb__item').forEach(function(btn) {
 /* ===== Output Detail ===== */
 var currentFilePath = '';
 function openDetail(path, name) {
+  console.log('[openDetail] called:', path, name);
   currentFilePath = path;
   document.getElementById('detail-title').textContent = name;
   var iframe = document.getElementById('detail-iframe');
