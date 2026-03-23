@@ -1,3 +1,4 @@
+import * as React from "react"
 import { useState } from "react"
 import { addPropertyControls, ControlType } from "framer"
 
@@ -15,6 +16,20 @@ export default function Section06_DifferentialPrivacy({
   bannerText = "The probability of any inference about an individual from the synthetic dataset is bounded by a mathematically defined epsilon -- regardless of external knowledge.",
 }: Props) {
   const [activeTab, setActiveTab] = useState(0)
+  const [isMobile, setIsMobile] = React.useState(false)
+  const [isTablet, setIsTablet] = React.useState(false)
+
+  React.useEffect(() => {
+    const check = () => {
+      setIsMobile(window.innerWidth < 768)
+      setIsTablet(window.innerWidth >= 768 && window.innerWidth < 1024)
+    }
+    check()
+    window.addEventListener("resize", check)
+    return () => window.removeEventListener("resize", check)
+  }, [])
+
+  const containerPadding = isMobile ? "0 16px" : isTablet ? "0 32px" : "0 120px"
 
   const tabs = [
     {
@@ -51,7 +66,7 @@ export default function Section06_DifferentialPrivacy({
     <div style={{ width: "100%", fontFamily: '"DM Sans", sans-serif', WebkitFontSmoothing: "antialiased" }}>
       <section style={{
         width: "100%",
-        padding: "80px 0",
+        padding: isMobile ? "48px 0" : "80px 0",
         backgroundColor: "#ffffff",
         fontFamily: '"DM Sans", sans-serif',
         WebkitFontSmoothing: "antialiased",
@@ -59,8 +74,9 @@ export default function Section06_DifferentialPrivacy({
         <div style={{
           width: "100%",
           maxWidth: 1440,
+         margin: "0 auto",
           margin: "0 auto",
-          padding: "0 120px",
+          padding: containerPadding,
           boxSizing: "border-box",
         }}>
           {/* Section Header */}
@@ -72,7 +88,7 @@ export default function Section06_DifferentialPrivacy({
           }}>
             <h2 style={{
               fontFamily: '"DM Sans", sans-serif',
-              fontSize: 28,
+              fontSize: isMobile ? 20 : isTablet ? 22 : 28,
               fontWeight: 700,
               color: "#0f0f0f",
               lineHeight: 1.2,
@@ -82,34 +98,38 @@ export default function Section06_DifferentialPrivacy({
               Mathematically Guaranteed <span style={{ color: "#725bea" }}>Privacy Protection</span>
             </h2>
             <p style={{
-              fontSize: 18,
+              fontSize: isMobile ? 14 : isTablet ? 16 : 18,
               color: "#636363",
               lineHeight: 1.7,
               maxWidth: 860,
+            margin: "0 auto",
             }}>{description}</p>
           </div>
 
           {/* Banner */}
-          <div style={{ marginBottom: 48 }}>
+          <div style={{ marginBottom: isMobile ? 32 : 48 }}>
             <div role="note" style={{
-              padding: "16px 24px",
+              padding: isMobile ? "14px 16px" : "16px 24px",
               borderTop: "1px solid #e6e7e9",
               borderBottom: "1px solid #e6e7e9",
               backgroundColor: "rgba(166, 23, 255, 0.06)",
-              fontSize: 14,
+              fontSize: isMobile ? 13 : 14,
               lineHeight: 1.7,
               textAlign: "center",
               color: "#0f0f0f",
             }}>{bannerText}</div>
           </div>
 
-          {/* Tab Nav */}
+          {/* Tab Nav — horizontal scroll on mobile */}
           <div role="tablist" aria-label="DP process steps" style={{
             display: "flex",
-            justifyContent: "center",
+            justifyContent: isMobile ? "flex-start" : "center",
             gap: 12,
-            flexWrap: "wrap",
-            marginBottom: 64,
+            flexWrap: isMobile ? "nowrap" : "wrap",
+            overflowX: isMobile ? "auto" : "visible",
+            WebkitOverflowScrolling: "touch",
+            marginBottom: isMobile ? 32 : 64,
+            paddingBottom: isMobile ? 8 : 0,
           }}>
             {tabs.map((tab, i) => {
               const isActive = activeTab === i
@@ -123,17 +143,18 @@ export default function Section06_DifferentialPrivacy({
                     display: "inline-flex",
                     alignItems: "center",
                     gap: 8,
-                    padding: "8px 24px",
+                    padding: isMobile ? "8px 16px" : "8px 24px",
                     borderRadius: 9999,
                     border: "1px solid",
                     borderColor: isActive ? "#0f0f0f" : "#e6e7e9",
                     backgroundColor: isActive ? "#0f0f0f" : "#ffffff",
                     fontFamily: '"DM Sans", sans-serif',
-                    fontSize: 14,
+                    fontSize: isMobile ? 13 : 14,
                     fontWeight: isActive ? 600 : 500,
                     color: isActive ? "#ffffff" : "#636363",
                     cursor: "pointer",
                     whiteSpace: "nowrap",
+                    flexShrink: 0,
                   }}
                 >
                   <span style={{
@@ -160,25 +181,27 @@ export default function Section06_DifferentialPrivacy({
           {/* Panel */}
           <div role="tabpanel" style={{
             display: "grid",
-            gridTemplateColumns: "5fr 7fr",
-            gap: 80,
+            gridTemplateColumns: isMobile ? "1fr" : isTablet ? "1fr" : "5fr 7fr",
+            gap: isMobile ? 24 : isTablet ? 40 : 80,
             alignItems: "center",
           }}>
             <div style={{
               display: "flex",
               flexDirection: "column",
-              gap: 24,
+              gap: isMobile ? 16 : 24,
             }}>
               <h3 style={{
                 fontFamily: '"DM Sans", sans-serif',
-                fontSize: 36,
+                fontSize: isMobile ? 22 : isTablet ? 28 : 36,
                 fontWeight: 700,
                 color: "#0f0f0f",
                 lineHeight: 1.2,
               }}>{tabs[activeTab].title}</h3>
               <p style={{
-                fontSize: 16,
+                fontSize: isMobile ? 14 : 16,
                 color: "#636363",
+              wordBreak: "keep-all" as const,
+              overflowWrap: "break-word" as const,
                 lineHeight: 1.7,
               }}>{tabs[activeTab].description}</p>
             </div>
@@ -188,7 +211,7 @@ export default function Section06_DifferentialPrivacy({
               border: "1px solid #e6e7e9",
               boxShadow: "0px 24px 40px rgba(0, 0, 0, 0.04)",
               backgroundColor: "#f7f7f7",
-              maxHeight: 420,
+              maxHeight: isMobile ? 240 : 420,
             }}>
               <img
                 src={tabs[activeTab].image}

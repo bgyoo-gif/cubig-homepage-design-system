@@ -1,3 +1,4 @@
+import * as React from "react"
 import { addPropertyControls, ControlType } from "framer"
 
 const IMAGE_BASE = "https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images"
@@ -23,11 +24,26 @@ export default function Section01_Hero({
   cta3Href = "/syntitan",
   screenshotAlt = "DTS — Enterprise Synthetic Data Engine",
 }: Props) {
+  const [isMobile, setIsMobile] = React.useState(false)
+  const [isTablet, setIsTablet] = React.useState(false)
+
+  React.useEffect(() => {
+    const check = () => {
+      setIsMobile(window.innerWidth < 768)
+      setIsTablet(window.innerWidth >= 768 && window.innerWidth < 1024)
+    }
+    check()
+    window.addEventListener("resize", check)
+    return () => window.removeEventListener("resize", check)
+  }, [])
+
+  const containerPadding = isMobile ? "0 16px" : isTablet ? "0 32px" : "0 120px"
+
   return (
     <div style={{ width: "100%", fontFamily: '"DM Sans", sans-serif', WebkitFontSmoothing: "antialiased" }}>
       <section style={{
         width: "100%",
-        paddingTop: 50,
+        paddingTop: isMobile ? 40 : 50,
         paddingBottom: 0,
         overflow: "visible",
         backgroundColor: "#ffffff",
@@ -37,40 +53,43 @@ export default function Section01_Hero({
         <div style={{
           width: "100%",
           maxWidth: 1440,
+         margin: "0 auto",
           margin: "0 auto",
-          padding: "0 120px",
+          padding: containerPadding,
           boxSizing: "border-box",
         }}>
           <div style={{
             display: "flex",
             flexDirection: "column",
-            gap: 24,
+            gap: isMobile ? 16 : 24,
             alignItems: "center",
             textAlign: "center",
             maxWidth: 860,
+           margin: "0 auto",
             margin: "0 auto",
           }}>
             <h1 style={{
               fontFamily: '"Oxanium", sans-serif',
-              fontSize: 64,
+              fontSize: isMobile ? 48 : isTablet ? 56 : 64,
               fontWeight: 700,
               color: "#0f0f0f",
               lineHeight: 1.2,
-              letterSpacing: "-2px",
-              marginBottom: 12,
+              letterSpacing: isMobile ? "-1px" : "-2px",
+              marginBottom: isMobile ? 8 : 12,
             }}>DTS</h1>
             <p style={{
-              fontSize: 18,
+              fontSize: isMobile ? 14 : isTablet ? 16 : 18,
               color: "#636363",
               lineHeight: 1.7,
               maxWidth: 860,
+             margin: "0 auto",
               margin: "0 auto 16px",
             }}>{description}</p>
           </div>
           <div style={{
-            marginTop: 32,
-            borderRadius: 40,
-            padding: "48px 48px 0",
+            marginTop: isMobile ? 20 : 32,
+            borderRadius: isMobile ? 24 : 40,
+            padding: isMobile ? "24px 20px 0" : isTablet ? "32px 32px 0" : "48px 48px 0",
             backgroundImage: `url('${IMAGE_BASE}/bg-gradient-cream-jade.png')`,
             backgroundSize: "cover",
             backgroundPosition: "center",
@@ -81,7 +100,7 @@ export default function Section01_Hero({
               overflow: "hidden",
               boxShadow: "0 -8px 40px rgba(0,0,0,0.12)",
               backgroundColor: "#ffffff",
-              minHeight: 320,
+              minHeight: isMobile ? 160 : 320,
             }}>
               <img
                 src={`${IMAGE_BASE}/screenshot-dts.avif`}
@@ -93,11 +112,12 @@ export default function Section01_Hero({
           </div>
           <div style={{
             display: "flex",
+            flexDirection: isMobile ? "column" : "row",
             flexWrap: "wrap",
             gap: 12,
             justifyContent: "center",
             marginTop: 24,
-            paddingBottom: 64,
+            paddingBottom: isMobile ? 40 : 64,
           }}>
             <a href={ctaHref} style={{
               display: "inline-flex",
@@ -107,7 +127,7 @@ export default function Section01_Hero({
               borderRadius: 9999,
               fontFamily: '"DM Sans", sans-serif',
               fontWeight: 500,
-              fontSize: 16,
+              fontSize: isMobile ? 14 : 16,
               cursor: "pointer",
               border: "none",
               whiteSpace: "nowrap",
@@ -115,6 +135,7 @@ export default function Section01_Hero({
               padding: "12px 32px",
               background: "linear-gradient(130deg, #673AFF 0%, #D932FF 50%, #FF266A 100%)",
               color: "#ffffff",
+              width: isMobile ? "100%" : "auto",
             }}>{ctaLabel}</a>
             <a href={cta2Href} target="_blank" rel="noopener noreferrer" style={{
               display: "inline-flex",
@@ -124,7 +145,7 @@ export default function Section01_Hero({
               borderRadius: 9999,
               fontFamily: '"DM Sans", sans-serif',
               fontWeight: 500,
-              fontSize: 16,
+              fontSize: isMobile ? 14 : 16,
               cursor: "pointer",
               whiteSpace: "nowrap",
               textDecoration: "none",
@@ -132,6 +153,7 @@ export default function Section01_Hero({
               backgroundColor: "transparent",
               color: "#0f0f0f",
               border: "1px solid #e6e7e9",
+              width: isMobile ? "100%" : "auto",
             }}>{cta2Label}</a>
             <a href={cta3Href} style={{
               display: "inline-flex",
@@ -141,7 +163,7 @@ export default function Section01_Hero({
               borderRadius: 9999,
               fontFamily: '"DM Sans", sans-serif',
               fontWeight: 500,
-              fontSize: 16,
+              fontSize: isMobile ? 14 : 16,
               cursor: "pointer",
               whiteSpace: "nowrap",
               textDecoration: "none",
@@ -149,6 +171,7 @@ export default function Section01_Hero({
               backgroundColor: "transparent",
               color: "#0f0f0f",
               border: "1px solid #e6e7e9",
+              width: isMobile ? "100%" : "auto",
             }}>{cta3Label}</a>
           </div>
         </div>

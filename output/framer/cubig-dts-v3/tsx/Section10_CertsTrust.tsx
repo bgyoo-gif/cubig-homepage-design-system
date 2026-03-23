@@ -1,3 +1,4 @@
+import * as React from "react"
 import { useEffect, useRef } from "react"
 import { addPropertyControls, ControlType } from "framer"
 
@@ -13,6 +14,20 @@ export default function Section10_CertsTrust({
 }: Props) {
   const certTrackRef = useRef<HTMLDivElement>(null)
   const partnerTrackRef = useRef<HTMLDivElement>(null)
+  const [isMobile, setIsMobile] = React.useState(false)
+  const [isTablet, setIsTablet] = React.useState(false)
+
+  React.useEffect(() => {
+    const check = () => {
+      setIsMobile(window.innerWidth < 768)
+      setIsTablet(window.innerWidth >= 768 && window.innerWidth < 1024)
+    }
+    check()
+    window.addEventListener("resize", check)
+    return () => window.removeEventListener("resize", check)
+  }, [])
+
+  const containerPadding = isMobile ? "0 16px" : isTablet ? "0 32px" : "0 120px"
 
   useEffect(() => {
     if (certTrackRef.current) {
@@ -79,11 +94,15 @@ export default function Section10_CertsTrust({
     }
   }, [])
 
+  // Slower animation on mobile
+  const certAnimDuration = isMobile ? "60s" : "40s"
+  const partnerAnimDuration = isMobile ? "45s" : "30s"
+
   return (
     <div style={{ width: "100%", fontFamily: '"DM Sans", sans-serif', WebkitFontSmoothing: "antialiased" }}>
       <section style={{
         width: "100%",
-        padding: "80px 0",
+        padding: isMobile ? "48px 0" : "80px 0",
         backgroundColor: "#ffffff",
         fontFamily: '"DM Sans", sans-serif',
         WebkitFontSmoothing: "antialiased",
@@ -92,8 +111,9 @@ export default function Section10_CertsTrust({
         <div style={{
           width: "100%",
           maxWidth: 1440,
+         margin: "0 auto",
           margin: "0 auto",
-          padding: "0 120px",
+          padding: containerPadding,
           boxSizing: "border-box",
         }}>
           {/* Section Header */}
@@ -105,7 +125,7 @@ export default function Section10_CertsTrust({
           }}>
             <h2 style={{
               fontFamily: '"DM Sans", sans-serif',
-              fontSize: 28,
+              fontSize: isMobile ? 20 : isTablet ? 22 : 28,
               fontWeight: 700,
               color: "#0f0f0f",
               lineHeight: 1.2,
@@ -121,31 +141,31 @@ export default function Section10_CertsTrust({
           width: "100vw",
           marginLeft: "calc(-50vw + 50%)",
           overflow: "hidden",
-          padding: "32px 0",
+          padding: isMobile ? "20px 0" : "32px 0",
         }}>
           <div
             ref={certTrackRef}
             style={{
               display: "flex",
-              gap: 24,
+              gap: isMobile ? 16 : 24,
               alignItems: "stretch",
               width: "max-content",
-              animation: "s10-marquee 40s linear infinite",
+              animation: `s10-marquee ${certAnimDuration} linear infinite`,
             }}
           >
             {certs.map((cert, i) => (
               <article key={i} style={{
                 backgroundColor: "#ffffff",
                 border: "1px solid #e6e7e9",
-                borderRadius: 24,
-                padding: "24px 32px",
+                borderRadius: isMobile ? 16 : 24,
+                padding: isMobile ? "16px 20px" : "24px 32px",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
                 textAlign: "center",
                 gap: 8,
                 flexShrink: 0,
-                width: 200,
+                width: isMobile ? 160 : 200,
               }}>
                 <span style={{
                   fontFamily: '"Fragment Mono", monospace',
@@ -158,8 +178,8 @@ export default function Section10_CertsTrust({
                 }}>{cert.group}</span>
                 <div style={{
                   position: "relative",
-                  width: 160,
-                  height: 120,
+                  width: isMobile ? 120 : 160,
+                  height: isMobile ? 90 : 120,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -180,12 +200,13 @@ export default function Section10_CertsTrust({
                   <span style={{
                     position: "relative",
                     zIndex: 1,
-                    fontSize: 14,
+                    fontSize: isMobile ? 12 : 14,
                     fontWeight: 700,
                     color: "#0f0f0f",
                     textAlign: "center",
                     lineHeight: 1.2,
                     maxWidth: 90,
+                  margin: "0 auto",
                   }}>{cert.text}</span>
                   <img
                     src={`${GRAPHICS_BASE}/cert-right.png`}
@@ -208,8 +229,8 @@ export default function Section10_CertsTrust({
                     src={cert.logo}
                     alt={cert.logoAlt}
                     style={{
-                      width: 60,
-                      height: 60,
+                      width: isMobile ? 48 : 60,
+                      height: isMobile ? 48 : 60,
                       objectFit: "contain",
                       marginTop: "auto",
                       marginBottom: -10,
@@ -225,8 +246,9 @@ export default function Section10_CertsTrust({
         <div style={{
           width: "100%",
           maxWidth: 1440,
+         margin: "0 auto",
           margin: "0 auto",
-          padding: "0 120px",
+          padding: containerPadding,
           boxSizing: "border-box",
         }}>
           <p style={{
@@ -237,7 +259,7 @@ export default function Section10_CertsTrust({
             color: "#9c9c9c",
             textAlign: "center",
             marginBottom: 24,
-            marginTop: 48,
+            marginTop: isMobile ? 32 : 48,
           }}>Trusted by enterprise &amp; government</p>
         </div>
 
@@ -246,16 +268,16 @@ export default function Section10_CertsTrust({
           width: "100vw",
           marginLeft: "calc(-50vw + 50%)",
           overflow: "hidden",
-          padding: "32px 0",
+          padding: isMobile ? "20px 0" : "32px 0",
         }}>
           <div
             ref={partnerTrackRef}
             style={{
               display: "flex",
-              gap: 64,
+              gap: isMobile ? 32 : 64,
               alignItems: "center",
               width: "max-content",
-              animation: "s10-marquee 30s linear infinite",
+              animation: `s10-marquee ${partnerAnimDuration} linear infinite`,
             }}
           >
             {partners.map((p, i) => (
@@ -269,7 +291,7 @@ export default function Section10_CertsTrust({
                 <img
                   src={p.logo}
                   alt={p.name}
-                  style={{ width: 120, height: 100, objectFit: "contain" }}
+                  style={{ width: isMobile ? 80 : 120, height: isMobile ? 64 : 100, objectFit: "contain" }}
                 />
                 <span style={{ fontSize: 12, color: "#9c9c9c", textAlign: "center", whiteSpace: "nowrap" }}>{p.name}</span>
               </div>

@@ -1,3 +1,4 @@
+import * as React from "react"
 import { addPropertyControls, ControlType } from "framer"
 
 const IMAGE_BASE = "https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images"
@@ -27,6 +28,19 @@ export default function Section13_CTABand({
   cta3Href = "/syntitan",
   footnote = "30-min review / no sales pitch",
 }: Props) {
+  const [isMobile, setIsMobile] = React.useState(false)
+  const [isTablet, setIsTablet] = React.useState(false)
+
+  React.useEffect(() => {
+    const check = () => {
+      setIsMobile(window.innerWidth < 768)
+      setIsTablet(window.innerWidth >= 768 && window.innerWidth < 1024)
+    }
+    check()
+    window.addEventListener("resize", check)
+    return () => window.removeEventListener("resize", check)
+  }, [])
+
   const btnStyle: React.CSSProperties = {
     display: "inline-flex",
     alignItems: "center",
@@ -35,14 +49,15 @@ export default function Section13_CTABand({
     borderRadius: 9999,
     fontFamily: '"DM Sans", sans-serif',
     fontWeight: 500,
-    fontSize: 16,
+    fontSize: isMobile ? 14 : 16,
     cursor: "pointer",
     border: "none",
     whiteSpace: "nowrap",
     textDecoration: "none",
-    padding: "12px 32px",
+    padding: isMobile ? "12px 24px" : "12px 32px",
     backgroundColor: "#ffffff",
     color: "#0f0f0f",
+    width: isMobile ? "100%" : "auto",
   }
 
   return (
@@ -56,7 +71,7 @@ export default function Section13_CTABand({
           backgroundPosition: "center",
           position: "relative",
           overflow: "hidden",
-          padding: "120px 120px",
+          padding: isMobile ? "64px 16px" : isTablet ? "80px 32px" : "120px 120px",
           textAlign: "center",
           fontFamily: '"DM Sans", sans-serif',
           WebkitFontSmoothing: "antialiased",
@@ -75,15 +90,16 @@ export default function Section13_CTABand({
           position: "relative",
           zIndex: 1,
           maxWidth: 860,
+         margin: "0 auto",
           margin: "0 auto",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          gap: 24,
+          gap: isMobile ? 16 : 24,
         }}>
           <h2 style={{
             fontFamily: '"DM Sans", sans-serif',
-            fontSize: 64,
+            fontSize: isMobile ? 36 : isTablet ? 48 : 64,
             fontWeight: 700,
             color: "#ffffff",
             lineHeight: 1.2,
@@ -92,16 +108,18 @@ export default function Section13_CTABand({
             {title} <span style={{ color: "#c6c5fa" }}>{titleBrandLight}</span>
           </h2>
           <p style={{
-            fontSize: 18,
+            fontSize: isMobile ? 14 : 18,
             color: "#ffffff",
             lineHeight: 1.7,
             opacity: 0.9,
           }}>{description}</p>
           <div style={{
             display: "flex",
+            flexDirection: isMobile ? "column" : "row",
             flexWrap: "wrap",
             gap: 12,
             justifyContent: "center",
+            width: isMobile ? "100%" : "auto",
           }}>
             <a href={cta1Href} style={btnStyle}>{cta1Label}</a>
             <a href={cta2Href} style={btnStyle}>{cta2Label}</a>

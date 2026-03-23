@@ -1,3 +1,4 @@
+import * as React from "react"
 import { addPropertyControls, ControlType } from "framer"
 
 interface Props {
@@ -21,6 +22,21 @@ export default function Section09_FiveSignals({
   cta3Label = "Learn: AI-Ready Data Infrastructure",
   cta3Href = "/learn/ai-ready-data-infrastructure",
 }: Props) {
+  const [isMobile, setIsMobile] = React.useState(false)
+  const [isTablet, setIsTablet] = React.useState(false)
+
+  React.useEffect(() => {
+    const check = () => {
+      setIsMobile(window.innerWidth < 768)
+      setIsTablet(window.innerWidth >= 768 && window.innerWidth < 1024)
+    }
+    check()
+    window.addEventListener("resize", check)
+    return () => window.removeEventListener("resize", check)
+  }, [])
+
+  const containerPadding = isMobile ? "0 16px" : isTablet ? "0 32px" : "0 120px"
+
   const signals = [
     {
       icon: "🛡️",
@@ -83,7 +99,7 @@ export default function Section09_FiveSignals({
     borderRadius: 9999,
     fontFamily: '"DM Sans", sans-serif',
     fontWeight: 500,
-    fontSize: 16,
+    fontSize: isMobile ? 14 : 16,
     cursor: "pointer",
     border: "none",
     whiteSpace: "nowrap",
@@ -91,6 +107,7 @@ export default function Section09_FiveSignals({
     padding: "12px 32px",
     background: "linear-gradient(130deg, #673AFF 0%, #D932FF 50%, #FF266A 100%)",
     color: "#ffffff",
+    width: isMobile ? "100%" : "auto",
   }
 
   const btnSecondaryStyle: React.CSSProperties = {
@@ -101,7 +118,7 @@ export default function Section09_FiveSignals({
     borderRadius: 9999,
     fontFamily: '"DM Sans", sans-serif',
     fontWeight: 500,
-    fontSize: 16,
+    fontSize: isMobile ? 14 : 16,
     cursor: "pointer",
     whiteSpace: "nowrap",
     textDecoration: "none",
@@ -109,19 +126,32 @@ export default function Section09_FiveSignals({
     backgroundColor: "transparent",
     color: "#0f0f0f",
     border: "1px solid #e6e7e9",
+    width: isMobile ? "100%" : "auto",
   }
 
   const btnSmSecondaryStyle: React.CSSProperties = {
-    ...btnSecondaryStyle,
-    padding: "8px 16px",
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
+    borderRadius: 9999,
+    fontFamily: '"DM Sans", sans-serif',
+    fontWeight: 500,
     fontSize: 14,
+    cursor: "pointer",
+    whiteSpace: "nowrap",
+    textDecoration: "none",
+    padding: "8px 16px",
+    backgroundColor: "transparent",
+    color: "#0f0f0f",
+    border: "1px solid #e6e7e9",
   }
 
   return (
     <div style={{ width: "100%", fontFamily: '"DM Sans", sans-serif', WebkitFontSmoothing: "antialiased" }}>
       <section style={{
         width: "100%",
-        padding: "80px 0",
+        padding: isMobile ? "48px 0" : "80px 0",
         backgroundColor: "#ffffff",
         fontFamily: '"DM Sans", sans-serif',
         WebkitFontSmoothing: "antialiased",
@@ -129,20 +159,21 @@ export default function Section09_FiveSignals({
         <div style={{
           width: "100%",
           maxWidth: 1440,
+         margin: "0 auto",
           margin: "0 auto",
-          padding: "0 120px",
+          padding: containerPadding,
           boxSizing: "border-box",
         }}>
           {/* Section Header */}
           <div style={{
             marginBottom: 32,
-            textAlign: "left",
+            textAlign: "center",
             paddingBottom: 24,
             borderBottom: "1px solid #e6e7e9",
           }}>
             <h2 style={{
               fontFamily: '"DM Sans", sans-serif',
-              fontSize: 28,
+              fontSize: isMobile ? 20 : isTablet ? 22 : 28,
               fontWeight: 700,
               color: "#0f0f0f",
               lineHeight: 1.2,
@@ -152,25 +183,26 @@ export default function Section09_FiveSignals({
               Five Signals Your Data Is <span style={{ color: "#725bea" }}>Blocking AI</span>
             </h2>
             <p style={{
-              fontSize: 18,
+              fontSize: isMobile ? 14 : isTablet ? 16 : 18,
               color: "#636363",
               lineHeight: 1.7,
               maxWidth: 860,
+            margin: "0 auto",
             }}>{description}</p>
           </div>
 
           {/* Feature Grid */}
           <div style={{
             display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gap: 32,
+            gridTemplateColumns: isMobile ? "1fr" : isTablet ? "repeat(2, 1fr)" : "repeat(3, 1fr)",
+            gap: isMobile ? 16 : 32,
           }}>
             {signals.map((s, i) => (
               <div key={i} style={{
                 display: "flex",
                 flexDirection: "column",
                 gap: 12,
-                padding: 24,
+                padding: isMobile ? 16 : 24,
                 border: "1px solid #e6e7e9",
                 borderRadius: 18,
                 backgroundColor: "#ffffff",
@@ -188,12 +220,12 @@ export default function Section09_FiveSignals({
                 }}>{s.icon}</div>
                 <h3 style={{
                   fontFamily: '"DM Sans", sans-serif',
-                  fontSize: 16,
+                  fontSize: isMobile ? 14 : 16,
                   fontWeight: 600,
                   color: "#0f0f0f",
                   lineHeight: 1.2,
                 }}>{s.title}</h3>
-                <p style={{ fontSize: 14, color: "#636363", lineHeight: 1.7 }}>{s.desc}</p>
+                <p style={{ fontSize: isMobile ? 13 : 14, color: "#636363", lineHeight: 1.7 }}>{s.desc}</p>
               </div>
             ))}
           </div>
@@ -201,10 +233,11 @@ export default function Section09_FiveSignals({
           {/* CTA Row */}
           <div style={{
             display: "flex",
+            flexDirection: isMobile ? "column" : "row",
             flexWrap: "wrap",
             gap: 12,
             justifyContent: "center",
-            marginTop: 48,
+            marginTop: isMobile ? 32 : 48,
           }}>
             <a href={cta1Href} style={btnPrimaryStyle}>{cta1Label}</a>
             <a href={cta2Href} style={btnSecondaryStyle}>{cta2Label}</a>
@@ -214,16 +247,16 @@ export default function Section09_FiveSignals({
           {/* Concepts Grid */}
           <div style={{
             display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
+            gridTemplateColumns: isMobile ? "1fr" : isTablet ? "1fr" : "repeat(3, 1fr)",
             gap: 24,
-            marginTop: 48,
+            marginTop: isMobile ? 32 : 48,
           }}>
             {keyConcepts.map((c, i) => (
               <article key={i} style={{
                 backgroundColor: "#ffffff",
                 borderRadius: 18,
                 border: "1px solid #e6e7e9",
-                padding: 24,
+                padding: isMobile ? 16 : 24,
                 boxShadow: "0px 24px 40px rgba(0, 0, 0, 0.04)",
                 boxSizing: "border-box",
                 display: "flex",
@@ -231,13 +264,13 @@ export default function Section09_FiveSignals({
               }}>
                 <h3 style={{
                   fontFamily: '"DM Sans", sans-serif',
-                  fontSize: 24,
+                  fontSize: isMobile ? 18 : 24,
                   fontWeight: 700,
                   color: "#0f0f0f",
                   lineHeight: 1.2,
                   marginBottom: 12,
                 }}>{c.title}</h3>
-                <p style={{ fontSize: 14, color: "#636363", lineHeight: 1.7, flex: 1 }}>{c.desc}</p>
+                <p style={{ fontSize: isMobile ? 13 : 14, color: "#636363", lineHeight: 1.7, flex: 1 }}>{c.desc}</p>
                 <div style={{ marginTop: "auto", paddingTop: 24 }}>
                   <a href={c.linkHref} style={btnSmSecondaryStyle}>{c.linkLabel}</a>
                 </div>

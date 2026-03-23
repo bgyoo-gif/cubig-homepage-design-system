@@ -1,3 +1,4 @@
+import * as React from "react"
 import { useState } from "react"
 import { addPropertyControls, ControlType } from "framer"
 
@@ -11,6 +12,20 @@ export default function Section08_CaseRecords({
   description = "Enterprise AI projects stall when data conditions prevent training, validation, or safe deployment. DTS was built for exactly these situations.",
 }: Props) {
   const [openIndex, setOpenIndex] = useState<number | null>(0)
+  const [isMobile, setIsMobile] = React.useState(false)
+  const [isTablet, setIsTablet] = React.useState(false)
+
+  React.useEffect(() => {
+    const check = () => {
+      setIsMobile(window.innerWidth < 768)
+      setIsTablet(window.innerWidth >= 768 && window.innerWidth < 1024)
+    }
+    check()
+    window.addEventListener("resize", check)
+    return () => window.removeEventListener("resize", check)
+  }, [])
+
+  const containerPadding = isMobile ? "0 16px" : isTablet ? "0 32px" : "0 120px"
 
   const cases = [
     {
@@ -82,7 +97,7 @@ export default function Section08_CaseRecords({
     <div style={{ width: "100%", fontFamily: '"DM Sans", sans-serif', WebkitFontSmoothing: "antialiased" }}>
       <section style={{
         width: "100%",
-        padding: "80px 0",
+        padding: isMobile ? "48px 0" : "80px 0",
         backgroundColor: "#ffffff",
         fontFamily: '"DM Sans", sans-serif',
         WebkitFontSmoothing: "antialiased",
@@ -90,8 +105,9 @@ export default function Section08_CaseRecords({
         <div style={{
           width: "100%",
           maxWidth: 1440,
+         margin: "0 auto",
           margin: "0 auto",
-          padding: "0 120px",
+          padding: containerPadding,
           boxSizing: "border-box",
         }}>
           {/* Section Header */}
@@ -103,7 +119,7 @@ export default function Section08_CaseRecords({
           }}>
             <h2 style={{
               fontFamily: '"DM Sans", sans-serif',
-              fontSize: 28,
+              fontSize: isMobile ? 20 : isTablet ? 22 : 28,
               fontWeight: 700,
               color: "#0f0f0f",
               lineHeight: 1.2,
@@ -113,10 +129,11 @@ export default function Section08_CaseRecords({
               Production <span style={{ color: "#725bea" }}>Case Records</span>
             </h2>
             <p style={{
-              fontSize: 18,
+              fontSize: isMobile ? 14 : isTablet ? 16 : 18,
               color: "#636363",
               lineHeight: 1.7,
               maxWidth: 860,
+            margin: "0 auto",
             }}>{description}</p>
           </div>
 
@@ -137,10 +154,10 @@ export default function Section08_CaseRecords({
                     aria-expanded={isOpen}
                     style={{
                       display: "grid",
-                      gridTemplateColumns: "1fr auto auto",
+                      gridTemplateColumns: isMobile ? "1fr auto" : "1fr auto auto",
                       alignItems: "center",
-                      gap: 16,
-                      padding: 24,
+                      gap: isMobile ? 12 : 16,
+                      padding: isMobile ? 16 : 24,
                       cursor: "pointer",
                       userSelect: "none",
                     }}
@@ -168,31 +185,54 @@ export default function Section08_CaseRecords({
                       </div>
                       <div style={{
                         fontFamily: '"DM Sans", sans-serif',
-                        fontSize: 18,
+                        fontSize: isMobile ? 14 : 18,
                         fontWeight: 500,
                         lineHeight: 1.2,
                         color: "#0f0f0f",
                         wordBreak: "keep-all",
                         overflowWrap: "break-word",
                       }}>{c.titleText}</div>
+                      {/* Badges shown inline on mobile (below title) */}
+                      {isMobile && (
+                        <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap", marginTop: 6 }}>
+                          {c.badges.map((b, j) => (
+                            <span key={j} style={{
+                              display: "inline-flex",
+                              alignItems: "center",
+                              gap: 4,
+                              padding: "4px 8px",
+                              borderRadius: 9999,
+                              fontSize: 11,
+                              fontWeight: 500,
+                              lineHeight: 1,
+                              whiteSpace: "nowrap",
+                              backgroundColor: badgeStyles[b.color].bg,
+                              color: badgeStyles[b.color].color,
+                            }}>{b.label}</span>
+                          ))}
+                        </div>
+                      )}
                     </div>
-                    <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", flexShrink: 0 }}>
-                      {c.badges.map((b, j) => (
-                        <span key={j} style={{
-                          display: "inline-flex",
-                          alignItems: "center",
-                          gap: 4,
-                          padding: "4px 8px",
-                          borderRadius: 9999,
-                          fontSize: 12,
-                          fontWeight: 500,
-                          lineHeight: 1,
-                          whiteSpace: "nowrap",
-                          backgroundColor: badgeStyles[b.color].bg,
-                          color: badgeStyles[b.color].color,
-                        }}>{b.label}</span>
-                      ))}
-                    </div>
+                    {/* Badges shown on non-mobile */}
+                    {!isMobile && (
+                      <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", flexShrink: 0 }}>
+                        {c.badges.map((b, j) => (
+                          <span key={j} style={{
+                            display: "inline-flex",
+                            alignItems: "center",
+                            gap: 4,
+                            padding: "4px 8px",
+                            borderRadius: 9999,
+                            fontSize: 12,
+                            fontWeight: 500,
+                            lineHeight: 1,
+                            whiteSpace: "nowrap",
+                            backgroundColor: badgeStyles[b.color].bg,
+                            color: badgeStyles[b.color].color,
+                          }}>{b.label}</span>
+                        ))}
+                      </div>
+                    )}
                     <div role="button" aria-label="Toggle accordion" style={{
                       width: 28,
                       height: 28,
@@ -212,6 +252,8 @@ export default function Section08_CaseRecords({
                         position: "relative",
                         fontSize: 16,
                         color: "#636363",
+              wordBreak: "keep-all" as const,
+              overflowWrap: "break-word" as const,
                         fontWeight: 700,
                         lineHeight: "12px",
                         textAlign: "center",
@@ -222,7 +264,7 @@ export default function Section08_CaseRecords({
                   {/* Accordion Body */}
                   {isOpen && (
                     <div style={{
-                      padding: 24,
+                      padding: isMobile ? 16 : 24,
                       borderTop: "1px solid #e6e7e9",
                       backgroundColor: "#f7f7f7",
                     }}>
@@ -235,12 +277,12 @@ export default function Section08_CaseRecords({
                             border: "1px solid #e6e7e9",
                             borderRadius: 8,
                             backgroundColor: "#ffffff",
-                            minWidth: 100,
+                            minWidth: isMobile ? 80 : 100,
                             flex: 1,
                           }}>
                             <span style={{
                               fontFamily: '"DM Sans", sans-serif',
-                              fontSize: 20,
+                              fontSize: isMobile ? 16 : 20,
                               fontWeight: 700,
                               lineHeight: 1,
                               color: "#0f0f0f",
@@ -256,7 +298,7 @@ export default function Section08_CaseRecords({
                           </div>
                         ))}
                       </div>
-                      <p style={{ fontSize: 14, color: "#636363", lineHeight: 1.7 }}>{c.body}</p>
+                      <p style={{ fontSize: isMobile ? 13 : 14, color: "#636363", lineHeight: 1.7 }}>{c.body}</p>
                     </div>
                   )}
                 </article>

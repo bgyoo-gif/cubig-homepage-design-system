@@ -1,3 +1,4 @@
+import * as React from "react"
 import { addPropertyControls, ControlType } from "framer"
 
 interface Props {
@@ -9,6 +10,21 @@ export default function Section04_Comparison({
   title = "DTS vs. Other Approaches to Restricted Data",
   description = "Databricks stores your data. Masking removes it. DTS makes it AI-ready -- without removing or exposing it.",
 }: Props) {
+  const [isMobile, setIsMobile] = React.useState(false)
+  const [isTablet, setIsTablet] = React.useState(false)
+
+  React.useEffect(() => {
+    const check = () => {
+      setIsMobile(window.innerWidth < 768)
+      setIsTablet(window.innerWidth >= 768 && window.innerWidth < 1024)
+    }
+    check()
+    window.addEventListener("resize", check)
+    return () => window.removeEventListener("resize", check)
+  }, [])
+
+  const containerPadding = isMobile ? "0 16px" : isTablet ? "0 32px" : "0 120px"
+
   const rows = [
     {
       capability: "Privacy guarantee",
@@ -59,12 +75,13 @@ export default function Section04_Comparison({
     const color = cell.cross ? "#ff3030" : cell.partial ? "#9c9c9c" : "#0e824c"
     return (
       <td style={{
-        padding: "14px 16px",
+        padding: isMobile ? "10px 10px" : "14px 16px",
         borderBottom: isLast ? "none" : "1px solid #e6e7e9",
         color: "#0f0f0f",
         verticalAlign: "top",
         lineHeight: 1.5,
-        fontSize: 14,
+        fontSize: isMobile ? 12 : 14,
+        minWidth: isMobile ? 80 : "auto",
       }}>
         <span style={{ color, fontWeight: 700 }}>{icon}</span>{cell.text ? ` ${cell.text}` : ""}
       </td>
@@ -75,7 +92,7 @@ export default function Section04_Comparison({
     <div style={{ width: "100%", fontFamily: '"DM Sans", sans-serif', WebkitFontSmoothing: "antialiased" }}>
       <section style={{
         width: "100%",
-        padding: "80px 0",
+        padding: isMobile ? "48px 0" : "80px 0",
         backgroundColor: "#f7f7f7",
         fontFamily: '"DM Sans", sans-serif',
         WebkitFontSmoothing: "antialiased",
@@ -83,20 +100,21 @@ export default function Section04_Comparison({
         <div style={{
           width: "100%",
           maxWidth: 1440,
+         margin: "0 auto",
           margin: "0 auto",
-          padding: "0 120px",
+          padding: containerPadding,
           boxSizing: "border-box",
         }}>
           {/* Section Header */}
           <div style={{
             marginBottom: 32,
-            textAlign: "left",
+            textAlign: "center",
             paddingBottom: 24,
             borderBottom: "1px solid #e6e7e9",
           }}>
             <h2 style={{
               fontFamily: '"DM Sans", sans-serif',
-              fontSize: 28,
+              fontSize: isMobile ? 20 : isTablet ? 22 : 28,
               fontWeight: 700,
               color: "#0f0f0f",
               lineHeight: 1.2,
@@ -106,10 +124,11 @@ export default function Section04_Comparison({
               <span style={{ fontFamily: '"Oxanium", sans-serif', fontWeight: 700 }}>DTS</span> vs. Other Approaches to <span style={{ color: "#725bea" }}>Restricted Data</span>
             </h2>
             <p style={{
-              fontSize: 18,
+              fontSize: isMobile ? 14 : isTablet ? 16 : 18,
               color: "#636363",
               lineHeight: 1.7,
               maxWidth: 860,
+            margin: "0 auto",
             }}>{description}</p>
           </div>
 
@@ -118,74 +137,81 @@ export default function Section04_Comparison({
             overflowX: "auto",
             borderRadius: 24,
             border: "1px solid #e6e7e9",
+            WebkitOverflowScrolling: "touch",
           }}>
             <table style={{
               width: "100%",
+              minWidth: isMobile ? 480 : "auto",
               borderCollapse: "collapse",
-              fontSize: 14,
+              fontSize: isMobile ? 12 : 14,
             }}>
               <thead>
                 <tr>
                   <th style={{
                     fontFamily: '"Fragment Mono", monospace',
-                    fontSize: 11,
+                    fontSize: isMobile ? 10 : 11,
                     textTransform: "uppercase",
                     letterSpacing: "0.08em",
                     color: "#0f0f0f",
                     fontWeight: 600,
-                    padding: "12px 16px",
+                    padding: isMobile ? "10px 10px" : "12px 16px",
                     borderBottom: "2px solid #e6e7e9",
-                    textAlign: "left",
+                    textAlign: "center",
                     backgroundColor: "#f7f7f7",
+                    minWidth: isMobile ? 90 : "auto",
                   }}>Capability</th>
                   <th style={{
                     fontFamily: '"Fragment Mono", monospace',
-                    fontSize: 11,
+                    fontSize: isMobile ? 10 : 11,
                     textTransform: "uppercase",
                     letterSpacing: "0.08em",
                     color: "#0f0f0f",
                     fontWeight: 600,
-                    padding: "12px 16px",
+                    padding: isMobile ? "10px 10px" : "12px 16px",
                     borderBottom: "2px solid #e6e7e9",
                     textAlign: "left",
                     backgroundColor: "rgba(114, 91, 234, 0.08)",
+                    minWidth: isMobile ? 80 : "auto",
                   }}><span style={{ fontFamily: '"Oxanium", sans-serif', fontWeight: 700 }}>DTS</span></th>
                   <th style={{
                     fontFamily: '"Fragment Mono", monospace',
-                    fontSize: 11,
+                    fontSize: isMobile ? 10 : 11,
                     textTransform: "uppercase",
                     letterSpacing: "0.08em",
                     color: "#0f0f0f",
                     fontWeight: 600,
-                    padding: "12px 16px",
+                    padding: isMobile ? "10px 10px" : "12px 16px",
                     borderBottom: "2px solid #e6e7e9",
                     textAlign: "left",
                     backgroundColor: "#f7f7f7",
-                  }}>Data Masking / Anonymization</th>
+                    minWidth: isMobile ? 80 : "auto",
+                  }}>Masking</th>
                   <th style={{
                     fontFamily: '"Fragment Mono", monospace',
-                    fontSize: 11,
+                    fontSize: isMobile ? 10 : 11,
                     textTransform: "uppercase",
                     letterSpacing: "0.08em",
                     color: "#0f0f0f",
                     fontWeight: 600,
-                    padding: "12px 16px",
+                    padding: isMobile ? "10px 10px" : "12px 16px",
                     borderBottom: "2px solid #e6e7e9",
                     textAlign: "left",
                     backgroundColor: "#f7f7f7",
-                  }}>Data Sampling</th>
+                    minWidth: isMobile ? 80 : "auto",
+                  }}>Sampling</th>
                   <th style={{
                     fontFamily: '"Fragment Mono", monospace',
-                    fontSize: 11,
+                    fontSize: isMobile ? 10 : 11,
                     textTransform: "uppercase",
                     letterSpacing: "0.08em",
                     color: "#0f0f0f",
                     fontWeight: 600,
-                    padding: "12px 16px",
+                    padding: isMobile ? "10px 10px" : "12px 16px",
                     borderBottom: "2px solid #e6e7e9",
                     textAlign: "left",
                     backgroundColor: "#f7f7f7",
-                  }}>Manual Labeling</th>
+                    minWidth: isMobile ? 80 : "auto",
+                  }}>Manual</th>
                 </tr>
               </thead>
               <tbody>
@@ -194,20 +220,20 @@ export default function Section04_Comparison({
                   return (
                     <tr key={i}>
                       <td style={{
-                        padding: "14px 16px",
+                        padding: isMobile ? "10px 10px" : "14px 16px",
                         borderBottom: isLast ? "none" : "1px solid #e6e7e9",
                         color: "#0f0f0f",
                         fontWeight: 600,
                         verticalAlign: "top",
                         lineHeight: 1.5,
-                        fontSize: 14,
+                        fontSize: isMobile ? 12 : 14,
                       }}>{row.capability}</td>
                       <td style={{
-                        padding: "14px 16px",
+                        padding: isMobile ? "10px 10px" : "14px 16px",
                         borderBottom: isLast ? "none" : "1px solid #e6e7e9",
                         verticalAlign: "top",
                         lineHeight: 1.5,
-                        fontSize: 14,
+                        fontSize: isMobile ? 12 : 14,
                         backgroundColor: "rgba(114, 91, 234, 0.04)",
                       }}>
                         <span style={{ color: "#0e824c", fontWeight: 700 }}>✓</span> {row.dts.text}

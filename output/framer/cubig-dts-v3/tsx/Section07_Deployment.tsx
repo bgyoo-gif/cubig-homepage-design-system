@@ -1,3 +1,4 @@
+import * as React from "react"
 import { addPropertyControls, ControlType } from "framer"
 
 interface Props {
@@ -17,6 +18,21 @@ export default function Section07_Deployment({
   cardBBtnLabel = "See SynTitan Platform",
   cardBBtnHref = "/syntitan",
 }: Props) {
+  const [isMobile, setIsMobile] = React.useState(false)
+  const [isTablet, setIsTablet] = React.useState(false)
+
+  React.useEffect(() => {
+    const check = () => {
+      setIsMobile(window.innerWidth < 768)
+      setIsTablet(window.innerWidth >= 768 && window.innerWidth < 1024)
+    }
+    check()
+    window.addEventListener("resize", check)
+    return () => window.removeEventListener("resize", check)
+  }, [])
+
+  const containerPadding = isMobile ? "0 16px" : isTablet ? "0 32px" : "0 120px"
+
   const productStyle: React.CSSProperties = {
     fontFamily: '"Oxanium", sans-serif',
     fontWeight: 700,
@@ -30,14 +46,15 @@ export default function Section07_Deployment({
     borderRadius: 9999,
     fontFamily: '"DM Sans", sans-serif',
     fontWeight: 500,
-    fontSize: 16,
+    fontSize: isMobile ? 14 : 16,
     cursor: "pointer",
     whiteSpace: "nowrap",
     textDecoration: "none",
-    padding: "12px 32px",
+    padding: isMobile ? "10px 24px" : "12px 32px",
     backgroundColor: "transparent",
     color: "#0f0f0f",
     border: "1px solid #e6e7e9",
+    width: isMobile ? "100%" : "auto",
   }
 
   const checkIconStyle: React.CSSProperties = {
@@ -71,7 +88,7 @@ export default function Section07_Deployment({
     <div style={{ width: "100%", fontFamily: '"DM Sans", sans-serif', WebkitFontSmoothing: "antialiased" }}>
       <section style={{
         width: "100%",
-        padding: "80px 0",
+        padding: isMobile ? "48px 0" : "80px 0",
         backgroundColor: "#f7f7f7",
         fontFamily: '"DM Sans", sans-serif',
         WebkitFontSmoothing: "antialiased",
@@ -79,8 +96,9 @@ export default function Section07_Deployment({
         <div style={{
           width: "100%",
           maxWidth: 1440,
+         margin: "0 auto",
           margin: "0 auto",
-          padding: "0 120px",
+          padding: containerPadding,
           boxSizing: "border-box",
         }}>
           {/* Section Header */}
@@ -92,7 +110,7 @@ export default function Section07_Deployment({
           }}>
             <h2 style={{
               fontFamily: '"DM Sans", sans-serif',
-              fontSize: 28,
+              fontSize: isMobile ? 20 : isTablet ? 22 : 28,
               fontWeight: 700,
               color: "#0f0f0f",
               lineHeight: 1.2,
@@ -105,7 +123,7 @@ export default function Section07_Deployment({
           {/* Card Grid */}
           <div style={{
             display: "grid",
-            gridTemplateColumns: "repeat(2, 1fr)",
+            gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)",
             gap: 24,
           }}>
             {/* Card A */}
@@ -117,7 +135,7 @@ export default function Section07_Deployment({
             }}>
               <div style={{
                 borderRadius: 16,
-                padding: 32,
+                padding: isMobile ? 20 : 32,
                 height: "100%",
                 display: "flex",
                 flexDirection: "column",
@@ -141,15 +159,17 @@ export default function Section07_Deployment({
                 }}>MODE A - INDEPENDENT</span>
                 <h3 style={{
                   fontFamily: '"DM Sans", sans-serif',
-                  fontSize: 24,
+                  fontSize: isMobile ? 18 : 24,
                   fontWeight: 700,
                   color: "#0f0f0f",
                   lineHeight: 1.2,
                   marginBottom: 12,
                 }}>DTS Standalone</h3>
                 <p style={{
-                  fontSize: 14,
+                  fontSize: isMobile ? 13 : 14,
                   color: "#636363",
+              wordBreak: "keep-all" as const,
+              overflowWrap: "break-word" as const,
                   lineHeight: 1.7,
                   marginBottom: 24,
                 }}>
@@ -157,7 +177,7 @@ export default function Section07_Deployment({
                 </p>
                 <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 12, marginBottom: 24, padding: 0 }}>
                   {cardAItems.map((item, i) => (
-                    <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: 8, fontSize: 16, lineHeight: 1.5, color: "#0f0f0f" }}>
+                    <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: 8, fontSize: isMobile ? 14 : 16, lineHeight: 1.5, color: "#0f0f0f" }}>
                       <span style={checkIconStyle}>✓</span>{item}
                     </li>
                   ))}
@@ -177,7 +197,7 @@ export default function Section07_Deployment({
             }}>
               <div style={{
                 borderRadius: 16,
-                padding: 32,
+                padding: isMobile ? 20 : 32,
                 height: "100%",
                 display: "flex",
                 flexDirection: "column",
@@ -201,7 +221,7 @@ export default function Section07_Deployment({
                 }}>MODE B - INTEGRATED</span>
                 <h3 style={{
                   fontFamily: '"DM Sans", sans-serif',
-                  fontSize: 24,
+                  fontSize: isMobile ? 18 : 24,
                   fontWeight: 700,
                   color: "#0f0f0f",
                   lineHeight: 1.2,
@@ -210,8 +230,10 @@ export default function Section07_Deployment({
                   <span style={productStyle}>DTS</span> + <span style={productStyle}>SynTitan</span>
                 </h3>
                 <p style={{
-                  fontSize: 14,
+                  fontSize: isMobile ? 13 : 14,
                   color: "#636363",
+              wordBreak: "keep-all" as const,
+              overflowWrap: "break-word" as const,
                   lineHeight: 1.7,
                   marginBottom: 24,
                 }}>
@@ -219,7 +241,7 @@ export default function Section07_Deployment({
                 </p>
                 <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 12, marginBottom: 24, padding: 0 }}>
                   {cardBItems.map((item, i) => (
-                    <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: 8, fontSize: 16, lineHeight: 1.5, color: "#0f0f0f" }}>
+                    <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: 8, fontSize: isMobile ? 14 : 16, lineHeight: 1.5, color: "#0f0f0f" }}>
                       <span style={checkIconStyle}>✓</span>{item}
                     </li>
                   ))}
@@ -236,11 +258,11 @@ export default function Section07_Deployment({
           {/* Note Banner */}
           <div style={{ marginTop: 32 }}>
             <div role="note" style={{
-              padding: "16px 24px",
+              padding: isMobile ? "14px 16px" : "16px 24px",
               borderTop: "1px solid #e6e7e9",
               borderBottom: "1px solid #e6e7e9",
               backgroundColor: "rgba(21, 94, 160, 0.06)",
-              fontSize: 14,
+              fontSize: isMobile ? 13 : 14,
               lineHeight: 1.7,
               textAlign: "center",
               color: "#0f0f0f",

@@ -1,3 +1,4 @@
+import * as React from "react"
 import { useState } from "react"
 import { addPropertyControls, ControlType } from "framer"
 
@@ -9,6 +10,20 @@ export default function Section12_FAQ({
   title = "Common Questions",
 }: Props) {
   const [openIndex, setOpenIndex] = useState<number | null>(0)
+  const [isMobile, setIsMobile] = React.useState(false)
+  const [isTablet, setIsTablet] = React.useState(false)
+
+  React.useEffect(() => {
+    const check = () => {
+      setIsMobile(window.innerWidth < 768)
+      setIsTablet(window.innerWidth >= 768 && window.innerWidth < 1024)
+    }
+    check()
+    window.addEventListener("resize", check)
+    return () => window.removeEventListener("resize", check)
+  }, [])
+
+  const containerPadding = isMobile ? "0 16px" : isTablet ? "0 32px" : "0 120px"
 
   const faqs = [
     {
@@ -43,7 +58,7 @@ export default function Section12_FAQ({
     <div style={{ width: "100%", fontFamily: '"DM Sans", sans-serif', WebkitFontSmoothing: "antialiased" }}>
       <section style={{
         width: "100%",
-        padding: "80px 0",
+        padding: isMobile ? "48px 0" : "80px 0",
         backgroundColor: "#ffffff",
         fontFamily: '"DM Sans", sans-serif',
         WebkitFontSmoothing: "antialiased",
@@ -51,8 +66,9 @@ export default function Section12_FAQ({
         <div style={{
           width: "100%",
           maxWidth: 1440,
+         margin: "0 auto",
           margin: "0 auto",
-          padding: "0 120px",
+          padding: containerPadding,
           boxSizing: "border-box",
         }}>
           {/* Section Header */}
@@ -64,7 +80,7 @@ export default function Section12_FAQ({
           }}>
             <h2 style={{
               fontFamily: '"DM Sans", sans-serif',
-              fontSize: 28,
+              fontSize: isMobile ? 20 : isTablet ? 22 : 28,
               fontWeight: 700,
               color: "#0f0f0f",
               lineHeight: 1.2,
@@ -93,14 +109,14 @@ export default function Section12_FAQ({
                       gridTemplateColumns: "1fr auto",
                       alignItems: "center",
                       gap: 16,
-                      padding: 24,
+                      padding: isMobile ? 16 : 24,
                       cursor: "pointer",
                       userSelect: "none",
                     }}
                   >
                     <div style={{
                       fontFamily: '"DM Sans", sans-serif',
-                      fontSize: 18,
+                      fontSize: isMobile ? 14 : 18,
                       fontWeight: 500,
                       lineHeight: 1.2,
                       color: "#0f0f0f",
@@ -131,11 +147,11 @@ export default function Section12_FAQ({
                   </div>
                   {isOpen && (
                     <div style={{
-                      padding: 24,
+                      padding: isMobile ? 16 : 24,
                       borderTop: "1px solid #e6e7e9",
                       backgroundColor: "#f7f7f7",
                     }}>
-                      <p style={{ fontSize: 14, color: "#636363", lineHeight: 1.7 }}>{faq.answer}</p>
+                      <p style={{ fontSize: isMobile ? 13 : 14, color: "#636363", lineHeight: 1.7 }}>{faq.answer}</p>
                     </div>
                   )}
                 </article>

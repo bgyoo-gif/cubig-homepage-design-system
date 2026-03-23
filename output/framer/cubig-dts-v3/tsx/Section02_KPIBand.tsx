@@ -1,3 +1,4 @@
+import * as React from "react"
 import { addPropertyControls, ControlType } from "framer"
 
 const IMAGE_BASE = "https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images"
@@ -33,6 +34,21 @@ export default function Section02_KPIBand({
   kpi4Sub = "Kyobo Life Insurance",
   bannerText = "True AI-ready data means it is usable, privacy-safe, and stable for production execution.",
 }: Props) {
+  const [isMobile, setIsMobile] = React.useState(false)
+  const [isTablet, setIsTablet] = React.useState(false)
+
+  React.useEffect(() => {
+    const check = () => {
+      setIsMobile(window.innerWidth < 768)
+      setIsTablet(window.innerWidth >= 768 && window.innerWidth < 1024)
+    }
+    check()
+    window.addEventListener("resize", check)
+    return () => window.removeEventListener("resize", check)
+  }, [])
+
+  const containerPadding = isMobile ? "0 16px" : isTablet ? "0 32px" : "0 120px"
+
   const kpis = [
     { number: kpi1Number, label: kpi1Label, sub: kpi1Sub },
     { number: kpi2Number, label: kpi2Label, sub: kpi2Sub },
@@ -44,7 +60,7 @@ export default function Section02_KPIBand({
     <div style={{ width: "100%", fontFamily: '"DM Sans", sans-serif', WebkitFontSmoothing: "antialiased" }}>
       <section style={{
         width: "100%",
-        padding: "80px 0",
+        padding: isMobile ? "48px 0" : "80px 0",
         backgroundColor: "#ffffff",
         fontFamily: '"DM Sans", sans-serif',
         WebkitFontSmoothing: "antialiased",
@@ -52,17 +68,18 @@ export default function Section02_KPIBand({
         <div style={{
           width: "100%",
           maxWidth: 1440,
+         margin: "0 auto",
           margin: "0 auto",
-          padding: "0 120px",
+          padding: containerPadding,
           boxSizing: "border-box",
         }}>
           {/* KPI Band */}
           <div style={{
-            borderRadius: 40,
-            padding: "48px 32px",
+            borderRadius: isMobile ? 24 : 40,
+            padding: isMobile ? "32px 16px" : isTablet ? "40px 24px" : "48px 32px",
             display: "grid",
-            gridTemplateColumns: "repeat(4, 1fr)",
-            gap: 32,
+            gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(4, 1fr)",
+            gap: isMobile ? 20 : 32,
             justifyItems: "center",
             backgroundImage: `url('${IMAGE_BASE}/bg-lavender.png')`,
             backgroundSize: "cover",
@@ -81,25 +98,25 @@ export default function Section02_KPIBand({
               <div key={i} style={{
                 display: "flex",
                 flexDirection: "column",
-                gap: 12,
+                gap: isMobile ? 8 : 12,
                 textAlign: "center",
                 position: "relative",
                 zIndex: 1,
               }}>
                 <span style={{
                   fontFamily: '"DM Sans", sans-serif',
-                  fontSize: 50,
+                  fontSize: isMobile ? 32 : isTablet ? 40 : 50,
                   fontWeight: 700,
                   lineHeight: 1,
                   color: "#ffffff",
                 }}>{kpi.number}</span>
                 <p style={{
-                  fontSize: 14,
+                  fontSize: isMobile ? 12 : 14,
                   color: "rgba(255,255,255,0.85)",
                   lineHeight: 1.5,
                 }}>{kpi.label}</p>
                 <span style={{
-                  fontSize: 12,
+                  fontSize: isMobile ? 11 : 12,
                   color: "rgba(255,255,255,0.65)",
                   fontFamily: '"Fragment Mono", monospace',
                   marginTop: 2,
@@ -113,14 +130,14 @@ export default function Section02_KPIBand({
             <div style={{
               width: "100%",
               textAlign: "center",
-              padding: "32px 48px",
-              borderRadius: 40,
+              padding: isMobile ? "24px 20px" : "32px 48px",
+              borderRadius: isMobile ? 24 : 40,
               backgroundImage: `url('${IMAGE_BASE}/bg-green-wave.png')`,
               backgroundSize: "cover",
               backgroundPosition: "center",
               position: "relative",
               overflow: "hidden",
-              fontSize: 18,
+              fontSize: isMobile ? 14 : 18,
               fontWeight: 500,
               lineHeight: 1.7,
               isolation: "isolate",

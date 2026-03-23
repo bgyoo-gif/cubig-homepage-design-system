@@ -1,3 +1,4 @@
+import * as React from "react"
 import { addPropertyControls, ControlType } from "framer"
 
 interface Props {
@@ -9,6 +10,21 @@ export default function Section05_ThreeProblems({
   title = "Three Data Problems. One Engine.",
   description = "Data that can't be used, can't be shared, or doesn't exist in sufficient volume -- DTS resolves all three.",
 }: Props) {
+  const [isMobile, setIsMobile] = React.useState(false)
+  const [isTablet, setIsTablet] = React.useState(false)
+
+  React.useEffect(() => {
+    const check = () => {
+      setIsMobile(window.innerWidth < 768)
+      setIsTablet(window.innerWidth >= 768 && window.innerWidth < 1024)
+    }
+    check()
+    window.addEventListener("resize", check)
+    return () => window.removeEventListener("resize", check)
+  }, [])
+
+  const containerPadding = isMobile ? "0 16px" : isTablet ? "0 32px" : "0 120px"
+
   const cards = [
     {
       badge: "RESTRICTED DATA",
@@ -55,7 +71,7 @@ export default function Section05_ThreeProblems({
     <div style={{ width: "100%", fontFamily: '"DM Sans", sans-serif', WebkitFontSmoothing: "antialiased" }}>
       <section style={{
         width: "100%",
-        padding: "80px 0",
+        padding: isMobile ? "48px 0" : "80px 0",
         backgroundColor: "#ffffff",
         fontFamily: '"DM Sans", sans-serif',
         WebkitFontSmoothing: "antialiased",
@@ -63,20 +79,21 @@ export default function Section05_ThreeProblems({
         <div style={{
           width: "100%",
           maxWidth: 1440,
+         margin: "0 auto",
           margin: "0 auto",
-          padding: "0 120px",
+          padding: containerPadding,
           boxSizing: "border-box",
         }}>
           {/* Section Header */}
           <div style={{
             marginBottom: 32,
-            textAlign: "left",
+            textAlign: "center",
             paddingBottom: 24,
             borderBottom: "1px solid #e6e7e9",
           }}>
             <h2 style={{
               fontFamily: '"DM Sans", sans-serif',
-              fontSize: 28,
+              fontSize: isMobile ? 20 : isTablet ? 22 : 28,
               fontWeight: 700,
               color: "#0f0f0f",
               lineHeight: 1.2,
@@ -86,17 +103,18 @@ export default function Section05_ThreeProblems({
               Three Data Problems. <span style={{ color: "#725bea" }}>One Engine.</span>
             </h2>
             <p style={{
-              fontSize: 18,
+              fontSize: isMobile ? 14 : isTablet ? 16 : 18,
               color: "#636363",
               lineHeight: 1.7,
               maxWidth: 860,
+            margin: "0 auto",
             }}>{description}</p>
           </div>
 
           {/* Card Grid */}
           <div style={{
             display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
+            gridTemplateColumns: isMobile ? "1fr" : isTablet ? "1fr" : "repeat(3, 1fr)",
             gap: 24,
           }}>
             {cards.map((card, i) => (
@@ -104,7 +122,7 @@ export default function Section05_ThreeProblems({
                 backgroundColor: "#ffffff",
                 borderRadius: 18,
                 border: "1px solid #e6e7e9",
-                padding: 24,
+                padding: isMobile ? 20 : 24,
                 boxShadow: "0px 24px 40px rgba(0, 0, 0, 0.04)",
                 boxSizing: "border-box",
                 display: "flex",
@@ -134,15 +152,17 @@ export default function Section05_ThreeProblems({
                 }}>{card.number}</p>
                 <h3 style={{
                   fontFamily: '"DM Sans", sans-serif',
-                  fontSize: 24,
+                  fontSize: isMobile ? 18 : isTablet ? 20 : 24,
                   fontWeight: 700,
                   color: "#0f0f0f",
                   lineHeight: 1.2,
                   marginBottom: 12,
                 }}>{card.title}</h3>
                 <p style={{
-                  fontSize: 14,
+                  fontSize: isMobile ? 13 : 14,
                   color: "#636363",
+              wordBreak: "keep-all" as const,
+              overflowWrap: "break-word" as const,
                   lineHeight: 1.7,
                   flex: 1,
                   marginBottom: 16,
@@ -160,7 +180,7 @@ export default function Section05_ThreeProblems({
                       display: "flex",
                       alignItems: "flex-start",
                       gap: 8,
-                      fontSize: 16,
+                      fontSize: isMobile ? 14 : 16,
                       lineHeight: 1.5,
                       color: "#0f0f0f",
                     }}>
