@@ -2873,22 +2873,26 @@ function openDetail(path, name) {
   iframe.srcdoc = '<html><body style="display:flex;align-items:center;justify-content:center;height:100vh;margin:0;color:#9c9c9c;font-family:DM Sans,sans-serif"><p>불러오는 중...</p></body></html>';
   document.getElementById('detail-overlay').classList.add('v-detail-overlay--open');
 
-  // API로 파일 내용 가져오기 (서버 모드), fallback으로 상대경로 fetch
-  var fetchUrl = apiBase + '/api/file-content?path=' + encodeURIComponent(path);
-  fetch(fetchUrl).then(function(r) {
-    if (!r.ok) throw new Error('api');
-    return r.json();
-  }).then(function(data) {
-    renderInIframe(iframe, path, data.content);
+  // 절대 URL이면 그대로, 상대경로면 ../prefix 붙이기
+  var isAbsolute = path.startsWith('http://') || path.startsWith('https://');
+  var directUrl = isAbsolute ? path : (path.startsWith('../') ? path : '../' + path);
+
+  // 1차: 직접 fetch (GitHub Pages에서도 동작)
+  fetch(directUrl).then(function(r) {
+    if (!r.ok) throw new Error(r.status);
+    return r.text();
+  }).then(function(text) {
+    renderInIframe(iframe, path, text);
   }).catch(function() {
-    // fallback: 직접 fetch (GitHub Pages 등)
-    fetch(path.startsWith('../') ? path : '../' + path).then(function(r) {
-      if (!r.ok) throw new Error(r.status);
-      return r.text();
-    }).then(function(text) {
-      renderInIframe(iframe, path, text);
+    // 2차: API 시도 (로컬 서버)
+    var fetchUrl = apiBase + '/api/file-content?path=' + encodeURIComponent(path);
+    fetch(fetchUrl).then(function(r) {
+      if (!r.ok) throw new Error('api');
+      return r.json();
+    }).then(function(data) {
+      renderInIframe(iframe, path, data.content);
     }).catch(function() {
-      iframe.srcdoc = '<html><body style="display:flex;align-items:center;justify-content:center;height:100vh;margin:0;font-family:DM Sans,sans-serif;color:#9c9c9c"><p>파일을 불러올 수 없습니다.<br><code style="font-size:12px;">python3 server/app.py</code> 로 서버를 실행해주세요.</p></body></html>';
+      iframe.srcdoc = '<html><body style="display:flex;align-items:center;justify-content:center;height:100vh;margin:0;font-family:DM Sans,sans-serif;color:#9c9c9c"><p>파일을 불러올 수 없습니다.</p></body></html>';
     });
   });
 }
