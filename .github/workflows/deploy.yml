@@ -6,7 +6,6 @@ on:
     paths:
       - 'output/**'
       - 'input/**'
-      - 'reference/**'
       - 'server/manifest.py'
 
 jobs:
