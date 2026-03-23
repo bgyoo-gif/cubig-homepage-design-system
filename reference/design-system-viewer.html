@@ -2773,7 +2773,7 @@ var apiBase = (window.location.hostname === 'localhost' || window.location.hostn
   : 'https://localhost:3333';
 
 function fileLink(f) {
-  return '<a class="v-ot-link" onclick="openDetail(\'' + f.path + '\',\'' + f.name + '\')">' + f.name + '</a>';
+  return '<a class="v-ot-link" href="javascript:void(0)" onclick="event.preventDefault();openDetail(\'' + f.path + '\',\'' + f.name + '\')">' + f.name + '</a>';
 }
 function fileList(arr) {
   if (!arr || arr.length === 0) return '<span class="v-ot-empty">—</span>';
