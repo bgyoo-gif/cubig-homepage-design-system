@@ -79,278 +79,184 @@ export default function Section08_CaseRecords({
   const toggle = (i: number) => setOpenIndex(openIndex === i ? null : i)
 
   return (
-    <>
-      <style>{`
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-        .s8-section {
-          width: 100%;
-          padding: 80px 0;
-          background-color: #ffffff;
-          font-family: "DM Sans", sans-serif;
-          -webkit-font-smoothing: antialiased;
-        }
-        .s8-container {
-          width: 100%;
-          margin: 0 auto;
-          padding: 0 16px;
-          box-sizing: border-box;
-        }
-        .s8-section-header {
-          margin-bottom: 32px;
-          text-align: center;
-          padding-bottom: 24px;
-          border-bottom: 1px solid #e6e7e9;
-        }
-        .s8-title {
-          font-family: "DM Sans", sans-serif;
-          font-size: 40px;
-          font-weight: 700;
-          color: #0f0f0f;
-          line-height: 1.2;
-          letter-spacing: -0.5px;
-          margin-bottom: 16px;
-          text-wrap: balance;
-        }
-        .s8-title-brand { color: #a617ff; }
-        .s8-description {
-          font-size: 18px;
-          color: #636363;
-          line-height: 1.7;
-          max-width: 100%;
-          margin: 0 auto;
-        }
-        .s8-ac-list {
-          display: flex;
-          flex-direction: column;
-          gap: 2px;
-        }
-        .s8-ac-card {
-          border: 1px solid #e6e7e9;
-          border-radius: 8px;
-          background-color: #ffffff;
-          overflow: hidden;
-          transition: background-color 0.2s;
-        }
-        .s8-ac-card:hover { background-color: #f7f7f7; }
-        .s8-ac-header {
-          display: grid;
-          grid-template-columns: 1fr auto auto;
-          align-items: center;
-          gap: 16px;
-          padding: 24px;
-          cursor: pointer;
-          user-select: none;
-        }
-        .s8-ac-title-wrap {
-          display: flex;
-          flex-direction: column;
-          gap: 4px;
-          min-width: 0;
-        }
-        .s8-ac-industry {
-          font-family: "Fragment Mono", monospace;
-          font-size: 10px;
-          letter-spacing: 0.1em;
-          text-transform: uppercase;
-          color: #9c9c9c;
-          display: flex;
-          align-items: center;
-          gap: 4px;
-        }
-        .s8-ac-industry-dot {
-          width: 6px;
-          height: 6px;
-          border-radius: 50%;
-          flex-shrink: 0;
-        }
-        .s8-ac-title {
-          font-family: "DM Sans", sans-serif;
-          font-size: 18px;
-          font-weight: 500;
-          line-height: 1.2;
-          color: #0f0f0f;
-          word-break: keep-all;
-          overflow-wrap: break-word;
-        }
-        .s8-ac-meta {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          flex-wrap: wrap;
-          flex-shrink: 0;
-        }
-        .s8-badge {
-          display: inline-flex;
-          align-items: center;
-          gap: 4px;
-          padding: 4px 8px;
-          border-radius: 9999px;
-          font-size: 12px;
-          font-weight: 500;
-          line-height: 1;
-          white-space: nowrap;
-        }
-        .s8-ac-toggle {
-          width: 28px;
-          height: 28px;
-          border-radius: 6px;
-          border: 0.5px solid #e6e7e9;
-          background: #f7f7f7;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-shrink: 0;
-          cursor: pointer;
-          transition: border-color 0.15s, background 0.15s;
-          position: relative;
-        }
-        .s8-ac-toggle:hover {
-          border-color: #171719;
-          background: #f2f2f2;
-        }
-        .s8-toggle-icon {
-          width: 12px;
-          height: 12px;
-          position: relative;
-          flex-shrink: 0;
-        }
-        .s8-toggle-icon::before,
-        .s8-toggle-icon::after {
-          content: '';
-          position: absolute;
-          background: #cacccf;
-          border-radius: 1px;
-          transition: opacity 0.2s;
-        }
-        .s8-toggle-icon::before {
-          width: 10px; height: 1.5px;
-          top: 50%; left: 50%;
-          transform: translate(-50%, -50%);
-        }
-        .s8-toggle-icon::after {
-          width: 1.5px; height: 10px;
-          top: 50%; left: 50%;
-          transform: translate(-50%, -50%);
-        }
-        .s8-toggle-icon--open::after { opacity: 0; }
-        .s8-toggle-icon--open::before { background: #636363; }
-        .s8-ac-body {
-          padding: 24px;
-          border-top: 1px solid #e6e7e9;
-          background: #f7f7f7;
-        }
-        .s8-ac-metrics {
-          display: flex;
-          gap: 8px;
-          flex-wrap: wrap;
-          margin-bottom: 24px;
-        }
-        .s8-ac-metric {
-          display: flex;
-          flex-direction: column;
-          padding: 12px 16px;
-          border: 1px solid #e6e7e9;
-          border-radius: 8px;
-          background-color: #ffffff;
-          min-width: 100px;
-          flex: 1;
-        }
-        .s8-ac-metric-val {
-          font-family: "DM Sans", sans-serif;
-          font-size: 20px;
-          font-weight: 700;
-          line-height: 1;
-          color: #0f0f0f;
-        }
-        .s8-ac-metric-label {
-          font-family: "Fragment Mono", monospace;
-          font-size: 10px;
-          letter-spacing: 0.08em;
-          text-transform: uppercase;
-          color: #9c9c9c;
-          margin-top: 4px;
-        }
-        .s8-ac-body-text {
-          font-size: 14px;
-          color: #636363;
-          line-height: 1.7;
-        }
-
-        @media (min-width: 768px) {
-          .s8-container { padding: 0 32px; }
-          .s8-title { font-size: 22px; }
-          .s8-description { max-width: 720px; }
-          .s8-section-header { text-align: left; }
-        }
-        @media (min-width: 1024px) {
-          .s8-container { padding: 0 32px; }
-          .s8-title { font-size: 24px; }
-          .s8-ac-header { grid-template-columns: 1fr auto auto; }
-        }
-        @media (min-width: 1440px) {
-          .s8-container { padding: 0 120px; max-width: 1440px; }
-          .s8-title { font-size: 28px; }
-          .s8-description { max-width: 860px; }
-        }
-        @media (max-width: 767px) {
-          .s8-section-header { text-align: left; }
-          .s8-title { font-size: 20px; }
-          .s8-ac-header { grid-template-columns: 1fr auto; align-items: start; }
-          .s8-ac-meta { display: none; }
-        }
-      `}</style>
-      <section className="s8-section">
-        <div className="s8-container">
-          <div className="s8-section-header">
-            <h2 className="s8-title">
-              Production <span className="s8-title-brand">Case Records</span>
+    <div style={{ width: "100%", fontFamily: '"DM Sans", sans-serif', WebkitFontSmoothing: "antialiased" }}>
+      <section style={{
+        width: "100%",
+        padding: "80px 0",
+        backgroundColor: "#ffffff",
+        fontFamily: '"DM Sans", sans-serif',
+        WebkitFontSmoothing: "antialiased",
+      }}>
+        <div style={{
+          width: "100%",
+          maxWidth: 1440,
+          margin: "0 auto",
+          padding: "0 120px",
+          boxSizing: "border-box",
+        }}>
+          {/* Section Header */}
+          <div style={{
+            marginBottom: 32,
+            textAlign: "left",
+            paddingBottom: 24,
+            borderBottom: "1px solid #e6e7e9",
+          }}>
+            <h2 style={{
+              fontFamily: '"DM Sans", sans-serif',
+              fontSize: 28,
+              fontWeight: 700,
+              color: "#0f0f0f",
+              lineHeight: 1.2,
+              letterSpacing: "-0.5px",
+              marginBottom: 16,
+            }}>
+              Production <span style={{ color: "#a617ff" }}>Case Records</span>
             </h2>
-            <p className="s8-description">{description}</p>
+            <p style={{
+              fontSize: 18,
+              color: "#636363",
+              lineHeight: 1.7,
+              maxWidth: 860,
+            }}>{description}</p>
           </div>
-          <div className="s8-ac-list" role="list">
+
+          {/* Accordion List */}
+          <div role="list" style={{ display: "flex", flexDirection: "column", gap: 2 }}>
             {cases.map((c, i) => {
               const isOpen = openIndex === i
               return (
-                <article className="s8-ac-card" key={i} role="listitem">
+                <article key={i} role="listitem" style={{
+                  border: "1px solid #e6e7e9",
+                  borderRadius: 8,
+                  backgroundColor: "#ffffff",
+                  overflow: "hidden",
+                }}>
+                  {/* Accordion Header */}
                   <div
-                    className="s8-ac-header"
                     onClick={() => toggle(i)}
                     aria-expanded={isOpen}
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: "1fr auto auto",
+                      alignItems: "center",
+                      gap: 16,
+                      padding: 24,
+                      cursor: "pointer",
+                      userSelect: "none",
+                    }}
                   >
-                    <div className="s8-ac-title-wrap">
-                      <div className="s8-ac-industry">
-                        <span className="s8-ac-industry-dot" style={{ backgroundColor: c.industryColor }} />
+                    <div style={{ display: "flex", flexDirection: "column", gap: 4, minWidth: 0 }}>
+                      <div style={{
+                        fontFamily: '"Fragment Mono", monospace',
+                        fontSize: 10,
+                        letterSpacing: "0.1em",
+                        textTransform: "uppercase",
+                        color: "#9c9c9c",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 4,
+                      }}>
+                        <span style={{
+                          width: 6,
+                          height: 6,
+                          borderRadius: "50%",
+                          flexShrink: 0,
+                          backgroundColor: c.industryColor,
+                          display: "inline-block",
+                        }} />
                         {c.industry}
                       </div>
-                      <div className="s8-ac-title">{c.titleText}</div>
+                      <div style={{
+                        fontFamily: '"DM Sans", sans-serif',
+                        fontSize: 18,
+                        fontWeight: 500,
+                        lineHeight: 1.2,
+                        color: "#0f0f0f",
+                        wordBreak: "keep-all",
+                        overflowWrap: "break-word",
+                      }}>{c.titleText}</div>
                     </div>
-                    <div className="s8-ac-meta">
+                    <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", flexShrink: 0 }}>
                       {c.badges.map((b, j) => (
-                        <span
-                          key={j}
-                          className="s8-badge"
-                          style={{ backgroundColor: badgeStyles[b.color].bg, color: badgeStyles[b.color].color }}
-                        >
-                          {b.label}
-                        </span>
+                        <span key={j} style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: 4,
+                          padding: "4px 8px",
+                          borderRadius: 9999,
+                          fontSize: 12,
+                          fontWeight: 500,
+                          lineHeight: 1,
+                          whiteSpace: "nowrap",
+                          backgroundColor: badgeStyles[b.color].bg,
+                          color: badgeStyles[b.color].color,
+                        }}>{b.label}</span>
                       ))}
                     </div>
-                    <div className="s8-ac-toggle" role="button" aria-label="Toggle accordion">
-                      <span className={`s8-toggle-icon${isOpen ? " s8-toggle-icon--open" : ""}`} />
+                    <div role="button" aria-label="Toggle accordion" style={{
+                      width: 28,
+                      height: 28,
+                      borderRadius: 6,
+                      border: "0.5px solid #e6e7e9",
+                      backgroundColor: "#f7f7f7",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      flexShrink: 0,
+                      cursor: "pointer",
+                    }}>
+                      <span style={{
+                        display: "block",
+                        width: 12,
+                        height: 12,
+                        position: "relative",
+                        fontSize: 16,
+                        color: "#636363",
+                        fontWeight: 700,
+                        lineHeight: "12px",
+                        textAlign: "center",
+                      }}>{isOpen ? "−" : "+"}</span>
                     </div>
                   </div>
+
+                  {/* Accordion Body */}
                   {isOpen && (
-                    <div className="s8-ac-body">
-                      <div className="s8-ac-metrics">
+                    <div style={{
+                      padding: 24,
+                      borderTop: "1px solid #e6e7e9",
+                      backgroundColor: "#f7f7f7",
+                    }}>
+                      <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 24 }}>
                         {c.metrics.map((m, j) => (
-                          <div className="s8-ac-metric" key={j}>
-                            <span className="s8-ac-metric-val">{m.val}</span>
-                            <span className="s8-ac-metric-label">{m.label}</span>
+                          <div key={j} style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            padding: "12px 16px",
+                            border: "1px solid #e6e7e9",
+                            borderRadius: 8,
+                            backgroundColor: "#ffffff",
+                            minWidth: 100,
+                            flex: 1,
+                          }}>
+                            <span style={{
+                              fontFamily: '"DM Sans", sans-serif',
+                              fontSize: 20,
+                              fontWeight: 700,
+                              lineHeight: 1,
+                              color: "#0f0f0f",
+                            }}>{m.val}</span>
+                            <span style={{
+                              fontFamily: '"Fragment Mono", monospace',
+                              fontSize: 10,
+                              letterSpacing: "0.08em",
+                              textTransform: "uppercase",
+                              color: "#9c9c9c",
+                              marginTop: 4,
+                            }}>{m.label}</span>
                           </div>
                         ))}
                       </div>
-                      <p className="s8-ac-body-text">{c.body}</p>
+                      <p style={{ fontSize: 14, color: "#636363", lineHeight: 1.7 }}>{c.body}</p>
                     </div>
                   )}
                 </article>
@@ -359,7 +265,7 @@ export default function Section08_CaseRecords({
           </div>
         </div>
       </section>
-    </>
+    </div>
   )
 }
 

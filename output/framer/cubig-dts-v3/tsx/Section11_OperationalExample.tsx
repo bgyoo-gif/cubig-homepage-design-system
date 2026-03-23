@@ -20,152 +20,107 @@ export default function Section11_OperationalExample({
   ctaHref = "/#enterprise-use-cases",
 }: Props) {
   return (
-    <>
-      <style>{`
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-        .s11-section {
-          width: 100%;
-          padding: 80px 0;
-          background-color: #ffffff;
-          font-family: "DM Sans", sans-serif;
-          -webkit-font-smoothing: antialiased;
-        }
-        .s11-container {
-          width: 100%;
-          margin: 0 auto;
-          padding: 0 16px;
-          box-sizing: border-box;
-        }
-        .s11-section-header {
-          margin-bottom: 32px;
-          text-align: center;
-          padding-bottom: 24px;
-          border-bottom: 1px solid #e6e7e9;
-        }
-        .s11-title {
-          font-family: "DM Sans", sans-serif;
-          font-size: 40px;
-          font-weight: 700;
-          color: #0f0f0f;
-          line-height: 1.2;
-          letter-spacing: -0.5px;
-          text-wrap: balance;
-        }
-        .s11-title-brand { color: #a617ff; }
-        .s11-banner-full {
-          width: 100%;
-          text-align: center;
-          padding: 32px 48px;
-          border-radius: 40px;
-          background-image: url('${IMAGE_BASE}/bg-peach.png');
-          background-size: cover;
-          background-position: center;
-          position: relative;
-          overflow: hidden;
-          font-size: 18px;
-          font-weight: 500;
-          line-height: 1.7;
-          border: none;
-          isolation: isolate;
-        }
-        .s11-banner-full::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: rgba(255,255,255,0.45);
-          z-index: 0;
-        }
-        .s11-banner-full > p {
-          position: relative;
-          z-index: 1;
-          color: #0f0f0f;
-        }
-        .s11-body-wrap {
-          max-width: 860px;
-          margin: 32px auto 0;
-        }
-        .s11-body-text {
-          font-family: "DM Sans", sans-serif;
-          font-size: 16px;
-          font-weight: 500;
-          line-height: 1.5;
-          color: #0f0f0f;
-          word-break: keep-all;
-          overflow-wrap: break-word;
-        }
-        .s11-tagline {
-          margin-top: 16px;
-          color: #9c9c9c;
-          text-align: center;
-          font-size: 12px;
-          font-weight: 500;
-          line-height: 1.5;
-        }
-        .s11-cta {
-          margin-top: 24px;
-          text-align: center;
-        }
-        .s11-btn {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          gap: 8px;
-          border-radius: 9999px;
-          font-family: "DM Sans", sans-serif;
-          font-weight: 500;
-          font-size: 14px;
-          cursor: pointer;
-          transition: opacity 0.2s, background-color 0.2s;
-          white-space: nowrap;
-          text-decoration: none;
-          padding: 8px 16px;
-          background-color: transparent;
-          color: #0f0f0f;
-          border: 1px solid #e6e7e9;
-        }
-        .s11-btn:hover { background-color: #f7f7f7; }
-
-        @media (min-width: 768px) {
-          .s11-container { padding: 0 32px; }
-          .s11-title { font-size: 22px; }
-          .s11-section-header { text-align: left; }
-        }
-        @media (min-width: 1024px) {
-          .s11-container { padding: 0 32px; }
-          .s11-title { font-size: 24px; }
-        }
-        @media (min-width: 1440px) {
-          .s11-container { padding: 0 120px; max-width: 1440px; }
-          .s11-title { font-size: 28px; }
-        }
-        @media (max-width: 767px) {
-          .s11-section-header { text-align: left; }
-          .s11-title { font-size: 20px; }
-          .s11-banner-full { padding: 24px; }
-          .s11-body-wrap { margin: 24px auto 0; }
-        }
-      `}</style>
-      <section className="s11-section">
-        <div className="s11-container">
-          <div className="s11-section-header">
-            <h2 className="s11-title">
-              Operational Example: <span className="s11-title-brand">Fraud Detection</span> with Rare Events
+    <div style={{ width: "100%", fontFamily: '"DM Sans", sans-serif', WebkitFontSmoothing: "antialiased" }}>
+      <section style={{
+        width: "100%",
+        padding: "80px 0",
+        backgroundColor: "#ffffff",
+        fontFamily: '"DM Sans", sans-serif',
+        WebkitFontSmoothing: "antialiased",
+      }}>
+        <div style={{
+          width: "100%",
+          maxWidth: 1440,
+          margin: "0 auto",
+          padding: "0 120px",
+          boxSizing: "border-box",
+        }}>
+          {/* Section Header */}
+          <div style={{
+            marginBottom: 32,
+            textAlign: "left",
+            paddingBottom: 24,
+            borderBottom: "1px solid #e6e7e9",
+          }}>
+            <h2 style={{
+              fontFamily: '"DM Sans", sans-serif',
+              fontSize: 28,
+              fontWeight: 700,
+              color: "#0f0f0f",
+              lineHeight: 1.2,
+              letterSpacing: "-0.5px",
+            }}>
+              Operational Example: <span style={{ color: "#a617ff" }}>Fraud Detection</span> with Rare Events
             </h2>
           </div>
-          <div className="s11-banner-full">
-            <p>{bannerText}</p>
+
+          {/* Banner */}
+          <div style={{
+            width: "100%",
+            textAlign: "center",
+            padding: "32px 48px",
+            borderRadius: 40,
+            backgroundImage: `url('${IMAGE_BASE}/bg-peach.png')`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            position: "relative",
+            overflow: "hidden",
+            fontSize: 18,
+            fontWeight: 500,
+            lineHeight: 1.7,
+            isolation: "isolate",
+          }}>
+            <div style={{
+              position: "absolute",
+              inset: 0,
+              background: "rgba(255,255,255,0.45)",
+              zIndex: 0,
+            }} />
+            <p style={{ color: "#0f0f0f", position: "relative", zIndex: 1 }}>{bannerText}</p>
           </div>
-          <div className="s11-body-wrap">
-            <p className="s11-body-text">{body}</p>
-            <p className="s11-tagline">{tagline}</p>
-            <div className="s11-cta">
-              <a href={ctaHref} className="s11-btn">{ctaLabel}</a>
+
+          {/* Body */}
+          <div style={{ maxWidth: 860, margin: "32px auto 0" }}>
+            <p style={{
+              fontFamily: '"DM Sans", sans-serif',
+              fontSize: 16,
+              fontWeight: 500,
+              lineHeight: 1.5,
+              color: "#0f0f0f",
+              wordBreak: "keep-all",
+              overflowWrap: "break-word",
+            }}>{body}</p>
+            <p style={{
+              marginTop: 16,
+              color: "#9c9c9c",
+              textAlign: "center",
+              fontSize: 12,
+              fontWeight: 500,
+              lineHeight: 1.5,
+            }}>{tagline}</p>
+            <div style={{ marginTop: 24, textAlign: "center" }}>
+              <a href={ctaHref} style={{
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 8,
+                borderRadius: 9999,
+                fontFamily: '"DM Sans", sans-serif',
+                fontWeight: 500,
+                fontSize: 14,
+                cursor: "pointer",
+                whiteSpace: "nowrap",
+                textDecoration: "none",
+                padding: "8px 16px",
+                backgroundColor: "transparent",
+                color: "#0f0f0f",
+                border: "1px solid #e6e7e9",
+              }}>{ctaLabel}</a>
             </div>
           </div>
         </div>
       </section>
-    </>
+    </div>
   )
 }
 

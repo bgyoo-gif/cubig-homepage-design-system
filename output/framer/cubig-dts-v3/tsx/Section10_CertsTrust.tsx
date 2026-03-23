@@ -63,234 +63,221 @@ export default function Section10_CertsTrust({
     { name: "Ministry of Data and Statistics", logo: `${IMAGE_BASE}/partner-ministry-of-data-and-statistics.png` },
   ]
 
-  return (
-    <>
-      <style>{`
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+  // Inject keyframes once
+  useEffect(() => {
+    const styleId = "s10-marquee-keyframes"
+    if (!document.getElementById(styleId)) {
+      const style = document.createElement("style")
+      style.id = styleId
+      style.textContent = `
         @keyframes s10-marquee {
           0% { transform: translateX(0); }
           100% { transform: translateX(-50%); }
         }
+      `
+      document.head.appendChild(style)
+    }
+  }, [])
 
-        .s10-section {
-          width: 100%;
-          padding: 80px 0;
-          background-color: #ffffff;
-          font-family: "DM Sans", sans-serif;
-          -webkit-font-smoothing: antialiased;
-          overflow: hidden;
-        }
-        .s10-container {
-          width: 100%;
-          margin: 0 auto;
-          padding: 0 16px;
-          box-sizing: border-box;
-        }
-        .s10-section-header {
-          margin-bottom: 32px;
-          text-align: center;
-          padding-bottom: 24px;
-          border-bottom: 1px solid #e6e7e9;
-        }
-        .s10-title {
-          font-family: "DM Sans", sans-serif;
-          font-size: 40px;
-          font-weight: 700;
-          color: #0f0f0f;
-          line-height: 1.2;
-          letter-spacing: -0.5px;
-          text-wrap: balance;
-        }
-        .s10-title-brand { color: #a617ff; }
-        .s10-cert-grid {
-          width: 100vw;
-          margin-left: calc(-50vw + 50%);
-          overflow: hidden;
-          padding: 32px 0;
-        }
-        .s10-cert-track {
-          display: flex;
-          gap: 24px;
-          align-items: stretch;
-          width: max-content;
-          animation: s10-marquee 40s linear infinite;
-        }
-        .s10-cert-track:hover { animation-play-state: paused; }
-        .s10-cert-card {
-          background: #ffffff;
-          border: 1px solid #e6e7e9;
-          border-radius: 24px;
-          padding: 24px 32px;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          text-align: center;
-          gap: 8px;
-          flex-shrink: 0;
-          width: 200px;
-        }
-        .s10-cert-group {
-          font-family: "Fragment Mono", monospace;
-          font-size: 10px;
-          font-weight: 500;
-          text-transform: uppercase;
-          letter-spacing: 0.08em;
-          color: #a617ff;
-          margin-bottom: 4px;
-        }
-        .s10-cert-wreath {
-          position: relative;
-          width: 160px;
-          height: 120px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-        .s10-cert-wreath-left,
-        .s10-cert-wreath-right {
-          position: absolute;
-          top: 0;
-          height: 100%;
-          width: 34%;
-          object-fit: contain;
-        }
-        .s10-cert-wreath-left { left: -6px; object-position: right; }
-        .s10-cert-wreath-right { right: -6px; object-position: left; }
-        .s10-cert-wreath-text {
-          position: relative;
-          z-index: 1;
-          font-size: 14px;
-          font-weight: 700;
-          color: #0f0f0f;
-          text-align: center;
-          line-height: 1.2;
-          max-width: 90px;
-        }
-        .s10-cert-org {
-          font-size: 12px;
-          color: #636363;
-        }
-        .s10-cert-year {
-          font-size: 12px;
-          color: #9c9c9c;
-          font-family: "Fragment Mono", monospace;
-        }
-        .s10-cert-logo {
-          width: 60px;
-          height: 60px;
-          object-fit: contain;
-          margin-top: auto;
-          margin-bottom: -10px;
-        }
-        .s10-partner-label {
-          font-family: "Fragment Mono", monospace;
-          font-size: 10px;
-          letter-spacing: 0.12em;
-          text-transform: uppercase;
-          color: #9c9c9c;
-          text-align: center;
-          margin-bottom: 24px;
-          margin-top: 48px;
-        }
-        .s10-partner-grid {
-          width: 100vw;
-          margin-left: calc(-50vw + 50%);
-          overflow: hidden;
-          padding: 32px 0;
-        }
-        .s10-partner-track {
-          display: flex;
-          gap: 64px;
-          align-items: center;
-          width: max-content;
-          animation: s10-marquee 30s linear infinite;
-        }
-        .s10-partner-track:hover { animation-play-state: paused; }
-        .s10-partner-item {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 8px;
-          flex-shrink: 0;
-        }
-        .s10-partner-logo {
-          width: 120px;
-          height: 100px;
-          object-fit: contain;
-        }
-        .s10-partner-name {
-          font-size: 12px;
-          color: #9c9c9c;
-          text-align: center;
-          white-space: nowrap;
-        }
-
-        @media (min-width: 768px) {
-          .s10-container { padding: 0 32px; }
-          .s10-title { font-size: 22px; }
-          .s10-section-header { text-align: left; }
-        }
-        @media (min-width: 1024px) {
-          .s10-container { padding: 0 32px; }
-          .s10-title { font-size: 24px; }
-        }
-        @media (min-width: 1440px) {
-          .s10-container { padding: 0 120px; max-width: 1440px; }
-          .s10-title { font-size: 28px; }
-        }
-        @media (max-width: 767px) {
-          .s10-section-header { text-align: left; }
-          .s10-title { font-size: 20px; }
-          .s10-cert-card { width: 170px; padding: 16px; }
-          .s10-cert-wreath { width: 130px; height: 96px; }
-          .s10-cert-wreath-text { font-size: 12px; max-width: 72px; }
-          .s10-cert-logo { width: 48px; height: 48px; }
-          .s10-cert-track { gap: 16px; animation-duration: 25s; }
-          .s10-partner-logo { width: 100px; height: 75px; }
-          .s10-partner-track { gap: 48px; animation-duration: 20s; }
-        }
-      `}</style>
-      <section className="s10-section">
-        <div className="s10-container">
-          <div className="s10-section-header">
-            <h2 className="s10-title">
-              Certified and <span className="s10-title-brand">Trusted</span>
+  return (
+    <div style={{ width: "100%", fontFamily: '"DM Sans", sans-serif', WebkitFontSmoothing: "antialiased" }}>
+      <section style={{
+        width: "100%",
+        padding: "80px 0",
+        backgroundColor: "#ffffff",
+        fontFamily: '"DM Sans", sans-serif',
+        WebkitFontSmoothing: "antialiased",
+        overflow: "hidden",
+      }}>
+        <div style={{
+          width: "100%",
+          maxWidth: 1440,
+          margin: "0 auto",
+          padding: "0 120px",
+          boxSizing: "border-box",
+        }}>
+          {/* Section Header */}
+          <div style={{
+            marginBottom: 32,
+            textAlign: "left",
+            paddingBottom: 24,
+            borderBottom: "1px solid #e6e7e9",
+          }}>
+            <h2 style={{
+              fontFamily: '"DM Sans", sans-serif',
+              fontSize: 28,
+              fontWeight: 700,
+              color: "#0f0f0f",
+              lineHeight: 1.2,
+              letterSpacing: "-0.5px",
+            }}>
+              Certified and <span style={{ color: "#a617ff" }}>Trusted</span>
             </h2>
           </div>
         </div>
-        <div className="s10-cert-grid" aria-label="Certifications and awards">
-          <div className="s10-cert-track" ref={certTrackRef}>
+
+        {/* Cert Marquee — full width */}
+        <div aria-label="Certifications and awards" style={{
+          width: "100vw",
+          marginLeft: "calc(-50vw + 50%)",
+          overflow: "hidden",
+          padding: "32px 0",
+        }}>
+          <div
+            ref={certTrackRef}
+            style={{
+              display: "flex",
+              gap: 24,
+              alignItems: "stretch",
+              width: "max-content",
+              animation: "s10-marquee 40s linear infinite",
+            }}
+          >
             {certs.map((cert, i) => (
-              <article className="s10-cert-card" key={i}>
-                <span className="s10-cert-group">{cert.group}</span>
-                <div className="s10-cert-wreath">
-                  <img className="s10-cert-wreath-left" src={`${GRAPHICS_BASE}/cert-left.png`} alt="" />
-                  <span className="s10-cert-wreath-text">{cert.text}</span>
-                  <img className="s10-cert-wreath-right" src={`${GRAPHICS_BASE}/cert-right.png`} alt="" />
+              <article key={i} style={{
+                backgroundColor: "#ffffff",
+                border: "1px solid #e6e7e9",
+                borderRadius: 24,
+                padding: "24px 32px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                textAlign: "center",
+                gap: 8,
+                flexShrink: 0,
+                width: 200,
+              }}>
+                <span style={{
+                  fontFamily: '"Fragment Mono", monospace',
+                  fontSize: 10,
+                  fontWeight: 500,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.08em",
+                  color: "#a617ff",
+                  marginBottom: 4,
+                }}>{cert.group}</span>
+                <div style={{
+                  position: "relative",
+                  width: 160,
+                  height: 120,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}>
+                  <img
+                    src={`${GRAPHICS_BASE}/cert-left.png`}
+                    alt=""
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      left: -6,
+                      height: "100%",
+                      width: "34%",
+                      objectFit: "contain",
+                      objectPosition: "right",
+                    }}
+                  />
+                  <span style={{
+                    position: "relative",
+                    zIndex: 1,
+                    fontSize: 14,
+                    fontWeight: 700,
+                    color: "#0f0f0f",
+                    textAlign: "center",
+                    lineHeight: 1.2,
+                    maxWidth: 90,
+                  }}>{cert.text}</span>
+                  <img
+                    src={`${GRAPHICS_BASE}/cert-right.png`}
+                    alt=""
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      right: -6,
+                      height: "100%",
+                      width: "34%",
+                      objectFit: "contain",
+                      objectPosition: "left",
+                    }}
+                  />
                 </div>
-                <span className="s10-cert-org">{cert.org}</span>
-                <span className="s10-cert-year">{cert.year}</span>
-                {cert.logo && <img className="s10-cert-logo" src={cert.logo} alt={cert.logoAlt} />}
+                <span style={{ fontSize: 12, color: "#636363" }}>{cert.org}</span>
+                <span style={{ fontSize: 12, color: "#9c9c9c", fontFamily: '"Fragment Mono", monospace' }}>{cert.year}</span>
+                {cert.logo && (
+                  <img
+                    src={cert.logo}
+                    alt={cert.logoAlt}
+                    style={{
+                      width: 60,
+                      height: 60,
+                      objectFit: "contain",
+                      marginTop: "auto",
+                      marginBottom: -10,
+                    }}
+                  />
+                )}
               </article>
             ))}
           </div>
         </div>
-        <div className="s10-container">
-          <p className="s10-partner-label">Trusted by enterprise &amp; government</p>
+
+        {/* Partner label */}
+        <div style={{
+          width: "100%",
+          maxWidth: 1440,
+          margin: "0 auto",
+          padding: "0 120px",
+          boxSizing: "border-box",
+        }}>
+          <p style={{
+            fontFamily: '"Fragment Mono", monospace',
+            fontSize: 10,
+            letterSpacing: "0.12em",
+            textTransform: "uppercase",
+            color: "#9c9c9c",
+            textAlign: "center",
+            marginBottom: 24,
+            marginTop: 48,
+          }}>Trusted by enterprise &amp; government</p>
         </div>
-        <div className="s10-partner-grid" aria-label="Partner logos">
-          <div className="s10-partner-track" ref={partnerTrackRef}>
+
+        {/* Partner Marquee — full width */}
+        <div aria-label="Partner logos" style={{
+          width: "100vw",
+          marginLeft: "calc(-50vw + 50%)",
+          overflow: "hidden",
+          padding: "32px 0",
+        }}>
+          <div
+            ref={partnerTrackRef}
+            style={{
+              display: "flex",
+              gap: 64,
+              alignItems: "center",
+              width: "max-content",
+              animation: "s10-marquee 30s linear infinite",
+            }}
+          >
             {partners.map((p, i) => (
-              <div className="s10-partner-item" key={i}>
-                <img className="s10-partner-logo" src={p.logo} alt={p.name} />
-                <span className="s10-partner-name">{p.name}</span>
+              <div key={i} style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: 8,
+                flexShrink: 0,
+              }}>
+                <img
+                  src={p.logo}
+                  alt={p.name}
+                  style={{ width: 120, height: 100, objectFit: "contain" }}
+                />
+                <span style={{ fontSize: 12, color: "#9c9c9c", textAlign: "center", whiteSpace: "nowrap" }}>{p.name}</span>
               </div>
             ))}
           </div>
         </div>
       </section>
-    </>
+    </div>
   )
 }
 

@@ -75,218 +75,178 @@ export default function Section09_FiveSignals({
     },
   ]
 
+  const btnPrimaryStyle: React.CSSProperties = {
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
+    borderRadius: 9999,
+    fontFamily: '"DM Sans", sans-serif',
+    fontWeight: 500,
+    fontSize: 16,
+    cursor: "pointer",
+    border: "none",
+    whiteSpace: "nowrap",
+    textDecoration: "none",
+    padding: "12px 32px",
+    background: "linear-gradient(130deg, #673AFF 0%, #D932FF 50%, #FF266A 100%)",
+    color: "#ffffff",
+  }
+
+  const btnSecondaryStyle: React.CSSProperties = {
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
+    borderRadius: 9999,
+    fontFamily: '"DM Sans", sans-serif',
+    fontWeight: 500,
+    fontSize: 16,
+    cursor: "pointer",
+    whiteSpace: "nowrap",
+    textDecoration: "none",
+    padding: "12px 32px",
+    backgroundColor: "transparent",
+    color: "#0f0f0f",
+    border: "1px solid #e6e7e9",
+  }
+
+  const btnSmSecondaryStyle: React.CSSProperties = {
+    ...btnSecondaryStyle,
+    padding: "8px 16px",
+    fontSize: 14,
+  }
+
   return (
-    <>
-      <style>{`
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-        .s9-section {
-          width: 100%;
-          padding: 80px 0;
-          background-color: #ffffff;
-          font-family: "DM Sans", sans-serif;
-          -webkit-font-smoothing: antialiased;
-        }
-        .s9-container {
-          width: 100%;
-          margin: 0 auto;
-          padding: 0 16px;
-          box-sizing: border-box;
-        }
-        .s9-section-header {
-          margin-bottom: 32px;
-          text-align: center;
-          padding-bottom: 24px;
-          border-bottom: 1px solid #e6e7e9;
-        }
-        .s9-title {
-          font-family: "DM Sans", sans-serif;
-          font-size: 40px;
-          font-weight: 700;
-          color: #0f0f0f;
-          line-height: 1.2;
-          letter-spacing: -0.5px;
-          margin-bottom: 16px;
-          text-wrap: balance;
-        }
-        .s9-title-brand { color: #a617ff; }
-        .s9-description {
-          font-size: 18px;
-          color: #636363;
-          line-height: 1.7;
-          max-width: 100%;
-          margin: 0 auto;
-        }
-        .s9-feature-grid {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 32px;
-        }
-        .s9-feature-item {
-          display: flex;
-          flex-direction: column;
-          gap: 12px;
-          padding: 24px;
-          border: 1px solid #e6e7e9;
-          border-radius: 18px;
-          background-color: #ffffff;
-        }
-        .s9-feature-icon {
-          width: 40px;
-          height: 40px;
-          border-radius: 8px;
-          background-color: #f7f7f7;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 20px;
-          flex-shrink: 0;
-        }
-        .s9-feature-title {
-          font-family: "DM Sans", sans-serif;
-          font-size: 16px;
-          font-weight: 600;
-          color: #0f0f0f;
-          line-height: 1.2;
-        }
-        .s9-feature-desc {
-          font-size: 14px;
-          color: #636363;
-          line-height: 1.7;
-        }
-        .s9-cta-row {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 12px;
-          justify-content: center;
-          margin-top: 48px;
-        }
-        .s9-btn {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          gap: 8px;
-          border-radius: 9999px;
-          font-family: "DM Sans", sans-serif;
-          font-weight: 500;
-          font-size: 16px;
-          cursor: pointer;
-          transition: opacity 0.2s, background-color 0.2s;
-          white-space: nowrap;
-          text-decoration: none;
-          padding: 12px 32px;
-        }
-        .s9-btn--primary {
-          background: linear-gradient(130deg, #673AFF 0%, #D932FF 50%, #FF266A 100%);
-          color: #ffffff;
-        }
-        .s9-btn--primary:hover { opacity: 0.88; }
-        .s9-btn--secondary {
-          background-color: transparent;
-          color: #0f0f0f;
-          border: 1px solid #e6e7e9;
-        }
-        .s9-btn--secondary:hover { background-color: #f7f7f7; }
-        .s9-concepts-grid {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 24px;
-          margin-top: 48px;
-        }
-        .s9-concept-card {
-          background-color: #ffffff;
-          border-radius: 18px;
-          border: 1px solid #e6e7e9;
-          padding: 24px;
-          box-shadow: 0px 24px 40px rgba(0, 0, 0, 0.04);
-          box-sizing: border-box;
-          display: flex;
-          flex-direction: column;
-        }
-        .s9-concept-title {
-          font-family: "DM Sans", sans-serif;
-          font-size: 24px;
-          font-weight: 700;
-          color: #0f0f0f;
-          line-height: 1.2;
-          margin-bottom: 12px;
-          text-wrap: balance;
-        }
-        .s9-concept-desc {
-          font-size: 14px;
-          color: #636363;
-          line-height: 1.7;
-          flex: 1;
-        }
-        .s9-concept-btn-wrap {
-          margin-top: auto;
-          padding-top: 24px;
-        }
-        .s9-btn--sm {
-          padding: 8px 16px;
-          font-size: 14px;
-        }
-
-        @media (min-width: 768px) {
-          .s9-container { padding: 0 32px; }
-          .s9-feature-grid { grid-template-columns: repeat(2, 1fr); }
-          .s9-title { font-size: 22px; }
-          .s9-description { max-width: 720px; }
-          .s9-section-header { text-align: left; }
-          .s9-concepts-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-        @media (min-width: 1024px) {
-          .s9-container { padding: 0 32px; }
-          .s9-title { font-size: 24px; }
-          .s9-concepts-grid { grid-template-columns: repeat(3, 1fr); }
-        }
-        @media (min-width: 1440px) {
-          .s9-container { padding: 0 120px; max-width: 1440px; }
-          .s9-title { font-size: 28px; }
-          .s9-description { max-width: 860px; }
-        }
-        @media (max-width: 767px) {
-          .s9-section-header { text-align: left; }
-          .s9-title { font-size: 20px; }
-          .s9-cta-row { flex-direction: column; align-items: flex-start; }
-        }
-      `}</style>
-      <section className="s9-section">
-        <div className="s9-container">
-          <div className="s9-section-header">
-            <h2 className="s9-title">
-              Five Signals Your Data Is <span className="s9-title-brand">Blocking AI</span>
+    <div style={{ width: "100%", fontFamily: '"DM Sans", sans-serif', WebkitFontSmoothing: "antialiased" }}>
+      <section style={{
+        width: "100%",
+        padding: "80px 0",
+        backgroundColor: "#ffffff",
+        fontFamily: '"DM Sans", sans-serif',
+        WebkitFontSmoothing: "antialiased",
+      }}>
+        <div style={{
+          width: "100%",
+          maxWidth: 1440,
+          margin: "0 auto",
+          padding: "0 120px",
+          boxSizing: "border-box",
+        }}>
+          {/* Section Header */}
+          <div style={{
+            marginBottom: 32,
+            textAlign: "left",
+            paddingBottom: 24,
+            borderBottom: "1px solid #e6e7e9",
+          }}>
+            <h2 style={{
+              fontFamily: '"DM Sans", sans-serif',
+              fontSize: 28,
+              fontWeight: 700,
+              color: "#0f0f0f",
+              lineHeight: 1.2,
+              letterSpacing: "-0.5px",
+              marginBottom: 16,
+            }}>
+              Five Signals Your Data Is <span style={{ color: "#a617ff" }}>Blocking AI</span>
             </h2>
-            <p className="s9-description">{description}</p>
+            <p style={{
+              fontSize: 18,
+              color: "#636363",
+              lineHeight: 1.7,
+              maxWidth: 860,
+            }}>{description}</p>
           </div>
-          <div className="s9-feature-grid">
+
+          {/* Feature Grid */}
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(3, 1fr)",
+            gap: 32,
+          }}>
             {signals.map((s, i) => (
-              <div className="s9-feature-item" key={i}>
-                <div className="s9-feature-icon" aria-hidden="true">{s.icon}</div>
-                <h3 className="s9-feature-title">{s.title}</h3>
-                <p className="s9-feature-desc">{s.desc}</p>
+              <div key={i} style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 12,
+                padding: 24,
+                border: "1px solid #e6e7e9",
+                borderRadius: 18,
+                backgroundColor: "#ffffff",
+              }}>
+                <div aria-hidden="true" style={{
+                  width: 40,
+                  height: 40,
+                  borderRadius: 8,
+                  backgroundColor: "#f7f7f7",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: 20,
+                  flexShrink: 0,
+                }}>{s.icon}</div>
+                <h3 style={{
+                  fontFamily: '"DM Sans", sans-serif',
+                  fontSize: 16,
+                  fontWeight: 600,
+                  color: "#0f0f0f",
+                  lineHeight: 1.2,
+                }}>{s.title}</h3>
+                <p style={{ fontSize: 14, color: "#636363", lineHeight: 1.7 }}>{s.desc}</p>
               </div>
             ))}
           </div>
-          <div className="s9-cta-row">
-            <a href={cta1Href} className="s9-btn s9-btn--primary">{cta1Label}</a>
-            <a href={cta2Href} className="s9-btn s9-btn--secondary">{cta2Label}</a>
-            <a href={cta3Href} className="s9-btn s9-btn--secondary">{cta3Label}</a>
+
+          {/* CTA Row */}
+          <div style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: 12,
+            justifyContent: "center",
+            marginTop: 48,
+          }}>
+            <a href={cta1Href} style={btnPrimaryStyle}>{cta1Label}</a>
+            <a href={cta2Href} style={btnSecondaryStyle}>{cta2Label}</a>
+            <a href={cta3Href} style={btnSecondaryStyle}>{cta3Label}</a>
           </div>
-          <div className="s9-concepts-grid">
+
+          {/* Concepts Grid */}
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(3, 1fr)",
+            gap: 24,
+            marginTop: 48,
+          }}>
             {keyConcepts.map((c, i) => (
-              <article className="s9-concept-card" key={i}>
-                <h3 className="s9-concept-title">{c.title}</h3>
-                <p className="s9-concept-desc">{c.desc}</p>
-                <div className="s9-concept-btn-wrap">
-                  <a href={c.linkHref} className="s9-btn s9-btn--secondary s9-btn--sm">{c.linkLabel}</a>
+              <article key={i} style={{
+                backgroundColor: "#ffffff",
+                borderRadius: 18,
+                border: "1px solid #e6e7e9",
+                padding: 24,
+                boxShadow: "0px 24px 40px rgba(0, 0, 0, 0.04)",
+                boxSizing: "border-box",
+                display: "flex",
+                flexDirection: "column",
+              }}>
+                <h3 style={{
+                  fontFamily: '"DM Sans", sans-serif',
+                  fontSize: 24,
+                  fontWeight: 700,
+                  color: "#0f0f0f",
+                  lineHeight: 1.2,
+                  marginBottom: 12,
+                }}>{c.title}</h3>
+                <p style={{ fontSize: 14, color: "#636363", lineHeight: 1.7, flex: 1 }}>{c.desc}</p>
+                <div style={{ marginTop: "auto", paddingTop: 24 }}>
+                  <a href={c.linkHref} style={btnSmSecondaryStyle}>{c.linkLabel}</a>
                 </div>
               </article>
             ))}
           </div>
         </div>
       </section>
-    </>
+    </div>
   )
 }
 

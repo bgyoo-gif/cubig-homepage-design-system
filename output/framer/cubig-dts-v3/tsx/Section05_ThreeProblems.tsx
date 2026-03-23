@@ -52,170 +52,130 @@ export default function Section05_ThreeProblems({
   ]
 
   return (
-    <>
-      <style>{`
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-        .s5-section {
-          width: 100%;
-          padding: 80px 0;
-          background-color: #ffffff;
-          font-family: "DM Sans", sans-serif;
-          -webkit-font-smoothing: antialiased;
-        }
-        .s5-container {
-          width: 100%;
-          margin: 0 auto;
-          padding: 0 16px;
-          box-sizing: border-box;
-        }
-        .s5-section-header {
-          margin-bottom: 32px;
-          text-align: center;
-          padding-bottom: 24px;
-          border-bottom: 1px solid #e6e7e9;
-        }
-        .s5-title {
-          font-family: "DM Sans", sans-serif;
-          font-size: 40px;
-          font-weight: 700;
-          color: #0f0f0f;
-          line-height: 1.2;
-          letter-spacing: -0.5px;
-          margin-bottom: 16px;
-          text-wrap: balance;
-        }
-        .s5-title-brand { color: #a617ff; }
-        .s5-description {
-          font-size: 18px;
-          color: #636363;
-          line-height: 1.7;
-          max-width: 100%;
-          margin: 0 auto;
-        }
-        .s5-card-grid {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 24px;
-        }
-        .s5-card {
-          background-color: #ffffff;
-          border-radius: 18px;
-          border: 1px solid #e6e7e9;
-          padding: 24px;
-          box-shadow: 0px 24px 40px rgba(0, 0, 0, 0.04);
-          box-sizing: border-box;
-          display: flex;
-          flex-direction: column;
-        }
-        .s5-card-badge {
-          display: inline-flex;
-          align-items: center;
-          width: fit-content;
-          padding: 4px 12px;
-          border-radius: 9999px;
-          font-size: 12px;
-          font-weight: 500;
-          font-family: "Fragment Mono", monospace;
-          text-transform: uppercase;
-          letter-spacing: 0.08em;
-          border: 1px solid currentColor;
-          margin-bottom: 16px;
-        }
-        .s5-card-number {
-          font-size: 12px;
-          font-weight: 500;
-          color: #9c9c9c;
-          margin-bottom: 8px;
-          line-height: 1.5;
-        }
-        .s5-card-title {
-          font-family: "DM Sans", sans-serif;
-          font-size: 24px;
-          font-weight: 700;
-          color: #0f0f0f;
-          line-height: 1.2;
-          margin-bottom: 12px;
-          text-wrap: balance;
-        }
-        .s5-card-desc {
-          font-size: 14px;
-          color: #636363;
-          line-height: 1.7;
-          flex: 1;
-          margin-bottom: 16px;
-        }
-        .s5-checklist {
-          list-style: none;
-          display: flex;
-          flex-direction: column;
-          gap: 12px;
-          margin-top: 16px;
-        }
-        .s5-check-item {
-          display: flex;
-          align-items: flex-start;
-          gap: 8px;
-          font-size: 16px;
-          line-height: 1.5;
-          color: #0f0f0f;
-        }
-        .s5-check-icon {
-          width: 20px;
-          height: 20px;
-          flex-shrink: 0;
-          margin-top: 2px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: #0e824c;
-          font-weight: 700;
-          font-size: 16px;
-        }
-
-        @media (min-width: 768px) {
-          .s5-container { padding: 0 32px; }
-          .s5-card-grid { grid-template-columns: repeat(2, 1fr); }
-          .s5-title { font-size: 22px; }
-          .s5-description { max-width: 720px; }
-          .s5-section-header { text-align: left; }
-        }
-        @media (min-width: 1024px) {
-          .s5-container { padding: 0 32px; }
-          .s5-card-grid { grid-template-columns: repeat(3, 1fr); }
-          .s5-title { font-size: 24px; }
-        }
-        @media (min-width: 1440px) {
-          .s5-container { padding: 0 120px; max-width: 1440px; }
-          .s5-title { font-size: 28px; }
-          .s5-description { max-width: 860px; }
-        }
-        @media (max-width: 767px) {
-          .s5-section-header { text-align: left; }
-          .s5-title { font-size: 20px; }
-        }
-      `}</style>
-      <section className="s5-section">
-        <div className="s5-container">
-          <div className="s5-section-header">
-            <h2 className="s5-title">
-              Three Data Problems. <span className="s5-title-brand">One Engine.</span>
+    <div style={{ width: "100%", fontFamily: '"DM Sans", sans-serif', WebkitFontSmoothing: "antialiased" }}>
+      <section style={{
+        width: "100%",
+        padding: "80px 0",
+        backgroundColor: "#ffffff",
+        fontFamily: '"DM Sans", sans-serif',
+        WebkitFontSmoothing: "antialiased",
+      }}>
+        <div style={{
+          width: "100%",
+          maxWidth: 1440,
+          margin: "0 auto",
+          padding: "0 120px",
+          boxSizing: "border-box",
+        }}>
+          {/* Section Header */}
+          <div style={{
+            marginBottom: 32,
+            textAlign: "left",
+            paddingBottom: 24,
+            borderBottom: "1px solid #e6e7e9",
+          }}>
+            <h2 style={{
+              fontFamily: '"DM Sans", sans-serif',
+              fontSize: 28,
+              fontWeight: 700,
+              color: "#0f0f0f",
+              lineHeight: 1.2,
+              letterSpacing: "-0.5px",
+              marginBottom: 16,
+            }}>
+              Three Data Problems. <span style={{ color: "#a617ff" }}>One Engine.</span>
             </h2>
-            <p className="s5-description">{description}</p>
+            <p style={{
+              fontSize: 18,
+              color: "#636363",
+              lineHeight: 1.7,
+              maxWidth: 860,
+            }}>{description}</p>
           </div>
-          <div className="s5-card-grid">
+
+          {/* Card Grid */}
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(3, 1fr)",
+            gap: 24,
+          }}>
             {cards.map((card, i) => (
-              <article className="s5-card" key={i}>
-                <span className="s5-card-badge" style={{ color: card.badgeColor, borderColor: card.badgeColor }}>
-                  {card.badge}
-                </span>
-                <p className="s5-card-number">{card.number}</p>
-                <h3 className="s5-card-title">{card.title}</h3>
-                <p className="s5-card-desc">{card.description}</p>
-                <ul className="s5-checklist">
+              <article key={i} style={{
+                backgroundColor: "#ffffff",
+                borderRadius: 18,
+                border: "1px solid #e6e7e9",
+                padding: 24,
+                boxShadow: "0px 24px 40px rgba(0, 0, 0, 0.04)",
+                boxSizing: "border-box",
+                display: "flex",
+                flexDirection: "column",
+              }}>
+                <span style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  width: "fit-content",
+                  padding: "4px 12px",
+                  borderRadius: 9999,
+                  fontSize: 12,
+                  fontWeight: 500,
+                  fontFamily: '"Fragment Mono", monospace',
+                  textTransform: "uppercase",
+                  letterSpacing: "0.08em",
+                  border: `1px solid ${card.badgeColor}`,
+                  color: card.badgeColor,
+                  marginBottom: 16,
+                }}>{card.badge}</span>
+                <p style={{
+                  fontSize: 12,
+                  fontWeight: 500,
+                  color: "#9c9c9c",
+                  marginBottom: 8,
+                  lineHeight: 1.5,
+                }}>{card.number}</p>
+                <h3 style={{
+                  fontFamily: '"DM Sans", sans-serif',
+                  fontSize: 24,
+                  fontWeight: 700,
+                  color: "#0f0f0f",
+                  lineHeight: 1.2,
+                  marginBottom: 12,
+                }}>{card.title}</h3>
+                <p style={{
+                  fontSize: 14,
+                  color: "#636363",
+                  lineHeight: 1.7,
+                  flex: 1,
+                  marginBottom: 16,
+                }}>{card.description}</p>
+                <ul style={{
+                  listStyle: "none",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 12,
+                  marginTop: 16,
+                  padding: 0,
+                }}>
                   {card.checks.map((check, j) => (
-                    <li className="s5-check-item" key={j}>
-                      <span className="s5-check-icon">✓</span>
+                    <li key={j} style={{
+                      display: "flex",
+                      alignItems: "flex-start",
+                      gap: 8,
+                      fontSize: 16,
+                      lineHeight: 1.5,
+                      color: "#0f0f0f",
+                    }}>
+                      <span style={{
+                        width: 20,
+                        height: 20,
+                        flexShrink: 0,
+                        marginTop: 2,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        color: "#0e824c",
+                        fontWeight: 700,
+                        fontSize: 16,
+                      }}>✓</span>
                       {check}
                     </li>
                   ))}
@@ -225,7 +185,7 @@ export default function Section05_ThreeProblems({
           </div>
         </div>
       </section>
-    </>
+    </div>
   )
 }
 

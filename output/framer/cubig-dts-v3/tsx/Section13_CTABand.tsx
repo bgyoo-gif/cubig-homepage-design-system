@@ -27,118 +27,93 @@ export default function Section13_CTABand({
   cta3Href = "/syntitan",
   footnote = "30-min review / no sales pitch",
 }: Props) {
+  const btnStyle: React.CSSProperties = {
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
+    borderRadius: 9999,
+    fontFamily: '"DM Sans", sans-serif',
+    fontWeight: 500,
+    fontSize: 16,
+    cursor: "pointer",
+    border: "none",
+    whiteSpace: "nowrap",
+    textDecoration: "none",
+    padding: "12px 32px",
+    backgroundColor: "#ffffff",
+    color: "#0f0f0f",
+  }
+
   return (
-    <>
-      <style>{`
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    <div style={{ width: "100%", fontFamily: '"DM Sans", sans-serif', WebkitFontSmoothing: "antialiased" }}>
+      <section
+        aria-label="Call to action"
+        style={{
+          width: "100%",
+          backgroundImage: `url('${IMAGE_BASE}/bg-wave-teal-blue.png')`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          position: "relative",
+          overflow: "hidden",
+          padding: "120px 120px",
+          textAlign: "center",
+          fontFamily: '"DM Sans", sans-serif',
+          WebkitFontSmoothing: "antialiased",
+        }}
+      >
+        {/* Overlay */}
+        <div style={{
+          position: "absolute",
+          inset: 0,
+          background: "rgba(10, 10, 20, 0.62)",
+          zIndex: 0,
+        }} />
 
-        .s13-section {
-          width: 100%;
-          background-image: url('${IMAGE_BASE}/bg-wave-teal-blue.png');
-          background-size: cover;
-          background-position: center;
-          position: relative;
-          overflow: hidden;
-          padding: 80px 16px;
-          text-align: center;
-          font-family: "DM Sans", sans-serif;
-          -webkit-font-smoothing: antialiased;
-        }
-        .s13-section::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: rgba(10, 10, 20, 0.62);
-          z-index: 0;
-        }
-        .s13-inner {
-          position: relative;
-          z-index: 1;
-          max-width: 860px;
-          margin: 0 auto;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 24px;
-        }
-        .s13-title {
-          font-family: "DM Sans", sans-serif;
-          font-size: 40px;
-          font-weight: 700;
-          color: #ffffff;
-          line-height: 1.2;
-          letter-spacing: -0.5px;
-          text-wrap: balance;
-        }
-        .s13-title-brand-light { color: #c6c5fa; }
-        .s13-description {
-          font-size: 18px;
-          color: #ffffff;
-          line-height: 1.7;
-          opacity: 0.9;
-        }
-        .s13-actions {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 12px;
-          justify-content: center;
-        }
-        .s13-btn {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          gap: 8px;
-          border-radius: 9999px;
-          font-family: "DM Sans", sans-serif;
-          font-weight: 500;
-          font-size: 16px;
-          cursor: pointer;
-          border: none;
-          transition: opacity 0.2s;
-          white-space: nowrap;
-          text-decoration: none;
-          padding: 12px 32px;
-          background-color: #ffffff;
-          color: #0f0f0f;
-        }
-        .s13-btn:hover { opacity: 0.9; }
-        .s13-footnote {
-          font-size: 12px;
-          color: rgba(255,255,255,0.55);
-        }
-
-        @media (min-width: 768px) {
-          .s13-section { padding: 100px 32px; }
-          .s13-title { font-size: 50px; }
-        }
-        @media (min-width: 1024px) {
-          .s13-title { font-size: 56px; }
-        }
-        @media (min-width: 1440px) {
-          .s13-section { padding: 120px 120px; }
-          .s13-title { font-size: 64px; }
-          .s13-inner { max-width: 1440px; }
-        }
-        @media (max-width: 767px) {
-          .s13-title { font-size: 40px; }
-          .s13-actions { flex-direction: column; align-items: center; max-width: 320px; margin: 0 auto; }
-        }
-      `}</style>
-      <section className="s13-section" aria-label="Call to action">
-        <div className="s13-inner">
-          <h2 className="s13-title">
-            {title} <span className="s13-title-brand-light">{titleBrandLight}</span>
+        {/* Inner */}
+        <div style={{
+          position: "relative",
+          zIndex: 1,
+          maxWidth: 860,
+          margin: "0 auto",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 24,
+        }}>
+          <h2 style={{
+            fontFamily: '"DM Sans", sans-serif',
+            fontSize: 64,
+            fontWeight: 700,
+            color: "#ffffff",
+            lineHeight: 1.2,
+            letterSpacing: "-0.5px",
+          }}>
+            {title} <span style={{ color: "#c6c5fa" }}>{titleBrandLight}</span>
           </h2>
-          <p className="s13-description">{description}</p>
-          <div className="s13-actions">
-            <a href={cta1Href} className="s13-btn">{cta1Label}</a>
-            <a href={cta2Href} className="s13-btn">{cta2Label}</a>
-            <a href={cta3Href} className="s13-btn">{cta3Label}</a>
+          <p style={{
+            fontSize: 18,
+            color: "#ffffff",
+            lineHeight: 1.7,
+            opacity: 0.9,
+          }}>{description}</p>
+          <div style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: 12,
+            justifyContent: "center",
+          }}>
+            <a href={cta1Href} style={btnStyle}>{cta1Label}</a>
+            <a href={cta2Href} style={btnStyle}>{cta2Label}</a>
+            <a href={cta3Href} style={btnStyle}>{cta3Label}</a>
           </div>
-          <p className="s13-footnote">{footnote}</p>
+          <p style={{
+            fontSize: 12,
+            color: "rgba(255,255,255,0.55)",
+          }}>{footnote}</p>
         </div>
       </section>
-    </>
+    </div>
   )
 }
 

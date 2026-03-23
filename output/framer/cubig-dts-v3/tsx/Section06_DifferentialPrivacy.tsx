@@ -48,232 +48,164 @@ export default function Section06_DifferentialPrivacy({
   ]
 
   return (
-    <>
-      <style>{`
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-        .s6-section {
-          width: 100%;
-          padding: 80px 0;
-          background-color: #ffffff;
-          font-family: "DM Sans", sans-serif;
-          -webkit-font-smoothing: antialiased;
-        }
-        .s6-container {
-          width: 100%;
-          margin: 0 auto;
-          padding: 0 16px;
-          box-sizing: border-box;
-        }
-        .s6-section-header {
-          margin-bottom: 32px;
-          text-align: center;
-          padding-bottom: 24px;
-          border-bottom: 1px solid #e6e7e9;
-        }
-        .s6-title {
-          font-family: "DM Sans", sans-serif;
-          font-size: 40px;
-          font-weight: 700;
-          color: #0f0f0f;
-          line-height: 1.2;
-          letter-spacing: -0.5px;
-          margin-bottom: 16px;
-          text-wrap: balance;
-        }
-        .s6-title-brand { color: #a617ff; }
-        .s6-description {
-          font-size: 18px;
-          color: #636363;
-          line-height: 1.7;
-          max-width: 100%;
-          margin: 0 auto;
-        }
-        .s6-banner-wrap { margin-bottom: 48px; }
-        .s6-banner {
-          padding: 16px 24px;
-          border-top: 1px solid #e6e7e9;
-          border-bottom: 1px solid #e6e7e9;
-          background-color: rgba(166, 23, 255, 0.06);
-          font-size: 14px;
-          line-height: 1.7;
-          text-align: center;
-          color: #0f0f0f;
-        }
-        .s6-tabs-nav {
-          display: flex;
-          justify-content: center;
-          gap: 12px;
-          flex-wrap: wrap;
-          margin-bottom: 64px;
-        }
-        .s6-tab {
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          padding: 8px 24px;
-          border-radius: 9999px;
-          border: 1px solid #e6e7e9;
-          background-color: #ffffff;
-          font-family: "DM Sans", sans-serif;
-          font-size: 14px;
-          font-weight: 500;
-          color: #636363;
-          cursor: pointer;
-          transition: all 0.2s;
-          white-space: nowrap;
-        }
-        .s6-tab:hover {
-          background-color: #0f0f0f;
-          border-color: #0f0f0f;
-          color: #ffffff;
-        }
-        .s6-tab-num {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          width: 22px;
-          height: 22px;
-          border-radius: 50%;
-          background-color: #ececec;
-          border: 1px solid #e6e7e9;
-          font-size: 12px;
-          font-weight: 700;
-          color: #636363;
-          flex-shrink: 0;
-          transition: all 0.2s;
-        }
-        .s6-tab--active {
-          background-color: #0f0f0f;
-          border-color: #0f0f0f;
-          color: #ffffff;
-          font-weight: 600;
-        }
-        .s6-tab--active .s6-tab-num {
-          background-color: #ffffff;
-          border-color: #ffffff;
-          color: #0f0f0f;
-        }
-        .s6-tab:hover .s6-tab-num {
-          background-color: #ffffff;
-          border-color: #ffffff;
-          color: #0f0f0f;
-        }
-        .s6-panel {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 48px;
-          align-items: center;
-        }
-        .s6-panel-content {
-          display: flex;
-          flex-direction: column;
-          gap: 24px;
-        }
-        .s6-panel-title {
-          font-family: "DM Sans", sans-serif;
-          font-size: 30px;
-          font-weight: 700;
-          color: #0f0f0f;
-          line-height: 1.2;
-          text-wrap: balance;
-        }
-        .s6-panel-desc {
-          font-size: 16px;
-          color: #636363;
-          line-height: 1.7;
-        }
-        .s6-panel-screenshot {
-          border-radius: 24px;
-          overflow: hidden;
-          border: 1px solid #e6e7e9;
-          box-shadow: 0px 24px 40px rgba(0, 0, 0, 0.04);
-          background-color: #f7f7f7;
-          max-height: 420px;
-        }
-        .s6-panel-screenshot img {
-          width: 100%;
-          display: block;
-          object-fit: cover;
-          object-position: top left;
-        }
-
-        @media (min-width: 768px) {
-          .s6-container { padding: 0 32px; }
-          .s6-title { font-size: 22px; }
-          .s6-description { max-width: 720px; }
-          .s6-section-header { text-align: left; }
-          .s6-panel-title { font-size: 36px; }
-        }
-        @media (min-width: 1024px) {
-          .s6-container { padding: 0 32px; }
-          .s6-title { font-size: 24px; }
-          .s6-panel { grid-template-columns: 5fr 7fr; gap: 64px; }
-        }
-        @media (min-width: 1440px) {
-          .s6-container { padding: 0 120px; max-width: 1440px; }
-          .s6-title { font-size: 28px; }
-          .s6-description { max-width: 860px; }
-          .s6-panel { gap: 80px; }
-        }
-        @media (max-width: 767px) {
-          .s6-section-header { text-align: left; }
-          .s6-title { font-size: 20px; }
-          .s6-panel-screenshot { max-height: 280px; }
-          .s6-tabs-nav {
-            justify-content: flex-start;
-            flex-wrap: nowrap;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-            padding-bottom: 8px;
-          }
-          .s6-tabs-nav::-webkit-scrollbar { display: none; }
-        }
-      `}</style>
-      <section className="s6-section">
-        <div className="s6-container">
-          <div className="s6-section-header">
-            <h2 className="s6-title">
-              Mathematically Guaranteed <span className="s6-title-brand">Privacy Protection</span>
+    <div style={{ width: "100%", fontFamily: '"DM Sans", sans-serif', WebkitFontSmoothing: "antialiased" }}>
+      <section style={{
+        width: "100%",
+        padding: "80px 0",
+        backgroundColor: "#ffffff",
+        fontFamily: '"DM Sans", sans-serif',
+        WebkitFontSmoothing: "antialiased",
+      }}>
+        <div style={{
+          width: "100%",
+          maxWidth: 1440,
+          margin: "0 auto",
+          padding: "0 120px",
+          boxSizing: "border-box",
+        }}>
+          {/* Section Header */}
+          <div style={{
+            marginBottom: 32,
+            textAlign: "left",
+            paddingBottom: 24,
+            borderBottom: "1px solid #e6e7e9",
+          }}>
+            <h2 style={{
+              fontFamily: '"DM Sans", sans-serif',
+              fontSize: 28,
+              fontWeight: 700,
+              color: "#0f0f0f",
+              lineHeight: 1.2,
+              letterSpacing: "-0.5px",
+              marginBottom: 16,
+            }}>
+              Mathematically Guaranteed <span style={{ color: "#a617ff" }}>Privacy Protection</span>
             </h2>
-            <p className="s6-description">{description}</p>
+            <p style={{
+              fontSize: 18,
+              color: "#636363",
+              lineHeight: 1.7,
+              maxWidth: 860,
+            }}>{description}</p>
           </div>
-          <div className="s6-banner-wrap">
-            <div className="s6-banner" role="note">
-              {bannerText}
+
+          {/* Banner */}
+          <div style={{ marginBottom: 48 }}>
+            <div role="note" style={{
+              padding: "16px 24px",
+              borderTop: "1px solid #e6e7e9",
+              borderBottom: "1px solid #e6e7e9",
+              backgroundColor: "rgba(166, 23, 255, 0.06)",
+              fontSize: 14,
+              lineHeight: 1.7,
+              textAlign: "center",
+              color: "#0f0f0f",
+            }}>{bannerText}</div>
+          </div>
+
+          {/* Tab Nav */}
+          <div role="tablist" aria-label="DP process steps" style={{
+            display: "flex",
+            justifyContent: "center",
+            gap: 12,
+            flexWrap: "wrap",
+            marginBottom: 64,
+          }}>
+            {tabs.map((tab, i) => {
+              const isActive = activeTab === i
+              return (
+                <button
+                  key={i}
+                  role="tab"
+                  aria-selected={isActive}
+                  onClick={() => setActiveTab(i)}
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 8,
+                    padding: "8px 24px",
+                    borderRadius: 9999,
+                    border: "1px solid",
+                    borderColor: isActive ? "#0f0f0f" : "#e6e7e9",
+                    backgroundColor: isActive ? "#0f0f0f" : "#ffffff",
+                    fontFamily: '"DM Sans", sans-serif',
+                    fontSize: 14,
+                    fontWeight: isActive ? 600 : 500,
+                    color: isActive ? "#ffffff" : "#636363",
+                    cursor: "pointer",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  <span style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    width: 22,
+                    height: 22,
+                    borderRadius: "50%",
+                    backgroundColor: isActive ? "#ffffff" : "#ececec",
+                    border: "1px solid",
+                    borderColor: isActive ? "#ffffff" : "#e6e7e9",
+                    fontSize: 12,
+                    fontWeight: 700,
+                    color: isActive ? "#0f0f0f" : "#636363",
+                    flexShrink: 0,
+                  }}>{i + 1}</span>
+                  {tab.label}
+                </button>
+              )
+            })}
+          </div>
+
+          {/* Panel */}
+          <div role="tabpanel" style={{
+            display: "grid",
+            gridTemplateColumns: "5fr 7fr",
+            gap: 80,
+            alignItems: "center",
+          }}>
+            <div style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 24,
+            }}>
+              <h3 style={{
+                fontFamily: '"DM Sans", sans-serif',
+                fontSize: 36,
+                fontWeight: 700,
+                color: "#0f0f0f",
+                lineHeight: 1.2,
+              }}>{tabs[activeTab].title}</h3>
+              <p style={{
+                fontSize: 16,
+                color: "#636363",
+                lineHeight: 1.7,
+              }}>{tabs[activeTab].description}</p>
             </div>
-          </div>
-          <div className="s6-tabs-nav" role="tablist" aria-label="DP process steps">
-            {tabs.map((tab, i) => (
-              <button
-                key={i}
-                className={`s6-tab${activeTab === i ? " s6-tab--active" : ""}`}
-                role="tab"
-                aria-selected={activeTab === i}
-                onClick={() => setActiveTab(i)}
-              >
-                <span className="s6-tab-num">{i + 1}</span>
-                {tab.label}
-              </button>
-            ))}
-          </div>
-          <div className="s6-panel" role="tabpanel">
-            <div className="s6-panel-content">
-              <h3 className="s6-panel-title">{tabs[activeTab].title}</h3>
-              <p className="s6-panel-desc">{tabs[activeTab].description}</p>
-            </div>
-            <div className="s6-panel-screenshot">
+            <div style={{
+              borderRadius: 24,
+              overflow: "hidden",
+              border: "1px solid #e6e7e9",
+              boxShadow: "0px 24px 40px rgba(0, 0, 0, 0.04)",
+              backgroundColor: "#f7f7f7",
+              maxHeight: 420,
+            }}>
               <img
                 src={tabs[activeTab].image}
                 alt={tabs[activeTab].imageAlt}
                 loading="lazy"
+                style={{
+                  width: "100%",
+                  display: "block",
+                  objectFit: "cover",
+                  objectPosition: "top left",
+                }}
               />
             </div>
           </div>
         </div>
       </section>
-    </>
+    </div>
   )
 }
 

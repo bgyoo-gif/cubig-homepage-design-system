@@ -2,12 +2,6 @@ import { addPropertyControls, ControlType } from "framer"
 
 const IMAGE_BASE = "https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images"
 
-interface KPIItem {
-  number: string
-  label: string
-  sub: string
-}
-
 interface Props {
   kpi1Number?: string
   kpi1Label?: string
@@ -39,148 +33,112 @@ export default function Section02_KPIBand({
   kpi4Sub = "Kyobo Life Insurance",
   bannerText = "True AI-ready data means it is usable, privacy-safe, and stable for production execution.",
 }: Props) {
+  const kpis = [
+    { number: kpi1Number, label: kpi1Label, sub: kpi1Sub },
+    { number: kpi2Number, label: kpi2Label, sub: kpi2Sub },
+    { number: kpi3Number, label: kpi3Label, sub: kpi3Sub },
+    { number: kpi4Number, label: kpi4Label, sub: kpi4Sub },
+  ]
+
   return (
-    <>
-      <style>{`
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-        .s2-section {
-          width: 100%;
-          padding: 80px 0;
-          background-color: #ffffff;
-          font-family: "DM Sans", sans-serif;
-          -webkit-font-smoothing: antialiased;
-        }
-        .s2-container {
-          width: 100%;
-          margin: 0 auto;
-          padding: 0 16px;
-          box-sizing: border-box;
-        }
-        .s2-kpi-band {
-          border-radius: 40px;
-          padding: 48px 32px;
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 32px;
-          justify-items: center;
-          background-image: url('${IMAGE_BASE}/bg-lavender.png');
-          background-size: cover;
-          background-position: center;
-          position: relative;
-          overflow: hidden;
-        }
-        .s2-kpi-band::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: rgba(0,0,0,0.35);
-          z-index: 0;
-        }
-        .s2-kpi-band > * { position: relative; z-index: 1; }
-        .s2-kpi-item {
-          display: flex;
-          flex-direction: column;
-          gap: 12px;
-          text-align: center;
-        }
-        .s2-kpi-number {
-          font-family: "DM Sans", sans-serif;
-          font-size: 50px;
-          font-weight: 700;
-          line-height: 1;
-          color: #ffffff;
-        }
-        .s2-kpi-label {
-          font-size: 14px;
-          color: rgba(255,255,255,0.85);
-          line-height: 1.5;
-        }
-        .s2-kpi-sub {
-          font-size: 12px;
-          color: rgba(255,255,255,0.65);
-          font-family: "Fragment Mono", monospace;
-          margin-top: 2px;
-        }
-        .s2-banner-wrap {
-          margin-top: 24px;
-        }
-        .s2-banner-full {
-          width: 100%;
-          text-align: center;
-          padding: 32px 48px;
-          border-radius: 40px;
-          background-image: url('${IMAGE_BASE}/bg-green-wave.png');
-          background-size: cover;
-          background-position: center;
-          position: relative;
-          overflow: hidden;
-          font-size: 18px;
-          font-weight: 500;
-          line-height: 1.7;
-          border: none;
-          isolation: isolate;
-        }
-        .s2-banner-full::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: rgba(255,255,255,0.45);
-          z-index: 0;
-        }
-        .s2-banner-full > * { position: relative; z-index: 1; }
-        .s2-banner-full p { color: #0f0f0f; }
-        .s2-banner-full em { font-style: italic; }
-
-        @media (max-width: 1023px) {
-          .s2-kpi-band { grid-template-columns: repeat(2, 1fr); }
-        }
-        @media (max-width: 767px) {
-          .s2-kpi-band { grid-template-columns: 1fr; padding: 32px 20px; }
-          .s2-kpi-number { font-size: 36px; }
-        }
-        @media (min-width: 768px) {
-          .s2-container { padding: 0 32px; }
-        }
-        @media (min-width: 1024px) {
-          .s2-container { padding: 0 32px; }
-        }
-        @media (min-width: 1440px) {
-          .s2-container { padding: 0 120px; max-width: 1440px; }
-        }
-      `}</style>
-      <section className="s2-section">
-        <div className="s2-container">
-          <div className="s2-kpi-band">
-            <div className="s2-kpi-item">
-              <span className="s2-kpi-number">{kpi1Number}</span>
-              <p className="s2-kpi-label">{kpi1Label}</p>
-              <span className="s2-kpi-sub">{kpi1Sub}</span>
-            </div>
-            <div className="s2-kpi-item">
-              <span className="s2-kpi-number">{kpi2Number}</span>
-              <p className="s2-kpi-label">{kpi2Label}</p>
-              <span className="s2-kpi-sub">{kpi2Sub}</span>
-            </div>
-            <div className="s2-kpi-item">
-              <span className="s2-kpi-number">{kpi3Number}</span>
-              <p className="s2-kpi-label">{kpi3Label}</p>
-              <span className="s2-kpi-sub">{kpi3Sub}</span>
-            </div>
-            <div className="s2-kpi-item">
-              <span className="s2-kpi-number">{kpi4Number}</span>
-              <p className="s2-kpi-label">{kpi4Label}</p>
-              <span className="s2-kpi-sub">{kpi4Sub}</span>
-            </div>
+    <div style={{ width: "100%", fontFamily: '"DM Sans", sans-serif', WebkitFontSmoothing: "antialiased" }}>
+      <section style={{
+        width: "100%",
+        padding: "80px 0",
+        backgroundColor: "#ffffff",
+        fontFamily: '"DM Sans", sans-serif',
+        WebkitFontSmoothing: "antialiased",
+      }}>
+        <div style={{
+          width: "100%",
+          maxWidth: 1440,
+          margin: "0 auto",
+          padding: "0 120px",
+          boxSizing: "border-box",
+        }}>
+          {/* KPI Band */}
+          <div style={{
+            borderRadius: 40,
+            padding: "48px 32px",
+            display: "grid",
+            gridTemplateColumns: "repeat(4, 1fr)",
+            gap: 32,
+            justifyItems: "center",
+            backgroundImage: `url('${IMAGE_BASE}/bg-lavender.png')`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            position: "relative",
+            overflow: "hidden",
+          }}>
+            {/* Overlay */}
+            <div style={{
+              position: "absolute",
+              inset: 0,
+              background: "rgba(0,0,0,0.35)",
+              zIndex: 0,
+            }} />
+            {kpis.map((kpi, i) => (
+              <div key={i} style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 12,
+                textAlign: "center",
+                position: "relative",
+                zIndex: 1,
+              }}>
+                <span style={{
+                  fontFamily: '"DM Sans", sans-serif',
+                  fontSize: 50,
+                  fontWeight: 700,
+                  lineHeight: 1,
+                  color: "#ffffff",
+                }}>{kpi.number}</span>
+                <p style={{
+                  fontSize: 14,
+                  color: "rgba(255,255,255,0.85)",
+                  lineHeight: 1.5,
+                }}>{kpi.label}</p>
+                <span style={{
+                  fontSize: 12,
+                  color: "rgba(255,255,255,0.65)",
+                  fontFamily: '"Fragment Mono", monospace',
+                  marginTop: 2,
+                }}>{kpi.sub}</span>
+              </div>
+            ))}
           </div>
-          <div className="s2-banner-wrap">
-            <div className="s2-banner-full">
-              <p>True AI-ready data means it is <em>usable</em>, <em>privacy-safe</em>, and <em>stable for production execution</em>.</p>
+
+          {/* Banner */}
+          <div style={{ marginTop: 24 }}>
+            <div style={{
+              width: "100%",
+              textAlign: "center",
+              padding: "32px 48px",
+              borderRadius: 40,
+              backgroundImage: `url('${IMAGE_BASE}/bg-green-wave.png')`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              position: "relative",
+              overflow: "hidden",
+              fontSize: 18,
+              fontWeight: 500,
+              lineHeight: 1.7,
+              isolation: "isolate",
+            }}>
+              <div style={{
+                position: "absolute",
+                inset: 0,
+                background: "rgba(255,255,255,0.45)",
+                zIndex: 0,
+              }} />
+              <p style={{ color: "#0f0f0f", position: "relative", zIndex: 1 }}>
+                True AI-ready data means it is <em>usable</em>, <em>privacy-safe</em>, and <em>stable for production execution</em>.
+              </p>
             </div>
           </div>
         </div>
       </section>
-    </>
+    </div>
   )
 }
 

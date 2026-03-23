@@ -18,113 +18,86 @@ export default function Section03_PrivacySafe({
   bannerText = "Synthetic data is a DTS capability. It is not Cubig's top-level identity.",
 }: Props) {
   return (
-    <>
-      <style>{`
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-        .s3-section {
-          width: 100%;
-          padding: 80px 0;
-          background-color: #ffffff;
-          font-family: "DM Sans", sans-serif;
-          -webkit-font-smoothing: antialiased;
-        }
-        .s3-container {
-          width: 100%;
-          margin: 0 auto;
-          padding: 0 16px;
-          box-sizing: border-box;
-        }
-        .s3-section-header {
-          margin-bottom: 48px;
-          text-align: center;
-          padding-bottom: 24px;
-          border-bottom: 1px solid #e6e7e9;
-          margin-bottom: 32px;
-        }
-        .s3-title {
-          font-family: "DM Sans", sans-serif;
-          font-size: 40px;
-          font-weight: 700;
-          color: #0f0f0f;
-          line-height: 1.2;
-          letter-spacing: -0.5px;
-          margin-bottom: 16px;
-          text-wrap: balance;
-        }
-        .s3-title-brand { color: #a617ff; }
-        .s3-description {
-          font-size: 18px;
-          color: #636363;
-          line-height: 1.7;
-          max-width: 100%;
-          margin: 0 auto;
-        }
-        .s3-body-wrap {
-          max-width: 100%;
-        }
-        .s3-body-text {
-          font-family: "DM Sans", sans-serif;
-          font-size: 16px;
-          font-weight: 500;
-          line-height: 1.5;
-          color: #0f0f0f;
-          word-break: keep-all;
-          overflow-wrap: break-word;
-        }
-        .s3-body-text + .s3-body-text {
-          margin-top: 24px;
-        }
-        .s3-banner {
-          padding: 16px 24px;
-          border-top: 1px solid #e6e7e9;
-          border-bottom: 1px solid #e6e7e9;
-          background-color: rgba(21, 94, 160, 0.06);
-          font-size: 14px;
-          line-height: 1.7;
-          text-align: center;
-          margin-top: 32px;
-          color: #0f0f0f;
-        }
-
-        @media (min-width: 768px) {
-          .s3-container { padding: 0 32px; }
-          .s3-title { font-size: 22px; }
-          .s3-description { max-width: 720px; }
-          .s3-section-header { text-align: left; }
-        }
-        @media (min-width: 1024px) {
-          .s3-container { padding: 0 32px; }
-          .s3-title { font-size: 24px; }
-          .s3-description { max-width: 720px; }
-          .s3-body-wrap { max-width: 860px; margin: 0 auto; }
-        }
-        @media (min-width: 1440px) {
-          .s3-container { padding: 0 120px; max-width: 1440px; }
-          .s3-title { font-size: 28px; }
-          .s3-description { max-width: 860px; }
-        }
-        @media (max-width: 767px) {
-          .s3-section-header { text-align: left; }
-          .s3-title { font-size: 20px; }
-        }
-      `}</style>
-      <section className="s3-section">
-        <div className="s3-container">
-          <div className="s3-section-header">
-            <h2 className="s3-title">{title}<span className="s3-title-brand">{titleBrand}</span></h2>
-            <p className="s3-description">{description}</p>
+    <div style={{ width: "100%", fontFamily: '"DM Sans", sans-serif', WebkitFontSmoothing: "antialiased" }}>
+      <section style={{
+        width: "100%",
+        padding: "80px 0",
+        backgroundColor: "#ffffff",
+        fontFamily: '"DM Sans", sans-serif',
+        WebkitFontSmoothing: "antialiased",
+      }}>
+        <div style={{
+          width: "100%",
+          maxWidth: 1440,
+          margin: "0 auto",
+          padding: "0 120px",
+          boxSizing: "border-box",
+        }}>
+          {/* Section Header */}
+          <div style={{
+            marginBottom: 32,
+            textAlign: "left",
+            paddingBottom: 24,
+            borderBottom: "1px solid #e6e7e9",
+          }}>
+            <h2 style={{
+              fontFamily: '"DM Sans", sans-serif',
+              fontSize: 28,
+              fontWeight: 700,
+              color: "#0f0f0f",
+              lineHeight: 1.2,
+              letterSpacing: "-0.5px",
+              marginBottom: 16,
+            }}>
+              {title}<span style={{ color: "#a617ff" }}>{titleBrand}</span>
+            </h2>
+            <p style={{
+              fontSize: 18,
+              color: "#636363",
+              lineHeight: 1.7,
+              maxWidth: 860,
+              margin: "0 auto",
+            }}>{description}</p>
           </div>
-          <div className="s3-body-wrap">
-            <p className="s3-body-text">{body1}</p>
-            <p className="s3-body-text">{body2}</p>
-            <div className="s3-banner" role="note">
+
+          {/* Body */}
+          <div style={{ maxWidth: 860, margin: "0 auto" }}>
+            <p style={{
+              fontFamily: '"DM Sans", sans-serif',
+              fontSize: 16,
+              fontWeight: 500,
+              lineHeight: 1.5,
+              color: "#0f0f0f",
+              wordBreak: "keep-all",
+              overflowWrap: "break-word",
+            }}>{body1}</p>
+            <p style={{
+              fontFamily: '"DM Sans", sans-serif',
+              fontSize: 16,
+              fontWeight: 500,
+              lineHeight: 1.5,
+              color: "#0f0f0f",
+              wordBreak: "keep-all",
+              overflowWrap: "break-word",
+              marginTop: 24,
+            }}>{body2}</p>
+            <div role="note" style={{
+              padding: "16px 24px",
+              borderTop: "1px solid #e6e7e9",
+              borderBottom: "1px solid #e6e7e9",
+              backgroundColor: "rgba(21, 94, 160, 0.06)",
+              fontSize: 14,
+              lineHeight: 1.7,
+              textAlign: "center",
+              marginTop: 32,
+              color: "#0f0f0f",
+            }}>
               {bannerText}
             </div>
           </div>
         </div>
       </section>
-    </>
+    </div>
   )
 }
 

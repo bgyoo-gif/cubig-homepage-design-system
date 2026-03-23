@@ -24,159 +24,136 @@ export default function Section01_Hero({
   screenshotAlt = "DTS — Enterprise Synthetic Data Engine",
 }: Props) {
   return (
-    <>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@700&family=Fragment+Mono&display=swap');
-
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-        .s1-section {
-          width: 100%;
-          padding: 50px 0 0;
-          overflow: visible;
-          background-color: #ffffff;
-          font-family: "DM Sans", sans-serif;
-          -webkit-font-smoothing: antialiased;
-        }
-        .s1-container {
-          width: 100%;
-          margin: 0 auto;
-          padding: 0 16px;
-          box-sizing: border-box;
-        }
-        .s1-hero {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 24px;
-          align-items: center;
-        }
-        .s1-hero--screenshot {
-          text-align: center;
-          max-width: 860px;
-          margin: 0 auto;
-        }
-        .s1-title {
-          font-family: "DM Sans", sans-serif;
-          font-size: 40px;
-          font-weight: 700;
-          color: #0f0f0f;
-          line-height: 1.2;
-          letter-spacing: -2px;
-          margin-bottom: 12px;
-          text-wrap: balance;
-        }
-        .s1-title-product {
-          font-family: "Oxanium", sans-serif;
-          font-weight: 700;
-        }
-        .s1-description {
-          font-size: 18px;
-          color: #636363;
-          line-height: 1.7;
-          max-width: 100%;
-          margin: 0 auto 16px;
-        }
-        .s1-screenshot-frame {
-          margin-top: 32px;
-          border-radius: 40px;
-          padding: 48px 48px 0;
-          background-image: url('${IMAGE_BASE}/bg-gradient-cream-jade.png');
-          background-size: cover;
-          background-position: center;
-          overflow: hidden;
-        }
-        .s1-screenshot {
-          border-radius: 24px 24px 0 0;
-          overflow: hidden;
-          box-shadow: 0 -8px 40px rgba(0,0,0,0.12);
-          background: #ffffff;
-          min-height: 320px;
-        }
-        .s1-screenshot img {
-          width: 100%;
-          display: block;
-        }
-        .s1-actions-below {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 12px;
-          justify-content: center;
-          margin-top: 24px;
-          padding-bottom: 64px;
-        }
-        .s1-btn {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          gap: 8px;
-          border-radius: 9999px;
-          font-family: "DM Sans", sans-serif;
-          font-weight: 500;
-          font-size: 16px;
-          cursor: pointer;
-          border: none;
-          transition: opacity 0.2s, background-color 0.2s;
-          white-space: nowrap;
-          text-decoration: none;
-          padding: 12px 32px;
-        }
-        .s1-btn--primary {
-          background: linear-gradient(130deg, #673AFF 0%, #D932FF 50%, #FF266A 100%);
-          color: #ffffff;
-        }
-        .s1-btn--primary:hover { opacity: 0.88; }
-        .s1-btn--secondary {
-          background-color: transparent;
-          color: #0f0f0f;
-          border: 1px solid #e6e7e9;
-        }
-        .s1-btn--secondary:hover { background-color: #f7f7f7; }
-
-        @media (min-width: 768px) {
-          .s1-container { padding: 0 32px; }
-          .s1-title { font-size: 50px; }
-          .s1-description { max-width: 720px; }
-        }
-        @media (min-width: 1024px) {
-          .s1-container { padding: 0 32px; }
-          .s1-title { font-size: 64px; }
-          .s1-description { max-width: 720px; }
-        }
-        @media (min-width: 1440px) {
-          .s1-container { padding: 0 120px; max-width: 1440px; }
-          .s1-title { font-size: 64px; }
-          .s1-description { max-width: 860px; }
-        }
-        @media (max-width: 767px) {
-          .s1-title { font-size: 24px; letter-spacing: -1px; }
-          .s1-screenshot-frame { padding: 32px 32px 0; border-radius: 24px; }
-          .s1-screenshot { min-height: 180px; border-radius: 18px 18px 0 0; }
-          .s1-actions-below { flex-direction: column; align-items: center; }
-        }
-      `}</style>
-      <section className="s1-section">
-        <div className="s1-container">
-          <div className="s1-hero s1-hero--screenshot">
-            <h1 className="s1-title"><span className="s1-title-product">DTS</span></h1>
-            <p className="s1-description">{description}</p>
+    <div style={{ width: "100%", fontFamily: '"DM Sans", sans-serif', WebkitFontSmoothing: "antialiased" }}>
+      <section style={{
+        width: "100%",
+        paddingTop: 50,
+        paddingBottom: 0,
+        overflow: "visible",
+        backgroundColor: "#ffffff",
+        fontFamily: '"DM Sans", sans-serif',
+        WebkitFontSmoothing: "antialiased",
+      }}>
+        <div style={{
+          width: "100%",
+          maxWidth: 1440,
+          margin: "0 auto",
+          padding: "0 120px",
+          boxSizing: "border-box",
+        }}>
+          <div style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 24,
+            alignItems: "center",
+            textAlign: "center",
+            maxWidth: 860,
+            margin: "0 auto",
+          }}>
+            <h1 style={{
+              fontFamily: '"Oxanium", sans-serif',
+              fontSize: 64,
+              fontWeight: 700,
+              color: "#0f0f0f",
+              lineHeight: 1.2,
+              letterSpacing: "-2px",
+              marginBottom: 12,
+            }}>DTS</h1>
+            <p style={{
+              fontSize: 18,
+              color: "#636363",
+              lineHeight: 1.7,
+              maxWidth: 860,
+              margin: "0 auto 16px",
+            }}>{description}</p>
           </div>
-          <div className="s1-screenshot-frame">
-            <div className="s1-screenshot">
+          <div style={{
+            marginTop: 32,
+            borderRadius: 40,
+            padding: "48px 48px 0",
+            backgroundImage: `url('${IMAGE_BASE}/bg-gradient-cream-jade.png')`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            overflow: "hidden",
+          }}>
+            <div style={{
+              borderRadius: "24px 24px 0 0",
+              overflow: "hidden",
+              boxShadow: "0 -8px 40px rgba(0,0,0,0.12)",
+              backgroundColor: "#ffffff",
+              minHeight: 320,
+            }}>
               <img
                 src={`${IMAGE_BASE}/screenshot-dts.avif`}
                 alt={screenshotAlt}
                 loading="lazy"
+                style={{ width: "100%", display: "block" }}
               />
             </div>
           </div>
-          <div className="s1-actions-below">
-            <a href={ctaHref} className="s1-btn s1-btn--primary">{ctaLabel}</a>
-            <a href={cta2Href} className="s1-btn s1-btn--secondary" target="_blank" rel="noopener noreferrer">{cta2Label}</a>
-            <a href={cta3Href} className="s1-btn s1-btn--secondary">{cta3Label}</a>
+          <div style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: 12,
+            justifyContent: "center",
+            marginTop: 24,
+            paddingBottom: 64,
+          }}>
+            <a href={ctaHref} style={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 8,
+              borderRadius: 9999,
+              fontFamily: '"DM Sans", sans-serif',
+              fontWeight: 500,
+              fontSize: 16,
+              cursor: "pointer",
+              border: "none",
+              whiteSpace: "nowrap",
+              textDecoration: "none",
+              padding: "12px 32px",
+              background: "linear-gradient(130deg, #673AFF 0%, #D932FF 50%, #FF266A 100%)",
+              color: "#ffffff",
+            }}>{ctaLabel}</a>
+            <a href={cta2Href} target="_blank" rel="noopener noreferrer" style={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 8,
+              borderRadius: 9999,
+              fontFamily: '"DM Sans", sans-serif',
+              fontWeight: 500,
+              fontSize: 16,
+              cursor: "pointer",
+              whiteSpace: "nowrap",
+              textDecoration: "none",
+              padding: "12px 32px",
+              backgroundColor: "transparent",
+              color: "#0f0f0f",
+              border: "1px solid #e6e7e9",
+            }}>{cta2Label}</a>
+            <a href={cta3Href} style={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 8,
+              borderRadius: 9999,
+              fontFamily: '"DM Sans", sans-serif',
+              fontWeight: 500,
+              fontSize: 16,
+              cursor: "pointer",
+              whiteSpace: "nowrap",
+              textDecoration: "none",
+              padding: "12px 32px",
+              backgroundColor: "transparent",
+              color: "#0f0f0f",
+              border: "1px solid #e6e7e9",
+            }}>{cta3Label}</a>
           </div>
         </div>
       </section>
-    </>
+    </div>
   )
 }
 
