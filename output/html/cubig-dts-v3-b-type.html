@@ -369,7 +369,11 @@
       border-bottom: 1px solid var(--ds-color-border-default);
       margin-bottom: var(--ds-space-xl);
     }
-    @media (max-width: 767px) { .ds-section-header { text-align: left; } }
+    @media (max-width: 767px) {
+      .ds-section-header { text-align: left; }
+      .ds-section-header__title { font-size: 20px; }
+      .ds-section-header__description { font-size: 14px; }
+    }
 
     /* ========================================================
        7. Hero
@@ -809,6 +813,10 @@
         -webkit-overflow-scrolling: touch; scrollbar-width: none; padding-bottom: var(--ds-space-xs);
       }
       .ds-step-tabs__nav::-webkit-scrollbar { display: none; }
+      .ds-step-tabs__tab { white-space: nowrap; font-size: 12px; padding: 6px 12px; }
+      .ds-step-tabs__title { font-size: 20px; }
+      .ds-step-tabs__description { font-size: 14px; }
+      .ds-step-tabs__panel--active { gap: var(--ds-space-lg); }
     }
 
     /* ========================================================
