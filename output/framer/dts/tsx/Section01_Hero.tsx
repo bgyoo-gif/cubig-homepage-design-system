@@ -5,6 +5,7 @@ import { addPropertyControls, ControlType } from "framer"
 const IMAGE_BASE = "https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images"
 
 interface Props {
+  marginTop?: number
   productName?: string
   description?: string
   primaryBtnText?: string
@@ -18,6 +19,7 @@ interface Props {
 }
 
 export default function Section01_Hero({
+  marginTop = 100,
   productName = "DTS",
   description = "Your AI is only as good as the data it trains on — and most enterprise data is not AI-ready. DTS solves unusable data for AI: whether it's restricted by privacy rules, imbalanced, or missing the coverage your model needs. The result is an AI-ready dataset you can actually use.",
   primaryBtnText = "Run technical demo",
@@ -36,7 +38,7 @@ export default function Section01_Hero({
 
         .s1-section {
           width: 100%;
-          padding: 100px 0 0;
+          padding: ${marginTop}px 0 0;
           overflow: visible;
           font-family: "DM Sans", sans-serif;
           color: #0f0f0f;
@@ -208,6 +210,14 @@ export default function Section01_Hero({
 }
 
 addPropertyControls(Section01_Hero, {
+  marginTop: {
+    type: ControlType.Number,
+    title: "Top Margin",
+    defaultValue: 100,
+    min: 0,
+    max: 200,
+    step: 10,
+  },
   productName: {
     type: ControlType.String,
     title: "Product Name",

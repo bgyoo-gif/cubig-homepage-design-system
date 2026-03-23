@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI-ready Data Infrastructure: Definition, Problems, and the Production Checklist | Cubig Learn</title>
+  <meta name="description" content="Enterprise AI fails in production when data is restricted, unusable, or execution becomes unstable. Learn what AI-ready data infrastructure means and how to build conditions for usable, privacy-safe, and stable execution.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://cubig.ai/learn/ai-ready-data-infrastructure">
+  <meta property="og:title" content="AI-ready Data Infrastructure: Definition, Problems, and the Production Checklist | Cubig">
+  <meta property="og:description" content="Enterprise AI fails when data is Restricted, Unusable, or execution becomes Unstable. Learn what AI-ready data infrastructure means and what production-ready conditions actually look like.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://cubig.ai/learn/ai-ready-data-infrastructure">
+  <meta property="og:image" content="https://cubig.ai/og-default.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://cubig.ai/og-default.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {"@type":"Organization","@id":"https://cubig.ai/#org","name":"Cubig","url":"https://cubig.ai"},
+      {"@type":"Article","@id":"https://cubig.ai/learn/ai-ready-data-infrastructure#article","url":"https://cubig.ai/learn/ai-ready-data-infrastructure","headline":"AI-ready Data Infrastructure for Enterprise AI","description":"Enterprise AI fails in production when data is restricted, unusable, or execution becomes unstable. Learn what AI-ready data infrastructure means.","keywords":"AI-ready data infrastructure, enterprise AI production failure, restricted data, unusable data, unstable execution, production AI checklist","author":{"@id":"https://cubig.ai/#org"},"publisher":{"@id":"https://cubig.ai/#org"}},
+      {"@type":"FAQPage","mainEntity":[
+        {"@type":"Question","name":"What is AI-ready data infrastructure?","acceptedAnswer":{"@type":"Answer","text":"AI-ready data infrastructure is the infrastructure layer that makes enterprise data usable, privacy-safe, and stable for production AI execution. It resolves three blockers: Restricted Data (compliance and access constraints), Unusable Data (missing values, bias, coverage gaps), and Unstable Execution (schema drift, pipeline changes, runtime variance)."}},
+        {"@type":"Question","name":"Why does AI fail after deployment?","acceptedAnswer":{"@type":"Answer","text":"AI fails after deployment because execution conditions change. PoC runs on fixed, controlled data. Production runs on changing data, evolving schemas, updated pipelines, and shifting runtime environments. The model doesn't change — the conditions around it do. This is called Unstable Execution."}},
+        {"@type":"Question","name":"What makes data unusable for AI?","acceptedAnswer":{"@type":"Answer","text":"Data is Unusable for AI when it exists but cannot be reliably used for training, validation, or inference. Common causes include missing values, class imbalance, coverage gaps (underrepresented distributions), restricted access, and distribution shift between training and production."}},
+        {"@type":"Question","name":"What is the difference between data drift and execution state drift?","acceptedAnswer":{"@type":"Answer","text":"Data drift refers to changes in the statistical distribution of values within a stable schema. Execution state drift refers to changes in the conditions around the model — schema, preprocessing logic, runtime dependencies — that alter behavior without any model update. Most production AI failures are execution state drift."}},
+        {"@type":"Question","name":"What does reproducible execution mean in production AI?","acceptedAnswer":{"@type":"Answer","text":"Reproducible execution means the ability to re-run the same AI pipeline under the same conditions and verify that results match a known baseline. It requires locking all execution conditions — data snapshot, schema, preprocessing logic, runtime dependencies — into a Release State, and binding every run to that state."}},
+        {"@type":"Question","name":"What is a Release State?","acceptedAnswer":{"@type":"Answer","text":"A Release State is a versioned, immutable snapshot of all conditions under which an AI run executes — including data schema, preprocessing logic, feature configuration, and runtime dependencies. Binding runs to a Release State enables comparison between releases and reproducibility for incident response."}}
+      ]}
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================================
+       1. CSS Reset + 전역 기본값
+       ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--ds-font-base);
+      color: var(--ds-color-text-primary);
+      background-color: var(--ds-color-surface-white);
+      padding-top: 58px;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+      -webkit-font-smoothing: antialiased;
+    }
+    img, video { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+
+    p, li, dt, dd, blockquote,
+    .ds-section-header__description,
+    .ds-hero__description,
+    .ds-cta-band__description,
+    .ds-body-l, .ds-body-m, .ds-body-s,
+    .ds-ac-card__title,
+    .ds-card__description {
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      text-wrap: pretty;
+    }
+
+    /* ============================================================
+       2. :root — CSS Variables
+       ============================================================ */
+    :root {
+      /* Brand */
+      --ds-color-brand-primary:   #3061f2;
+      --ds-color-brand-purple:    #725bea;
+      --ds-color-brand-purple-lt: #c6c5fa;
+      --ds-color-brand-purple-md: #ab2eff;
+
+      /* Neutral */
+      --ds-color-neutral-900: #0f0f0f;
+      --ds-color-neutral-850: #141414;
+      --ds-color-neutral-800: #171719;
+      --ds-color-neutral-700: #303135;
+      --ds-color-neutral-500: #636363;
+      --ds-color-neutral-400: #9c9c9c;
+      --ds-color-neutral-350: #adadad;
+      --ds-color-neutral-300: #bababa;
+      --ds-color-neutral-250: #c4c4c4;
+      --ds-color-neutral-200: #e0e0e0;
+      --ds-color-neutral-150: #e6e7e9;
+      --ds-color-neutral-100: #ececec;
+      --ds-color-neutral-050: #f2f2f2;
+      --ds-color-neutral-025: #f7f7f7;
+      --ds-color-white: #ffffff;
+      --ds-color-black: #000000;
+
+      /* Text */
+      --ds-color-text-primary:   #0f0f0f;
+      --ds-color-text-secondary: #636363;
+      --ds-color-text-tertiary:  #9c9c9c;
+      --ds-color-text-inverse:   #ffffff;
+      --ds-color-text-muted:     #cacccf;
+
+      /* Functional */
+      --ds-color-success: #0e824c;
+      --ds-color-error:   #ff3030;
+      --ds-color-info:    #155ea0;
+      --ds-color-warn:    #f59e0b;
+
+      /* Border */
+      --ds-color-border-default: #e6e7e9;
+      --ds-color-border-strong:  #171719;
+      --ds-color-border-brand:   #725bea;
+
+      /* Surface */
+      --ds-color-surface-dark:  #171719;
+      --ds-color-surface-mid:   #f2f2f2;
+      --ds-color-surface-light: #f7f7f7;
+      --ds-color-surface-white: #ffffff;
+
+      /* Gradient */
+      --ds-gradient-brand: linear-gradient(130deg, #673AFF 0%, #D932FF 50%, #FF266A 100%);
+      --ds-gradient-dark:  linear-gradient(180deg, #0f0f0f 0%, #171719 100%);
+
+      /* Spacing */
+      --ds-space-2xs:  4px;
+      --ds-space-xs:   8px;
+      --ds-space-sm:   12px;
+      --ds-space-md:   16px;
+      --ds-space-lg:   24px;
+      --ds-space-xl:   32px;
+      --ds-space-2xl:  48px;
+      --ds-space-3xl:  64px;
+      --ds-space-4xl:  80px;
+      --ds-space-5xl: 100px;
+      --ds-space-6xl: 150px;
+
+      /* Radius */
+      --ds-radius-none: 0px;
+      --ds-radius-xs:   5px;
+      --ds-radius-sm:   8px;
+      --ds-radius-md:   18px;
+      --ds-radius-lg:   24px;
+      --ds-radius-xl:   40px;
+      --ds-radius-2xl:  56px;
+      --ds-radius-pill: 9999px;
+
+      /* Border Tokens */
+      --ds-border-width:      1px;
+      --ds-border-width-bold: 2px;
+      --ds-border-default:    1px solid var(--ds-color-border-default);
+      --ds-border-brand:      1px solid var(--ds-color-brand-purple);
+
+      /* Shadow */
+      --ds-shadow-card:  0px 24px 40px rgba(0, 0, 0, 0.04);
+      --ds-shadow-modal: 0px 24px 40px rgba(0, 0, 0, 0.10);
+
+      /* Typography */
+      --ds-font-base:    "DM Sans", "DM Sans Placeholder", sans-serif;
+      --ds-font-brand:   "Oxanium", sans-serif;
+      --ds-font-code:    "Fragment Mono", "Geist Mono", monospace;
+
+      --ds-text-xs:   12px;
+      --ds-text-sm:   14px;
+      --ds-text-md:   16px;
+      --ds-text-lg:   18px;
+      --ds-text-xl:   20px;
+      --ds-text-2xl:  24px;
+      --ds-text-3xl:  30px;
+      --ds-text-4xl:  36px;
+      --ds-text-5xl:  40px;
+      --ds-text-6xl:  50px;
+      --ds-text-7xl:  64px;
+      --ds-text-8xl:  90px;
+
+      --ds-weight-light:    300;
+      --ds-weight-regular:  400;
+      --ds-weight-medium:   500;
+      --ds-weight-semibold: 600;
+      --ds-weight-bold:     700;
+
+      --ds-leading-tight:   1.2;
+      --ds-leading-normal:  1.5;
+      --ds-leading-relaxed: 1.7;
+
+      --ds-tracking-tight:  -0.5px;
+      --ds-tracking-normal: 0px;
+      --ds-tracking-wide:   0.08em;
+
+      /* Container */
+      --ds-container-padding-mobile:     16px;
+      --ds-container-padding-tablet:     32px;
+      --ds-container-padding-sm-desktop: 32px;
+      --ds-container-padding-desktop:    120px;
+      --ds-content-max-width:            1200px;
+
+      /* Background Images */
+      --ds-bg-img-paint-lavender: url('https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/bg-paint-lavender-gold.png');
+      --ds-bg-img-grad-deep:      url('https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/bg-gradient-deep-teal.png');
+      --ds-bg-img-wave-teal:      url('https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/bg-wave-teal-blue.png');
+
+      /* Component-specific fallback colors (from DS component definitions) */
+      --color-badge-teal:        #0e9f8e;
+      --color-kpi-start:         #1a6fe8;
+      --color-kpi-end:           #0ea5a0;
+      --color-cta-start:         #b2f0e8;
+      --color-cta-mid:           #7ecfea;
+      --color-cta-end:           #4a9fd4;
+
+      /* Overlay / transparency tokens */
+      --color-overlay-nav:       rgba(255,255,255,0.92);
+      --color-overlay-light:     rgba(255,255,255,0.45);
+      --color-overlay-dark:      rgba(0,0,0,0.35);
+      --color-overlay-cta:       rgba(0,0,0,0.15);
+      --color-inverse-70:        rgba(255,255,255,0.7);
+      --color-inverse-60:        rgba(255,255,255,0.6);
+    }
+
+    /* ============================================================
+       3. Base Styles
+       ============================================================ */
+    h1, .ds-h1 { font-family: var(--ds-font-base); font-size: 24px; font-weight: var(--ds-weight-bold); line-height: var(--ds-leading-tight); letter-spacing: var(--ds-tracking-tight); text-wrap: balance; }
+    h2, .ds-h2 { font-family: var(--ds-font-base); font-size: 20px; font-weight: var(--ds-weight-bold); line-height: var(--ds-leading-tight); letter-spacing: var(--ds-tracking-tight); text-wrap: balance; }
+    h3, .ds-h3 { font-family: var(--ds-font-base); font-size: 18px; font-weight: var(--ds-weight-semibold); line-height: var(--ds-leading-tight); text-wrap: balance; }
+    h4, .ds-h4 { font-family: var(--ds-font-base); font-size: var(--ds-text-2xl); font-weight: var(--ds-weight-medium); line-height: var(--ds-leading-tight); }
+
+    .ds-body-l  { font-family: var(--ds-font-base); font-size: var(--ds-text-xl); font-weight: var(--ds-weight-regular); line-height: var(--ds-leading-normal); }
+    .ds-body-m  { font-family: var(--ds-font-base); font-size: var(--ds-text-md); font-weight: var(--ds-weight-medium); line-height: var(--ds-leading-normal); }
+    .ds-body-s  { font-family: var(--ds-font-base); font-size: var(--ds-text-sm); font-weight: var(--ds-weight-medium); line-height: var(--ds-leading-normal); }
+    .ds-caption { font-family: var(--ds-font-base); font-size: var(--ds-text-xs); font-weight: var(--ds-weight-medium); line-height: var(--ds-leading-normal); }
+
+    .ds-text--brand       { color: var(--ds-color-brand-purple); }
+    .ds-text--brand-light { color: var(--ds-color-brand-purple-lt); }
+    .ds-text--product     { font-family: var(--ds-font-brand); font-weight: var(--ds-weight-bold); }
+
+    /* ============================================================
+       4. Component Styles
+       ============================================================ */
+
+    /* Navigation */
+    .ds-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: 58px;
+      display: flex; align-items: center;
+      background: var(--color-overlay-nav);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--ds-color-border-default);
+      padding: 0 var(--ds-container-padding-mobile);
+    }
+    .ds-nav__inner { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .ds-nav__logo { font-family: var(--ds-font-base); font-weight: var(--ds-weight-bold); font-size: var(--ds-text-lg); color: var(--ds-color-text-primary); }
+    .ds-nav__links { display: flex; align-items: center; gap: 32px; list-style: none; padding: 0; margin: 0; }
+    .ds-nav__link { font-size: var(--ds-text-sm); color: var(--ds-color-text-secondary); transition: color 0.15s; }
+    .ds-nav__link:hover { color: var(--ds-color-text-primary); }
+
+    /* Container */
+    .ds-container {
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 var(--ds-container-padding-mobile);
+      box-sizing: border-box;
+    }
+
+    /* Section */
+    .ds-section { width: 100%; padding: var(--ds-space-4xl) 0; }
+    .ds-section--hero { padding-top: 100px; padding-bottom: var(--ds-space-5xl); }
+    .ds-section--dark { background-color: var(--ds-color-surface-dark); color: var(--ds-color-text-inverse); }
+    .ds-section--light { background-color: var(--ds-color-surface-light); }
+
+    /* Article body — max-width 860px center */
+    .ds-article-body { max-width: 860px; margin: 0 auto; }
+
+    /* Section Header */
+    .ds-section-header { margin-bottom: var(--ds-space-2xl); text-align: center; }
+    .ds-section-header--left { text-align: left; }
+    .ds-section-header--left .ds-section-header__description { margin: 0; }
+    .ds-section-header--underline {
+      padding-bottom: var(--ds-space-lg);
+      border-bottom: 1px solid var(--ds-color-border-default);
+      margin-bottom: var(--ds-space-xl);
+    }
+    .ds-section-header__title {
+      font-family: var(--ds-font-base); font-size: 20px; font-weight: var(--ds-weight-bold);
+      color: var(--ds-color-text-primary); line-height: var(--ds-leading-tight);
+      letter-spacing: var(--ds-tracking-tight); margin-bottom: var(--ds-space-md);
+      text-wrap: balance;
+    }
+    .ds-section-header__description {
+      font-size: var(--ds-text-lg); color: var(--ds-color-text-secondary);
+      line-height: var(--ds-leading-relaxed); max-width: 100%; margin: 0 auto;
+      word-break: keep-all; overflow-wrap: break-word;
+    }
+
+    /* Icon Section Title */
+    .ds-section-title-icon { display: flex; align-items: center; gap: 12px; margin-bottom: var(--ds-space-xl); margin-top: var(--ds-space-2xl); }
+    .ds-section-title-icon__icon { font-size: 24px; line-height: 1; flex-shrink: 0; }
+    .ds-section-title-icon__text { font-family: var(--ds-font-base); font-size: var(--ds-text-xl); font-weight: var(--ds-weight-semibold); color: var(--ds-color-text-primary); line-height: var(--ds-leading-tight); }
+
+    /* Hero Text-only */
+    .ds-hero--text-only { max-width: 860px; }
+    .ds-hero__title {
+      font-family: var(--ds-font-base); font-size: 24px; font-weight: var(--ds-weight-bold);
+      color: var(--ds-color-text-primary); line-height: var(--ds-leading-tight);
+      letter-spacing: var(--ds-tracking-tight); margin-bottom: var(--ds-space-sm);
+    }
+    .ds-hero__description {
+      font-size: var(--ds-text-lg); color: var(--ds-color-text-secondary);
+      line-height: var(--ds-leading-relaxed); max-width: 100%; margin-bottom: var(--ds-space-xl);
+      word-break: keep-all; overflow-wrap: break-word;
+    }
+    .ds-hero__breadcrumb {
+      font-family: var(--ds-font-code); font-size: var(--ds-text-xs);
+      color: var(--ds-color-text-tertiary); margin-bottom: var(--ds-space-md);
+      display: flex; align-items: center; gap: var(--ds-space-xs);
+    }
+    .ds-hero__breadcrumb a { color: var(--ds-color-brand-purple); }
+    .ds-hero__breadcrumb span { opacity: 0.4; }
+
+    /* TOC Bar */
+    .ds-toc-bar {
+      background-color: var(--ds-color-surface-light);
+      border-bottom: 1px solid var(--ds-color-border-default);
+      padding: var(--ds-space-md) 0;
+    }
+    .ds-toc-bar__inner {
+      max-width: 860px; margin: 0 auto;
+      display: flex; gap: var(--ds-space-xs);
+      flex-wrap: nowrap; overflow-x: auto;
+      -webkit-overflow-scrolling: touch; scrollbar-width: none;
+    }
+    .ds-toc-bar__inner::-webkit-scrollbar { display: none; }
+    .ds-toc-link {
+      font-size: var(--ds-text-sm); color: var(--ds-color-text-secondary);
+      padding: var(--ds-space-2xs) var(--ds-space-sm);
+      border: 1px solid var(--ds-color-border-default);
+      border-radius: var(--ds-radius-pill);
+      white-space: nowrap; transition: color 0.2s, border-color 0.2s;
+    }
+    .ds-toc-link:hover { color: var(--ds-color-brand-purple); border-color: var(--ds-color-brand-purple); }
+
+    /* Article paragraph */
+    .ds-article-p {
+      font-size: var(--ds-text-md); color: var(--ds-color-text-primary);
+      line-height: var(--ds-leading-relaxed); margin-bottom: var(--ds-space-lg);
+      word-break: keep-all; overflow-wrap: break-word;
+    }
+    .ds-article-p a { color: var(--ds-color-brand-purple); }
+    .ds-article-p:last-child { margin-bottom: 0; }
+
+    /* Card */
+    .ds-card {
+      background-color: var(--ds-color-surface-white);
+      border-radius: var(--ds-radius-md);
+      border: var(--ds-border-default);
+      padding: var(--ds-space-lg);
+      box-shadow: var(--ds-shadow-card);
+      box-sizing: border-box;
+    }
+    .ds-card--dark {
+      background-color: var(--ds-color-neutral-850);
+      border-color: var(--ds-color-neutral-700);
+      color: var(--ds-color-text-inverse);
+    }
+
+    /* Card Sub-components */
+    .ds-card__badge {
+      display: inline-flex; align-items: center; width: fit-content;
+      padding: 4px 12px; border-radius: var(--ds-radius-pill);
+      font-size: var(--ds-text-xs); font-weight: var(--ds-weight-medium);
+      font-family: var(--ds-font-code); text-transform: uppercase;
+      letter-spacing: var(--ds-tracking-wide);
+      border: 1px solid currentColor; margin-bottom: var(--ds-space-md);
+    }
+    .ds-card__badge--brand { color: var(--ds-color-brand-purple); border-color: var(--ds-color-brand-purple); }
+    .ds-card__badge--teal  { color: var(--color-badge-teal); border-color: var(--color-badge-teal); }
+    .ds-card__badge--red   { color: var(--ds-color-error); border-color: var(--ds-color-error); }
+    .ds-card__badge--gray  { color: var(--ds-color-text-tertiary); border-color: var(--ds-color-border-default); }
+
+    .ds-card__title { font-family: var(--ds-font-base); font-size: var(--ds-text-2xl); font-weight: var(--ds-weight-bold); color: var(--ds-color-text-primary); line-height: var(--ds-leading-tight); margin-bottom: var(--ds-space-sm); }
+    .ds-card__subtitle { font-size: var(--ds-text-sm); color: var(--ds-color-text-tertiary); margin-bottom: var(--ds-space-md); }
+    .ds-card__description { font-size: var(--ds-text-sm); color: var(--ds-color-text-secondary); line-height: var(--ds-leading-relaxed); flex: 1; word-break: keep-all; overflow-wrap: break-word; }
+    .ds-card__link { display: block; margin-top: var(--ds-space-md); font-size: var(--ds-text-sm); color: var(--ds-color-brand-purple); }
+
+    /* Card with dark background for link cards */
+    .ds-card--dark .ds-card__title { color: var(--ds-color-text-inverse); }
+    .ds-card--dark .ds-card__description { color: var(--color-inverse-70); }
+    .ds-card--dark .ds-card__link { color: var(--color-inverse-60); }
+
+    /* Card Grid */
+    .ds-card-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+    .ds-card-grid .ds-card { display: flex; flex-direction: column; }
+
+    /* Grid utility */
+    .ds-grid { display: grid; gap: var(--ds-space-lg); width: 100%; }
+    .ds-grid--1 { grid-template-columns: 1fr; }
+    .ds-grid--2 { grid-template-columns: 1fr; }
+
+    /* Banner */
+    .ds-banner {
+      padding: var(--ds-space-md) var(--ds-space-lg);
+      border-radius: 0;
+      border: none;
+      border-top: 1px solid var(--ds-color-border-default);
+      border-bottom: 1px solid var(--ds-color-border-default);
+      background-color: var(--ds-banner-bg, var(--ds-color-surface-light));
+      font-size: var(--ds-text-sm);
+      line-height: var(--ds-leading-relaxed);
+      text-align: center;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+    .ds-banner a, .ds-banner--full a { display: block; margin-top: var(--ds-space-sm); }
+    .ds-banner__label {
+      font-family: var(--ds-font-code); font-size: var(--ds-text-xs); text-transform: uppercase;
+      letter-spacing: var(--ds-tracking-wide); color: var(--ds-color-text-tertiary);
+      margin-bottom: var(--ds-space-xs); display: block;
+    }
+    .ds-banner--brand { --ds-banner-bg: rgba(166, 23, 255, 0.06); }
+
+    /* Banner Full */
+    .ds-banner--full {
+      width: 100%; text-align: center;
+      padding: var(--ds-space-xl) var(--ds-space-2xl);
+      border-radius: var(--ds-radius-xl);
+      background-size: cover; background-position: center;
+      position: relative; overflow: hidden;
+      color: var(--ds-color-text-primary);
+      font-size: var(--ds-text-lg); font-weight: var(--ds-weight-medium);
+      line-height: var(--ds-leading-relaxed);
+      border: none;
+      word-break: keep-all; overflow-wrap: break-word;
+      isolation: isolate;
+    }
+    .ds-banner--full::before {
+      content: ''; position: absolute; inset: 0;
+      background: var(--color-overlay-light); z-index: 0;
+    }
+    .ds-banner--full > * { position: relative; z-index: 1; }
+    .ds-banner--full strong { font-weight: var(--ds-weight-bold); }
+
+    .ds-bg--paint-lavender { background-image: var(--ds-bg-img-paint-lavender); }
+
+    /* Bullet List */
+    .ds-bullet { list-style: none; display: flex; flex-direction: column; gap: var(--ds-space-sm); }
+    .ds-bullet__item { display: flex; align-items: flex-start; gap: var(--ds-space-xs); font-size: var(--ds-text-md); line-height: var(--ds-leading-normal); color: var(--ds-color-text-primary); }
+    .ds-bullet__icon { width: 20px; height: 20px; flex-shrink: 0; margin-top: 2px; display: flex; align-items: center; justify-content: center; }
+    .ds-bullet--dot .ds-bullet__icon::before { content: "•"; color: var(--ds-color-brand-purple); font-size: var(--ds-text-xl); line-height: 1; }
+    .ds-bullet--check .ds-bullet__icon::before { content: "✓"; color: var(--ds-color-success); font-weight: var(--ds-weight-bold); font-size: var(--ds-text-md); line-height: 1; }
+    .ds-bullet--number { counter-reset: bullet; }
+    .ds-bullet--number .ds-bullet__item::before { counter-increment: bullet; }
+    .ds-bullet--number .ds-bullet__icon::before {
+      counter-increment: bullet; content: counter(bullet);
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 20px; height: 20px; border-radius: 50%;
+      background-color: var(--ds-color-brand-primary); color: var(--ds-color-white);
+      font-size: var(--ds-text-xs); font-weight: var(--ds-weight-bold);
+    }
+
+    /* Numbered bullet — strong title style */
+    .ds-bullet--number .ds-bullet__item strong {
+      font-weight: var(--ds-weight-bold);
+      color: var(--ds-color-text-primary);
+    }
+    .ds-bullet--number .ds-bullet__item { flex-direction: row; align-items: flex-start; }
+    .ds-bullet--number .ds-bullet__text { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+
+    /* KPI Band */
+    .ds-kpi-band {
+      border-radius: var(--ds-radius-xl); padding: 48px 40px;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+      justify-items: center;
+      background-size: cover; background-position: center;
+      position: relative; overflow: hidden;
+    }
+    .ds-kpi-band:not([class*="ds-bg--"]) {
+      background: linear-gradient(135deg, var(--color-kpi-start), var(--color-kpi-end));
+    }
+    .ds-bg--grad-deep { background-image: var(--ds-bg-img-grad-deep); }
+    .ds-kpi-band[class*="ds-bg--"]::before {
+      content: ''; position: absolute; inset: 0;
+      background: var(--color-overlay-dark); z-index: 0;
+    }
+    .ds-kpi-band > * { position: relative; z-index: 1; }
+    .ds-kpi-band__item { display: flex; flex-direction: column; gap: 12px; text-align: center; }
+    .ds-kpi-band__number {
+      font-family: var(--ds-font-base); font-size: var(--ds-text-6xl);
+      font-weight: var(--ds-weight-bold); line-height: 1; color: var(--ds-color-white);
+    }
+    .ds-kpi-band__label { font-size: var(--ds-text-sm); color: rgba(255,255,255,0.85); line-height: var(--ds-leading-normal); }
+    .ds-kpi-band__source { font-size: var(--ds-text-xs); color: rgba(255,255,255,0.6); font-family: var(--ds-font-code); margin-top: 4px; }
+
+    /* Button */
+    .ds-btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: var(--ds-space-xs);
+      border-radius: var(--ds-radius-pill);
+      font-family: var(--ds-font-base); font-weight: var(--ds-weight-medium); font-size: var(--ds-text-md);
+      cursor: pointer; border: none; transition: opacity 0.2s, background-color 0.2s;
+      white-space: nowrap; text-decoration: none;
+    }
+    .ds-btn--sm { padding: var(--ds-space-xs) var(--ds-space-md); font-size: var(--ds-text-sm); }
+    .ds-btn--md { padding: var(--ds-space-sm) var(--ds-space-xl); font-size: var(--ds-text-md); }
+    .ds-btn--lg { padding: var(--ds-space-md) var(--ds-space-2xl); font-size: var(--ds-text-lg); }
+    .ds-btn--primary   { background: var(--ds-gradient-brand); color: var(--ds-color-white); }
+    .ds-btn--primary:hover { opacity: 0.88; }
+    .ds-btn--secondary { background-color: transparent; color: var(--ds-color-text-primary); border: var(--ds-border-default); }
+    .ds-btn--secondary:hover { background-color: var(--ds-color-surface-light); }
+
+    /* CTA Band */
+    .ds-cta-band {
+      width: 100%; position: relative; overflow: hidden;
+      padding: 80px var(--ds-container-padding-mobile);
+      text-align: center;
+      background-size: cover; background-position: center;
+    }
+    .ds-bg--wave-teal { background-image: var(--ds-bg-img-wave-teal); }
+    .ds-cta-band:not([class*="ds-bg--"]) {
+      background: linear-gradient(135deg, var(--color-cta-start) 0%, var(--color-cta-mid) 40%, var(--color-cta-end) 100%);
+    }
+    .ds-cta-band::before {
+      content: ''; position: absolute; inset: 0;
+      background: var(--color-overlay-cta); z-index: 0;
+    }
+    .ds-cta-band > * { position: relative; z-index: 1; }
+    .ds-cta-band__inner { max-width: 100%; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: var(--ds-space-lg); }
+    .ds-cta-band__title {
+      font-family: var(--ds-font-base); font-size: var(--ds-text-5xl);
+      font-weight: var(--ds-weight-bold); color: #ffffff;
+      line-height: var(--ds-leading-tight); letter-spacing: -2px; margin: 0;
+    }
+    .ds-cta-band__description {
+      font-size: var(--ds-text-lg); color: rgba(255,255,255,0.85);
+      line-height: var(--ds-leading-relaxed); margin: 0;
+      word-break: keep-all; overflow-wrap: break-word;
+    }
+    .ds-cta-band__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; }
+    .ds-cta-band__actions .ds-btn { background: rgba(255,255,255,0.92); color: var(--ds-color-text-primary); border: 1px solid rgba(255,255,255,0.6); backdrop-filter: blur(8px); }
+    .ds-cta-band__actions .ds-btn:hover { background: var(--ds-color-white); }
+
+    /* Dark card link arrow */
+    .ds-card--dark .ds-card__arrow {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: var(--ds-text-sm); color: rgba(255,255,255,0.5);
+      margin-top: auto; padding-top: var(--ds-space-md);
+    }
+
+    /* Accordion FAQ */
+    .ds-ac-list { display: flex; flex-direction: column; gap: 2px; }
+    .ds-ac-card { border: var(--ds-border-default); border-radius: var(--ds-radius-sm); background-color: var(--ds-color-surface-white); overflow: hidden; transition: background-color 0.2s; }
+    .ds-ac-card:hover { background-color: var(--ds-color-neutral-025); }
+    .ds-ac-card__header { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: var(--ds-space-md); padding: var(--ds-space-lg); cursor: pointer; user-select: none; }
+    .ds-ac-card__title-wrap { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+    .ds-ac-card__title { font-family: var(--ds-font-base); font-size: var(--ds-text-md); font-weight: var(--ds-weight-medium); line-height: var(--ds-leading-tight); color: var(--ds-color-text-primary); word-break: keep-all; overflow-wrap: break-word; }
+    .ds-ac-card__toggle { width: 28px; height: 28px; border-radius: 6px; border: 0.5px solid var(--ds-color-border-default); background: var(--ds-color-surface-light); display: flex; align-items: center; justify-content: center; flex-shrink: 0; cursor: pointer; transition: border-color 0.15s, background 0.15s; }
+    .ds-ac-card__toggle:hover { border-color: var(--ds-color-border-strong); background: var(--ds-color-surface-mid); }
+    .ds-ac-card__toggle-icon { width: 12px; height: 12px; position: relative; flex-shrink: 0; }
+    .ds-ac-card__toggle-icon::before, .ds-ac-card__toggle-icon::after { content: ''; position: absolute; background: var(--ds-color-text-muted); border-radius: 1px; transition: opacity 0.2s; }
+    .ds-ac-card__toggle-icon::before { width: 10px; height: 1.5px; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+    .ds-ac-card__toggle-icon::after  { width: 1.5px; height: 10px; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 1; }
+    .ds-ac-card.ds-ac--open .ds-ac-card__toggle-icon::after { opacity: 0; }
+    .ds-ac-card.ds-ac--open .ds-ac-card__toggle-icon::before { background: var(--ds-color-text-secondary); }
+    .ds-ac-card__body { display: none; padding: var(--ds-space-lg); border-top: var(--ds-border-default); background: var(--ds-color-surface-light); }
+    .ds-ac-card.ds-ac--open .ds-ac-card__body { display: block; }
+    .ds-ac-card__body p { font-size: var(--ds-text-sm); color: var(--ds-color-text-secondary); line-height: var(--ds-leading-relaxed); word-break: keep-all; overflow-wrap: break-word; }
+
+    /* ============================================================
+       5. Layout / Section-specific Styles
+       ============================================================ */
+
+    /* TOC full-width within section */
+    .ds-section--toc { padding: 0; }
+
+    /* Article paragraph spacing */
+    .ds-article-body .ds-article-p + .ds-article-p { margin-top: 0; }
+
+    /* Dark section link cards grid */
+    .ds-dark-link-grid { display: grid; grid-template-columns: 1fr; gap: var(--ds-space-md); }
+    .ds-card--dark { display: flex; flex-direction: column; padding: var(--ds-space-lg); border-radius: var(--ds-radius-md); }
+    .ds-card--dark h3 { font-size: var(--ds-text-lg); font-weight: var(--ds-weight-semibold); color: var(--ds-color-text-inverse); margin-bottom: var(--ds-space-xs); }
+    .ds-card--dark p { font-size: var(--ds-text-sm); color: rgba(255,255,255,0.6); line-height: var(--ds-leading-normal); }
+    .ds-card--dark .ds-card__arrow-icon { margin-top: auto; padding-top: var(--ds-space-md); display: block; color: rgba(255,255,255,0.4); }
+
+    /* Where to go next section label */
+    .ds-section-label {
+      font-family: var(--ds-font-code); font-size: var(--ds-text-xs);
+      text-transform: uppercase; letter-spacing: var(--ds-tracking-wide);
+      color: rgba(255,255,255,0.5); margin-bottom: var(--ds-space-xl); display: block;
+    }
+
+    /* Checklist section spacing */
+    .ds-checklist-block { margin-bottom: var(--ds-space-2xl); }
+    .ds-checklist-block:last-child { margin-bottom: 0; }
+
+    /* Inline link style */
+    a.ds-inline-link { color: var(--ds-color-brand-purple); }
+
+    /* Spacing utility classes (avoids inline style) */
+    .ds-mt-xl  { margin-top: var(--ds-space-xl); }
+    .ds-mt-2xl { margin-top: var(--ds-space-2xl); }
+    .ds-mb-lg  { margin-bottom: var(--ds-space-lg); }
+    .ds-mb-2xl { margin-bottom: var(--ds-space-2xl); }
+    .ds-gap-md { gap: var(--ds-space-md); }
+
+    /* Bullet list spacing inside cards */
+    .ds-card .ds-bullet { margin-top: var(--ds-space-md); }
+
+    /* KPI band spacing */
+    .ds-kpi-band--spaced { margin: var(--ds-space-2xl) 0; }
+
+    /* Numbered bullet description text */
+    .ds-bullet__desc {
+      font-size: var(--ds-text-sm); color: var(--ds-color-text-secondary); line-height: var(--ds-leading-relaxed);
+    }
+
+    /* Definition label inside banner */
+    .ds-banner--full__label {
+      display: block;
+      margin-bottom: var(--ds-space-xs);
+      font-family: var(--ds-font-code);
+      font-size: var(--ds-text-xs);
+      text-transform: uppercase;
+      letter-spacing: var(--ds-tracking-wide);
+      color: var(--ds-color-text-secondary);
+    }
+
+    /* ============================================================
+       6. Responsive — Mobile → Tablet → sm-Desktop → Desktop
+       ============================================================ */
+    @media (min-width: 768px) {
+      .ds-container { padding: 0 var(--ds-container-padding-tablet); }
+      h1, .ds-h1 { font-size: 28px; }
+      h2, .ds-h2 { font-size: 22px; }
+      .ds-section-header__title { font-size: 22px; }
+      .ds-hero__title { font-size: 28px; }
+      .ds-kpi-band { grid-template-columns: repeat(3, 1fr); }
+      .ds-card-grid--3col { grid-template-columns: repeat(2, 1fr); }
+      .ds-toc-bar__inner { flex-wrap: wrap; justify-content: center; overflow-x: visible; }
+      .ds-dark-link-grid { grid-template-columns: repeat(2, 1fr); }
+      .ds-cta-band { padding: 100px var(--ds-container-padding-tablet); }
+      .ds-cta-band__title { font-size: var(--ds-text-7xl); }
+    }
+    @media (min-width: 1024px) {
+      .ds-container { padding: 0 var(--ds-container-padding-sm-desktop); }
+      h1, .ds-h1 { font-size: 32px; }
+      h2, .ds-h2 { font-size: 24px; }
+      h3, .ds-h3 { font-size: 20px; }
+      .ds-section-header__title { font-size: 24px; }
+      .ds-hero__title { font-size: 32px; }
+      .ds-section-header__description { max-width: 720px; }
+      .ds-hero__description { max-width: 720px; }
+      .ds-card-grid--3col { grid-template-columns: repeat(3, 1fr); }
+      .ds-section-title-icon__text { font-size: var(--ds-text-2xl); }
+    }
+    @media (min-width: 1440px) {
+      .ds-container { padding: 0 var(--ds-container-padding-desktop); max-width: 1440px; }
+      h1, .ds-h1 { font-size: 36px; }
+      h2, .ds-h2 { font-size: 28px; }
+      h3, .ds-h3 { font-size: 22px; }
+      .ds-section-header__title { font-size: 28px; }
+      .ds-hero__title { font-size: 36px; }
+      .ds-section-header__description { max-width: 860px; }
+      .ds-hero__description { max-width: 860px; }
+      .ds-nav { padding: 0 var(--ds-container-padding-desktop); }
+      .ds-cta-band { padding: 120px var(--ds-container-padding-desktop); max-width: 1440px; margin: 0 auto; }
+      .ds-cta-band__inner { max-width: 860px; }
+    }
+    @media (max-width: 767px) {
+      .ds-nav__links { display: none; }
+      .ds-kpi-band { grid-template-columns: 1fr; padding: 32px 20px; }
+      .ds-cta-band__title { font-size: var(--ds-text-5xl); letter-spacing: -1px; }
+      .ds-cta-band__actions { flex-direction: column; align-items: center; }
+      .ds-cta-band__actions .ds-btn { width: 100%; max-width: 320px; }
+      .ds-banner--full { padding: var(--ds-space-lg) var(--ds-space-md); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="ds-nav" role="navigation" aria-label="Main navigation">
+    <div class="ds-nav__inner">
+      <a href="/" class="ds-nav__logo">CUBIG</a>
+      <ul class="ds-nav__links">
+        <li><a href="/syntitan" class="ds-nav__link">SynTitan</a></li>
+        <li><a href="/dts" class="ds-nav__link">DTS</a></li>
+        <li><a href="/llm-capsule" class="ds-nav__link">LLM Capsule</a></li>
+        <li><a href="/learn" class="ds-nav__link">Learn</a></li>
+        <li><a href="/proof" class="ds-nav__link">Proof</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- ============================================================
+         Section 1: Hero (text-only)
+         ============================================================ -->
+    <section class="ds-section ds-section--hero" id="section-1">
+      <div class="ds-container">
+        <div class="ds-hero--text-only">
+          <!-- Breadcrumb -->
+          <nav class="ds-hero__breadcrumb" aria-label="Breadcrumb">
+            <a href="/learn">Learn</a>
+            <span aria-hidden="true">/</span>
+            <span>Pillar 1 : Category Definition</span>
+          </nav>
+
+          <h1 class="ds-hero__title">
+            <span class="ds-text--brand">AI-ready</span> Data Infrastructure for Enterprise AI
+          </h1>
+          <p class="ds-hero__description">
+            Enterprise AI fails in production when data is Restricted, Unusable, or execution becomes Unstable. This article defines what AI-ready means as an operational condition — not a specification — and explains what it takes to build it.
+          </p>
+
+          <!-- Callout banner below description -->
+          <div class="ds-banner ds-banner--brand">
+            <p>True AI-ready data means it is usable, privacy-safe, and stable for production execution.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Section 2: Table of Contents
+         ============================================================ -->
+    <section class="ds-section ds-section--toc ds-section--light" id="section-2">
+      <div class="ds-container">
+        <nav class="ds-toc-bar" aria-label="Article navigation">
+          <div class="ds-toc-bar__inner">
+            <a href="#why-fails" class="ds-toc-link">Why AI fails</a>
+            <a href="#three-conditions" class="ds-toc-link">Three conditions</a>
+            <a href="#what-ai-ready-means" class="ds-toc-link">What AI-ready means</a>
+            <a href="#stack" class="ds-toc-link">Practical stack</a>
+            <a href="#checklist" class="ds-toc-link">Production checklist</a>
+            <a href="#antipatterns" class="ds-toc-link">Anti-patterns</a>
+            <a href="#faq" class="ds-toc-link">FAQ</a>
+          </div>
+        </nav>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Section 3: Why Enterprise AI Fails After Deployment
+         ============================================================ -->
+    <section class="ds-section" id="why-fails">
+      <div class="ds-container">
+        <div class="ds-article-body">
+
+          <div class="ds-section-header ds-section-header--left ds-section-header--underline">
+            <h2 class="ds-section-header__title">
+              Why enterprise AI <span class="ds-text--brand">fails</span> after deployment
+            </h2>
+            <p class="ds-section-header__description">
+              AI systems rarely fail during training. They fail after deployment, when the real world starts changing the conditions behind the model.
+            </p>
+          </div>
+
+          <p class="ds-article-p">
+            AI systems rarely fail during training. They fail after deployment, when the real world starts changing the conditions behind the model. The same code, the same model version, the same architecture — but different outcomes. Teams investigate the model first. In most cases, the model is not the problem.
+          </p>
+
+          <p class="ds-article-p">
+            The problem is that <strong>PoC runs on fixed conditions</strong>. Production runs on changing ones. Data schemas evolve upstream. Preprocessing logic gets updated. Runtime dependencies shift. Access policies change. The model doesn't know any of this — it processes whatever arrives. When what arrives is different from what it was trained on, results degrade silently.
+          </p>
+
+          <!-- KPI Band -->
+          <div class="ds-kpi-band ds-bg--grad-deep ds-kpi-band--spaced">
+            <div class="ds-kpi-band__item">
+              <span class="ds-kpi-band__number">42%</span>
+              <p class="ds-kpi-band__label">of US enterprises halted most AI initiatives — up from 17% the prior year</p>
+              <span class="ds-kpi-band__source">Source: S&amp;P Global, 2025</span>
+            </div>
+            <div class="ds-kpi-band__item">
+              <span class="ds-kpi-band__number">60%</span>
+              <p class="ds-kpi-band__label">of AI projects will fail by 2026 without AI-optimized data infrastructure</p>
+              <span class="ds-kpi-band__source">Source: Gartner, Feb 2025</span>
+            </div>
+            <div class="ds-kpi-band__item">
+              <span class="ds-kpi-band__number">30%</span>
+              <p class="ds-kpi-band__label">of GenAI projects abandoned after PoC — before reaching production</p>
+              <span class="ds-kpi-band__source">Source: Gartner, Jul 2024</span>
+            </div>
+          </div>
+
+          <p class="ds-article-p">
+            These failures share a common pattern. The issue is not model quality. It is the absence of infrastructure that makes data <strong>ready for production AI</strong> — not just available, not just cleaned, but genuinely usable, privacy-safe, and stable in production. See also: <a href="/learn/release-state" class="ds-inline-link">how execution conditions change after deployment</a>.
+          </p>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Section 4: The Three Data Conditions
+         ============================================================ -->
+    <section class="ds-section" id="three-conditions">
+      <div class="ds-container">
+        <div class="ds-article-body">
+
+          <div class="ds-section-header ds-section-header--left ds-section-header--underline">
+            <h2 class="ds-section-header__title">
+              The <span class="ds-text--brand">three data conditions</span> that block production AI
+            </h2>
+            <p class="ds-section-header__description">
+              Enterprise AI production failures almost always trace back to one or more of three conditions. Understanding these as a framework — not a checklist — is the starting point for building AI-ready data infrastructure.
+            </p>
+          </div>
+
+          <div class="ds-card-grid ds-card-grid--3col">
+            <!-- Card 1: Restricted -->
+            <article class="ds-card">
+              <span class="ds-card__badge ds-card__badge--red">RESTRICTED</span>
+              <h3 class="ds-card__title">Restricted Data</h3>
+              <p class="ds-card__description">Sensitive, regulated, or policy-controlled data that cannot be safely used with AI. Privacy rules, access controls, and compliance requirements block it from reaching models.</p>
+              <ul class="ds-bullet ds-bullet--dot">
+                <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>PII and personal identifiers</li>
+                <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Regulated health and financial records</li>
+                <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Confidential business data</li>
+                <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Cross-border data with sovereignty constraints</li>
+              </ul>
+            </article>
+
+            <!-- Card 2: Unusable -->
+            <article class="ds-card">
+              <span class="ds-card__badge ds-card__badge--teal">UNUSABLE</span>
+              <h3 class="ds-card__title">Unusable Data</h3>
+              <p class="ds-card__description">Data that exists but cannot be reliably used for AI training, validation, or inference. The problem is not access — it is fitness. Unusable data makes models silently unreliable.</p>
+              <ul class="ds-bullet ds-bullet--dot">
+                <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Missing values and sparse features</li>
+                <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Class imbalance and coverage gaps</li>
+                <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Distribution shift between environments</li>
+                <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Data that exists but cannot reach the pipeline</li>
+              </ul>
+            </article>
+
+            <!-- Card 3: Unstable -->
+            <article class="ds-card">
+              <span class="ds-card__badge ds-card__badge--gray">UNSTABLE</span>
+              <h3 class="ds-card__title">Unstable Execution</h3>
+              <p class="ds-card__description">A production state where data and execution conditions change after deployment — schema shifts, pipeline updates, runtime variance — making results impossible to reproduce or diagnose.</p>
+              <ul class="ds-bullet ds-bullet--dot">
+                <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Schema changes in upstream sources</li>
+                <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Preprocessing logic updates</li>
+                <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Runtime dependency drift</li>
+                <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Input window and distribution shifts</li>
+              </ul>
+            </article>
+          </div>
+
+          <!-- Callout banner -->
+          <div class="ds-banner ds-mt-2xl">
+            <span class="ds-banner__label">Key point</span>
+            <p>These three conditions are connected. Restricted data creates pressure to use Unusable substitutes. Unusable data masks execution instability. Unstable execution makes it impossible to know whether Restricted or Unusable conditions are responsible for failures. AI-ready data infrastructure addresses all three as a connected system.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Section 5: What "True AI-Ready" Means
+         ============================================================ -->
+    <section class="ds-section ds-section--light" id="what-ai-ready-means">
+      <div class="ds-container">
+        <div class="ds-article-body">
+
+          <div class="ds-section-header ds-section-header--left ds-section-header--underline">
+            <h2 class="ds-section-header__title">
+              What true <span class="ds-text--brand">AI-ready</span> means
+            </h2>
+          </div>
+
+          <!-- Definition box -->
+          <div class="ds-banner--full ds-bg--paint-lavender ds-mb-2xl">
+            <strong class="ds-banner--full__label">AI-Ready Data</strong>
+            <p>True AI-ready data is usable, privacy-safe, and stable for production execution. It requires resolving Restricted Data, Unusable Data, and Unstable Execution conditions as a connected infrastructure layer — not as isolated data quality fixes.</p>
+          </div>
+
+          <div class="ds-card-grid ds-card-grid--3col">
+            <!-- Card 1: Usable -->
+            <article class="ds-card">
+              <span class="ds-card__badge ds-card__badge--brand">CONDITION 1</span>
+              <h3 class="ds-card__title">Usable</h3>
+              <p class="ds-card__description">Data can actually be used for training, validation, and decisions — not just stored or partially accessible. Coverage is representative. Rare classes are present. Missing values are handled explicitly. The data that reaches the model reflects the distribution it will encounter in production.</p>
+            </article>
+
+            <!-- Card 2: Privacy-Safe -->
+            <article class="ds-card">
+              <span class="ds-card__badge ds-card__badge--brand">CONDITION 2</span>
+              <h3 class="ds-card__title">Privacy-Safe</h3>
+              <p class="ds-card__description">Sensitive information is protected while data remains useful and compliant for AI workflows. Privacy protection doesn't mean making data inaccessible — it means making it safe to use under the relevant regulatory and policy constraints without destroying its utility for the model.</p>
+            </article>
+
+            <!-- Card 3: Stable -->
+            <article class="ds-card">
+              <span class="ds-card__badge ds-card__badge--brand">CONDITION 3</span>
+              <h3 class="ds-card__title">Stable in Production</h3>
+              <p class="ds-card__description">AI runs stay reproducible even as environments, schemas, and pipelines change over time. Execution conditions are tracked, compared, and reproducible on demand. When behavior changes, the cause can be identified — which layer changed, and when.</p>
+              <a href="/learn/release-state" class="ds-card__link">Release State →</a>
+            </article>
+          </div>
+
+          <p class="ds-article-p ds-mt-2xl">
+            The infrastructure that achieves these three conditions is what Cubig builds: <strong>AI-Ready Data Infrastructure</strong> for enterprise AI. The implementation architecture — <span class="ds-text--product">SynTitan</span>, <span class="ds-text--product">DTS</span>, and <span class="ds-text--product">LLM Capsule</span> — is called the <strong>AI-Ready Data OS</strong>. It is not a single product but an infrastructure layer composed of three distinct layers, each solving a different blocker.
+          </p>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Section 6: A Practical Stack for AI-Ready Data Infrastructure
+         ============================================================ -->
+    <section class="ds-section" id="stack">
+      <div class="ds-container">
+        <div class="ds-article-body">
+
+          <div class="ds-section-header ds-section-header--left ds-section-header--underline">
+            <h2 class="ds-section-header__title">
+              A <span class="ds-text--brand">practical stack</span> for AI-ready data infrastructure
+            </h2>
+            <p class="ds-section-header__description">
+              Building AI-ready conditions in production requires three distinct layers. Each addresses a different failure mode. They can work independently, but they are designed to work together.
+            </p>
+          </div>
+
+          <ul class="ds-bullet ds-bullet--number">
+            <li class="ds-bullet__item">
+              <span class="ds-bullet__icon"></span>
+              <div class="ds-bullet__text">
+                <strong>Execution stability platform</strong>
+                <span class="ds-bullet__desc">
+                  Stabilizes production AI execution by locking execution conditions into a versioned Release State, binding every run to that state, and providing diff and re-run capabilities. Addresses Unstable Execution. Enables incident response, regression verification, and traceability across releases. <a href="/proof" class="ds-inline-link">See operational evidence →</a>
+                </span>
+              </div>
+            </li>
+            <li class="ds-bullet__item">
+              <span class="ds-bullet__icon"></span>
+              <div class="ds-bullet__text">
+                <strong>Data privacy &amp; quality capability</strong>
+                <span class="ds-bullet__desc">
+                  Makes Restricted and Unusable data usable at enterprise scale. Generates privacy-safe synthetic datasets using differential privacy — replacing restricted data, expanding coverage, fixing imbalance, and enabling training and validation without exposing sensitive records.
+                </span>
+              </div>
+            </li>
+            <li class="ds-bullet__item">
+              <span class="ds-bullet__icon"></span>
+              <div class="ds-bullet__text">
+                <strong>Security capability for LLM usage</strong>
+                <span class="ds-bullet__desc">
+                  Protects sensitive data — including PII and regulated fields — at the point of LLM interaction. Detects and anonymizes sensitive fields before prompts reach external APIs, and re-maps anonymized tokens in outputs for downstream use within the secure perimeter.
+                </span>
+              </div>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Section 7: Production Checklist
+         ============================================================ -->
+    <section class="ds-section" id="checklist">
+      <div class="ds-container">
+        <div class="ds-article-body">
+
+          <div class="ds-section-header ds-section-header--left ds-section-header--underline">
+            <h2 class="ds-section-header__title">
+              Production checklist: how to tell if your data is <span class="ds-text--brand">AI-ready</span>
+            </h2>
+            <p class="ds-section-header__description">
+              AI-readiness is not a one-time assessment — it is an ongoing operational condition. The following checklist reflects the minimum state that production AI systems should maintain across all three problem areas.
+            </p>
+          </div>
+
+          <!-- Sub-section 1: Restricted Data -->
+          <div class="ds-checklist-block">
+            <div class="ds-section-title-icon">
+              <span class="ds-section-title-icon__icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              </span>
+              <h3 class="ds-section-title-icon__text">Restricted Data</h3>
+            </div>
+            <ul class="ds-bullet ds-bullet--check">
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Privacy and compliance boundaries are clearly defined per data asset</li>
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Access controls are enforced programmatically, not just by policy</li>
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Privacy-safe alternatives exist for restricted datasets needed in training or validation</li>
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>LLM workflows have an inline protection layer before prompts reach external APIs</li>
+            </ul>
+          </div>
+
+          <!-- Sub-section 2: Unusable Data -->
+          <div class="ds-checklist-block">
+            <div class="ds-section-title-icon">
+              <span class="ds-section-title-icon__icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+              </span>
+              <h3 class="ds-section-title-icon__text">Unusable Data</h3>
+            </div>
+            <ul class="ds-bullet ds-bullet--check">
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Training data class distribution is documented and version-controlled</li>
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Per-class recall metrics are tracked — not just aggregate accuracy</li>
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Coverage gaps in rare classes are identified and addressed before training runs</li>
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Distribution between training and production environments is actively compared</li>
+            </ul>
+          </div>
+
+          <!-- Sub-section 3: Unstable Execution -->
+          <div class="ds-checklist-block">
+            <div class="ds-section-title-icon">
+              <span class="ds-section-title-icon__icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
+              </span>
+              <h3 class="ds-section-title-icon__text">Unstable Execution</h3>
+            </div>
+            <ul class="ds-bullet ds-bullet--check">
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Execution conditions are captured at each run — data snapshot, schema, preprocessing, runtime</li>
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Every AI run is bound to a specific, versioned execution state</li>
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Diffs between releases are available for incident response</li>
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Prior runs can be reproduced under their original execution conditions</li>
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>When behavior shifts, the root cause layer (data, schema, pipeline, runtime) can be isolated</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Section 8: Industry Examples
+         ============================================================ -->
+    <section class="ds-section ds-section--light" id="industry-examples">
+      <div class="ds-container">
+        <div class="ds-article-body">
+
+          <div class="ds-section-header ds-section-header--left ds-section-header--underline">
+            <h2 class="ds-section-header__title">
+              How these <span class="ds-text--brand">blockers</span> appear in practice
+            </h2>
+            <p class="ds-section-header__description">
+              The three data blockers are not abstract. They appear consistently across enterprise AI use cases. Here are examples of how each blocker manifests in real production pipelines.
+            </p>
+          </div>
+
+          <div class="ds-grid ds-grid--1 ds-gap-md">
+
+            <article class="ds-card">
+              <span class="ds-card__badge ds-card__badge--red">RESTRICTED DATA</span>
+              <p class="ds-card__subtitle">Financial Services</p>
+              <p class="ds-card__description">In fraud detection pipelines, transaction records often contain PII and regulated financial data. Teams cannot use this data directly for LLM-assisted analysis — so the entire AI workflow stalls at the data access layer. <span class="ds-text--product">LLM Capsule</span> resolves this by removing sensitive fields at the prompt level before the data reaches any external model.</p>
+            </article>
+
+            <article class="ds-card">
+              <span class="ds-card__badge ds-card__badge--teal">UNUSABLE DATA</span>
+              <p class="ds-card__subtitle">Manufacturing</p>
+              <p class="ds-card__description">In quality inspection models, rare defect classes are severely underrepresented in training data. The model appears accurate on aggregate metrics but misses edge-case defects in production. <span class="ds-text--product">DTS</span> generates privacy-safe synthetic samples for rare classes, rebalancing the dataset without exposing original records.</p>
+            </article>
+
+            <article class="ds-card">
+              <span class="ds-card__badge ds-card__badge--brand">UNSTABLE EXECUTION</span>
+              <p class="ds-card__subtitle">Telecom</p>
+              <p class="ds-card__description">In telecom churn prediction pipelines, execution state drift often occurs when upstream customer feature schemas change between runs — new columns added, existing types coerced — causing the model to produce inconsistent scores without any alert. <span class="ds-text--product">SynTitan</span>'s Release State detects schema diffs at ingestion and flags the change before the next training run.</p>
+            </article>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Section 9: Common Anti-Patterns
+         ============================================================ -->
+    <section class="ds-section" id="antipatterns">
+      <div class="ds-container">
+        <div class="ds-article-body">
+
+          <div class="ds-section-header ds-section-header--left ds-section-header--underline">
+            <h2 class="ds-section-header__title">
+              Common <span class="ds-text--brand">anti-patterns</span> (PoC to production failure)
+            </h2>
+            <p class="ds-section-header__description">
+              These patterns appear consistently in enterprise AI deployments that stall or degrade after moving from PoC to production.
+            </p>
+          </div>
+
+          <ul class="ds-bullet ds-bullet--dot">
+            <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Treating PoC accuracy as a reliable predictor of production performance — PoC conditions are artificially stable</li>
+            <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Relying on one-time data quality fixes instead of infrastructure that maintains quality as conditions change</li>
+            <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Using production data directly for training without verifying distribution against the inference environment</li>
+            <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Treating model versioning as equivalent to execution state tracking — model registries don't capture schema, pipeline, or runtime</li>
+            <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Labeling production AI failures as "model drift" without isolating which execution condition changed</li>
+            <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Accepting non-reproducible AI runs as inherent to the technology — irreproducibility is a process failure, not a model property</li>
+          </ul>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Section 10: FAQ
+         ============================================================ -->
+    <section class="ds-section ds-section--light" id="faq">
+      <div class="ds-container">
+        <div class="ds-article-body">
+
+          <div class="ds-section-header ds-section-header--left ds-section-header--underline">
+            <h2 class="ds-section-header__title">
+              Frequently Asked <span class="ds-text--brand">Questions</span>
+            </h2>
+          </div>
+
+          <div class="ds-ac-list">
+
+            <article class="ds-ac-card ds-ac--open">
+              <div class="ds-ac-card__header" onclick="toggleAcCard(this)">
+                <div class="ds-ac-card__title-wrap">
+                  <div class="ds-ac-card__title">What is AI-ready data infrastructure?</div>
+                </div>
+                <div class="ds-ac-card__toggle"><span class="ds-ac-card__toggle-icon"></span></div>
+              </div>
+              <div class="ds-ac-card__body">
+                <p>AI-ready data infrastructure is the infrastructure layer that makes enterprise data usable, privacy-safe, and stable for production AI execution. It resolves three blockers: Restricted Data (compliance and access constraints), Unusable Data (missing values, bias, coverage gaps), and Unstable Execution (schema drift, pipeline changes, runtime variance). It is not a data quality project — it is the operational foundation that makes production AI reliable.</p>
+              </div>
+            </article>
+
+            <article class="ds-ac-card">
+              <div class="ds-ac-card__header" onclick="toggleAcCard(this)">
+                <div class="ds-ac-card__title-wrap">
+                  <div class="ds-ac-card__title">Why does AI fail after deployment?</div>
+                </div>
+                <div class="ds-ac-card__toggle"><span class="ds-ac-card__toggle-icon"></span></div>
+              </div>
+              <div class="ds-ac-card__body">
+                <p>AI fails after deployment because execution conditions change. PoC runs on fixed, curated data under controlled conditions. Production runs on live data with evolving schemas, updated pipelines, and shifting runtime environments. The model doesn't change — the conditions around it do. Without infrastructure to track and stabilize those conditions, production AI is essentially non-reproducible.</p>
+              </div>
+            </article>
+
+            <article class="ds-ac-card">
+              <div class="ds-ac-card__header" onclick="toggleAcCard(this)">
+                <div class="ds-ac-card__title-wrap">
+                  <div class="ds-ac-card__title">What makes data unusable for AI?</div>
+                </div>
+                <div class="ds-ac-card__toggle"><span class="ds-ac-card__toggle-icon"></span></div>
+              </div>
+              <div class="ds-ac-card__body">
+                <p>Data is Unusable for AI when it exists but cannot be reliably used for training, validation, or inference. The most common causes are missing values (incomplete features), class imbalance (rare classes underrepresented), coverage gaps (insufficient distribution across segments), and restricted access (data exists but cannot reach the model safely). Unusable data produces models that appear to perform well in development and fail silently in production.</p>
+              </div>
+            </article>
+
+            <article class="ds-ac-card">
+              <div class="ds-ac-card__header" onclick="toggleAcCard(this)">
+                <div class="ds-ac-card__title-wrap">
+                  <div class="ds-ac-card__title">What is the difference between data drift and execution state drift?</div>
+                </div>
+                <div class="ds-ac-card__toggle"><span class="ds-ac-card__toggle-icon"></span></div>
+              </div>
+              <div class="ds-ac-card__body">
+                <p>Data drift refers to changes in the statistical distribution of values within a stable schema — the real world changing over time. Execution state drift refers to changes in the conditions around the model — schema, preprocessing logic, runtime dependencies — that alter behavior without any model update. Most production AI failures investigated as data drift are actually execution state drift.</p>
+              </div>
+            </article>
+
+            <article class="ds-ac-card">
+              <div class="ds-ac-card__header" onclick="toggleAcCard(this)">
+                <div class="ds-ac-card__title-wrap">
+                  <div class="ds-ac-card__title">How does synthetic data help with privacy and dataset usability?</div>
+                </div>
+                <div class="ds-ac-card__toggle"><span class="ds-ac-card__toggle-icon"></span></div>
+              </div>
+              <div class="ds-ac-card__body">
+                <p>Differential privacy synthetic data generation creates statistically equivalent datasets without containing real personal information. For Restricted Data, it provides privacy-safe alternatives that can be used for training and validation without exposing sensitive records. For Unusable Data, it expands coverage of rare classes and fills distribution gaps — providing new examples rather than replicating existing ones.</p>
+              </div>
+            </article>
+
+            <article class="ds-ac-card">
+              <div class="ds-ac-card__header" onclick="toggleAcCard(this)">
+                <div class="ds-ac-card__title-wrap">
+                  <div class="ds-ac-card__title">What does reproducible execution mean in production AI?</div>
+                </div>
+                <div class="ds-ac-card__toggle"><span class="ds-ac-card__toggle-icon"></span></div>
+              </div>
+              <div class="ds-ac-card__body">
+                <p>Reproducible execution means the ability to re-run an AI pipeline under the same conditions as a prior run and verify that results match a known baseline. It requires locking all execution conditions — data snapshot, schema, preprocessing logic, feature configuration, runtime dependencies — into an immutable Release State, and binding every run to that state. This makes it possible to identify what changed when behavior shifts, and to reproduce prior behavior for incident response.</p>
+              </div>
+            </article>
+
+            <article class="ds-ac-card">
+              <div class="ds-ac-card__header" onclick="toggleAcCard(this)">
+                <div class="ds-ac-card__title-wrap">
+                  <div class="ds-ac-card__title">What is a Release State?</div>
+                </div>
+                <div class="ds-ac-card__toggle"><span class="ds-ac-card__toggle-icon"></span></div>
+              </div>
+              <div class="ds-ac-card__body">
+                <p>A Release State is a versioned, immutable snapshot of all conditions under which an AI run executes — including data schema, preprocessing logic, feature configuration, and runtime dependencies. Every AI run is bound to a specific Release State. This binding enables two critical capabilities: diffing between releases to trace what changed, and reproducing any prior run for incident response and regression verification.</p>
+              </div>
+            </article>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Section 11: Where CUBIG Fits + Operational Example
+         ============================================================ -->
+    <section class="ds-section" id="section-11">
+      <div class="ds-container">
+        <div class="ds-article-body">
+
+          <!-- Banner 1: Brand -->
+          <div class="ds-banner ds-banner--brand ds-mb-lg">
+            <p>Databricks and Snowflake store your data. MLflow tracks your models. <strong>CUBIG is the layer between them and your AI</strong> — making data usable, reproducible, and blocker-free in production.</p>
+            <a href="/" class="ds-inline-link">See how →</a>
+          </div>
+
+          <!-- Banner 2: Operational Example -->
+          <div class="ds-banner">
+            <span class="ds-banner__label">Operational Example</span>
+            <p>A public sector team needed to monitor policy sentiment across media and online communities in real time — but fragmented data sources and privacy constraints made direct integration impossible. Using synthetic data-driven analytics and agent-based monitoring models built on Cubig AI-Ready Data Infrastructure, the team achieved early detection of opinion leader influence and policy sentiment shifts before they escalated to public-facing issues.</p>
+            <a href="/#enterprise-use-cases" class="ds-inline-link">See enterprise use cases →</a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Section 12: Bridge / Where to Go Next (dark)
+         ============================================================ -->
+    <section class="ds-section ds-section--dark" id="section-12">
+      <div class="ds-container">
+        <div class="ds-article-body">
+          <span class="ds-section-label">Where to go next</span>
+          <div class="ds-dark-link-grid">
+
+            <a href="/learn/release-state" class="ds-card ds-card--dark">
+              <h3>Read Pillar 2: Release State</h3>
+              <p>How to make AI execution reproducible in production</p>
+              <span class="ds-card__arrow-icon" aria-hidden="true">→</span>
+            </a>
+
+            <a href="/proof" class="ds-card ds-card--dark">
+              <h3>See operational evidence</h3>
+              <p>6 production case records — before/after/diff/reproduce</p>
+              <span class="ds-card__arrow-icon" aria-hidden="true">→</span>
+            </a>
+
+            <a href="/syntitan" class="ds-card ds-card--dark">
+              <h3>Explore SynTitan</h3>
+              <p>Execution stability platform — Release State &amp; Run Binding</p>
+              <span class="ds-card__arrow-icon" aria-hidden="true">→</span>
+            </a>
+
+            <a href="/dts" class="ds-card ds-card--dark">
+              <h3>Explore DTS</h3>
+              <p>Data privacy &amp; quality — differential privacy synthetic data</p>
+              <span class="ds-card__arrow-icon" aria-hidden="true">→</span>
+            </a>
+
+            <a href="/llm-capsule" class="ds-card ds-card--dark">
+              <h3>Explore LLM Capsule</h3>
+              <p>Security capability for LLM usage with sensitive data</p>
+              <span class="ds-card__arrow-icon" aria-hidden="true">→</span>
+            </a>
+
+            <a href="/learn/why-ai-fails-after-deployment" class="ds-card ds-card--dark">
+              <h3>Read: Why AI Fails After Deployment</h3>
+              <p>The production failure pattern explained</p>
+              <span class="ds-card__arrow-icon" aria-hidden="true">→</span>
+            </a>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================
+       Section 13: CTA Band (outside container, full-width)
+       ============================================================ -->
+  <section class="ds-cta-band ds-bg--wave-teal" id="section-13" aria-label="Call to action">
+    <div class="ds-cta-band__inner">
+      <h2 class="ds-cta-band__title">Enterprise AI doesn't have to break here.</h2>
+      <p class="ds-cta-band__description">CUBIG builds the infrastructure layer that removes these exact problems — restricted data, unusable data, unstable execution — from production AI.</p>
+      <div class="ds-cta-band__actions">
+        <a href="/syntitan" class="ds-btn ds-btn--md">Explore SynTitan →</a>
+        <a href="mailto:contact@cubig.ai" class="ds-btn ds-btn--md">Talk to our engineers →</a>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function toggleAcCard(header) {
+      const card = header.closest('.ds-ac-card');
+      card.classList.toggle('ds-ac--open');
+    }
+  </script>
+
+</body>
+</html>
