@@ -1504,13 +1504,15 @@ HTML:
 }
 .ds-step-tabs__actions { display: flex; flex-wrap: wrap; gap: var(--ds-space-sm); margin-top: var(--ds-space-xs); }
 
-/* Screenshot */
+/* Screenshot — max-height crop (좌상단 기준) */
 .ds-step-tabs__screenshot {
   border-radius: var(--ds-radius-lg); overflow: hidden;
   border: var(--ds-border-default); box-shadow: var(--ds-shadow-card);
   background-color: var(--ds-color-surface-light);
+  max-height: 420px;
 }
-.ds-step-tabs__screenshot img { width: 100%; display: block; }
+.ds-step-tabs__screenshot img { width: 100%; display: block; object-fit: cover; object-position: top left; }
+@media (max-width: 767px) { .ds-step-tabs__screenshot { max-height: 280px; } }
 
 /* Responsive */
 @media (min-width: 768px) { .ds-step-tabs__title { font-size: var(--ds-text-4xl); } }
