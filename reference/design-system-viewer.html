@@ -2768,9 +2768,7 @@ function triggerDownload(text, fileName) {
 }
 
 /* ===== Output: Dynamic File List + WebSocket ===== */
-var apiBase = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-  ? window.location.origin
-  : 'https://localhost:3333';
+var apiBase = window.location.origin;
 
 function fileLink(f) {
   return '<a class="v-ot-link" href="javascript:void(0)" onclick="event.preventDefault();openDetail(\'' + f.path + '\',\'' + f.name + '\')">' + f.name + '</a>';

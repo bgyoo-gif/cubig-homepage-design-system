@@ -20,6 +20,7 @@ product-designer → frontend-dev → qa (FAIL 시 재호출) → feedback-sync 
 | design-system-viewer | design-system-viewer.html 업데이트 + GitHub Pages 배포 | sonnet |
 | diagram-builder | 프롬프트 기반 다이어그램 HTML 생성 | sonnet |
 | feedback-sync | 사용자 피드백을 모든 관련 파일에 일괄 전파 | sonnet |
+| viewer-qa | 뷰어/서버 기능 품질 검증 — deploy 전 필수 | sonnet |
 | orchestrator | 전체 변환 파이프라인 자동 실행 (PD→FE→QA→Framer) | opus |
 
 ### 자동 연동 체인 (모든 작업 완료 후 자동 실행)
@@ -187,7 +188,12 @@ Low 결함만 남은 경우 CONDITIONAL PASS 선언 가능.
 design-system.md가 변경됐으면 design-system-viewer 에이전트를 호출하여
 reference/design-system-viewer.html도 같이 업데이트한다.
 
-### ③ deploy (항상 실행)
+### ③ viewer-qa (뷰어 수정 시)
+design-system-viewer.html을 수정했으면 deploy 전에 viewer-qa 에이전트를 호출.
+FAIL이면 수정 후 재검증. PASS일 때만 deploy 진행.
+뷰어를 수정하지 않았으면 건너뛴다.
+
+### ④ deploy (항상 실행)
 ```bash
 python3 server/manifest.py   # Output manifest 자동 생성
 git add -A
@@ -195,8 +201,9 @@ git commit -m "Auto-deploy: [작업 요약]"
 git push origin gh-pages
 ```
 
-**이 3단계를 빠뜨리면 작업 미완료로 간주한다.**
+**이 4단계를 빠뜨리면 작업 미완료로 간주한다.**
 - ①을 안 하면 → 다음 변환에서 같은 결함 재발
 - ②를 안 하면 → 뷰어에서 최신 DS를 확인할 수 없음
-- ③을 안 하면 → GitHub Pages에 반영 안 됨
+- ③을 안 하면 → 깨진 뷰어가 배포됨 (typeBadge 같은 버그 재발)
+- ④를 안 하면 → GitHub Pages에 반영 안 됨
 
