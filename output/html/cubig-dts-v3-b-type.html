@@ -533,6 +533,25 @@
       .ds-card-grid--3col { grid-template-columns: repeat(3, 1fr); }
     }
 
+    /* Case Study Card — 1col variant */
+    .ds-card--case-study { display: grid; grid-template-columns: 240px 1fr; gap: 0; padding: 0; overflow: hidden; }
+    .ds-card--case-study .ds-card__left { background: transparent; border-right: 1px solid var(--ds-color-border-default); padding: var(--ds-space-lg) var(--ds-space-md); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: var(--ds-space-sm); }
+    .ds-card--case-study .ds-card__left-image { width: 160px; height: 140px; object-fit: contain; border-radius: var(--ds-radius-md); }
+    .ds-card--case-study .ds-card__left-category { font-size: var(--ds-text-xs); color: var(--ds-color-text-secondary); letter-spacing: var(--ds-tracking-wide); text-transform: uppercase; }
+    .ds-card--case-study .ds-card__left-title { font-size: var(--ds-text-lg); font-weight: var(--ds-weight-bold); color: var(--ds-color-text-primary); line-height: var(--ds-leading-tight); }
+    .ds-card--case-study .ds-card__right { padding: var(--ds-space-lg); display: flex; flex-direction: column; gap: var(--ds-space-md); }
+    .ds-card--case-study .ds-card__right .ds-bullet { gap: var(--ds-space-2xs); }
+    .ds-card--case-study .ds-card__right .ds-bullet__item { font-size: var(--ds-text-sm); }
+    @media (max-width: 767px) { .ds-card--case-study { grid-template-columns: 1fr; } .ds-card--case-study .ds-card__left { border-right: none; border-bottom: 1px solid var(--ds-color-border-default); } }
+
+    /* Case Image Grid — 원본 vs 합성 비교 */
+    .ds-case-image-grid { display: flex; flex-direction: column; gap: var(--ds-space-sm); margin-top: var(--ds-space-md); }
+    .ds-case-image-pair { display: grid; grid-template-columns: 1fr 1fr; gap: var(--ds-space-sm); }
+    .ds-case-image-slot { display: flex; flex-direction: column; gap: var(--ds-space-2xs); }
+    .ds-case-image-slot img { width: 100%; border-radius: var(--ds-radius-sm); border: 1px solid var(--ds-color-border-default); aspect-ratio: 4/3; object-fit: cover; }
+    .ds-case-image-label { font-size: var(--ds-text-xs); color: var(--ds-color-text-tertiary); text-align: center; }
+    .ds-screenshot-placeholder { width: 100%; aspect-ratio: 4/3; background: var(--ds-color-surface-light); border: 1px dashed var(--ds-color-border-default); border-radius: var(--ds-radius-sm); display: flex; align-items: center; justify-content: center; font-size: var(--ds-text-xs); color: var(--ds-color-text-tertiary); }
+
     /* Gradient Card */
     .ds-card--gradient {
       padding: 2px;
@@ -1427,136 +1446,129 @@
           <p class="ds-section-header__description">Enterprise AI projects stall when data conditions prevent training, validation, or safe deployment. DTS was built for exactly these situations.</p>
         </div>
 
-        <div class="ds-ac-list" role="list">
+        <div class="ds-card-grid ds-card-grid--1col">
 
-          <!-- Accordion 1: IBK Industrial Bank — open by default -->
-          <article class="ds-ac-card ds-ac--open" role="listitem">
-            <div class="ds-ac-card__header" onclick="toggleAcCard(this)" aria-expanded="true">
-              <div class="ds-ac-card__title-wrap">
-                <div class="ds-ac-card__industry">
-                  <span class="ds-ac-card__industry-dot" style="background-color: var(--ds-color-brand-purple)"></span>
-                  Finance
-                </div>
-                <div class="ds-ac-card__title">97.6% AI detection rate -- 79 patterns expanded to 1,000 records</div>
-              </div>
-              <div class="ds-ac-card__meta">
-                <span class="ds-badge ds-badge--success">Privacy-Safe</span>
-                <span class="ds-badge ds-badge--purple">DTS Standalone</span>
-              </div>
-              <div class="ds-ac-card__toggle" role="button" aria-label="Toggle accordion">
-                <span class="ds-ac-card__toggle-icon"></span>
-              </div>
+          <!-- Case 1: Defense -->
+          <article class="ds-card ds-card--case-study">
+            <div class="ds-card__left">
+              <img class="ds-card__left-image" src="../reference/graphics/illustration-security.png" alt="Defense">
+              <span class="ds-card__left-category">Defense</span>
+              <span class="ds-card__left-title">국방 분야</span>
             </div>
-            <div class="ds-ac-card__body">
-              <div class="ds-ac-metrics">
-                <div class="ds-ac-metric">
-                  <span class="ds-ac-metric__val">97.6%</span>
-                  <span class="ds-ac-metric__label">AI Detection Rate</span>
+            <div class="ds-card__right">
+              <ul class="ds-bullet ds-bullet--dot">
+                <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>드론 공격 사례는 발생 빈도가 낮고 훈련 데이터가 충분하지 않음</li>
+                <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>드론 공격 데이터를 증폭해 군사훈련 및 대응 시스템 성능을 향상</li>
+              </ul>
+              <!-- 이미지 그리드: 원본 vs 합성 -->
+              <div class="ds-case-image-grid">
+                <div class="ds-case-image-pair">
+                  <div class="ds-case-image-slot">
+                    <div class="ds-screenshot-placeholder">원본 이미지</div>
+                    <span class="ds-case-image-label">Original</span>
+                  </div>
+                  <div class="ds-case-image-slot">
+                    <div class="ds-screenshot-placeholder">보안합성데이터 이미지</div>
+                    <span class="ds-case-image-label">Synthetic</span>
+                  </div>
                 </div>
-                <div class="ds-ac-metric">
-                  <span class="ds-ac-metric__val">79 → 1,000</span>
-                  <span class="ds-ac-metric__label">Records Expanded</span>
+                <div class="ds-case-image-pair">
+                  <div class="ds-case-image-slot">
+                    <div class="ds-screenshot-placeholder">원본 이미지</div>
+                    <span class="ds-case-image-label">Original</span>
+                  </div>
+                  <div class="ds-case-image-slot">
+                    <div class="ds-screenshot-placeholder">보안합성데이터 이미지</div>
+                    <span class="ds-case-image-label">Synthetic</span>
+                  </div>
                 </div>
               </div>
-              <p class="ds-ac-body-text">IBK expanded 79 fraud/transaction patterns into 1,000+ DP-safe synthetic records using DTS. AI detection rate reached 97.6%. Full PIPA compliance -- zero real customer data accessed or exported. Passed internal audit with no data sovereignty issues.</p>
             </div>
           </article>
 
-          <!-- Accordion 2: Kyobo Life Insurance -->
-          <article class="ds-ac-card" role="listitem">
-            <div class="ds-ac-card__header" onclick="toggleAcCard(this)" aria-expanded="false">
-              <div class="ds-ac-card__title-wrap">
-                <div class="ds-ac-card__industry">
-                  <span class="ds-ac-card__industry-dot" style="background-color: var(--ds-color-brand-purple)"></span>
-                  Finance
-                </div>
-                <div class="ds-ac-card__title">F1 0.92 churn model -- 277,249 synthetic records, 6-month deletion policy bypassed</div>
-              </div>
-              <div class="ds-ac-card__meta">
-                <span class="ds-badge ds-badge--success">Privacy-Safe</span>
-                <span class="ds-badge ds-badge--purple">Compliance</span>
-              </div>
-              <div class="ds-ac-card__toggle" role="button" aria-label="Toggle accordion">
-                <span class="ds-ac-card__toggle-icon"></span>
-              </div>
+          <!-- Case 2: Finance -->
+          <article class="ds-card ds-card--case-study">
+            <div class="ds-card__left">
+              <img class="ds-card__left-image" src="../reference/graphics/illustration-insurance.png" alt="Finance">
+              <span class="ds-card__left-category">Finance</span>
+              <span class="ds-card__left-title">금융 분야</span>
             </div>
-            <div class="ds-ac-card__body">
-              <div class="ds-ac-metrics">
-                <div class="ds-ac-metric">
-                  <span class="ds-ac-metric__val">F1 0.92</span>
-                  <span class="ds-ac-metric__label">Churn Prediction</span>
-                </div>
-                <div class="ds-ac-metric">
-                  <span class="ds-ac-metric__val">277,249</span>
-                  <span class="ds-ac-metric__label">Synthetic Records</span>
-                </div>
-                <div class="ds-ac-metric">
-                  <span class="ds-ac-metric__val">+30pp</span>
-                  <span class="ds-ac-metric__label">F1 Improvement</span>
+            <div class="ds-card__right">
+              <ul class="ds-bullet ds-bullet--dot">
+                <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>금융기관에서 AI 기반의 이상거래 탐지 수요가 높음</li>
+                <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>실제 이상 거래 데이터의 비중은 전체 데이터의 0.2% 수준으로 희소</li>
+                <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>합성데이터 기반으로 이상거래 데이터를 증폭 생성해 모델 정확도와 신뢰성을 향상</li>
+              </ul>
+              <div class="ds-case-image-grid">
+                <div class="ds-case-image-pair">
+                  <div class="ds-case-image-slot">
+                    <div class="ds-screenshot-placeholder">원본 이미지</div>
+                    <span class="ds-case-image-label">Original</span>
+                  </div>
+                  <div class="ds-case-image-slot">
+                    <div class="ds-screenshot-placeholder">보안합성데이터 이미지</div>
+                    <span class="ds-case-image-label">Synthetic</span>
+                  </div>
                 </div>
               </div>
-              <p class="ds-ac-body-text">Kyobo's churn AI was blocked by a 6-month data retention policy. DTS generated 277,249 DP-safe synthetic records from historical data -- legally usable after deletion. Churn F1 reached 0.92. Separately, a top-3 life insurer's VoC AI improved from F1 58.55% to 88.55% (+30pp); deploy time cut from 4 weeks to 1 day.</p>
             </div>
           </article>
 
-          <!-- Accordion 3: Marketing / Sales -->
-          <article class="ds-ac-card" role="listitem">
-            <div class="ds-ac-card__header" onclick="toggleAcCard(this)" aria-expanded="false">
-              <div class="ds-ac-card__title-wrap">
-                <div class="ds-ac-card__industry">
-                  <span class="ds-ac-card__industry-dot" style="background-color: var(--ds-color-success)"></span>
-                  Marketing
-                </div>
-                <div class="ds-ac-card__title">90% time reduction -- 70% cost saving on trend research</div>
-              </div>
-              <div class="ds-ac-card__meta">
-                <span class="ds-badge ds-badge--success">Cost Reduction</span>
-              </div>
-              <div class="ds-ac-card__toggle" role="button" aria-label="Toggle accordion">
-                <span class="ds-ac-card__toggle-icon"></span>
-              </div>
+          <!-- Case 3: Healthcare -->
+          <article class="ds-card ds-card--case-study">
+            <div class="ds-card__left">
+              <img class="ds-card__left-image" src="../reference/graphics/illustration-public-sector.png" alt="Healthcare">
+              <span class="ds-card__left-category">Healthcare</span>
+              <span class="ds-card__left-title">헬스케어 분야</span>
             </div>
-            <div class="ds-ac-card__body">
-              <div class="ds-ac-metrics">
-                <div class="ds-ac-metric">
-                  <span class="ds-ac-metric__val">90%</span>
-                  <span class="ds-ac-metric__label">Time Reduction</span>
+            <div class="ds-card__right">
+              <ul class="ds-bullet ds-bullet--dot">
+                <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>윤리위원회(IRB) 승인을 포함한 복잡한 절차로 인해 의료 데이터 공유가 제한됨</li>
+                <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>CUBIG 데이터 비접근 기술을 통해 민감한 환자의 개인정보 보호, 희귀 질환 데이터 결합 및 분석 가능</li>
+                <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>데이터의 양이 적은 희귀 질환 데이터를 증강</li>
+              </ul>
+              <div class="ds-case-image-grid">
+                <div class="ds-case-image-pair">
+                  <div class="ds-case-image-slot">
+                    <div class="ds-screenshot-placeholder">원본 이미지</div>
+                    <span class="ds-case-image-label">Original — 폐렴</span>
+                  </div>
+                  <div class="ds-case-image-slot">
+                    <div class="ds-screenshot-placeholder">보안합성데이터 이미지</div>
+                    <span class="ds-case-image-label">Synthetic — 폐렴</span>
+                  </div>
                 </div>
-                <div class="ds-ac-metric">
-                  <span class="ds-ac-metric__val">70%</span>
-                  <span class="ds-ac-metric__label">Cost Saving</span>
+                <div class="ds-case-image-pair">
+                  <div class="ds-case-image-slot">
+                    <div class="ds-screenshot-placeholder">원본 이미지</div>
+                    <span class="ds-case-image-label">Original — 유방암</span>
+                  </div>
+                  <div class="ds-case-image-slot">
+                    <div class="ds-screenshot-placeholder">보안합성데이터 이미지</div>
+                    <span class="ds-case-image-label">Synthetic — 유방암</span>
+                  </div>
+                </div>
+                <div class="ds-case-image-pair">
+                  <div class="ds-case-image-slot">
+                    <div class="ds-screenshot-placeholder">원본 이미지</div>
+                    <span class="ds-case-image-label">Original — 뇌 데이터</span>
+                  </div>
+                  <div class="ds-case-image-slot">
+                    <div class="ds-screenshot-placeholder">보안합성데이터 이미지</div>
+                    <span class="ds-case-image-label">Synthetic — 뇌 데이터</span>
+                  </div>
+                </div>
+                <div class="ds-case-image-pair">
+                  <div class="ds-case-image-slot">
+                    <div class="ds-screenshot-placeholder">원본 이미지</div>
+                    <span class="ds-case-image-label">Original — 안구 데이터</span>
+                  </div>
+                  <div class="ds-case-image-slot">
+                    <div class="ds-screenshot-placeholder">보안합성데이터 이미지</div>
+                    <span class="ds-case-image-label">Synthetic — 안구 데이터</span>
+                  </div>
                 </div>
               </div>
-              <p class="ds-ac-body-text">Annual consumer trend surveys replaced with AI persona agents trained on synthetic behavioral data. Key insights delivered in 1-2 days (vs. 1+ month), with 70% cost savings by eliminating field collection, incentives, and anonymization steps.</p>
-            </div>
-          </article>
-
-          <!-- Accordion 4: Ministry of National Defense (Korea) -->
-          <article class="ds-ac-card" role="listitem">
-            <div class="ds-ac-card__header" onclick="toggleAcCard(this)" aria-expanded="false">
-              <div class="ds-ac-card__title-wrap">
-                <div class="ds-ac-card__industry">
-                  <span class="ds-ac-card__industry-dot" style="background-color: var(--ds-color-error)"></span>
-                  Defense
-                </div>
-                <div class="ds-ac-card__title">Zero data exports -- Classified imagery converted to AI-ready synthetic datasets</div>
-              </div>
-              <div class="ds-ac-card__meta">
-                <span class="ds-badge ds-badge--error">Classified</span>
-                <span class="ds-badge ds-badge--purple">Zero-Access</span>
-              </div>
-              <div class="ds-ac-card__toggle" role="button" aria-label="Toggle accordion">
-                <span class="ds-ac-card__toggle-icon"></span>
-              </div>
-            </div>
-            <div class="ds-ac-card__body">
-              <div class="ds-ac-metrics">
-                <div class="ds-ac-metric">
-                  <span class="ds-ac-metric__val">0</span>
-                  <span class="ds-ac-metric__label">Data Exports</span>
-                </div>
-              </div>
-              <p class="ds-ac-body-text">DTS deployed on-premise in an air-gapped classified environment. Zero-Access Architecture: no original imagery left the secure perimeter. Classified defense data converted to AI-ready synthetic datasets for model training within security clearance requirements.</p>
             </div>
           </article>
 
