@@ -2878,6 +2878,10 @@ function loadOutputFiles() {
     });
 }
 
+function typeBadge(type) {
+  var labels = { html: 'HTML / Docs', tsx: 'TSX' };
+  return labels[type] || type;
+}
 function resolveStaticPath(f) {
   var n = f.name;
   if (n.endsWith('.tsx')) return 'output/framer/' + n;
@@ -2958,7 +2962,7 @@ function renderStaticTable() {
     var htmlFiles = group.outputs.filter(function(o) { return o.type === 'html' || o.type === 'md'; });
     var tsxFiles = group.outputs.filter(function(o) { return o.type === 'tsx'; });
 
-    var inputLink = group.ipath ? '<a href="' + group.ipath + '" target="_blank" style="color:var(--ds-color-text-primary);text-decoration:none;" onmouseover="this.style.color=\'var(--ds-color-brand-primary)\'" onmouseout="this.style.color=\'var(--ds-color-text-primary)\'">' + group.input + '</a>' : group.input;
+    var inputLink = group.ipath ? '<a class="v-ot-link" href="javascript:void(0)" onclick="event.preventDefault();openDetail(\'' + group.ipath + '\',\'' + group.input + '\')" style="color:var(--ds-color-text-primary);font-weight:600;">' + group.input + '</a>' : '<span style="color:var(--ds-color-text-tertiary);">' + group.input + '</span>';
 
     html += '<tr style="border-bottom:1px solid var(--ds-color-surface-light);">';
     html += '<td style="padding:10px 12px;font-weight:500;vertical-align:top;white-space:nowrap;">' + inputLink + '</td>';
