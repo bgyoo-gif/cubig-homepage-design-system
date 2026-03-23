@@ -2878,6 +2878,13 @@ function loadOutputFiles() {
     });
 }
 
+function resolveStaticPath(f) {
+  var n = f.name;
+  if (n.endsWith('.tsx')) return 'output/framer/' + n;
+  if (n.endsWith('-b-type.html') || n.startsWith('figure_')) return 'output/html/' + n;
+  if (n.endsWith('-spec.md') || n.endsWith('-qa-report.md')) return 'output/docs/' + n;
+  return 'output/' + n;
+}
 function renderStaticTable() {
   var container = document.getElementById('output-file-list');
   var data = [
@@ -2960,7 +2967,8 @@ function renderStaticTable() {
     // HTML + Docs column
     html += '<td style="padding:10px 12px;vertical-align:top;line-height:1.8;">';
     htmlFiles.forEach(function(f) {
-      html += '<div style="font-size:12px;color:var(--ds-color-text-primary);">' + f.name + '</div>';
+      var fpath = resolveStaticPath(f);
+      html += '<div><a class="v-ot-link" href="javascript:void(0)" onclick="event.preventDefault();openDetail(\'' + fpath + '\',\'' + f.name + '\')" style="font-size:12px;">' + f.name + '</a></div>';
     });
     if (htmlFiles.length === 0) html += '<span style="color:var(--ds-color-text-tertiary);">—</span>';
     html += '</td>';
@@ -2968,7 +2976,8 @@ function renderStaticTable() {
     // TSX column
     html += '<td style="padding:10px 12px;vertical-align:top;line-height:1.8;">';
     tsxFiles.forEach(function(f) {
-      html += '<div style="font-size:12px;color:var(--ds-color-text-primary);">' + f.name + '</div>';
+      var fpath = resolveStaticPath(f);
+      html += '<div><a class="v-ot-link" href="javascript:void(0)" onclick="event.preventDefault();openDetail(\'' + fpath + '\',\'' + f.name + '\')" style="font-size:12px;">' + f.name + '</a></div>';
     });
     if (tsxFiles.length === 0) html += '<span style="color:var(--ds-color-text-tertiary);">—</span>';
     html += '</td>';
