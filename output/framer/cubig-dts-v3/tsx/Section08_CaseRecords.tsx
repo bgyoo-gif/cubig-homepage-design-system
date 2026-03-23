@@ -41,7 +41,7 @@ export default function Section08_CaseRecords({
       ],
     },
     {
-      illustration: `${IMAGE_BASE}/graphics/illustration-insurance.png`,
+      illustration: `${IMAGE_BASE}/graphics/illustration-finance.png`,
       category: "Finance",
       caseTitle: "Anomaly Transaction Detection",
       bullets: [
