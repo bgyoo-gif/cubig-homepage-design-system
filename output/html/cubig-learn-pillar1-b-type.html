@@ -199,21 +199,7 @@
       --ds-bg-img-grad-deep:      url('https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/bg-gradient-deep-teal.png');
       --ds-bg-img-wave-teal:      url('https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/bg-wave-teal-blue.png');
 
-      /* Component-specific fallback colors (from DS component definitions) */
-      --color-badge-teal:        #0e9f8e;
-      --color-kpi-start:         #1a6fe8;
-      --color-kpi-end:           #0ea5a0;
-      --color-cta-start:         #b2f0e8;
-      --color-cta-mid:           #7ecfea;
-      --color-cta-end:           #4a9fd4;
-
-      /* Overlay / transparency tokens */
-      --color-overlay-nav:       rgba(255,255,255,0.92);
-      --color-overlay-light:     rgba(255,255,255,0.45);
-      --color-overlay-dark:      rgba(0,0,0,0.35);
-      --color-overlay-cta:       rgba(0,0,0,0.15);
-      --color-inverse-70:        rgba(255,255,255,0.7);
-      --color-inverse-60:        rgba(255,255,255,0.6);
+      /* 커스텀 변수 금지 — DS 정의 변수만 사용 */
     }
 
     /* ============================================================
@@ -242,7 +228,7 @@
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       height: 58px;
       display: flex; align-items: center;
-      background: var(--color-overlay-nav);
+      background: rgba(255,255,255,0.92);
       backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--ds-color-border-default);
       padding: 0 var(--ds-container-padding-mobile);
@@ -372,7 +358,7 @@
       border: 1px solid currentColor; margin-bottom: var(--ds-space-md);
     }
     .ds-card__badge--brand { color: var(--ds-color-brand-purple); border-color: var(--ds-color-brand-purple); }
-    .ds-card__badge--teal  { color: var(--color-badge-teal); border-color: var(--color-badge-teal); }
+    .ds-card__badge--teal  { color: #0e9f8e; border-color: #0e9f8e; }
     .ds-card__badge--red   { color: var(--ds-color-error); border-color: var(--ds-color-error); }
     .ds-card__badge--gray  { color: var(--ds-color-text-tertiary); border-color: var(--ds-color-border-default); }
 
@@ -383,8 +369,8 @@
 
     /* Card with dark background for link cards */
     .ds-card--dark .ds-card__title { color: var(--ds-color-text-inverse); }
-    .ds-card--dark .ds-card__description { color: var(--color-inverse-70); }
-    .ds-card--dark .ds-card__link { color: var(--color-inverse-60); }
+    .ds-card--dark .ds-card__description { color: rgba(255,255,255,0.7); }
+    .ds-card--dark .ds-card__link { color: rgba(255,255,255,0.6); }
 
     /* Card Grid */
     .ds-card-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
@@ -433,7 +419,7 @@
     }
     .ds-banner--full::before {
       content: ''; position: absolute; inset: 0;
-      background: var(--color-overlay-light); z-index: 0;
+      background: rgba(255,255,255,0.45); z-index: 0;
     }
     .ds-banner--full > * { position: relative; z-index: 1; }
     .ds-banner--full strong { font-weight: var(--ds-weight-bold); }
@@ -473,12 +459,12 @@
       position: relative; overflow: hidden;
     }
     .ds-kpi-band:not([class*="ds-bg--"]) {
-      background: linear-gradient(135deg, var(--color-kpi-start), var(--color-kpi-end));
+      background: linear-gradient(135deg, #1a6fe8, #0ea5a0);
     }
     .ds-bg--grad-deep { background-image: var(--ds-bg-img-grad-deep); }
     .ds-kpi-band[class*="ds-bg--"]::before {
       content: ''; position: absolute; inset: 0;
-      background: var(--color-overlay-dark); z-index: 0;
+      background: rgba(0,0,0,0.35); z-index: 0;
     }
     .ds-kpi-band > * { position: relative; z-index: 1; }
     .ds-kpi-band__item { display: flex; flex-direction: column; gap: 12px; text-align: center; }
@@ -514,17 +500,17 @@
     }
     .ds-bg--wave-teal { background-image: var(--ds-bg-img-wave-teal); }
     .ds-cta-band:not([class*="ds-bg--"]) {
-      background: linear-gradient(135deg, var(--color-cta-start) 0%, var(--color-cta-mid) 40%, var(--color-cta-end) 100%);
+      background: linear-gradient(135deg, #b2f0e8 0%, #7ecfea 40%, #4a9fd4 100%);
     }
     .ds-cta-band::before {
       content: ''; position: absolute; inset: 0;
-      background: var(--color-overlay-cta); z-index: 0;
+      background: rgba(0,0,0,0.15); z-index: 0;
     }
     .ds-cta-band > * { position: relative; z-index: 1; }
     .ds-cta-band__inner { max-width: 100%; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: var(--ds-space-lg); }
     .ds-cta-band__title {
       font-family: var(--ds-font-base); font-size: var(--ds-text-5xl);
-      font-weight: var(--ds-weight-bold); color: #ffffff;
+      font-weight: var(--ds-weight-bold); color: var(--ds-color-white);
       line-height: var(--ds-leading-tight); letter-spacing: -2px; margin: 0;
     }
     .ds-cta-band__description {
@@ -1100,7 +1086,7 @@
     <!-- ============================================================
          Section 10: FAQ
          ============================================================ -->
-    <section class="ds-section ds-section--light" id="faq">
+    <section class="ds-section" id="faq">
       <div class="ds-container">
         <div class="ds-article-body">
 
