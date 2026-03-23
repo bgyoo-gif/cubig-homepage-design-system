@@ -2680,7 +2680,7 @@ code, .ds-code-inline {
   (function(){
     var thS='padding:10px 12px;font-size:11px;font-weight:600;color:#9c9c9c;letter-spacing:0.08em;text-transform:uppercase;white-space:nowrap;';
 
-    function lnk(f){return '<a href="'+f.path+'" target="_blank" download="'+f.name+'" style="color:#3061f2;text-decoration:none;cursor:pointer;" onmouseover="this.style.textDecoration=\'underline\'" onmouseout="this.style.textDecoration=\'none\'">'+f.name+'</a>';}
+    function lnk(f){return '<span class="v-ot-link" onclick="openDetail(\''+f.path+'\',\''+f.name+'\')">'+f.name+'</span>';}
 
     function renderManifest(m) {
       var o='<table style="width:100%;border-collapse:collapse;font-size:13px;"><thead><tr style="border-bottom:2px solid #e6e7e9;text-align:left;">';
@@ -2695,7 +2695,7 @@ code, .ds-code-inline {
         var allTsx = g.tsx||[];
 
         o+='<tr style="border-bottom:1px solid #f7f7f7;">';
-        var il = inp.path ? '<a href="'+inp.path+'" target="_blank" style="color:#0f0f0f;text-decoration:none;" onmouseover="this.style.color=\'#725bea\'" onmouseout="this.style.color=\'#0f0f0f\'">'+inp.name+'</a>' : inp.name;
+        var il = inp.path ? '<span class="v-ot-link" onclick="openDetail(\''+inp.path+'\',\''+inp.name+'\')" style="color:#0f0f0f;font-weight:600;">'+inp.name+'</span>' : inp.name;
         o+='<td style="padding:10px 12px;font-weight:500;vertical-align:top;white-space:nowrap;">'+il+'</td>';
         o+='<td style="padding:10px 12px;font-size:12px;color:#9c9c9c;vertical-align:top;white-space:nowrap;">'+inp.modified+'</td>';
         o+='<td style="padding:10px 12px;vertical-align:top;line-height:1.8;">';
@@ -3370,9 +3370,9 @@ function showResult(result) {
   if (result) {
     Object.keys(result).forEach(function(key) {
       var path = result[key];
-      container.innerHTML += '<a href="' + SERVER_URL + '/' + path + '" target="_blank" style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:white;border:1px solid var(--ds-color-border-default);border-radius:8px;text-decoration:none;color:var(--ds-color-text-primary);font-size:13px;font-weight:500;">' +
+      container.innerHTML += '<span onclick="openDetail(\''+path+'\',\''+key+'\')" style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:white;border:1px solid var(--ds-color-border-default);border-radius:8px;cursor:pointer;color:var(--ds-color-text-primary);font-size:13px;font-weight:500;">' +
         '<span style="color:var(--ds-color-brand-primary)">' + key + '</span>' +
-        '<span style="color:var(--ds-color-text-tertiary);margin-left:auto;font-size:12px;font-family:var(--ds-font-code)">' + path + '</span></a>';
+        '<span style="color:var(--ds-color-text-tertiary);margin-left:auto;font-size:12px;font-family:var(--ds-font-code)">' + path + '</span></span>';
     });
   }
 }

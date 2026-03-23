@@ -8,4 +8,3 @@ server/jobs/
 server/server.log
 .claude/settings.local.json
 output/*.png
-.github/
