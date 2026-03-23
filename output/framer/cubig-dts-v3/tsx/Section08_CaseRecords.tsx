@@ -1,6 +1,7 @@
 import * as React from "react"
-import { useState } from "react"
 import { addPropertyControls, ControlType } from "framer"
+
+const IMAGE_BASE = "https://bgyoo-gif.github.io/cubig-homepage-design-system/reference"
 
 interface Props {
   title?: string
@@ -11,7 +12,6 @@ export default function Section08_CaseRecords({
   title = "Production Case Records",
   description = "Enterprise AI projects stall when data conditions prevent training, validation, or safe deployment. DTS was built for exactly these situations.",
 }: Props) {
-  const [openIndex, setOpenIndex] = useState<number | null>(0)
   const [isMobile, setIsMobile] = React.useState(false)
   const [isTablet, setIsTablet] = React.useState(false)
 
@@ -29,69 +29,46 @@ export default function Section08_CaseRecords({
 
   const cases = [
     {
-      industry: "Finance",
-      industryColor: "#725bea",
-      titleText: "97.6% AI detection rate -- 79 patterns expanded to 1,000 records",
-      badges: [
-        { label: "Privacy-Safe", color: "success" },
-        { label: "DTS Standalone", color: "purple" },
+      illustration: `${IMAGE_BASE}/graphics/illustration-defense.png`,
+      category: "Defense",
+      caseTitle: "Drone Attack Data Augmentation",
+      bullets: [
+        "Drone attack incidents are rare, leaving insufficient training data for defense AI systems",
+        "Augmented drone attack data to improve military training and response system performance",
       ],
-      metrics: [
-        { val: "97.6%", label: "AI Detection Rate" },
-        { val: "79 → 1,000", label: "Records Expanded" },
+      images: [
+        { src: `${IMAGE_BASE}/images/casestudy-defense-dron-1.png`, alt: "Drone attack — Original vs Synthetic" },
       ],
-      body: "IBK expanded 79 fraud/transaction patterns into 1,000+ DP-safe synthetic records using DTS. AI detection rate reached 97.6%. Full PIPA compliance -- zero real customer data accessed or exported. Passed internal audit with no data sovereignty issues.",
     },
     {
-      industry: "Finance",
-      industryColor: "#725bea",
-      titleText: "F1 0.92 churn model -- 277,249 synthetic records, 6-month deletion policy bypassed",
-      badges: [
-        { label: "Privacy-Safe", color: "success" },
-        { label: "Compliance", color: "purple" },
+      illustration: `${IMAGE_BASE}/graphics/illustration-insurance.png`,
+      category: "Finance",
+      caseTitle: "Anomaly Transaction Detection",
+      bullets: [
+        "High demand for AI-based anomaly transaction detection in financial institutions",
+        "Actual anomaly transaction data accounts for only 0.2% of total data — extremely sparse",
+        "Generated augmented anomaly data using synthetic data to improve model accuracy and reliability",
       ],
-      metrics: [
-        { val: "F1 0.92", label: "Churn Prediction" },
-        { val: "277,249", label: "Synthetic Records" },
-        { val: "+30pp", label: "F1 Improvement" },
+      images: [
+        { src: `${IMAGE_BASE}/images/casestudy-financial-abnormal-transaction.png`, alt: "Financial anomaly detection — Original vs Synthetic" },
       ],
-      body: "Kyobo's churn AI was blocked by a 6-month data retention policy. DTS generated 277,249 DP-safe synthetic records from historical data -- legally usable after deletion. Churn F1 reached 0.92. Separately, a top-3 life insurer's VoC AI improved from F1 58.55% to 88.55% (+30pp); deploy time cut from 4 weeks to 1 day.",
     },
     {
-      industry: "Marketing",
-      industryColor: "#0e824c",
-      titleText: "90% time reduction -- 70% cost saving on trend research",
-      badges: [
-        { label: "Cost Reduction", color: "success" },
+      illustration: `${IMAGE_BASE}/graphics/illustration-healthcare.png`,
+      category: "Healthcare",
+      caseTitle: "Rare Disease Data Augmentation",
+      bullets: [
+        "Medical data sharing is restricted due to complex IRB approval procedures",
+        "CUBIG's zero-access technology enables patient privacy protection and rare disease data combination and analysis",
+        "Augmented scarce rare disease datasets for improved AI training coverage",
       ],
-      metrics: [
-        { val: "90%", label: "Time Reduction" },
-        { val: "70%", label: "Cost Saving" },
+      images: [
+        { src: `${IMAGE_BASE}/images/casestudy-healthcare-lung.png`, alt: "Pneumonia X-ray — Original vs Synthetic", label: "Pneumonia X-ray — Original vs Synthetic" },
+        { src: `${IMAGE_BASE}/images/casestudy-healthcare-brain.png`, alt: "Brain Tumor & Aneurysm CT — Original vs Synthetic", label: "Brain Tumor & Aneurysm CT — Original vs Synthetic" },
+        { src: `${IMAGE_BASE}/images/casestudy-healthcare-diabetes.png`, alt: "Diabetic Retinopathy — Original vs Synthetic", label: "Diabetic Retinopathy — Original vs Synthetic" },
       ],
-      body: "Annual consumer trend surveys replaced with AI persona agents trained on synthetic behavioral data. Key insights delivered in 1-2 days (vs. 1+ month), with 70% cost savings by eliminating field collection, incentives, and anonymization steps.",
-    },
-    {
-      industry: "Defense",
-      industryColor: "#ff3030",
-      titleText: "Zero data exports -- Classified imagery converted to AI-ready synthetic datasets",
-      badges: [
-        { label: "Classified", color: "error" },
-        { label: "Zero-Access", color: "purple" },
-      ],
-      metrics: [
-        { val: "0", label: "Data Exports" },
-      ],
-      body: "DTS deployed on-premise in an air-gapped classified environment. Zero-Access Architecture: no original imagery left the secure perimeter. Classified defense data converted to AI-ready synthetic datasets for model training within security clearance requirements.",
     },
   ]
-
-  const badgeStyles: Record<string, { bg: string; color: string }> = {
-    success: { bg: "rgba(14, 130, 76, 0.12)", color: "#0e824c" },
-    purple: { bg: "#c6c5fa", color: "#725bea" },
-    error: { bg: "rgba(255, 48, 48, 0.12)", color: "#ff3030" },
-  }
-
-  const toggle = (i: number) => setOpenIndex(openIndex === i ? null : i)
 
   return (
     <div style={{ width: "100%", fontFamily: '"DM Sans", sans-serif', WebkitFontSmoothing: "antialiased" }}>
@@ -99,13 +76,11 @@ export default function Section08_CaseRecords({
         width: "100%",
         padding: isMobile ? "48px 0" : "80px 0",
         backgroundColor: "#ffffff",
-        fontFamily: '"DM Sans", sans-serif',
-        WebkitFontSmoothing: "antialiased",
       }}>
         <div style={{
           width: "100%",
           maxWidth: 1440,
-         margin: "0 auto",
+          margin: "0 auto",
           padding: containerPadding,
           boxSizing: "border-box",
         }}>
@@ -133,177 +108,109 @@ export default function Section08_CaseRecords({
               color: "#636363",
               lineHeight: 1.7,
               maxWidth: 860,
-            margin: "0 auto",
+              margin: "0 auto",
+              textAlign: "center",
+              wordBreak: "keep-all" as const,
+              overflowWrap: "break-word" as const,
             }}>{description}</p>
           </div>
 
-          {/* Accordion List */}
-          <div role="list" style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-            {cases.map((c, i) => {
-              const isOpen = openIndex === i
-              return (
-                <article key={i} role="listitem" style={{
-                  border: "1px solid #e6e7e9",
-                  borderRadius: 8,
-                  backgroundColor: "#ffffff",
-                  overflow: "hidden",
+          {/* Case Study Cards — 1col */}
+          <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+            {cases.map((c, i) => (
+              <article key={i} style={{
+                backgroundColor: "#ffffff",
+                borderRadius: 18,
+                border: "1px solid #e6e7e9",
+                boxShadow: "0px 24px 40px rgba(0,0,0,0.04)",
+                display: "grid",
+                gridTemplateColumns: isMobile ? "1fr" : "240px 1fr",
+                gap: 0,
+                padding: 0,
+                overflow: "hidden",
+              }}>
+                {/* Left — Illustration + Category + Title */}
+                <div style={{
+                  borderRight: isMobile ? "none" : "1px solid #e6e7e9",
+                  borderBottom: isMobile ? "1px solid #e6e7e9" : "none",
+                  padding: isMobile ? "24px 16px" : "32px 16px",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "flex-start",
+                  textAlign: "center",
+                  gap: 12,
                 }}>
-                  {/* Accordion Header */}
-                  <div
-                    onClick={() => toggle(i)}
-                    aria-expanded={isOpen}
-                    style={{
-                      display: "grid",
-                      gridTemplateColumns: isMobile ? "1fr auto" : "1fr auto auto",
-                      alignItems: "center",
-                      gap: isMobile ? 12 : 16,
-                      padding: isMobile ? 16 : 24,
-                      cursor: "pointer",
-                      userSelect: "none",
-                    }}
-                  >
-                    <div style={{ display: "flex", flexDirection: "column", gap: 4, minWidth: 0 }}>
-                      <div style={{
-                        fontFamily: '"Fragment Mono", monospace',
-                        fontSize: 10,
-                        letterSpacing: "0.1em",
-                        textTransform: "uppercase",
-                        color: "#9c9c9c",
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 4,
-                      }}>
-                        <span style={{
-                          width: 6,
-                          height: 6,
-                          borderRadius: "50%",
-                          flexShrink: 0,
-                          backgroundColor: c.industryColor,
-                          display: "inline-block",
-                        }} />
-                        {c.industry}
-                      </div>
-                      <div style={{
-                        fontFamily: '"DM Sans", sans-serif',
-                        fontSize: isMobile ? 14 : 18,
-                        fontWeight: 500,
-                        lineHeight: 1.2,
-                        color: "#0f0f0f",
-                        wordBreak: "keep-all",
-                        overflowWrap: "break-word",
-                      }}>{c.titleText}</div>
-                      {/* Badges shown inline on mobile (below title) */}
-                      {isMobile && (
-                        <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap", marginTop: 6 }}>
-                          {c.badges.map((b, j) => (
-                            <span key={j} style={{
-                              display: "inline-flex",
-                              alignItems: "center",
-                              gap: 4,
-                              padding: "4px 8px",
-                              borderRadius: 9999,
-                              fontSize: 11,
-                              fontWeight: 500,
-                              lineHeight: 1,
-                              whiteSpace: "nowrap",
-                              backgroundColor: badgeStyles[b.color].bg,
-                              color: badgeStyles[b.color].color,
-                            }}>{b.label}</span>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                    {/* Badges shown on non-mobile */}
-                    {!isMobile && (
-                      <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", flexShrink: 0 }}>
-                        {c.badges.map((b, j) => (
-                          <span key={j} style={{
-                            display: "inline-flex",
-                            alignItems: "center",
-                            gap: 4,
-                            padding: "4px 8px",
-                            borderRadius: 9999,
-                            fontSize: 12,
-                            fontWeight: 500,
-                            lineHeight: 1,
-                            whiteSpace: "nowrap",
-                            backgroundColor: badgeStyles[b.color].bg,
-                            color: badgeStyles[b.color].color,
-                          }}>{b.label}</span>
-                        ))}
-                      </div>
-                    )}
-                    <div role="button" aria-label="Toggle accordion" style={{
-                      width: 28,
-                      height: 28,
-                      borderRadius: 6,
-                      border: "0.5px solid #e6e7e9",
-                      backgroundColor: "#f7f7f7",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      flexShrink: 0,
-                      cursor: "pointer",
-                    }}>
-                      <span style={{
-                        display: "block",
-                        width: 12,
-                        height: 12,
-                        position: "relative",
-                        fontSize: 16,
-                        color: "#636363",
-              wordBreak: "keep-all" as const,
-              overflowWrap: "break-word" as const,
-                        fontWeight: 700,
-                        lineHeight: "12px",
-                        textAlign: "center",
-                      }}>{isOpen ? "−" : "+"}</span>
-                    </div>
-                  </div>
+                  <img src={c.illustration} alt={c.category} style={{
+                    width: 160,
+                    height: 140,
+                    objectFit: "contain",
+                    borderRadius: 18,
+                  }} />
+                  <span style={{
+                    fontSize: 12,
+                    color: "#636363",
+                    letterSpacing: "0.08em",
+                    textTransform: "uppercase",
+                  }}>{c.category}</span>
+                  <span style={{
+                    fontSize: 18,
+                    fontWeight: 700,
+                    color: "#0f0f0f",
+                    lineHeight: 1.2,
+                  }}>{c.caseTitle}</span>
+                </div>
 
-                  {/* Accordion Body */}
-                  {isOpen && (
-                    <div style={{
-                      padding: isMobile ? 16 : 24,
-                      borderTop: "1px solid #e6e7e9",
-                      backgroundColor: "#f7f7f7",
-                    }}>
-                      <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 24 }}>
-                        {c.metrics.map((m, j) => (
-                          <div key={j} style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            padding: "12px 16px",
-                            border: "1px solid #e6e7e9",
-                            borderRadius: 8,
-                            backgroundColor: "#ffffff",
-                            minWidth: isMobile ? 80 : 100,
-                            flex: 1,
-                          }}>
-                            <span style={{
-                              fontFamily: '"DM Sans", sans-serif',
-                              fontSize: isMobile ? 16 : 20,
-                              fontWeight: 700,
-                              lineHeight: 1,
-                              color: "#0f0f0f",
-                            }}>{m.val}</span>
-                            <span style={{
-                              fontFamily: '"Fragment Mono", monospace',
-                              fontSize: 10,
-                              letterSpacing: "0.08em",
-                              textTransform: "uppercase",
-                              color: "#9c9c9c",
-                              marginTop: 4,
-                            }}>{m.label}</span>
-                          </div>
-                        ))}
+                {/* Right — Bullets + Images */}
+                <div style={{
+                  padding: isMobile ? 16 : 24,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 16,
+                }}>
+                  {/* Bullets */}
+                  <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 4 }}>
+                    {c.bullets.map((b, j) => (
+                      <li key={j} style={{
+                        display: "flex",
+                        alignItems: "flex-start",
+                        gap: 8,
+                        fontSize: 14,
+                        lineHeight: 1.5,
+                        color: "#0f0f0f",
+                        wordBreak: "keep-all" as const,
+                        overflowWrap: "break-word" as const,
+                      }}>
+                        <span style={{ color: "#725bea", fontSize: 20, lineHeight: "1", flexShrink: 0, marginTop: 2 }}>•</span>
+                        {b}
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* Case Images */}
+                  <div style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 8 }}>
+                    {c.images.map((img, j) => (
+                      <div key={j} style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                        <img src={img.src} alt={img.alt} loading="lazy" style={{
+                          width: "100%",
+                          borderRadius: 8,
+                          border: "1px solid #e6e7e9",
+                        }} />
+                        {"label" in img && img.label && (
+                          <span style={{
+                            fontSize: 12,
+                            color: "#9c9c9c",
+                            textAlign: "center",
+                            display: "block",
+                            marginBottom: 8,
+                          }}>{img.label}</span>
+                        )}
                       </div>
-                      <p style={{ fontSize: isMobile ? 13 : 14, color: "#636363", lineHeight: 1.7 }}>{c.body}</p>
-                    </div>
-                  )}
-                </article>
-              )
-            })}
+                    ))}
+                  </div>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </section>
