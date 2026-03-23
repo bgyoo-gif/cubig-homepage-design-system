@@ -361,18 +361,25 @@ grep -n 'color.*#e6e7e9\|color.*#f2f2f2\|color.*#f7f7f7\|color.*#ececec' output/
 
 ### 반응형 (필수)
 모든 TSX에 아래 패턴을 반드시 포함:
+**`window.innerWidth` 사용 금지** — Framer 에디터 캔버스에서 컴포넌트 프레임 크기와 무관하게 에디터 창 크기를 반환하므로 반응형이 깨짐.
+반드시 `ResizeObserver`로 컴포넌트 자체 너비를 측정:
 ```tsx
+const containerRef = React.useRef<HTMLDivElement>(null)
 const [isMobile, setIsMobile] = React.useState(false)
 const [isTablet, setIsTablet] = React.useState(false)
 React.useEffect(() => {
-  const check = () => {
-    setIsMobile(window.innerWidth < 768)
-    setIsTablet(window.innerWidth >= 768 && window.innerWidth < 1024)
-  }
-  check()
-  window.addEventListener("resize", check)
-  return () => window.removeEventListener("resize", check)
+  const el = containerRef.current
+  if (!el) return
+  const ro = new ResizeObserver(([entry]) => {
+    const w = entry.contentRect.width
+    setIsMobile(w < 768)
+    setIsTablet(w >= 768 && w < 1024)
+  })
+  ro.observe(el)
+  return () => ro.disconnect()
 }, [])
+// return 최상위 div에 ref 연결:
+return <div ref={containerRef}>...</div>
 ```
 적용 방식: `isMobile ? 모바일값 : isTablet ? 태블릿값 : 데스크톱값`
 - 컨테이너 padding: mobile `"0 16px"` / tablet `"0 32px"` / desktop `"0 120px"`
