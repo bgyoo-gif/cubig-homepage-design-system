@@ -19,10 +19,14 @@ export default function Section08_CaseRecords({
   React.useEffect(() => {
     const el = containerRef.current
     if (!el) return
+    let prevMobile = false
+    let prevTablet = false
     const ro = new ResizeObserver(([entry]) => {
       const w = entry.contentRect.width
-      setIsMobile(w < 768)
-      setIsTablet(w >= 768 && w < 1024)
+      const m = w < 768
+      const t = w >= 768 && w < 1024
+      if (m !== prevMobile) { prevMobile = m; setIsMobile(m) }
+      if (t !== prevTablet) { prevTablet = t; setIsTablet(t) }
     })
     ro.observe(el)
     return () => ro.disconnect()
