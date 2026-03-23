@@ -77,7 +77,12 @@ def update_job(job_id, stage, message, status=None, result=None):
   │  NO  → 건너뛰기
   │
   ▼
-[③ deploy] 항상 실행
+[③ viewer-qa] viewer를 수정했는가?
+  │  YES → viewer-qa 실행, FAIL이면 수정 후 재검증
+  │  NO  → 건너뛰기
+  │
+  ▼
+[④ deploy] 항상 실행
   │  python3 server/manifest.py  ← Output manifest 자동 생성
   │  git add -A && git commit && git push origin gh-pages
   │

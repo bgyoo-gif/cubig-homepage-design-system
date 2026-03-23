@@ -349,12 +349,60 @@ grep -n 'color.*#e6e7e9\|color.*#f2f2f2\|color.*#f7f7f7\|color.*#ececec' output/
 
 ---
 
+## TSX 필수 규칙 (Framer Code Component)
+
+### 스타일링
+- **`<style>` 태그 사용 금지** — Framer에서 지원 안 됨. 에러 발생
+- **인라인 스타일만 사용** — `style={{ fontSize: 16, color: "#0f0f0f" }}`
+- `className` 사용 금지 — Framer에서 CSS 클래스 미지원
+- `::before`/`::after` → 별도 `<div>` 오버레이로 구현
+- `@keyframes` → `useEffect`로 `document.head`에 `<style>` 태그 주입
+- Fragment `<>...</>` 금지 → 단일 `<div>` wrapper 사용
+
+### 반응형 (필수)
+모든 TSX에 아래 패턴을 반드시 포함:
+```tsx
+const [isMobile, setIsMobile] = React.useState(false)
+const [isTablet, setIsTablet] = React.useState(false)
+React.useEffect(() => {
+  const check = () => {
+    setIsMobile(window.innerWidth < 768)
+    setIsTablet(window.innerWidth >= 768 && window.innerWidth < 1024)
+  }
+  check()
+  window.addEventListener("resize", check)
+  return () => window.removeEventListener("resize", check)
+}, [])
+```
+적용 방식: `isMobile ? 모바일값 : isTablet ? 태블릿값 : 데스크톱값`
+- 컨테이너 padding: mobile `"0 16px"` / tablet `"0 32px"` / desktop `"0 120px"`
+- 그리드: 2col/3col → mobile 1col
+- 폰트: h1 `36→24px`, h2 `28→20px`, body `16→14px`
+- CTA 버튼: `flexDirection: "column"` on mobile
+
+### 정렬
+- 섹션 헤더: `textAlign: "center"` 기본
+- description: `maxWidth: 860`, `margin: "0 auto"`
+- 텍스트: `wordBreak: "keep-all"`, `overflowWrap: "break-word"`
+
+### 색상
+- **Brand Purple: `#725bea`** (이전 #a617ff 사용 금지)
+- Brand Purple Light: `#c6c5fa`
+- 팔레트에 정의된 색상만 사용 (임의 색상 생성 금지)
+
+### 배경 이미지 (20종)
+이미지 URL: `IMAGE_BASE` 상수 경유 (`https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/`)
+- 오버레이 투명도: 밝은 `rgba(255,255,255,0.45)`, 어두운 `rgba(0,0,0,0.35)`
+- 페이지별 다른 배경 사용 (중복 금지)
+
+### 스크린샷 (Step Tabs)
+- `maxHeight: 420px` (mobile `280px`)
+- `objectFit: "cover"`, `objectPosition: "top left"`
+
+---
+
 ## 절대 규칙
 - 원문 텍스트를 단 한 글자도 바꾸지 않는다
-- **팔레트에 정의된 색상만 사용한다** (임의 색상 생성 금지)
-- 외부 CSS 파일 사용 금지 — 모든 스타일은 `<style>` 태그 내장
-- Framer에서 동작하지 않는 패턴 금지 (window.document 직접 접근 등)
 - 이미지 경로는 반드시 `IMAGE_BASE` 상수 경유
 - 각 섹션 컴포넌트는 독립적으로 동작해야 한다 (다른 섹션에 의존 금지)
-- 클래스명은 섹션별 접두사로 전역 충돌 방지
-- tsx 파일은 `tsx/` 폴더, 프리뷰 HTML은 `html/` 폴더에 저장
+- tsx 파일은 `output/framer/[페이지명]/tsx/`, 프리뷰 HTML은 `output/framer/[페이지명]/html/`에 저장

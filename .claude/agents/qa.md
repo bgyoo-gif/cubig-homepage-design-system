@@ -376,21 +376,35 @@ grep -rn '#[0-9a-fA-F]\{3,8\}' output/framer/[페이지명]/tsx/ | grep -v \
 grep -rn 'color.*#e6e7e9\|color.*#f2f2f2\|color.*#f7f7f7\|color.*#ececec' output/framer/[페이지명]/tsx/
 ```
 
-### [CAT-F2] 구조 검증 (Medium)
+### [CAT-F2] 구조 검증 (High)
 
 ```bash
+# <style> 태그 사용 금지 (Framer에서 에러 발생)
+grep -rn '<style>' output/framer/[페이지명]/tsx/
+
+# className 사용 금지 (인라인 스타일만 허용)
+grep -rn 'className=' output/framer/[페이지명]/tsx/
+
+# 반응형 isMobile 존재 확인
+grep -rL 'isMobile' output/framer/[페이지명]/tsx/
+
+# textAlign center 존재 확인 (섹션 헤더)
+grep -rL 'textAlign.*center' output/framer/[페이지명]/tsx/
+
+# wordBreak 존재 확인
+grep -rL 'wordBreak\|word-break' output/framer/[페이지명]/tsx/
+
+# margin "0 auto" 존재 확인 (description 중앙 정렬)
+grep -rL '"0 auto"' output/framer/[페이지명]/tsx/
+
 # addPropertyControls 존재 확인
 grep -rL 'addPropertyControls' output/framer/[페이지명]/tsx/
 
-# 반응형 breakpoint 존재
-grep -rL '1440px' output/framer/[페이지명]/tsx/
-
-# max-width 1440px 확인
-grep -rL 'max-width.*1440' output/framer/[페이지명]/tsx/
-
-# 컨테이너 padding 4단계
-grep -rn 'padding.*16px\|padding.*32px\|padding.*120px' output/framer/[페이지명]/tsx/ | head -20
+# 이전 brand purple #a617ff 사용 금지
+grep -rn '#a617ff' output/framer/[페이지명]/tsx/
 ```
+→ `<style>`, `className`, `#a617ff`가 있으면 FAIL
+→ `isMobile`, `textAlign.*center`, `wordBreak`, `"0 auto"`, `addPropertyControls`가 없으면 FAIL
 
 ### [CAT-F3] B타입 HTML 대조 (High)
 - TSX의 텍스트 콘텐츠가 B타입 HTML과 일치하는지 확인
