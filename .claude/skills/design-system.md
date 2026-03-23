@@ -1121,7 +1121,7 @@ A타입 HTML에 인증 목록이 어떻게 언급되어 있든 **반드시 아�
 | Certifications | ISO/IEC 42001 (AIMS) | ISO | 2026 | cert-iso.png |
 | Awards | Information Security Innovation Award | Ministry of Science & ICT | 2024 | awards-ministry-of-science-and-ict.jpg |
 | Awards | Startup World Cup — Finalist | Startup World Cup | 2025 | cert-startupworldcup.png |
-| Awards | Next Rise — Global Innovator | Next Rise | 2025 | — |
+| Awards | Next Rise — Global Innovator | Next Rise | 2025 | awards-NextRise.png |
 | Awards | T Challenge 2026 — Finalist | Deutsche Telekom | 2026 | partner-deutsche-telekom.avif |
 | Awards | AI EXPO KOREA — AI Medical Innovation Award | AI EXPO KOREA | 2025 | awards-koreaia.png |
 | Recognition | Emerging AI+X Top 100 | — | 2026 | — |
