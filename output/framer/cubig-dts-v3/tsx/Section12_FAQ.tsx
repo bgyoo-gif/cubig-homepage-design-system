@@ -70,7 +70,7 @@ export default function Section12_FAQ({
               lineHeight: 1.2,
               letterSpacing: "-0.5px",
             }}>
-              Common <span style={{ color: "#a617ff" }}>Questions</span>
+              Common <span style={{ color: "#725bea" }}>Questions</span>
             </h2>
           </div>
 

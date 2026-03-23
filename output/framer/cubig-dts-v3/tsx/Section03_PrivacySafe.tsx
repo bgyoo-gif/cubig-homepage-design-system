@@ -49,7 +49,7 @@ export default function Section03_PrivacySafe({
               letterSpacing: "-0.5px",
               marginBottom: 16,
             }}>
-              {title}<span style={{ color: "#a617ff" }}>{titleBrand}</span>
+              {title}<span style={{ color: "#725bea" }}>{titleBrand}</span>
             </h2>
             <p style={{
               fontSize: 18,

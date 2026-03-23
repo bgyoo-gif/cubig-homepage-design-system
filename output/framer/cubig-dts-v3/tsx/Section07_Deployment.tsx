@@ -135,8 +135,8 @@ export default function Section07_Deployment({
                   fontFamily: '"Fragment Mono", monospace',
                   textTransform: "uppercase",
                   letterSpacing: "0.08em",
-                  border: "1px solid #a617ff",
-                  color: "#a617ff",
+                  border: "1px solid #725bea",
+                  color: "#725bea",
                   marginBottom: 16,
                 }}>MODE A - INDEPENDENT</span>
                 <h3 style={{
@@ -195,8 +195,8 @@ export default function Section07_Deployment({
                   fontFamily: '"Fragment Mono", monospace',
                   textTransform: "uppercase",
                   letterSpacing: "0.08em",
-                  border: "1px solid #a617ff",
-                  color: "#a617ff",
+                  border: "1px solid #725bea",
+                  color: "#725bea",
                   marginBottom: 16,
                 }}>MODE B - INTEGRATED</span>
                 <h3 style={{

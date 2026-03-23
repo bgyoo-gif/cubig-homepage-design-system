@@ -83,7 +83,7 @@ export default function Section05_ThreeProblems({
               letterSpacing: "-0.5px",
               marginBottom: 16,
             }}>
-              Three Data Problems. <span style={{ color: "#a617ff" }}>One Engine.</span>
+              Three Data Problems. <span style={{ color: "#725bea" }}>One Engine.</span>
             </h2>
             <p style={{
               fontSize: 18,

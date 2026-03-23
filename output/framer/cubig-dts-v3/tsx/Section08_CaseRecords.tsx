@@ -15,7 +15,7 @@ export default function Section08_CaseRecords({
   const cases = [
     {
       industry: "Finance",
-      industryColor: "#a617ff",
+      industryColor: "#725bea",
       titleText: "97.6% AI detection rate -- 79 patterns expanded to 1,000 records",
       badges: [
         { label: "Privacy-Safe", color: "success" },
@@ -29,7 +29,7 @@ export default function Section08_CaseRecords({
     },
     {
       industry: "Finance",
-      industryColor: "#a617ff",
+      industryColor: "#725bea",
       titleText: "F1 0.92 churn model -- 277,249 synthetic records, 6-month deletion policy bypassed",
       badges: [
         { label: "Privacy-Safe", color: "success" },
@@ -72,7 +72,7 @@ export default function Section08_CaseRecords({
 
   const badgeStyles: Record<string, { bg: string; color: string }> = {
     success: { bg: "rgba(14, 130, 76, 0.12)", color: "#0e824c" },
-    purple: { bg: "#c6c5fa", color: "#a617ff" },
+    purple: { bg: "#c6c5fa", color: "#725bea" },
     error: { bg: "rgba(255, 48, 48, 0.12)", color: "#ff3030" },
   }
 
@@ -110,7 +110,7 @@ export default function Section08_CaseRecords({
               letterSpacing: "-0.5px",
               marginBottom: 16,
             }}>
-              Production <span style={{ color: "#a617ff" }}>Case Records</span>
+              Production <span style={{ color: "#725bea" }}>Case Records</span>
             </h2>
             <p style={{
               fontSize: 18,

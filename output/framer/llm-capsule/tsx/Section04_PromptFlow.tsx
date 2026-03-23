@@ -177,7 +177,7 @@ export default function Section04_PromptFlow({
         .s4-arrow::before {
           content: "↓";
           font-size: 18px;
-          color: #a617ff;
+          color: #725bea;
           flex-shrink: 0;
         }
 

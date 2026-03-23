@@ -149,7 +149,7 @@ export default function Section09_FiveSignals({
               letterSpacing: "-0.5px",
               marginBottom: 16,
             }}>
-              Five Signals Your Data Is <span style={{ color: "#a617ff" }}>Blocking AI</span>
+              Five Signals Your Data Is <span style={{ color: "#725bea" }}>Blocking AI</span>
             </h2>
             <p style={{
               fontSize: 18,

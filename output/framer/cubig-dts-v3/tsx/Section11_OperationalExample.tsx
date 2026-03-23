@@ -50,7 +50,7 @@ export default function Section11_OperationalExample({
               lineHeight: 1.2,
               letterSpacing: "-0.5px",
             }}>
-              Operational Example: <span style={{ color: "#a617ff" }}>Fraud Detection</span> with Rare Events
+              Operational Example: <span style={{ color: "#725bea" }}>Fraud Detection</span> with Rare Events
             </h2>
           </div>
 

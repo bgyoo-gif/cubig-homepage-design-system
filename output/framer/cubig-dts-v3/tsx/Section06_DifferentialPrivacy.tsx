@@ -79,7 +79,7 @@ export default function Section06_DifferentialPrivacy({
               letterSpacing: "-0.5px",
               marginBottom: 16,
             }}>
-              Mathematically Guaranteed <span style={{ color: "#a617ff" }}>Privacy Protection</span>
+              Mathematically Guaranteed <span style={{ color: "#725bea" }}>Privacy Protection</span>
             </h2>
             <p style={{
               fontSize: 18,

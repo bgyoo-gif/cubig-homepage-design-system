@@ -182,7 +182,7 @@ export default function Section08_Integration({
           width: 6px;
           height: 6px;
           border-radius: 50%;
-          background: #a617ff;
+          background: #725bea;
           flex-shrink: 0;
           margin-top: 6px;
         }

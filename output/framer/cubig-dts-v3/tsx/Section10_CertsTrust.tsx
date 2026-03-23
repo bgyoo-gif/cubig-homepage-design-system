@@ -111,7 +111,7 @@ export default function Section10_CertsTrust({
               lineHeight: 1.2,
               letterSpacing: "-0.5px",
             }}>
-              Certified and <span style={{ color: "#a617ff" }}>Trusted</span>
+              Certified and <span style={{ color: "#725bea" }}>Trusted</span>
             </h2>
           </div>
         </div>
@@ -153,7 +153,7 @@ export default function Section10_CertsTrust({
                   fontWeight: 500,
                   textTransform: "uppercase",
                   letterSpacing: "0.08em",
-                  color: "#a617ff",
+                  color: "#725bea",
                   marginBottom: 4,
                 }}>{cert.group}</span>
                 <div style={{

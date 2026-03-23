@@ -103,7 +103,7 @@ export default function Section04_Comparison({
               letterSpacing: "-0.5px",
               marginBottom: 16,
             }}>
-              <span style={{ fontFamily: '"Oxanium", sans-serif', fontWeight: 700 }}>DTS</span> vs. Other Approaches to <span style={{ color: "#a617ff" }}>Restricted Data</span>
+              <span style={{ fontFamily: '"Oxanium", sans-serif', fontWeight: 700 }}>DTS</span> vs. Other Approaches to <span style={{ color: "#725bea" }}>Restricted Data</span>
             </h2>
             <p style={{
               fontSize: 18,

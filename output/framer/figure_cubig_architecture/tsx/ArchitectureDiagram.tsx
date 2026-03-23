@@ -4,7 +4,7 @@ import { useState } from "react"
 // ─── Palette ────────────────────────────────────────────────────────────────
 const PALETTE = {
   brandPrimary: "#3061f2",
-  brandPurple: "#a617ff",
+  brandPurple: "#725bea",
   neutral900: "#0f0f0f",
   neutral700: "#303135",
   neutral500: "#636363",
