@@ -160,7 +160,6 @@ export default function Section09_FiveSignals({
           width: "100%",
           maxWidth: 1440,
          margin: "0 auto",
-          margin: "0 auto",
           padding: containerPadding,
           boxSizing: "border-box",
         }}>
@@ -179,6 +178,7 @@ export default function Section09_FiveSignals({
               lineHeight: 1.2,
               letterSpacing: "-0.5px",
               marginBottom: 16,
+              textAlign: "center",
             }}>
               Five Signals Your Data Is <span style={{ color: "#725bea" }}>Blocking AI</span>
             </h2>

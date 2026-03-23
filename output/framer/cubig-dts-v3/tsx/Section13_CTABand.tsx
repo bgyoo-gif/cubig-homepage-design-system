@@ -91,7 +91,6 @@ export default function Section13_CTABand({
           zIndex: 1,
           maxWidth: 860,
          margin: "0 auto",
-          margin: "0 auto",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",

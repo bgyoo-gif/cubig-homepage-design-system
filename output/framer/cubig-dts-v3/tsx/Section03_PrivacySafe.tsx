@@ -46,7 +46,6 @@ export default function Section03_PrivacySafe({
           width: "100%",
           maxWidth: 1440,
          margin: "0 auto",
-          margin: "0 auto",
           padding: containerPadding,
           boxSizing: "border-box",
         }}>
@@ -65,6 +64,7 @@ export default function Section03_PrivacySafe({
               lineHeight: 1.2,
               letterSpacing: "-0.5px",
               marginBottom: 16,
+              textAlign: "center",
             }}>
               {title}<span style={{ color: "#725bea" }}>{titleBrand}</span>
             </h2>
@@ -74,7 +74,6 @@ export default function Section03_PrivacySafe({
               lineHeight: 1.7,
               maxWidth: 860,
              margin: "0 auto",
-              margin: "0 auto",
             }}>{description}</p>
           </div>
 

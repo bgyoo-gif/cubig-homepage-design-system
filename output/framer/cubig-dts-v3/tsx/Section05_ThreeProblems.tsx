@@ -80,7 +80,6 @@ export default function Section05_ThreeProblems({
           width: "100%",
           maxWidth: 1440,
          margin: "0 auto",
-          margin: "0 auto",
           padding: containerPadding,
           boxSizing: "border-box",
         }}>
@@ -99,6 +98,7 @@ export default function Section05_ThreeProblems({
               lineHeight: 1.2,
               letterSpacing: "-0.5px",
               marginBottom: 16,
+              textAlign: "center",
             }}>
               Three Data Problems. <span style={{ color: "#725bea" }}>One Engine.</span>
             </h2>

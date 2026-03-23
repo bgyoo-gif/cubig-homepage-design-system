@@ -97,7 +97,6 @@ export default function Section07_Deployment({
           width: "100%",
           maxWidth: 1440,
          margin: "0 auto",
-          margin: "0 auto",
           padding: containerPadding,
           boxSizing: "border-box",
         }}>

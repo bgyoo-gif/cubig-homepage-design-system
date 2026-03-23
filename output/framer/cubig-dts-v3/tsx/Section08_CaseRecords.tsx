@@ -106,7 +106,6 @@ export default function Section08_CaseRecords({
           width: "100%",
           maxWidth: 1440,
          margin: "0 auto",
-          margin: "0 auto",
           padding: containerPadding,
           boxSizing: "border-box",
         }}>
@@ -125,6 +124,7 @@ export default function Section08_CaseRecords({
               lineHeight: 1.2,
               letterSpacing: "-0.5px",
               marginBottom: 16,
+              textAlign: "center",
             }}>
               Production <span style={{ color: "#725bea" }}>Case Records</span>
             </h2>

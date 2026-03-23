@@ -75,7 +75,6 @@ export default function Section06_DifferentialPrivacy({
           width: "100%",
           maxWidth: 1440,
          margin: "0 auto",
-          margin: "0 auto",
           padding: containerPadding,
           boxSizing: "border-box",
         }}>
@@ -94,6 +93,7 @@ export default function Section06_DifferentialPrivacy({
               lineHeight: 1.2,
               letterSpacing: "-0.5px",
               marginBottom: 16,
+              textAlign: "center",
             }}>
               Mathematically Guaranteed <span style={{ color: "#725bea" }}>Privacy Protection</span>
             </h2>

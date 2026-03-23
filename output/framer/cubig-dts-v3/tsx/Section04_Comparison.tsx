@@ -101,7 +101,6 @@ export default function Section04_Comparison({
           width: "100%",
           maxWidth: 1440,
          margin: "0 auto",
-          margin: "0 auto",
           padding: containerPadding,
           boxSizing: "border-box",
         }}>
@@ -120,6 +119,7 @@ export default function Section04_Comparison({
               lineHeight: 1.2,
               letterSpacing: "-0.5px",
               marginBottom: 16,
+              textAlign: "center",
             }}>
               <span style={{ fontFamily: '"Oxanium", sans-serif', fontWeight: 700 }}>DTS</span> vs. Other Approaches to <span style={{ color: "#725bea" }}>Restricted Data</span>
             </h2>
