@@ -18,23 +18,26 @@ export default function Section03_PrivacySafe({
   body2 = "DTS is a capability within Cubig's AI-Ready Data Infrastructure -- the infrastructure layer that makes enterprise data usable, privacy-safe, and stable for production AI execution. DTS specifically addresses the Restricted Data and Unusable Data blockers.",
   bannerText = "Synthetic data is a DTS capability. It is not Cubig's top-level identity.",
 }: Props) {
+  const containerRef = React.useRef<HTMLDivElement>(null)
   const [isMobile, setIsMobile] = React.useState(false)
   const [isTablet, setIsTablet] = React.useState(false)
 
   React.useEffect(() => {
-    const check = () => {
-      setIsMobile(window.innerWidth < 768)
-      setIsTablet(window.innerWidth >= 768 && window.innerWidth < 1024)
-    }
-    check()
-    window.addEventListener("resize", check)
-    return () => window.removeEventListener("resize", check)
+    const el = containerRef.current
+    if (!el) return
+    const ro = new ResizeObserver(([entry]) => {
+      const w = entry.contentRect.width
+      setIsMobile(w < 768)
+      setIsTablet(w >= 768 && w < 1024)
+    })
+    ro.observe(el)
+    return () => ro.disconnect()
   }, [])
 
   const containerPadding = isMobile ? "0 16px" : isTablet ? "0 32px" : "0 120px"
 
   return (
-    <div style={{ width: "100%", fontFamily: '"DM Sans", sans-serif', WebkitFontSmoothing: "antialiased" }}>
+    <div ref={containerRef} style={{ width: "100%", fontFamily: '"DM Sans", sans-serif', WebkitFontSmoothing: "antialiased" }}>
       <section style={{
         width: "100%",
         padding: isMobile ? "48px 0" : "80px 0",

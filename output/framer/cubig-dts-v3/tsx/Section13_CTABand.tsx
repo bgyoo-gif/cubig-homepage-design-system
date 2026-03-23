@@ -28,17 +28,20 @@ export default function Section13_CTABand({
   cta3Href = "/syntitan",
   footnote = "30-min review / no sales pitch",
 }: Props) {
+  const containerRef = React.useRef<HTMLDivElement>(null)
   const [isMobile, setIsMobile] = React.useState(false)
   const [isTablet, setIsTablet] = React.useState(false)
 
   React.useEffect(() => {
-    const check = () => {
-      setIsMobile(window.innerWidth < 768)
-      setIsTablet(window.innerWidth >= 768 && window.innerWidth < 1024)
-    }
-    check()
-    window.addEventListener("resize", check)
-    return () => window.removeEventListener("resize", check)
+    const el = containerRef.current
+    if (!el) return
+    const ro = new ResizeObserver(([entry]) => {
+      const w = entry.contentRect.width
+      setIsMobile(w < 768)
+      setIsTablet(w >= 768 && w < 1024)
+    })
+    ro.observe(el)
+    return () => ro.disconnect()
   }, [])
 
   const btnStyle: React.CSSProperties = {
@@ -61,7 +64,7 @@ export default function Section13_CTABand({
   }
 
   return (
-    <div style={{ width: "100%", fontFamily: '"DM Sans", sans-serif', WebkitFontSmoothing: "antialiased" }}>
+    <div ref={containerRef} style={{ width: "100%", fontFamily: '"DM Sans", sans-serif', WebkitFontSmoothing: "antialiased" }}>
       <section
         aria-label="Call to action"
         style={{

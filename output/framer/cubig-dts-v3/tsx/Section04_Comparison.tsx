@@ -10,17 +10,20 @@ export default function Section04_Comparison({
   title = "DTS vs. Other Approaches to Restricted Data",
   description = "Databricks stores your data. Masking removes it. DTS makes it AI-ready -- without removing or exposing it.",
 }: Props) {
+  const containerRef = React.useRef<HTMLDivElement>(null)
   const [isMobile, setIsMobile] = React.useState(false)
   const [isTablet, setIsTablet] = React.useState(false)
 
   React.useEffect(() => {
-    const check = () => {
-      setIsMobile(window.innerWidth < 768)
-      setIsTablet(window.innerWidth >= 768 && window.innerWidth < 1024)
-    }
-    check()
-    window.addEventListener("resize", check)
-    return () => window.removeEventListener("resize", check)
+    const el = containerRef.current
+    if (!el) return
+    const ro = new ResizeObserver(([entry]) => {
+      const w = entry.contentRect.width
+      setIsMobile(w < 768)
+      setIsTablet(w >= 768 && w < 1024)
+    })
+    ro.observe(el)
+    return () => ro.disconnect()
   }, [])
 
   const containerPadding = isMobile ? "0 16px" : isTablet ? "0 32px" : "0 120px"
@@ -89,7 +92,7 @@ export default function Section04_Comparison({
   }
 
   return (
-    <div style={{ width: "100%", fontFamily: '"DM Sans", sans-serif', WebkitFontSmoothing: "antialiased" }}>
+    <div ref={containerRef} style={{ width: "100%", fontFamily: '"DM Sans", sans-serif', WebkitFontSmoothing: "antialiased" }}>
       <section style={{
         width: "100%",
         padding: isMobile ? "48px 0" : "80px 0",
