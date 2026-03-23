@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 06 — Differential Privacy Step Tabs Preview</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@700&family=Fragment+Mono&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #fff; word-break: keep-all; overflow-wrap: break-word; -webkit-font-smoothing: antialiased; }
+
+    .s6-section { width: 100%; padding: 80px 0; background-color: #ffffff; font-family: "DM Sans", sans-serif; }
+    .s6-container { width: 100%; margin: 0 auto; padding: 0 16px; box-sizing: border-box; }
+    .s6-section-header { margin-bottom: 32px; text-align: left; padding-bottom: 24px; border-bottom: 1px solid #e6e7e9; }
+    .s6-title { font-family: "DM Sans", sans-serif; font-size: 20px; font-weight: 700; color: #0f0f0f; line-height: 1.2; letter-spacing: -0.5px; margin-bottom: 16px; text-wrap: balance; }
+    .s6-title-brand { color: #a617ff; }
+    .s6-description { font-size: 18px; color: #636363; line-height: 1.7; max-width: 720px; }
+    .s6-banner-wrap { margin-bottom: 48px; }
+    .s6-banner { padding: 16px 24px; border-top: 1px solid #e6e7e9; border-bottom: 1px solid #e6e7e9; background-color: rgba(166, 23, 255, 0.06); font-size: 14px; line-height: 1.7; text-align: center; color: #0f0f0f; }
+    .s6-tabs-nav { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 64px; }
+    .s6-tab { display: inline-flex; align-items: center; gap: 8px; padding: 8px 24px; border-radius: 9999px; border: 1px solid #e6e7e9; background-color: #ffffff; font-family: "DM Sans", sans-serif; font-size: 14px; font-weight: 500; color: #636363; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+    .s6-tab:hover { background-color: #0f0f0f; border-color: #0f0f0f; color: #ffffff; }
+    .s6-tab-num { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background-color: #ececec; border: 1px solid #e6e7e9; font-size: 12px; font-weight: 700; color: #636363; flex-shrink: 0; transition: all 0.2s; }
+    .s6-tab--active { background-color: #0f0f0f; border-color: #0f0f0f; color: #ffffff; font-weight: 600; }
+    .s6-tab--active .s6-tab-num { background-color: #ffffff; border-color: #ffffff; color: #0f0f0f; }
+    .s6-panel { display: none; }
+    .s6-panel--active { display: grid; grid-template-columns: 1fr; gap: 48px; align-items: center; }
+    .s6-panel-content { display: flex; flex-direction: column; gap: 24px; }
+    .s6-panel-title { font-family: "DM Sans", sans-serif; font-size: 30px; font-weight: 700; color: #0f0f0f; line-height: 1.2; text-wrap: balance; }
+    .s6-panel-desc { font-size: 16px; color: #636363; line-height: 1.7; }
+    .s6-panel-screenshot { border-radius: 24px; overflow: hidden; border: 1px solid #e6e7e9; box-shadow: 0px 24px 40px rgba(0,0,0,0.04); background-color: #f7f7f7; max-height: 420px; }
+    .s6-panel-screenshot img { width: 100%; display: block; object-fit: cover; object-position: top left; }
+
+    @media (min-width: 768px) { .s6-container { padding: 0 32px; } .s6-title { font-size: 22px; } .s6-panel-title { font-size: 36px; } }
+    @media (min-width: 1024px) { .s6-container { padding: 0 32px; } .s6-title { font-size: 24px; } .s6-panel--active { grid-template-columns: 5fr 7fr; gap: 64px; } }
+    @media (min-width: 1440px) { .s6-container { padding: 0 120px; max-width: 1440px; } .s6-title { font-size: 28px; } .s6-panel--active { gap: 80px; } }
+    @media (max-width: 767px) { .s6-panel-screenshot { max-height: 280px; } .s6-tabs-nav { justify-content: flex-start; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding-bottom: 8px; } .s6-tabs-nav::-webkit-scrollbar { display: none; } }
+  </style>
+</head>
+<body>
+  <section class="s6-section">
+    <div class="s6-container">
+      <div class="s6-section-header">
+        <h2 class="s6-title">Mathematically Guaranteed <span class="s6-title-brand">Privacy Protection</span></h2>
+        <p class="s6-description">Differential privacy (DP) is a mathematical framework that guarantees any single individual's data cannot be identified from the synthetic output -- regardless of what an attacker already knows.</p>
+      </div>
+      <div class="s6-banner-wrap">
+        <div class="s6-banner" role="note">
+          The probability of any inference about an individual from the synthetic dataset is bounded by a mathematically defined epsilon -- regardless of external knowledge.
+        </div>
+      </div>
+      <div class="s6-tabs-nav" role="tablist" aria-label="DP process steps">
+        <button class="s6-tab s6-tab--active" data-tab="0"><span class="s6-tab-num">1</span> Statistical Profiling</button>
+        <button class="s6-tab" data-tab="1"><span class="s6-tab-num">2</span> DP Noise Injection</button>
+        <button class="s6-tab" data-tab="2"><span class="s6-tab-num">3</span> Synthetic Generation</button>
+        <button class="s6-tab" data-tab="3"><span class="s6-tab-num">4</span> Fidelity Validation</button>
+      </div>
+      <div class="s6-panel s6-panel--active" data-panel="0">
+        <div class="s6-panel-content">
+          <h3 class="s6-panel-title">Statistical Profiling</h3>
+          <p class="s6-panel-desc">DTS analyzes the real dataset's statistical properties -- distributions, correlations, marginals -- without storing raw records.</p>
+        </div>
+        <div class="s6-panel-screenshot">
+          <img src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/screenshot-dts-statistical-profiling.png" alt="DTS Statistical Profiling interface" loading="lazy">
+        </div>
+      </div>
+      <div class="s6-panel" data-panel="1">
+        <div class="s6-panel-content">
+          <h3 class="s6-panel-title">DP Noise Injection</h3>
+          <p class="s6-panel-desc">Calibrated noise is injected into the statistical model according to DP bounds. Individual data points become mathematically unidentifiable.</p>
+        </div>
+        <div class="s6-panel-screenshot">
+          <img src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/screenshot-dts-differencial-privacy.png" alt="DTS Differential Privacy interface" loading="lazy">
+        </div>
+      </div>
+      <div class="s6-panel" data-panel="2">
+        <div class="s6-panel-content">
+          <h3 class="s6-panel-title">Synthetic Generation</h3>
+          <p class="s6-panel-desc">New records are sampled from the DP-protected model. Output is statistically representative but contains no real personal information.</p>
+        </div>
+        <div class="s6-panel-screenshot">
+          <img src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/screenshot-dts-syntheticgeneration.png" alt="DTS Synthetic Generation interface" loading="lazy">
+        </div>
+      </div>
+      <div class="s6-panel" data-panel="3">
+        <div class="s6-panel-content">
+          <h3 class="s6-panel-title">Fidelity Validation</h3>
+          <p class="s6-panel-desc">Generated data is validated against the original distribution. Quality and utility metrics confirm suitability for training and validation use.</p>
+        </div>
+        <div class="s6-panel-screenshot">
+          <img src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/screenshot-dts-quality-evaluation.png" alt="DTS Quality Evaluation dashboard" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+  <script>
+    document.querySelectorAll('.s6-tab').forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        var idx = this.getAttribute('data-tab');
+        document.querySelectorAll('.s6-tab').forEach(function(t) { t.classList.remove('s6-tab--active'); });
+        document.querySelectorAll('.s6-panel').forEach(function(p) { p.classList.remove('s6-panel--active'); });
+        this.classList.add('s6-tab--active');
+        document.querySelector('[data-panel="' + idx + '"]').classList.add('s6-panel--active');
+      });
+    });
+  </script>
+</body>
+</html>

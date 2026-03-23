@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 05 — Three Problems Preview</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@700&family=Fragment+Mono&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #fff; word-break: keep-all; overflow-wrap: break-word; -webkit-font-smoothing: antialiased; }
+
+    .s5-section { width: 100%; padding: 80px 0; background-color: #ffffff; font-family: "DM Sans", sans-serif; }
+    .s5-container { width: 100%; margin: 0 auto; padding: 0 16px; box-sizing: border-box; }
+    .s5-section-header { margin-bottom: 32px; text-align: left; padding-bottom: 24px; border-bottom: 1px solid #e6e7e9; }
+    .s5-title { font-family: "DM Sans", sans-serif; font-size: 20px; font-weight: 700; color: #0f0f0f; line-height: 1.2; letter-spacing: -0.5px; margin-bottom: 16px; text-wrap: balance; }
+    .s5-title-brand { color: #a617ff; }
+    .s5-description { font-size: 18px; color: #636363; line-height: 1.7; max-width: 720px; }
+    .s5-card-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+    .s5-card { background-color: #ffffff; border-radius: 18px; border: 1px solid #e6e7e9; padding: 24px; box-shadow: 0px 24px 40px rgba(0,0,0,0.04); box-sizing: border-box; display: flex; flex-direction: column; }
+    .s5-card-badge { display: inline-flex; align-items: center; width: fit-content; padding: 4px 12px; border-radius: 9999px; font-size: 12px; font-weight: 500; font-family: "Fragment Mono", monospace; text-transform: uppercase; letter-spacing: 0.08em; border: 1px solid currentColor; margin-bottom: 16px; }
+    .s5-card-number { font-size: 12px; font-weight: 500; color: #9c9c9c; margin-bottom: 8px; line-height: 1.5; }
+    .s5-card-title { font-family: "DM Sans", sans-serif; font-size: 24px; font-weight: 700; color: #0f0f0f; line-height: 1.2; margin-bottom: 12px; text-wrap: balance; }
+    .s5-card-desc { font-size: 14px; color: #636363; line-height: 1.7; flex: 1; margin-bottom: 16px; }
+    .s5-checklist { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-top: 16px; }
+    .s5-check-item { display: flex; align-items: flex-start; gap: 8px; font-size: 16px; line-height: 1.5; color: #0f0f0f; }
+    .s5-check-icon { width: 20px; height: 20px; flex-shrink: 0; margin-top: 2px; display: flex; align-items: center; justify-content: center; color: #0e824c; font-weight: 700; }
+
+    @media (min-width: 768px) { .s5-container { padding: 0 32px; } .s5-card-grid { grid-template-columns: repeat(2, 1fr); } .s5-title { font-size: 22px; } }
+    @media (min-width: 1024px) { .s5-container { padding: 0 32px; } .s5-card-grid { grid-template-columns: repeat(3, 1fr); } .s5-title { font-size: 24px; } }
+    @media (min-width: 1440px) { .s5-container { padding: 0 120px; max-width: 1440px; } .s5-title { font-size: 28px; } }
+  </style>
+</head>
+<body>
+  <section class="s5-section">
+    <div class="s5-container">
+      <div class="s5-section-header">
+        <h2 class="s5-title">Three Data Problems. <span class="s5-title-brand">One Engine.</span></h2>
+        <p class="s5-description">Data that can't be used, can't be shared, or doesn't exist in sufficient volume -- DTS resolves all three.</p>
+      </div>
+      <div class="s5-card-grid">
+        <article class="s5-card">
+          <span class="s5-card-badge" style="color: #ff3030; border-color: #ff3030;">RESTRICTED DATA</span>
+          <p class="s5-card-number">01 / 03</p>
+          <h3 class="s5-card-title">Privacy-Safe Replacement</h3>
+          <p class="s5-card-desc">Sensitive or regulated data blocked by compliance rules. DTS generates a statistically equivalent synthetic dataset -- with no real personal information.</p>
+          <ul class="s5-checklist">
+            <li class="s5-check-item"><span class="s5-check-icon">✓</span>Replace GDPR, PIPA, HIPAA, or CCPA-restricted data with DP-safe synthetic equivalents</li>
+            <li class="s5-check-item"><span class="s5-check-icon">✓</span>Differential privacy guarantee on all synthetic output</li>
+            <li class="s5-check-item"><span class="s5-check-icon">✓</span>Safe for cross-team, cross-border, and external use</li>
+            <li class="s5-check-item"><span class="s5-check-icon">✓</span>Full distribution fidelity preserved</li>
+          </ul>
+        </article>
+        <article class="s5-card">
+          <span class="s5-card-badge" style="color: #0e824c; border-color: #0e824c;">UNUSABLE DATA</span>
+          <p class="s5-card-number">02 / 03</p>
+          <h3 class="s5-card-title">Coverage &amp; Balance Expansion</h3>
+          <p class="s5-card-desc">Data exists but is unfit for AI -- missing rare classes, biased distributions, or insufficient volume for reliable training.</p>
+          <ul class="s5-checklist">
+            <li class="s5-check-item"><span class="s5-check-icon">✓</span>Augment underrepresented classes at scale</li>
+            <li class="s5-check-item"><span class="s5-check-icon">✓</span>Fix class imbalance without overfitting</li>
+            <li class="s5-check-item"><span class="s5-check-icon">✓</span>Generate edge case and rare event samples</li>
+            <li class="s5-check-item"><span class="s5-check-icon">✓</span>Expand small datasets to production-grade volumes</li>
+          </ul>
+        </article>
+        <article class="s5-card">
+          <span class="s5-card-badge" style="color: #ff3030; border-color: #ff3030;">NON-ACCESSIBLE DATA</span>
+          <p class="s5-card-number">03 / 03</p>
+          <h3 class="s5-card-title">Safe Dataset Generation</h3>
+          <p class="s5-card-desc">Data exists in a silo -- restricted by access controls, third-party agreements, or geographic regulations -- and can't reach training pipelines.</p>
+          <ul class="s5-checklist">
+            <li class="s5-check-item"><span class="s5-check-icon">✓</span>Generate safe replacement datasets from inaccessible sources</li>
+            <li class="s5-check-item"><span class="s5-check-icon">✓</span>Unblock stalled validation and testing workflows</li>
+            <li class="s5-check-item"><span class="s5-check-icon">✓</span>Remove data access bottlenecks in regulated environments</li>
+            <li class="s5-check-item"><span class="s5-check-icon">✓</span>Maintain statistical characteristics without data transfer</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

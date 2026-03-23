@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 02 — KPI Band Preview</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@700&family=Fragment+Mono&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #fff; word-break: keep-all; overflow-wrap: break-word; -webkit-font-smoothing: antialiased; }
+
+    .s2-section { width: 100%; padding: 80px 0; background-color: #ffffff; font-family: "DM Sans", sans-serif; }
+    .s2-container { width: 100%; margin: 0 auto; padding: 0 16px; box-sizing: border-box; }
+    .s2-kpi-band {
+      border-radius: 40px;
+      padding: 48px 32px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+      justify-items: center;
+      background-image: url('https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/bg-lavender.png');
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .s2-kpi-band::before { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.35); z-index: 0; }
+    .s2-kpi-band > * { position: relative; z-index: 1; }
+    .s2-kpi-item { display: flex; flex-direction: column; gap: 12px; text-align: center; }
+    .s2-kpi-number { font-family: "DM Sans", sans-serif; font-size: 50px; font-weight: 700; line-height: 1; color: #ffffff; }
+    .s2-kpi-label { font-size: 14px; color: rgba(255,255,255,0.85); line-height: 1.5; }
+    .s2-kpi-sub { font-size: 12px; color: rgba(255,255,255,0.65); font-family: "Fragment Mono", monospace; margin-top: 2px; }
+    .s2-banner-wrap { margin-top: 24px; }
+    .s2-banner-full {
+      width: 100%; text-align: center;
+      padding: 32px 48px;
+      border-radius: 40px;
+      background-image: url('https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/bg-green-wave.png');
+      background-size: cover; background-position: center;
+      position: relative; overflow: hidden;
+      font-size: 18px; font-weight: 500; line-height: 1.7; border: none; isolation: isolate;
+    }
+    .s2-banner-full::before { content: ''; position: absolute; inset: 0; background: rgba(255,255,255,0.45); z-index: 0; }
+    .s2-banner-full > * { position: relative; z-index: 1; }
+    .s2-banner-full p { color: #0f0f0f; }
+    .s2-banner-full em { font-style: italic; }
+
+    @media (max-width: 1023px) { .s2-kpi-band { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 767px) { .s2-kpi-band { grid-template-columns: 1fr; padding: 32px 20px; } .s2-kpi-number { font-size: 36px; } }
+    @media (min-width: 768px) { .s2-container { padding: 0 32px; } }
+    @media (min-width: 1440px) { .s2-container { padding: 0 120px; max-width: 1440px; } }
+  </style>
+</head>
+<body>
+  <section class="s2-section">
+    <div class="s2-container">
+      <div class="s2-kpi-band">
+        <div class="s2-kpi-item">
+          <span class="s2-kpi-number">+30pp</span>
+          <p class="s2-kpi-label">F1-Score Lift</p>
+          <span class="s2-kpi-sub">58.55% → 88.55%</span>
+        </div>
+        <div class="s2-kpi-item">
+          <span class="s2-kpi-number">-90%</span>
+          <p class="s2-kpi-label">Time to Deploy</p>
+          <span class="s2-kpi-sub">4 weeks → 1 day</span>
+        </div>
+        <div class="s2-kpi-item">
+          <span class="s2-kpi-number">97.6%</span>
+          <p class="s2-kpi-label">AI Detection Rate</p>
+          <span class="s2-kpi-sub">IBK Industrial Bank</span>
+        </div>
+        <div class="s2-kpi-item">
+          <span class="s2-kpi-number">277K+</span>
+          <p class="s2-kpi-label">Synthetic Records</p>
+          <span class="s2-kpi-sub">Kyobo Life Insurance</span>
+        </div>
+      </div>
+      <div class="s2-banner-wrap">
+        <div class="s2-banner-full">
+          <p>True AI-ready data means it is <em>usable</em>, <em>privacy-safe</em>, and <em>stable for production execution</em>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
