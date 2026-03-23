@@ -774,7 +774,14 @@ HTML:
 /* 스크린샷 아래 CTA 버튼 영역 */
 .ds-hero__actions-below { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 20px; padding-bottom: var(--ds-space-3xl); }
 
-/* 스크린샷 프레임 — 반드시 배경 이미지(ds-bg--*) 사용 (gradient 금지) */
+/* 스크린샷 프레임 — 반드시 배경 이미지(ds-bg--*) 사용 (gradient 금지)
+   추천 조합:
+   - 밝은 제품: ds-bg--paint-blue, ds-bg--paint-lavender, ds-bg--paint-sand, ds-bg--grad-sky
+   - 따뜻한 톤: ds-bg--peach, ds-bg--paint-peach, ds-bg--grad-cream, ds-bg--grad-sage
+   - 쿨/다크 톤: ds-bg--grad-deep, ds-bg--grad-navy, ds-bg--grad-blue, ds-bg--grad-violet
+   - 자연/유기적: ds-bg--green-wave, ds-bg--lime, ds-bg--paint-teal, ds-bg--glow-yellow
+   - 부드러운: ds-bg--lavender, ds-bg--pink, ds-bg--smoke-pink, ds-bg--wave-teal
+   페이지별로 다른 배경을 사용해야 함 (중복 금지) */
 .ds-hero__screenshot-frame {
   margin-top: var(--ds-space-xl);
   border-radius: var(--ds-radius-xl);
@@ -2103,13 +2110,33 @@ drawArrows() 함수 규칙:
 
 ```css
 :root {
-  --ds-bg-img-green-wave: url('../reference/images/bg-green-wave.png');
-  --ds-bg-img-lavender:   url('../reference/images/bg-lavender.png');
-  --ds-bg-img-pink:       url('../reference/images/bg-pink.png');
-  --ds-bg-img-peach:      url('../reference/images/bg-peach.png');
-  --ds-bg-img-lime:       url('../reference/images/bg-lime.png');
-  --ds-bg-img-paint-blue: url('../reference/images/bg-paint-blue-iridescent.png');
-  --ds-bg-img-wave-teal:  url('../reference/images/bg-wave-teal-blue.png');
+  /* 원색 계열 */
+  --ds-bg-img-green-wave:    url('../reference/images/bg-green-wave.png');
+  --ds-bg-img-lavender:      url('../reference/images/bg-lavender.png');
+  --ds-bg-img-pink:          url('../reference/images/bg-pink.png');
+  --ds-bg-img-peach:         url('../reference/images/bg-peach.png');
+  --ds-bg-img-lime:          url('../reference/images/bg-lime.png');
+  --ds-bg-img-wave-teal:     url('../reference/images/bg-wave-teal-blue.png');
+
+  /* 페인트 질감 계열 */
+  --ds-bg-img-paint-blue:    url('../reference/images/bg-paint-blue-iridescent.png');
+  --ds-bg-img-paint-lavender:url('../reference/images/bg-paint-lavender-gold.png');
+  --ds-bg-img-paint-peach:   url('../reference/images/bg-paint-peach-coral.png');
+  --ds-bg-img-paint-sand:    url('../reference/images/bg-paint-sand-sky.png');
+  --ds-bg-img-paint-teal:    url('../reference/images/bg-paint-white-teal.png');
+
+  /* 그라디언트 계열 */
+  --ds-bg-img-grad-blue:     url('../reference/images/bg-gradient-blue-violet.png');
+  --ds-bg-img-grad-cream:    url('../reference/images/bg-gradient-cream-jade.png');
+  --ds-bg-img-grad-deep:     url('../reference/images/bg-gradient-deep-teal.png');
+  --ds-bg-img-grad-navy:     url('../reference/images/bg-gradient-navy-teal.png');
+  --ds-bg-img-grad-sage:     url('../reference/images/bg-gradient-sage-rose.png');
+  --ds-bg-img-grad-sky:      url('../reference/images/bg-gradient-sky-blush.png');
+  --ds-bg-img-grad-violet:   url('../reference/images/bg-gradient-violet-teal.png');
+
+  /* 스모크/글로우 계열 */
+  --ds-bg-img-smoke-pink:    url('../reference/images/bg-smoke-pink-teal.png');
+  --ds-bg-img-glow-yellow:   url('../reference/images/bg-glow-yellow-teal.png');
 }
 
 .ds-section--bg-img { position: relative; background-size: cover; background-position: center; overflow: hidden; }
@@ -2117,13 +2144,30 @@ drawArrows() 함수 규칙:
 .ds-section--bg-img > * { position: relative; z-index: 1; }
 .ds-section--bg-img-dark::before { background: rgba(0,0,0,0.35); }
 
-.ds-bg--green-wave { background-image: var(--ds-bg-img-green-wave); }
-.ds-bg--lavender   { background-image: var(--ds-bg-img-lavender); }
-.ds-bg--pink       { background-image: var(--ds-bg-img-pink); }
-.ds-bg--peach      { background-image: var(--ds-bg-img-peach); }
-.ds-bg--lime       { background-image: var(--ds-bg-img-lime); }
-.ds-bg--paint-blue { background-image: var(--ds-bg-img-paint-blue); }
-.ds-bg--wave-teal  { background-image: var(--ds-bg-img-wave-teal); }
+/* 원색 */
+.ds-bg--green-wave    { background-image: var(--ds-bg-img-green-wave); }
+.ds-bg--lavender      { background-image: var(--ds-bg-img-lavender); }
+.ds-bg--pink          { background-image: var(--ds-bg-img-pink); }
+.ds-bg--peach         { background-image: var(--ds-bg-img-peach); }
+.ds-bg--lime          { background-image: var(--ds-bg-img-lime); }
+.ds-bg--wave-teal     { background-image: var(--ds-bg-img-wave-teal); }
+/* 페인트 */
+.ds-bg--paint-blue    { background-image: var(--ds-bg-img-paint-blue); }
+.ds-bg--paint-lavender{ background-image: var(--ds-bg-img-paint-lavender); }
+.ds-bg--paint-peach   { background-image: var(--ds-bg-img-paint-peach); }
+.ds-bg--paint-sand    { background-image: var(--ds-bg-img-paint-sand); }
+.ds-bg--paint-teal    { background-image: var(--ds-bg-img-paint-teal); }
+/* 그라디언트 */
+.ds-bg--grad-blue     { background-image: var(--ds-bg-img-grad-blue); }
+.ds-bg--grad-cream    { background-image: var(--ds-bg-img-grad-cream); }
+.ds-bg--grad-deep     { background-image: var(--ds-bg-img-grad-deep); }
+.ds-bg--grad-navy     { background-image: var(--ds-bg-img-grad-navy); }
+.ds-bg--grad-sage     { background-image: var(--ds-bg-img-grad-sage); }
+.ds-bg--grad-sky      { background-image: var(--ds-bg-img-grad-sky); }
+.ds-bg--grad-violet   { background-image: var(--ds-bg-img-grad-violet); }
+/* 스모크/글로우 */
+.ds-bg--smoke-pink    { background-image: var(--ds-bg-img-smoke-pink); }
+.ds-bg--glow-yellow   { background-image: var(--ds-bg-img-glow-yellow); }
 ```
 
 ---

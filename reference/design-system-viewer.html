@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CUBIG Design System v5.0</title>
+<title>CUBIG Design System v5.1</title>
 <!-- last-updated: 20260322013954 -->
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@400;600;700&family=Fragment+Mono&display=swap" rel="stylesheet">
 <style>
@@ -88,6 +88,31 @@
   --ds-diag-grad-warm:   linear-gradient(135deg, #fb923c 0%, #f472b6 35%, #e879f9 70%, #fda4af 100%);
   /* Diagram OS Window content bg */
   --ds-diag-os-content: linear-gradient(135deg, #dff0ea 0%, #eef3ff 40%, #f3eeff 70%, #fdeef8 100%);
+
+  /* Background Image Assets — 원색 계열 */
+  --ds-bg-img-green-wave:    url('images/bg-green-wave.png');
+  --ds-bg-img-lavender:      url('images/bg-lavender.png');
+  --ds-bg-img-pink:          url('images/bg-pink.png');
+  --ds-bg-img-peach:         url('images/bg-peach.png');
+  --ds-bg-img-lime:          url('images/bg-lime.png');
+  --ds-bg-img-wave-teal:     url('images/bg-wave-teal-blue.png');
+  /* 페인트 질감 계열 */
+  --ds-bg-img-paint-blue:    url('images/bg-paint-blue-iridescent.png');
+  --ds-bg-img-paint-lavender:url('images/bg-paint-lavender-gold.png');
+  --ds-bg-img-paint-peach:   url('images/bg-paint-peach-coral.png');
+  --ds-bg-img-paint-sand:    url('images/bg-paint-sand-sky.png');
+  --ds-bg-img-paint-teal:    url('images/bg-paint-white-teal.png');
+  /* 그라디언트 계열 */
+  --ds-bg-img-grad-blue:     url('images/bg-gradient-blue-violet.png');
+  --ds-bg-img-grad-cream:    url('images/bg-gradient-cream-jade.png');
+  --ds-bg-img-grad-deep:     url('images/bg-gradient-deep-teal.png');
+  --ds-bg-img-grad-navy:     url('images/bg-gradient-navy-teal.png');
+  --ds-bg-img-grad-sage:     url('images/bg-gradient-sage-rose.png');
+  --ds-bg-img-grad-sky:      url('images/bg-gradient-sky-blush.png');
+  --ds-bg-img-grad-violet:   url('images/bg-gradient-violet-teal.png');
+  /* 스모크/글로우 계열 */
+  --ds-bg-img-smoke-pink:    url('images/bg-smoke-pink-teal.png');
+  --ds-bg-img-glow-yellow:   url('images/bg-glow-yellow-teal.png');
 }
 
 /* ===== Viewer Layout ===== */
@@ -790,6 +815,46 @@ code, .ds-code-inline {
   pointer-events: none;
   overflow: visible;
 }
+
+/* ===== Background Image Assets ===== */
+.ds-section--bg-img { position: relative; background-size: cover; background-position: center; overflow: hidden; }
+.ds-section--bg-img::before { content: ''; position: absolute; inset: 0; background: rgba(255,255,255,0.45); z-index: 0; }
+.ds-section--bg-img > * { position: relative; z-index: 1; }
+.ds-section--bg-img-dark::before { background: rgba(0,0,0,0.35); }
+/* 원색 */
+.ds-bg--green-wave    { background-image: var(--ds-bg-img-green-wave); }
+.ds-bg--lavender      { background-image: var(--ds-bg-img-lavender); }
+.ds-bg--pink          { background-image: var(--ds-bg-img-pink); }
+.ds-bg--peach         { background-image: var(--ds-bg-img-peach); }
+.ds-bg--lime          { background-image: var(--ds-bg-img-lime); }
+.ds-bg--wave-teal     { background-image: var(--ds-bg-img-wave-teal); }
+/* 페인트 */
+.ds-bg--paint-blue    { background-image: var(--ds-bg-img-paint-blue); }
+.ds-bg--paint-lavender{ background-image: var(--ds-bg-img-paint-lavender); }
+.ds-bg--paint-peach   { background-image: var(--ds-bg-img-paint-peach); }
+.ds-bg--paint-sand    { background-image: var(--ds-bg-img-paint-sand); }
+.ds-bg--paint-teal    { background-image: var(--ds-bg-img-paint-teal); }
+/* 그라디언트 */
+.ds-bg--grad-blue     { background-image: var(--ds-bg-img-grad-blue); }
+.ds-bg--grad-cream    { background-image: var(--ds-bg-img-grad-cream); }
+.ds-bg--grad-deep     { background-image: var(--ds-bg-img-grad-deep); }
+.ds-bg--grad-navy     { background-image: var(--ds-bg-img-grad-navy); }
+.ds-bg--grad-sage     { background-image: var(--ds-bg-img-grad-sage); }
+.ds-bg--grad-sky      { background-image: var(--ds-bg-img-grad-sky); }
+.ds-bg--grad-violet   { background-image: var(--ds-bg-img-grad-violet); }
+/* 스모크/글로우 */
+.ds-bg--smoke-pink    { background-image: var(--ds-bg-img-smoke-pink); }
+.ds-bg--glow-yellow   { background-image: var(--ds-bg-img-glow-yellow); }
+
+/* Background Image preview tiles (viewer-only) */
+.v-bg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; margin-top: 12px; }
+.v-bg-tile { border-radius: var(--ds-radius-sm); overflow: hidden; border: 1px solid var(--ds-color-border-default); }
+.v-bg-tile__preview { height: 96px; background-size: cover; background-position: center; }
+.v-bg-tile__preview--fallback { display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--ds-color-text-tertiary); font-family: var(--ds-font-code); height: 96px; }
+.v-bg-tile__meta { padding: 8px 10px; background: var(--ds-color-surface-light); }
+.v-bg-tile__class { font-family: var(--ds-font-code); font-size: 11px; font-weight: 600; color: var(--ds-color-text-primary); display: block; }
+.v-bg-tile__var { font-family: var(--ds-font-code); font-size: 10px; color: var(--ds-color-text-tertiary); display: block; margin-top: 2px; word-break: break-all; }
+.v-bg-group-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ds-color-text-tertiary); margin: 20px 0 8px; }
 </style>
 </head>
 <body>
@@ -822,6 +887,7 @@ code, .ds-code-inline {
   <a class="v-subnav__item" href="#spacing">Spacing &amp; Shape</a>
   <a class="v-subnav__item" href="#iconography">Iconography</a>
   <a class="v-subnav__item" href="#responsive">Responsive System</a>
+  <a class="v-subnav__item" href="#bg-images">Background Images</a>
 </nav>
 
 <!-- Colors -->
@@ -1337,6 +1403,113 @@ code, .ds-code-inline {
     <div class="v-note">--ds-content-max-width: 1200px (섹션 내 콘텐츠 최대폭) / ds-container max-width: 1440px (컨테이너 최대폭)</div>
   </div></div>
 </section>
+
+<!-- Background Images -->
+<section class="v-section" id="bg-images">
+  <h2 class="v-section__title">Background Image Assets</h2>
+  <p class="v-section__desc">총 20개. 경로: <code>reference/images/</code>. 이미지가 없는 환경에서는 CSS gradient로 대체 표시.</p>
+
+  <div class="v-card"><div class="v-card__body">
+    <span class="v-label">사용 규칙</span>
+    <div style="font-size:13px;line-height:1.8;color:var(--ds-color-text-secondary)">
+      <div>Hero Screenshot, CTA, ds-banner--full — 배경 이미지 사용</div>
+      <div>Hero Text-only — 배경 이미지 <strong style="color:var(--ds-color-error)">사용 금지</strong> (흰색/밝은 배경만)</div>
+      <div>흰/회색 배경 3개 이상 연속 — 중간에 1개 삽입</div>
+      <div>배경 이미지 위 텍스트 — <strong>black</strong>(밝은 이미지) 또는 <strong>white</strong>(어두운 이미지)만 허용</div>
+      <div>한 페이지 안에 동일한 <code>ds-bg--*</code> 2번 이상 사용 금지</div>
+    </div>
+  </div></div>
+
+  <!-- 원색 계열 -->
+  <p class="v-bg-group-label">원색 계열 (6)</p>
+  <div class="v-bg-grid" id="bg-grid-solid"></div>
+
+  <!-- 페인트 질감 계열 -->
+  <p class="v-bg-group-label">페인트 질감 계열 (5)</p>
+  <div class="v-bg-grid" id="bg-grid-paint"></div>
+
+  <!-- 그라디언트 계열 -->
+  <p class="v-bg-group-label">그라디언트 계열 (7)</p>
+  <div class="v-bg-grid" id="bg-grid-grad"></div>
+
+  <!-- 스모크/글로우 계열 -->
+  <p class="v-bg-group-label">스모크 / 글로우 계열 (2)</p>
+  <div class="v-bg-grid" id="bg-grid-smoke"></div>
+
+  <div class="v-note">이미지가 없으면 CSS gradient로 대체 표시됨. 실제 배경 이미지는 images/ 디렉터리에 png 파일로 배치.</div>
+</section>
+
+<script>
+(function() {
+  var bgData = {
+    solid: [
+      { cls: 'ds-bg--green-wave',  varName: '--ds-bg-img-green-wave',  file: 'images/bg-green-wave.png',           fallback: 'linear-gradient(135deg,#a8e6a3 0%,#4caf50 50%,#1b5e20 100%)' },
+      { cls: 'ds-bg--lavender',    varName: '--ds-bg-img-lavender',     file: 'images/bg-lavender.png',             fallback: 'linear-gradient(135deg,#e8d5f5 0%,#b39ddb 50%,#7b1fa2 100%)' },
+      { cls: 'ds-bg--pink',        varName: '--ds-bg-img-pink',         file: 'images/bg-pink.png',                 fallback: 'linear-gradient(135deg,#fce4ec 0%,#f48fb1 50%,#c2185b 100%)' },
+      { cls: 'ds-bg--peach',       varName: '--ds-bg-img-peach',        file: 'images/bg-peach.png',                fallback: 'linear-gradient(135deg,#fff3e0 0%,#ffb74d 50%,#e65100 100%)' },
+      { cls: 'ds-bg--lime',        varName: '--ds-bg-img-lime',         file: 'images/bg-lime.png',                 fallback: 'linear-gradient(135deg,#f9fbe7 0%,#aed581 50%,#558b2f 100%)' },
+      { cls: 'ds-bg--wave-teal',   varName: '--ds-bg-img-wave-teal',    file: 'images/bg-wave-teal-blue.png',       fallback: 'linear-gradient(135deg,#e0f7fa 0%,#26c6da 50%,#006064 100%)' }
+    ],
+    paint: [
+      { cls: 'ds-bg--paint-blue',     varName: '--ds-bg-img-paint-blue',     file: 'images/bg-paint-blue-iridescent.png', fallback: 'linear-gradient(135deg,#e3f2fd 0%,#64b5f6 40%,#b2ebf2 70%,#e8eaf6 100%)' },
+      { cls: 'ds-bg--paint-lavender', varName: '--ds-bg-img-paint-lavender', file: 'images/bg-paint-lavender-gold.png',   fallback: 'linear-gradient(135deg,#ede7f6 0%,#b39ddb 40%,#fff8e1 70%,#ffd54f 100%)' },
+      { cls: 'ds-bg--paint-peach',    varName: '--ds-bg-img-paint-peach',    file: 'images/bg-paint-peach-coral.png',     fallback: 'linear-gradient(135deg,#fff8f0 0%,#ffccbc 40%,#ff8a65 70%,#ff7043 100%)' },
+      { cls: 'ds-bg--paint-sand',     varName: '--ds-bg-img-paint-sand',     file: 'images/bg-paint-sand-sky.png',        fallback: 'linear-gradient(135deg,#fff9f0 0%,#e6c98a 40%,#b2dff7 70%,#90caf9 100%)' },
+      { cls: 'ds-bg--paint-teal',     varName: '--ds-bg-img-paint-teal',     file: 'images/bg-paint-white-teal.png',      fallback: 'linear-gradient(135deg,#ffffff 0%,#e0f2f1 40%,#80cbc4 70%,#00897b 100%)' }
+    ],
+    grad: [
+      { cls: 'ds-bg--grad-blue',   varName: '--ds-bg-img-grad-blue',   file: 'images/bg-gradient-blue-violet.png',  fallback: 'linear-gradient(135deg,#1565c0 0%,#5c6bc0 50%,#7b1fa2 100%)' },
+      { cls: 'ds-bg--grad-cream',  varName: '--ds-bg-img-grad-cream',  file: 'images/bg-gradient-cream-jade.png',   fallback: 'linear-gradient(135deg,#fffde7 0%,#f9f9f0 40%,#a5d6a7 70%,#00897b 100%)' },
+      { cls: 'ds-bg--grad-deep',   varName: '--ds-bg-img-grad-deep',   file: 'images/bg-gradient-deep-teal.png',    fallback: 'linear-gradient(135deg,#0d1b2a 0%,#0d3b4f 50%,#006064 100%)' },
+      { cls: 'ds-bg--grad-navy',   varName: '--ds-bg-img-grad-navy',   file: 'images/bg-gradient-navy-teal.png',    fallback: 'linear-gradient(135deg,#0a1628 0%,#1a3a5c 50%,#006064 100%)' },
+      { cls: 'ds-bg--grad-sage',   varName: '--ds-bg-img-grad-sage',   file: 'images/bg-gradient-sage-rose.png',    fallback: 'linear-gradient(135deg,#8a9e7c 0%,#b2c4a8 40%,#e8a0a0 70%,#c97b7b 100%)' },
+      { cls: 'ds-bg--grad-sky',    varName: '--ds-bg-img-grad-sky',    file: 'images/bg-gradient-sky-blush.png',    fallback: 'linear-gradient(135deg,#b3e5fc 0%,#e1f5fe 40%,#fce4ec 70%,#f8bbd9 100%)' },
+      { cls: 'ds-bg--grad-violet', varName: '--ds-bg-img-grad-violet', file: 'images/bg-gradient-violet-teal.png',  fallback: 'linear-gradient(135deg,#4a148c 0%,#6a1b9a 40%,#006064 70%,#00897b 100%)' }
+    ],
+    smoke: [
+      { cls: 'ds-bg--smoke-pink',  varName: '--ds-bg-img-smoke-pink',  file: 'images/bg-smoke-pink-teal.png',       fallback: 'radial-gradient(ellipse at 30% 40%,rgba(240,130,170,0.7) 0%,rgba(0,150,150,0.5) 60%,rgba(20,20,30,0.9) 100%)' },
+      { cls: 'ds-bg--glow-yellow', varName: '--ds-bg-img-glow-yellow', file: 'images/bg-glow-yellow-teal.png',      fallback: 'radial-gradient(ellipse at 50% 50%,rgba(255,230,50,0.8) 0%,rgba(0,180,160,0.5) 50%,rgba(10,10,20,0.95) 100%)' }
+    ]
+  };
+
+  function buildGrid(gridId, items) {
+    var grid = document.getElementById(gridId);
+    if (!grid) return;
+    items.forEach(function(item) {
+      var tile = document.createElement('div');
+      tile.className = 'v-bg-tile';
+
+      var img = new Image();
+      var preview = document.createElement('div');
+      preview.className = 'v-bg-tile__preview';
+
+      img.onload = function() {
+        preview.style.backgroundImage = 'url(' + item.file + ')';
+      };
+      img.onerror = function() {
+        preview.style.background = item.fallback;
+        preview.title = '이미지 없음 — CSS gradient로 대체';
+      };
+      img.src = item.file;
+
+      var meta = document.createElement('div');
+      meta.className = 'v-bg-tile__meta';
+      meta.innerHTML = '<span class="v-bg-tile__class">.' + item.cls + '</span><span class="v-bg-tile__var">' + item.varName + '</span>';
+
+      tile.appendChild(preview);
+      tile.appendChild(meta);
+      grid.appendChild(tile);
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    buildGrid('bg-grid-solid', bgData.solid);
+    buildGrid('bg-grid-paint', bgData.paint);
+    buildGrid('bg-grid-grad',  bgData.grad);
+    buildGrid('bg-grid-smoke', bgData.smoke);
+  });
+})();
+</script>
 
 </div><!-- /page-foundation -->
 
