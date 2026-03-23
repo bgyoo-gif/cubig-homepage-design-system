@@ -550,7 +550,8 @@
     .ds-case-image-pair { display: grid; grid-template-columns: 1fr 1fr; gap: var(--ds-space-sm); }
     .ds-case-image-slot { display: flex; flex-direction: column; gap: var(--ds-space-2xs); }
     .ds-case-image-slot img { width: 100%; border-radius: var(--ds-radius-sm); border: 1px solid var(--ds-color-border-default); aspect-ratio: 4/3; object-fit: cover; }
-    .ds-case-image-label { font-size: var(--ds-text-xs); color: var(--ds-color-text-tertiary); text-align: center; }
+    .ds-case-image-label { font-size: var(--ds-text-xs); color: var(--ds-color-text-tertiary); text-align: center; display: block; margin-bottom: var(--ds-space-sm); }
+    .ds-case-image-full { width: 100%; border-radius: var(--ds-radius-sm); border: 1px solid var(--ds-color-border-default); }
     .ds-screenshot-placeholder { width: 100%; aspect-ratio: 4/3; background: var(--ds-color-surface-light); border: 1px dashed var(--ds-color-border-default); border-radius: var(--ds-radius-sm); display: flex; align-items: center; justify-content: center; font-size: var(--ds-text-xs); color: var(--ds-color-text-tertiary); }
 
     /* Gradient Card */
@@ -1454,35 +1455,15 @@
             <div class="ds-card__left">
               <img class="ds-card__left-image" src="../reference/graphics/illustration-defense.png" alt="Defense">
               <span class="ds-card__left-category">Defense</span>
-              <span class="ds-card__left-title">국방 분야</span>
+              <span class="ds-card__left-title">Drone Attack Data Augmentation</span>
             </div>
             <div class="ds-card__right">
               <ul class="ds-bullet ds-bullet--dot">
-                <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>드론 공격 사례는 발생 빈도가 낮고 훈련 데이터가 충분하지 않음</li>
-                <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>드론 공격 데이터를 증폭해 군사훈련 및 대응 시스템 성능을 향상</li>
+                <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Drone attack incidents are rare, leaving insufficient training data for defense AI systems</li>
+                <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Augmented drone attack data to improve military training and response system performance</li>
               </ul>
-              <!-- 이미지 그리드: 원본 vs 합성 -->
               <div class="ds-case-image-grid">
-                <div class="ds-case-image-pair">
-                  <div class="ds-case-image-slot">
-                    <div class="ds-screenshot-placeholder">원본 이미지</div>
-                    <span class="ds-case-image-label">Original</span>
-                  </div>
-                  <div class="ds-case-image-slot">
-                    <div class="ds-screenshot-placeholder">보안합성데이터 이미지</div>
-                    <span class="ds-case-image-label">Synthetic</span>
-                  </div>
-                </div>
-                <div class="ds-case-image-pair">
-                  <div class="ds-case-image-slot">
-                    <div class="ds-screenshot-placeholder">원본 이미지</div>
-                    <span class="ds-case-image-label">Original</span>
-                  </div>
-                  <div class="ds-case-image-slot">
-                    <div class="ds-screenshot-placeholder">보안합성데이터 이미지</div>
-                    <span class="ds-case-image-label">Synthetic</span>
-                  </div>
-                </div>
+                <img class="ds-case-image-full" src="../reference/images/casestudy-defense-dron-1.png" alt="Drone attack — Original vs Privacy-safe Synthetic Data">
               </div>
             </div>
           </article>
@@ -1492,25 +1473,16 @@
             <div class="ds-card__left">
               <img class="ds-card__left-image" src="../reference/graphics/illustration-insurance.png" alt="Finance">
               <span class="ds-card__left-category">Finance</span>
-              <span class="ds-card__left-title">금융 분야</span>
+              <span class="ds-card__left-title">Anomaly Transaction Detection</span>
             </div>
             <div class="ds-card__right">
               <ul class="ds-bullet ds-bullet--dot">
-                <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>금융기관에서 AI 기반의 이상거래 탐지 수요가 높음</li>
-                <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>실제 이상 거래 데이터의 비중은 전체 데이터의 0.2% 수준으로 희소</li>
-                <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>합성데이터 기반으로 이상거래 데이터를 증폭 생성해 모델 정확도와 신뢰성을 향상</li>
+                <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>High demand for AI-based anomaly transaction detection in financial institutions</li>
+                <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Actual anomaly transaction data accounts for only 0.2% of total data — extremely sparse</li>
+                <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Generated augmented anomaly data using synthetic data to improve model accuracy and reliability</li>
               </ul>
               <div class="ds-case-image-grid">
-                <div class="ds-case-image-pair">
-                  <div class="ds-case-image-slot">
-                    <div class="ds-screenshot-placeholder">원본 이미지</div>
-                    <span class="ds-case-image-label">Original</span>
-                  </div>
-                  <div class="ds-case-image-slot">
-                    <div class="ds-screenshot-placeholder">보안합성데이터 이미지</div>
-                    <span class="ds-case-image-label">Synthetic</span>
-                  </div>
-                </div>
+                <img class="ds-case-image-full" src="../reference/images/casestudy-financial-abnormal-transaction.png" alt="Financial anomaly detection — Original vs Privacy-safe Synthetic Data">
               </div>
             </div>
           </article>
@@ -1520,55 +1492,21 @@
             <div class="ds-card__left">
               <img class="ds-card__left-image" src="../reference/graphics/illustration-healthcare.png" alt="Healthcare">
               <span class="ds-card__left-category">Healthcare</span>
-              <span class="ds-card__left-title">헬스케어 분야</span>
+              <span class="ds-card__left-title">Rare Disease Data Augmentation</span>
             </div>
             <div class="ds-card__right">
               <ul class="ds-bullet ds-bullet--dot">
-                <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>윤리위원회(IRB) 승인을 포함한 복잡한 절차로 인해 의료 데이터 공유가 제한됨</li>
-                <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>CUBIG 데이터 비접근 기술을 통해 민감한 환자의 개인정보 보호, 희귀 질환 데이터 결합 및 분석 가능</li>
-                <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>데이터의 양이 적은 희귀 질환 데이터를 증강</li>
+                <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Medical data sharing is restricted due to complex IRB approval procedures</li>
+                <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>CUBIG's zero-access technology enables patient privacy protection and rare disease data combination and analysis</li>
+                <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Augmented scarce rare disease datasets for improved AI training coverage</li>
               </ul>
               <div class="ds-case-image-grid">
-                <div class="ds-case-image-pair">
-                  <div class="ds-case-image-slot">
-                    <div class="ds-screenshot-placeholder">원본 이미지</div>
-                    <span class="ds-case-image-label">Original — 폐렴</span>
-                  </div>
-                  <div class="ds-case-image-slot">
-                    <div class="ds-screenshot-placeholder">보안합성데이터 이미지</div>
-                    <span class="ds-case-image-label">Synthetic — 폐렴</span>
-                  </div>
-                </div>
-                <div class="ds-case-image-pair">
-                  <div class="ds-case-image-slot">
-                    <div class="ds-screenshot-placeholder">원본 이미지</div>
-                    <span class="ds-case-image-label">Original — 유방암</span>
-                  </div>
-                  <div class="ds-case-image-slot">
-                    <div class="ds-screenshot-placeholder">보안합성데이터 이미지</div>
-                    <span class="ds-case-image-label">Synthetic — 유방암</span>
-                  </div>
-                </div>
-                <div class="ds-case-image-pair">
-                  <div class="ds-case-image-slot">
-                    <div class="ds-screenshot-placeholder">원본 이미지</div>
-                    <span class="ds-case-image-label">Original — 뇌 데이터</span>
-                  </div>
-                  <div class="ds-case-image-slot">
-                    <div class="ds-screenshot-placeholder">보안합성데이터 이미지</div>
-                    <span class="ds-case-image-label">Synthetic — 뇌 데이터</span>
-                  </div>
-                </div>
-                <div class="ds-case-image-pair">
-                  <div class="ds-case-image-slot">
-                    <div class="ds-screenshot-placeholder">원본 이미지</div>
-                    <span class="ds-case-image-label">Original — 안구 데이터</span>
-                  </div>
-                  <div class="ds-case-image-slot">
-                    <div class="ds-screenshot-placeholder">보안합성데이터 이미지</div>
-                    <span class="ds-case-image-label">Synthetic — 안구 데이터</span>
-                  </div>
-                </div>
+                <img class="ds-case-image-full" src="../reference/images/casestudy-healthcare-lung.png" alt="Pneumonia — Original vs Privacy-safe Synthetic Data">
+                <span class="ds-case-image-label">Pneumonia X-ray — Original vs Synthetic</span>
+                <img class="ds-case-image-full" src="../reference/images/casestudy-healthcare-brain.png" alt="Brain tumor & aneurysm — Original vs Privacy-safe Synthetic Data">
+                <span class="ds-case-image-label">Brain Tumor & Aneurysm CT — Original vs Synthetic</span>
+                <img class="ds-case-image-full" src="../reference/images/casestudy-healthcare-diabetes.png" alt="Diabetic retinopathy — Original vs Privacy-safe Synthetic Data">
+                <span class="ds-case-image-label">Diabetic Retinopathy — Original vs Synthetic</span>
               </div>
             </div>
           </article>
