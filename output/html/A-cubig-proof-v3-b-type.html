@@ -164,18 +164,11 @@
       --ds-color-border-default: #e6e7e9;
       --ds-color-border-strong:  #171719;
       --ds-color-border-brand:   #725bea;
-      --ds-color-teal:           #0e9f8e;
-
       /* Surface */
       --ds-color-surface-dark:  #171719;
       --ds-color-surface-mid:   #f2f2f2;
       --ds-color-surface-light: #f7f7f7;
       --ds-color-surface-white: #ffffff;
-
-      /* Overlay */
-      --ds-overlay-light:     rgba(255,255,255,0.72);
-      --ds-overlay-dark:      rgba(0,0,0,0.15);
-      --ds-overlay-cta-btn:   rgba(255,255,255,0.6);
 
       /* Gradient */
       --ds-gradient-brand:        linear-gradient(130deg, #673AFF 0%, #D932FF 50%, #FF266A 100%);
@@ -418,7 +411,7 @@
     }
     .ds-banner--full::before {
       content: ''; position: absolute; inset: 0;
-      background: var(--ds-overlay-light); z-index: 0;
+      background: rgba(255,255,255,0.72); z-index: 0;
     }
     .ds-banner--full > * { position: relative; z-index: 1; }
     @media (max-width: 767px) {
@@ -429,7 +422,7 @@
        10. KPI Band
     ───────────────────────────────────────────── */
     .ds-kpi-band {
-      border-radius: var(--ds-radius-xl); padding: 48px 40px;
+      border-radius: var(--ds-radius-xl); padding: var(--ds-space-2xl) var(--ds-space-xl);
       display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
       justify-items: center;
       background-size: cover; background-position: center;
@@ -448,7 +441,7 @@
     }
     .ds-kpi-band__label { font-size: var(--ds-text-sm); color: rgba(255,255,255,0.85); line-height: var(--ds-leading-normal); }
     @media (max-width: 1023px) { .ds-kpi-band { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 767px)  { .ds-kpi-band { grid-template-columns: 1fr; padding: 32px 20px; } }
+    @media (max-width: 767px)  { .ds-kpi-band { grid-template-columns: 1fr; padding: var(--ds-space-xl) var(--ds-space-md); } }
 
     /* ─────────────────────────────────────────────
        11. Partner Grid (Marquee)
@@ -491,7 +484,7 @@
       border: 1px solid currentColor; margin-bottom: var(--ds-space-md);
     }
     .ds-card__badge--brand { color: var(--ds-color-brand-purple); border-color: var(--ds-color-brand-purple); }
-    .ds-card__badge--teal  { color: var(--ds-color-teal); border-color: var(--ds-color-teal); }
+    .ds-card__badge--teal  { color: var(--ds-color-success); border-color: var(--ds-color-success); }
     .ds-card__badge--gray  { color: var(--ds-color-text-tertiary); border-color: var(--ds-color-border-default); }
     .ds-card__title        { font-size: var(--ds-text-2xl); font-weight: var(--ds-weight-bold); color: var(--ds-color-text-primary); line-height: var(--ds-leading-tight); margin-bottom: var(--ds-space-sm); }
     .ds-card__description  { font-size: var(--ds-text-sm); color: var(--ds-color-text-secondary); line-height: var(--ds-leading-relaxed); flex: 1; word-break: keep-all; overflow-wrap: break-word; }
@@ -640,7 +633,7 @@
       line-height: 1; white-space: nowrap;
     }
     .ds-badge--brand   { background-color: var(--ds-color-brand-purple-lt); color: var(--ds-color-brand-purple); }
-    .ds-badge--teal    { background-color: rgba(14,159,142,0.12); color: var(--ds-color-teal); }
+    .ds-badge--teal    { background-color: rgba(14,130,76,0.12); color: var(--ds-color-success); }
     .ds-badge--gray    { background-color: var(--ds-color-neutral-100); color: var(--ds-color-text-secondary); }
     .ds-badge--success { background-color: rgba(14,130,76,0.12); color: var(--ds-color-success); }
     .ds-badge--warn    { background-color: rgba(245,158,11,0.12); color: var(--ds-color-warn); }
@@ -767,7 +760,7 @@
     }
     .ds-cta-band::before {
       content: ''; position: absolute; inset: 0;
-      background: var(--ds-overlay-dark); z-index: 0;
+      background: rgba(0,0,0,0.15); z-index: 0;
     }
     .ds-cta-band > * { position: relative; z-index: 1; }
     .ds-cta-band__inner { max-width: 100%; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: var(--ds-space-lg); }
