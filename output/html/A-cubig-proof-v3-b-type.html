@@ -490,7 +490,7 @@
     .ds-card__title        { font-size: var(--ds-text-2xl); font-weight: var(--ds-weight-bold); color: var(--ds-color-text-primary); line-height: var(--ds-leading-tight); margin-bottom: var(--ds-space-sm); }
     .ds-card__description  { font-size: var(--ds-text-sm); color: var(--ds-color-text-secondary); line-height: var(--ds-leading-relaxed); flex: 1; word-break: keep-all; overflow-wrap: break-word; }
 
-    .ds-card-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+    .ds-card-grid { display: grid; grid-template-columns: 1fr; gap: 24px; width: 100%; overflow: hidden; }
     .ds-card-grid .ds-card { display: flex; flex-direction: column; }
     @media (min-width: 768px)  { .ds-card-grid--3col { grid-template-columns: repeat(2, 1fr); } }
     @media (min-width: 1024px) { .ds-card-grid--3col { grid-template-columns: repeat(3, 1fr); } }
