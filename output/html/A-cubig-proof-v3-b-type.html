@@ -743,12 +743,22 @@
       line-height: var(--ds-leading-relaxed); text-wrap: pretty;
     }
     .ds-step-tabs__meta {
-      display: flex; flex-direction: column; gap: var(--ds-space-xs);
+      display: flex; flex-direction: column; gap: var(--ds-space-md);
       font-size: var(--ds-text-sm); color: var(--ds-color-text-secondary); line-height: var(--ds-leading-relaxed);
+      margin-top: var(--ds-space-lg); padding-top: var(--ds-space-lg);
+      border-top: 1px solid var(--ds-color-border-default);
     }
     .ds-step-tabs__meta-label {
+      display: inline-block; width: fit-content;
       font-family: var(--ds-font-code); font-size: 10px; text-transform: uppercase;
-      letter-spacing: 0.08em; color: var(--ds-color-text-tertiary); font-weight: var(--ds-weight-semibold);
+      letter-spacing: 0.08em; font-weight: var(--ds-weight-semibold);
+      padding: 3px 10px; border-radius: var(--ds-radius-pill);
+    }
+    .ds-step-tabs__meta-label--cause {
+      background: rgba(255, 48, 48, 0.08); color: var(--ds-color-error);
+    }
+    .ds-step-tabs__meta-label--resolution {
+      background: rgba(14, 130, 76, 0.08); color: var(--ds-color-success);
     }
     .ds-step-tabs__screenshot {
       border-radius: 0; overflow: visible;
@@ -1120,9 +1130,9 @@
               <h3 class="ds-step-tabs__title">Release State Comparison</h3>
               <p class="ds-step-tabs__description">When output behavior changes between runs, <span class="ds-text--product">SynTitan</span> diffs the two Release States to surface exactly which execution condition changed.</p>
                           <div class="ds-step-tabs__meta">
-                <span class="ds-step-tabs__meta-label">Root cause</span>
+                <span class="ds-step-tabs__meta-label ds-step-tabs__meta-label--cause">Root cause</span>
                 <p>Feature column type coerced from integer to string upstream. Preprocessing normalization version updated in the same window.</p>
-                <span class="ds-step-tabs__meta-label">Resolution</span>
+                <span class="ds-step-tabs__meta-label ds-step-tabs__meta-label--resolution">Resolution</span>
                 <p>Restored prior schema type constraint. Pinned preprocessing version in Release State.</p>
               </div>
             </div>
@@ -1143,9 +1153,9 @@
               <h3 class="ds-step-tabs__title">Schema Fingerprint Change</h3>
               <p class="ds-step-tabs__description"><span class="ds-text--product">SynTitan</span> captures a schema fingerprint at each ingestion. When the fingerprint changes, it is logged in the Release State and surfaced in the Change Log before the run proceeds.</p>
                           <div class="ds-step-tabs__meta">
-                <span class="ds-step-tabs__meta-label">Root cause</span>
+                <span class="ds-step-tabs__meta-label ds-step-tabs__meta-label--cause">Root cause</span>
                 <p>Upstream data feed removed two feature columns without downstream notification.</p>
-                <span class="ds-step-tabs__meta-label">Resolution</span>
+                <span class="ds-step-tabs__meta-label ds-step-tabs__meta-label--resolution">Resolution</span>
                 <p>Run halted before training. Schema contract enforced. Upstream notified within the same hour.</p>
               </div>
             </div>
@@ -1168,9 +1178,9 @@
               <h3 class="ds-step-tabs__title">Preprocessing Logic Change</h3>
               <p class="ds-step-tabs__description">Preprocessing steps are versioned inside each Release State. When logic changes — normalization, imputation, encoding — the diff shows exactly which step changed and what the expected effect is.</p>
                           <div class="ds-step-tabs__meta">
-                <span class="ds-step-tabs__meta-label">Root cause</span>
+                <span class="ds-step-tabs__meta-label ds-step-tabs__meta-label--cause">Root cause</span>
                 <p>Normalization method switched from min-max to z-score — changing the scale of all downstream feature inputs.</p>
-                <span class="ds-step-tabs__meta-label">Resolution</span>
+                <span class="ds-step-tabs__meta-label ds-step-tabs__meta-label--resolution">Resolution</span>
                 <p>Reverted to prior Release State for immediate rollback. New method evaluated in staging before reintroduction.</p>
               </div>
             </div>
@@ -1193,9 +1203,9 @@
               <h3 class="ds-step-tabs__title">Runtime Dependency Change</h3>
               <p class="ds-step-tabs__description">Runtime environment versions — libraries, Python runtime, inference server — are captured in each Release State. Unexpected version changes are surfaced as execution state drift events.</p>
                           <div class="ds-step-tabs__meta">
-                <span class="ds-step-tabs__meta-label">Root cause</span>
+                <span class="ds-step-tabs__meta-label ds-step-tabs__meta-label--cause">Root cause</span>
                 <p>Container image updated in CI/CD pipeline without version-pinning the AI dependencies.</p>
-                <span class="ds-step-tabs__meta-label">Resolution</span>
+                <span class="ds-step-tabs__meta-label ds-step-tabs__meta-label--resolution">Resolution</span>
                 <p>Dependency versions pinned in Release State manifest. Container image rebuild triggered with verified versions.</p>
               </div>
             </div>
