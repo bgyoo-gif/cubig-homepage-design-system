@@ -146,13 +146,15 @@ export default function Section04_CaseStudy({
           word-break: keep-all;
           overflow-wrap: break-word;
           -webkit-font-smoothing: antialiased;
+        }
+        .s4-inner {
+          width: 100%;
           container-type: inline-size;
         }
-        @container (min-width: 768px)  { .s4-section { padding: 80px 32px; } }
-        @container (min-width: 1024px) { .s4-section { padding: 80px 32px; } }
-        @container (min-width: 1440px) { .s4-section { padding: 80px 120px; max-width: 1440px; margin-left: auto; margin-right: auto; } }
-
-        .s4-container { width: 100%; max-width: 1200px; margin: 0 auto; }
+        .s4-container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 16px; box-sizing: border-box; }
+        @container (min-width: 768px)  { .s4-container { padding: 0 32px; } }
+        @container (min-width: 1024px) { .s4-container { padding: 0 32px; } }
+        @container (min-width: 1440px) { .s4-container { padding: 0 120px; max-width: 1440px; } }
 
         .s4-section-header {
           text-align: center;
@@ -293,6 +295,7 @@ export default function Section04_CaseStudy({
       `}</style>
 
       <section className="s4-section" id="section-4" style={{ marginTop }}>
+       <div className="s4-inner">
         <div className="s4-container">
 
           {/* Section Header */}
@@ -326,6 +329,7 @@ export default function Section04_CaseStudy({
           </div>
 
         </div>
+       </div>
       </section>
     </>
   )

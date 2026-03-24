@@ -243,20 +243,36 @@ addPropertyControls(SectionNN_Name, {
 **클래스명 규칙:**
 - 전역 충돌 방지를 위해 섹션별 접두사: `s1-`, `s2-`, ... `sN-`
 
-**Framer 컴포넌트 width 대응 (필수):**
-Framer는 Code Component에 고정 width를 부여하므로, media query만으로는 반응형이 안 될 수 있다.
-- 최상위 래퍼에 반드시 `style={{ width: "100%", overflow: "hidden" }}` 적용
-- `body { overflow-x: hidden }` 은 Framer에서 적용 불가하므로 컴포넌트 레벨에서 처리
+**Framer 반응형 — Container Query 필수 (media query 금지):**
 
-**반응형 breakpoint (4단계):**
+Framer Code Component는 뷰포트가 아닌 **컴포넌트 자체 width**로 반응해야 함.
+`@media` 쿼리는 Framer 캔버스에서 동작하지 않으므로 **반드시 `@container` 쿼리** 사용.
+
+구조 (필수):
+```
+<section class="sN-section">     ← 외부: padding, bg 등 (고정값만)
+  <div class="sN-inner">         ← container-type: inline-size (이 div가 container)
+    <div class="sN-container">   ← 실제 콘텐츠 래퍼 (padding 반응형)
+      ...
+    </div>
+  </div>
+</section>
+```
+
+핵심 규칙:
+- `@media` 사용 금지 → `@container` 사용
+- `container-type: inline-size`는 `.sN-inner`에 적용 (section 자체 X — 자기 자신 스타일 변경 불가)
+- `.sN-section`의 padding/bg는 고정값 사용
+- `.sN-container`의 padding만 `@container`로 변경
+
 ```css
-/* mobile 기본 (375px) */
-.sN-section { width: 100%; overflow: hidden; box-sizing: border-box; }
+.sN-section { width: 100%; overflow: hidden; box-sizing: border-box; padding: 80px 0; }
+.sN-inner { width: 100%; container-type: inline-size; }
 .sN-container { width: 100%; padding: 0 16px; max-width: 100%; margin: 0 auto; box-sizing: border-box; }
 
-@media (min-width: 768px)  { .sN-container { padding: 0 32px; } }
-@media (min-width: 1024px) { .sN-container { padding: 0 32px; } }
-@media (min-width: 1440px) { .sN-container { padding: 0 120px; max-width: 1440px; } }
+@container (min-width: 768px)  { .sN-container { padding: 0 32px; } }
+@container (min-width: 1024px) { .sN-container { padding: 0 32px; } }
+@container (min-width: 1440px) { .sN-container { padding: 0 120px; max-width: 1440px; } }
 ```
 
 ### 4. 인터랙션 변환
