@@ -11,6 +11,7 @@ interface KpiItem {
 }
 
 interface Props {
+  marginTop?: number
   kpi1Number?: string
   kpi1Label?: string
   kpi1Sub?: string
@@ -27,6 +28,7 @@ interface Props {
 }
 
 export default function Section02_KpiBand({
+  marginTop = 0,
   kpi1Number = "+30pp",
   kpi1Label = "F1-Score Lift",
   kpi1Sub = "58.55% → 88.55%",
@@ -49,6 +51,7 @@ export default function Section02_KpiBand({
         .s2-section {
           width: 100%;
           padding: 80px 0;
+          margin-top: ${marginTop}px;
           font-family: "DM Sans", sans-serif;
           color: #0f0f0f;
           background-color: #ffffff;
@@ -203,9 +206,7 @@ export default function Section02_KpiBand({
 
           <div className="s2-banner-wrap">
             <div className="s2-banner">
-              <p>
-                True AI-ready data means it is <em>usable</em>, <em>privacy-safe</em>, and <em>stable for production execution</em>.
-              </p>
+              <p>{bannerText}</p>
             </div>
           </div>
         </div>
@@ -215,6 +216,14 @@ export default function Section02_KpiBand({
 }
 
 addPropertyControls(Section02_KpiBand, {
+  marginTop: {
+    type: ControlType.Number,
+    title: "Top Margin",
+    defaultValue: 0,
+    min: 0,
+    max: 200,
+    step: 10,
+  },
   kpi1Number: {
     type: ControlType.String,
     title: "KPI 1 Number",

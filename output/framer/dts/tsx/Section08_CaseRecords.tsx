@@ -19,6 +19,7 @@ interface AccordionItem {
 }
 
 interface Props {
+  marginTop?: number
   sectionTitle?: string
   sectionDescription?: string
   defaultOpenIndex?: number
@@ -104,6 +105,7 @@ function getBadgeStyle(type: string) {
 }
 
 export default function Section08_CaseRecords({
+  marginTop = 0,
   sectionTitle = "Production Case Records",
   sectionDescription = "Enterprise AI projects stall when data conditions prevent training, validation, or safe deployment. DTS was built for exactly these situations.",
   defaultOpenIndex = 0,
@@ -360,11 +362,11 @@ export default function Section08_CaseRecords({
         }
       `}</style>
 
-      <section className="s8-section" id="section-8">
+      <section className="s8-section" id="section-8" style={{ marginTop: `${marginTop}px` }}>
         <div className="s8-container">
           <div className="s8-header">
             <h2 className="s8-header__title">
-              Production{" "}
+              {sectionTitle.replace("Case Records", "")}{" "}
               <span className="s8-header__title-brand">Case Records</span>
             </h2>
             <p className="s8-header__description">{sectionDescription}</p>
@@ -437,6 +439,14 @@ export default function Section08_CaseRecords({
 }
 
 addPropertyControls(Section08_CaseRecords, {
+  marginTop: {
+    type: ControlType.Number,
+    title: "Top Margin",
+    defaultValue: 0,
+    min: 0,
+    max: 200,
+    step: 10,
+  },
   sectionTitle: {
     type: ControlType.String,
     title: "Section Title",

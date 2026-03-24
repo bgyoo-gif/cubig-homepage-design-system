@@ -5,8 +5,10 @@ import { addPropertyControls, ControlType } from "framer"
 const IMAGE_BASE = "https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images"
 
 interface Props {
+  marginTop?: number
   sectionTitle?: string
   sectionTitleHighlight?: string
+  sectionTitleSuffix?: string
   bannerText?: string
   bodyText?: string
   taglineText?: string
@@ -15,8 +17,10 @@ interface Props {
 }
 
 export default function Section11_Banner({
+  marginTop = 0,
   sectionTitle = "Operational Example:",
   sectionTitleHighlight = "Fraud Detection",
+  sectionTitleSuffix = "with Rare Events",
   bannerText = "A financial services team building a fraud detection model found that rare anomaly events were severely underrepresented in training data -- real fraud cases were too few to train a reliable classifier.",
   bodyText = "DTS generated synthetic fraud scenarios using differential privacy, expanding the rare-event class to statistically meaningful coverage. The resulting dataset could not be reverse-engineered to individual records -- satisfying both compliance requirements and model training needs.",
   taglineText = "Blocker removed: unusable data (imbalanced dataset / rare class underrepresentation)",
@@ -155,13 +159,13 @@ export default function Section11_Banner({
         .s11-btn:hover { background-color: #f7f7f7; }
       `}</style>
 
-      <section className="s11-section" id="section-11">
+      <section className="s11-section" id="section-11" style={{ marginTop: `${marginTop}px` }}>
         <div className="s11-container">
           {/* Section Header */}
           <div className="s11-section-header">
             <h2 className="s11-section-title">
               {sectionTitle} <span className="s11-brand">{sectionTitleHighlight}</span>{" "}
-              with Rare Events
+              {sectionTitleSuffix}
             </h2>
           </div>
 
@@ -187,6 +191,14 @@ export default function Section11_Banner({
 }
 
 addPropertyControls(Section11_Banner, {
+  marginTop: {
+    type: ControlType.Number,
+    title: "Top Margin",
+    defaultValue: 0,
+    min: 0,
+    max: 200,
+    step: 10,
+  },
   sectionTitle: {
     type: ControlType.String,
     title: "Section Title",
@@ -196,6 +208,11 @@ addPropertyControls(Section11_Banner, {
     type: ControlType.String,
     title: "Title Highlight",
     defaultValue: "Fraud Detection",
+  },
+  sectionTitleSuffix: {
+    type: ControlType.String,
+    title: "Title Suffix",
+    defaultValue: "with Rare Events",
   },
   bannerText: {
     type: ControlType.String,

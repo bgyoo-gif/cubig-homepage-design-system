@@ -3,6 +3,7 @@
 import { addPropertyControls, ControlType } from "framer"
 
 interface Props {
+  marginTop?: number
   sectionTitle?: string
   sectionTitleProduct?: string
   sectionTitleMiddle?: string
@@ -11,6 +12,7 @@ interface Props {
 }
 
 export default function Section04_ComparisonTable({
+  marginTop = 0,
   sectionTitle = "",
   sectionTitleProduct = "DTS",
   sectionTitleMiddle = " vs. Other Approaches to ",
@@ -25,6 +27,7 @@ export default function Section04_ComparisonTable({
         .s4-section {
           width: 100%;
           padding: 80px 0;
+          margin-top: ${marginTop}px;
           font-family: "DM Sans", sans-serif;
           color: #0f0f0f;
           background-color: #f7f7f7;
@@ -221,6 +224,14 @@ export default function Section04_ComparisonTable({
 }
 
 addPropertyControls(Section04_ComparisonTable, {
+  marginTop: {
+    type: ControlType.Number,
+    title: "Top Margin",
+    defaultValue: 0,
+    min: 0,
+    max: 200,
+    step: 10,
+  },
   sectionTitleProduct: {
     type: ControlType.String,
     title: "Title Product",

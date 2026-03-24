@@ -3,6 +3,7 @@
 import { addPropertyControls, ControlType } from "framer"
 
 interface Props {
+  marginTop?: number
   sectionTitle?: string
   sectionDescription?: string
   signal1Icon?: string
@@ -44,6 +45,7 @@ interface Props {
 }
 
 export default function Section09_FiveSignals({
+  marginTop = 0,
   sectionTitle = "Five Signals Your Data Is Blocking AI",
   sectionDescription = "Enterprise AI projects stall when data conditions prevent training, validation, or safe deployment. DTS was built for exactly these situations.",
   signal1Icon = "🛡️",
@@ -306,7 +308,7 @@ export default function Section09_FiveSignals({
         }
       `}</style>
 
-      <section className="s9-section" id="section-9">
+      <section className="s9-section" id="section-9" style={{ marginTop: `${marginTop}px` }}>
         <div className="s9-container">
           <div className="s9-header">
             <h2 className="s9-header__title">
@@ -365,6 +367,14 @@ export default function Section09_FiveSignals({
 }
 
 addPropertyControls(Section09_FiveSignals, {
+  marginTop: {
+    type: ControlType.Number,
+    title: "Top Margin",
+    defaultValue: 0,
+    min: 0,
+    max: 200,
+    step: 10,
+  },
   sectionTitle: {
     type: ControlType.String,
     title: "Section Title",

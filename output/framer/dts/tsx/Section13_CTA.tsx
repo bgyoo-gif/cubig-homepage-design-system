@@ -5,6 +5,7 @@ import { addPropertyControls, ControlType } from "framer"
 const IMAGE_BASE = "https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images"
 
 interface Props {
+  marginTop?: number
   title?: string
   titleHighlight?: string
   description?: string
@@ -18,6 +19,7 @@ interface Props {
 }
 
 export default function Section13_CTA({
+  marginTop = 0,
   title = "Restricted Data.",
   titleHighlight = "Usable AI.",
   description = "DTS turns restricted, unusable, and inaccessible enterprise data into privacy-safe synthetic datasets -- without ever moving the original data. GS Certified. KISA approved. Available on AWS Marketplace.",
@@ -140,7 +142,7 @@ export default function Section13_CTA({
         }
       `}</style>
 
-      <section className="s13-cta-band" id="section-13" aria-label="Call to action">
+      <section className="s13-cta-band" id="section-13" aria-label="Call to action" style={{ marginTop: `${marginTop}px` }}>
         <div className="s13-cta-inner">
           <h2 className="s13-title">
             {title}{" "}
@@ -172,6 +174,14 @@ export default function Section13_CTA({
 }
 
 addPropertyControls(Section13_CTA, {
+  marginTop: {
+    type: ControlType.Number,
+    title: "Top Margin",
+    defaultValue: 0,
+    min: 0,
+    max: 200,
+    step: 10,
+  },
   title: {
     type: ControlType.String,
     title: "Title",

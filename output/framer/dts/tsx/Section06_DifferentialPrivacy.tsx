@@ -13,7 +13,9 @@ interface Tab {
 }
 
 interface Props {
-  sectionTitle?: string
+  marginTop?: number
+  sectionTitlePlain?: string
+  sectionTitleHighlight?: string
   sectionDescription?: string
   bannerText?: string
   tab1Label?: string
@@ -31,7 +33,9 @@ interface Props {
 }
 
 export default function Section06_DifferentialPrivacy({
-  sectionTitle = "Mathematically Guaranteed Privacy Protection",
+  marginTop = 0,
+  sectionTitlePlain = "Mathematically Guaranteed",
+  sectionTitleHighlight = "Privacy Protection",
   sectionDescription = "Differential privacy (DP) is a mathematical framework that guarantees any single individual's data cannot be identified from the synthetic output -- regardless of what an attacker already knows.",
   bannerText = "The probability of any inference about an individual from the synthetic dataset is bounded by a mathematically defined epsilon -- regardless of external knowledge.",
   tab1Label = "Statistical Profiling",
@@ -64,6 +68,7 @@ export default function Section06_DifferentialPrivacy({
         .s6-section {
           width: 100%;
           padding: 80px 0;
+          margin-top: ${marginTop}px;
           background-color: #ffffff;
           font-family: "DM Sans", sans-serif;
           color: #0f0f0f;
@@ -264,8 +269,8 @@ export default function Section06_DifferentialPrivacy({
         <div className="s6-container">
           <div className="s6-header">
             <h2 className="s6-header__title">
-              Mathematically Guaranteed{" "}
-              <span className="s6-header__title-brand">Privacy Protection</span>
+              {sectionTitlePlain}{" "}
+              <span className="s6-header__title-brand">{sectionTitleHighlight}</span>
             </h2>
             <p className="s6-header__description">{sectionDescription}</p>
           </div>
@@ -316,10 +321,23 @@ export default function Section06_DifferentialPrivacy({
 }
 
 addPropertyControls(Section06_DifferentialPrivacy, {
-  sectionTitle: {
+  marginTop: {
+    type: ControlType.Number,
+    title: "Top Margin",
+    defaultValue: 0,
+    min: 0,
+    max: 200,
+    step: 10,
+  },
+  sectionTitlePlain: {
     type: ControlType.String,
-    title: "Section Title",
-    defaultValue: "Mathematically Guaranteed Privacy Protection",
+    title: "Title (plain)",
+    defaultValue: "Mathematically Guaranteed",
+  },
+  sectionTitleHighlight: {
+    type: ControlType.String,
+    title: "Title (highlight)",
+    defaultValue: "Privacy Protection",
   },
   sectionDescription: {
     type: ControlType.String,

@@ -48,11 +48,13 @@ const PARTNER_ITEMS: PartnerItem[] = [
 ]
 
 interface Props {
+  marginTop?: number
   sectionTitle?: string
   partnerLabel?: string
 }
 
 export default function Section10_Certs({
+  marginTop = 0,
   sectionTitle = "Certified and Trusted",
   partnerLabel = "Trusted by enterprise & government",
 }: Props) {
@@ -259,7 +261,7 @@ export default function Section10_Certs({
         }
       `}</style>
 
-      <section className="s10-section" id="section-10">
+      <section className="s10-section" id="section-10" style={{ marginTop: `${marginTop}px` }}>
         {/* Section Header */}
         <div className="s10-container">
           <div className="s10-section-header">
@@ -339,6 +341,14 @@ export default function Section10_Certs({
 }
 
 addPropertyControls(Section10_Certs, {
+  marginTop: {
+    type: ControlType.Number,
+    title: "Top Margin",
+    defaultValue: 0,
+    min: 0,
+    max: 200,
+    step: 10,
+  },
   sectionTitle: {
     type: ControlType.String,
     title: "Section Title",

@@ -3,7 +3,9 @@
 import { addPropertyControls, ControlType } from "framer"
 
 interface Props {
+  marginTop?: number
   sectionTitle?: string
+  sectionTitleProduct?: string
   cardAMode?: string
   cardATitle?: string
   cardADescription?: string
@@ -26,7 +28,9 @@ interface Props {
 }
 
 export default function Section07_Deployment({
-  sectionTitle = "Standalone or Integrated with SynTitan",
+  marginTop = 0,
+  sectionTitle = "Standalone or Integrated with",
+  sectionTitleProduct = "SynTitan",
   cardAMode = "MODE A - INDEPENDENT",
   cardATitle = "DTS Standalone",
   cardADescription = "Use DTS without SynTitan -- directly against your data sources. Available on AWS Marketplace for enterprise procurement.",
@@ -55,6 +59,7 @@ export default function Section07_Deployment({
         .s7-section {
           width: 100%;
           padding: 80px 0;
+          margin-top: ${marginTop}px;
           background-color: #f7f7f7;
           font-family: "DM Sans", sans-serif;
           color: #0f0f0f;
@@ -263,8 +268,8 @@ export default function Section07_Deployment({
         <div className="s7-container">
           <div className="s7-header">
             <h2 className="s7-header__title">
-              Standalone or Integrated with{" "}
-              <span className="s7-header__title-product">SynTitan</span>
+              {sectionTitle}{" "}
+              <span className="s7-header__title-product">{sectionTitleProduct}</span>
             </h2>
           </div>
 
@@ -274,12 +279,7 @@ export default function Section07_Deployment({
               <div className="s7-card-inner">
                 <span className="s7-card-badge">{cardAMode}</span>
                 <h3 className="s7-card-title">{cardATitle}</h3>
-                <p className="s7-card-description">
-                  Use <span className="s7-card-title-product">DTS</span> without{" "}
-                  <span className="s7-card-title-product">SynTitan</span> --
-                  directly against your data sources. Available on AWS
-                  Marketplace for enterprise procurement.
-                </p>
+                <p className="s7-card-description">{cardADescription}</p>
                 <ul className="s7-bullet">
                   {[cardAItem1, cardAItem2, cardAItem3, cardAItem4, cardAItem5].map(
                     (item, i) => (
@@ -307,19 +307,8 @@ export default function Section07_Deployment({
             <div className="s7-card-purple">
               <div className="s7-card-inner">
                 <span className="s7-card-badge">{cardBMode}</span>
-                <h3 className="s7-card-title">
-                  <span className="s7-card-title-product">DTS</span> +{" "}
-                  <span className="s7-card-title-product">SynTitan</span>
-                </h3>
-                <p className="s7-card-description">
-                  When privacy or compliance is the blocker -- regulated data
-                  that can't reach models --{" "}
-                  <span className="s7-card-title-product">DTS</span> runs inside{" "}
-                  <span className="s7-card-title-product">SynTitan</span> to
-                  generate privacy-safe replacements. The synthetic dataset is
-                  automatically versioned, bound to a Release State, and tracked
-                  in the Change Log.
-                </p>
+                <h3 className="s7-card-title">{cardBTitle}</h3>
+                <p className="s7-card-description">{cardBDescription}</p>
                 <ul className="s7-bullet">
                   {[cardBItem1, cardBItem2, cardBItem3].map((item, i) => (
                     <li key={i} className="s7-bullet-item">
@@ -330,7 +319,7 @@ export default function Section07_Deployment({
                 </ul>
                 <div className="s7-card-button">
                   <a href={cardBBtnHref} className="s7-btn">
-                    See <span className="s7-card-title-product">SynTitan</span> Platform
+                    {cardBBtnText}
                   </a>
                 </div>
               </div>
@@ -339,13 +328,7 @@ export default function Section07_Deployment({
 
           {/* Overlap Note Banner */}
           <div className="s7-note" role="note">
-            <span className="s7-card-title-product">SynTitan</span> performs
-            data quality refinement as part of execution stability.{" "}
-            <span className="s7-card-title-product">SynTitan</span> can use a
-            subset of <span className="s7-card-title-product">DTS</span>{" "}
-            capabilities when privacy-safe synthetic data is needed, while{" "}
-            <span className="s7-card-title-product">DTS</span> is a full
-            standalone enterprise synthetic data engine.
+            {noteText}
           </div>
         </div>
       </section>
@@ -354,10 +337,23 @@ export default function Section07_Deployment({
 }
 
 addPropertyControls(Section07_Deployment, {
+  marginTop: {
+    type: ControlType.Number,
+    title: "Top Margin",
+    defaultValue: 0,
+    min: 0,
+    max: 200,
+    step: 10,
+  },
   sectionTitle: {
     type: ControlType.String,
-    title: "Section Title",
-    defaultValue: "Standalone or Integrated with SynTitan",
+    title: "Section Title (plain)",
+    defaultValue: "Standalone or Integrated with",
+  },
+  sectionTitleProduct: {
+    type: ControlType.String,
+    title: "Section Title (product)",
+    defaultValue: "SynTitan",
   },
   cardAMode: {
     type: ControlType.String,
@@ -415,6 +411,18 @@ addPropertyControls(Section07_Deployment, {
     type: ControlType.String,
     title: "Card B Mode",
     defaultValue: "MODE B - INTEGRATED",
+  },
+  cardBTitle: {
+    type: ControlType.String,
+    title: "Card B Title",
+    defaultValue: "DTS + SynTitan",
+  },
+  cardBDescription: {
+    type: ControlType.String,
+    title: "Card B Description",
+    displayTextArea: true,
+    defaultValue:
+      "When privacy or compliance is the blocker -- regulated data that can't reach models -- DTS runs inside SynTitan to generate privacy-safe replacements. The synthetic dataset is automatically versioned, bound to a Release State, and tracked in the Change Log.",
   },
   cardBItem1: {
     type: ControlType.String,

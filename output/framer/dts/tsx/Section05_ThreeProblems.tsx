@@ -3,6 +3,7 @@
 import { addPropertyControls, ControlType } from "framer"
 
 interface Props {
+  marginTop?: number
   sectionTitle?: string
   sectionTitleHighlight?: string
   sectionDescription?: string
@@ -36,6 +37,7 @@ interface Props {
 }
 
 export default function Section05_ThreeProblems({
+  marginTop = 0,
   sectionTitle = "Three Data Problems.",
   sectionTitleHighlight = "One Engine.",
   sectionDescription = "Data that can't be used, can't be shared, or doesn't exist in sufficient volume -- DTS resolves all three.",
@@ -72,6 +74,7 @@ export default function Section05_ThreeProblems({
         .s5-section {
           width: 100%;
           padding: 80px 0;
+          margin-top: ${marginTop}px;
           font-family: "DM Sans", sans-serif;
           color: #0f0f0f;
           background-color: #ffffff;
@@ -339,6 +342,14 @@ export default function Section05_ThreeProblems({
 }
 
 addPropertyControls(Section05_ThreeProblems, {
+  marginTop: {
+    type: ControlType.Number,
+    title: "Top Margin",
+    defaultValue: 0,
+    min: 0,
+    max: 200,
+    step: 10,
+  },
   sectionTitle: {
     type: ControlType.String,
     title: "Title (plain)",

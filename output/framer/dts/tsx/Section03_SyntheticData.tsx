@@ -3,6 +3,7 @@
 import { addPropertyControls, ControlType } from "framer"
 
 interface Props {
+  marginTop?: number
   sectionTitle?: string
   sectionTitleHighlight?: string
   sectionDescription?: string
@@ -12,6 +13,7 @@ interface Props {
 }
 
 export default function Section03_SyntheticData({
+  marginTop = 0,
   sectionTitle = "Privacy-Safe",
   sectionTitleHighlight = "Synthetic Data",
   sectionDescription = "DTS includes privacy-safe synthetic data generation to expand coverage and repair imbalance when real data is restricted or incomplete.",
@@ -27,6 +29,7 @@ export default function Section03_SyntheticData({
         .s3-section {
           width: 100%;
           padding: 80px 0;
+          margin-top: ${marginTop}px;
           font-family: "DM Sans", sans-serif;
           color: #0f0f0f;
           background-color: #ffffff;
@@ -152,6 +155,14 @@ export default function Section03_SyntheticData({
 }
 
 addPropertyControls(Section03_SyntheticData, {
+  marginTop: {
+    type: ControlType.Number,
+    title: "Top Margin",
+    defaultValue: 0,
+    min: 0,
+    max: 200,
+    step: 10,
+  },
   sectionTitle: {
     type: ControlType.String,
     title: "Title (plain)",
