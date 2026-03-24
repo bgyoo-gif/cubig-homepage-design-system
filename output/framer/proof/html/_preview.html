@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proof — Framer Preview (S1–S3)</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Oxanium:wght@700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "DM Sans", sans-serif;
+      color: #0f0f0f;
+      background-color: #ffffff;
+      -webkit-font-smoothing: antialiased;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── Shared ── */
+    .preview-container {
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 16px;
+      box-sizing: border-box;
+    }
+    @media (min-width: 768px)  { .preview-container { padding: 0 32px; } }
+    @media (min-width: 1024px) { .preview-container { padding: 0 32px; } }
+    @media (min-width: 1440px) { .preview-container { padding: 0 120px; max-width: 1440px; } }
+
+    /* ══════════════════════════════════════════
+       SECTION 1 — HERO
+    ══════════════════════════════════════════ */
+    .s1-section {
+      width: 100%;
+      padding: 100px 0 100px;
+      background-color: #ffffff;
+    }
+    .s1-hero {
+      max-width: 860px;
+      margin: 0 auto;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    .s1-hero__title {
+      font-family: "DM Sans", sans-serif;
+      font-size: 68px;
+      font-weight: 700;
+      color: #0f0f0f;
+      line-height: 1.2;
+      letter-spacing: -2px;
+      margin-bottom: 12px;
+      text-wrap: balance;
+    }
+    .s1-hero__description {
+      font-size: 18px;
+      color: #636363;
+      line-height: 1.7;
+      max-width: 720px;
+      margin: 0 auto 32px;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      text-wrap: pretty;
+    }
+    .s1-banner {
+      width: 100%;
+      padding: 16px 24px;
+      border-top: 1px solid #e6e7e9;
+      border-bottom: 1px solid #e6e7e9;
+      background-color: #f7f7f7;
+      font-size: 14px;
+      line-height: 1.7;
+      text-align: center;
+      margin-top: 32px;
+      margin-bottom: 32px;
+    }
+    .s1-banner__brand { color: #725bea; }
+    .s1-hero__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
+    .s1-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border-radius: 9999px;
+      font-family: "DM Sans", sans-serif;
+      font-weight: 500;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      white-space: nowrap;
+      text-decoration: none;
+      padding: 12px 32px;
+    }
+    .s1-btn--primary {
+      background: linear-gradient(130deg, #673AFF 0%, #D932FF 50%, #FF266A 100%);
+      color: #ffffff;
+    }
+    .s1-btn--primary:hover { opacity: 0.88; }
+    .s1-btn--secondary {
+      background-color: transparent;
+      color: #0f0f0f;
+      border: 1px solid #e6e7e9;
+    }
+    .s1-product {
+      font-family: "Oxanium", sans-serif;
+      font-weight: 700;
+    }
+    @media (max-width: 767px) {
+      .s1-hero__title { font-size: 40px; letter-spacing: -1px; }
+      .s1-hero__actions { flex-direction: column; align-items: center; width: 100%; }
+      .s1-btn { width: 100%; max-width: 320px; }
+    }
+    @media (min-width: 768px) and (max-width: 1023px) {
+      .s1-hero__title { font-size: 48px; }
+    }
+    @media (min-width: 1024px) and (max-width: 1439px) {
+      .s1-hero__title { font-size: 56px; }
+    }
+
+    /* ══════════════════════════════════════════
+       SECTION 2 — KPI BAND
+    ══════════════════════════════════════════ */
+    .s2-section {
+      width: 100%;
+      padding-top: 0;
+      padding-bottom: 80px;
+      background-color: #ffffff;
+    }
+    .s2-kpi-band {
+      border-radius: 40px;
+      padding: 48px 32px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      justify-items: center;
+      background-image: url('https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/bg-gradient-deep-teal.png');
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .s2-kpi-band::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.35);
+      z-index: 0;
+    }
+    .s2-kpi-band > * { position: relative; z-index: 1; }
+    .s2-kpi-band__item {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      text-align: center;
+    }
+    .s2-kpi-band__number {
+      font-family: "DM Sans", sans-serif;
+      font-size: 50px;
+      font-weight: 700;
+      line-height: 1;
+      color: #ffffff;
+    }
+    .s2-kpi-band__label {
+      font-size: 14px;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.5;
+    }
+    .s2-product {
+      font-family: "Oxanium", sans-serif;
+      font-weight: 700;
+    }
+    @media (max-width: 1023px) {
+      .s2-kpi-band { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 767px) {
+      .s2-kpi-band { grid-template-columns: 1fr; padding: 32px 16px; }
+      .s2-kpi-band__number { font-size: 40px; }
+    }
+
+    /* ══════════════════════════════════════════
+       SECTION 3 — PARTNERS (MARQUEE)
+    ══════════════════════════════════════════ */
+    .s3-section {
+      width: 100%;
+      padding: 80px 0;
+      background-color: #ffffff;
+      overflow: hidden;
+    }
+    .s3-section-header {
+      margin-bottom: 48px;
+      text-align: center;
+      padding-bottom: 24px;
+      border-bottom: 1px solid #e6e7e9;
+    }
+    .s3-section-header__title {
+      font-family: "DM Sans", sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: #0f0f0f;
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+      margin-bottom: 16px;
+      text-wrap: balance;
+    }
+    .s3-section-header__brand { color: #725bea; }
+    .s3-section-header__description {
+      font-size: 18px;
+      color: #636363;
+      line-height: 1.7;
+      max-width: 720px;
+      margin: 0 auto;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      text-wrap: pretty;
+    }
+    .s3-partner-grid {
+      width: 100vw;
+      margin-left: calc(-50vw + 50%);
+      overflow: hidden;
+      padding: 32px 0;
+    }
+    .s3-partner-grid__track {
+      display: flex;
+      gap: 64px;
+      align-items: center;
+      width: max-content;
+      animation: s3-marquee 30s linear infinite;
+    }
+    .s3-partner-grid__track:hover { animation-play-state: paused; }
+    @keyframes s3-marquee {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .s3-partner-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .s3-partner-item__logo {
+      width: 120px;
+      height: 100px;
+      object-fit: contain;
+    }
+    .s3-partner-item__name {
+      font-size: 12px;
+      color: #9c9c9c;
+      text-align: center;
+      white-space: nowrap;
+    }
+    @media (min-width: 768px)  { .s3-section-header__title { font-size: 28px; } }
+    @media (min-width: 1024px) { .s3-section-header__title { font-size: 32px; } }
+    @media (min-width: 1440px) {
+      .s3-section-header__title { font-size: 40px; }
+      .s3-section-header__description { max-width: 860px; }
+    }
+    @media (max-width: 767px) {
+      .s3-section-header { text-align: left; }
+      .s3-section-header__description { margin: 0; }
+      .s3-partner-item__logo { width: 100px; height: 75px; }
+      .s3-partner-grid__track { gap: 48px; animation-duration: 20s; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════
+       SECTION 1 — HERO
+  ══════════════════════════════════════════ -->
+  <section class="s1-section" id="section-1">
+    <div class="preview-container">
+      <div class="s1-hero">
+        <h1 class="s1-hero__title">Proof</h1>
+        <p class="s1-hero__description">PoC runs in controlled conditions. Production data changes. Pipelines update. Environments shift. Here's the evidence that AI execution doesn't have to break.</p>
+
+        <div class="s1-banner" role="note">
+          True AI-ready data means it is
+          <span class="s1-banner__brand">usable</span>,
+          <span class="s1-banner__brand">privacy-safe</span>, and
+          <span class="s1-banner__brand">stable for production execution</span>.
+        </div>
+
+        <div class="s1-hero__actions">
+          <a href="mailto:contact@cubig.ai" class="s1-btn s1-btn--primary">Request Walkthrough</a>
+          <a href="https://syntitan.ai" target="_blank" rel="noopener noreferrer" class="s1-btn s1-btn--secondary">Try <span class="s1-product">SynTitan</span> ↗</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       SECTION 2 — KPI BAND
+  ══════════════════════════════════════════ -->
+  <section class="s2-section" id="section-2">
+    <div class="preview-container">
+      <div class="s2-kpi-band">
+        <div class="s2-kpi-band__item">
+          <span class="s2-kpi-band__number">95%</span>
+          <p class="s2-kpi-band__label">reduction in root cause identification time (21 days to under 4 hours)</p>
+        </div>
+        <div class="s2-kpi-band__item">
+          <span class="s2-kpi-band__number">+30pp</span>
+          <p class="s2-kpi-band__label">F1-score improvement (58.55% to 88.55%) via <span class="s2-product">DTS</span> synthetic data augmentation</p>
+        </div>
+        <div class="s2-kpi-band__item">
+          <span class="s2-kpi-band__number">-90%</span>
+          <p class="s2-kpi-band__label">time-to-deploy: 4 weeks to 1 day on AI model production cycle</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       SECTION 3 — PARTNER LOGOS (MARQUEE)
+  ══════════════════════════════════════════ -->
+  <section class="s3-section" id="section-3">
+    <div class="preview-container">
+      <div class="s3-section-header">
+        <h2 class="s3-section-header__title">
+          Deployed Across <span class="s3-section-header__brand">Regulated Industries</span>
+        </h2>
+        <p class="s3-section-header__description">15+ enterprise clients across finance, telecom, healthcare, defense, and global sectors.</p>
+      </div>
+    </div>
+
+    <div class="s3-partner-grid" aria-label="Partner logos">
+      <div class="s3-partner-grid__track">
+        <!-- Set 1 -->
+        <div class="s3-partner-item">
+          <img class="s3-partner-item__logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-gartner.png" alt="Gartner" loading="lazy">
+          <span class="s3-partner-item__name">Gartner</span>
+        </div>
+        <div class="s3-partner-item">
+          <img class="s3-partner-item__logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-navercloud.avif" alt="Naver Cloud" loading="lazy">
+          <span class="s3-partner-item__name">Naver Cloud</span>
+        </div>
+        <div class="s3-partner-item">
+          <img class="s3-partner-item__logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-sktelecom.avif" alt="SK Telecom" loading="lazy">
+          <span class="s3-partner-item__name">SK Telecom</span>
+        </div>
+        <div class="s3-partner-item">
+          <img class="s3-partner-item__logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-kyobo.avif" alt="Kyobo" loading="lazy">
+          <span class="s3-partner-item__name">Kyobo</span>
+        </div>
+        <div class="s3-partner-item">
+          <img class="s3-partner-item__logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-korea army.avif" alt="ROK Army" loading="lazy">
+          <span class="s3-partner-item__name">ROK Army</span>
+        </div>
+        <div class="s3-partner-item">
+          <img class="s3-partner-item__logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-korea-airforce.avif" alt="ROK Air Force" loading="lazy">
+          <span class="s3-partner-item__name">ROK Air Force</span>
+        </div>
+        <div class="s3-partner-item">
+          <img class="s3-partner-item__logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-eumc.avif" alt="EUMC" loading="lazy">
+          <span class="s3-partner-item__name">EUMC</span>
+        </div>
+        <div class="s3-partner-item">
+          <img class="s3-partner-item__logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-deutsche-telekom.avif" alt="Deutsche Telekom" loading="lazy">
+          <span class="s3-partner-item__name">Deutsche Telekom</span>
+        </div>
+        <div class="s3-partner-item">
+          <img class="s3-partner-item__logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-claroty.png" alt="Claroty" loading="lazy">
+          <span class="s3-partner-item__name">Claroty</span>
+        </div>
+        <div class="s3-partner-item">
+          <img class="s3-partner-item__logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-korea-heritage-service.jpg" alt="Korea Heritage Service" loading="lazy">
+          <span class="s3-partner-item__name">Korea Heritage Service</span>
+        </div>
+        <div class="s3-partner-item">
+          <img class="s3-partner-item__logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-ministry-of-data-and-statistics.png" alt="Ministry of Data and Statistics" loading="lazy">
+          <span class="s3-partner-item__name">Ministry of Data and Statistics</span>
+        </div>
+        <!-- Set 2 (duplicate for seamless loop) -->
+        <div class="s3-partner-item">
+          <img class="s3-partner-item__logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-gartner.png" alt="Gartner" loading="lazy">
+          <span class="s3-partner-item__name">Gartner</span>
+        </div>
+        <div class="s3-partner-item">
+          <img class="s3-partner-item__logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-navercloud.avif" alt="Naver Cloud" loading="lazy">
+          <span class="s3-partner-item__name">Naver Cloud</span>
+        </div>
+        <div class="s3-partner-item">
+          <img class="s3-partner-item__logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-sktelecom.avif" alt="SK Telecom" loading="lazy">
+          <span class="s3-partner-item__name">SK Telecom</span>
+        </div>
+        <div class="s3-partner-item">
+          <img class="s3-partner-item__logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-kyobo.avif" alt="Kyobo" loading="lazy">
+          <span class="s3-partner-item__name">Kyobo</span>
+        </div>
+        <div class="s3-partner-item">
+          <img class="s3-partner-item__logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-korea army.avif" alt="ROK Army" loading="lazy">
+          <span class="s3-partner-item__name">ROK Army</span>
+        </div>
+        <div class="s3-partner-item">
+          <img class="s3-partner-item__logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-korea-airforce.avif" alt="ROK Air Force" loading="lazy">
+          <span class="s3-partner-item__name">ROK Air Force</span>
+        </div>
+        <div class="s3-partner-item">
+          <img class="s3-partner-item__logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-eumc.avif" alt="EUMC" loading="lazy">
+          <span class="s3-partner-item__name">EUMC</span>
+        </div>
+        <div class="s3-partner-item">
+          <img class="s3-partner-item__logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-deutsche-telekom.avif" alt="Deutsche Telekom" loading="lazy">
+          <span class="s3-partner-item__name">Deutsche Telekom</span>
+        </div>
+        <div class="s3-partner-item">
+          <img class="s3-partner-item__logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-claroty.png" alt="Claroty" loading="lazy">
+          <span class="s3-partner-item__name">Claroty</span>
+        </div>
+        <div class="s3-partner-item">
+          <img class="s3-partner-item__logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-korea-heritage-service.jpg" alt="Korea Heritage Service" loading="lazy">
+          <span class="s3-partner-item__name">Korea Heritage Service</span>
+        </div>
+        <div class="s3-partner-item">
+          <img class="s3-partner-item__logo" src="https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/partner-ministry-of-data-and-statistics.png" alt="Ministry of Data and Statistics" loading="lazy">
+          <span class="s3-partner-item__name">Ministry of Data and Statistics</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>

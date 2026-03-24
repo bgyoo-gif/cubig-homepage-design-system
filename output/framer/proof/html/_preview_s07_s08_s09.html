@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proof — S07/S08/S09 Framer Preview</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Oxanium:wght@700&family=Fragment+Mono:ital@0;1&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── Reset ─────────────────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "DM Sans", sans-serif;
+      color: #0f0f0f;
+      background-color: #ffffff;
+      -webkit-font-smoothing: antialiased;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+    img, video { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── Design Tokens ─────────────────────────────────────────────────────── */
+    :root {
+      --brand-purple:       #725bea;
+      --brand-purple-lt:    #c6c5fa;
+      --text-primary:       #0f0f0f;
+      --text-secondary:     #636363;
+      --text-tertiary:      #9c9c9c;
+      --border-default:     #e6e7e9;
+      --border-strong:      #171719;
+      --surface-white:      #ffffff;
+      --surface-light:      #f7f7f7;
+      --surface-mid:        #f2f2f2;
+      --color-success:      #0e824c;
+      --gradient-inner-purple: linear-gradient(99deg, #F8EDFF 0%, #FCFCFE 58%, #fff 100%);
+      --shadow-card:        0px 24px 40px rgba(0, 0, 0, 0.04);
+      --font-base:          "DM Sans", sans-serif;
+      --font-brand:         "Oxanium", sans-serif;
+      --font-code:          "Fragment Mono", monospace;
+
+      --image-base: "https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images";
+    }
+
+    /* ── Shared Utilities ───────────────────────────────────────────────────── */
+    .product {
+      font-family: var(--font-brand);
+      font-weight: 700;
+    }
+    .brand-text { color: var(--brand-purple); }
+
+    /* ── Container ──────────────────────────────────────────────────────────── */
+    .container {
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 16px;
+      box-sizing: border-box;
+    }
+    @media (min-width: 768px)  { .container { padding: 0 32px; } }
+    @media (min-width: 1440px) { .container { padding: 0 120px; max-width: 1440px; } }
+
+    /* ── Section Header ─────────────────────────────────────────────────────── */
+    .section-header {
+      text-align: center;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border-default);
+      margin-bottom: 32px;
+    }
+    .section-header__title {
+      font-family: var(--font-base);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+      margin-bottom: 16px;
+      text-wrap: balance;
+    }
+    .section-header__description {
+      font-size: 18px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      max-width: 100%;
+      margin: 0 auto;
+      text-wrap: pretty;
+    }
+    @media (min-width: 768px) {
+      .section-header__title { font-size: 28px; }
+      .section-header__description { max-width: 720px; }
+    }
+    @media (min-width: 1024px) { .section-header__title { font-size: 32px; } }
+    @media (min-width: 1440px) {
+      .section-header__title { font-size: 40px; }
+      .section-header__description { max-width: 860px; }
+    }
+
+    /* ════════════════════════════════════════════════════════════════════════
+       S7: Business Impact
+    ════════════════════════════════════════════════════════════════════════ */
+    .s7-section {
+      width: 100%;
+      background-color: var(--surface-light);
+      padding: 80px 0;
+    }
+
+    .s7-card-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    @media (min-width: 768px)  { .s7-card-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .s7-card-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    .s7-card {
+      background-color: var(--surface-white);
+      border-radius: 18px;
+      border: 1px solid var(--border-default);
+      padding: 24px;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+    }
+    .s7-card--thread {
+      background: var(--gradient-inner-purple);
+    }
+
+    .s7-card__badge {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 500;
+      font-family: var(--font-code);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border: 1px solid currentColor;
+      margin-bottom: 16px;
+    }
+    .s7-card__badge--teal  { color: var(--color-success); border-color: var(--color-success); }
+    .s7-card__badge--brand { color: var(--brand-purple); border-color: var(--brand-purple); }
+
+    .s7-impact-kpi {
+      font-family: var(--font-base);
+      font-size: 30px;
+      font-weight: 700;
+      color: var(--brand-purple);
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .s7-impact-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      flex: 1;
+    }
+
+    .s7-thread-body {
+      font-size: 16px;
+      color: var(--text-primary);
+      line-height: 1.7;
+      flex: 1;
+    }
+    .s7-thread-actions { margin-top: 24px; }
+
+    .btn--secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 16px;
+      font-size: 14px;
+      font-family: var(--font-base);
+      font-weight: 500;
+      border-radius: 9999px;
+      background-color: transparent;
+      color: var(--text-primary);
+      border: 1px solid var(--border-default);
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.2s;
+      white-space: nowrap;
+    }
+    .btn--secondary:hover { background-color: var(--surface-light); }
+
+    /* ════════════════════════════════════════════════════════════════════════
+       S8: FAQ Accordion
+    ════════════════════════════════════════════════════════════════════════ */
+    .s8-section {
+      width: 100%;
+      background-color: var(--surface-white);
+      padding: 80px 0;
+    }
+
+    .s8-ac-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .s8-ac-card {
+      border: 1px solid var(--border-default);
+      border-radius: 8px;
+      background-color: var(--surface-white);
+      overflow: hidden;
+      transition: background-color 0.2s;
+    }
+    .s8-ac-card:hover { background-color: var(--surface-light); }
+
+    .s8-ac-header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 16px;
+      padding: 24px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .s8-ac-title-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 0;
+    }
+
+    .s8-ac-title {
+      font-family: var(--font-base);
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.2;
+      color: var(--text-primary);
+      word-break: keep-all;
+    }
+    @media (min-width: 768px) { .s8-ac-title { font-size: 18px; } }
+
+    .s8-ac-toggle {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      border: 0.5px solid var(--border-default);
+      background: var(--surface-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .s8-ac-toggle:hover { border-color: var(--border-strong); background: var(--surface-mid); }
+
+    .s8-ac-toggle-icon {
+      width: 12px;
+      height: 12px;
+      position: relative;
+      flex-shrink: 0;
+      display: block;
+    }
+    .s8-ac-toggle-icon::before,
+    .s8-ac-toggle-icon::after {
+      content: '';
+      position: absolute;
+      background: var(--text-tertiary);
+      border-radius: 1px;
+      transition: opacity 0.2s;
+    }
+    .s8-ac-toggle-icon::before {
+      width: 10px; height: 1.5px;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .s8-ac-toggle-icon::after {
+      width: 1.5px; height: 10px;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 1;
+    }
+    .s8-ac--open .s8-ac-toggle-icon::after  { opacity: 0; }
+    .s8-ac--open .s8-ac-toggle-icon::before { background: var(--text-secondary); }
+
+    .s8-ac-body {
+      display: none;
+      padding: 24px;
+      border-top: 1px solid var(--border-default);
+      background: var(--surface-light);
+    }
+    .s8-ac--open .s8-ac-body { display: block; }
+
+    .s8-body-text {
+      font-size: 16px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      text-wrap: pretty;
+      margin: 0;
+    }
+
+    /* ════════════════════════════════════════════════════════════════════════
+       S9: CTA Band
+    ════════════════════════════════════════════════════════════════════════ */
+    .s9-cta-band {
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      padding: 80px 16px;
+      text-align: center;
+      background-size: cover;
+      background-position: center;
+      background-image: url('https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/bg-gradient-navy-teal.png');
+    }
+    .s9-cta-band::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.15);
+      z-index: 0;
+    }
+    .s9-cta-band > * { position: relative; z-index: 1; }
+
+    .s9-inner {
+      max-width: 100%;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .s9-title {
+      font-family: var(--font-base);
+      font-size: 40px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.2;
+      letter-spacing: -2px;
+      margin: 0;
+      text-wrap: balance;
+    }
+
+    .s9-description {
+      font-size: 18px;
+      color: rgba(255, 255, 255, 0.85);
+      line-height: 1.7;
+      margin: 0;
+      text-wrap: pretty;
+    }
+
+    .s9-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .s9-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 32px;
+      font-size: 16px;
+      font-family: var(--font-base);
+      font-weight: 500;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.92);
+      color: #0f0f0f;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(8px);
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+    .s9-btn:hover { background: #ffffff; }
+
+    .s9-footnote {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.6);
+      font-family: var(--font-code);
+      letter-spacing: 0.08em;
+      margin: 0;
+    }
+
+    @media (min-width: 768px) {
+      .s9-cta-band { padding: 100px 32px; }
+    }
+    @media (min-width: 1024px) {
+      .s9-inner { max-width: 720px; }
+    }
+    @media (min-width: 1440px) {
+      .s9-cta-band { padding: 120px 120px; max-width: 1440px; margin: 0 auto; }
+      .s9-inner { max-width: 860px; }
+    }
+    @media (max-width: 767px) {
+      .s9-title { font-size: 40px; letter-spacing: -1px; }
+      .s9-actions { flex-direction: column; align-items: center; }
+      .s9-btn { width: 100%; max-width: 320px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       S7: Business Impact — 3col Card Grid
+  ════════════════════════════════════════════════════════════════════════ -->
+  <section class="s7-section" id="section-7">
+    <div class="container">
+
+      <div class="section-header">
+        <h2 class="section-header__title">
+          What Changes When AI Execution Is <span class="brand-text">Reproducible</span>
+        </h2>
+        <p class="section-header__description">These are the business outcomes the operational evidence demonstrates — not theoretical capabilities, but changes documented in production deployments.</p>
+      </div>
+
+      <div class="s7-card-grid">
+
+        <!-- Card 1: Incident Recovery -->
+        <article class="s7-card">
+          <span class="s7-card__badge s7-card__badge--teal">Incident Recovery</span>
+          <div class="s7-impact-kpi">21 days to &lt;4h</div>
+          <p class="s7-impact-desc">Root cause identification time. Schema change detected at ingestion via Release State. Incident resolved before next training run.</p>
+        </article>
+
+        <!-- Card 2: Data Usability -->
+        <article class="s7-card">
+          <span class="s7-card__badge s7-card__badge--teal">Data Usability</span>
+          <div class="s7-impact-kpi">+30pp F1</div>
+          <p class="s7-impact-desc">Model accuracy improvement after <span class="product">DTS</span> fixed class imbalance. Rare defect class augmented with privacy-safe synthetic data. Deploy time cut from 4 weeks to 1 day.</p>
+        </article>
+
+        <!-- Card 3: LLM Adoption -->
+        <article class="s7-card">
+          <span class="s7-card__badge s7-card__badge--teal">LLM Adoption</span>
+          <div class="s7-impact-kpi">98.1%</div>
+          <p class="s7-impact-desc">PII detection accuracy in enterprise prompts. Compliance-blocked LLM projects unblocked without sacrificing data usability or audit requirements.</p>
+        </article>
+
+        <!-- Card 4: Rollback Speed -->
+        <article class="s7-card">
+          <span class="s7-card__badge s7-card__badge--teal">Rollback Speed</span>
+          <div class="s7-impact-kpi">&lt;2h rollback</div>
+          <p class="s7-impact-desc">Run Binding enabled stable-state re-execution after preprocessing drift caused inference inconsistency. Prior Release State re-run confirmed. Score distribution matched baseline.</p>
+        </article>
+
+        <!-- Card 5: Compliance-Safe AI Data -->
+        <article class="s7-card">
+          <span class="s7-card__badge s7-card__badge--teal">Compliance-Safe AI Data</span>
+          <div class="s7-impact-kpi">277K records</div>
+          <p class="s7-impact-desc">DP-safe synthetic records generated to replace retention-deleted data. F1 churn model reached 0.92. Zero real customer data accessed or exported. Full regulatory compliance.</p>
+        </article>
+
+        <!-- Card 6: Common Thread -->
+        <article class="s7-card s7-card--thread">
+          <span class="s7-card__badge s7-card__badge--brand">Common Thread</span>
+          <p class="s7-thread-body">
+            Each case reduced <strong>deployment risk</strong>, <strong>incident investigation time</strong>, or <strong>AI adoption blockers</strong> — without replacing existing data infrastructure.
+          </p>
+          <div class="s7-thread-actions">
+            <a href="mailto:contact@cubig.ai" class="btn--secondary">Talk to our engineers</a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       S8: FAQ Accordion
+  ════════════════════════════════════════════════════════════════════════ -->
+  <section class="s8-section" id="section-8">
+    <div class="container">
+
+      <div class="section-header">
+        <h2 class="section-header__title">
+          Common <span class="brand-text">Questions</span>
+        </h2>
+      </div>
+
+      <div class="s8-ac-list">
+
+        <!-- FAQ 1 — default open -->
+        <article class="s8-ac-card s8-ac--open">
+          <div class="s8-ac-header" onclick="toggleFAQ(this)" tabindex="0" role="button" aria-expanded="true">
+            <div class="s8-ac-title-wrap">
+              <div class="s8-ac-title">What does 'reproducible AI execution' mean in production?</div>
+            </div>
+            <div class="s8-ac-toggle"><span class="s8-ac-toggle-icon"></span></div>
+          </div>
+          <div class="s8-ac-body">
+            <p class="s8-body-text">Reproducible AI execution means that any past AI run can be re-executed under the exact same data, environment, and pipeline conditions — returning the same result. <span class="product">SynTitan</span> achieves this through Release State and Run Binding, which lock execution conditions at every run. When something breaks in production, you don't debug blind — you diff the states and reproduce the last known-good run.</p>
+          </div>
+        </article>
+
+        <!-- FAQ 2 -->
+        <article class="s8-ac-card">
+          <div class="s8-ac-header" onclick="toggleFAQ(this)" tabindex="0" role="button" aria-expanded="false">
+            <div class="s8-ac-title-wrap">
+              <div class="s8-ac-title">What is a Release State in <span class="product">SynTitan</span>?</div>
+            </div>
+            <div class="s8-ac-toggle"><span class="s8-ac-toggle-icon"></span></div>
+          </div>
+          <div class="s8-ac-body">
+            <p class="s8-body-text">A Release State is a versioned snapshot of all execution conditions at the time of an AI run — including data schema, pipeline configuration, feature set, and runtime parameters. It enables diff between states to trace what changed and re-run the same conditions for incident response and regression verification.</p>
+          </div>
+        </article>
+
+        <!-- FAQ 3 -->
+        <article class="s8-ac-card">
+          <div class="s8-ac-header" onclick="toggleFAQ(this)" tabindex="0" role="button" aria-expanded="false">
+            <div class="s8-ac-title-wrap">
+              <div class="s8-ac-title">How does <span class="product">DTS</span> solve the unusable data problem?</div>
+            </div>
+            <div class="s8-ac-toggle"><span class="s8-ac-toggle-icon"></span></div>
+          </div>
+          <div class="s8-ac-body">
+            <p class="s8-body-text"><span class="product">DTS</span> generates privacy-safe synthetic data using differential privacy to fill coverage gaps, fix class imbalance, and replace non-accessible data. It operates as a standalone engine or integrates with <span class="product">SynTitan</span> for end-to-end execution stability.</p>
+          </div>
+        </article>
+
+        <!-- FAQ 4 -->
+        <article class="s8-ac-card">
+          <div class="s8-ac-header" onclick="toggleFAQ(this)" tabindex="0" role="button" aria-expanded="false">
+            <div class="s8-ac-title-wrap">
+              <div class="s8-ac-title">How does <span class="product">LLM Capsule</span> protect sensitive data during LLM usage?</div>
+            </div>
+            <div class="s8-ac-toggle"><span class="s8-ac-toggle-icon"></span></div>
+          </div>
+          <div class="s8-ac-body">
+            <p class="s8-body-text"><span class="product">LLM Capsule</span> detects sensitive fields including PII in prompts and outputs, anonymizes or shields them before LLM interaction, and preserves output usability for downstream workflows — all within <span class="product">SynTitan</span> execution workflows.</p>
+          </div>
+        </article>
+
+        <!-- FAQ 5 -->
+        <article class="s8-ac-card">
+          <div class="s8-ac-header" onclick="toggleFAQ(this)" tabindex="0" role="button" aria-expanded="false">
+            <div class="s8-ac-title-wrap">
+              <div class="s8-ac-title">What is the difference between <span class="product">SynTitan</span> and <span class="product">DTS</span>?</div>
+            </div>
+            <div class="s8-ac-toggle"><span class="s8-ac-toggle-icon"></span></div>
+          </div>
+          <div class="s8-ac-body">
+            <p class="s8-body-text"><span class="product">SynTitan</span> performs data quality refinement as part of execution stability. <span class="product">SynTitan</span> can use a subset of <span class="product">DTS</span> capabilities when privacy-safe synthetic data is needed, while <span class="product">DTS</span> is a full standalone enterprise synthetic data engine.</p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       S9: CTA Band — full-width, background image
+  ════════════════════════════════════════════════════════════════════════ -->
+  <section class="s9-cta-band" id="section-9">
+    <div class="s9-inner">
+      <h2 class="s9-title">Make Your AI Runs Reproducible.</h2>
+      <p class="s9-description">Every production AI failure has a root cause. These cases show how to find it fast, fix it correctly, and prevent recurrence. The same infrastructure is available now.</p>
+      <div class="s9-actions">
+        <a href="https://syntitan.ai" class="s9-btn" target="_blank" rel="noopener">Start Evaluation</a>
+        <a href="mailto:contact@cubig.ai" class="s9-btn">Run a Technical Demo</a>
+        <a href="/learn/why-ai-fails-after-deployment" class="s9-btn">Explore: Why AI Fails</a>
+      </div>
+      <p class="s9-footnote">30-min architecture review. Engineers-first. No sales pitch.</p>
+    </div>
+  </section>
+
+
+  <!-- JavaScript: FAQ Accordion Toggle -->
+  <script>
+    function toggleFAQ(header) {
+      var card = header.closest('.s8-ac-card');
+      var isOpen = card.classList.contains('s8-ac--open');
+      // Close all
+      document.querySelectorAll('.s8-ac-card').forEach(function(c) {
+        c.classList.remove('s8-ac--open');
+        c.querySelector('.s8-ac-header').setAttribute('aria-expanded', 'false');
+      });
+      // Open clicked if it was closed
+      if (!isOpen) {
+        card.classList.add('s8-ac--open');
+        header.setAttribute('aria-expanded', 'true');
+      }
+    }
+
+    // Keyboard support
+    document.querySelectorAll('.s8-ac-header').forEach(function(header) {
+      header.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggleFAQ(this);
+        }
+      });
+    });
+  </script>
+</body>
+</html>

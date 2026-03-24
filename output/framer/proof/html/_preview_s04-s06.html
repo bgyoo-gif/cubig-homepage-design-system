@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proof S4–S6 — Framer Preview</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Oxanium:wght@700&family=Fragment+Mono:ital@0;1&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "DM Sans", sans-serif;
+      color: #0f0f0f;
+      background-color: #ffffff;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      -webkit-font-smoothing: antialiased;
+    }
+    img, video { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── Design Tokens ── */
+    :root {
+      --color-brand-purple:    #725bea;
+      --color-brand-purple-lt: #c6c5fa;
+      --color-text-primary:    #0f0f0f;
+      --color-text-secondary:  #636363;
+      --color-text-tertiary:   #9c9c9c;
+      --color-border-default:  #e6e7e9;
+      --color-surface-light:   #f7f7f7;
+      --color-surface-white:   #ffffff;
+      --color-success:         #0e824c;
+      --color-error:           #ff3030;
+      --color-error-light:     #ff6b6b;
+      --color-success-light:   #34d399;
+      --color-warn-light:      #fbbf24;
+      --color-neutral-500:     #636363;
+      --color-neutral-900:     #0f0f0f;
+      --shadow-card:           0px 24px 40px rgba(0,0,0,0.04);
+      --grad-inner-purple:     linear-gradient(99deg, #F8EDFF 0%, #FCFCFE 58%, #fff 100%);
+      --image-base: "https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images";
+    }
+
+    /* ── Shared Container ── */
+    .ds-container {
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 16px;
+      box-sizing: border-box;
+    }
+    @media (min-width: 768px)  { .ds-container { padding: 0 32px; } }
+    @media (min-width: 1024px) { .ds-container { padding: 0 32px; } }
+    @media (min-width: 1440px) { .ds-container { padding: 0 120px; max-width: 1440px; } }
+
+    /* ── Shared Section ── */
+    .ds-section { width: 100%; padding: 80px 0; }
+    .ds-section--light { background-color: var(--color-surface-light); }
+
+    /* ── Section Header ── */
+    .ds-section-header {
+      text-align: center;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--color-border-default);
+      margin-bottom: 32px;
+    }
+    @media (max-width: 767px) { .ds-section-header { text-align: left; } }
+
+    .ds-section-header__title {
+      font-family: "DM Sans", sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+      margin-bottom: 16px;
+      text-wrap: balance;
+    }
+    @media (min-width: 768px)  { .ds-section-header__title { font-size: 28px; } }
+    @media (min-width: 1024px) { .ds-section-header__title { font-size: 32px; } }
+    @media (min-width: 1440px) { .ds-section-header__title { font-size: 40px; } }
+
+    .ds-section-header__description {
+      font-size: 18px;
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+      max-width: 720px;
+      margin: 0 auto;
+      text-wrap: pretty;
+    }
+    @media (min-width: 1440px) { .ds-section-header__description { max-width: 860px; } }
+
+    .ds-text--brand   { color: var(--color-brand-purple); }
+    .ds-text--product { font-family: "Oxanium", sans-serif; font-weight: 700; }
+
+    /* ─────────────────────────────────────────────
+       S4: Case Study Cards
+    ───────────────────────────────────────────── */
+    .ds-card-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+    @media (min-width: 768px)  { .ds-card-grid--3col { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .ds-card-grid--3col { grid-template-columns: repeat(3, 1fr); } }
+
+    .ds-card {
+      background-color: var(--color-surface-white);
+      border-radius: 18px;
+      border: 1px solid var(--color-border-default);
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .ds-card--case-study { padding: 0; }
+
+    .ds-card--case-study__graphic {
+      width: 100%;
+      height: 100px;
+      background: var(--grad-inner-purple);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      flex-shrink: 0;
+    }
+
+    .ds-card--case-study__body {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 24px;
+      flex: 1;
+    }
+
+    .ds-card__badge {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 500;
+      font-family: "Fragment Mono", "Geist Mono", monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border: 1px solid currentColor;
+      margin-bottom: 16px;
+    }
+    .ds-card__badge--brand { color: var(--color-brand-purple); border-color: var(--color-brand-purple); }
+    .ds-card__badge--teal  { color: var(--color-success); border-color: var(--color-success); }
+
+    .ds-card__title--sm {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      line-height: 1.2;
+      margin-bottom: 0;
+    }
+
+    .ds-card__description {
+      font-size: 14px;
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+      flex: 1;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      text-wrap: pretty;
+    }
+
+    .ds-card__tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .ds-card__tag {
+      font-size: 12px;
+      font-family: "Fragment Mono", "Geist Mono", monospace;
+      color: var(--color-text-tertiary);
+      background-color: var(--color-surface-light);
+      border: 1px solid var(--color-border-default);
+      border-radius: 9999px;
+      padding: 2px 10px;
+    }
+
+    .ds-banner {
+      margin-top: 32px;
+      padding: 16px 24px;
+      border-top: 1px solid var(--color-border-default);
+      border-bottom: 1px solid var(--color-border-default);
+      background-color: var(--color-surface-light);
+      font-size: 14px;
+      line-height: 1.7;
+      text-align: center;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+
+    /* ─────────────────────────────────────────────
+       S5: Step Tabs
+    ───────────────────────────────────────────── */
+    .ds-step-tabs__nav {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 64px;
+    }
+    @media (max-width: 767px) {
+      .ds-step-tabs__nav {
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding-bottom: 8px;
+      }
+      .ds-step-tabs__nav::-webkit-scrollbar { display: none; }
+    }
+
+    .ds-step-tabs__tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 24px;
+      border-radius: 9999px;
+      border: 1px solid var(--color-border-default);
+      background-color: var(--color-surface-white);
+      font-family: "DM Sans", sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .ds-step-tabs__tab:hover,
+    .ds-step-tabs__tab--active {
+      background-color: var(--color-neutral-900);
+      border-color: var(--color-neutral-900);
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .ds-step-tabs__tab-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background-color: #ececec;
+      border: 1px solid var(--color-border-default);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--color-text-secondary);
+      flex-shrink: 0;
+      transition: all 0.2s;
+    }
+    .ds-step-tabs__tab:hover .ds-step-tabs__tab-number,
+    .ds-step-tabs__tab--active .ds-step-tabs__tab-number {
+      background-color: #ffffff;
+      border-color: #ffffff;
+      color: var(--color-neutral-900);
+    }
+
+    .ds-step-tabs__panel { display: none; }
+    .ds-step-tabs__panel--active {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+    @media (min-width: 1024px) { .ds-step-tabs__panel--active { grid-template-columns: 5fr 7fr; gap: 64px; } }
+    @media (min-width: 1440px) { .ds-step-tabs__panel--active { gap: 80px; } }
+
+    .ds-step-tabs__content { display: flex; flex-direction: column; gap: 24px; }
+
+    .ds-step-tabs__title {
+      font-family: "DM Sans", sans-serif;
+      font-size: 30px;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      line-height: 1.2;
+      text-wrap: balance;
+    }
+    @media (min-width: 768px) { .ds-step-tabs__title { font-size: 36px; } }
+
+    .ds-step-tabs__description {
+      font-size: 16px;
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+      text-wrap: pretty;
+    }
+
+    .ds-step-tabs__meta {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      font-size: 14px;
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid var(--color-border-default);
+    }
+
+    .ds-step-tabs__meta-label {
+      display: inline-block;
+      width: fit-content;
+      font-family: "Fragment Mono", "Geist Mono", monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 9999px;
+    }
+    .ds-step-tabs__meta-label--cause {
+      background: rgba(255, 48, 48, 0.08);
+      color: var(--color-error);
+    }
+    .ds-step-tabs__meta-label--resolution {
+      background: rgba(14, 130, 76, 0.08);
+      color: var(--color-success);
+    }
+
+    /* Code Block */
+    .ds-code-block {
+      background-color: #0f0f0f;
+      border: none;
+      border-radius: 8px;
+      padding: 16px;
+      font-family: "Fragment Mono", "Geist Mono", monospace;
+      font-size: 14px;
+      line-height: 1.9;
+      color: #bababa;
+      overflow-x: auto;
+    }
+    .ds-code--remove { color: var(--color-error-light); }
+    .ds-code--add    { color: var(--color-success-light); }
+    .ds-code--warn   { color: var(--color-warn-light); }
+    .ds-code--muted  { color: var(--color-neutral-500); }
+
+    .ds-banner--bottom {
+      margin-top: 48px;
+      padding: 16px 24px;
+      border-top: 1px solid var(--color-border-default);
+      border-bottom: 1px solid var(--color-border-default);
+      background-color: var(--color-surface-light);
+      font-size: 14px;
+      line-height: 1.7;
+      text-align: center;
+    }
+    .ds-banner--bottom a { display: block; margin-top: 12px; }
+
+    .ds-btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border-radius: 9999px;
+      font-family: "DM Sans", sans-serif;
+      font-weight: 500;
+      font-size: 14px;
+      cursor: pointer;
+      border: 1px solid var(--color-border-default);
+      background-color: transparent;
+      color: var(--color-text-primary);
+      padding: 8px 16px;
+      text-decoration: none;
+      transition: background-color 0.2s;
+    }
+    .ds-btn-secondary:hover { background-color: var(--color-surface-light); }
+
+    /* ─────────────────────────────────────────────
+       S6: Banner Full
+    ───────────────────────────────────────────── */
+    .ds-banner--full {
+      width: 100%;
+      text-align: center;
+      padding: 32px 48px;
+      border-radius: 40px;
+      background-image: url('https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/bg-wave-teal-blue.png');
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      overflow: hidden;
+      font-family: "DM Sans", sans-serif;
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 1.7;
+      color: var(--color-text-primary);
+      isolation: isolate;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+    @media (max-width: 767px) {
+      .ds-banner--full { padding: 24px; font-size: 16px; }
+    }
+    .ds-banner--full::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.72);
+      z-index: 0;
+    }
+    .ds-banner--full > * { position: relative; z-index: 1; }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════
+       S4: EVIDENCE — OPERATIONAL CASE RECORDS
+  ═══════════════════════════════════════════ -->
+  <section class="ds-section ds-section--light" id="section-4">
+    <div class="ds-container">
+      <div class="ds-section-header">
+        <h2 class="ds-section-header__title">
+          Operational <span class="ds-text--brand">Case Records</span>
+        </h2>
+        <p class="ds-section-header__description">Each record follows the same format: Before, After, What Changed, Reproduce.</p>
+      </div>
+
+      <div class="ds-card-grid ds-card-grid--3col">
+
+        <!-- Card 1: Financial Services -->
+        <article class="ds-card ds-card--case-study">
+          <div class="ds-card--case-study__graphic" aria-hidden="true">🏦</div>
+          <div class="ds-card--case-study__body">
+            <span class="ds-card__badge ds-card__badge--brand">Execution Stability</span>
+            <h3 class="ds-card__title ds-card__title--sm">Model retraining pipeline — schema drift detection</h3>
+            <p class="ds-card__description">Before: Schema change in upstream data caused silent model degradation. Root cause took 21 days to identify. After: Release State detected the schema diff at ingestion — issue flagged in &lt;1 run, root cause from 21 days to under 4 hours.</p>
+            <div class="ds-card__tags">
+              <span class="ds-card__tag">Financial Services</span>
+              <span class="ds-card__tag">Fraud Detection</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 2: Telco -->
+        <article class="ds-card ds-card--case-study">
+          <div class="ds-card--case-study__graphic" aria-hidden="true">📡</div>
+          <div class="ds-card--case-study__body">
+            <span class="ds-card__badge ds-card__badge--brand">Execution Stability</span>
+            <h3 class="ds-card__title ds-card__title--sm">Real-time inference service — pipeline version rollback</h3>
+            <p class="ds-card__description">Before: Preprocessing update produced inconsistent scores. No way to trace which version caused drift. After: Run Binding linked every score to its exact Release State. Rollback completed in &lt;2 hours with 100% score distribution match.</p>
+            <div class="ds-card__tags">
+              <span class="ds-card__tag">Telco</span>
+              <span class="ds-card__tag">Customer Churn Prediction</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 3: Manufacturing -->
+        <article class="ds-card ds-card--case-study">
+          <div class="ds-card--case-study__graphic" aria-hidden="true">🏭</div>
+          <div class="ds-card--case-study__body">
+            <span class="ds-card__badge ds-card__badge--teal">Data Usability</span>
+            <h3 class="ds-card__title ds-card__title--sm">Quality inspection model — rare defect class coverage</h3>
+            <p class="ds-card__description">Before: 3 rare defect classes underrepresented — model missed edge cases in production. After: DTS generated DP-safe synthetic samples for all 3 classes. Coverage gap closed, defect detection recall improved.</p>
+            <div class="ds-card__tags">
+              <span class="ds-card__tag">Manufacturing</span>
+              <span class="ds-card__tag">Imbalanced Dataset</span>
+              <span class="ds-card__tag">AI-Ready Data</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 4: Healthcare -->
+        <article class="ds-card ds-card--case-study">
+          <div class="ds-card--case-study__graphic" aria-hidden="true">🏥</div>
+          <div class="ds-card--case-study__body">
+            <span class="ds-card__badge ds-card__badge--teal">Data Usability</span>
+            <h3 class="ds-card__title ds-card__title--sm">Clinical AI validation — restricted patient data replacement</h3>
+            <p class="ds-card__description">Before: Validation pipeline stalled — real patient records inaccessible due to HIPAA constraints. After: DTS generated differential-privacy synthetic records matching real distributions. Validation unblocked, compliance passed.</p>
+            <div class="ds-card__tags">
+              <span class="ds-card__tag">Healthcare</span>
+              <span class="ds-card__tag">DP Audit Log</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 5: Insurance -->
+        <article class="ds-card ds-card--case-study">
+          <div class="ds-card--case-study__graphic" aria-hidden="true">🔒</div>
+          <div class="ds-card--case-study__body">
+            <span class="ds-card__badge ds-card__badge--brand">Secure LLM Usage</span>
+            <h3 class="ds-card__title ds-card__title--sm">LLM-assisted claims processing — PII leakage prevention</h3>
+            <p class="ds-card__description">Before: Claims documents with PII passed directly to external LLM API — compliance blocked the workflow. After: LLM Capsule intercepted and anonymized all PII. Zero PII fields reached the API, output usability preserved.</p>
+            <div class="ds-card__tags">
+              <span class="ds-card__tag">Insurance</span>
+              <span class="ds-card__tag">PII Protection</span>
+              <span class="ds-card__tag">Enterprise LLM Search</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 6: Retail / E-Commerce -->
+        <article class="ds-card ds-card--case-study">
+          <div class="ds-card--case-study__graphic" aria-hidden="true">🛒</div>
+          <div class="ds-card--case-study__body">
+            <span class="ds-card__badge ds-card__badge--brand">Execution Stability</span>
+            <h3 class="ds-card__title ds-card__title--sm">Recommendation engine — runtime environment drift</h3>
+            <p class="ds-card__description">Before: Scores degraded after infrastructure upgrade — runtime parameters unrecorded, reproduction impossible. After: Run Binding captured every runtime parameter. Pre-upgrade state re-run in &lt;3 hours, exact environment reproduced.</p>
+            <div class="ds-card__tags">
+              <span class="ds-card__tag">Retail / E-Commerce</span>
+              <span class="ds-card__tag">Personalization Systems</span>
+            </div>
+          </div>
+        </article>
+
+      </div><!-- /.ds-card-grid -->
+
+      <div class="ds-banner" role="note">
+        <span class="ds-text--product">SynTitan</span> performs data quality refinement as part of execution stability. <span class="ds-text--product">SynTitan</span> can use a subset of <span class="ds-text--product">DTS</span> capabilities when privacy-safe synthetic data is needed, while <span class="ds-text--product">DTS</span> is a full standalone enterprise synthetic data engine.
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════
+       S5: TECHNICAL ARTIFACTS — STEP TABS
+  ═══════════════════════════════════════════ -->
+  <section class="ds-section" id="section-5">
+    <div class="ds-container">
+      <div class="ds-section-header">
+        <h2 class="ds-section-header__title">
+          What <span class="ds-text--brand">Traceability</span> Looks Like in Practice
+        </h2>
+        <p class="ds-section-header__description">Every <span class="ds-text--product">SynTitan</span> run produces structured artifacts that make execution conditions inspectable, comparable, and reproducible. These are the operational records teams use for incident response and regression verification.</p>
+      </div>
+
+      <div data-step-tabs>
+        <div class="ds-step-tabs__nav" role="tablist" aria-label="Technical artifact types">
+          <button class="ds-step-tabs__tab ds-step-tabs__tab--active" role="tab" aria-selected="true" data-tab="0" onclick="switchTab(0)">
+            <span class="ds-step-tabs__tab-number">1</span> Release State Diff
+          </button>
+          <button class="ds-step-tabs__tab" role="tab" aria-selected="false" data-tab="1" onclick="switchTab(1)">
+            <span class="ds-step-tabs__tab-number">2</span> Schema Fingerprint
+          </button>
+          <button class="ds-step-tabs__tab" role="tab" aria-selected="false" data-tab="2" onclick="switchTab(2)">
+            <span class="ds-step-tabs__tab-number">3</span> Preprocessing Diff
+          </button>
+          <button class="ds-step-tabs__tab" role="tab" aria-selected="false" data-tab="3" onclick="switchTab(3)">
+            <span class="ds-step-tabs__tab-number">4</span> Runtime Dependency
+          </button>
+        </div>
+
+        <!-- Panel 1: Release State Diff -->
+        <div class="ds-step-tabs__panel ds-step-tabs__panel--active" role="tabpanel" data-panel="0">
+          <div class="ds-step-tabs__content">
+            <h3 class="ds-step-tabs__title">Release State Comparison</h3>
+            <p class="ds-step-tabs__description">When output behavior changes between runs, <span class="ds-text--product">SynTitan</span> diffs the two Release States to surface exactly which execution condition changed.</p>
+            <div class="ds-step-tabs__meta">
+              <span class="ds-step-tabs__meta-label ds-step-tabs__meta-label--cause">Root cause</span>
+              <p>Feature column type coerced from integer to string upstream. Preprocessing normalization version updated in the same window.</p>
+              <span class="ds-step-tabs__meta-label ds-step-tabs__meta-label--resolution">Resolution</span>
+              <p>Restored prior schema type constraint. Pinned preprocessing version in Release State.</p>
+            </div>
+          </div>
+          <div>
+            <div class="ds-code-block">
+              <div class="ds-code--muted">// Release State diff: RS-0041 → RS-0042</div>
+              <div class="ds-code--remove">− schema.feature_col_7: dtype=int64</div>
+              <div class="ds-code--add">+ schema.feature_col_7: dtype=object</div>
+              <div class="ds-code--muted">// 1 schema fingerprint change detected</div>
+              <div class="ds-code--warn">! Run Binding: RS-0042 flagged before production</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel 2: Schema Fingerprint -->
+        <div class="ds-step-tabs__panel" role="tabpanel" data-panel="1">
+          <div class="ds-step-tabs__content">
+            <h3 class="ds-step-tabs__title">Schema Fingerprint Change</h3>
+            <p class="ds-step-tabs__description"><span class="ds-text--product">SynTitan</span> captures a schema fingerprint at each ingestion. When the fingerprint changes, it is logged in the Release State and surfaced in the Change Log before the run proceeds.</p>
+            <div class="ds-step-tabs__meta">
+              <span class="ds-step-tabs__meta-label ds-step-tabs__meta-label--cause">Root cause</span>
+              <p>Upstream data feed removed two feature columns without downstream notification.</p>
+              <span class="ds-step-tabs__meta-label ds-step-tabs__meta-label--resolution">Resolution</span>
+              <p>Run halted before training. Schema contract enforced. Upstream notified within the same hour.</p>
+            </div>
+          </div>
+          <div>
+            <div class="ds-code-block">
+              <div class="ds-code--muted">// Schema fingerprint audit log</div>
+              <div class="ds-code--warn">schema_fingerprint: CHANGED</div>
+              <div class="ds-code--remove">prev: sha256:a4f2b...3c91</div>
+              <div class="ds-code--add">curr: sha256:d9e7a...11fa</div>
+              <div class="ds-code--muted">// columns_added: 0</div>
+              <div class="ds-code--remove">// columns_removed: 2 [user_segment_v2, tenure_bucket]</div>
+              <div class="ds-code--muted">// type_changes: 1</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel 3: Preprocessing Diff -->
+        <div class="ds-step-tabs__panel" role="tabpanel" data-panel="2">
+          <div class="ds-step-tabs__content">
+            <h3 class="ds-step-tabs__title">Preprocessing Logic Change</h3>
+            <p class="ds-step-tabs__description">Preprocessing steps are versioned inside each Release State. When logic changes — normalization, imputation, encoding — the diff shows exactly which step changed and what the expected effect is.</p>
+            <div class="ds-step-tabs__meta">
+              <span class="ds-step-tabs__meta-label ds-step-tabs__meta-label--cause">Root cause</span>
+              <p>Normalization method switched from min-max to z-score — changing the scale of all downstream feature inputs.</p>
+              <span class="ds-step-tabs__meta-label ds-step-tabs__meta-label--resolution">Resolution</span>
+              <p>Reverted to prior Release State for immediate rollback. New method evaluated in staging before reintroduction.</p>
+            </div>
+          </div>
+          <div>
+            <div class="ds-code-block">
+              <div class="ds-code--muted">// Preprocessing diff: RS-0042 → RS-0043</div>
+              <div class="ds-code--remove">− step: normalize_amount</div>
+              <div class="ds-code--remove">&nbsp; method: min-max&nbsp; range: [0, 1000]</div>
+              <div class="ds-code--add">+ step: normalize_amount</div>
+              <div class="ds-code--add">&nbsp; method: z-score&nbsp; params: μ=0, σ=1</div>
+              <div class="ds-code--warn">! normalization method changed</div>
+              <div class="ds-code--muted">// all downstream feature scores affected</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel 4: Runtime Dependency -->
+        <div class="ds-step-tabs__panel" role="tabpanel" data-panel="3">
+          <div class="ds-step-tabs__content">
+            <h3 class="ds-step-tabs__title">Runtime Dependency Change</h3>
+            <p class="ds-step-tabs__description">Runtime environment versions — libraries, Python runtime, inference server — are captured in each Release State. Unexpected version changes are surfaced as execution state drift events.</p>
+            <div class="ds-step-tabs__meta">
+              <span class="ds-step-tabs__meta-label ds-step-tabs__meta-label--cause">Root cause</span>
+              <p>Container image updated in CI/CD pipeline without version-pinning the AI dependencies.</p>
+              <span class="ds-step-tabs__meta-label ds-step-tabs__meta-label--resolution">Resolution</span>
+              <p>Dependency versions pinned in Release State manifest. Container image rebuild triggered with verified versions.</p>
+            </div>
+          </div>
+          <div>
+            <div class="ds-code-block">
+              <div class="ds-code--muted">// Runtime dependency audit: RS-0043</div>
+              <div class="ds-code--remove">− sklearn: 1.2.2</div>
+              <div class="ds-code--add">+ sklearn: 1.4.0</div>
+              <div class="ds-code--remove">− pandas: 1.5.3</div>
+              <div class="ds-code--add">+ pandas: 2.1.0</div>
+              <div class="ds-code--warn">! 2 runtime dependencies changed</div>
+              <div class="ds-code--warn">! imputation behavior may differ</div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /.ds-step-tabs -->
+
+      <div class="ds-banner--bottom" role="note">
+        These artifact types are produced by <span class="ds-text--product">SynTitan</span> during every AI run. State Cards, Change Logs, Schema Diffs, Preprocessing Diffs, and Re-run Records are all standard outputs — not manual reports.
+        <a href="/syntitan" class="ds-btn-secondary">See execution state comparison</a>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════
+       S6: SaaS Diff Note (Banner)
+  ════════════════════════════════════════ -->
+  <section class="ds-section" id="section-6">
+    <div class="ds-container">
+      <div class="ds-banner--full">
+        <p>
+          Databricks versioned the data. MLflow tracked the model. The AI still broke in production.
+          <strong>Because neither tool versions the data state the model was bound to at run time.</strong>
+          <span class="ds-text--product">SynTitan</span> does. That's the difference these cases reflect.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <script>
+    function switchTab(index) {
+      // Update tab buttons
+      const tabs = document.querySelectorAll('.ds-step-tabs__tab');
+      tabs.forEach(function(tab, i) {
+        if (i === index) {
+          tab.classList.add('ds-step-tabs__tab--active');
+          tab.setAttribute('aria-selected', 'true');
+        } else {
+          tab.classList.remove('ds-step-tabs__tab--active');
+          tab.setAttribute('aria-selected', 'false');
+        }
+      });
+
+      // Update panels
+      const panels = document.querySelectorAll('.ds-step-tabs__panel');
+      panels.forEach(function(panel, i) {
+        if (i === index) {
+          panel.classList.add('ds-step-tabs__panel--active');
+        } else {
+          panel.classList.remove('ds-step-tabs__panel--active');
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>
