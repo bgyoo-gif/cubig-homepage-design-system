@@ -2186,7 +2186,7 @@ drawArrows() 함수 규칙:
 9. KPI/지표 수치 색상은 text-primary (파란색 금지)
 10. ds-banner 좌측 굵은 border 금지 (상하 얇은 border만)
 11. CTA 밴드는 ds-container 밖에 전폭으로 배치
-12. 줄바꿈 전역 규칙: `body { word-break: keep-all; overflow-wrap: break-word; }` — 의미 단위로 줄바꿈. 추가로 `text-wrap: balance`(제목) / `text-wrap: pretty`(본문)으로 줄 길이 균등화 필수
+12. 줄바꿈 전역 규칙: `body { word-break: keep-all; overflow-wrap: break-word; overflow-x: hidden; }` — 의미 단위로 줄바꿈 + 가로 overflow 방지(100vw 마키 컴포넌트 대응). `text-wrap: balance`(제목) / `text-wrap: pretty`(본문)으로 줄 길이 균등화 필수
 13. 긴 문장 분리: 짧은 독립 문장이 마침표로 2개 이상 나열되면 `ds-bullet ds-bullet--dot` 불릿 리스트로 분리한다
     - 인라인 middot(·)이 아닌 실제 불릿 리스트 컴포넌트 사용
     - Before: `<p>Run halted before training. Schema contract enforced. Upstream notified.</p>`
