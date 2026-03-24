@@ -526,6 +526,61 @@
     }
 
     /* ─────────────────────────────────────────────
+       12-b. Case Study Card
+    ───────────────────────────────────────────── */
+    .ds-card--case-study {
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+      overflow: hidden;
+    }
+    .ds-card--case-study__graphic {
+      width: 100%;
+      height: 100px;
+      background: var(--ds-gradient-inner-purple);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      flex-shrink: 0;
+    }
+    .ds-card--case-study__body {
+      display: flex;
+      flex-direction: column;
+      gap: var(--ds-space-xs);
+      padding: var(--ds-space-lg);
+      flex: 1;
+    }
+    .ds-card--case-study .ds-card__title--sm {
+      font-size: var(--ds-text-md);
+      font-weight: var(--ds-weight-semibold);
+      color: var(--ds-color-text-primary);
+      line-height: var(--ds-leading-tight);
+      margin-bottom: 0;
+    }
+    .ds-card--case-study .ds-card__description {
+      font-size: var(--ds-text-sm);
+      color: var(--ds-color-text-secondary);
+      line-height: var(--ds-leading-relaxed);
+      flex: 1;
+    }
+    .ds-card__tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--ds-space-xs);
+      margin-top: var(--ds-space-xs);
+    }
+    .ds-card__tag {
+      font-size: var(--ds-text-xs);
+      font-family: var(--ds-font-code);
+      color: var(--ds-color-text-tertiary);
+      background-color: var(--ds-color-surface-light);
+      border: var(--ds-border-default);
+      border-radius: var(--ds-radius-pill);
+      padding: 2px 10px;
+    }
+
+    /* ─────────────────────────────────────────────
        13. Accordion Card
     ───────────────────────────────────────────── */
     .ds-ac-list { display: flex; flex-direction: column; gap: 2px; }
@@ -933,378 +988,95 @@
           <p class="ds-section-header__description">Each record follows the same format: Before, After, What Changed, Reproduce.</p>
         </div>
 
-        <div class="ds-ac-list" role="list">
+        <div class="ds-card-grid ds-card-grid--3col">
 
           <!-- Card 1: Financial Services -->
-          <article class="ds-ac-card ds-ac--open" role="listitem">
-            <div class="ds-ac-card__header" onclick="toggleAcCard(this)" role="button" aria-expanded="true" tabindex="0">
-              <div class="ds-ac-card__title-wrap">
-                <div class="ds-ac-card__industry">
-                  <span class="ds-ac-card__industry-dot" style="background-color: var(--ds-color-warn)"></span>
-                  Financial Services
-                </div>
-                <div class="ds-ac-card__title">Model retraining pipeline — schema drift detection</div>
-              </div>
-              <div class="ds-ac-card__meta">
-                <span class="ds-badge ds-badge--brand">Execution Stability</span>
-                <span class="ds-badge ds-badge--gray">Fraud Detection</span>
-              </div>
-              <div class="ds-ac-card__toggle" aria-label="Toggle details">
-                <span class="ds-ac-card__toggle-icon"></span>
-              </div>
-            </div>
-            <div class="ds-ac-card__body">
-              <div class="ds-ac-metrics">
-                <div class="ds-ac-metric">
-                  <span class="ds-ac-metric__val ds-ac-metric__val--warn">3 wk</span>
-                  <span class="ds-ac-metric__label">Root cause time (before)</span>
-                </div>
-                <div class="ds-ac-metric">
-                  <span class="ds-ac-metric__val ds-ac-metric__val--success">&lt; 1 run</span>
-                  <span class="ds-ac-metric__label">Detection time (after)</span>
-                </div>
-                <div class="ds-ac-metric">
-                  <span class="ds-ac-metric__val ds-ac-metric__val--purple">2</span>
-                  <span class="ds-ac-metric__label">Feature columns removed</span>
-                </div>
-                <div class="ds-ac-metric">
-                  <span class="ds-ac-metric__val ds-ac-metric__val--purple">1</span>
-                  <span class="ds-ac-metric__label">Schema type coercion</span>
-                </div>
-              </div>
-              <div class="ds-ac-grid">
-                <div class="ds-ac-grid__item">
-                  <span class="ds-ac-grid__label ds-ac-grid__label--error">Before</span>
-                  <p class="ds-ac-grid__text">Schema change in upstream data caused silent model degradation. Root cause took 21 days to identify — by which time downstream decisions had been affected.</p>
-                </div>
-                <div class="ds-ac-grid__item">
-                  <span class="ds-ac-grid__label ds-ac-grid__label--success">After</span>
-                  <p class="ds-ac-grid__text"><span class="ds-text--product">SynTitan</span> Release State detected the schema diff at ingestion. Issue flagged before the next training run triggered. No degraded model reached production.</p>
-                </div>
-                <div class="ds-ac-grid__item">
-                  <span class="ds-ac-grid__label ds-ac-grid__label--purple">What Changed</span>
-                  <p class="ds-ac-grid__text">2 feature columns removed from upstream feed. 1 schema type coercion introduced silently. Release State diff surfaced both in the change log.</p>
-                </div>
-                <div class="ds-ac-grid__item">
-                  <span class="ds-ac-grid__label ds-ac-grid__label--warn">Reproduce</span>
-                  <p class="ds-ac-grid__text">Prior run re-executed under locked Release State conditions. Model behavior verified against known-good baseline. Root cause identification time: 21 days to under 4 hours (95% reduction). Incident response completed before next production run.</p>
-                </div>
-              </div>
-              <div class="ds-ac-artifacts">
-                <span class="ds-ac-artifacts__label">Artifacts</span>
-                <span class="ds-ac-artifacts__tag">State Card</span>
-                <span class="ds-ac-artifacts__tag">Change Log</span>
-                <span class="ds-ac-artifacts__tag">Re-run Record</span>
-                <span class="ds-ac-artifacts__tag">Schema Diff</span>
+          <article class="ds-card ds-card--case-study">
+            <div class="ds-card--case-study__graphic" aria-hidden="true">🏦</div>
+            <div class="ds-card--case-study__body">
+              <span class="ds-card__badge ds-card__badge--brand">Execution Stability</span>
+              <h3 class="ds-card__title ds-card__title--sm">Model retraining pipeline — schema drift detection</h3>
+              <p class="ds-card__description">Before: Schema change in upstream data caused silent model degradation. Root cause took 21 days to identify. After: Release State detected the schema diff at ingestion — issue flagged in &lt;1 run, root cause from 21 days to under 4 hours.</p>
+              <div class="ds-card__tags">
+                <span class="ds-card__tag">Financial Services</span>
+                <span class="ds-card__tag">Fraud Detection</span>
               </div>
             </div>
           </article>
 
           <!-- Card 2: Telco -->
-          <article class="ds-ac-card" role="listitem">
-            <div class="ds-ac-card__header" onclick="toggleAcCard(this)" role="button" aria-expanded="false" tabindex="0">
-              <div class="ds-ac-card__title-wrap">
-                <div class="ds-ac-card__industry">
-                  <span class="ds-ac-card__industry-dot" style="background-color: var(--ds-color-warn)"></span>
-                  Telco
-                </div>
-                <div class="ds-ac-card__title">Real-time inference service — pipeline version rollback</div>
-              </div>
-              <div class="ds-ac-card__meta">
-                <span class="ds-badge ds-badge--brand">Execution Stability</span>
-                <span class="ds-badge ds-badge--gray">Customer Churn Prediction</span>
-              </div>
-              <div class="ds-ac-card__toggle" aria-label="Toggle details">
-                <span class="ds-ac-card__toggle-icon"></span>
-              </div>
-            </div>
-            <div class="ds-ac-card__body">
-              <div class="ds-ac-metrics">
-                <div class="ds-ac-metric">
-                  <span class="ds-ac-metric__val ds-ac-metric__val--warn">Unknown</span>
-                  <span class="ds-ac-metric__label">Drift source (before)</span>
-                </div>
-                <div class="ds-ac-metric">
-                  <span class="ds-ac-metric__val ds-ac-metric__val--success">&lt; 2 hr</span>
-                  <span class="ds-ac-metric__label">Rollback time (after)</span>
-                </div>
-                <div class="ds-ac-metric">
-                  <span class="ds-ac-metric__val ds-ac-metric__val--purple">100%</span>
-                  <span class="ds-ac-metric__label">Score distribution match</span>
-                </div>
-              </div>
-              <div class="ds-ac-grid">
-                <div class="ds-ac-grid__item">
-                  <span class="ds-ac-grid__label ds-ac-grid__label--error">Before</span>
-                  <p class="ds-ac-grid__text">Preprocessing pipeline update produced inconsistent scores in production. No way to trace which version caused the score drift. Engineers spent days reconstructing execution history manually.</p>
-                </div>
-                <div class="ds-ac-grid__item">
-                  <span class="ds-ac-grid__label ds-ac-grid__label--success">After</span>
-                  <p class="ds-ac-grid__text">Run Binding linked every score to its exact Release State. Rollback to stable state completed in under 2 hours. No manual reconstruction required.</p>
-                </div>
-                <div class="ds-ac-grid__item">
-                  <span class="ds-ac-grid__label ds-ac-grid__label--purple">What Changed</span>
-                  <p class="ds-ac-grid__text">Normalization logic updated across the preprocessing step. Feature scaling range shifted by 12%. Release State diff identified both changes with exact pipeline version reference.</p>
-                </div>
-                <div class="ds-ac-grid__item">
-                  <span class="ds-ac-grid__label ds-ac-grid__label--warn">Reproduce</span>
-                  <p class="ds-ac-grid__text">Stable release re-run confirmed. Score distribution matched baseline output. Run Binding record archived for future regression checks.</p>
-                </div>
-              </div>
-              <div class="ds-ac-artifacts">
-                <span class="ds-ac-artifacts__label">Artifacts</span>
-                <span class="ds-ac-artifacts__tag">State Card</span>
-                <span class="ds-ac-artifacts__tag">Change Log</span>
-                <span class="ds-ac-artifacts__tag">Re-run Record</span>
+          <article class="ds-card ds-card--case-study">
+            <div class="ds-card--case-study__graphic" aria-hidden="true">📡</div>
+            <div class="ds-card--case-study__body">
+              <span class="ds-card__badge ds-card__badge--brand">Execution Stability</span>
+              <h3 class="ds-card__title ds-card__title--sm">Real-time inference service — pipeline version rollback</h3>
+              <p class="ds-card__description">Before: Preprocessing update produced inconsistent scores. No way to trace which version caused drift. After: Run Binding linked every score to its exact Release State. Rollback completed in &lt;2 hours with 100% score distribution match.</p>
+              <div class="ds-card__tags">
+                <span class="ds-card__tag">Telco</span>
+                <span class="ds-card__tag">Customer Churn Prediction</span>
               </div>
             </div>
           </article>
 
           <!-- Card 3: Manufacturing -->
-          <article class="ds-ac-card" role="listitem">
-            <div class="ds-ac-card__header" onclick="toggleAcCard(this)" role="button" aria-expanded="false" tabindex="0">
-              <div class="ds-ac-card__title-wrap">
-                <div class="ds-ac-card__industry">
-                  <span class="ds-ac-card__industry-dot" style="background-color: var(--ds-color-success)"></span>
-                  Manufacturing
-                </div>
-                <div class="ds-ac-card__title">Quality inspection model — rare defect class coverage</div>
-              </div>
-              <div class="ds-ac-card__meta">
-                <span class="ds-badge ds-badge--teal">Data Usability</span>
-                <span class="ds-badge ds-badge--gray">Imbalanced Dataset</span>
-                <span class="ds-badge ds-badge--gray">AI-Ready Data</span>
-              </div>
-              <div class="ds-ac-card__toggle" aria-label="Toggle details">
-                <span class="ds-ac-card__toggle-icon"></span>
-              </div>
-            </div>
-            <div class="ds-ac-card__body">
-              <div class="ds-ac-metrics">
-                <div class="ds-ac-metric">
-                  <span class="ds-ac-metric__val ds-ac-metric__val--warn">3</span>
-                  <span class="ds-ac-metric__label">Underrepresented classes</span>
-                </div>
-                <div class="ds-ac-metric">
-                  <span class="ds-ac-metric__val ds-ac-metric__val--success">Closed</span>
-                  <span class="ds-ac-metric__label">Coverage gap (after DTS)</span>
-                </div>
-                <div class="ds-ac-metric">
-                  <span class="ds-ac-metric__val ds-ac-metric__val--purple">Recall +</span>
-                  <span class="ds-ac-metric__label">Defect detection</span>
-                </div>
-              </div>
-              <div class="ds-ac-grid">
-                <div class="ds-ac-grid__item">
-                  <span class="ds-ac-grid__label ds-ac-grid__label--error">Before</span>
-                  <p class="ds-ac-grid__text">Rare defect class underrepresented in training data. Model missed edge cases in production — the gap was invisible until incidents occurred on the line.</p>
-                </div>
-                <div class="ds-ac-grid__item">
-                  <span class="ds-ac-grid__label ds-ac-grid__label--success">After</span>
-                  <p class="ds-ac-grid__text"><span class="ds-text--product">DTS</span> generated privacy-safe synthetic samples for the 3 underrepresented classes using differential privacy. Coverage gap closed before next training cycle.</p>
-                </div>
-                <div class="ds-ac-grid__item">
-                  <span class="ds-ac-grid__label ds-ac-grid__label--purple">What Changed</span>
-                  <p class="ds-ac-grid__text">3 underrepresented defect classes augmented with DP-safe synthetic data. Class distribution rebalanced. Augmented dataset versioned within <span class="ds-text--product">SynTitan</span> Release State.</p>
-                </div>
-                <div class="ds-ac-grid__item">
-                  <span class="ds-ac-grid__label ds-ac-grid__label--warn">Reproduce</span>
-                  <p class="ds-ac-grid__text">Augmented dataset versioned and bound to Release State. Same training run reproducible on demand. Defect detection recall improved and verified against holdout.</p>
-                </div>
-              </div>
-              <div class="ds-ac-artifacts">
-                <span class="ds-ac-artifacts__label">Artifacts</span>
-                <span class="ds-ac-artifacts__tag">State Card</span>
-                <span class="ds-ac-artifacts__tag">Dataset Version</span>
-                <span class="ds-ac-artifacts__tag">Re-run Record</span>
-                <span class="ds-ac-artifacts__tag">Class Dist. Log</span>
+          <article class="ds-card ds-card--case-study">
+            <div class="ds-card--case-study__graphic" aria-hidden="true">🏭</div>
+            <div class="ds-card--case-study__body">
+              <span class="ds-card__badge ds-card__badge--teal">Data Usability</span>
+              <h3 class="ds-card__title ds-card__title--sm">Quality inspection model — rare defect class coverage</h3>
+              <p class="ds-card__description">Before: 3 rare defect classes underrepresented — model missed edge cases in production. After: DTS generated DP-safe synthetic samples for all 3 classes. Coverage gap closed, defect detection recall improved.</p>
+              <div class="ds-card__tags">
+                <span class="ds-card__tag">Manufacturing</span>
+                <span class="ds-card__tag">Imbalanced Dataset</span>
+                <span class="ds-card__tag">AI-Ready Data</span>
               </div>
             </div>
           </article>
 
           <!-- Card 4: Healthcare -->
-          <article class="ds-ac-card" role="listitem">
-            <div class="ds-ac-card__header" onclick="toggleAcCard(this)" role="button" aria-expanded="false" tabindex="0">
-              <div class="ds-ac-card__title-wrap">
-                <div class="ds-ac-card__industry">
-                  <span class="ds-ac-card__industry-dot" style="background-color: var(--ds-color-success)"></span>
-                  Healthcare
-                </div>
-                <div class="ds-ac-card__title">Clinical AI validation — restricted patient data replacement</div>
-              </div>
-              <div class="ds-ac-card__meta">
-                <span class="ds-badge ds-badge--teal">Data Usability</span>
-              </div>
-              <div class="ds-ac-card__toggle" aria-label="Toggle details">
-                <span class="ds-ac-card__toggle-icon"></span>
-              </div>
-            </div>
-            <div class="ds-ac-card__body">
-              <div class="ds-ac-metrics">
-                <div class="ds-ac-metric">
-                  <span class="ds-ac-metric__val ds-ac-metric__val--warn">Blocked</span>
-                  <span class="ds-ac-metric__label">Validation status (before)</span>
-                </div>
-                <div class="ds-ac-metric">
-                  <span class="ds-ac-metric__val ds-ac-metric__val--success">Unblocked</span>
-                  <span class="ds-ac-metric__label">Validation status (after)</span>
-                </div>
-                <div class="ds-ac-metric">
-                  <span class="ds-ac-metric__val ds-ac-metric__val--purple">DP</span>
-                  <span class="ds-ac-metric__label">Differential privacy applied</span>
-                </div>
-              </div>
-              <div class="ds-ac-grid">
-                <div class="ds-ac-grid__item">
-                  <span class="ds-ac-grid__label ds-ac-grid__label--error">Before</span>
-                  <p class="ds-ac-grid__text">Real patient records required for model validation could not be accessed due to HIPAA compliance constraints. Validation pipeline stalled. No way to test model behavior on realistic distributions.</p>
-                </div>
-                <div class="ds-ac-grid__item">
-                  <span class="ds-ac-grid__label ds-ac-grid__label--success">After</span>
-                  <p class="ds-ac-grid__text"><span class="ds-text--product">DTS</span> generated differential-privacy synthetic patient records that matched real distribution characteristics without containing any real identifiable information. Validation unblocked.</p>
-                </div>
-                <div class="ds-ac-grid__item">
-                  <span class="ds-ac-grid__label ds-ac-grid__label--purple">What Changed</span>
-                  <p class="ds-ac-grid__text">Non-accessible real records replaced with DP-safe synthetic equivalents. Data distribution preserved. Compliance review passed. Validation pipeline resumed without modification.</p>
-                </div>
-                <div class="ds-ac-grid__item">
-                  <span class="ds-ac-grid__label ds-ac-grid__label--warn">Reproduce</span>
-                  <p class="ds-ac-grid__text">Synthetic dataset versioned in <span class="ds-text--product">SynTitan</span>. Validation run reproducible with same synthetic distribution on demand. Audit trail maintained throughout.</p>
-                </div>
-              </div>
-              <div class="ds-ac-artifacts">
-                <span class="ds-ac-artifacts__label">Artifacts</span>
-                <span class="ds-ac-artifacts__tag">State Card</span>
-                <span class="ds-ac-artifacts__tag">DP Audit Log</span>
-                <span class="ds-ac-artifacts__tag">Dataset Version</span>
+          <article class="ds-card ds-card--case-study">
+            <div class="ds-card--case-study__graphic" aria-hidden="true">🏥</div>
+            <div class="ds-card--case-study__body">
+              <span class="ds-card__badge ds-card__badge--teal">Data Usability</span>
+              <h3 class="ds-card__title ds-card__title--sm">Clinical AI validation — restricted patient data replacement</h3>
+              <p class="ds-card__description">Before: Validation pipeline stalled — real patient records inaccessible due to HIPAA constraints. After: DTS generated differential-privacy synthetic records matching real distributions. Validation unblocked, compliance passed.</p>
+              <div class="ds-card__tags">
+                <span class="ds-card__tag">Healthcare</span>
+                <span class="ds-card__tag">DP Audit Log</span>
               </div>
             </div>
           </article>
 
           <!-- Card 5: Insurance -->
-          <article class="ds-ac-card" role="listitem">
-            <div class="ds-ac-card__header" onclick="toggleAcCard(this)" role="button" aria-expanded="false" tabindex="0">
-              <div class="ds-ac-card__title-wrap">
-                <div class="ds-ac-card__industry">
-                  <span class="ds-ac-card__industry-dot" style="background-color: var(--ds-color-brand-purple)"></span>
-                  Insurance
-                </div>
-                <div class="ds-ac-card__title">LLM-assisted claims processing — PII leakage prevention</div>
-              </div>
-              <div class="ds-ac-card__meta">
-                <span class="ds-badge ds-badge--brand">Secure LLM Usage</span>
-                <span class="ds-badge ds-badge--gray">Enterprise LLM Search</span>
-                <span class="ds-badge ds-badge--gray">PII Protection</span>
-              </div>
-              <div class="ds-ac-card__toggle" aria-label="Toggle details">
-                <span class="ds-ac-card__toggle-icon"></span>
-              </div>
-            </div>
-            <div class="ds-ac-card__body">
-              <div class="ds-ac-metrics">
-                <div class="ds-ac-metric">
-                  <span class="ds-ac-metric__val ds-ac-metric__val--warn">Exposed</span>
-                  <span class="ds-ac-metric__label">PII in LLM prompts (before)</span>
-                </div>
-                <div class="ds-ac-metric">
-                  <span class="ds-ac-metric__val ds-ac-metric__val--success">0</span>
-                  <span class="ds-ac-metric__label">PII fields in prompts (after)</span>
-                </div>
-                <div class="ds-ac-metric">
-                  <span class="ds-ac-metric__val ds-ac-metric__val--purple">Preserved</span>
-                  <span class="ds-ac-metric__label">Output usability</span>
-                </div>
-              </div>
-              <div class="ds-ac-grid">
-                <div class="ds-ac-grid__item">
-                  <span class="ds-ac-grid__label ds-ac-grid__label--error">Before</span>
-                  <p class="ds-ac-grid__text">Claims documents containing policyholder names, ID numbers, and medical details were passed directly to an external LLM API. Compliance team blocked the workflow pending a PII solution.</p>
-                </div>
-                <div class="ds-ac-grid__item">
-                  <span class="ds-ac-grid__label ds-ac-grid__label--success">After</span>
-                  <p class="ds-ac-grid__text"><span class="ds-text--product">LLM Capsule</span> intercepted prompts, detected and anonymized all PII fields before submission to the LLM. Outputs returned with anonymized tokens re-mapped for downstream use.</p>
-                </div>
-                <div class="ds-ac-grid__item">
-                  <span class="ds-ac-grid__label ds-ac-grid__label--purple">What Changed</span>
-                  <p class="ds-ac-grid__text"><span class="ds-text--product">LLM Capsule</span> layer inserted into the workflow. PII detection covered names, IDs, dates, and medical field patterns. Zero identified PII fields reached the external API.</p>
-                </div>
-                <div class="ds-ac-grid__item">
-                  <span class="ds-ac-grid__label ds-ac-grid__label--warn">Reproduce</span>
-                  <p class="ds-ac-grid__text">Each anonymization run logged and bound to <span class="ds-text--product">SynTitan</span> Release State. Workflow reproducible with same anonymization logic for audit and regression verification.</p>
-                </div>
-              </div>
-              <div class="ds-ac-artifacts">
-                <span class="ds-ac-artifacts__label">Artifacts</span>
-                <span class="ds-ac-artifacts__tag">State Card</span>
-                <span class="ds-ac-artifacts__tag">PII Detect Log</span>
-                <span class="ds-ac-artifacts__tag">Anonymization Map</span>
-                <span class="ds-ac-artifacts__tag">Re-run Record</span>
+          <article class="ds-card ds-card--case-study">
+            <div class="ds-card--case-study__graphic" aria-hidden="true">🔒</div>
+            <div class="ds-card--case-study__body">
+              <span class="ds-card__badge ds-card__badge--brand">Secure LLM Usage</span>
+              <h3 class="ds-card__title ds-card__title--sm">LLM-assisted claims processing — PII leakage prevention</h3>
+              <p class="ds-card__description">Before: Claims documents with PII passed directly to external LLM API — compliance blocked the workflow. After: LLM Capsule intercepted and anonymized all PII. Zero PII fields reached the API, output usability preserved.</p>
+              <div class="ds-card__tags">
+                <span class="ds-card__tag">Insurance</span>
+                <span class="ds-card__tag">PII Protection</span>
+                <span class="ds-card__tag">Enterprise LLM Search</span>
               </div>
             </div>
           </article>
 
-          <!-- Card 6: Retail / E-commerce -->
-          <article class="ds-ac-card" role="listitem">
-            <div class="ds-ac-card__header" onclick="toggleAcCard(this)" role="button" aria-expanded="false" tabindex="0">
-              <div class="ds-ac-card__title-wrap">
-                <div class="ds-ac-card__industry">
-                  <span class="ds-ac-card__industry-dot" style="background-color: var(--ds-color-warn)"></span>
-                  Retail / E-Commerce
-                </div>
-                <div class="ds-ac-card__title">Recommendation engine — runtime environment drift</div>
-              </div>
-              <div class="ds-ac-card__meta">
-                <span class="ds-badge ds-badge--brand">Execution Stability</span>
-                <span class="ds-badge ds-badge--gray">Personalization Systems</span>
-              </div>
-              <div class="ds-ac-card__toggle" aria-label="Toggle details">
-                <span class="ds-ac-card__toggle-icon"></span>
-              </div>
-            </div>
-            <div class="ds-ac-card__body">
-              <div class="ds-ac-metrics">
-                <div class="ds-ac-metric">
-                  <span class="ds-ac-metric__val ds-ac-metric__val--warn">Days</span>
-                  <span class="ds-ac-metric__label">Debugging time (before)</span>
-                </div>
-                <div class="ds-ac-metric">
-                  <span class="ds-ac-metric__val ds-ac-metric__val--success">&lt; 3 hr</span>
-                  <span class="ds-ac-metric__label">Root cause identified (after)</span>
-                </div>
-                <div class="ds-ac-metric">
-                  <span class="ds-ac-metric__val ds-ac-metric__val--purple">Exact</span>
-                  <span class="ds-ac-metric__label">Environment reproduced</span>
-                </div>
-              </div>
-              <div class="ds-ac-grid">
-                <div class="ds-ac-grid__item">
-                  <span class="ds-ac-grid__label ds-ac-grid__label--error">Before</span>
-                  <p class="ds-ac-grid__text">Recommendation scores degraded after a routine infrastructure upgrade. Engineers could not reproduce the pre-upgrade behavior — all runtime parameters had changed and were not recorded.</p>
-                </div>
-                <div class="ds-ac-grid__item">
-                  <span class="ds-ac-grid__label ds-ac-grid__label--success">After</span>
-                  <p class="ds-ac-grid__text"><span class="ds-text--product">SynTitan</span>'s Run Binding captured every runtime parameter at execution time. Pre-upgrade Release State re-run in under 3 hours. Exact recommendation distribution confirmed and compared.</p>
-                </div>
-                <div class="ds-ac-grid__item">
-                  <span class="ds-ac-grid__label ds-ac-grid__label--purple">What Changed</span>
-                  <p class="ds-ac-grid__text">Library version bump changed default float precision handling. Embedding normalization behavior altered. Release State diff identified the exact library version delta.</p>
-                </div>
-                <div class="ds-ac-grid__item">
-                  <span class="ds-ac-grid__label ds-ac-grid__label--warn">Reproduce</span>
-                  <p class="ds-ac-grid__text">Pre-upgrade run reproduced exactly. Score distribution delta measured and confirmed. Infrastructure team patched and validated against reproduced baseline.</p>
-                </div>
-              </div>
-              <div class="ds-ac-artifacts">
-                <span class="ds-ac-artifacts__label">Artifacts</span>
-                <span class="ds-ac-artifacts__tag">State Card</span>
-                <span class="ds-ac-artifacts__tag">Runtime Snapshot</span>
-                <span class="ds-ac-artifacts__tag">Change Log</span>
-                <span class="ds-ac-artifacts__tag">Re-run Record</span>
+          <!-- Card 6: Retail / E-Commerce -->
+          <article class="ds-card ds-card--case-study">
+            <div class="ds-card--case-study__graphic" aria-hidden="true">🛒</div>
+            <div class="ds-card--case-study__body">
+              <span class="ds-card__badge ds-card__badge--brand">Execution Stability</span>
+              <h3 class="ds-card__title ds-card__title--sm">Recommendation engine — runtime environment drift</h3>
+              <p class="ds-card__description">Before: Scores degraded after infrastructure upgrade — runtime parameters unrecorded, reproduction impossible. After: Run Binding captured every runtime parameter. Pre-upgrade state re-run in &lt;3 hours, exact environment reproduced.</p>
+              <div class="ds-card__tags">
+                <span class="ds-card__tag">Retail / E-Commerce</span>
+                <span class="ds-card__tag">Personalization Systems</span>
               </div>
             </div>
           </article>
 
-        </div><!-- /.ds-ac-list -->
+        </div><!-- /.ds-card-grid -->
 
         <!-- Overlap prevention note -->
         <div class="ds-banner" role="note" style="margin-top: var(--ds-space-xl);">
@@ -1362,8 +1134,14 @@
                 <p>Restored prior schema type constraint. Pinned preprocessing version in Release State.</p>
               </div>
             </div>
-            <div class="ds-step-tabs__screenshot" aria-label="Release State Diff View screenshot">
-              <div style="background: var(--ds-color-neutral-050); border-radius: var(--ds-radius-md); height: 280px; display: flex; align-items: center; justify-content: center; color: var(--ds-color-text-tertiary); font-size: var(--ds-text-sm); font-family: var(--ds-font-code);">[Screenshot placeholder]</div>
+            <div class="ds-step-tabs__screenshot" aria-label="Release State Diff code example">
+              <div class="ds-code-block">
+                <div class="ds-code--muted">// Release State diff: RS-0041 → RS-0042</div>
+                <div class="ds-code--remove">− schema.feature_col_7: dtype=int64</div>
+                <div class="ds-code--add">+ schema.feature_col_7: dtype=object</div>
+                <div class="ds-code--muted">// 1 schema fingerprint change detected</div>
+                <div class="ds-code--warn">! Run Binding: RS-0042 flagged before production</div>
+              </div>
             </div>
           </div>
 
@@ -1390,8 +1168,16 @@
                 <p>Run halted before training. Schema contract enforced. Upstream notified within the same hour.</p>
               </div>
             </div>
-            <div class="ds-step-tabs__screenshot" aria-label="Schema Fingerprint View screenshot">
-              <div style="background: var(--ds-color-neutral-050); border-radius: var(--ds-radius-md); height: 280px; display: flex; align-items: center; justify-content: center; color: var(--ds-color-text-tertiary); font-size: var(--ds-text-sm); font-family: var(--ds-font-code);">[Screenshot placeholder]</div>
+            <div class="ds-step-tabs__screenshot" aria-label="Schema fingerprint code example">
+              <div class="ds-code-block">
+                <div class="ds-code--muted">// Schema fingerprint audit log</div>
+                <div class="ds-code--warn">schema_fingerprint: CHANGED</div>
+                <div class="ds-code--remove">prev: sha256:a4f2b...3c91</div>
+                <div class="ds-code--add">curr: sha256:d9e7a...11fa</div>
+                <div class="ds-code--muted">// columns_added: 0</div>
+                <div class="ds-code--remove">// columns_removed: 2 [user_segment_v2, tenure_bucket]</div>
+                <div class="ds-code--muted">// type_changes: 1</div>
+              </div>
             </div>
           </div>
 
@@ -1416,8 +1202,16 @@
                 <p>Reverted to prior Release State for immediate rollback. New method evaluated in staging before reintroduction.</p>
               </div>
             </div>
-            <div class="ds-step-tabs__screenshot" aria-label="Preprocessing Diff View screenshot">
-              <div style="background: var(--ds-color-neutral-050); border-radius: var(--ds-radius-md); height: 280px; display: flex; align-items: center; justify-content: center; color: var(--ds-color-text-tertiary); font-size: var(--ds-text-sm); font-family: var(--ds-font-code);">[Screenshot placeholder]</div>
+            <div class="ds-step-tabs__screenshot" aria-label="Preprocessing diff code example">
+              <div class="ds-code-block">
+                <div class="ds-code--muted">// Preprocessing diff: RS-0042 → RS-0043</div>
+                <div class="ds-code--remove">− step: normalize_amount</div>
+                <div class="ds-code--remove">  method: min-max  range: [0, 1000]</div>
+                <div class="ds-code--add">+ step: normalize_amount</div>
+                <div class="ds-code--add">  method: z-score  params: μ=0, σ=1</div>
+                <div class="ds-code--warn">! normalization method changed</div>
+                <div class="ds-code--muted">// all downstream feature scores affected</div>
+              </div>
             </div>
           </div>
 
@@ -1442,8 +1236,16 @@
                 <p>Dependency versions pinned in Release State manifest. Container image rebuild triggered with verified versions.</p>
               </div>
             </div>
-            <div class="ds-step-tabs__screenshot" aria-label="Runtime Dependency View screenshot">
-              <div style="background: var(--ds-color-neutral-050); border-radius: var(--ds-radius-md); height: 280px; display: flex; align-items: center; justify-content: center; color: var(--ds-color-text-tertiary); font-size: var(--ds-text-sm); font-family: var(--ds-font-code);">[Screenshot placeholder]</div>
+            <div class="ds-step-tabs__screenshot" aria-label="Runtime dependency code example">
+              <div class="ds-code-block">
+                <div class="ds-code--muted">// Runtime dependency audit: RS-0043</div>
+                <div class="ds-code--remove">− sklearn: 1.2.2</div>
+                <div class="ds-code--add">+ sklearn: 1.4.0</div>
+                <div class="ds-code--remove">− pandas: 1.5.3</div>
+                <div class="ds-code--add">+ pandas: 2.1.0</div>
+                <div class="ds-code--warn">! 2 runtime dependencies changed</div>
+                <div class="ds-code--warn">! imputation behavior may differ</div>
+              </div>
             </div>
           </div>
 
