@@ -338,7 +338,7 @@
        7. Hero
     ───────────────────────────────────────────── */
     .ds-hero { padding: 0; display: grid; grid-template-columns: 1fr; gap: var(--ds-space-lg); align-items: center; }
-    .ds-hero--text-only { max-width: 860px; }
+    .ds-hero--text-only { max-width: 860px; margin: 0 auto; text-align: center; }
     .ds-hero__title {
       font-family: var(--ds-font-base); font-size: var(--ds-text-7xl); font-weight: var(--ds-weight-bold);
       color: var(--ds-color-text-primary); line-height: var(--ds-leading-tight); letter-spacing: -2px;
@@ -346,12 +346,12 @@
     }
     .ds-hero__description {
       font-size: var(--ds-text-lg); color: var(--ds-color-text-secondary);
-      line-height: var(--ds-leading-relaxed); max-width: 100%; margin-bottom: var(--ds-space-xl);
+      line-height: var(--ds-leading-relaxed); max-width: 100%; margin: 0 auto var(--ds-space-xl);
       word-break: keep-all; overflow-wrap: break-word; text-wrap: pretty;
     }
     @media (min-width: 768px)  { .ds-hero__description { max-width: 720px; } }
     @media (min-width: 1440px) { .ds-hero__description { max-width: 860px; } }
-    .ds-hero__actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .ds-hero__actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
     @media (max-width: 767px) {
       .ds-hero__title { font-size: var(--ds-text-5xl); letter-spacing: -1px; }
       .ds-hero__actions { flex-direction: column; }
@@ -797,13 +797,13 @@
        16. Background Images
     ───────────────────────────────────────────── */
     .ds-bg--grad-deep {
-      background-image: url('https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/bg-grad-deep.avif');
+      background-image: url('https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/bg-gradient-deep-teal.png');
     }
     .ds-bg--wave-teal {
-      background-image: url('https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/bg-wave-teal.avif');
+      background-image: url('https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/bg-wave-teal-blue.png');
     }
     .ds-bg--grad-navy {
-      background-image: url('https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/bg-grad-navy.avif');
+      background-image: url('https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/bg-gradient-navy-teal.png');
     }
 
     /* ─────────────────────────────────────────────
