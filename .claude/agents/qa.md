@@ -318,6 +318,7 @@ grep -n "padding.*16px\|padding.*32px\|padding.*120px" output/[파일명]-b-type
 - 순차 프로세스("Step 1,2,3" / "How it works")가 ds-step-tabs 미사용 (CAT-2 High)
 - 인증/수상(ISO, GS인증 등)이 ds-cert-grid 미사용 (CAT-2 High)
 - FAQ 섹션이 아코디언(ds-ac-card)이 아닌 카드 나열로 구현 (CAT-2 High)
+- 도입 사례(고객명+산업+설명)가 ds-card--case-study가 아닌 아코디언/범용 카드로 구현 (CAT-2 High)
 - 이미지 경로가 상대경로(../../reference/) — `/cubig-homepage-design-system/reference/` 절대경로 필수 (CAT-2 High)
 - KPI band 배경 이미지 오버레이가 rgba(0,0,0,0.35)가 아님 (CAT-2 High)
 - 아코디언 header grid가 1fr auto auto가 아님 — 160px 고정 (CAT-2 High)

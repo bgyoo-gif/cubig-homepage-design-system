@@ -66,6 +66,7 @@ frontend-dev 에이전트에게 구현을 위임합니다.
 - **외부 서비스 링크는 버튼형**: "View on AWS Marketplace", "llmcapsule.ai" 등 외부 링크는 `ds-btn ds-btn--secondary` 버튼으로 구현 (인라인 텍스트 링크 금지)
 - **단계별 프로세스는 Step Tabs**: "Step 1,2,3" / "How it works" 순차 프로세스는 `ds-step-tabs`([U])로 구현. 스크린샷 필요 시 placeholder + 사용자 요청
 - **인증/수상은 Cert Grid**: ISO, GS인증 등은 `ds-cert-grid`([I-2]) 마키 + 공식 이미지(reference/graphics/cert-*) 사용
+- **도입 사례/Case Record는 Case Study 카드**: 고객명+산업+설명이 있는 사례는 반드시 `ds-card--case-study`([H]) 사용. 아코디언([S])이 아닌 카드 그리드. 3건 이하 → 1col, 3건 → 3col, 6건 → 3col×2행
 
 **⚠️ 섹션 헤더 필수 규칙**
 모든 섹션은 반드시 아래 구조 순서로 시작한다. 예외 없음.

@@ -2215,4 +2215,5 @@ drawArrows() 함수 규칙:
 26. 외부 서비스 링크는 버튼형: "View on AWS Marketplace", "llmcapsule.ai" 등 외부 서비스/제품 링크는 인라인 텍스트 링크가 아닌 `ds-btn ds-btn--secondary` 버튼으로 구현한다.
 27. 단계별 프로세스(Steps)는 Step Tabs 사용: "Step 1, 2, 3..." 또는 "How it works" 형태의 순차 프로세스 설명은 반드시 `[U] ds-step-tabs`로 구현. 각 탭 하단에 스크린샷이 필요하면 `<img src="[screenshot-placeholder]" alt="Step N screenshot">` placeholder를 넣고 사용자에게 스크린샷을 요청한다.
 28. 인증/수상 섹션은 Cert Grid 사용: ISO, GS인증 등 인증/수상 내용은 반드시 `[L] ds-cert-grid` 마키 컴포넌트를 사용하고, DS에 정의된 공식 인증 목록 + 이미지(reference/graphics/cert-*)를 참조한다.
-29. 이미지 경로는 GitHub Pages 전체 URL 사용: B타입 HTML/TSX에서 이미지 참조 시 상대경로 금지. 반드시 `https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/` 또는 `https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/` 전체 URL 사용. TSX의 IMAGE_BASE도 동일.
+29. 도입 사례/Case Record는 Case Study 카드 필수: 고객명+산업+설명이 있는 사례는 반드시 `ds-card--case-study`([H]) 사용. 아코디언([S])이 아닌 카드 그리드. 범용 카드보다 우선.
+30. 이미지 경로는 GitHub Pages 전체 URL 사용: B타입 HTML/TSX에서 이미지 참조 시 상대경로 금지. 반드시 `https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/` 또는 `https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/` 전체 URL 사용. TSX의 IMAGE_BASE도 동일.
