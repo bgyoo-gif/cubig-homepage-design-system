@@ -114,6 +114,7 @@ export default function Section09_FiveSignals({
           -webkit-font-smoothing: antialiased;
           word-break: keep-all;
           overflow-wrap: break-word;
+          container-type: inline-size;
         }
         .s9-container {
           width: 100%;
@@ -285,24 +286,24 @@ export default function Section09_FiveSignals({
         .s9-btn--sm:hover { background-color: #f7f7f7; }
 
         /* Responsive */
-        @media (max-width: 767px) {
+        @container (max-width: 767px) {
           .s9-header { text-align: left; }
           .s9-header__title { font-size: 28px; }
           .s9-cta-row { flex-direction: column; align-items: flex-start; }
         }
-        @media (min-width: 768px) {
+        @container (min-width: 768px) {
           .s9-container { padding: 0 32px; }
           .s9-feature-grid { grid-template-columns: repeat(2, 1fr); }
           .s9-header__description { max-width: 720px; }
           .s9-header__title { font-size: 40px; }
           .s9-concepts-grid { grid-template-columns: repeat(2, 1fr); }
         }
-        @media (min-width: 1024px) {
+        @container (min-width: 1024px) {
           .s9-container { padding: 0 32px; }
           .s9-header__description { max-width: 720px; }
           .s9-concepts-grid { grid-template-columns: repeat(3, 1fr); }
         }
-        @media (min-width: 1440px) {
+        @container (min-width: 1440px) {
           .s9-container { padding: 0 120px; max-width: 1440px; }
           .s9-header__description { max-width: 860px; }
         }

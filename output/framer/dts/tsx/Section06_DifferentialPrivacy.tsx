@@ -75,6 +75,7 @@ export default function Section06_DifferentialPrivacy({
           -webkit-font-smoothing: antialiased;
           word-break: keep-all;
           overflow-wrap: break-word;
+          container-type: inline-size;
         }
         .s6-container {
           width: 100%;
@@ -230,7 +231,7 @@ export default function Section06_DifferentialPrivacy({
         }
 
         /* Responsive */
-        @media (max-width: 767px) {
+        @container (max-width: 767px) {
           .s6-header { text-align: left; }
           .s6-header__title { font-size: 28px; }
           .s6-tabs-nav {
@@ -244,13 +245,13 @@ export default function Section06_DifferentialPrivacy({
           .s6-tabs-nav::-webkit-scrollbar { display: none; }
           .s6-panel-title { font-size: 26px; }
         }
-        @media (min-width: 768px) {
+        @container (min-width: 768px) {
           .s6-container { padding: 0 32px; }
           .s6-header__description { max-width: 720px; }
           .s6-header__title { font-size: 40px; }
           .s6-panel-title { font-size: 36px; }
         }
-        @media (min-width: 1024px) {
+        @container (min-width: 1024px) {
           .s6-container { padding: 0 32px; }
           .s6-panel {
             grid-template-columns: 5fr 7fr;
@@ -258,7 +259,7 @@ export default function Section06_DifferentialPrivacy({
           }
           .s6-header__description { max-width: 720px; }
         }
-        @media (min-width: 1440px) {
+        @container (min-width: 1440px) {
           .s6-container { padding: 0 120px; max-width: 1440px; }
           .s6-panel { gap: 80px; }
           .s6-header__description { max-width: 860px; }

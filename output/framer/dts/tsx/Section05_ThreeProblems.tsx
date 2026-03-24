@@ -82,6 +82,7 @@ export default function Section05_ThreeProblems({
           word-break: keep-all;
           overflow-wrap: break-word;
           box-sizing: border-box;
+          container-type: inline-size;
         }
         .s5-container {
           width: 100%;
@@ -223,22 +224,22 @@ export default function Section05_ThreeProblems({
         }
 
         /* Responsive */
-        @media (min-width: 768px) {
+        @container (min-width: 768px) {
           .s5-container { padding: 0 32px; }
           .s5-card-grid { grid-template-columns: repeat(2, 1fr); }
           .s5-header__description { max-width: 720px; }
         }
-        @media (min-width: 1024px) {
+        @container (min-width: 1024px) {
           .s5-container { padding: 0 32px; }
           .s5-card-grid { grid-template-columns: repeat(3, 1fr); }
           .s5-header__title { font-size: 40px; }
         }
-        @media (min-width: 1440px) {
+        @container (min-width: 1440px) {
           .s5-container { padding: 0 120px; max-width: 1440px; }
           .s5-header__description { max-width: 860px; }
         }
 
-        @media (max-width: 767px) {
+        @container (max-width: 767px) {
           .s5-header { text-align: left; }
           .s5-header__title { font-size: 28px; }
           .s5-header__description { font-size: 16px; }

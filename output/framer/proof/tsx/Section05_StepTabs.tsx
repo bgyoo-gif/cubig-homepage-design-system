@@ -145,10 +145,11 @@ export default function Section05_StepTabs({
           word-break: keep-all;
           overflow-wrap: break-word;
           -webkit-font-smoothing: antialiased;
+          container-type: inline-size;
         }
-        @media (min-width: 768px)  { .s5-section { padding: 80px 32px; } }
-        @media (min-width: 1024px) { .s5-section { padding: 80px 32px; } }
-        @media (min-width: 1440px) { .s5-section { padding: 80px 120px; max-width: 1440px; margin-left: auto; margin-right: auto; } }
+        @container (min-width: 768px)  { .s5-section { padding: 80px 32px; } }
+        @container (min-width: 1024px) { .s5-section { padding: 80px 32px; } }
+        @container (min-width: 1440px) { .s5-section { padding: 80px 120px; max-width: 1440px; margin-left: auto; margin-right: auto; } }
 
         .s5-container { width: 100%; max-width: 1200px; margin: 0 auto; }
 
@@ -159,7 +160,7 @@ export default function Section05_StepTabs({
           border-bottom: 1px solid #e6e7e9;
           margin-bottom: 32px;
         }
-        @media (max-width: 767px) { .s5-section-header { text-align: left; } }
+        @container (max-width: 767px) { .s5-section-header { text-align: left; } }
 
         .s5-header-title {
           font-family: "DM Sans", sans-serif;
@@ -171,9 +172,9 @@ export default function Section05_StepTabs({
           margin-bottom: 16px;
           text-wrap: balance;
         }
-        @media (min-width: 768px)  { .s5-header-title { font-size: 28px; } }
-        @media (min-width: 1024px) { .s5-header-title { font-size: 32px; } }
-        @media (min-width: 1440px) { .s5-header-title { font-size: 40px; } }
+        @container (min-width: 768px)  { .s5-header-title { font-size: 28px; } }
+        @container (min-width: 1024px) { .s5-header-title { font-size: 32px; } }
+        @container (min-width: 1440px) { .s5-header-title { font-size: 40px; } }
 
         .s5-header-desc {
           font-size: 18px;
@@ -183,7 +184,7 @@ export default function Section05_StepTabs({
           margin: 0 auto;
           text-wrap: pretty;
         }
-        @media (min-width: 1440px) { .s5-header-desc { max-width: 860px; } }
+        @container (min-width: 1440px) { .s5-header-desc { max-width: 860px; } }
 
         /* ── Tab Nav ── */
         .s5-tab-nav {
@@ -193,7 +194,7 @@ export default function Section05_StepTabs({
           flex-wrap: wrap;
           margin-bottom: 64px;
         }
-        @media (max-width: 767px) {
+        @container (max-width: 767px) {
           .s5-tab-nav {
             justify-content: flex-start;
             flex-wrap: nowrap;
@@ -258,8 +259,8 @@ export default function Section05_StepTabs({
           gap: 48px;
           align-items: start;
         }
-        @media (min-width: 1024px) { .s5-panel { grid-template-columns: 5fr 7fr; gap: 64px; } }
-        @media (min-width: 1440px) { .s5-panel { gap: 80px; } }
+        @container (min-width: 1024px) { .s5-panel { grid-template-columns: 5fr 7fr; gap: 64px; } }
+        @container (min-width: 1440px) { .s5-panel { gap: 80px; } }
 
         /* ── Left Content ── */
         .s5-content {
@@ -276,7 +277,7 @@ export default function Section05_StepTabs({
           line-height: 1.2;
           text-wrap: balance;
         }
-        @media (min-width: 768px) { .s5-content-title { font-size: 36px; } }
+        @container (min-width: 768px) { .s5-content-title { font-size: 36px; } }
 
         .s5-content-desc {
           font-size: 16px;

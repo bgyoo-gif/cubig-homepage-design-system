@@ -46,6 +46,7 @@ export default function Section01_Hero({
           -webkit-font-smoothing: antialiased;
           word-break: keep-all;
           overflow-wrap: break-word;
+          container-type: inline-size;
         }
         .s1-container {
           width: 100%;
@@ -148,20 +149,20 @@ export default function Section01_Hero({
         .s1-btn--secondary:hover { background-color: #f7f7f7; }
 
         /* Responsive */
-        @media (min-width: 768px) {
+        @container (min-width: 768px) {
           .s1-container { padding: 0 32px; }
           .s1-title { font-size: 50px; }
         }
-        @media (min-width: 1024px) {
+        @container (min-width: 1024px) {
           .s1-container { padding: 0 32px; }
           .s1-title { font-size: 64px; }
         }
-        @media (min-width: 1440px) {
+        @container (min-width: 1440px) {
           .s1-container { padding: 0 120px; max-width: 1440px; }
           .s1-title { font-size: 64px; }
         }
 
-        @media (max-width: 767px) {
+        @container (max-width: 767px) {
           .s1-title { font-size: 36px; letter-spacing: -1px; }
           .s1-actions { flex-direction: column; align-items: center; }
           .s1-btn { width: 100%; max-width: 320px; }

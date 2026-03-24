@@ -59,6 +59,7 @@ export default function Section02_KpiBand({
           word-break: keep-all;
           overflow-wrap: break-word;
           box-sizing: border-box;
+          container-type: inline-size;
         }
         .s2-container {
           width: 100%;
@@ -160,19 +161,19 @@ export default function Section02_KpiBand({
         }
 
         /* Responsive */
-        @media (min-width: 768px) {
+        @container (min-width: 768px) {
           .s2-container { padding: 0 32px; }
           .s2-kpi-band { grid-template-columns: repeat(4, 1fr); }
         }
-        @media (min-width: 1024px) {
+        @container (min-width: 1024px) {
           .s2-container { padding: 0 32px; }
           .s2-kpi-band { grid-template-columns: repeat(4, 1fr); }
         }
-        @media (min-width: 1440px) {
+        @container (min-width: 1440px) {
           .s2-container { padding: 0 120px; max-width: 1440px; }
         }
 
-        @media (max-width: 767px) {
+        @container (max-width: 767px) {
           .s2-kpi-band { padding: 32px 20px; grid-template-columns: 1fr; }
           .s2-kpi-number { font-size: 40px; }
           .s2-banner { padding: 24px 20px; font-size: 16px; border-radius: 24px; }

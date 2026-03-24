@@ -35,6 +35,7 @@ export default function Section04_ComparisonTable({
           word-break: keep-all;
           overflow-wrap: break-word;
           box-sizing: border-box;
+          container-type: inline-size;
         }
         .s4-container {
           width: 100%;
@@ -129,20 +130,20 @@ export default function Section04_ComparisonTable({
         .s4-cross { color: #ff3030; }
 
         /* Responsive */
-        @media (min-width: 768px) {
+        @container (min-width: 768px) {
           .s4-container { padding: 0 32px; }
           .s4-header__description { max-width: 720px; }
         }
-        @media (min-width: 1024px) {
+        @container (min-width: 1024px) {
           .s4-container { padding: 0 32px; }
           .s4-header__title { font-size: 40px; }
         }
-        @media (min-width: 1440px) {
+        @container (min-width: 1440px) {
           .s4-container { padding: 0 120px; max-width: 1440px; }
           .s4-header__description { max-width: 860px; }
         }
 
-        @media (max-width: 767px) {
+        @container (max-width: 767px) {
           .s4-header { text-align: left; }
           .s4-header__title { font-size: 28px; }
           .s4-header__description { font-size: 16px; }

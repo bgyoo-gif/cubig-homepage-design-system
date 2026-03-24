@@ -48,6 +48,7 @@ export default function Section02_KpiBand({
           background-color: ${tokens.colorSurfaceWhite};
           font-family: ${tokens.fontBase};
           -webkit-font-smoothing: antialiased;
+          container-type: inline-size;
         }
 
         .s2-container {
@@ -56,9 +57,9 @@ export default function Section02_KpiBand({
           padding: 0 16px;
           box-sizing: border-box;
         }
-        @media (min-width: 768px)  { .s2-container { padding: 0 32px; } }
-        @media (min-width: 1024px) { .s2-container { padding: 0 32px; } }
-        @media (min-width: 1440px) { .s2-container { padding: 0 120px; max-width: 1440px; } }
+        @container (min-width: 768px)  { .s2-container { padding: 0 32px; } }
+        @container (min-width: 1024px) { .s2-container { padding: 0 32px; } }
+        @container (min-width: 1440px) { .s2-container { padding: 0 120px; max-width: 1440px; } }
 
         .s2-kpi-band {
           border-radius: 40px;
@@ -82,10 +83,10 @@ export default function Section02_KpiBand({
         }
         .s2-kpi-band > * { position: relative; z-index: 1; }
 
-        @media (max-width: 1023px) {
+        @container (max-width: 1023px) {
           .s2-kpi-band { grid-template-columns: repeat(2, 1fr); }
         }
-        @media (max-width: 767px) {
+        @container (max-width: 767px) {
           .s2-kpi-band { grid-template-columns: 1fr; padding: 32px 16px; }
         }
 
@@ -103,7 +104,7 @@ export default function Section02_KpiBand({
           line-height: 1;
           color: ${tokens.colorWhite};
         }
-        @media (max-width: 767px) {
+        @container (max-width: 767px) {
           .s2-kpi-band__number { font-size: 40px; }
         }
 

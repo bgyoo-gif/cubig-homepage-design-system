@@ -41,6 +41,7 @@ export default function Section11_Banner({
           -webkit-font-smoothing: antialiased;
           word-break: keep-all;
           overflow-wrap: break-word;
+          container-type: inline-size;
         }
         .s11-container {
           width: 100%;
@@ -48,8 +49,8 @@ export default function Section11_Banner({
           padding: 0 16px;
           box-sizing: border-box;
         }
-        @media (min-width: 768px)  { .s11-container { padding: 0 32px; } }
-        @media (min-width: 1440px) { .s11-container { padding: 0 120px; max-width: 1440px; } }
+        @container (min-width: 768px)  { .s11-container { padding: 0 32px; } }
+        @container (min-width: 1440px) { .s11-container { padding: 0 120px; max-width: 1440px; } }
 
         /* Section Header */
         .s11-section-header {
@@ -69,12 +70,12 @@ export default function Section11_Banner({
           text-wrap: balance;
         }
         .s11-brand { color: #725bea; }
-        @media (max-width: 767px) {
+        @container (max-width: 767px) {
           .s11-section-header { text-align: left; }
           .s11-section-title  { font-size: 28px; }
         }
-        @media (min-width: 768px)  { .s11-section-title { font-size: 36px; } }
-        @media (min-width: 1024px) { .s11-section-title { font-size: 40px; } }
+        @container (min-width: 768px)  { .s11-section-title { font-size: 36px; } }
+        @container (min-width: 1024px) { .s11-section-title { font-size: 40px; } }
 
         /* Full-width Banner */
         .s11-banner {
@@ -106,7 +107,7 @@ export default function Section11_Banner({
           margin: 0;
           text-wrap: pretty;
         }
-        @media (max-width: 767px) {
+        @container (max-width: 767px) {
           .s11-banner { padding: 24px 20px; border-radius: 24px; font-size: 16px; }
         }
 

@@ -146,10 +146,11 @@ export default function Section04_CaseStudy({
           word-break: keep-all;
           overflow-wrap: break-word;
           -webkit-font-smoothing: antialiased;
+          container-type: inline-size;
         }
-        @media (min-width: 768px)  { .s4-section { padding: 80px 32px; } }
-        @media (min-width: 1024px) { .s4-section { padding: 80px 32px; } }
-        @media (min-width: 1440px) { .s4-section { padding: 80px 120px; max-width: 1440px; margin-left: auto; margin-right: auto; } }
+        @container (min-width: 768px)  { .s4-section { padding: 80px 32px; } }
+        @container (min-width: 1024px) { .s4-section { padding: 80px 32px; } }
+        @container (min-width: 1440px) { .s4-section { padding: 80px 120px; max-width: 1440px; margin-left: auto; margin-right: auto; } }
 
         .s4-container { width: 100%; max-width: 1200px; margin: 0 auto; }
 
@@ -159,7 +160,7 @@ export default function Section04_CaseStudy({
           border-bottom: 1px solid #e6e7e9;
           margin-bottom: 32px;
         }
-        @media (max-width: 767px) { .s4-section-header { text-align: left; } }
+        @container (max-width: 767px) { .s4-section-header { text-align: left; } }
 
         .s4-header-title {
           font-family: "DM Sans", sans-serif;
@@ -171,9 +172,9 @@ export default function Section04_CaseStudy({
           margin-bottom: 16px;
           text-wrap: balance;
         }
-        @media (min-width: 768px)  { .s4-header-title { font-size: 28px; } }
-        @media (min-width: 1024px) { .s4-header-title { font-size: 32px; } }
-        @media (min-width: 1440px) { .s4-header-title { font-size: 40px; } }
+        @container (min-width: 768px)  { .s4-header-title { font-size: 28px; } }
+        @container (min-width: 1024px) { .s4-header-title { font-size: 32px; } }
+        @container (min-width: 1440px) { .s4-header-title { font-size: 40px; } }
 
         .s4-header-desc {
           font-size: 18px;
@@ -183,15 +184,15 @@ export default function Section04_CaseStudy({
           margin: 0 auto;
           text-wrap: pretty;
         }
-        @media (min-width: 1440px) { .s4-header-desc { max-width: 860px; } }
+        @container (min-width: 1440px) { .s4-header-desc { max-width: 860px; } }
 
         .s4-card-grid {
           display: grid;
           grid-template-columns: 1fr;
           gap: 24px;
         }
-        @media (min-width: 768px)  { .s4-card-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (min-width: 1024px) { .s4-card-grid { grid-template-columns: repeat(3, 1fr); } }
+        @container (min-width: 768px)  { .s4-card-grid { grid-template-columns: repeat(2, 1fr); } }
+        @container (min-width: 1024px) { .s4-card-grid { grid-template-columns: repeat(3, 1fr); } }
 
         .s4-card {
           background-color: #ffffff;

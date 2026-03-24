@@ -66,6 +66,7 @@ export default function Section09_CTA(props: Props) {
           font-family: "DM Sans", sans-serif;
           word-break: keep-all;
           overflow-wrap: break-word;
+          container-type: inline-size;
         }
 
         .s9-cta-band::before {
@@ -148,19 +149,19 @@ export default function Section09_CTA(props: Props) {
           margin: 0;
         }
 
-        @media (min-width: 768px) {
+        @container (min-width: 768px) {
           .s9-cta-band {
             padding: 100px 32px;
           }
         }
 
-        @media (min-width: 1024px) {
+        @container (min-width: 1024px) {
           .s9-inner {
             max-width: 720px;
           }
         }
 
-        @media (min-width: 1440px) {
+        @container (min-width: 1440px) {
           .s9-cta-band {
             padding: 120px 120px;
             max-width: 1440px;
@@ -171,7 +172,7 @@ export default function Section09_CTA(props: Props) {
           }
         }
 
-        @media (max-width: 767px) {
+        @container (max-width: 767px) {
           .s9-title {
             font-size: 40px;
             letter-spacing: -1px;

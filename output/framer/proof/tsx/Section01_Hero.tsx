@@ -53,6 +53,7 @@ export default function Section01_Hero({
           background-color: ${tokens.colorSurfaceWhite};
           font-family: ${tokens.fontBase};
           -webkit-font-smoothing: antialiased;
+          container-type: inline-size;
         }
 
         .s1-container {
@@ -61,9 +62,9 @@ export default function Section01_Hero({
           padding: 0 16px;
           box-sizing: border-box;
         }
-        @media (min-width: 768px)  { .s1-container { padding: 0 32px; } }
-        @media (min-width: 1024px) { .s1-container { padding: 0 32px; } }
-        @media (min-width: 1440px) { .s1-container { padding: 0 120px; max-width: 1440px; } }
+        @container (min-width: 768px)  { .s1-container { padding: 0 32px; } }
+        @container (min-width: 1024px) { .s1-container { padding: 0 32px; } }
+        @container (min-width: 1440px) { .s1-container { padding: 0 120px; max-width: 1440px; } }
 
         .s1-hero {
           max-width: 860px;
@@ -87,13 +88,13 @@ export default function Section01_Hero({
           word-break: keep-all;
           overflow-wrap: break-word;
         }
-        @media (max-width: 767px) {
+        @container (max-width: 767px) {
           .s1-hero__title { font-size: 40px; letter-spacing: -1px; }
         }
-        @media (min-width: 768px) and (max-width: 1023px) {
+        @container (min-width: 768px) and (max-width: 1023px) {
           .s1-hero__title { font-size: 48px; }
         }
-        @media (min-width: 1024px) and (max-width: 1439px) {
+        @container (min-width: 1024px) and (max-width: 1439px) {
           .s1-hero__title { font-size: 56px; }
         }
 
@@ -107,7 +108,7 @@ export default function Section01_Hero({
           overflow-wrap: break-word;
           text-wrap: pretty;
         }
-        @media (min-width: 1440px) { .s1-hero__description { max-width: 860px; } }
+        @container (min-width: 1440px) { .s1-hero__description { max-width: 860px; } }
 
         .s1-banner {
           width: 100%;
@@ -132,7 +133,7 @@ export default function Section01_Hero({
           gap: 12px;
           justify-content: center;
         }
-        @media (max-width: 767px) {
+        @container (max-width: 767px) {
           .s1-hero__actions { flex-direction: column; align-items: center; width: 100%; }
         }
 
@@ -152,7 +153,7 @@ export default function Section01_Hero({
           text-decoration: none;
           padding: 12px 32px;
         }
-        @media (max-width: 767px) {
+        @container (max-width: 767px) {
           .s1-btn { width: 100%; max-width: 320px; }
         }
 

@@ -140,6 +140,7 @@ export default function Section08_CaseRecords({
           -webkit-font-smoothing: antialiased;
           word-break: keep-all;
           overflow-wrap: break-word;
+          container-type: inline-size;
         }
         .s8-container {
           width: 100%;
@@ -346,7 +347,7 @@ export default function Section08_CaseRecords({
         }
 
         /* Responsive */
-        @media (max-width: 767px) {
+        @container (max-width: 767px) {
           .s8-header { text-align: left; }
           .s8-header__title { font-size: 28px; }
           .s8-ac-header {
@@ -355,18 +356,18 @@ export default function Section08_CaseRecords({
           }
           .s8-ac-meta { display: none; }
         }
-        @media (min-width: 768px) {
+        @container (min-width: 768px) {
           .s8-container { padding: 0 32px; }
           .s8-header__description { max-width: 720px; }
           .s8-header__title { font-size: 40px; }
         }
-        @media (min-width: 1024px) {
+        @container (min-width: 1024px) {
           .s8-container { padding: 0 32px; }
           .s8-header__description { max-width: 720px; }
           .s8-ac-header { grid-template-columns: 1fr auto auto; }
           .s8-ac-meta { display: flex; }
         }
-        @media (min-width: 1440px) {
+        @container (min-width: 1440px) {
           .s8-container { padding: 0 120px; max-width: 1440px; }
           .s8-header__description { max-width: 860px; }
         }

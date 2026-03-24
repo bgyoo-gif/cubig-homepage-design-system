@@ -49,6 +49,7 @@ export default function Section13_CTA({
           -webkit-font-smoothing: antialiased;
           word-break: keep-all;
           overflow-wrap: break-word;
+          container-type: inline-size;
         }
         /* Dark overlay for readability */
         .s13-cta-band::before {
@@ -123,19 +124,19 @@ export default function Section13_CTA({
           margin: 0;
         }
 
-        @media (min-width: 768px) {
+        @container (min-width: 768px) {
           .s13-cta-band { padding: 100px 32px; }
           .s13-title    { font-size: 50px; }
         }
-        @media (min-width: 1024px) {
+        @container (min-width: 1024px) {
           .s13-title { font-size: 56px; }
         }
-        @media (min-width: 1440px) {
+        @container (min-width: 1440px) {
           .s13-cta-band  { padding: 120px 120px; }
           .s13-title     { font-size: 64px; }
           .s13-cta-inner { max-width: 1440px; }
         }
-        @media (max-width: 767px) {
+        @container (max-width: 767px) {
           .s13-actions { flex-direction: column; align-items: center; max-width: 320px; margin: 0 auto; }
           .s13-btn     { width: 100%; }
           .s13-title   { font-size: 40px; }

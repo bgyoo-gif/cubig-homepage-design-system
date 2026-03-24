@@ -35,10 +35,11 @@ export default function Section06_Banner({
           word-break: keep-all;
           overflow-wrap: break-word;
           -webkit-font-smoothing: antialiased;
+          container-type: inline-size;
         }
-        @media (min-width: 768px)  { .s6-section { padding: 80px 32px; } }
-        @media (min-width: 1024px) { .s6-section { padding: 80px 32px; } }
-        @media (min-width: 1440px) { .s6-section { padding: 80px 120px; max-width: 1440px; margin-left: auto; margin-right: auto; } }
+        @container (min-width: 768px)  { .s6-section { padding: 80px 32px; } }
+        @container (min-width: 1024px) { .s6-section { padding: 80px 32px; } }
+        @container (min-width: 1440px) { .s6-section { padding: 80px 120px; max-width: 1440px; margin-left: auto; margin-right: auto; } }
 
         .s6-container { width: 100%; max-width: 1200px; margin: 0 auto; }
 
@@ -60,7 +61,7 @@ export default function Section06_Banner({
           word-break: keep-all;
           overflow-wrap: break-word;
         }
-        @media (max-width: 767px) {
+        @container (max-width: 767px) {
           .s6-banner-full { padding: 24px; font-size: 16px; }
         }
 

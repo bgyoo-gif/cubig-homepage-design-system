@@ -77,6 +77,7 @@ export default function Section10_Certs({
           -webkit-font-smoothing: antialiased;
           word-break: keep-all;
           overflow-wrap: break-word;
+          container-type: inline-size;
         }
         .s10-container {
           width: 100%;
@@ -84,8 +85,8 @@ export default function Section10_Certs({
           padding: 0 16px;
           box-sizing: border-box;
         }
-        @media (min-width: 768px)  { .s10-container { padding: 0 32px; } }
-        @media (min-width: 1440px) { .s10-container { padding: 0 120px; max-width: 1440px; } }
+        @container (min-width: 768px)  { .s10-container { padding: 0 32px; } }
+        @container (min-width: 1440px) { .s10-container { padding: 0 120px; max-width: 1440px; } }
 
         /* Section Header */
         .s10-section-header {
@@ -106,12 +107,12 @@ export default function Section10_Certs({
           text-wrap: balance;
         }
         .s10-brand { color: #725bea; }
-        @media (max-width: 767px) {
+        @container (max-width: 767px) {
           .s10-section-header { text-align: left; }
           .s10-section-title { font-size: 28px; }
         }
-        @media (min-width: 768px)  { .s10-section-title { font-size: 36px; } }
-        @media (min-width: 1024px) { .s10-section-title { font-size: 40px; } }
+        @container (min-width: 768px)  { .s10-section-title { font-size: 36px; } }
+        @container (min-width: 1024px) { .s10-section-title { font-size: 40px; } }
 
         /* ─── Cert Grid Marquee ─── */
         @keyframes s10-marquee {
@@ -133,7 +134,7 @@ export default function Section10_Certs({
           animation: s10-marquee 40s linear infinite;
         }
         .s10-cert-track:hover { animation-play-state: paused; }
-        @media (max-width: 767px) {
+        @container (max-width: 767px) {
           .s10-cert-track { gap: 16px; animation-duration: 25s; }
         }
 
@@ -151,7 +152,7 @@ export default function Section10_Certs({
           flex-shrink: 0;
           width: 200px;
         }
-        @media (max-width: 767px) {
+        @container (max-width: 767px) {
           .s10-cert-card { width: 170px; padding: 16px; }
         }
         .s10-cert-group {
@@ -171,7 +172,7 @@ export default function Section10_Certs({
           align-items: center;
           justify-content: center;
         }
-        @media (max-width: 767px) {
+        @container (max-width: 767px) {
           .s10-cert-wreath { width: 130px; height: 96px; }
         }
         .s10-cert-wreath-left,
@@ -194,7 +195,7 @@ export default function Section10_Certs({
           line-height: 1.2;
           max-width: 90px;
         }
-        @media (max-width: 767px) {
+        @container (max-width: 767px) {
           .s10-cert-wreath-text { font-size: 12px; max-width: 72px; }
         }
         .s10-cert-org  { font-size: 12px; color: #636363; }
@@ -206,7 +207,7 @@ export default function Section10_Certs({
           margin-top: auto;
           margin-bottom: -10px;
         }
-        @media (max-width: 767px) {
+        @container (max-width: 767px) {
           .s10-cert-logo { width: 48px; height: 48px; }
         }
 
@@ -235,7 +236,7 @@ export default function Section10_Certs({
           animation: s10-marquee 30s linear infinite;
         }
         .s10-partner-track:hover { animation-play-state: paused; }
-        @media (max-width: 767px) {
+        @container (max-width: 767px) {
           .s10-partner-track { gap: 48px; animation-duration: 20s; }
         }
         .s10-partner-item {
@@ -250,7 +251,7 @@ export default function Section10_Certs({
           height: 100px;
           object-fit: contain;
         }
-        @media (max-width: 767px) {
+        @container (max-width: 767px) {
           .s10-partner-logo { width: 100px; height: 75px; }
         }
         .s10-partner-name {

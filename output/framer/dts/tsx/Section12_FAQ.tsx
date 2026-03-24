@@ -74,6 +74,7 @@ export default function Section12_FAQ({
           -webkit-font-smoothing: antialiased;
           word-break: keep-all;
           overflow-wrap: break-word;
+          container-type: inline-size;
         }
         .s12-container {
           width: 100%;
@@ -81,8 +82,8 @@ export default function Section12_FAQ({
           padding: 0 16px;
           box-sizing: border-box;
         }
-        @media (min-width: 768px)  { .s12-container { padding: 0 32px; } }
-        @media (min-width: 1440px) { .s12-container { padding: 0 120px; max-width: 1440px; } }
+        @container (min-width: 768px)  { .s12-container { padding: 0 32px; } }
+        @container (min-width: 1440px) { .s12-container { padding: 0 120px; max-width: 1440px; } }
 
         /* Section Header */
         .s12-section-header {
@@ -102,12 +103,12 @@ export default function Section12_FAQ({
           text-wrap: balance;
         }
         .s12-brand { color: #725bea; }
-        @media (max-width: 767px) {
+        @container (max-width: 767px) {
           .s12-section-header { text-align: left; }
           .s12-section-title  { font-size: 28px; }
         }
-        @media (min-width: 768px)  { .s12-section-title { font-size: 36px; } }
-        @media (min-width: 1024px) { .s12-section-title { font-size: 40px; } }
+        @container (min-width: 768px)  { .s12-section-title { font-size: 36px; } }
+        @container (min-width: 1024px) { .s12-section-title { font-size: 40px; } }
 
         /* Accordion List */
         .s12-ac-list {
@@ -144,7 +145,7 @@ export default function Section12_FAQ({
           word-break: keep-all;
           overflow-wrap: break-word;
         }
-        @media (max-width: 767px) {
+        @container (max-width: 767px) {
           .s12-ac-title { font-size: 16px; }
           .s12-ac-header { padding: 16px; }
         }
@@ -213,7 +214,7 @@ export default function Section12_FAQ({
           word-break: keep-all;
           overflow-wrap: break-word;
         }
-        @media (max-width: 767px) {
+        @container (max-width: 767px) {
           .s12-ac-body { padding: 16px; }
           .s12-ac-body-text { font-size: 14px; }
         }

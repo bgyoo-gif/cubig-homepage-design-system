@@ -66,6 +66,7 @@ export default function Section07_Deployment({
           -webkit-font-smoothing: antialiased;
           word-break: keep-all;
           overflow-wrap: break-word;
+          container-type: inline-size;
         }
         .s7-container {
           width: 100%;
@@ -247,19 +248,19 @@ export default function Section07_Deployment({
         }
 
         /* Responsive */
-        @media (max-width: 767px) {
+        @container (max-width: 767px) {
           .s7-header { text-align: left; }
           .s7-header__title { font-size: 28px; }
         }
-        @media (min-width: 768px) {
+        @container (min-width: 768px) {
           .s7-container { padding: 0 32px; }
           .s7-card-grid { grid-template-columns: repeat(2, 1fr); }
           .s7-header__title { font-size: 40px; }
         }
-        @media (min-width: 1024px) {
+        @container (min-width: 1024px) {
           .s7-container { padding: 0 32px; }
         }
-        @media (min-width: 1440px) {
+        @container (min-width: 1440px) {
           .s7-container { padding: 0 120px; max-width: 1440px; }
         }
       `}</style>

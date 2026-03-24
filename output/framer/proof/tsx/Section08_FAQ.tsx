@@ -280,6 +280,7 @@ export default function Section08_FAQ(props: Props) {
           font-family: "DM Sans", sans-serif;
           word-break: keep-all;
           overflow-wrap: break-word;
+          container-type: inline-size;
         }
 
         .s8-container {
@@ -436,7 +437,7 @@ export default function Section08_FAQ(props: Props) {
           font-weight: 700;
         }
 
-        @media (min-width: 768px) {
+        @container (min-width: 768px) {
           .s8-container {
             padding: 0 32px;
           }
@@ -448,13 +449,13 @@ export default function Section08_FAQ(props: Props) {
           }
         }
 
-        @media (min-width: 1024px) {
+        @container (min-width: 1024px) {
           .s8-section-header__title {
             font-size: 32px;
           }
         }
 
-        @media (min-width: 1440px) {
+        @container (min-width: 1440px) {
           .s8-container {
             padding: 0 120px;
             max-width: 1440px;

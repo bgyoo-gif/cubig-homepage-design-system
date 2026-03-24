@@ -100,6 +100,7 @@ export default function Section07_BusinessImpact(props: Props) {
           font-family: "DM Sans", sans-serif;
           word-break: keep-all;
           overflow-wrap: break-word;
+          container-type: inline-size;
         }
 
         .s7-container {
@@ -242,7 +243,7 @@ export default function Section07_BusinessImpact(props: Props) {
           background-color: #f7f7f7;
         }
 
-        @media (min-width: 768px) {
+        @container (min-width: 768px) {
           .s7-container {
             padding: 0 32px;
           }
@@ -257,7 +258,7 @@ export default function Section07_BusinessImpact(props: Props) {
           }
         }
 
-        @media (min-width: 1024px) {
+        @container (min-width: 1024px) {
           .s7-section-header__title {
             font-size: 32px;
           }
@@ -266,7 +267,7 @@ export default function Section07_BusinessImpact(props: Props) {
           }
         }
 
-        @media (min-width: 1440px) {
+        @container (min-width: 1440px) {
           .s7-container {
             padding: 0 120px;
             max-width: 1440px;

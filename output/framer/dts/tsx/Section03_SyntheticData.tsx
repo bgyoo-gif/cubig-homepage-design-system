@@ -37,6 +37,7 @@ export default function Section03_SyntheticData({
           word-break: keep-all;
           overflow-wrap: break-word;
           box-sizing: border-box;
+          container-type: inline-size;
         }
         .s3-container {
           width: 100%;
@@ -109,22 +110,22 @@ export default function Section03_SyntheticData({
         }
 
         /* Responsive */
-        @media (min-width: 768px) {
+        @container (min-width: 768px) {
           .s3-container { padding: 0 32px; }
           .s3-header__description { max-width: 720px; }
         }
-        @media (min-width: 1024px) {
+        @container (min-width: 1024px) {
           .s3-container { padding: 0 32px; }
           .s3-header__description { max-width: 720px; }
           .s3-body { max-width: 860px; margin: 0 auto; }
           .s3-header__title { font-size: 40px; }
         }
-        @media (min-width: 1440px) {
+        @container (min-width: 1440px) {
           .s3-container { padding: 0 120px; max-width: 1440px; }
           .s3-header__description { max-width: 860px; }
         }
 
-        @media (max-width: 767px) {
+        @container (max-width: 767px) {
           .s3-header { text-align: left; }
           .s3-header__title { font-size: 28px; }
           .s3-header__description { font-size: 16px; }
