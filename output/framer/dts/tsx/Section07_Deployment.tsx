@@ -66,6 +66,9 @@ export default function Section07_Deployment({
           -webkit-font-smoothing: antialiased;
           word-break: keep-all;
           overflow-wrap: break-word;
+        }
+        .s7-inner {
+          width: 100%;
           container-type: inline-size;
         }
         .s7-container {
@@ -266,6 +269,7 @@ export default function Section07_Deployment({
       `}</style>
 
       <section className="s7-section" id="section-7">
+        <div className="s7-inner">
         <div className="s7-container">
           <div className="s7-header">
             <h2 className="s7-header__title">
@@ -331,6 +335,7 @@ export default function Section07_Deployment({
           <div className="s7-note" role="note">
             {noteText}
           </div>
+        </div>
         </div>
       </section>
     </>

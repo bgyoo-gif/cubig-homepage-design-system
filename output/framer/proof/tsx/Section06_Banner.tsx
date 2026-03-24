@@ -30,16 +30,21 @@ export default function Section06_Banner({
         .s6-section {
           width: 100%;
           background-color: #ffffff;
-          padding: 80px 16px;
           font-family: "DM Sans", sans-serif;
           word-break: keep-all;
           overflow-wrap: break-word;
           -webkit-font-smoothing: antialiased;
-          container-type: inline-size;
         }
-        @container (min-width: 768px)  { .s6-section { padding: 80px 32px; } }
-        @container (min-width: 1024px) { .s6-section { padding: 80px 32px; } }
-        @container (min-width: 1440px) { .s6-section { padding: 80px 120px; max-width: 1440px; margin-left: auto; margin-right: auto; } }
+
+        .s6-inner {
+          width: 100%;
+          container-type: inline-size;
+          padding: 80px 16px;
+          box-sizing: border-box;
+        }
+        @container (min-width: 768px)  { .s6-inner { padding: 80px 32px; } }
+        @container (min-width: 1024px) { .s6-inner { padding: 80px 32px; } }
+        @container (min-width: 1440px) { .s6-inner { padding: 80px 120px; max-width: 1440px; margin-left: auto; margin-right: auto; } }
 
         .s6-container { width: 100%; max-width: 1200px; margin: 0 auto; }
 
@@ -89,6 +94,7 @@ export default function Section06_Banner({
       `}</style>
 
       <section className="s6-section" id="section-6" style={{ marginTop }}>
+        <div className="s6-inner">
         <div className="s6-container">
           <div className="s6-banner-full">
             <p className="s6-banner-content">
@@ -97,6 +103,7 @@ export default function Section06_Banner({
               <span className="s6-product">{productName}</span> {trailText}
             </p>
           </div>
+        </div>
         </div>
       </section>
     </>

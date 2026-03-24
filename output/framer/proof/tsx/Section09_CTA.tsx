@@ -58,7 +58,6 @@ export default function Section09_CTA(props: Props) {
           width: 100%;
           position: relative;
           overflow: hidden;
-          padding: 80px 16px;
           text-align: center;
           background-size: cover;
           background-position: center;
@@ -66,19 +65,13 @@ export default function Section09_CTA(props: Props) {
           font-family: "DM Sans", sans-serif;
           word-break: keep-all;
           overflow-wrap: break-word;
+        }
+
+        .s9-wrap {
+          width: 100%;
           container-type: inline-size;
-        }
-
-        .s9-cta-band::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          z-index: 0;
-        }
-
-        .s9-cta-band > * {
-          position: relative;
-          z-index: 1;
+          padding: 80px 16px;
+          box-sizing: border-box;
         }
 
         .s9-inner {
@@ -150,7 +143,7 @@ export default function Section09_CTA(props: Props) {
         }
 
         @container (min-width: 768px) {
-          .s9-cta-band {
+          .s9-wrap {
             padding: 100px 32px;
           }
         }
@@ -162,7 +155,7 @@ export default function Section09_CTA(props: Props) {
         }
 
         @container (min-width: 1440px) {
-          .s9-cta-band {
+          .s9-wrap {
             padding: 120px 120px;
             max-width: 1440px;
             margin: 0 auto;
@@ -206,6 +199,7 @@ export default function Section09_CTA(props: Props) {
           }}
         />
 
+        <div className="s9-wrap" style={{ position: "relative", zIndex: 1 }}>
         <div className="s9-inner">
           <h2 className="s9-title">{title}</h2>
           <p className="s9-description">{description}</p>
@@ -221,6 +215,7 @@ export default function Section09_CTA(props: Props) {
             </a>
           </div>
           <p className="s9-footnote">{footnote}</p>
+        </div>
         </div>
       </section>
     </>

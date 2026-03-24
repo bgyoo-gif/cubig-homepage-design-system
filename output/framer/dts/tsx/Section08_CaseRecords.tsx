@@ -140,6 +140,9 @@ export default function Section08_CaseRecords({
           -webkit-font-smoothing: antialiased;
           word-break: keep-all;
           overflow-wrap: break-word;
+        }
+        .s8-inner {
+          width: 100%;
           container-type: inline-size;
         }
         .s8-container {
@@ -374,6 +377,7 @@ export default function Section08_CaseRecords({
       `}</style>
 
       <section className="s8-section" id="section-8" style={{ marginTop: `${marginTop}px` }}>
+        <div className="s8-inner">
         <div className="s8-container">
           <div className="s8-header">
             <h2 className="s8-header__title">
@@ -443,6 +447,7 @@ export default function Section08_CaseRecords({
               )
             })}
           </div>
+        </div>
         </div>
       </section>
     </>

@@ -75,6 +75,9 @@ export default function Section06_DifferentialPrivacy({
           -webkit-font-smoothing: antialiased;
           word-break: keep-all;
           overflow-wrap: break-word;
+        }
+        .s6-inner {
+          width: 100%;
           container-type: inline-size;
         }
         .s6-container {
@@ -267,6 +270,7 @@ export default function Section06_DifferentialPrivacy({
       `}</style>
 
       <section className="s6-section" id="section-6">
+        <div className="s6-inner">
         <div className="s6-container">
           <div className="s6-header">
             <h2 className="s6-header__title">
@@ -315,6 +319,7 @@ export default function Section06_DifferentialPrivacy({
               </div>
             </div>
           </div>
+        </div>
         </div>
       </section>
     </>

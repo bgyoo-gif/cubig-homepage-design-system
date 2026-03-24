@@ -36,6 +36,13 @@ export default function Section13_CTA({
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@700&family=Fragment+Mono&display=swap');
 
+        .s13-section {
+          width: 100%;
+        }
+        .s13-inner {
+          width: 100%;
+          container-type: inline-size;
+        }
         .s13-cta-band {
           width: 100%;
           background-image: url('${IMAGE_BASE}/bg-wave-teal-blue.png');
@@ -49,7 +56,6 @@ export default function Section13_CTA({
           -webkit-font-smoothing: antialiased;
           word-break: keep-all;
           overflow-wrap: break-word;
-          container-type: inline-size;
         }
         /* Dark overlay for readability */
         .s13-cta-band::before {
@@ -143,7 +149,9 @@ export default function Section13_CTA({
         }
       `}</style>
 
-      <section className="s13-cta-band" id="section-13" aria-label="Call to action" style={{ marginTop: `${marginTop}px` }}>
+      <section className="s13-section" id="section-13" aria-label="Call to action" style={{ marginTop: `${marginTop}px` }}>
+        <div className="s13-inner">
+        <div className="s13-cta-band">
         <div className="s13-cta-inner">
           <h2 className="s13-title">
             {title}{" "}
@@ -168,6 +176,8 @@ export default function Section13_CTA({
             )}
           </div>
           {footnote && <p className="s13-footnote">{footnote}</p>}
+        </div>
+        </div>
         </div>
       </section>
     </>

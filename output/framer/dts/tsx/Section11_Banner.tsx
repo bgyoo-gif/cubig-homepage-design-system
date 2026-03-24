@@ -41,6 +41,9 @@ export default function Section11_Banner({
           -webkit-font-smoothing: antialiased;
           word-break: keep-all;
           overflow-wrap: break-word;
+        }
+        .s11-inner {
+          width: 100%;
           container-type: inline-size;
         }
         .s11-container {
@@ -161,6 +164,7 @@ export default function Section11_Banner({
       `}</style>
 
       <section className="s11-section" id="section-11" style={{ marginTop: `${marginTop}px` }}>
+        <div className="s11-inner">
         <div className="s11-container">
           {/* Section Header */}
           <div className="s11-section-header">
@@ -185,6 +189,7 @@ export default function Section11_Banner({
               </a>
             </div>
           </div>
+        </div>
         </div>
       </section>
     </>

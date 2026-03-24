@@ -59,6 +59,9 @@ export default function Section02_KpiBand({
           word-break: keep-all;
           overflow-wrap: break-word;
           box-sizing: border-box;
+        }
+        .s2-inner {
+          width: 100%;
           container-type: inline-size;
         }
         .s2-container {
@@ -181,6 +184,7 @@ export default function Section02_KpiBand({
       `}</style>
 
       <section className="s2-section" id="section-2">
+        <div className="s2-inner">
         <div className="s2-container">
           <div className="s2-kpi-band">
             <div className="s2-kpi-item">
@@ -210,6 +214,7 @@ export default function Section02_KpiBand({
               <p>{bannerText}</p>
             </div>
           </div>
+        </div>
         </div>
       </section>
     </>

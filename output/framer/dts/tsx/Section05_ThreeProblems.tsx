@@ -82,6 +82,9 @@ export default function Section05_ThreeProblems({
           word-break: keep-all;
           overflow-wrap: break-word;
           box-sizing: border-box;
+        }
+        .s5-inner {
+          width: 100%;
           container-type: inline-size;
         }
         .s5-container {
@@ -247,6 +250,7 @@ export default function Section05_ThreeProblems({
       `}</style>
 
       <section className="s5-section" id="section-5">
+        <div className="s5-inner">
         <div className="s5-container">
           <div className="s5-header">
             <h2 className="s5-header__title">
@@ -336,6 +340,7 @@ export default function Section05_ThreeProblems({
             </article>
 
           </div>
+        </div>
         </div>
       </section>
     </>

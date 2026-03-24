@@ -37,6 +37,9 @@ export default function Section03_SyntheticData({
           word-break: keep-all;
           overflow-wrap: break-word;
           box-sizing: border-box;
+        }
+        .s3-inner {
+          width: 100%;
           container-type: inline-size;
         }
         .s3-container {
@@ -134,6 +137,7 @@ export default function Section03_SyntheticData({
       `}</style>
 
       <section className="s3-section" id="section-3">
+        <div className="s3-inner">
         <div className="s3-container">
           <div className="s3-header">
             <h2 className="s3-header__title">
@@ -149,6 +153,7 @@ export default function Section03_SyntheticData({
               {bannerText}
             </div>
           </div>
+        </div>
         </div>
       </section>
     </>

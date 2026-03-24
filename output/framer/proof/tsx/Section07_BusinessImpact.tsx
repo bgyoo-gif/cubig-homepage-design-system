@@ -96,10 +96,13 @@ export default function Section07_BusinessImpact(props: Props) {
           width: 100%; overflow: hidden; box-sizing: border-box;
           background-color: #f7f7f7;
           padding: 80px 0;
-          box-sizing: border-box;
           font-family: "DM Sans", sans-serif;
           word-break: keep-all;
           overflow-wrap: break-word;
+        }
+
+        .s7-inner {
+          width: 100%;
           container-type: inline-size;
         }
 
@@ -286,6 +289,7 @@ export default function Section07_BusinessImpact(props: Props) {
         id="section-7"
         style={{ marginTop }}
       >
+        <div className="s7-inner">
         <div className="s7-container">
           <div className="s7-section-header">
             <h2 className="s7-section-header__title">
@@ -352,6 +356,7 @@ export default function Section07_BusinessImpact(props: Props) {
             </article>
 
           </div>
+        </div>
         </div>
       </section>
     </>

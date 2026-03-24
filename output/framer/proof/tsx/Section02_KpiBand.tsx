@@ -48,6 +48,10 @@ export default function Section02_KpiBand({
           background-color: ${tokens.colorSurfaceWhite};
           font-family: ${tokens.fontBase};
           -webkit-font-smoothing: antialiased;
+        }
+
+        .s2-inner {
+          width: 100%;
           container-type: inline-size;
         }
 
@@ -121,6 +125,7 @@ export default function Section02_KpiBand({
         id="section-2"
         style={{ marginTop }}
       >
+        <div className="s2-inner">
         <div className="s2-container">
           <div className="s2-kpi-band">
             {kpis.map((item, i) => (
@@ -130,6 +135,7 @@ export default function Section02_KpiBand({
               </div>
             ))}
           </div>
+        </div>
         </div>
       </section>
     </>

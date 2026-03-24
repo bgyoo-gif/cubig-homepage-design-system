@@ -114,6 +114,9 @@ export default function Section09_FiveSignals({
           -webkit-font-smoothing: antialiased;
           word-break: keep-all;
           overflow-wrap: break-word;
+        }
+        .s9-inner {
+          width: 100%;
           container-type: inline-size;
         }
         .s9-container {
@@ -310,6 +313,7 @@ export default function Section09_FiveSignals({
       `}</style>
 
       <section className="s9-section" id="section-9" style={{ marginTop: `${marginTop}px` }}>
+        <div className="s9-inner">
         <div className="s9-container">
           <div className="s9-header">
             <h2 className="s9-header__title">
@@ -361,6 +365,7 @@ export default function Section09_FiveSignals({
               </article>
             ))}
           </div>
+        </div>
         </div>
       </section>
     </>

@@ -74,6 +74,9 @@ export default function Section12_FAQ({
           -webkit-font-smoothing: antialiased;
           word-break: keep-all;
           overflow-wrap: break-word;
+        }
+        .s12-inner {
+          width: 100%;
           container-type: inline-size;
         }
         .s12-container {
@@ -221,6 +224,7 @@ export default function Section12_FAQ({
       `}</style>
 
       <section className="s12-section" id="section-12" style={{ marginTop: `${marginTop}px` }}>
+        <div className="s12-inner">
         <div className="s12-container">
           {/* Section Header */}
           <div className="s12-section-header">
@@ -260,6 +264,7 @@ export default function Section12_FAQ({
               )
             })}
           </div>
+        </div>
         </div>
       </section>
     </>

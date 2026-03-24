@@ -60,6 +60,10 @@ export default function Section03_Partners({
           font-family: ${tokens.fontBase};
           -webkit-font-smoothing: antialiased;
           overflow: hidden;
+        }
+
+        .s3-inner {
+          width: 100%;
           container-type: inline-size;
         }
 
@@ -176,6 +180,7 @@ export default function Section03_Partners({
         id="section-3"
         style={{ marginTop }}
       >
+        <div className="s3-inner">
         <div className="s3-container">
           <div className="s3-section-header">
             <h2 className="s3-section-header__title">
@@ -204,6 +209,7 @@ export default function Section03_Partners({
               </div>
             ))}
           </div>
+        </div>
         </div>
       </section>
     </>

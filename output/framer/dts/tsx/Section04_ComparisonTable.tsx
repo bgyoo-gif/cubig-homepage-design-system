@@ -35,6 +35,9 @@ export default function Section04_ComparisonTable({
           word-break: keep-all;
           overflow-wrap: break-word;
           box-sizing: border-box;
+        }
+        .s4-inner {
+          width: 100%;
           container-type: inline-size;
         }
         .s4-container {
@@ -151,6 +154,7 @@ export default function Section04_ComparisonTable({
       `}</style>
 
       <section className="s4-section" id="section-4">
+        <div className="s4-inner">
         <div className="s4-container">
           <div className="s4-header">
             <h2 className="s4-header__title">
@@ -218,6 +222,7 @@ export default function Section04_ComparisonTable({
               </tbody>
             </table>
           </div>
+        </div>
         </div>
       </section>
     </>

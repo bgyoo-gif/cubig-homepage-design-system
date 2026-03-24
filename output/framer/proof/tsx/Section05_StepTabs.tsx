@@ -140,16 +140,21 @@ export default function Section05_StepTabs({
         .s5-section {
           width: 100%; overflow: hidden; box-sizing: border-box;
           background-color: #ffffff;
-          padding: 80px 16px;
           font-family: "DM Sans", sans-serif;
           word-break: keep-all;
           overflow-wrap: break-word;
           -webkit-font-smoothing: antialiased;
-          container-type: inline-size;
         }
-        @container (min-width: 768px)  { .s5-section { padding: 80px 32px; } }
-        @container (min-width: 1024px) { .s5-section { padding: 80px 32px; } }
-        @container (min-width: 1440px) { .s5-section { padding: 80px 120px; max-width: 1440px; margin-left: auto; margin-right: auto; } }
+
+        .s5-inner {
+          width: 100%;
+          container-type: inline-size;
+          padding: 80px 16px;
+          box-sizing: border-box;
+        }
+        @container (min-width: 768px)  { .s5-inner { padding: 80px 32px; } }
+        @container (min-width: 1024px) { .s5-inner { padding: 80px 32px; } }
+        @container (min-width: 1440px) { .s5-inner { padding: 80px 120px; max-width: 1440px; margin-left: auto; margin-right: auto; } }
 
         .s5-container { width: 100%; max-width: 1200px; margin: 0 auto; }
 
@@ -384,6 +389,7 @@ export default function Section05_StepTabs({
       `}</style>
 
       <section className="s5-section" id="section-5" style={{ marginTop }}>
+        <div className="s5-inner">
         <div className="s5-container">
 
           {/* Section Header */}
@@ -443,6 +449,7 @@ export default function Section05_StepTabs({
             <a href={bannerLinkHref} className="s5-btn-secondary">{bannerLinkLabel}</a>
           </div>
 
+        </div>
         </div>
       </section>
     </>

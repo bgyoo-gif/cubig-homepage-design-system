@@ -280,6 +280,10 @@ export default function Section08_FAQ(props: Props) {
           font-family: "DM Sans", sans-serif;
           word-break: keep-all;
           overflow-wrap: break-word;
+        }
+
+        .s8-inner {
+          width: 100%;
           container-type: inline-size;
         }
 
@@ -471,6 +475,7 @@ export default function Section08_FAQ(props: Props) {
         id="section-8"
         style={{ marginTop }}
       >
+        <div className="s8-inner">
         <div className="s8-container">
           <div className="s8-section-header">
             <h2 className="s8-section-header__title">
@@ -500,6 +505,7 @@ export default function Section08_FAQ(props: Props) {
               />
             ))}
           </div>
+        </div>
         </div>
       </section>
     </>

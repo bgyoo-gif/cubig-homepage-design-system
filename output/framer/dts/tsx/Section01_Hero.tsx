@@ -46,6 +46,9 @@ export default function Section01_Hero({
           -webkit-font-smoothing: antialiased;
           word-break: keep-all;
           overflow-wrap: break-word;
+        }
+        .s1-inner {
+          width: 100%;
           container-type: inline-size;
         }
         .s1-container {
@@ -172,6 +175,7 @@ export default function Section01_Hero({
       `}</style>
 
       <section className="s1-section" id="section-1">
+        <div className="s1-inner">
         <div className="s1-container">
           <div className="s1-hero">
             <h1 className="s1-title">
@@ -204,6 +208,7 @@ export default function Section01_Hero({
               </a>
             )}
           </div>
+        </div>
         </div>
       </section>
     </>

@@ -77,6 +77,9 @@ export default function Section10_Certs({
           -webkit-font-smoothing: antialiased;
           word-break: keep-all;
           overflow-wrap: break-word;
+        }
+        .s10-inner {
+          width: 100%;
           container-type: inline-size;
         }
         .s10-container {
@@ -263,6 +266,7 @@ export default function Section10_Certs({
       `}</style>
 
       <section className="s10-section" id="section-10" style={{ marginTop: `${marginTop}px` }}>
+        <div className="s10-inner">
         {/* Section Header */}
         <div className="s10-container">
           <div className="s10-section-header">
@@ -335,6 +339,7 @@ export default function Section10_Certs({
               </div>
             ))}
           </div>
+        </div>
         </div>
       </section>
     </>

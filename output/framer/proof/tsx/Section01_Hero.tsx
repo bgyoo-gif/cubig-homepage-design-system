@@ -53,6 +53,10 @@ export default function Section01_Hero({
           background-color: ${tokens.colorSurfaceWhite};
           font-family: ${tokens.fontBase};
           -webkit-font-smoothing: antialiased;
+        }
+
+        .s1-inner {
+          width: 100%;
           container-type: inline-size;
         }
 
@@ -176,6 +180,7 @@ export default function Section01_Hero({
         id="section-1"
         style={{ marginTop }}
       >
+        <div className="s1-inner">
         <div className="s1-container">
           <div className="s1-hero">
             <h1 className="s1-hero__title">{heroTitle}</h1>
@@ -202,6 +207,7 @@ export default function Section01_Hero({
               </a>
             </div>
           </div>
+        </div>
         </div>
       </section>
     </>
