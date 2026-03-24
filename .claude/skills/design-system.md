@@ -2217,3 +2217,4 @@ drawArrows() 함수 규칙:
 28. 인증/수상 섹션은 Cert Grid 사용: ISO, GS인증 등 인증/수상 내용은 반드시 `[L] ds-cert-grid` 마키 컴포넌트를 사용하고, DS에 정의된 공식 인증 목록 + 이미지(reference/graphics/cert-*)를 참조한다.
 29. 도입 사례/Case Record는 Case Study 카드 필수: 고객명+산업+설명이 있는 사례는 반드시 `ds-card--case-study`([H]) 사용. 아코디언([S])이 아닌 카드 그리드. 범용 카드보다 우선.
 30. 이미지 경로는 GitHub Pages 전체 URL 사용: B타입 HTML/TSX에서 이미지 참조 시 상대경로 금지. 반드시 `https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/` 또는 `https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/` 전체 URL 사용. TSX의 IMAGE_BASE도 동일.
+31. 이미지 포맷은 WebP 우선: 모든 이미지는 `.webp` 포맷을 우선 사용한다. 새 이미지 추가 시 반드시 WebP로 변환 후 저장. WebP가 없는 경우에만 PNG/AVIF/JPG 허용. 배경 이미지, 스크린샷, 케이스스터디 모두 해당.

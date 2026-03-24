@@ -119,7 +119,8 @@ const PALETTE = {
 - **단계별 프로세스는 Step Tabs**: "Step 1,2,3" / "How it works" 순차 프로세스는 `ds-step-tabs` 스타일로 구현 (스크린샷 필요 시 placeholder)
 - **인증/수상은 Cert Grid**: ISO, GS인증 등은 `ds-cert-grid` 마키 + 공식 이미지(reference/graphics/cert-*) 사용
 - **Partner는 ds-partner-grid 마키 + 공식 11개 로고**: A타입 목록 무시, DS 공식 목록만 사용
-- **이미지 경로**: TSX는 `IMAGE_BASE` 상수 경유, 프리뷰 HTML도 `/cubig-homepage-design-system/reference/` 절대경로 권장
+- **이미지 경로**: TSX는 `IMAGE_BASE` 상수 경유, GitHub Pages 절대경로 필수
+- **이미지 포맷 WebP 우선**: 모든 이미지는 `.webp` 사용. 새 이미지 추가 시 WebP 변환 필수. WebP 없을 때만 PNG 허용
 - **KPI band 배경 이미지 오버레이**: `rgba(0,0,0,0.35)` 어두운 오버레이 적용 (흰 텍스트 가독성)
 - **아코디언 header grid**: `1fr auto auto` (160px 고정 금지 — 1024px+에서도 동일)
 - **banner-full padding**: `space-xl` (32px) 사용 (`space-3xl`/64px 금지 — 과도한 여백 방지)

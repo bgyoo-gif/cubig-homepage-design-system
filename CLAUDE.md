@@ -98,6 +98,7 @@ deploy (gh-pages push → GitHub Pages 자동 배포)
 - 단계별 프로세스는 Step Tabs: "Step 1,2,3" / "How it works" 형태는 반드시 `[U] ds-step-tabs` 사용. 스크린샷 필요 시 placeholder + 사용자 요청
 - 인증/수상은 Cert Grid: ISO, GS 등 인증 내용은 `[L] ds-cert-grid` 마키 + 공식 이미지 사용
 - TSX Localization 필수: 모든 텍스트를 prop으로 추출 + `addPropertyControls` 등록 — JSX 하드코딩 텍스트 0개 (Framer Localization 패널 대응)
+- 이미지 WebP 우선: 모든 이미지는 .webp 포맷 우선 사용. 새 이미지 추가 시 WebP 변환 필수. WebP 없을 때만 PNG/AVIF 허용
 
 ---
 
@@ -200,6 +201,20 @@ FAIL이면 수정 후 재검증. PASS일 때만 deploy 진행.
 
 ### ⑤ deploy (항상 실행)
 ```bash
+# 새 이미지 WebP 변환 (PNG/AVIF → WebP)
+python3 -c "
+from pathlib import Path
+try:
+    from PIL import Image
+    for ext in ['*.png', '*.avif']:
+        for p in Path('reference/images').glob(ext):
+            if p.stat().st_size > 50000 and not p.with_suffix('.webp').exists():
+                img = Image.open(p)
+                if img.width > 1920: img = img.resize((1920, int(img.height * 1920 / img.width)), Image.LANCZOS)
+                img.save(p.with_suffix('.webp'), 'WEBP', quality=82)
+                print(f'  WebP: {p.name} → {p.with_suffix(\".webp\").name}')
+except: pass
+"
 python3 server/manifest.py   # Output manifest 자동 생성
 git add -A
 git commit -m "Auto-deploy: [작업 요약]"
