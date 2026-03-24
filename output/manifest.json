@@ -1,5 +1,5 @@
 {
-  "generated": "2026-03-24 01:22:30",
+  "generated": "2026-03-24 02:10:07",
   "github_base": "https://bgyoo-gif.github.io/cubig-homepage-design-system",
   "groups": [
     {
@@ -267,6 +267,16 @@
         "modified": "2026-03-24"
       },
       "html": [
+        {
+          "name": "A-cubig-proof-v3-b-type-part1.html",
+          "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/html/A-cubig-proof-v3-b-type-part1.html",
+          "modified": "2026-03-24"
+        },
+        {
+          "name": "A-cubig-proof-v3-b-type-part2.html",
+          "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/html/A-cubig-proof-v3-b-type-part2.html",
+          "modified": "2026-03-24"
+        },
         {
           "name": "A-cubig-proof-v3-b-type.html",
           "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/html/A-cubig-proof-v3-b-type.html",
