@@ -5,15 +5,49 @@ import { addPropertyControls, ControlType } from "framer"
 const IMAGE_BASE = "https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images"
 
 interface Props {
-  title?: string
+  titlePart1?: string
+  titleBrand?: string
   description?: string
   bannerText?: string
+  tab1Label?: string
+  tab1Title?: string
+  tab1Description?: string
+  tab1ImageAlt?: string
+  tab2Label?: string
+  tab2Title?: string
+  tab2Description?: string
+  tab2ImageAlt?: string
+  tab3Label?: string
+  tab3Title?: string
+  tab3Description?: string
+  tab3ImageAlt?: string
+  tab4Label?: string
+  tab4Title?: string
+  tab4Description?: string
+  tab4ImageAlt?: string
 }
 
 export default function Section06_DifferentialPrivacy({
-  title = "Mathematically Guaranteed Privacy Protection",
+  titlePart1 = "Mathematically Guaranteed ",
+  titleBrand = "Privacy Protection",
   description = "Differential privacy (DP) is a mathematical framework that guarantees any single individual's data cannot be identified from the synthetic output -- regardless of what an attacker already knows.",
   bannerText = "The probability of any inference about an individual from the synthetic dataset is bounded by a mathematically defined epsilon -- regardless of external knowledge.",
+  tab1Label = "Statistical Profiling",
+  tab1Title = "Statistical Profiling",
+  tab1Description = "DTS analyzes the real dataset's statistical properties -- distributions, correlations, marginals -- without storing raw records.",
+  tab1ImageAlt = "DTS Statistical Profiling interface",
+  tab2Label = "DP Noise Injection",
+  tab2Title = "DP Noise Injection",
+  tab2Description = "Calibrated noise is injected into the statistical model according to DP bounds. Individual data points become mathematically unidentifiable.",
+  tab2ImageAlt = "DTS Differential Privacy interface",
+  tab3Label = "Synthetic Generation",
+  tab3Title = "Synthetic Generation",
+  tab3Description = "New records are sampled from the DP-protected model. Output is statistically representative but contains no real personal information.",
+  tab3ImageAlt = "DTS Synthetic Generation interface",
+  tab4Label = "Fidelity Validation",
+  tab4Title = "Fidelity Validation",
+  tab4Description = "Generated data is validated against the original distribution. Quality and utility metrics confirm suitability for training and validation use.",
+  tab4ImageAlt = "DTS Quality Evaluation dashboard",
 }: Props) {
   const [activeTab, setActiveTab] = useState(0)
   const containerRef = React.useRef<HTMLDivElement>(null)
@@ -40,32 +74,32 @@ export default function Section06_DifferentialPrivacy({
 
   const tabs = [
     {
-      label: "Statistical Profiling",
-      title: "Statistical Profiling",
-      description: "DTS analyzes the real dataset's statistical properties -- distributions, correlations, marginals -- without storing raw records.",
+      label: tab1Label,
+      title: tab1Title,
+      description: tab1Description,
       image: `${IMAGE_BASE}/screenshot-dts-statistical-profiling.png`,
-      imageAlt: "DTS Statistical Profiling interface",
+      imageAlt: tab1ImageAlt,
     },
     {
-      label: "DP Noise Injection",
-      title: "DP Noise Injection",
-      description: "Calibrated noise is injected into the statistical model according to DP bounds. Individual data points become mathematically unidentifiable.",
+      label: tab2Label,
+      title: tab2Title,
+      description: tab2Description,
       image: `${IMAGE_BASE}/screenshot-dts-differencial-privacy.png`,
-      imageAlt: "DTS Differential Privacy interface",
+      imageAlt: tab2ImageAlt,
     },
     {
-      label: "Synthetic Generation",
-      title: "Synthetic Generation",
-      description: "New records are sampled from the DP-protected model. Output is statistically representative but contains no real personal information.",
+      label: tab3Label,
+      title: tab3Title,
+      description: tab3Description,
       image: `${IMAGE_BASE}/screenshot-dts-syntheticgeneration.png`,
-      imageAlt: "DTS Synthetic Generation interface",
+      imageAlt: tab3ImageAlt,
     },
     {
-      label: "Fidelity Validation",
-      title: "Fidelity Validation",
-      description: "Generated data is validated against the original distribution. Quality and utility metrics confirm suitability for training and validation use.",
+      label: tab4Label,
+      title: tab4Title,
+      description: tab4Description,
       image: `${IMAGE_BASE}/screenshot-dts-quality-evaluation.png`,
-      imageAlt: "DTS Quality Evaluation dashboard",
+      imageAlt: tab4ImageAlt,
     },
   ]
 
@@ -102,7 +136,7 @@ export default function Section06_DifferentialPrivacy({
               marginBottom: 16,
               textAlign: "center",
             }}>
-              Mathematically Guaranteed <span style={{ color: "#725bea" }}>Privacy Protection</span>
+              {titlePart1}<span style={{ color: "#725bea" }}>{titleBrand}</span>
             </h2>
             <p style={{
               fontSize: isMobile ? 14 : isTablet ? 16 : 18,
@@ -240,7 +274,8 @@ export default function Section06_DifferentialPrivacy({
 }
 
 addPropertyControls(Section06_DifferentialPrivacy, {
-  title: { type: ControlType.String, title: "Title", defaultValue: "Mathematically Guaranteed Privacy Protection" },
+  titlePart1: { type: ControlType.String, title: "Title Part 1", defaultValue: "Mathematically Guaranteed " },
+  titleBrand: { type: ControlType.String, title: "Title Brand", defaultValue: "Privacy Protection" },
   description: {
     type: ControlType.String,
     title: "Description",
@@ -253,4 +288,40 @@ addPropertyControls(Section06_DifferentialPrivacy, {
     defaultValue: "The probability of any inference about an individual from the synthetic dataset is bounded by a mathematically defined epsilon -- regardless of external knowledge.",
     displayTextArea: true,
   },
+  tab1Label: { type: ControlType.String, title: "Tab1: Label", defaultValue: "Statistical Profiling" },
+  tab1Title: { type: ControlType.String, title: "Tab1: Title", defaultValue: "Statistical Profiling" },
+  tab1Description: {
+    type: ControlType.String,
+    title: "Tab1: Description",
+    defaultValue: "DTS analyzes the real dataset's statistical properties -- distributions, correlations, marginals -- without storing raw records.",
+    displayTextArea: true,
+  },
+  tab1ImageAlt: { type: ControlType.String, title: "Tab1: Image Alt", defaultValue: "DTS Statistical Profiling interface" },
+  tab2Label: { type: ControlType.String, title: "Tab2: Label", defaultValue: "DP Noise Injection" },
+  tab2Title: { type: ControlType.String, title: "Tab2: Title", defaultValue: "DP Noise Injection" },
+  tab2Description: {
+    type: ControlType.String,
+    title: "Tab2: Description",
+    defaultValue: "Calibrated noise is injected into the statistical model according to DP bounds. Individual data points become mathematically unidentifiable.",
+    displayTextArea: true,
+  },
+  tab2ImageAlt: { type: ControlType.String, title: "Tab2: Image Alt", defaultValue: "DTS Differential Privacy interface" },
+  tab3Label: { type: ControlType.String, title: "Tab3: Label", defaultValue: "Synthetic Generation" },
+  tab3Title: { type: ControlType.String, title: "Tab3: Title", defaultValue: "Synthetic Generation" },
+  tab3Description: {
+    type: ControlType.String,
+    title: "Tab3: Description",
+    defaultValue: "New records are sampled from the DP-protected model. Output is statistically representative but contains no real personal information.",
+    displayTextArea: true,
+  },
+  tab3ImageAlt: { type: ControlType.String, title: "Tab3: Image Alt", defaultValue: "DTS Synthetic Generation interface" },
+  tab4Label: { type: ControlType.String, title: "Tab4: Label", defaultValue: "Fidelity Validation" },
+  tab4Title: { type: ControlType.String, title: "Tab4: Title", defaultValue: "Fidelity Validation" },
+  tab4Description: {
+    type: ControlType.String,
+    title: "Tab4: Description",
+    defaultValue: "Generated data is validated against the original distribution. Quality and utility metrics confirm suitability for training and validation use.",
+    displayTextArea: true,
+  },
+  tab4ImageAlt: { type: ControlType.String, title: "Tab4: Image Alt", defaultValue: "DTS Quality Evaluation dashboard" },
 })

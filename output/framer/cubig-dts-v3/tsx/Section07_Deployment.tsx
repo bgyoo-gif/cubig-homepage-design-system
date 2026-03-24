@@ -2,19 +2,49 @@ import * as React from "react"
 import { addPropertyControls, ControlType } from "framer"
 
 interface Props {
-  title?: string
+  titlePart1?: string
+  titleBrand?: string
   bannerText?: string
+  cardABadge?: string
+  cardATitle?: string
+  cardADescription?: string
+  cardACheck1?: string
+  cardACheck2?: string
+  cardACheck3?: string
+  cardACheck4?: string
+  cardACheck5?: string
   cardABtnLabel?: string
   cardABtnHref?: string
+  cardBBadge?: string
+  cardBTitle?: string
+  cardBDescription?: string
+  cardBCheck1?: string
+  cardBCheck2?: string
+  cardBCheck3?: string
   cardBBtnLabel?: string
   cardBBtnHref?: string
 }
 
 export default function Section07_Deployment({
-  title = "Standalone or Integrated with SynTitan",
+  titlePart1 = "Standalone or Integrated with ",
+  titleBrand = "SynTitan",
   bannerText = "SynTitan performs data quality refinement as part of execution stability. SynTitan can use a subset of DTS capabilities when privacy-safe synthetic data is needed, while DTS is a full standalone enterprise synthetic data engine.",
+  cardABadge = "MODE A - INDEPENDENT",
+  cardATitle = "DTS Standalone",
+  cardADescription = "Use DTS without SynTitan -- directly against your data sources. Available on AWS Marketplace for enterprise procurement.",
+  cardACheck1 = "Fix class imbalance -- oversample minority classes with distribution fidelity",
+  cardACheck2 = "Augment sparse datasets to production-grade volume",
+  cardACheck3 = "Generate edge cases and rare event samples",
+  cardACheck4 = "Replace missing values with statistically valid equivalents",
+  cardACheck5 = "Expand narrow training sets without data collection overhead",
   cardABtnLabel = "AWS Marketplace",
   cardABtnHref = "https://aws.amazon.com/marketplace",
+  cardBBadge = "MODE B - INTEGRATED",
+  cardBTitle = "DTS + SynTitan",
+  cardBDescription = "When privacy or compliance is the blocker -- regulated data that can't reach models -- DTS runs inside SynTitan to generate privacy-safe replacements. The synthetic dataset is automatically versioned, bound to a Release State, and tracked in the Change Log.",
+  cardBCheck1 = "Replace GDPR, PIPA, HIPAA-restricted data -- no original data leaves the perimeter",
+  cardBCheck2 = "Synthetic datasets versioned and bound to execution states",
+  cardBCheck3 = "Change log tracks every data generation event",
   cardBBtnLabel = "See SynTitan Platform",
   cardBBtnHref = "/syntitan",
 }: Props) {
@@ -77,19 +107,8 @@ export default function Section07_Deployment({
     fontSize: 16,
   }
 
-  const cardAItems = [
-    "Fix class imbalance -- oversample minority classes with distribution fidelity",
-    "Augment sparse datasets to production-grade volume",
-    "Generate edge cases and rare event samples",
-    "Replace missing values with statistically valid equivalents",
-    "Expand narrow training sets without data collection overhead",
-  ]
-
-  const cardBItems = [
-    "Replace GDPR, PIPA, HIPAA-restricted data -- no original data leaves the perimeter",
-    "Synthetic datasets versioned and bound to execution states",
-    "Change log tracks every data generation event",
-  ]
+  const cardAItems = [cardACheck1, cardACheck2, cardACheck3, cardACheck4, cardACheck5]
+  const cardBItems = [cardBCheck1, cardBCheck2, cardBCheck3]
 
   return (
     <div ref={containerRef} style={{ width: "100%", fontFamily: '"DM Sans", sans-serif', WebkitFontSmoothing: "antialiased" }}>
@@ -122,7 +141,7 @@ export default function Section07_Deployment({
               lineHeight: 1.2,
               letterSpacing: "-0.5px",
             }}>
-              Standalone or Integrated with <span style={productStyle}>SynTitan</span>
+              {titlePart1}<span style={productStyle}>{titleBrand}</span>
             </h2>
           </div>
 
@@ -162,7 +181,7 @@ export default function Section07_Deployment({
                   border: "1px solid #725bea",
                   color: "#725bea",
                   marginBottom: 16,
-                }}>MODE A - INDEPENDENT</span>
+                }}>{cardABadge}</span>
                 <h3 style={{
                   fontFamily: '"DM Sans", sans-serif',
                   fontSize: isMobile ? 18 : 24,
@@ -170,7 +189,7 @@ export default function Section07_Deployment({
                   color: "#0f0f0f",
                   lineHeight: 1.2,
                   marginBottom: 12,
-                }}>DTS Standalone</h3>
+                }}>{cardATitle}</h3>
                 <p style={{
                   fontSize: isMobile ? 13 : 14,
                   color: "#636363",
@@ -179,7 +198,7 @@ export default function Section07_Deployment({
                   lineHeight: 1.7,
                   marginBottom: 24,
                 }}>
-                  Use <span style={productStyle}>DTS</span> without <span style={productStyle}>SynTitan</span> -- directly against your data sources. Available on AWS Marketplace for enterprise procurement.
+                  {cardADescription}
                 </p>
                 <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 12, marginBottom: 24, padding: 0 }}>
                   {cardAItems.map((item, i) => (
@@ -224,7 +243,7 @@ export default function Section07_Deployment({
                   border: "1px solid #725bea",
                   color: "#725bea",
                   marginBottom: 16,
-                }}>MODE B - INTEGRATED</span>
+                }}>{cardBBadge}</span>
                 <h3 style={{
                   fontFamily: '"DM Sans", sans-serif',
                   fontSize: isMobile ? 18 : 24,
@@ -233,7 +252,7 @@ export default function Section07_Deployment({
                   lineHeight: 1.2,
                   marginBottom: 12,
                 }}>
-                  <span style={productStyle}>DTS</span> + <span style={productStyle}>SynTitan</span>
+                  {cardBTitle}
                 </h3>
                 <p style={{
                   fontSize: isMobile ? 13 : 14,
@@ -243,7 +262,7 @@ export default function Section07_Deployment({
                   lineHeight: 1.7,
                   marginBottom: 24,
                 }}>
-                  When privacy or compliance is the blocker -- regulated data that can't reach models -- <span style={productStyle}>DTS</span> runs inside <span style={productStyle}>SynTitan</span> to generate privacy-safe replacements. The synthetic dataset is automatically versioned, bound to a Release State, and tracked in the Change Log.
+                  {cardBDescription}
                 </p>
                 <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 12, marginBottom: 24, padding: 0 }}>
                   {cardBItems.map((item, i) => (
@@ -254,7 +273,7 @@ export default function Section07_Deployment({
                 </ul>
                 <div style={{ marginTop: "auto", paddingTop: 24 }}>
                   <a href={cardBBtnHref} style={btnStyle}>
-                    {cardBBtnLabel} <span style={productStyle}>SynTitan</span>
+                    {cardBBtnLabel}
                   </a>
                 </div>
               </div>
@@ -273,7 +292,7 @@ export default function Section07_Deployment({
               textAlign: "center",
               color: "#0f0f0f",
             }}>
-              <span style={productStyle}>SynTitan</span> performs data quality refinement as part of execution stability. <span style={productStyle}>SynTitan</span> can use a subset of <span style={productStyle}>DTS</span> capabilities when privacy-safe synthetic data is needed, while <span style={productStyle}>DTS</span> is a full standalone enterprise synthetic data engine.
+              {bannerText}
             </div>
           </div>
         </div>
@@ -283,15 +302,40 @@ export default function Section07_Deployment({
 }
 
 addPropertyControls(Section07_Deployment, {
-  title: { type: ControlType.String, title: "Title", defaultValue: "Standalone or Integrated with SynTitan" },
+  titlePart1: { type: ControlType.String, title: "Title Part 1", defaultValue: "Standalone or Integrated with " },
+  titleBrand: { type: ControlType.String, title: "Title Brand", defaultValue: "SynTitan" },
   bannerText: {
     type: ControlType.String,
     title: "Banner Text",
     defaultValue: "SynTitan performs data quality refinement as part of execution stability. SynTitan can use a subset of DTS capabilities when privacy-safe synthetic data is needed, while DTS is a full standalone enterprise synthetic data engine.",
     displayTextArea: true,
   },
-  cardABtnLabel: { type: ControlType.String, title: "Card A Btn", defaultValue: "AWS Marketplace" },
-  cardABtnHref: { type: ControlType.String, title: "Card A Href", defaultValue: "https://aws.amazon.com/marketplace" },
-  cardBBtnLabel: { type: ControlType.String, title: "Card B Btn", defaultValue: "See" },
-  cardBBtnHref: { type: ControlType.String, title: "Card B Href", defaultValue: "/syntitan" },
+  cardABadge: { type: ControlType.String, title: "CardA: Badge", defaultValue: "MODE A - INDEPENDENT" },
+  cardATitle: { type: ControlType.String, title: "CardA: Title", defaultValue: "DTS Standalone" },
+  cardADescription: {
+    type: ControlType.String,
+    title: "CardA: Description",
+    defaultValue: "Use DTS without SynTitan -- directly against your data sources. Available on AWS Marketplace for enterprise procurement.",
+    displayTextArea: true,
+  },
+  cardACheck1: { type: ControlType.String, title: "CardA: Check 1", defaultValue: "Fix class imbalance -- oversample minority classes with distribution fidelity" },
+  cardACheck2: { type: ControlType.String, title: "CardA: Check 2", defaultValue: "Augment sparse datasets to production-grade volume" },
+  cardACheck3: { type: ControlType.String, title: "CardA: Check 3", defaultValue: "Generate edge cases and rare event samples" },
+  cardACheck4: { type: ControlType.String, title: "CardA: Check 4", defaultValue: "Replace missing values with statistically valid equivalents" },
+  cardACheck5: { type: ControlType.String, title: "CardA: Check 5", defaultValue: "Expand narrow training sets without data collection overhead" },
+  cardABtnLabel: { type: ControlType.String, title: "CardA: Btn Label", defaultValue: "AWS Marketplace" },
+  cardABtnHref: { type: ControlType.String, title: "CardA: Btn Href", defaultValue: "https://aws.amazon.com/marketplace" },
+  cardBBadge: { type: ControlType.String, title: "CardB: Badge", defaultValue: "MODE B - INTEGRATED" },
+  cardBTitle: { type: ControlType.String, title: "CardB: Title", defaultValue: "DTS + SynTitan" },
+  cardBDescription: {
+    type: ControlType.String,
+    title: "CardB: Description",
+    defaultValue: "When privacy or compliance is the blocker -- regulated data that can't reach models -- DTS runs inside SynTitan to generate privacy-safe replacements. The synthetic dataset is automatically versioned, bound to a Release State, and tracked in the Change Log.",
+    displayTextArea: true,
+  },
+  cardBCheck1: { type: ControlType.String, title: "CardB: Check 1", defaultValue: "Replace GDPR, PIPA, HIPAA-restricted data -- no original data leaves the perimeter" },
+  cardBCheck2: { type: ControlType.String, title: "CardB: Check 2", defaultValue: "Synthetic datasets versioned and bound to execution states" },
+  cardBCheck3: { type: ControlType.String, title: "CardB: Check 3", defaultValue: "Change log tracks every data generation event" },
+  cardBBtnLabel: { type: ControlType.String, title: "CardB: Btn Label", defaultValue: "See SynTitan Platform" },
+  cardBBtnHref: { type: ControlType.String, title: "CardB: Btn Href", defaultValue: "/syntitan" },
 })

@@ -4,7 +4,9 @@ import { addPropertyControls, ControlType } from "framer"
 const IMAGE_BASE = "https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images"
 
 interface Props {
-  title?: string
+  titlePrefix?: string
+  titleHighlight?: string
+  titleSuffix?: string
   bannerText?: string
   body?: string
   tagline?: string
@@ -13,7 +15,9 @@ interface Props {
 }
 
 export default function Section11_OperationalExample({
-  title = "Operational Example: Fraud Detection with Rare Events",
+  titlePrefix = "Operational Example:",
+  titleHighlight = "Fraud Detection",
+  titleSuffix = "with Rare Events",
   bannerText = "A financial services team building a fraud detection model found that rare anomaly events were severely underrepresented in training data -- real fraud cases were too few to train a reliable classifier.",
   body = "DTS generated synthetic fraud scenarios using differential privacy, expanding the rare-event class to statistically meaningful coverage. The resulting dataset could not be reverse-engineered to individual records -- satisfying both compliance requirements and model training needs.",
   tagline = "Blocker removed: unusable data (imbalanced dataset / rare class underrepresentation)",
@@ -73,7 +77,7 @@ export default function Section11_OperationalExample({
               lineHeight: 1.2,
               letterSpacing: "-0.5px",
             }}>
-              Operational Example: <span style={{ color: "#725bea" }}>Fraud Detection</span> with Rare Events
+              {titlePrefix} <span style={{ color: "#725bea" }}>{titleHighlight}</span> {titleSuffix}
             </h2>
           </div>
 
@@ -148,7 +152,9 @@ export default function Section11_OperationalExample({
 }
 
 addPropertyControls(Section11_OperationalExample, {
-  title: { type: ControlType.String, title: "Title", defaultValue: "Operational Example: Fraud Detection with Rare Events" },
+  titlePrefix: { type: ControlType.String, title: "Title Prefix", defaultValue: "Operational Example:" },
+  titleHighlight: { type: ControlType.String, title: "Title Highlight", defaultValue: "Fraud Detection" },
+  titleSuffix: { type: ControlType.String, title: "Title Suffix", defaultValue: "with Rare Events" },
   bannerText: {
     type: ControlType.String,
     title: "Banner Text",

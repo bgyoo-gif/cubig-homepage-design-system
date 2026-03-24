@@ -2,13 +2,63 @@ import * as React from "react"
 import { addPropertyControls, ControlType } from "framer"
 
 interface Props {
-  title?: string
+  titlePart1?: string
+  titleBrand?: string
   description?: string
+  card1Badge?: string
+  card1Number?: string
+  card1Title?: string
+  card1Description?: string
+  card1Check1?: string
+  card1Check2?: string
+  card1Check3?: string
+  card1Check4?: string
+  card2Badge?: string
+  card2Number?: string
+  card2Title?: string
+  card2Description?: string
+  card2Check1?: string
+  card2Check2?: string
+  card2Check3?: string
+  card2Check4?: string
+  card3Badge?: string
+  card3Number?: string
+  card3Title?: string
+  card3Description?: string
+  card3Check1?: string
+  card3Check2?: string
+  card3Check3?: string
+  card3Check4?: string
 }
 
 export default function Section05_ThreeProblems({
-  title = "Three Data Problems. One Engine.",
+  titlePart1 = "Three Data Problems. ",
+  titleBrand = "One Engine.",
   description = "Data that can't be used, can't be shared, or doesn't exist in sufficient volume -- DTS resolves all three.",
+  card1Badge = "RESTRICTED DATA",
+  card1Number = "01 / 03",
+  card1Title = "Privacy-Safe Replacement",
+  card1Description = "Sensitive or regulated data blocked by compliance rules. DTS generates a statistically equivalent synthetic dataset -- with no real personal information.",
+  card1Check1 = "Replace GDPR, PIPA, HIPAA, or CCPA-restricted data with DP-safe synthetic equivalents",
+  card1Check2 = "Differential privacy guarantee on all synthetic output",
+  card1Check3 = "Safe for cross-team, cross-border, and external use",
+  card1Check4 = "Full distribution fidelity preserved",
+  card2Badge = "UNUSABLE DATA",
+  card2Number = "02 / 03",
+  card2Title = "Coverage & Balance Expansion",
+  card2Description = "Data exists but is unfit for AI -- missing rare classes, biased distributions, or insufficient volume for reliable training.",
+  card2Check1 = "Augment underrepresented classes at scale",
+  card2Check2 = "Fix class imbalance without overfitting",
+  card2Check3 = "Generate edge case and rare event samples",
+  card2Check4 = "Expand small datasets to production-grade volumes",
+  card3Badge = "NON-ACCESSIBLE DATA",
+  card3Number = "03 / 03",
+  card3Title = "Safe Dataset Generation",
+  card3Description = "Data exists in a silo -- restricted by access controls, third-party agreements, or geographic regulations -- and can't reach training pipelines.",
+  card3Check1 = "Generate safe replacement datasets from inaccessible sources",
+  card3Check2 = "Unblock stalled validation and testing workflows",
+  card3Check3 = "Remove data access bottlenecks in regulated environments",
+  card3Check4 = "Maintain statistical characteristics without data transfer",
 }: Props) {
   const containerRef = React.useRef<HTMLDivElement>(null)
   const [isMobile, setIsMobile] = React.useState(false)
@@ -34,43 +84,28 @@ export default function Section05_ThreeProblems({
 
   const cards = [
     {
-      badge: "RESTRICTED DATA",
+      badge: card1Badge,
       badgeColor: "#ff3030",
-      number: "01 / 03",
-      title: "Privacy-Safe Replacement",
-      description: "Sensitive or regulated data blocked by compliance rules. DTS generates a statistically equivalent synthetic dataset -- with no real personal information.",
-      checks: [
-        "Replace GDPR, PIPA, HIPAA, or CCPA-restricted data with DP-safe synthetic equivalents",
-        "Differential privacy guarantee on all synthetic output",
-        "Safe for cross-team, cross-border, and external use",
-        "Full distribution fidelity preserved",
-      ],
+      number: card1Number,
+      title: card1Title,
+      description: card1Description,
+      checks: [card1Check1, card1Check2, card1Check3, card1Check4],
     },
     {
-      badge: "UNUSABLE DATA",
+      badge: card2Badge,
       badgeColor: "#0e824c",
-      number: "02 / 03",
-      title: "Coverage & Balance Expansion",
-      description: "Data exists but is unfit for AI -- missing rare classes, biased distributions, or insufficient volume for reliable training.",
-      checks: [
-        "Augment underrepresented classes at scale",
-        "Fix class imbalance without overfitting",
-        "Generate edge case and rare event samples",
-        "Expand small datasets to production-grade volumes",
-      ],
+      number: card2Number,
+      title: card2Title,
+      description: card2Description,
+      checks: [card2Check1, card2Check2, card2Check3, card2Check4],
     },
     {
-      badge: "NON-ACCESSIBLE DATA",
+      badge: card3Badge,
       badgeColor: "#ff3030",
-      number: "03 / 03",
-      title: "Safe Dataset Generation",
-      description: "Data exists in a silo -- restricted by access controls, third-party agreements, or geographic regulations -- and can't reach training pipelines.",
-      checks: [
-        "Generate safe replacement datasets from inaccessible sources",
-        "Unblock stalled validation and testing workflows",
-        "Remove data access bottlenecks in regulated environments",
-        "Maintain statistical characteristics without data transfer",
-      ],
+      number: card3Number,
+      title: card3Title,
+      description: card3Description,
+      checks: [card3Check1, card3Check2, card3Check3, card3Check4],
     },
   ]
 
@@ -107,7 +142,7 @@ export default function Section05_ThreeProblems({
               marginBottom: 16,
               textAlign: "center",
             }}>
-              Three Data Problems. <span style={{ color: "#725bea" }}>One Engine.</span>
+              {titlePart1}<span style={{ color: "#725bea" }}>{titleBrand}</span>
             </h2>
             <p style={{
               fontSize: isMobile ? 14 : isTablet ? 16 : 18,
@@ -217,11 +252,51 @@ export default function Section05_ThreeProblems({
 }
 
 addPropertyControls(Section05_ThreeProblems, {
-  title: { type: ControlType.String, title: "Title", defaultValue: "Three Data Problems. One Engine." },
+  titlePart1: { type: ControlType.String, title: "Title Part 1", defaultValue: "Three Data Problems. " },
+  titleBrand: { type: ControlType.String, title: "Title Brand", defaultValue: "One Engine." },
   description: {
     type: ControlType.String,
     title: "Description",
     defaultValue: "Data that can't be used, can't be shared, or doesn't exist in sufficient volume -- DTS resolves all three.",
     displayTextArea: true,
   },
+  card1Badge: { type: ControlType.String, title: "Card1: Badge", defaultValue: "RESTRICTED DATA" },
+  card1Number: { type: ControlType.String, title: "Card1: Number", defaultValue: "01 / 03" },
+  card1Title: { type: ControlType.String, title: "Card1: Title", defaultValue: "Privacy-Safe Replacement" },
+  card1Description: {
+    type: ControlType.String,
+    title: "Card1: Description",
+    defaultValue: "Sensitive or regulated data blocked by compliance rules. DTS generates a statistically equivalent synthetic dataset -- with no real personal information.",
+    displayTextArea: true,
+  },
+  card1Check1: { type: ControlType.String, title: "Card1: Check 1", defaultValue: "Replace GDPR, PIPA, HIPAA, or CCPA-restricted data with DP-safe synthetic equivalents" },
+  card1Check2: { type: ControlType.String, title: "Card1: Check 2", defaultValue: "Differential privacy guarantee on all synthetic output" },
+  card1Check3: { type: ControlType.String, title: "Card1: Check 3", defaultValue: "Safe for cross-team, cross-border, and external use" },
+  card1Check4: { type: ControlType.String, title: "Card1: Check 4", defaultValue: "Full distribution fidelity preserved" },
+  card2Badge: { type: ControlType.String, title: "Card2: Badge", defaultValue: "UNUSABLE DATA" },
+  card2Number: { type: ControlType.String, title: "Card2: Number", defaultValue: "02 / 03" },
+  card2Title: { type: ControlType.String, title: "Card2: Title", defaultValue: "Coverage & Balance Expansion" },
+  card2Description: {
+    type: ControlType.String,
+    title: "Card2: Description",
+    defaultValue: "Data exists but is unfit for AI -- missing rare classes, biased distributions, or insufficient volume for reliable training.",
+    displayTextArea: true,
+  },
+  card2Check1: { type: ControlType.String, title: "Card2: Check 1", defaultValue: "Augment underrepresented classes at scale" },
+  card2Check2: { type: ControlType.String, title: "Card2: Check 2", defaultValue: "Fix class imbalance without overfitting" },
+  card2Check3: { type: ControlType.String, title: "Card2: Check 3", defaultValue: "Generate edge case and rare event samples" },
+  card2Check4: { type: ControlType.String, title: "Card2: Check 4", defaultValue: "Expand small datasets to production-grade volumes" },
+  card3Badge: { type: ControlType.String, title: "Card3: Badge", defaultValue: "NON-ACCESSIBLE DATA" },
+  card3Number: { type: ControlType.String, title: "Card3: Number", defaultValue: "03 / 03" },
+  card3Title: { type: ControlType.String, title: "Card3: Title", defaultValue: "Safe Dataset Generation" },
+  card3Description: {
+    type: ControlType.String,
+    title: "Card3: Description",
+    defaultValue: "Data exists in a silo -- restricted by access controls, third-party agreements, or geographic regulations -- and can't reach training pipelines.",
+    displayTextArea: true,
+  },
+  card3Check1: { type: ControlType.String, title: "Card3: Check 1", defaultValue: "Generate safe replacement datasets from inaccessible sources" },
+  card3Check2: { type: ControlType.String, title: "Card3: Check 2", defaultValue: "Unblock stalled validation and testing workflows" },
+  card3Check3: { type: ControlType.String, title: "Card3: Check 3", defaultValue: "Remove data access bottlenecks in regulated environments" },
+  card3Check4: { type: ControlType.String, title: "Card3: Check 4", defaultValue: "Maintain statistical characteristics without data transfer" },
 })

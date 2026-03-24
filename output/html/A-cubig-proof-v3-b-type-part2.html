@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proof | Operational Evidence of Reproducible AI Execution — Cubig</title>
+
+  <!-- SEO -->
+  <meta name="description" content="See operational evidence of reproducible AI execution, including before/after outcomes, state comparison, and reproducible releases under production constraints.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://cubig.ai/proof">
+
+  <!-- OG -->
+  <meta property="og:title" content="Proof | Operational Evidence of Reproducible AI Execution">
+  <meta property="og:description" content="Operational evidence of reproducible AI execution in production. Before/after outcomes, state comparison, reproducible runs.">
+  <meta property="og:site_name" content="Cubig">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://cubig.ai/proof">
+  <meta property="og:image" content="https://cubig.ai/og-default.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://cubig.ai/og-default.png">
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://cubig.ai/#org",
+        "name": "Cubig",
+        "url": "https://cubig.ai"
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://cubig.ai/proof#webpage",
+        "url": "https://cubig.ai/proof",
+        "name": "Proof | Operational Evidence of Reproducible AI Execution - Cubig",
+        "description": "Operational evidence of reproducible AI execution. Before/after outcomes, state comparison, and reproducible releases under production constraints.",
+        "isPartOf": {
+          "@id": "https://cubig.ai/#org"
+        },
+        "about": {
+          "@type": "Thing",
+          "name": "reproducible AI execution",
+          "description": "Reproducible AI execution means the same AI run produces the same result when run under the same execution state conditions."
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is operational evidence in AI systems?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Operational evidence in AI systems is concrete, verifiable documentation that shows how an AI system behaves in production — including what changed between runs, what caused behavioral differences, and whether the same conditions can reproduce the same results. It includes before/after outcomes, state comparisons (what changed), and re-run records."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is reproducible AI execution?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Reproducible AI execution means that given the same execution conditions — data state, schema, preprocessing logic, runtime dependencies — an AI system produces the same result. SynTitan achieves this through Release State (capturing and locking execution conditions), Run Binding (tying every run to a specific state), and Reproduce (re-running identical conditions to verify behavior)."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why is AI execution unstable in production?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "AI execution becomes unstable in production when execution conditions change after deployment — data schemas, preprocessing logic, dependencies, data windows. Any of these changes can cause AI results to drift without any change to the model itself. When execution state is not captured and fixed, there is no way to identify which change caused a production issue."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Oxanium:wght@700&family=Fragment+Mono:ital@0;1&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─── 1. CSS Reset + 전역 기본값 ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--ds-font-base);
+      color: var(--ds-color-text-primary);
+      background-color: var(--ds-color-surface-white);
+      padding-top: 58px;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+      -webkit-font-smoothing: antialiased;
+    }
+    img, video { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+
+    p, li, dt, dd, blockquote,
+    .ds-section-header__description,
+    .ds-hero__description,
+    .ds-cta-band__description,
+    .ds-body-l, .ds-body-m, .ds-body-s,
+    .ds-ac-card__title,
+    .ds-card__description {
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      text-wrap: pretty;
+    }
+
+    /* ─── 2. :root — CSS 변수 ─── */
+    :root {
+      /* Colors */
+      --ds-color-brand-primary:    #3061f2;
+      --ds-color-brand-purple:     #725bea;
+      --ds-color-brand-purple-lt:  #c6c5fa;
+      --ds-color-brand-purple-md:  #ab2eff;
+      --ds-color-neutral-900:      #0f0f0f;
+      --ds-color-neutral-850:      #141414;
+      --ds-color-neutral-800:      #171719;
+      --ds-color-neutral-700:      #303135;
+      --ds-color-neutral-500:      #636363;
+      --ds-color-neutral-400:      #9c9c9c;
+      --ds-color-neutral-350:      #adadad;
+      --ds-color-neutral-300:      #bababa;
+      --ds-color-neutral-250:      #c4c4c4;
+      --ds-color-neutral-200:      #e0e0e0;
+      --ds-color-neutral-150:      #e6e7e9;
+      --ds-color-neutral-100:      #ececec;
+      --ds-color-neutral-050:      #f2f2f2;
+      --ds-color-neutral-025:      #f7f7f7;
+      --ds-color-white:            #ffffff;
+      --ds-color-black:            #000000;
+      --ds-color-text-primary:     #0f0f0f;
+      --ds-color-text-secondary:   #636363;
+      --ds-color-text-tertiary:    #9c9c9c;
+      --ds-color-text-inverse:     #ffffff;
+      --ds-color-text-muted:       #cacccf;
+      --ds-color-success:          #0e824c;
+      --ds-color-error:            #ff3030;
+      --ds-color-info:             #155ea0;
+      --ds-color-warn:             #f59e0b;
+      --ds-color-success-light:    #34d399;
+      --ds-color-error-light:      #ff6b6b;
+      --ds-color-info-light:       #60a5fa;
+      --ds-color-warn-light:       #fbbf24;
+      --ds-color-border-default:   #e6e7e9;
+      --ds-color-border-strong:    #171719;
+      --ds-color-border-brand:     #725bea;
+      --ds-color-teal-badge:       #0e9f8e;
+      --ds-color-surface-dark:     #171719;
+      --ds-overlay-light:          rgba(255,255,255,0.72);
+      --ds-overlay-dark:           rgba(0,0,0,0.15);
+      --ds-overlay-cta-btn:        rgba(255,255,255,0.6);
+      --ds-color-surface-mid:      #f2f2f2;
+      --ds-color-surface-light:    #f7f7f7;
+      --ds-color-surface-white:    #ffffff;
+
+      /* Gradients */
+      --ds-gradient-brand:         linear-gradient(130deg, #673AFF 0%, #D932FF 50%, #FF266A 100%);
+      --ds-gradient-dark:          linear-gradient(180deg, #0f0f0f 0%, #171719 100%);
+      --ds-gradient-inner-purple:  linear-gradient(99deg, #F8EDFF 0%, #FCFCFE 58%, #fff 100%);
+
+      /* Typography */
+      --ds-font-base:    "DM Sans", "DM Sans Placeholder", sans-serif;
+      --ds-font-brand:   "Oxanium", sans-serif;
+      --ds-font-code:    "Fragment Mono", "Geist Mono", monospace;
+      --ds-text-xs:      12px;
+      --ds-text-sm:      14px;
+      --ds-text-md:      16px;
+      --ds-text-lg:      18px;
+      --ds-text-xl:      20px;
+      --ds-text-2xl:     24px;
+      --ds-text-3xl:     30px;
+      --ds-text-4xl:     36px;
+      --ds-text-5xl:     40px;
+      --ds-text-6xl:     50px;
+      --ds-text-7xl:     64px;
+      --ds-weight-light:    300;
+      --ds-weight-regular:  400;
+      --ds-weight-medium:   500;
+      --ds-weight-semibold: 600;
+      --ds-weight-bold:     700;
+      --ds-leading-tight:   1.2;
+      --ds-leading-normal:  1.5;
+      --ds-leading-relaxed: 1.7;
+      --ds-tracking-tight:  -0.5px;
+      --ds-tracking-normal: 0px;
+      --ds-tracking-wide:   0.08em;
+
+      /* Spacing */
+      --ds-space-2xs:  4px;
+      --ds-space-xs:   8px;
+      --ds-space-sm:   12px;
+      --ds-space-md:   16px;
+      --ds-space-lg:   24px;
+      --ds-space-xl:   32px;
+      --ds-space-2xl:  48px;
+      --ds-space-3xl:  64px;
+      --ds-space-4xl:  80px;
+      --ds-space-5xl:  100px;
+
+      /* Shape */
+      --ds-radius-none: 0px;
+      --ds-radius-xs:   5px;
+      --ds-radius-sm:   8px;
+      --ds-radius-md:   18px;
+      --ds-radius-lg:   24px;
+      --ds-radius-xl:   40px;
+      --ds-radius-2xl:  56px;
+      --ds-radius-pill: 9999px;
+      --ds-border-default:  1px solid var(--ds-color-border-default);
+      --ds-border-brand:    1px solid var(--ds-color-brand-purple);
+      --ds-shadow-card:     0px 24px 40px rgba(0,0,0,0.04);
+      --ds-shadow-modal:    0px 24px 40px rgba(0,0,0,0.10);
+
+      /* Container */
+      --ds-container-padding-mobile:     16px;
+      --ds-container-padding-tablet:     32px;
+      --ds-container-padding-sm-desktop: 32px;
+      --ds-container-padding-desktop:    120px;
+      --ds-content-max-width:            1200px;
+
+      /* Background Images */
+      --ds-bg-img-wave-teal:  url('https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/bg-wave-teal-blue.png');
+      --ds-bg-img-grad-navy:  url('https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/bg-gradient-navy-teal.png');
+    }
+
+    /* ─── 3. Base Styles ─── */
+    .ds-container {
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 var(--ds-container-padding-mobile);
+    }
+    @media (min-width: 768px)  { .ds-container { padding: 0 var(--ds-container-padding-tablet); } }
+    @media (min-width: 1024px) { .ds-container { padding: 0 var(--ds-container-padding-sm-desktop); } }
+    @media (min-width: 1440px) { .ds-container { padding: 0 var(--ds-container-padding-desktop); max-width: 1440px; } }
+
+    .ds-section { width: 100%; padding: var(--ds-space-4xl) 0; }
+    .ds-section--light { background-color: var(--ds-color-surface-light); }
+
+    /* ─── 4. Typography ─── */
+    h1, .ds-h1 { font-family: var(--ds-font-base); font-size: var(--ds-text-7xl); font-weight: var(--ds-weight-bold); line-height: var(--ds-leading-tight); letter-spacing: var(--ds-tracking-tight); text-wrap: balance; }
+    h2, .ds-h2 { font-family: var(--ds-font-base); font-size: 28px; font-weight: var(--ds-weight-bold); line-height: var(--ds-leading-tight); letter-spacing: var(--ds-tracking-tight); text-wrap: balance; }
+    h3, .ds-h3 { font-family: var(--ds-font-base); font-size: var(--ds-text-3xl); font-weight: var(--ds-weight-semibold); line-height: var(--ds-leading-tight); text-wrap: balance; }
+    @media (min-width: 1024px) { h2, .ds-h2 { font-size: 32px; } }
+    @media (min-width: 1440px) { h2, .ds-h2 { font-size: 36px; } }
+
+    .ds-text--brand   { color: var(--ds-color-brand-purple); }
+    .ds-text--product { font-family: var(--ds-font-brand); font-weight: var(--ds-weight-bold); }
+
+    /* ─── 5. Section Header ─── */
+    .ds-section-header { margin-bottom: var(--ds-space-2xl); text-align: center; }
+    .ds-section-header__eyebrow {
+      font-family: var(--ds-font-code); font-size: var(--ds-text-xs); font-weight: var(--ds-weight-medium);
+      text-transform: uppercase; letter-spacing: var(--ds-tracking-wide);
+      color: var(--ds-color-brand-purple); margin-bottom: var(--ds-space-sm); display: block;
+    }
+    .ds-section-header__title {
+      font-family: var(--ds-font-base); font-size: 28px; font-weight: var(--ds-weight-bold);
+      color: var(--ds-color-text-primary); line-height: var(--ds-leading-tight);
+      letter-spacing: var(--ds-tracking-tight); margin-bottom: var(--ds-space-md);
+      text-wrap: balance;
+    }
+    @media (min-width: 1024px) { .ds-section-header__title { font-size: 32px; } }
+    @media (min-width: 1440px) { .ds-section-header__title { font-size: 36px; } }
+    .ds-section-header__description {
+      font-size: var(--ds-text-lg); color: var(--ds-color-text-secondary);
+      line-height: var(--ds-leading-relaxed); max-width: 100%; margin: 0 auto;
+      word-break: keep-all; overflow-wrap: break-word;
+    }
+    @media (min-width: 1024px) { .ds-section-header__description { max-width: 720px; } }
+    @media (min-width: 1440px) { .ds-section-header__description { max-width: 860px; } }
+    .ds-section-header--underline {
+      padding-bottom: var(--ds-space-lg);
+      border-bottom: 1px solid var(--ds-color-border-default);
+      margin-bottom: var(--ds-space-xl);
+    }
+    @media (max-width: 767px) { .ds-section-header { text-align: left; } }
+
+    /* ─── 6. Card ─── */
+    .ds-card {
+      background-color: var(--ds-color-surface-white);
+      border-radius: var(--ds-radius-md);
+      border: var(--ds-border-default);
+      padding: var(--ds-space-lg);
+      box-shadow: var(--ds-shadow-card);
+    }
+    @media (min-width: 1440px) { .ds-card { padding: var(--ds-space-xl); } }
+
+    .ds-card__badge {
+      display: inline-flex; align-items: center; width: fit-content;
+      padding: 4px 12px; border-radius: var(--ds-radius-pill);
+      font-size: var(--ds-text-xs); font-weight: var(--ds-weight-medium);
+      font-family: var(--ds-font-code); text-transform: uppercase;
+      letter-spacing: var(--ds-tracking-wide);
+      border: 1px solid currentColor; margin-bottom: var(--ds-space-md);
+    }
+    .ds-card__badge--brand { color: var(--ds-color-brand-purple);  border-color: var(--ds-color-brand-purple); }
+    .ds-card__badge--teal  { color: var(--ds-color-teal-badge);      border-color: var(--ds-color-teal-badge); }
+    .ds-card__badge--gray  { color: var(--ds-color-text-tertiary);   border-color: var(--ds-color-border-default); }
+
+    /* Card Grid */
+    .ds-card-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+    .ds-card-grid .ds-card { display: flex; flex-direction: column; }
+    @media (min-width: 768px)  { .ds-card-grid--3col { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .ds-card-grid--3col { grid-template-columns: repeat(3, 1fr); } }
+
+    /* Business Impact card KPI */
+    .ds-impact-card__kpi {
+      font-family: var(--ds-font-base);
+      font-size: var(--ds-text-3xl);
+      font-weight: var(--ds-weight-bold);
+      color: var(--ds-color-brand-purple);
+      line-height: 1.2;
+      margin-bottom: var(--ds-space-sm);
+    }
+    .ds-impact-card__desc {
+      font-size: var(--ds-text-sm);
+      color: var(--ds-color-text-secondary);
+      line-height: var(--ds-leading-relaxed);
+      flex: 1;
+    }
+
+    /* Common Thread card */
+    .ds-impact-card--thread {
+      background: var(--ds-gradient-inner-purple);
+      border: var(--ds-border-default);
+    }
+    .ds-impact-card--thread .ds-impact-card__body {
+      font-size: var(--ds-text-md);
+      color: var(--ds-color-text-primary);
+      line-height: var(--ds-leading-relaxed);
+      flex: 1;
+    }
+    .ds-impact-card--thread .ds-impact-card__actions {
+      margin-top: var(--ds-space-lg);
+    }
+
+    /* ─── 7. Banner ─── */
+    .ds-banner {
+      padding: var(--ds-space-md) var(--ds-space-lg);
+      border-radius: 0;
+      border: none;
+      border-top: 1px solid var(--ds-color-border-default);
+      border-bottom: 1px solid var(--ds-color-border-default);
+      background-color: var(--ds-color-surface-light);
+      font-size: var(--ds-text-sm);
+      line-height: var(--ds-leading-relaxed);
+      text-align: center;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+    .ds-banner a, .ds-banner--full a { display: block; margin-top: var(--ds-space-sm); }
+
+    /* Banner Full */
+    .ds-banner--full {
+      width: 100%; text-align: center;
+      padding: var(--ds-space-xl) var(--ds-space-2xl);
+      border-radius: var(--ds-radius-xl);
+      background-size: cover; background-position: center;
+      position: relative; overflow: hidden;
+      color: var(--ds-color-text-primary);
+      font-size: var(--ds-text-lg); font-weight: var(--ds-weight-medium);
+      line-height: var(--ds-leading-relaxed);
+      border: none;
+      word-break: keep-all; overflow-wrap: break-word;
+      isolation: isolate;
+    }
+    .ds-banner--full::before {
+      content: ''; position: absolute; inset: 0;
+      background: var(--ds-overlay-light); z-index: 0;
+    }
+    .ds-banner--full > * { position: relative; z-index: 1; }
+    @media (max-width: 767px) {
+      .ds-banner--full { padding: var(--ds-space-lg); font-size: var(--ds-text-md); }
+    }
+
+    /* ─── 8. Button ─── */
+    .ds-btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: var(--ds-space-xs);
+      border-radius: var(--ds-radius-pill);
+      font-family: var(--ds-font-base); font-weight: var(--ds-weight-medium); font-size: var(--ds-text-md);
+      cursor: pointer; border: none; transition: opacity 0.2s, background-color 0.2s;
+      white-space: nowrap; text-decoration: none;
+    }
+    .ds-btn--sm { padding: var(--ds-space-xs) var(--ds-space-md); font-size: var(--ds-text-sm); }
+    .ds-btn--md { padding: var(--ds-space-sm) var(--ds-space-xl); font-size: var(--ds-text-md); }
+    .ds-btn--lg { padding: var(--ds-space-md) var(--ds-space-2xl); font-size: var(--ds-text-lg); }
+    .ds-btn--primary   { background: var(--ds-gradient-brand); color: var(--ds-color-white); }
+    .ds-btn--primary:hover { opacity: 0.88; }
+    .ds-btn--secondary { background-color: transparent; color: var(--ds-color-text-primary); border: var(--ds-border-default); }
+    .ds-btn--secondary:hover { background-color: var(--ds-color-surface-light); }
+
+    /* ─── 9. Accordion Card (.ds-ac-card) ─── */
+    .ds-ac-list { display: flex; flex-direction: column; gap: 2px; }
+    .ds-ac-card {
+      border: var(--ds-border-default); border-radius: var(--ds-radius-sm);
+      background-color: var(--ds-color-surface-white); overflow: hidden; transition: background-color 0.2s;
+    }
+    .ds-ac-card:hover { background-color: var(--ds-color-neutral-025); }
+    .ds-ac-card__header {
+      display: grid; grid-template-columns: 1fr auto;
+      align-items: center; gap: var(--ds-space-md);
+      padding: var(--ds-space-lg); cursor: pointer; user-select: none;
+    }
+    @media (min-width: 1024px) {
+      .ds-ac-card__header { grid-template-columns: 1fr auto auto; }
+    }
+    .ds-ac-card__title-wrap { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+    .ds-ac-card__industry {
+      font-family: var(--ds-font-code); font-size: 10px; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--ds-color-text-tertiary);
+      display: flex; align-items: center; gap: var(--ds-space-2xs);
+    }
+    .ds-ac-card__industry-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .ds-ac-card__title {
+      font-family: var(--ds-font-base); font-size: var(--ds-text-lg); font-weight: var(--ds-weight-medium);
+      line-height: var(--ds-leading-tight); color: var(--ds-color-text-primary);
+      word-break: keep-all; overflow-wrap: break-word;
+    }
+    .ds-ac-card__meta {
+      display: flex; align-items: center; gap: var(--ds-space-xs);
+      flex-wrap: wrap; flex-shrink: 0;
+    }
+    @media (max-width: 767px) { .ds-ac-card__meta { display: none; } }
+    .ds-ac-card__toggle {
+      width: 28px; height: 28px; border-radius: 6px;
+      border: 0.5px solid var(--ds-color-border-default);
+      background: var(--ds-color-surface-light);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; cursor: pointer; transition: border-color 0.15s, background 0.15s;
+    }
+    .ds-ac-card__toggle:hover { border-color: var(--ds-color-border-strong); background: var(--ds-color-surface-mid); }
+    .ds-ac-card__toggle-icon { width: 12px; height: 12px; position: relative; flex-shrink: 0; }
+    .ds-ac-card__toggle-icon::before, .ds-ac-card__toggle-icon::after {
+      content: ''; position: absolute; background: var(--ds-color-text-tertiary);
+      border-radius: 1px; transition: opacity 0.2s;
+    }
+    .ds-ac-card__toggle-icon::before { width: 10px; height: 1.5px; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+    .ds-ac-card__toggle-icon::after  { width: 1.5px; height: 10px; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 1; }
+    .ds-ac-card.ds-ac--open .ds-ac-card__toggle-icon::after { opacity: 0; }
+    .ds-ac-card.ds-ac--open .ds-ac-card__toggle-icon::before { background: var(--ds-color-text-secondary); }
+    .ds-ac-card__body { display: none; padding: var(--ds-space-lg); border-top: var(--ds-border-default); background: var(--ds-color-surface-light); }
+    .ds-ac-card.ds-ac--open .ds-ac-card__body { display: block; }
+
+    /* FAQ-specific: no industry dot, Q label as title */
+    .ds-ac-card--faq .ds-ac-card__header { grid-template-columns: 1fr auto; }
+    .ds-ac-card--faq .ds-ac-card__title { font-size: var(--ds-text-md); font-weight: var(--ds-weight-semibold); }
+    @media (min-width: 768px) { .ds-ac-card--faq .ds-ac-card__title { font-size: var(--ds-text-lg); } }
+
+    .ds-ac-card__body-text {
+      font-size: var(--ds-text-md);
+      color: var(--ds-color-text-secondary);
+      line-height: var(--ds-leading-relaxed);
+      text-wrap: pretty;
+    }
+
+    /* Accordion Evidence Body: 4-col grid */
+    .ds-ac-evidence-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--ds-space-md);
+      margin-top: var(--ds-space-md);
+    }
+    @media (min-width: 768px)  { .ds-ac-evidence-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .ds-ac-evidence-grid { grid-template-columns: repeat(4, 1fr); } }
+
+    .ds-ac-evidence-col { display: flex; flex-direction: column; gap: var(--ds-space-xs); }
+    .ds-ac-evidence-col__label {
+      font-family: var(--ds-font-code); font-size: 10px; text-transform: uppercase;
+      letter-spacing: 0.1em; font-weight: var(--ds-weight-medium);
+      padding: 2px 8px; border-radius: var(--ds-radius-pill);
+      display: inline-block; width: fit-content;
+    }
+    .ds-ac-evidence-col__label--before   { color: var(--ds-color-error);         background-color: rgba(255,48,48,0.08); }
+    .ds-ac-evidence-col__label--after    { color: var(--ds-color-success);        background-color: rgba(14,130,76,0.08); }
+    .ds-ac-evidence-col__label--changed  { color: var(--ds-color-brand-purple);   background-color: rgba(114,91,234,0.08); }
+    .ds-ac-evidence-col__label--reproduce{ color: var(--ds-color-warn);           background-color: rgba(245,158,11,0.08); }
+    .ds-ac-evidence-col__text {
+      font-size: var(--ds-text-sm); color: var(--ds-color-text-secondary);
+      line-height: var(--ds-leading-relaxed);
+    }
+
+    /* Metrics row */
+    .ds-ac-metrics { display: flex; gap: var(--ds-space-xs); flex-wrap: wrap; margin-bottom: var(--ds-space-lg); }
+    .ds-ac-metric {
+      display: flex; flex-direction: column; padding: var(--ds-space-sm) var(--ds-space-md);
+      border: var(--ds-border-default); border-radius: var(--ds-radius-sm);
+      background-color: var(--ds-color-surface-white); min-width: 80px; flex: 1;
+    }
+    .ds-ac-metric__val { font-family: var(--ds-font-base); font-size: var(--ds-text-xl); font-weight: var(--ds-weight-bold); line-height: 1; color: var(--ds-color-text-primary); }
+    .ds-ac-metric__val--warn    { color: var(--ds-color-warn); }
+    .ds-ac-metric__val--success { color: var(--ds-color-success); }
+    .ds-ac-metric__val--purple  { color: var(--ds-color-brand-purple); }
+    .ds-ac-metric__label { font-family: var(--ds-font-code); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ds-color-text-tertiary); margin-top: var(--ds-space-2xs); }
+
+    /* Artifacts */
+    .ds-ac-artifacts { display: flex; flex-wrap: wrap; gap: var(--ds-space-xs); margin-top: var(--ds-space-lg); }
+    .ds-ac-artifacts__label {
+      font-family: var(--ds-font-code); font-size: 10px; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--ds-color-text-tertiary);
+      padding: 2px 8px; border-radius: var(--ds-radius-pill);
+      border: 1px solid var(--ds-color-border-default);
+      background-color: var(--ds-color-surface-white);
+    }
+
+    /* ─── 10. Step Tabs ─── */
+    .ds-step-tabs__nav {
+      display: flex; justify-content: center; gap: var(--ds-space-sm);
+      flex-wrap: wrap; margin-bottom: var(--ds-space-3xl);
+    }
+    .ds-step-tabs__tab {
+      display: inline-flex; align-items: center; gap: var(--ds-space-xs);
+      padding: var(--ds-space-xs) var(--ds-space-lg);
+      border-radius: var(--ds-radius-pill); border: var(--ds-border-default);
+      background-color: var(--ds-color-surface-white);
+      font-family: var(--ds-font-base); font-size: var(--ds-text-sm); font-weight: var(--ds-weight-medium);
+      color: var(--ds-color-text-secondary); cursor: pointer; transition: all 0.2s; white-space: nowrap;
+    }
+    .ds-step-tabs__tab-number {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 22px; height: 22px; border-radius: 50%;
+      background-color: var(--ds-color-neutral-100); border: 1px solid var(--ds-color-border-default);
+      font-size: var(--ds-text-xs); font-weight: var(--ds-weight-bold);
+      color: var(--ds-color-text-secondary); flex-shrink: 0; transition: all 0.2s;
+    }
+    .ds-step-tabs__tab:hover {
+      background-color: var(--ds-color-neutral-900); border-color: var(--ds-color-neutral-900);
+      color: var(--ds-color-white);
+    }
+    .ds-step-tabs__tab:hover .ds-step-tabs__tab-number {
+      background-color: var(--ds-color-white); border-color: var(--ds-color-white);
+      color: var(--ds-color-neutral-900);
+    }
+    .ds-step-tabs__tab--active {
+      background-color: var(--ds-color-neutral-900); border-color: var(--ds-color-neutral-900);
+      color: var(--ds-color-white); font-weight: var(--ds-weight-semibold);
+    }
+    .ds-step-tabs__tab--active .ds-step-tabs__tab-number {
+      background-color: var(--ds-color-white); border-color: var(--ds-color-white);
+      color: var(--ds-color-neutral-900);
+    }
+    .ds-step-tabs__panel { display: none; }
+    .ds-step-tabs__panel--active {
+      display: grid; grid-template-columns: 1fr; gap: var(--ds-space-2xl); align-items: center;
+    }
+    @media (min-width: 1024px) { .ds-step-tabs__panel--active { grid-template-columns: 5fr 7fr; gap: var(--ds-space-3xl); } }
+    @media (min-width: 1440px) { .ds-step-tabs__panel--active { gap: var(--ds-space-4xl); } }
+    .ds-step-tabs__content { display: flex; flex-direction: column; gap: var(--ds-space-lg); }
+    .ds-step-tabs__title {
+      font-family: var(--ds-font-base); font-size: var(--ds-text-3xl); font-weight: var(--ds-weight-bold);
+      color: var(--ds-color-text-primary); line-height: var(--ds-leading-tight); text-wrap: balance;
+    }
+    @media (min-width: 768px) { .ds-step-tabs__title { font-size: var(--ds-text-4xl); } }
+    .ds-step-tabs__description {
+      font-size: var(--ds-text-md); color: var(--ds-color-text-secondary); line-height: var(--ds-leading-relaxed);
+    }
+    .ds-step-tabs__screenshot {
+      border-radius: var(--ds-radius-lg); overflow: hidden;
+      border: var(--ds-border-default); box-shadow: var(--ds-shadow-card);
+      background-color: var(--ds-color-surface-light); max-height: 420px;
+    }
+    .ds-step-tabs__screenshot-placeholder {
+      width: 100%; height: 320px;
+      display: flex; align-items: center; justify-content: center;
+      background-color: var(--ds-color-surface-mid);
+      color: var(--ds-color-text-tertiary);
+      font-size: var(--ds-text-sm); font-family: var(--ds-font-code);
+      letter-spacing: 0.05em;
+    }
+    @media (max-width: 767px) {
+      .ds-step-tabs__nav { justify-content: flex-start; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding-bottom: var(--ds-space-xs); }
+      .ds-step-tabs__nav::-webkit-scrollbar { display: none; }
+      .ds-step-tabs__screenshot { max-height: 220px; }
+      .ds-step-tabs__screenshot-placeholder { height: 180px; }
+    }
+
+    /* Code Block */
+    .ds-code-block {
+      background-color: var(--ds-color-neutral-900);
+      border: none;
+      border-radius: var(--ds-radius-sm);
+      padding: var(--ds-space-md);
+      font-family: var(--ds-font-code);
+      font-size: var(--ds-text-sm);
+      line-height: 1.9;
+      color: var(--ds-color-neutral-300);
+      overflow-x: auto;
+      margin-top: var(--ds-space-lg);
+      margin-bottom: var(--ds-space-md);
+    }
+    .ds-code--remove { color: var(--ds-color-error-light); }
+    .ds-code--add    { color: var(--ds-color-success-light); }
+    .ds-code--warn   { color: var(--ds-color-warn-light); }
+    .ds-code--muted  { color: var(--ds-color-neutral-500); }
+
+    /* Code annotation */
+    .ds-step-detail { display: flex; flex-direction: column; gap: var(--ds-space-xs); }
+    .ds-step-detail__row { display: flex; gap: var(--ds-space-sm); align-items: baseline; }
+    .ds-step-detail__key {
+      font-family: var(--ds-font-code); font-size: var(--ds-text-xs); text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--ds-color-text-tertiary); min-width: 110px; flex-shrink: 0;
+    }
+    .ds-step-detail__val {
+      font-size: var(--ds-text-sm); color: var(--ds-color-text-secondary); line-height: var(--ds-leading-relaxed);
+    }
+
+    /* ─── 11. CTA Band ─── */
+    .ds-cta-band {
+      width: 100%; position: relative; overflow: hidden;
+      padding: 80px var(--ds-container-padding-mobile);
+      text-align: center;
+      background-size: cover; background-position: center;
+    }
+    .ds-cta-band::before {
+      content: ''; position: absolute; inset: 0;
+      background: var(--ds-overlay-dark); z-index: 0;
+    }
+    .ds-cta-band > * { position: relative; z-index: 1; }
+    .ds-cta-band__inner {
+      max-width: 100%; margin: 0 auto;
+      display: flex; flex-direction: column; align-items: center; gap: var(--ds-space-lg);
+    }
+    @media (min-width: 1024px) { .ds-cta-band__inner { max-width: 720px; } }
+    @media (min-width: 1440px) { .ds-cta-band__inner { max-width: 860px; } }
+    .ds-cta-band__title {
+      font-family: var(--ds-font-base); font-size: var(--ds-text-5xl);
+      font-weight: var(--ds-weight-bold); color: var(--ds-color-white);
+      line-height: var(--ds-leading-tight); letter-spacing: -2px; margin: 0; text-wrap: balance;
+    }
+    @media (min-width: 768px)  { .ds-cta-band__title { font-size: 48px; } }
+    @media (min-width: 1024px) { .ds-cta-band__title { font-size: 56px; } }
+    @media (min-width: 1440px) { .ds-cta-band__title { font-size: var(--ds-text-7xl); } }
+    .ds-cta-band__description {
+      font-size: var(--ds-text-lg); color: rgba(255,255,255,0.85);
+      line-height: var(--ds-leading-relaxed); margin: 0;
+      word-break: keep-all; overflow-wrap: break-word;
+    }
+    .ds-cta-band__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; }
+    .ds-cta-band__actions .ds-btn {
+      background: rgba(255,255,255,0.92); color: var(--ds-color-text-primary);
+      border: 1px solid var(--ds-overlay-cta-btn); backdrop-filter: blur(8px);
+    }
+    .ds-cta-band__actions .ds-btn:hover { background: var(--ds-color-white); }
+    .ds-cta-band__footnote { font-size: var(--ds-text-xs); color: rgba(255,255,255,0.6); font-family: var(--ds-font-code); letter-spacing: var(--ds-tracking-wide); }
+    @media (min-width: 768px)  { .ds-cta-band { padding: 100px var(--ds-container-padding-tablet); } }
+    @media (min-width: 1440px) { .ds-cta-band { padding: 120px var(--ds-container-padding-desktop); max-width: 1440px; margin: 0 auto; } }
+    @media (max-width: 767px) {
+      .ds-cta-band__actions { flex-direction: column; align-items: center; }
+      .ds-cta-band__actions .ds-btn { width: 100%; max-width: 320px; }
+    }
+
+    /* Background images */
+    .ds-bg--wave-teal { background-image: var(--ds-bg-img-wave-teal); }
+    .ds-bg--grad-navy { background-image: var(--ds-bg-img-grad-navy); }
+
+    /* Bullet List */
+    .ds-bullet { list-style: none; display: flex; flex-direction: column; gap: var(--ds-space-sm); padding: 0; margin: 0; }
+    .ds-bullet__item { display: flex; align-items: flex-start; gap: var(--ds-space-xs); font-size: var(--ds-text-md); line-height: var(--ds-leading-normal); color: var(--ds-color-text-primary); }
+    .ds-bullet__icon { width: 20px; height: 20px; flex-shrink: 0; margin-top: 2px; display: flex; align-items: center; justify-content: center; }
+    .ds-bullet--dot .ds-bullet__icon::before { content: "•"; color: var(--ds-color-brand-purple); font-size: var(--ds-text-xl); line-height: 1; }
+  </style>
+</head>
+<body>
+
+<!-- NOTE: This file contains S6–S9 (part2). Merge after <!-- PART 2 CONTINUES HERE --> in part1. -->
+
+<!-- ════════════════════════════════════════
+     S6: SaaS Diff Note (Banner)
+     배경: ds-bg--wave-teal (banner-full)
+     ════════════════════════════════════════ -->
+<section class="ds-section" id="section-6">
+  <div class="ds-container">
+    <div class="ds-banner--full ds-bg--wave-teal">
+      <p>
+        Databricks versioned the data. MLflow tracked the model. The AI still broke in production.
+        <strong>Because neither tool versions the data state the model was bound to at run time.</strong>
+        <span class="ds-text--product">SynTitan</span> does. That's the difference these cases reflect.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     S7: Business Impact Summary
+     배경: surface-light
+     ════════════════════════════════════════ -->
+<section class="ds-section ds-section--light" id="section-7">
+  <div class="ds-container">
+    <div class="ds-section-header ds-section-header--underline">
+      <h2 class="ds-section-header__title">
+        What Changes When AI Execution Is <span class="ds-text--brand">Reproducible</span>
+      </h2>
+      <p class="ds-section-header__description">These are the business outcomes the operational evidence demonstrates — not theoretical capabilities, but changes documented in production deployments.</p>
+    </div>
+
+    <div class="ds-card-grid ds-card-grid--3col">
+
+      <!-- Card 1: Incident Recovery -->
+      <article class="ds-card">
+        <span class="ds-card__badge ds-card__badge--teal">Incident Recovery</span>
+        <div class="ds-impact-card__kpi">21 days to &lt;4h</div>
+        <p class="ds-impact-card__desc">Root cause identification time. Schema change detected at ingestion via Release State. Incident resolved before next training run.</p>
+      </article>
+
+      <!-- Card 2: Data Usability -->
+      <article class="ds-card">
+        <span class="ds-card__badge ds-card__badge--teal">Data Usability</span>
+        <div class="ds-impact-card__kpi">+30pp F1</div>
+        <p class="ds-impact-card__desc">Model accuracy improvement after <span class="ds-text--product">DTS</span> fixed class imbalance. Rare defect class augmented with privacy-safe synthetic data. Deploy time cut from 4 weeks to 1 day.</p>
+      </article>
+
+      <!-- Card 3: LLM Adoption -->
+      <article class="ds-card">
+        <span class="ds-card__badge ds-card__badge--teal">LLM Adoption</span>
+        <div class="ds-impact-card__kpi">98.1%</div>
+        <p class="ds-impact-card__desc">PII detection accuracy in enterprise prompts. Compliance-blocked LLM projects unblocked without sacrificing data usability or audit requirements.</p>
+      </article>
+
+      <!-- Card 4: Rollback Speed -->
+      <article class="ds-card">
+        <span class="ds-card__badge ds-card__badge--teal">Rollback Speed</span>
+        <div class="ds-impact-card__kpi">&lt;2h rollback</div>
+        <p class="ds-impact-card__desc">Run Binding enabled stable-state re-execution after preprocessing drift caused inference inconsistency. Prior Release State re-run confirmed. Score distribution matched baseline.</p>
+      </article>
+
+      <!-- Card 5: Compliance-Safe AI Data -->
+      <article class="ds-card">
+        <span class="ds-card__badge ds-card__badge--teal">Compliance-Safe AI Data</span>
+        <div class="ds-impact-card__kpi">277K records</div>
+        <p class="ds-impact-card__desc">DP-safe synthetic records generated to replace retention-deleted data. F1 churn model reached 0.92. Zero real customer data accessed or exported. Full regulatory compliance.</p>
+      </article>
+
+      <!-- Card 6: Common Thread -->
+      <article class="ds-card ds-impact-card--thread">
+        <span class="ds-card__badge ds-card__badge--brand">Common Thread</span>
+        <p class="ds-impact-card--thread ds-impact-card__body">
+          Each case reduced <strong>deployment risk</strong>, <strong>incident investigation time</strong>, or <strong>AI adoption blockers</strong> — without replacing existing data infrastructure.
+        </p>
+        <div class="ds-impact-card--thread ds-impact-card__actions">
+          <a href="mailto:contact@cubig.ai" class="ds-btn ds-btn--secondary ds-btn--sm">Talk to our engineers</a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     S8: FAQ
+     배경: white
+     ════════════════════════════════════════ -->
+<section class="ds-section" id="section-8">
+  <div class="ds-container">
+    <div class="ds-section-header ds-section-header--underline">
+      <h2 class="ds-section-header__title">
+        Common <span class="ds-text--brand">Questions</span>
+      </h2>
+    </div>
+
+    <div class="ds-ac-list">
+
+      <!-- FAQ 1 — default open -->
+      <article class="ds-ac-card ds-ac-card--faq ds-ac--open">
+        <div class="ds-ac-card__header" onclick="toggleAcCard(this)">
+          <div class="ds-ac-card__title-wrap">
+            <div class="ds-ac-card__title">What does 'reproducible AI execution' mean in production?</div>
+          </div>
+          <div class="ds-ac-card__toggle"><span class="ds-ac-card__toggle-icon"></span></div>
+        </div>
+        <div class="ds-ac-card__body">
+          <p class="ds-ac-card__body-text">Reproducible AI execution means that any past AI run can be re-executed under the exact same data, environment, and pipeline conditions — returning the same result. <span class="ds-text--product">SynTitan</span> achieves this through Release State and Run Binding, which lock execution conditions at every run. When something breaks in production, you don't debug blind — you diff the states and reproduce the last known-good run.</p>
+        </div>
+      </article>
+
+      <!-- FAQ 2 -->
+      <article class="ds-ac-card ds-ac-card--faq">
+        <div class="ds-ac-card__header" onclick="toggleAcCard(this)">
+          <div class="ds-ac-card__title-wrap">
+            <div class="ds-ac-card__title">What is a Release State in <span class="ds-text--product">SynTitan</span>?</div>
+          </div>
+          <div class="ds-ac-card__toggle"><span class="ds-ac-card__toggle-icon"></span></div>
+        </div>
+        <div class="ds-ac-card__body">
+          <p class="ds-ac-card__body-text">A Release State is a versioned snapshot of all execution conditions at the time of an AI run — including data schema, pipeline configuration, feature set, and runtime parameters. It enables diff between states to trace what changed and re-run the same conditions for incident response and regression verification.</p>
+        </div>
+      </article>
+
+      <!-- FAQ 3 -->
+      <article class="ds-ac-card ds-ac-card--faq">
+        <div class="ds-ac-card__header" onclick="toggleAcCard(this)">
+          <div class="ds-ac-card__title-wrap">
+            <div class="ds-ac-card__title">How does <span class="ds-text--product">DTS</span> solve the unusable data problem?</div>
+          </div>
+          <div class="ds-ac-card__toggle"><span class="ds-ac-card__toggle-icon"></span></div>
+        </div>
+        <div class="ds-ac-card__body">
+          <p class="ds-ac-card__body-text"><span class="ds-text--product">DTS</span> generates privacy-safe synthetic data using differential privacy to fill coverage gaps, fix class imbalance, and replace non-accessible data. It operates as a standalone engine or integrates with <span class="ds-text--product">SynTitan</span> for end-to-end execution stability.</p>
+        </div>
+      </article>
+
+      <!-- FAQ 4 -->
+      <article class="ds-ac-card ds-ac-card--faq">
+        <div class="ds-ac-card__header" onclick="toggleAcCard(this)">
+          <div class="ds-ac-card__title-wrap">
+            <div class="ds-ac-card__title">How does <span class="ds-text--product">LLM Capsule</span> protect sensitive data during LLM usage?</div>
+          </div>
+          <div class="ds-ac-card__toggle"><span class="ds-ac-card__toggle-icon"></span></div>
+        </div>
+        <div class="ds-ac-card__body">
+          <p class="ds-ac-card__body-text"><span class="ds-text--product">LLM Capsule</span> detects sensitive fields including PII in prompts and outputs, anonymizes or shields them before LLM interaction, and preserves output usability for downstream workflows — all within <span class="ds-text--product">SynTitan</span> execution workflows.</p>
+        </div>
+      </article>
+
+      <!-- FAQ 5 -->
+      <article class="ds-ac-card ds-ac-card--faq">
+        <div class="ds-ac-card__header" onclick="toggleAcCard(this)">
+          <div class="ds-ac-card__title-wrap">
+            <div class="ds-ac-card__title">What is the difference between <span class="ds-text--product">SynTitan</span> and <span class="ds-text--product">DTS</span>?</div>
+          </div>
+          <div class="ds-ac-card__toggle"><span class="ds-ac-card__toggle-icon"></span></div>
+        </div>
+        <div class="ds-ac-card__body">
+          <p class="ds-ac-card__body-text"><span class="ds-text--product">SynTitan</span> performs data quality refinement as part of execution stability. <span class="ds-text--product">SynTitan</span> can use a subset of <span class="ds-text--product">DTS</span> capabilities when privacy-safe synthetic data is needed, while <span class="ds-text--product">DTS</span> is a full standalone enterprise synthetic data engine.</p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     S9: CTA Band
+     배경: ds-bg--grad-navy (전폭)
+     ════════════════════════════════════════ -->
+<section class="ds-cta-band ds-bg--grad-navy" id="section-9">
+  <div class="ds-cta-band__inner">
+    <h2 class="ds-cta-band__title">Make Your AI Runs Reproducible.</h2>
+    <p class="ds-cta-band__description">Every production AI failure has a root cause. These cases show how to find it fast, fix it correctly, and prevent recurrence. The same infrastructure is available now.</p>
+    <div class="ds-cta-band__actions">
+      <a href="https://syntitan.ai" class="ds-btn ds-btn--md" target="_blank" rel="noopener">Start Evaluation</a>
+      <a href="mailto:contact@cubig.ai" class="ds-btn ds-btn--md">Run a Technical Demo</a>
+      <a href="/learn/why-ai-fails-after-deployment" class="ds-btn ds-btn--md">Explore: Why AI Fails</a>
+    </div>
+    <p class="ds-cta-band__footnote">30-min architecture review. Engineers-first. No sales pitch.</p>
+  </div>
+</section>
+
+<script>
+  /* Accordion toggle */
+  function toggleAcCard(header) {
+    var card = header.closest('.ds-ac-card');
+    card.classList.toggle('ds-ac--open');
+  }
+</script>
+
+</body>
+</html>

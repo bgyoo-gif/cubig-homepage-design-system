@@ -2,13 +2,74 @@ import * as React from "react"
 import { addPropertyControls, ControlType } from "framer"
 
 interface Props {
-  title?: string
+  titlePart1?: string
+  titleBrand?: string
+  titlePart2?: string
+  titleBrandColor?: string
   description?: string
+  colCapability?: string
+  colDTS?: string
+  colMasking?: string
+  colSampling?: string
+  colManual?: string
+  row1Capability?: string
+  row1DTS?: string
+  row1MaskingText?: string
+  row1SamplingText?: string
+  row2Capability?: string
+  row2DTS?: string
+  row2MaskingText?: string
+  row2SamplingText?: string
+  row2ManualText?: string
+  row3Capability?: string
+  row3DTS?: string
+  row3SamplingText?: string
+  row3ManualText?: string
+  row4Capability?: string
+  row4DTS?: string
+  row4MaskingText?: string
+  row4SamplingText?: string
+  row4ManualText?: string
+  row5Capability?: string
+  row5DTS?: string
+  row5MaskingText?: string
+  row6Capability?: string
+  row6DTS?: string
 }
 
 export default function Section04_Comparison({
-  title = "DTS vs. Other Approaches to Restricted Data",
+  titlePart1 = "vs. Other Approaches to ",
+  titleBrand = "Restricted Data",
+  titlePart2 = "",
   description = "Databricks stores your data. Masking removes it. DTS makes it AI-ready -- without removing or exposing it.",
+  colCapability = "Capability",
+  colDTS = "DTS",
+  colMasking = "Masking",
+  colSampling = "Sampling",
+  colManual = "Manual",
+  row1Capability = "Privacy guarantee",
+  row1DTS = "Mathematical DP bound",
+  row1MaskingText = "Re-identification risk remains",
+  row1SamplingText = "No privacy guarantee",
+  row2Capability = "Coverage expansion",
+  row2DTS = "Generate at any scale",
+  row2MaskingText = "Can't create new data",
+  row2SamplingText = "Bounded by real data volume",
+  row2ManualText = "Expensive & slow",
+  row3Capability = "Rare class augmentation",
+  row3DTS = "Targeted generation",
+  row3SamplingText = "Can't create rare events",
+  row3ManualText = "Very high cost",
+  row4Capability = "Distribution fidelity",
+  row4DTS = "Validated against real stats",
+  row4MaskingText = "Distorted by masking",
+  row4SamplingText = "Sampling bias risk",
+  row4ManualText = "Annotator variance",
+  row5Capability = "Cross-border / external use",
+  row5DTS = "No real data transferred",
+  row5MaskingText = "Residual risk",
+  row6Capability = "SynTitan integration",
+  row6DTS = "Native versioning & binding",
 }: Props) {
   const containerRef = React.useRef<HTMLDivElement>(null)
   const [isMobile, setIsMobile] = React.useState(false)
@@ -34,43 +95,43 @@ export default function Section04_Comparison({
 
   const rows = [
     {
-      capability: "Privacy guarantee",
-      dts: { text: "Mathematical DP bound" },
-      masking: { partial: true, text: "Re-identification risk remains" },
-      sampling: { cross: true, text: "No privacy guarantee" },
+      capability: row1Capability,
+      dts: { text: row1DTS },
+      masking: { partial: true, text: row1MaskingText },
+      sampling: { cross: true, text: row1SamplingText },
       manual: { cross: true, text: "" },
     },
     {
-      capability: "Coverage expansion",
-      dts: { text: "Generate at any scale" },
-      masking: { cross: true, text: "Can't create new data" },
-      sampling: { partial: true, text: "Bounded by real data volume" },
-      manual: { partial: true, text: "Expensive & slow" },
+      capability: row2Capability,
+      dts: { text: row2DTS },
+      masking: { cross: true, text: row2MaskingText },
+      sampling: { partial: true, text: row2SamplingText },
+      manual: { partial: true, text: row2ManualText },
     },
     {
-      capability: "Rare class augmentation",
-      dts: { text: "Targeted generation" },
+      capability: row3Capability,
+      dts: { text: row3DTS },
       masking: { cross: true, text: "" },
-      sampling: { cross: true, text: "Can't create rare events" },
-      manual: { partial: true, text: "Very high cost" },
+      sampling: { cross: true, text: row3SamplingText },
+      manual: { partial: true, text: row3ManualText },
     },
     {
-      capability: "Distribution fidelity",
-      dts: { text: "Validated against real stats" },
-      masking: { partial: true, text: "Distorted by masking" },
-      sampling: { partial: true, text: "Sampling bias risk" },
-      manual: { partial: true, text: "Annotator variance" },
+      capability: row4Capability,
+      dts: { text: row4DTS },
+      masking: { partial: true, text: row4MaskingText },
+      sampling: { partial: true, text: row4SamplingText },
+      manual: { partial: true, text: row4ManualText },
     },
     {
-      capability: "Cross-border / external use",
-      dts: { text: "No real data transferred" },
-      masking: { cross: true, text: "Residual risk" },
+      capability: row5Capability,
+      dts: { text: row5DTS },
+      masking: { cross: true, text: row5MaskingText },
       sampling: { cross: true, text: "" },
       manual: { cross: true, text: "" },
     },
     {
-      capability: "SynTitan integration",
-      dts: { text: "Native versioning & binding" },
+      capability: row6Capability,
+      dts: { text: row6DTS },
       masking: { cross: true, text: "" },
       sampling: { cross: true, text: "" },
       manual: { cross: true, text: "" },
@@ -128,7 +189,7 @@ export default function Section04_Comparison({
               marginBottom: 16,
               textAlign: "center",
             }}>
-              <span style={{ fontFamily: '"Oxanium", sans-serif', fontWeight: 700 }}>DTS</span> vs. Other Approaches to <span style={{ color: "#725bea" }}>Restricted Data</span>
+              <span style={{ fontFamily: '"Oxanium", sans-serif', fontWeight: 700 }}>{colDTS}</span>{titlePart1}<span style={{ color: "#725bea" }}>{titleBrand}</span>{titlePart2}
             </h2>
             <p style={{
               fontSize: isMobile ? 14 : isTablet ? 16 : 18,
@@ -166,7 +227,7 @@ export default function Section04_Comparison({
                     textAlign: "center",
                     backgroundColor: "#f7f7f7",
                     minWidth: isMobile ? 90 : "auto",
-                  }}>Capability</th>
+                  }}>{colCapability}</th>
                   <th style={{
                     fontFamily: '"Fragment Mono", monospace',
                     fontSize: isMobile ? 10 : 11,
@@ -179,7 +240,7 @@ export default function Section04_Comparison({
                     textAlign: "center",
                     backgroundColor: "rgba(114, 91, 234, 0.08)",
                     minWidth: isMobile ? 80 : "auto",
-                  }}><span style={{ fontFamily: '"Oxanium", sans-serif', fontWeight: 700 }}>DTS</span></th>
+                  }}><span style={{ fontFamily: '"Oxanium", sans-serif', fontWeight: 700 }}>{colDTS}</span></th>
                   <th style={{
                     fontFamily: '"Fragment Mono", monospace',
                     fontSize: isMobile ? 10 : 11,
@@ -192,7 +253,7 @@ export default function Section04_Comparison({
                     textAlign: "left",
                     backgroundColor: "#f7f7f7",
                     minWidth: isMobile ? 80 : "auto",
-                  }}>Masking</th>
+                  }}>{colMasking}</th>
                   <th style={{
                     fontFamily: '"Fragment Mono", monospace',
                     fontSize: isMobile ? 10 : 11,
@@ -205,7 +266,7 @@ export default function Section04_Comparison({
                     textAlign: "left",
                     backgroundColor: "#f7f7f7",
                     minWidth: isMobile ? 80 : "auto",
-                  }}>Sampling</th>
+                  }}>{colSampling}</th>
                   <th style={{
                     fontFamily: '"Fragment Mono", monospace',
                     fontSize: isMobile ? 10 : 11,
@@ -218,7 +279,7 @@ export default function Section04_Comparison({
                     textAlign: "left",
                     backgroundColor: "#f7f7f7",
                     minWidth: isMobile ? 80 : "auto",
-                  }}>Manual</th>
+                  }}>{colManual}</th>
                 </tr>
               </thead>
               <tbody>
@@ -261,11 +322,41 @@ export default function Section04_Comparison({
 }
 
 addPropertyControls(Section04_Comparison, {
-  title: { type: ControlType.String, title: "Title", defaultValue: "DTS vs. Other Approaches to Restricted Data" },
+  titlePart1: { type: ControlType.String, title: "Title Part 1", defaultValue: " vs. Other Approaches to " },
+  titleBrand: { type: ControlType.String, title: "Title Brand", defaultValue: "Restricted Data" },
+  titlePart2: { type: ControlType.String, title: "Title Part 2", defaultValue: "" },
   description: {
     type: ControlType.String,
     title: "Description",
     defaultValue: "Databricks stores your data. Masking removes it. DTS makes it AI-ready -- without removing or exposing it.",
     displayTextArea: true,
   },
+  colCapability: { type: ControlType.String, title: "Col: Capability", defaultValue: "Capability" },
+  colDTS: { type: ControlType.String, title: "Col: DTS", defaultValue: "DTS" },
+  colMasking: { type: ControlType.String, title: "Col: Masking", defaultValue: "Masking" },
+  colSampling: { type: ControlType.String, title: "Col: Sampling", defaultValue: "Sampling" },
+  colManual: { type: ControlType.String, title: "Col: Manual", defaultValue: "Manual" },
+  row1Capability: { type: ControlType.String, title: "Row1: Capability", defaultValue: "Privacy guarantee" },
+  row1DTS: { type: ControlType.String, title: "Row1: DTS", defaultValue: "Mathematical DP bound" },
+  row1MaskingText: { type: ControlType.String, title: "Row1: Masking", defaultValue: "Re-identification risk remains" },
+  row1SamplingText: { type: ControlType.String, title: "Row1: Sampling", defaultValue: "No privacy guarantee" },
+  row2Capability: { type: ControlType.String, title: "Row2: Capability", defaultValue: "Coverage expansion" },
+  row2DTS: { type: ControlType.String, title: "Row2: DTS", defaultValue: "Generate at any scale" },
+  row2MaskingText: { type: ControlType.String, title: "Row2: Masking", defaultValue: "Can't create new data" },
+  row2SamplingText: { type: ControlType.String, title: "Row2: Sampling", defaultValue: "Bounded by real data volume" },
+  row2ManualText: { type: ControlType.String, title: "Row2: Manual", defaultValue: "Expensive & slow" },
+  row3Capability: { type: ControlType.String, title: "Row3: Capability", defaultValue: "Rare class augmentation" },
+  row3DTS: { type: ControlType.String, title: "Row3: DTS", defaultValue: "Targeted generation" },
+  row3SamplingText: { type: ControlType.String, title: "Row3: Sampling", defaultValue: "Can't create rare events" },
+  row3ManualText: { type: ControlType.String, title: "Row3: Manual", defaultValue: "Very high cost" },
+  row4Capability: { type: ControlType.String, title: "Row4: Capability", defaultValue: "Distribution fidelity" },
+  row4DTS: { type: ControlType.String, title: "Row4: DTS", defaultValue: "Validated against real stats" },
+  row4MaskingText: { type: ControlType.String, title: "Row4: Masking", defaultValue: "Distorted by masking" },
+  row4SamplingText: { type: ControlType.String, title: "Row4: Sampling", defaultValue: "Sampling bias risk" },
+  row4ManualText: { type: ControlType.String, title: "Row4: Manual", defaultValue: "Annotator variance" },
+  row5Capability: { type: ControlType.String, title: "Row5: Capability", defaultValue: "Cross-border / external use" },
+  row5DTS: { type: ControlType.String, title: "Row5: DTS", defaultValue: "No real data transferred" },
+  row5MaskingText: { type: ControlType.String, title: "Row5: Masking", defaultValue: "Residual risk" },
+  row6Capability: { type: ControlType.String, title: "Row6: Capability", defaultValue: "SynTitan integration" },
+  row6DTS: { type: ControlType.String, title: "Row6: DTS", defaultValue: "Native versioning & binding" },
 })

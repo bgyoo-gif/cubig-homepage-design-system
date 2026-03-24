@@ -172,11 +172,6 @@
       --ds-color-surface-light: #f7f7f7;
       --ds-color-surface-white: #ffffff;
 
-      /* Overlay */
-      --ds-overlay-light:     rgba(255,255,255,0.72);
-      --ds-overlay-dark:      rgba(0,0,0,0.15);
-      --ds-overlay-cta-btn:   rgba(255,255,255,0.6);
-
       /* Gradient */
       --ds-gradient-brand:        linear-gradient(130deg, #673AFF 0%, #D932FF 50%, #FF266A 100%);
       --ds-gradient-dark:         linear-gradient(180deg, #0f0f0f 0%, #171719 100%);
@@ -418,12 +413,9 @@
     }
     .ds-banner--full::before {
       content: ''; position: absolute; inset: 0;
-      background: var(--ds-overlay-light); z-index: 0;
+      background: rgba(255,255,255,0.72); z-index: 0;
     }
     .ds-banner--full > * { position: relative; z-index: 1; }
-    @media (max-width: 767px) {
-      .ds-banner--full { padding: var(--ds-space-lg); font-size: var(--ds-text-md); }
-    }
 
     /* ─────────────────────────────────────────────
        10. KPI Band
@@ -501,37 +493,6 @@
     @media (min-width: 768px)  { .ds-card-grid--3col { grid-template-columns: repeat(2, 1fr); } }
     @media (min-width: 1024px) { .ds-card-grid--3col { grid-template-columns: repeat(3, 1fr); } }
 
-    /* Business Impact card KPI */
-    .ds-impact-card__kpi {
-      font-family: var(--ds-font-base);
-      font-size: var(--ds-text-3xl);
-      font-weight: var(--ds-weight-bold);
-      color: var(--ds-color-brand-purple);
-      line-height: 1.2;
-      margin-bottom: var(--ds-space-sm);
-    }
-    .ds-impact-card__desc {
-      font-size: var(--ds-text-sm);
-      color: var(--ds-color-text-secondary);
-      line-height: var(--ds-leading-relaxed);
-      flex: 1;
-    }
-
-    /* Common Thread card */
-    .ds-impact-card--thread {
-      background: var(--ds-gradient-inner-purple);
-      border: var(--ds-border-default);
-    }
-    .ds-impact-card--thread .ds-impact-card__body {
-      font-size: var(--ds-text-md);
-      color: var(--ds-color-text-primary);
-      line-height: var(--ds-leading-relaxed);
-      flex: 1;
-    }
-    .ds-impact-card--thread .ds-impact-card__actions {
-      margin-top: var(--ds-space-lg);
-    }
-
     /* ─────────────────────────────────────────────
        13. Accordion Card
     ───────────────────────────────────────────── */
@@ -577,18 +538,6 @@
     .ds-ac-card__body { display: none; padding: var(--ds-space-lg); border-top: var(--ds-border-default); background: var(--ds-color-surface-light); }
     .ds-ac-card.ds-ac--open .ds-ac-card__body { display: block; }
 
-    /* FAQ-specific */
-    .ds-ac-card--faq .ds-ac-card__header { grid-template-columns: 1fr auto; }
-    .ds-ac-card--faq .ds-ac-card__title { font-size: var(--ds-text-md); font-weight: var(--ds-weight-semibold); }
-    @media (min-width: 768px) { .ds-ac-card--faq .ds-ac-card__title { font-size: var(--ds-text-lg); } }
-
-    .ds-ac-card__body-text {
-      font-size: var(--ds-text-md);
-      color: var(--ds-color-text-secondary);
-      line-height: var(--ds-leading-relaxed);
-      text-wrap: pretty;
-    }
-
     /* Accordion body internals */
     .ds-ac-metrics { display: flex; gap: var(--ds-space-xs); flex-wrap: wrap; margin-bottom: var(--ds-space-lg); }
     .ds-ac-metric {
@@ -631,7 +580,7 @@
       .ds-ac-card__meta   { display: none; }
     }
 
-    /* Badge */
+    /* Badge (ds-card badge variant used in ac-card header) */
     .ds-badge {
       display: inline-flex; align-items: center; gap: var(--ds-space-2xs);
       padding: var(--ds-space-2xs) var(--ds-space-xs);
@@ -767,7 +716,7 @@
     }
     .ds-cta-band::before {
       content: ''; position: absolute; inset: 0;
-      background: var(--ds-overlay-dark); z-index: 0;
+      background: rgba(0,0,0,0.15); z-index: 0;
     }
     .ds-cta-band > * { position: relative; z-index: 1; }
     .ds-cta-band__inner { max-width: 100%; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: var(--ds-space-lg); }
@@ -1465,186 +1414,10 @@
       </div>
     </section>
 
-    <!-- ════════════════════════════════════════
-         S6: SaaS Diff Note (Banner)
-         배경: ds-bg--wave-teal (banner-full)
-         ════════════════════════════════════════ -->
-    <section class="ds-section" id="section-6">
-      <div class="ds-container">
-        <div class="ds-banner--full ds-bg--wave-teal">
-          <p>
-            Databricks versioned the data. MLflow tracked the model. The AI still broke in production.
-            <strong>Because neither tool versions the data state the model was bound to at run time.</strong>
-            <span class="ds-text--product">SynTitan</span> does. That's the difference these cases reflect.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ════════════════════════════════════════
-         S7: Business Impact Summary
-         배경: surface-light
-         ════════════════════════════════════════ -->
-    <section class="ds-section ds-section--light" id="section-7">
-      <div class="ds-container">
-        <div class="ds-section-header ds-section-header--underline">
-          <h2 class="ds-section-header__title">
-            What Changes When AI Execution Is <span class="ds-text--brand">Reproducible</span>
-          </h2>
-          <p class="ds-section-header__description">These are the business outcomes the operational evidence demonstrates — not theoretical capabilities, but changes documented in production deployments.</p>
-        </div>
-
-        <div class="ds-card-grid ds-card-grid--3col">
-
-          <!-- Card 1: Incident Recovery -->
-          <article class="ds-card">
-            <span class="ds-card__badge ds-card__badge--teal">Incident Recovery</span>
-            <div class="ds-impact-card__kpi">21 days to &lt;4h</div>
-            <p class="ds-impact-card__desc">Root cause identification time. Schema change detected at ingestion via Release State. Incident resolved before next training run.</p>
-          </article>
-
-          <!-- Card 2: Data Usability -->
-          <article class="ds-card">
-            <span class="ds-card__badge ds-card__badge--teal">Data Usability</span>
-            <div class="ds-impact-card__kpi">+30pp F1</div>
-            <p class="ds-impact-card__desc">Model accuracy improvement after <span class="ds-text--product">DTS</span> fixed class imbalance. Rare defect class augmented with privacy-safe synthetic data. Deploy time cut from 4 weeks to 1 day.</p>
-          </article>
-
-          <!-- Card 3: LLM Adoption -->
-          <article class="ds-card">
-            <span class="ds-card__badge ds-card__badge--teal">LLM Adoption</span>
-            <div class="ds-impact-card__kpi">98.1%</div>
-            <p class="ds-impact-card__desc">PII detection accuracy in enterprise prompts. Compliance-blocked LLM projects unblocked without sacrificing data usability or audit requirements.</p>
-          </article>
-
-          <!-- Card 4: Rollback Speed -->
-          <article class="ds-card">
-            <span class="ds-card__badge ds-card__badge--teal">Rollback Speed</span>
-            <div class="ds-impact-card__kpi">&lt;2h rollback</div>
-            <p class="ds-impact-card__desc">Run Binding enabled stable-state re-execution after preprocessing drift caused inference inconsistency. Prior Release State re-run confirmed. Score distribution matched baseline.</p>
-          </article>
-
-          <!-- Card 5: Compliance-Safe AI Data -->
-          <article class="ds-card">
-            <span class="ds-card__badge ds-card__badge--teal">Compliance-Safe AI Data</span>
-            <div class="ds-impact-card__kpi">277K records</div>
-            <p class="ds-impact-card__desc">DP-safe synthetic records generated to replace retention-deleted data. F1 churn model reached 0.92. Zero real customer data accessed or exported. Full regulatory compliance.</p>
-          </article>
-
-          <!-- Card 6: Common Thread -->
-          <article class="ds-card ds-impact-card--thread">
-            <span class="ds-card__badge ds-card__badge--brand">Common Thread</span>
-            <p class="ds-impact-card--thread ds-impact-card__body">
-              Each case reduced <strong>deployment risk</strong>, <strong>incident investigation time</strong>, or <strong>AI adoption blockers</strong> — without replacing existing data infrastructure.
-            </p>
-            <div class="ds-impact-card--thread ds-impact-card__actions">
-              <a href="mailto:contact@cubig.ai" class="ds-btn ds-btn--secondary ds-btn--sm">Talk to our engineers</a>
-            </div>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ════════════════════════════════════════
-         S8: FAQ
-         배경: white
-         ════════════════════════════════════════ -->
-    <section class="ds-section" id="section-8">
-      <div class="ds-container">
-        <div class="ds-section-header ds-section-header--underline">
-          <h2 class="ds-section-header__title">
-            Common <span class="ds-text--brand">Questions</span>
-          </h2>
-        </div>
-
-        <div class="ds-ac-list">
-
-          <!-- FAQ 1 — default open -->
-          <article class="ds-ac-card ds-ac-card--faq ds-ac--open">
-            <div class="ds-ac-card__header" onclick="toggleAcCard(this)">
-              <div class="ds-ac-card__title-wrap">
-                <div class="ds-ac-card__title">What does 'reproducible AI execution' mean in production?</div>
-              </div>
-              <div class="ds-ac-card__toggle"><span class="ds-ac-card__toggle-icon"></span></div>
-            </div>
-            <div class="ds-ac-card__body">
-              <p class="ds-ac-card__body-text">Reproducible AI execution means that any past AI run can be re-executed under the exact same data, environment, and pipeline conditions — returning the same result. <span class="ds-text--product">SynTitan</span> achieves this through Release State and Run Binding, which lock execution conditions at every run. When something breaks in production, you don't debug blind — you diff the states and reproduce the last known-good run.</p>
-            </div>
-          </article>
-
-          <!-- FAQ 2 -->
-          <article class="ds-ac-card ds-ac-card--faq">
-            <div class="ds-ac-card__header" onclick="toggleAcCard(this)">
-              <div class="ds-ac-card__title-wrap">
-                <div class="ds-ac-card__title">What is a Release State in <span class="ds-text--product">SynTitan</span>?</div>
-              </div>
-              <div class="ds-ac-card__toggle"><span class="ds-ac-card__toggle-icon"></span></div>
-            </div>
-            <div class="ds-ac-card__body">
-              <p class="ds-ac-card__body-text">A Release State is a versioned snapshot of all execution conditions at the time of an AI run — including data schema, pipeline configuration, feature set, and runtime parameters. It enables diff between states to trace what changed and re-run the same conditions for incident response and regression verification.</p>
-            </div>
-          </article>
-
-          <!-- FAQ 3 -->
-          <article class="ds-ac-card ds-ac-card--faq">
-            <div class="ds-ac-card__header" onclick="toggleAcCard(this)">
-              <div class="ds-ac-card__title-wrap">
-                <div class="ds-ac-card__title">How does <span class="ds-text--product">DTS</span> solve the unusable data problem?</div>
-              </div>
-              <div class="ds-ac-card__toggle"><span class="ds-ac-card__toggle-icon"></span></div>
-            </div>
-            <div class="ds-ac-card__body">
-              <p class="ds-ac-card__body-text"><span class="ds-text--product">DTS</span> generates privacy-safe synthetic data using differential privacy to fill coverage gaps, fix class imbalance, and replace non-accessible data. It operates as a standalone engine or integrates with <span class="ds-text--product">SynTitan</span> for end-to-end execution stability.</p>
-            </div>
-          </article>
-
-          <!-- FAQ 4 -->
-          <article class="ds-ac-card ds-ac-card--faq">
-            <div class="ds-ac-card__header" onclick="toggleAcCard(this)">
-              <div class="ds-ac-card__title-wrap">
-                <div class="ds-ac-card__title">How does <span class="ds-text--product">LLM Capsule</span> protect sensitive data during LLM usage?</div>
-              </div>
-              <div class="ds-ac-card__toggle"><span class="ds-ac-card__toggle-icon"></span></div>
-            </div>
-            <div class="ds-ac-card__body">
-              <p class="ds-ac-card__body-text"><span class="ds-text--product">LLM Capsule</span> detects sensitive fields including PII in prompts and outputs, anonymizes or shields them before LLM interaction, and preserves output usability for downstream workflows — all within <span class="ds-text--product">SynTitan</span> execution workflows.</p>
-            </div>
-          </article>
-
-          <!-- FAQ 5 -->
-          <article class="ds-ac-card ds-ac-card--faq">
-            <div class="ds-ac-card__header" onclick="toggleAcCard(this)">
-              <div class="ds-ac-card__title-wrap">
-                <div class="ds-ac-card__title">What is the difference between <span class="ds-text--product">SynTitan</span> and <span class="ds-text--product">DTS</span>?</div>
-              </div>
-              <div class="ds-ac-card__toggle"><span class="ds-ac-card__toggle-icon"></span></div>
-            </div>
-            <div class="ds-ac-card__body">
-              <p class="ds-ac-card__body-text"><span class="ds-text--product">SynTitan</span> performs data quality refinement as part of execution stability. <span class="ds-text--product">SynTitan</span> can use a subset of <span class="ds-text--product">DTS</span> capabilities when privacy-safe synthetic data is needed, while <span class="ds-text--product">DTS</span> is a full standalone enterprise synthetic data engine.</p>
-            </div>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ════════════════════════════════════════
-         S9: CTA Band
-         배경: ds-bg--grad-navy (전폭)
-         ════════════════════════════════════════ -->
-    <section class="ds-cta-band ds-bg--grad-navy" id="section-9">
-      <div class="ds-cta-band__inner">
-        <h2 class="ds-cta-band__title">Make Your AI Runs Reproducible.</h2>
-        <p class="ds-cta-band__description">Every production AI failure has a root cause. These cases show how to find it fast, fix it correctly, and prevent recurrence. The same infrastructure is available now.</p>
-        <div class="ds-cta-band__actions">
-          <a href="https://syntitan.ai" class="ds-btn ds-btn--md" target="_blank" rel="noopener">Start Evaluation</a>
-          <a href="mailto:contact@cubig.ai" class="ds-btn ds-btn--md">Run a Technical Demo</a>
-          <a href="/learn/why-ai-fails-after-deployment" class="ds-btn ds-btn--md">Explore: Why AI Fails</a>
-        </div>
-        <p class="ds-cta-band__footnote">30-min architecture review. Engineers-first. No sales pitch.</p>
-      </div>
-    </section>
+    <!-- ═══════════════════════════════════════════
+         PART 2 CONTINUES HERE
+    ═══════════════════════════════════════════ -->
+    <!-- PART 2 CONTINUES HERE -->
 
   </main>
 

@@ -4,6 +4,7 @@ import { addPropertyControls, ControlType } from "framer"
 const IMAGE_BASE = "https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images"
 
 interface Props {
+  heroTitle?: string
   description?: string
   ctaLabel?: string
   ctaHref?: string
@@ -15,6 +16,7 @@ interface Props {
 }
 
 export default function Section01_Hero({
+  heroTitle = "DTS",
   description = "Your AI is only as good as the data it trains on — and most enterprise data is not AI-ready. DTS solves unusable data for AI: whether it's restricted by privacy rules, imbalanced, or missing the coverage your model needs. The result is an AI-ready dataset you can actually use.",
   ctaLabel = "Run technical demo",
   ctaHref = "/contact",
@@ -81,7 +83,7 @@ export default function Section01_Hero({
               lineHeight: 1.2,
               letterSpacing: isMobile ? "-1px" : "-2px",
               marginBottom: isMobile ? 8 : 12,
-            }}>DTS</h1>
+            }}>{heroTitle}</h1>
             <p style={{
               fontSize: isMobile ? 14 : isTablet ? 16 : 18,
               color: "#636363",
@@ -186,6 +188,7 @@ export default function Section01_Hero({
 }
 
 addPropertyControls(Section01_Hero, {
+  heroTitle: { type: ControlType.String, title: "Hero Title", defaultValue: "DTS" },
   description: {
     type: ControlType.String,
     title: "Description",

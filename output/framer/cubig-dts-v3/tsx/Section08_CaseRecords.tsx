@@ -5,12 +5,54 @@ const IMAGE_BASE = "https://bgyoo-gif.github.io/cubig-homepage-design-system/ref
 
 interface Props {
   title?: string
+  titleHighlight?: string
   description?: string
+
+  case1Category?: string
+  case1Title?: string
+  case1Bullet1?: string
+  case1Bullet2?: string
+
+  case2Category?: string
+  case2Title?: string
+  case2Bullet1?: string
+  case2Bullet2?: string
+  case2Bullet3?: string
+
+  case3Category?: string
+  case3Title?: string
+  case3Bullet1?: string
+  case3Bullet2?: string
+  case3Bullet3?: string
+  case3Image1Label?: string
+  case3Image2Label?: string
+  case3Image3Label?: string
 }
 
 export default function Section08_CaseRecords({
-  title = "Production Case Records",
+  title = "Production",
+  titleHighlight = "Case Records",
   description = "Enterprise AI projects stall when data conditions prevent training, validation, or safe deployment. DTS was built for exactly these situations.",
+
+  case1Category = "Defense",
+  case1Title = "Drone Attack Data Augmentation",
+  case1Bullet1 = "Drone attack incidents are rare, leaving insufficient training data for defense AI systems",
+  case1Bullet2 = "Augmented drone attack data to improve military training and response system performance",
+
+  case2Category = "Finance",
+  case2Title = "Anomaly Transaction Detection",
+  case2Bullet1 = "High demand for AI-based anomaly transaction detection in financial institutions",
+  case2Bullet2 = "Actual anomaly transaction data accounts for only 0.2% of total data — extremely sparse",
+  case2Bullet3 = "Generated augmented anomaly data using synthetic data to improve model accuracy and reliability",
+
+  case3Category = "Healthcare",
+  case3Title = "Rare Disease Data Augmentation",
+  case3Bullet1 = "Medical data sharing is restricted due to complex IRB approval procedures",
+  case3Bullet2 = "CUBIG's zero-access technology enables patient privacy protection and rare disease data combination and analysis",
+  case3Bullet3 = "Augmented scarce rare disease datasets for improved AI training coverage",
+  case3Image1Label = "Pneumonia X-ray — Original vs Synthetic",
+  case3Image2Label = "Brain Tumor & Aneurysm CT — Original vs Synthetic",
+  case3Image3Label = "Diabetic Retinopathy — Original vs Synthetic",
 }: Props) {
   const containerRef = React.useRef<HTMLDivElement>(null)
   const [isMobile, setIsMobile] = React.useState(false)
@@ -37,42 +79,31 @@ export default function Section08_CaseRecords({
   const cases = [
     {
       illustration: `${IMAGE_BASE}/graphics/illustration-defense.png`,
-      category: "Defense",
-      caseTitle: "Drone Attack Data Augmentation",
-      bullets: [
-        "Drone attack incidents are rare, leaving insufficient training data for defense AI systems",
-        "Augmented drone attack data to improve military training and response system performance",
-      ],
+      category: case1Category,
+      caseTitle: case1Title,
+      bullets: [case1Bullet1, case1Bullet2],
       images: [
         { src: `${IMAGE_BASE}/images/casestudy-defense-dron-1.png`, alt: "Drone attack — Original vs Synthetic" },
       ],
     },
     {
       illustration: `${IMAGE_BASE}/graphics/illustration-finance.png`,
-      category: "Finance",
-      caseTitle: "Anomaly Transaction Detection",
-      bullets: [
-        "High demand for AI-based anomaly transaction detection in financial institutions",
-        "Actual anomaly transaction data accounts for only 0.2% of total data — extremely sparse",
-        "Generated augmented anomaly data using synthetic data to improve model accuracy and reliability",
-      ],
+      category: case2Category,
+      caseTitle: case2Title,
+      bullets: [case2Bullet1, case2Bullet2, case2Bullet3],
       images: [
         { src: `${IMAGE_BASE}/images/casestudy-financial-abnormal-transaction.png`, alt: "Financial anomaly detection — Original vs Synthetic" },
       ],
     },
     {
       illustration: `${IMAGE_BASE}/graphics/illustration-healthcare.png`,
-      category: "Healthcare",
-      caseTitle: "Rare Disease Data Augmentation",
-      bullets: [
-        "Medical data sharing is restricted due to complex IRB approval procedures",
-        "CUBIG's zero-access technology enables patient privacy protection and rare disease data combination and analysis",
-        "Augmented scarce rare disease datasets for improved AI training coverage",
-      ],
+      category: case3Category,
+      caseTitle: case3Title,
+      bullets: [case3Bullet1, case3Bullet2, case3Bullet3],
       images: [
-        { src: `${IMAGE_BASE}/images/casestudy-healthcare-lung.png`, alt: "Pneumonia X-ray — Original vs Synthetic", label: "Pneumonia X-ray — Original vs Synthetic" },
-        { src: `${IMAGE_BASE}/images/casestudy-healthcare-brain.png`, alt: "Brain Tumor & Aneurysm CT — Original vs Synthetic", label: "Brain Tumor & Aneurysm CT — Original vs Synthetic" },
-        { src: `${IMAGE_BASE}/images/casestudy-healthcare-diabetes.png`, alt: "Diabetic Retinopathy — Original vs Synthetic", label: "Diabetic Retinopathy — Original vs Synthetic" },
+        { src: `${IMAGE_BASE}/images/casestudy-healthcare-lung.png`, alt: case3Image1Label, label: case3Image1Label },
+        { src: `${IMAGE_BASE}/images/casestudy-healthcare-brain.png`, alt: case3Image2Label, label: case3Image2Label },
+        { src: `${IMAGE_BASE}/images/casestudy-healthcare-diabetes.png`, alt: case3Image3Label, label: case3Image3Label },
       ],
     },
   ]
@@ -108,7 +139,7 @@ export default function Section08_CaseRecords({
               marginBottom: 16,
               textAlign: "center",
             }}>
-              Production <span style={{ color: "#725bea" }}>Case Records</span>
+              {title} <span style={{ color: "#725bea" }}>{titleHighlight}</span>
             </h2>
             <p style={{
               fontSize: isMobile ? 14 : isTablet ? 16 : 18,
@@ -226,11 +257,32 @@ export default function Section08_CaseRecords({
 }
 
 addPropertyControls(Section08_CaseRecords, {
-  title: { type: ControlType.String, title: "Title", defaultValue: "Production Case Records" },
+  title: { type: ControlType.String, title: "Title", defaultValue: "Production" },
+  titleHighlight: { type: ControlType.String, title: "Title Highlight", defaultValue: "Case Records" },
   description: {
     type: ControlType.String,
     title: "Description",
     defaultValue: "Enterprise AI projects stall when data conditions prevent training, validation, or safe deployment. DTS was built for exactly these situations.",
     displayTextArea: true,
   },
+
+  case1Category: { type: ControlType.String, title: "Case1 Category", defaultValue: "Defense" },
+  case1Title: { type: ControlType.String, title: "Case1 Title", defaultValue: "Drone Attack Data Augmentation" },
+  case1Bullet1: { type: ControlType.String, title: "Case1 Bullet 1", defaultValue: "Drone attack incidents are rare, leaving insufficient training data for defense AI systems", displayTextArea: true },
+  case1Bullet2: { type: ControlType.String, title: "Case1 Bullet 2", defaultValue: "Augmented drone attack data to improve military training and response system performance", displayTextArea: true },
+
+  case2Category: { type: ControlType.String, title: "Case2 Category", defaultValue: "Finance" },
+  case2Title: { type: ControlType.String, title: "Case2 Title", defaultValue: "Anomaly Transaction Detection" },
+  case2Bullet1: { type: ControlType.String, title: "Case2 Bullet 1", defaultValue: "High demand for AI-based anomaly transaction detection in financial institutions", displayTextArea: true },
+  case2Bullet2: { type: ControlType.String, title: "Case2 Bullet 2", defaultValue: "Actual anomaly transaction data accounts for only 0.2% of total data — extremely sparse", displayTextArea: true },
+  case2Bullet3: { type: ControlType.String, title: "Case2 Bullet 3", defaultValue: "Generated augmented anomaly data using synthetic data to improve model accuracy and reliability", displayTextArea: true },
+
+  case3Category: { type: ControlType.String, title: "Case3 Category", defaultValue: "Healthcare" },
+  case3Title: { type: ControlType.String, title: "Case3 Title", defaultValue: "Rare Disease Data Augmentation" },
+  case3Bullet1: { type: ControlType.String, title: "Case3 Bullet 1", defaultValue: "Medical data sharing is restricted due to complex IRB approval procedures", displayTextArea: true },
+  case3Bullet2: { type: ControlType.String, title: "Case3 Bullet 2", defaultValue: "CUBIG's zero-access technology enables patient privacy protection and rare disease data combination and analysis", displayTextArea: true },
+  case3Bullet3: { type: ControlType.String, title: "Case3 Bullet 3", defaultValue: "Augmented scarce rare disease datasets for improved AI training coverage", displayTextArea: true },
+  case3Image1Label: { type: ControlType.String, title: "Case3 Image1 Label", defaultValue: "Pneumonia X-ray — Original vs Synthetic" },
+  case3Image2Label: { type: ControlType.String, title: "Case3 Image2 Label", defaultValue: "Brain Tumor & Aneurysm CT — Original vs Synthetic" },
+  case3Image3Label: { type: ControlType.String, title: "Case3 Image3 Label", defaultValue: "Diabetic Retinopathy — Original vs Synthetic" },
 })

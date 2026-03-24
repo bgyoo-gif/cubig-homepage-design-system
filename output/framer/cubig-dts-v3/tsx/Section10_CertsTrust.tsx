@@ -7,10 +7,128 @@ const IMAGE_BASE = "https://bgyoo-gif.github.io/cubig-homepage-design-system/ref
 
 interface Props {
   title?: string
+  titleHighlight?: string
+  partnerLabel?: string
+
+  cert1Group?: string
+  cert1Text?: string
+  cert1Org?: string
+  cert1Year?: string
+  cert2Group?: string
+  cert2Text?: string
+  cert2Org?: string
+  cert2Year?: string
+  cert3Group?: string
+  cert3Text?: string
+  cert3Org?: string
+  cert3Year?: string
+  cert4Group?: string
+  cert4Text?: string
+  cert4Org?: string
+  cert4Year?: string
+  cert5Group?: string
+  cert5Text?: string
+  cert5Org?: string
+  cert5Year?: string
+  cert6Group?: string
+  cert6Text?: string
+  cert6Org?: string
+  cert6Year?: string
+  cert7Group?: string
+  cert7Text?: string
+  cert7Org?: string
+  cert7Year?: string
+  cert8Group?: string
+  cert8Text?: string
+  cert8Org?: string
+  cert8Year?: string
+  cert9Group?: string
+  cert9Text?: string
+  cert9Org?: string
+  cert9Year?: string
+  cert10Group?: string
+  cert10Text?: string
+  cert10Org?: string
+  cert10Year?: string
+  cert11Group?: string
+  cert11Text?: string
+  cert11Org?: string
+  cert11Year?: string
+
+  partner1Name?: string
+  partner2Name?: string
+  partner3Name?: string
+  partner4Name?: string
+  partner5Name?: string
+  partner6Name?: string
+  partner7Name?: string
+  partner8Name?: string
+  partner9Name?: string
+  partner10Name?: string
+  partner11Name?: string
 }
 
 export default function Section10_CertsTrust({
-  title = "Certified and Trusted",
+  title = "Certified and",
+  titleHighlight = "Trusted",
+  partnerLabel = "Trusted by enterprise & government",
+
+  cert1Group = "Certifications",
+  cert1Text = "Information Security Fast Track",
+  cert1Org = "KISA",
+  cert1Year = "2024",
+  cert2Group = "Certifications",
+  cert2Text = "GS Certification",
+  cert2Org = "TTA",
+  cert2Year = "2025",
+  cert3Group = "Certifications",
+  cert3Text = "ISO/IEC 27001 (ISMS)",
+  cert3Org = "ISO",
+  cert3Year = "2026",
+  cert4Group = "Certifications",
+  cert4Text = "ISO/IEC 42001 (AIMS)",
+  cert4Org = "ISO",
+  cert4Year = "2026",
+  cert5Group = "Awards",
+  cert5Text = "Information Security Innovation Award",
+  cert5Org = "Ministry of Science & ICT",
+  cert5Year = "2024",
+  cert6Group = "Awards",
+  cert6Text = "Startup World Cup — Finalist",
+  cert6Org = "Startup World Cup",
+  cert6Year = "2025",
+  cert7Group = "Awards",
+  cert7Text = "Next Rise — Global Innovator",
+  cert7Org = "Next Rise",
+  cert7Year = "2025",
+  cert8Group = "Awards",
+  cert8Text = "T Challenge 2026 — Finalist",
+  cert8Org = "Deutsche Telekom",
+  cert8Year = "2026",
+  cert9Group = "Awards",
+  cert9Text = "AI EXPO KOREA — AI Medical Innovation Award",
+  cert9Org = "AI EXPO KOREA",
+  cert9Year = "2025",
+  cert10Group = "Recognition",
+  cert10Text = "Emerging AI+X Top 100",
+  cert10Org = "—",
+  cert10Year = "2026",
+  cert11Group = "Recognition",
+  cert11Text = "Representative Vendor, Hyper-Synthetic Data",
+  cert11Org = "Gartner",
+  cert11Year = "2025",
+
+  partner1Name = "Gartner",
+  partner2Name = "Naver Cloud",
+  partner3Name = "SK Telecom",
+  partner4Name = "Kyobo",
+  partner5Name = "ROK Army",
+  partner6Name = "ROK Air Force",
+  partner7Name = "EUMC",
+  partner8Name = "Deutsche Telekom",
+  partner9Name = "Claroty",
+  partner10Name = "Korea Heritage Service",
+  partner11Name = "Ministry of Data and Statistics",
 }: Props) {
   const certTrackRef = useRef<HTMLDivElement>(null)
   const partnerTrackRef = useRef<HTMLDivElement>(null)
@@ -58,31 +176,31 @@ export default function Section10_CertsTrust({
   }, [])
 
   const certs = [
-    { group: "Certifications", text: "Information Security Fast Track", org: "KISA", year: "2024", logo: `${GRAPHICS_BASE}/cert-kisa.png`, logoAlt: "KISA" },
-    { group: "Certifications", text: "GS Certification", org: "TTA", year: "2025", logo: `${GRAPHICS_BASE}/cert-gs.png`, logoAlt: "GS Certification" },
-    { group: "Certifications", text: "ISO/IEC 27001 (ISMS)", org: "ISO", year: "2026", logo: `${GRAPHICS_BASE}/cert-iso.png`, logoAlt: "ISO/IEC 27001" },
-    { group: "Certifications", text: "ISO/IEC 42001 (AIMS)", org: "ISO", year: "2026", logo: `${GRAPHICS_BASE}/cert-iso.png`, logoAlt: "ISO/IEC 42001" },
-    { group: "Awards", text: "Information Security Innovation Award", org: "Ministry of Science & ICT", year: "2024", logo: `${GRAPHICS_BASE}/awards-ministry-of-science-and-ict.jpg`, logoAlt: "Ministry of Science & ICT" },
-    { group: "Awards", text: "Startup World Cup — Finalist", org: "Startup World Cup", year: "2025", logo: `${GRAPHICS_BASE}/cert-startupworldcup.png`, logoAlt: "Startup World Cup" },
-    { group: "Awards", text: "Next Rise — Global Innovator", org: "Next Rise", year: "2025", logo: `${GRAPHICS_BASE}/awards-NextRise.png`, logoAlt: "Next Rise" },
-    { group: "Awards", text: "T Challenge 2026 — Finalist", org: "Deutsche Telekom", year: "2026", logo: `${IMAGE_BASE}/partner-deutsche-telekom.avif`, logoAlt: "Deutsche Telekom" },
-    { group: "Awards", text: "AI EXPO KOREA — AI Medical Innovation Award", org: "AI EXPO KOREA", year: "2025", logo: `${GRAPHICS_BASE}/awards-koreaia.png`, logoAlt: "AI EXPO KOREA" },
-    { group: "Recognition", text: "Emerging AI+X Top 100", org: "—", year: "2026", logo: null, logoAlt: "" },
-    { group: "Recognition", text: "Representative Vendor, Hyper-Synthetic Data", org: "Gartner", year: "2025", logo: `${GRAPHICS_BASE}/cert-gartner.svg.png`, logoAlt: "Gartner" },
+    { group: cert1Group, text: cert1Text, org: cert1Org, year: cert1Year, logo: `${GRAPHICS_BASE}/cert-kisa.png`, logoAlt: "KISA" },
+    { group: cert2Group, text: cert2Text, org: cert2Org, year: cert2Year, logo: `${GRAPHICS_BASE}/cert-gs.png`, logoAlt: "GS Certification" },
+    { group: cert3Group, text: cert3Text, org: cert3Org, year: cert3Year, logo: `${GRAPHICS_BASE}/cert-iso.png`, logoAlt: "ISO/IEC 27001" },
+    { group: cert4Group, text: cert4Text, org: cert4Org, year: cert4Year, logo: `${GRAPHICS_BASE}/cert-iso.png`, logoAlt: "ISO/IEC 42001" },
+    { group: cert5Group, text: cert5Text, org: cert5Org, year: cert5Year, logo: `${GRAPHICS_BASE}/awards-ministry-of-science-and-ict.jpg`, logoAlt: "Ministry of Science & ICT" },
+    { group: cert6Group, text: cert6Text, org: cert6Org, year: cert6Year, logo: `${GRAPHICS_BASE}/cert-startupworldcup.png`, logoAlt: "Startup World Cup" },
+    { group: cert7Group, text: cert7Text, org: cert7Org, year: cert7Year, logo: `${GRAPHICS_BASE}/awards-NextRise.png`, logoAlt: "Next Rise" },
+    { group: cert8Group, text: cert8Text, org: cert8Org, year: cert8Year, logo: `${IMAGE_BASE}/partner-deutsche-telekom.avif`, logoAlt: "Deutsche Telekom" },
+    { group: cert9Group, text: cert9Text, org: cert9Org, year: cert9Year, logo: `${GRAPHICS_BASE}/awards-koreaia.png`, logoAlt: "AI EXPO KOREA" },
+    { group: cert10Group, text: cert10Text, org: cert10Org, year: cert10Year, logo: null, logoAlt: "" },
+    { group: cert11Group, text: cert11Text, org: cert11Org, year: cert11Year, logo: `${GRAPHICS_BASE}/cert-gartner.svg.png`, logoAlt: "Gartner" },
   ]
 
   const partners = [
-    { name: "Gartner", logo: `${IMAGE_BASE}/partner-gartner.png` },
-    { name: "Naver Cloud", logo: `${IMAGE_BASE}/partner-navercloud.avif` },
-    { name: "SK Telecom", logo: `${IMAGE_BASE}/partner-sktelecom.avif` },
-    { name: "Kyobo", logo: `${IMAGE_BASE}/partner-kyobo.avif` },
-    { name: "ROK Army", logo: `${IMAGE_BASE}/partner-korea army.avif` },
-    { name: "ROK Air Force", logo: `${IMAGE_BASE}/partner-korea-airforce.avif` },
-    { name: "EUMC", logo: `${IMAGE_BASE}/partner-eumc.avif` },
-    { name: "Deutsche Telekom", logo: `${IMAGE_BASE}/partner-deutsche-telekom.avif` },
-    { name: "Claroty", logo: `${IMAGE_BASE}/partner-claroty.png` },
-    { name: "Korea Heritage Service", logo: `${IMAGE_BASE}/partner-korea-heritage-service.jpg` },
-    { name: "Ministry of Data and Statistics", logo: `${IMAGE_BASE}/partner-ministry-of-data-and-statistics.png` },
+    { name: partner1Name, logo: `${IMAGE_BASE}/partner-gartner.png` },
+    { name: partner2Name, logo: `${IMAGE_BASE}/partner-navercloud.avif` },
+    { name: partner3Name, logo: `${IMAGE_BASE}/partner-sktelecom.avif` },
+    { name: partner4Name, logo: `${IMAGE_BASE}/partner-kyobo.avif` },
+    { name: partner5Name, logo: `${IMAGE_BASE}/partner-korea army.avif` },
+    { name: partner6Name, logo: `${IMAGE_BASE}/partner-korea-airforce.avif` },
+    { name: partner7Name, logo: `${IMAGE_BASE}/partner-eumc.avif` },
+    { name: partner8Name, logo: `${IMAGE_BASE}/partner-deutsche-telekom.avif` },
+    { name: partner9Name, logo: `${IMAGE_BASE}/partner-claroty.png` },
+    { name: partner10Name, logo: `${IMAGE_BASE}/partner-korea-heritage-service.jpg` },
+    { name: partner11Name, logo: `${IMAGE_BASE}/partner-ministry-of-data-and-statistics.png` },
   ]
 
   // Inject keyframes once
@@ -137,7 +255,7 @@ export default function Section10_CertsTrust({
               lineHeight: 1.2,
               letterSpacing: "-0.5px",
             }}>
-              Certified and <span style={{ color: "#725bea" }}>Trusted</span>
+              {title} <span style={{ color: "#725bea" }}>{titleHighlight}</span>
             </h2>
           </div>
         </div>
@@ -265,7 +383,7 @@ export default function Section10_CertsTrust({
             textAlign: "center",
             marginBottom: 24,
             marginTop: isMobile ? 32 : 48,
-          }}>Trusted by enterprise &amp; government</p>
+          }}>{partnerLabel}</p>
         </div>
 
         {/* Partner Marquee — full width */}
@@ -309,5 +427,64 @@ export default function Section10_CertsTrust({
 }
 
 addPropertyControls(Section10_CertsTrust, {
-  title: { type: ControlType.String, title: "Title", defaultValue: "Certified and Trusted" },
+  title: { type: ControlType.String, title: "Title", defaultValue: "Certified and" },
+  titleHighlight: { type: ControlType.String, title: "Title Highlight", defaultValue: "Trusted" },
+  partnerLabel: { type: ControlType.String, title: "Partner Label", defaultValue: "Trusted by enterprise & government" },
+
+  cert1Group: { type: ControlType.String, title: "Cert1 Group", defaultValue: "Certifications" },
+  cert1Text: { type: ControlType.String, title: "Cert1 Text", defaultValue: "Information Security Fast Track" },
+  cert1Org: { type: ControlType.String, title: "Cert1 Org", defaultValue: "KISA" },
+  cert1Year: { type: ControlType.String, title: "Cert1 Year", defaultValue: "2024" },
+  cert2Group: { type: ControlType.String, title: "Cert2 Group", defaultValue: "Certifications" },
+  cert2Text: { type: ControlType.String, title: "Cert2 Text", defaultValue: "GS Certification" },
+  cert2Org: { type: ControlType.String, title: "Cert2 Org", defaultValue: "TTA" },
+  cert2Year: { type: ControlType.String, title: "Cert2 Year", defaultValue: "2025" },
+  cert3Group: { type: ControlType.String, title: "Cert3 Group", defaultValue: "Certifications" },
+  cert3Text: { type: ControlType.String, title: "Cert3 Text", defaultValue: "ISO/IEC 27001 (ISMS)" },
+  cert3Org: { type: ControlType.String, title: "Cert3 Org", defaultValue: "ISO" },
+  cert3Year: { type: ControlType.String, title: "Cert3 Year", defaultValue: "2026" },
+  cert4Group: { type: ControlType.String, title: "Cert4 Group", defaultValue: "Certifications" },
+  cert4Text: { type: ControlType.String, title: "Cert4 Text", defaultValue: "ISO/IEC 42001 (AIMS)" },
+  cert4Org: { type: ControlType.String, title: "Cert4 Org", defaultValue: "ISO" },
+  cert4Year: { type: ControlType.String, title: "Cert4 Year", defaultValue: "2026" },
+  cert5Group: { type: ControlType.String, title: "Cert5 Group", defaultValue: "Awards" },
+  cert5Text: { type: ControlType.String, title: "Cert5 Text", defaultValue: "Information Security Innovation Award" },
+  cert5Org: { type: ControlType.String, title: "Cert5 Org", defaultValue: "Ministry of Science & ICT" },
+  cert5Year: { type: ControlType.String, title: "Cert5 Year", defaultValue: "2024" },
+  cert6Group: { type: ControlType.String, title: "Cert6 Group", defaultValue: "Awards" },
+  cert6Text: { type: ControlType.String, title: "Cert6 Text", defaultValue: "Startup World Cup — Finalist" },
+  cert6Org: { type: ControlType.String, title: "Cert6 Org", defaultValue: "Startup World Cup" },
+  cert6Year: { type: ControlType.String, title: "Cert6 Year", defaultValue: "2025" },
+  cert7Group: { type: ControlType.String, title: "Cert7 Group", defaultValue: "Awards" },
+  cert7Text: { type: ControlType.String, title: "Cert7 Text", defaultValue: "Next Rise — Global Innovator" },
+  cert7Org: { type: ControlType.String, title: "Cert7 Org", defaultValue: "Next Rise" },
+  cert7Year: { type: ControlType.String, title: "Cert7 Year", defaultValue: "2025" },
+  cert8Group: { type: ControlType.String, title: "Cert8 Group", defaultValue: "Awards" },
+  cert8Text: { type: ControlType.String, title: "Cert8 Text", defaultValue: "T Challenge 2026 — Finalist" },
+  cert8Org: { type: ControlType.String, title: "Cert8 Org", defaultValue: "Deutsche Telekom" },
+  cert8Year: { type: ControlType.String, title: "Cert8 Year", defaultValue: "2026" },
+  cert9Group: { type: ControlType.String, title: "Cert9 Group", defaultValue: "Awards" },
+  cert9Text: { type: ControlType.String, title: "Cert9 Text", defaultValue: "AI EXPO KOREA — AI Medical Innovation Award" },
+  cert9Org: { type: ControlType.String, title: "Cert9 Org", defaultValue: "AI EXPO KOREA" },
+  cert9Year: { type: ControlType.String, title: "Cert9 Year", defaultValue: "2025" },
+  cert10Group: { type: ControlType.String, title: "Cert10 Group", defaultValue: "Recognition" },
+  cert10Text: { type: ControlType.String, title: "Cert10 Text", defaultValue: "Emerging AI+X Top 100" },
+  cert10Org: { type: ControlType.String, title: "Cert10 Org", defaultValue: "—" },
+  cert10Year: { type: ControlType.String, title: "Cert10 Year", defaultValue: "2026" },
+  cert11Group: { type: ControlType.String, title: "Cert11 Group", defaultValue: "Recognition" },
+  cert11Text: { type: ControlType.String, title: "Cert11 Text", defaultValue: "Representative Vendor, Hyper-Synthetic Data" },
+  cert11Org: { type: ControlType.String, title: "Cert11 Org", defaultValue: "Gartner" },
+  cert11Year: { type: ControlType.String, title: "Cert11 Year", defaultValue: "2025" },
+
+  partner1Name: { type: ControlType.String, title: "Partner1 Name", defaultValue: "Gartner" },
+  partner2Name: { type: ControlType.String, title: "Partner2 Name", defaultValue: "Naver Cloud" },
+  partner3Name: { type: ControlType.String, title: "Partner3 Name", defaultValue: "SK Telecom" },
+  partner4Name: { type: ControlType.String, title: "Partner4 Name", defaultValue: "Kyobo" },
+  partner5Name: { type: ControlType.String, title: "Partner5 Name", defaultValue: "ROK Army" },
+  partner6Name: { type: ControlType.String, title: "Partner6 Name", defaultValue: "ROK Air Force" },
+  partner7Name: { type: ControlType.String, title: "Partner7 Name", defaultValue: "EUMC" },
+  partner8Name: { type: ControlType.String, title: "Partner8 Name", defaultValue: "Deutsche Telekom" },
+  partner9Name: { type: ControlType.String, title: "Partner9 Name", defaultValue: "Claroty" },
+  partner10Name: { type: ControlType.String, title: "Partner10 Name", defaultValue: "Korea Heritage Service" },
+  partner11Name: { type: ControlType.String, title: "Partner11 Name", defaultValue: "Ministry of Data and Statistics" },
 })

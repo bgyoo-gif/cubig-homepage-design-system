@@ -16,7 +16,13 @@ interface Props {
   kpi4Number?: string
   kpi4Label?: string
   kpi4Sub?: string
-  bannerText?: string
+  bannerPart1?: string
+  bannerEmphasis1?: string
+  bannerPart2?: string
+  bannerEmphasis2?: string
+  bannerPart3?: string
+  bannerEmphasis3?: string
+  bannerPart4?: string
 }
 
 export default function Section02_KPIBand({
@@ -32,7 +38,13 @@ export default function Section02_KPIBand({
   kpi4Number = "277K+",
   kpi4Label = "Synthetic Records",
   kpi4Sub = "Kyobo Life Insurance",
-  bannerText = "True AI-ready data means it is usable, privacy-safe, and stable for production execution.",
+  bannerPart1 = "True AI-ready data means it is ",
+  bannerEmphasis1 = "usable",
+  bannerPart2 = ", ",
+  bannerEmphasis2 = "privacy-safe",
+  bannerPart3 = ", and ",
+  bannerEmphasis3 = "stable for production execution",
+  bannerPart4 = ".",
 }: Props) {
   const containerRef = React.useRef<HTMLDivElement>(null)
   const [isMobile, setIsMobile] = React.useState(false)
@@ -155,7 +167,7 @@ export default function Section02_KPIBand({
                 zIndex: 0,
               }} />
               <p style={{ color: "#0f0f0f", position: "relative", zIndex: 1 }}>
-                True AI-ready data means it is <em>usable</em>, <em>privacy-safe</em>, and <em>stable for production execution</em>.
+                {bannerPart1}<em>{bannerEmphasis1}</em>{bannerPart2}<em>{bannerEmphasis2}</em>{bannerPart3}<em>{bannerEmphasis3}</em>{bannerPart4}
               </p>
             </div>
           </div>
@@ -178,10 +190,11 @@ addPropertyControls(Section02_KPIBand, {
   kpi4Number: { type: ControlType.String, title: "KPI4 Number", defaultValue: "277K+" },
   kpi4Label: { type: ControlType.String, title: "KPI4 Label", defaultValue: "Synthetic Records" },
   kpi4Sub: { type: ControlType.String, title: "KPI4 Sub", defaultValue: "Kyobo Life Insurance" },
-  bannerText: {
-    type: ControlType.String,
-    title: "Banner Text",
-    defaultValue: "True AI-ready data means it is usable, privacy-safe, and stable for production execution.",
-    displayTextArea: true,
-  },
+  bannerPart1: { type: ControlType.String, title: "Banner Part 1", defaultValue: "True AI-ready data means it is " },
+  bannerEmphasis1: { type: ControlType.String, title: "Banner Emphasis 1", defaultValue: "usable" },
+  bannerPart2: { type: ControlType.String, title: "Banner Part 2", defaultValue: ", " },
+  bannerEmphasis2: { type: ControlType.String, title: "Banner Emphasis 2", defaultValue: "privacy-safe" },
+  bannerPart3: { type: ControlType.String, title: "Banner Part 3", defaultValue: ", and " },
+  bannerEmphasis3: { type: ControlType.String, title: "Banner Emphasis 3", defaultValue: "stable for production execution" },
+  bannerPart4: { type: ControlType.String, title: "Banner Part 4", defaultValue: "." },
 })
