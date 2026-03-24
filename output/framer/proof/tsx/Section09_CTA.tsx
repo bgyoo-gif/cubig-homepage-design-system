@@ -49,7 +49,7 @@ export default function Section09_CTA(props: Props) {
 
   const bgUrl =
     backgroundImage ||
-    `${IMAGE_BASE}/bg-gradient-navy-teal.png`
+    `${IMAGE_BASE}/bg-gradient-blue-violet.png`
 
   return (
     <>
