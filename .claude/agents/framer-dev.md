@@ -216,11 +216,23 @@ addPropertyControls(SectionNN_Name, {
 
 ### 2. addPropertyControls (필수)
 
-**모든 편집 가능한 콘텐츠**를 Props + addPropertyControls로 노출한다:
-- 텍스트 (제목, 본문, 라벨, 배지)
+**Localization 필수 — 화면에 보이는 모든 텍스트**를 Props + addPropertyControls로 노출한다. 하드코딩 텍스트 금지.
+
+노출 대상 (빠짐없이):
+- 섹션 제목, 부제목, 설명
+- 카드 제목, 카드 설명, 카드 배지/라벨
+- 아코디언 질문 텍스트, 탭 제목
+- Step Tabs: 탭 라벨, 패널 제목, 패널 설명, Root cause 텍스트, Resolution 텍스트
+- 버튼 텍스트 + href
+- 배너 텍스트, footnote
+- KPI 숫자, KPI 라벨, KPI 서브텍스트
 - 링크 URL
 - 이미지 (ControlType.Image)
-- 버튼 텍스트 + href
+
+예외 (하드코딩 허용):
+- CSS 클래스명, HTML 구조
+- 아코디언 답변 본문 (길이 문제)
+- 인증/파트너 목록 데이터 (배열 구조)
 
 긴 텍스트는 `displayTextArea: true` 옵션 사용.
 

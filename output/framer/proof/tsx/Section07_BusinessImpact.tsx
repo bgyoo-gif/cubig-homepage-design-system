@@ -45,6 +45,7 @@ interface Props {
   card5Badge: string
   card5Kpi: string
   card5Description: string
+  card2ProductName: string
   threadBadge: string
   threadBody: string
   threadCtaLabel: string
@@ -71,6 +72,7 @@ export default function Section07_BusinessImpact(props: Props) {
     card5Badge,
     card5Kpi,
     card5Description,
+    card2ProductName,
     threadBadge,
     threadBody,
     threadCtaLabel,
@@ -309,8 +311,8 @@ export default function Section07_BusinessImpact(props: Props) {
               <div className="s7-impact-kpi">{card2Kpi}</div>
               <p className="s7-impact-desc">
                 Model accuracy improvement after{" "}
-                <span className="product">DTS</span>{" "}
-                fixed class imbalance. Rare defect class augmented with privacy-safe synthetic data. Deploy time cut from 4 weeks to 1 day.
+                <span className="product">{card2ProductName}</span>{" "}
+                {card2Description}
               </p>
             </article>
 
@@ -402,11 +404,16 @@ addPropertyControls(Section07_BusinessImpact, {
     title: "Card 2 KPI",
     defaultValue: "+30pp F1",
   },
+  card2ProductName: {
+    type: ControlType.String,
+    title: "Card 2 Product Name",
+    defaultValue: "DTS",
+  },
   card2Description: {
     type: ControlType.String,
-    title: "Card 2 Description (note: DTS tag is hardcoded)",
+    title: "Card 2 Description (after product name)",
     defaultValue:
-      "Model accuracy improvement after DTS fixed class imbalance. Rare defect class augmented with privacy-safe synthetic data. Deploy time cut from 4 weeks to 1 day.",
+      "fixed class imbalance. Rare defect class augmented with privacy-safe synthetic data. Deploy time cut from 4 weeks to 1 day.",
   },
   card3Badge: {
     type: ControlType.String,

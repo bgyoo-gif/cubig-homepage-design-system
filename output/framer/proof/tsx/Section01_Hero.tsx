@@ -126,10 +126,6 @@ export default function Section01_Hero({
           color: ${tokens.colorTextPrimary};
         }
 
-        .s1-banner__brand {
-          color: ${tokens.colorBrandPurple};
-        }
-
         .s1-hero__actions {
           display: flex;
           flex-wrap: wrap;
@@ -172,11 +168,6 @@ export default function Section01_Hero({
           border: 1px solid ${tokens.colorBorderDefault};
         }
         .s1-btn--secondary:hover { background-color: ${tokens.colorSurfaceLight}; }
-
-        .s1-product {
-          font-family: ${tokens.fontBrand};
-          font-weight: 700;
-        }
       `}</style>
 
       <section
@@ -190,13 +181,7 @@ export default function Section01_Hero({
             <p className="s1-hero__description">{heroDescription}</p>
 
             <div className="s1-banner" role="note">
-              True AI-ready data means it is{" "}
-              <span className="s1-banner__brand">usable</span>,{" "}
-              <span className="s1-banner__brand">privacy-safe</span>, and{" "}
-              <span className="s1-banner__brand">
-                stable for production execution
-              </span>
-              .
+              {bannerText}
             </div>
 
             <div className="s1-hero__actions">
@@ -212,7 +197,7 @@ export default function Section01_Hero({
                 rel="noopener noreferrer"
                 className="s1-btn s1-btn--secondary"
               >
-                Try <span className="s1-product">SynTitan</span> ↗
+                {ctaSecondaryLabel}
               </a>
             </div>
           </div>

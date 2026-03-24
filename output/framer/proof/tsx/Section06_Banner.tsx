@@ -9,6 +9,7 @@ interface Props {
   bannerText?: string
   highlightText?: string
   productName?: string
+  trailText?: string
 }
 
 // ─── Component ───────────────────────────────────────────────────────────────
@@ -17,6 +18,7 @@ export default function Section06_Banner({
   bannerText = "Databricks versioned the data. MLflow tracked the model. The AI still broke in production.",
   highlightText = "Because neither tool versions the data state the model was bound to at run time.",
   productName = "SynTitan",
+  trailText = "does. That\u2019s the difference these cases reflect.",
 }: Props) {
   return (
     <>
@@ -91,7 +93,7 @@ export default function Section06_Banner({
             <p className="s6-banner-content">
               {bannerText}{" "}
               <strong className="s6-banner-strong">{highlightText}</strong>{" "}
-              <span className="s6-product">{productName}</span> does. That&rsquo;s the difference these cases reflect.
+              <span className="s6-product">{productName}</span> {trailText}
             </p>
           </div>
         </div>
@@ -125,5 +127,10 @@ addPropertyControls(Section06_Banner, {
     type: ControlType.String,
     title: "Product Name",
     defaultValue: "SynTitan",
+  },
+  trailText: {
+    type: ControlType.String,
+    title: "Trail Text (after product name)",
+    defaultValue: "does. That\u2019s the difference these cases reflect.",
   },
 })

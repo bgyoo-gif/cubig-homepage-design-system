@@ -23,43 +23,76 @@ interface FAQItem {
   answer: React.ReactNode
 }
 
-// ─── FAQ Answer content (rich text with product spans) ───────────────────────
-function AnswerContent({ index }: { index: number }) {
-  switch (index) {
+// ─── FAQ Answer content ───────────────────────────────────────────────────────
+interface AnswerContentProps {
+  index: number
+  a1ProductName: string
+  a1Prefix: string
+  a1Suffix: string
+  a2: string
+  a3ProductName1: string
+  a3Middle: string
+  a3ProductName2: string
+  a3Suffix: string
+  a4ProductName1: string
+  a4Middle: string
+  a4ProductName2: string
+  a4Suffix: string
+  a5ProductName1: string
+  a5Middle1: string
+  a5ProductName2: string
+  a5Middle2: string
+  a5ProductName3: string
+  a5Middle3: string
+  a5ProductName4: string
+  a5Suffix: string
+}
+
+function AnswerContent(p: AnswerContentProps) {
+  switch (p.index) {
     case 0:
       return (
         <p className="s8-body-text">
-          Reproducible AI execution means that any past AI run can be re-executed under the exact same data, environment, and pipeline conditions — returning the same result.{" "}
-          <span className="s8-product">SynTitan</span> achieves this through Release State and Run Binding, which lock execution conditions at every run. When something breaks in production, you don't debug blind — you diff the states and reproduce the last known-good run.
+          {p.a1Prefix}{" "}
+          <span className="s8-product">{p.a1ProductName}</span>{" "}
+          {p.a1Suffix}
         </p>
       )
     case 1:
       return (
         <p className="s8-body-text">
-          A Release State is a versioned snapshot of all execution conditions at the time of an AI run — including data schema, pipeline configuration, feature set, and runtime parameters. It enables diff between states to trace what changed and re-run the same conditions for incident response and regression verification.
+          {p.a2}
         </p>
       )
     case 2:
       return (
         <p className="s8-body-text">
-          <span className="s8-product">DTS</span> generates privacy-safe synthetic data using differential privacy to fill coverage gaps, fix class imbalance, and replace non-accessible data. It operates as a standalone engine or integrates with{" "}
-          <span className="s8-product">SynTitan</span> for end-to-end execution stability.
+          <span className="s8-product">{p.a3ProductName1}</span>{" "}
+          {p.a3Middle}{" "}
+          <span className="s8-product">{p.a3ProductName2}</span>{" "}
+          {p.a3Suffix}
         </p>
       )
     case 3:
       return (
         <p className="s8-body-text">
-          <span className="s8-product">LLM Capsule</span> detects sensitive fields including PII in prompts and outputs, anonymizes or shields them before LLM interaction, and preserves output usability for downstream workflows — all within{" "}
-          <span className="s8-product">SynTitan</span> execution workflows.
+          <span className="s8-product">{p.a4ProductName1}</span>{" "}
+          {p.a4Middle}{" "}
+          <span className="s8-product">{p.a4ProductName2}</span>{" "}
+          {p.a4Suffix}
         </p>
       )
     case 4:
       return (
         <p className="s8-body-text">
-          <span className="s8-product">SynTitan</span> performs data quality refinement as part of execution stability.{" "}
-          <span className="s8-product">SynTitan</span> can use a subset of{" "}
-          <span className="s8-product">DTS</span> capabilities when privacy-safe synthetic data is needed, while{" "}
-          <span className="s8-product">DTS</span> is a full standalone enterprise synthetic data engine.
+          <span className="s8-product">{p.a5ProductName1}</span>{" "}
+          {p.a5Middle1}{" "}
+          <span className="s8-product">{p.a5ProductName2}</span>{" "}
+          {p.a5Middle2}{" "}
+          <span className="s8-product">{p.a5ProductName3}</span>{" "}
+          {p.a5Middle3}{" "}
+          <span className="s8-product">{p.a5ProductName4}</span>{" "}
+          {p.a5Suffix}
         </p>
       )
     default:
@@ -71,25 +104,31 @@ function AnswerContent({ index }: { index: number }) {
 function QuestionContent({
   index,
   q1, q2, q3, q4, q5,
+  q2ProductName,
+  q3ProductName,
+  q4ProductName,
+  q5ProductName1,
+  q5ProductName2,
 }: {
   index: number
   q1: string; q2: string; q3: string; q4: string; q5: string
+  q2ProductName: string
+  q3ProductName: string
+  q4ProductName: string
+  q5ProductName1: string
+  q5ProductName2: string
 }) {
-  const questions = [q1, q2, q3, q4, q5]
-  const raw = questions[index] || ""
-
-  // q2, q3, q4, q5 contain product names — render raw text, product markup is in labels
   switch (index) {
     case 1:
-      return <span>What is a Release State in <span className="s8-product">SynTitan</span>?</span>
+      return <span>{q2} <span className="s8-product">{q2ProductName}</span>?</span>
     case 2:
-      return <span>How does <span className="s8-product">DTS</span> solve the unusable data problem?</span>
+      return <span>How does <span className="s8-product">{q3ProductName}</span> {q3}</span>
     case 3:
-      return <span>How does <span className="s8-product">LLM Capsule</span> protect sensitive data during LLM usage?</span>
+      return <span>How does <span className="s8-product">{q4ProductName}</span> {q4}</span>
     case 4:
-      return <span>What is the difference between <span className="s8-product">SynTitan</span> and <span className="s8-product">DTS</span>?</span>
+      return <span>{q5} <span className="s8-product">{q5ProductName1}</span> and <span className="s8-product">{q5ProductName2}</span>?</span>
     default:
-      return <span>{raw}</span>
+      return <span>{q1}</span>
   }
 }
 
@@ -99,11 +138,19 @@ function AccordionItem({
   isOpen,
   onToggle,
   q1, q2, q3, q4, q5,
+  q2ProductName, q3ProductName, q4ProductName, q5ProductName1, q5ProductName2,
+  answerProps,
 }: {
   index: number
   isOpen: boolean
   onToggle: () => void
   q1: string; q2: string; q3: string; q4: string; q5: string
+  q2ProductName: string
+  q3ProductName: string
+  q4ProductName: string
+  q5ProductName1: string
+  q5ProductName2: string
+  answerProps: AnswerContentProps
 }) {
   return (
     <article
@@ -124,7 +171,15 @@ function AccordionItem({
       >
         <div className="s8-ac-title-wrap">
           <div className="s8-ac-title">
-            <QuestionContent index={index} q1={q1} q2={q2} q3={q3} q4={q4} q5={q5} />
+            <QuestionContent
+              index={index}
+              q1={q1} q2={q2} q3={q3} q4={q4} q5={q5}
+              q2ProductName={q2ProductName}
+              q3ProductName={q3ProductName}
+              q4ProductName={q4ProductName}
+              q5ProductName1={q5ProductName1}
+              q5ProductName2={q5ProductName2}
+            />
           </div>
         </div>
         <div className="s8-ac-toggle">
@@ -133,7 +188,7 @@ function AccordionItem({
       </div>
       {isOpen && (
         <div className="s8-ac-body">
-          <AnswerContent index={index} />
+          <AnswerContent {...answerProps} index={index} />
         </div>
       )}
     </article>
@@ -145,11 +200,39 @@ interface Props {
   marginTop: number
   sectionTitlePrefix: string
   sectionTitleHighlight: string
+  // Questions
   q1: string
   q2: string
   q3: string
   q4: string
   q5: string
+  // Question product names
+  q2ProductName: string
+  q3ProductName: string
+  q4ProductName: string
+  q5ProductName1: string
+  q5ProductName2: string
+  // Answers
+  a1ProductName: string
+  a1Prefix: string
+  a1Suffix: string
+  a2: string
+  a3ProductName1: string
+  a3Middle: string
+  a3ProductName2: string
+  a3Suffix: string
+  a4ProductName1: string
+  a4Middle: string
+  a4ProductName2: string
+  a4Suffix: string
+  a5ProductName1: string
+  a5Middle1: string
+  a5ProductName2: string
+  a5Middle2: string
+  a5ProductName3: string
+  a5Middle3: string
+  a5ProductName4: string
+  a5Suffix: string
   defaultOpenIndex: number
 }
 
@@ -160,6 +243,13 @@ export default function Section08_FAQ(props: Props) {
     sectionTitlePrefix,
     sectionTitleHighlight,
     q1, q2, q3, q4, q5,
+    q2ProductName, q3ProductName, q4ProductName, q5ProductName1, q5ProductName2,
+    a1ProductName, a1Prefix, a1Suffix,
+    a2,
+    a3ProductName1, a3Middle, a3ProductName2, a3Suffix,
+    a4ProductName1, a4Middle, a4ProductName2, a4Suffix,
+    a5ProductName1, a5Middle1, a5ProductName2, a5Middle2,
+    a5ProductName3, a5Middle3, a5ProductName4, a5Suffix,
     defaultOpenIndex,
   } = props
 
@@ -167,6 +257,16 @@ export default function Section08_FAQ(props: Props) {
 
   const handleToggle = (index: number) => {
     setOpenIndex(openIndex === index ? -1 : index)
+  }
+
+  const answerProps: AnswerContentProps = {
+    index: 0,
+    a1ProductName, a1Prefix, a1Suffix,
+    a2,
+    a3ProductName1, a3Middle, a3ProductName2, a3Suffix,
+    a4ProductName1, a4Middle, a4ProductName2, a4Suffix,
+    a5ProductName1, a5Middle1, a5ProductName2, a5Middle2,
+    a5ProductName3, a5Middle3, a5ProductName4, a5Suffix,
   }
 
   return (
@@ -390,6 +490,12 @@ export default function Section08_FAQ(props: Props) {
                 q3={q3}
                 q4={q4}
                 q5={q5}
+                q2ProductName={q2ProductName}
+                q3ProductName={q3ProductName}
+                q4ProductName={q4ProductName}
+                q5ProductName1={q5ProductName1}
+                q5ProductName2={q5ProductName2}
+                answerProps={{ ...answerProps, index: i }}
               />
             ))}
           </div>
@@ -419,34 +525,166 @@ addPropertyControls(Section08_FAQ, {
     title: "Title Highlight",
     defaultValue: "Questions",
   },
+  // ── Questions ──────────────────────────────────────────────────────────────
   q1: {
     type: ControlType.String,
     title: "Q1 Text",
-    defaultValue: "What does 'reproducible AI execution' mean in production?",
+    defaultValue: "What does \u2018reproducible AI execution\u2019 mean in production?",
   },
   q2: {
     type: ControlType.String,
-    title: "Q2 Text (SynTitan hardcoded)",
-    defaultValue: "What is a Release State in SynTitan?",
+    title: "Q2 Prefix",
+    defaultValue: "What is a Release State in",
+  },
+  q2ProductName: {
+    type: ControlType.String,
+    title: "Q2 Product Name",
+    defaultValue: "SynTitan",
   },
   q3: {
     type: ControlType.String,
-    title: "Q3 Text (DTS hardcoded)",
-    defaultValue: "How does DTS solve the unusable data problem?",
+    title: "Q3 Suffix (after product)",
+    defaultValue: "solve the unusable data problem?",
+  },
+  q3ProductName: {
+    type: ControlType.String,
+    title: "Q3 Product Name",
+    defaultValue: "DTS",
   },
   q4: {
     type: ControlType.String,
-    title: "Q4 Text (LLM Capsule hardcoded)",
-    defaultValue: "How does LLM Capsule protect sensitive data during LLM usage?",
+    title: "Q4 Suffix (after product)",
+    defaultValue: "protect sensitive data during LLM usage?",
+  },
+  q4ProductName: {
+    type: ControlType.String,
+    title: "Q4 Product Name",
+    defaultValue: "LLM Capsule",
   },
   q5: {
     type: ControlType.String,
-    title: "Q5 Text (product names hardcoded)",
-    defaultValue: "What is the difference between SynTitan and DTS?",
+    title: "Q5 Prefix (before products)",
+    defaultValue: "What is the difference between",
   },
+  q5ProductName1: {
+    type: ControlType.String,
+    title: "Q5 Product Name 1",
+    defaultValue: "SynTitan",
+  },
+  q5ProductName2: {
+    type: ControlType.String,
+    title: "Q5 Product Name 2",
+    defaultValue: "DTS",
+  },
+  // ── Answer 1 ───────────────────────────────────────────────────────────────
+  a1Prefix: {
+    type: ControlType.String,
+    title: "A1 Prefix (before product)",
+    defaultValue: "Reproducible AI execution means that any past AI run can be re-executed under the exact same data, environment, and pipeline conditions \u2014 returning the same result.",
+  },
+  a1ProductName: {
+    type: ControlType.String,
+    title: "A1 Product Name",
+    defaultValue: "SynTitan",
+  },
+  a1Suffix: {
+    type: ControlType.String,
+    title: "A1 Suffix (after product)",
+    defaultValue: "achieves this through Release State and Run Binding, which lock execution conditions at every run. When something breaks in production, you don\u2019t debug blind \u2014 you diff the states and reproduce the last known-good run.",
+  },
+  // ── Answer 2 ───────────────────────────────────────────────────────────────
+  a2: {
+    type: ControlType.String,
+    title: "A2 Text",
+    defaultValue: "A Release State is a versioned snapshot of all execution conditions at the time of an AI run \u2014 including data schema, pipeline configuration, feature set, and runtime parameters. It enables diff between states to trace what changed and re-run the same conditions for incident response and regression verification.",
+  },
+  // ── Answer 3 ───────────────────────────────────────────────────────────────
+  a3ProductName1: {
+    type: ControlType.String,
+    title: "A3 Product Name 1",
+    defaultValue: "DTS",
+  },
+  a3Middle: {
+    type: ControlType.String,
+    title: "A3 Middle (between products)",
+    defaultValue: "generates privacy-safe synthetic data using differential privacy to fill coverage gaps, fix class imbalance, and replace non-accessible data. It operates as a standalone engine or integrates with",
+  },
+  a3ProductName2: {
+    type: ControlType.String,
+    title: "A3 Product Name 2",
+    defaultValue: "SynTitan",
+  },
+  a3Suffix: {
+    type: ControlType.String,
+    title: "A3 Suffix",
+    defaultValue: "for end-to-end execution stability.",
+  },
+  // ── Answer 4 ───────────────────────────────────────────────────────────────
+  a4ProductName1: {
+    type: ControlType.String,
+    title: "A4 Product Name 1",
+    defaultValue: "LLM Capsule",
+  },
+  a4Middle: {
+    type: ControlType.String,
+    title: "A4 Middle (between products)",
+    defaultValue: "detects sensitive fields including PII in prompts and outputs, anonymizes or shields them before LLM interaction, and preserves output usability for downstream workflows \u2014 all within",
+  },
+  a4ProductName2: {
+    type: ControlType.String,
+    title: "A4 Product Name 2",
+    defaultValue: "SynTitan",
+  },
+  a4Suffix: {
+    type: ControlType.String,
+    title: "A4 Suffix",
+    defaultValue: "execution workflows.",
+  },
+  // ── Answer 5 ───────────────────────────────────────────────────────────────
+  a5ProductName1: {
+    type: ControlType.String,
+    title: "A5 Product Name 1",
+    defaultValue: "SynTitan",
+  },
+  a5Middle1: {
+    type: ControlType.String,
+    title: "A5 Middle 1",
+    defaultValue: "performs data quality refinement as part of execution stability.",
+  },
+  a5ProductName2: {
+    type: ControlType.String,
+    title: "A5 Product Name 2",
+    defaultValue: "SynTitan",
+  },
+  a5Middle2: {
+    type: ControlType.String,
+    title: "A5 Middle 2",
+    defaultValue: "can use a subset of",
+  },
+  a5ProductName3: {
+    type: ControlType.String,
+    title: "A5 Product Name 3",
+    defaultValue: "DTS",
+  },
+  a5Middle3: {
+    type: ControlType.String,
+    title: "A5 Middle 3",
+    defaultValue: "capabilities when privacy-safe synthetic data is needed, while",
+  },
+  a5ProductName4: {
+    type: ControlType.String,
+    title: "A5 Product Name 4",
+    defaultValue: "DTS",
+  },
+  a5Suffix: {
+    type: ControlType.String,
+    title: "A5 Suffix",
+    defaultValue: "is a full standalone enterprise synthetic data engine.",
+  },
+  // ── Misc ───────────────────────────────────────────────────────────────────
   defaultOpenIndex: {
     type: ControlType.Number,
-    title: "Default Open (0–4, -1 = none)",
+    title: "Default Open (0\u20134, -1 = none)",
     defaultValue: 0,
     min: -1,
     max: 4,

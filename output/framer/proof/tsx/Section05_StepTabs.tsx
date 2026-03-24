@@ -4,50 +4,95 @@ import { addPropertyControls, ControlType } from "framer"
 // ─── Image Base ───────────────────────────────────────────────────────────────
 const IMAGE_BASE = "https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images"
 
-// ─── Tab Data ─────────────────────────────────────────────────────────────────
-interface TabData {
-  tabLabel: string
-  title: string
-  description: React.ReactNode
-  rootCause: string
-  resolution: string
-  codeLines: { type: "muted" | "remove" | "add" | "warn"; text: string }[]
+// ─── Props ────────────────────────────────────────────────────────────────────
+interface Props {
+  marginTop?: number
+  sectionTitle?: string
+  sectionDescription?: string
+
+  // Tab labels
+  tab1Label?: string
+  tab2Label?: string
+  tab3Label?: string
+  tab4Label?: string
+
+  // Tab 1 panel
+  tab1Title?: string
+  tab1Description?: string
+  tab1RootCause?: string
+  tab1Resolution?: string
+
+  // Tab 2 panel
+  tab2Title?: string
+  tab2Description?: string
+  tab2RootCause?: string
+  tab2Resolution?: string
+
+  // Tab 3 panel
+  tab3Title?: string
+  tab3Description?: string
+  tab3RootCause?: string
+  tab3Resolution?: string
+
+  // Tab 4 panel
+  tab4Title?: string
+  tab4Description?: string
+  tab4RootCause?: string
+  tab4Resolution?: string
+
+  // Bottom banner
+  bannerText?: string
+  bannerLinkLabel?: string
+  bannerLinkHref?: string
 }
 
-const tabs: TabData[] = [
-  {
-    tabLabel: "Release State Diff",
-    title: "Release State Comparison",
-    description: (
-      <>
-        When output behavior changes between runs, <span style={{ fontFamily: '"Oxanium", sans-serif', fontWeight: 700 }}>SynTitan</span> diffs the two Release States to surface exactly which execution condition changed.
-      </>
-    ),
-    rootCause:
-      "Feature column type coerced from integer to string upstream. Preprocessing normalization version updated in the same window.",
-    resolution:
-      "Restored prior schema type constraint. Pinned preprocessing version in Release State.",
-    codeLines: [
+// ─── Component ───────────────────────────────────────────────────────────────
+export default function Section05_StepTabs({
+  marginTop = 0,
+  sectionTitle = "What Traceability Looks Like in Practice",
+  sectionDescription = "Every SynTitan run produces structured artifacts that make execution conditions inspectable, comparable, and reproducible. These are the operational records teams use for incident response and regression verification.",
+
+  tab1Label = "Release State Diff",
+  tab2Label = "Schema Fingerprint",
+  tab3Label = "Preprocessing Diff",
+  tab4Label = "Runtime Dependency",
+
+  tab1Title = "Release State Comparison",
+  tab1Description = "When output behavior changes between runs, SynTitan diffs the two Release States to surface exactly which execution condition changed.",
+  tab1RootCause = "Feature column type coerced from integer to string upstream. Preprocessing normalization version updated in the same window.",
+  tab1Resolution = "Restored prior schema type constraint. Pinned preprocessing version in Release State.",
+
+  tab2Title = "Schema Fingerprint Change",
+  tab2Description = "SynTitan captures a schema fingerprint at each ingestion. When the fingerprint changes, it is logged in the Release State and surfaced in the Change Log before the run proceeds.",
+  tab2RootCause = "Upstream data feed removed two feature columns without downstream notification.",
+  tab2Resolution = "Run halted before training. Schema contract enforced. Upstream notified within the same hour.",
+
+  tab3Title = "Preprocessing Logic Change",
+  tab3Description = "Preprocessing steps are versioned inside each Release State. When logic changes — normalization, imputation, encoding — the diff shows exactly which step changed and what the expected effect is.",
+  tab3RootCause = "Normalization method switched from min-max to z-score — changing the scale of all downstream feature inputs.",
+  tab3Resolution = "Reverted to prior Release State for immediate rollback. New method evaluated in staging before reintroduction.",
+
+  tab4Title = "Runtime Dependency Change",
+  tab4Description = "Runtime environment versions — libraries, Python runtime, inference server — are captured in each Release State. Unexpected version changes are surfaced as execution state drift events.",
+  tab4RootCause = "Container image updated in CI/CD pipeline without version-pinning the AI dependencies.",
+  tab4Resolution = "Dependency versions pinned in Release State manifest. Container image rebuild triggered with verified versions.",
+
+  bannerText = "These artifact types are produced by SynTitan during every AI run. State Cards, Change Logs, Schema Diffs, Preprocessing Diffs, and Re-run Records are all standard outputs — not manual reports.",
+  bannerLinkLabel = "See execution state comparison",
+  bannerLinkHref = "/syntitan",
+}: Props) {
+  const [activeTab, setActiveTab] = useState(0)
+
+  // Code lines are implementation detail — kept as static data
+  const tabCodeLines = [
+    [
       { type: "muted",  text: "// Release State diff: RS-0041 → RS-0042" },
       { type: "remove", text: "− schema.feature_col_7: dtype=int64" },
       { type: "add",    text: "+ schema.feature_col_7: dtype=object" },
       { type: "muted",  text: "// 1 schema fingerprint change detected" },
       { type: "warn",   text: "! Run Binding: RS-0042 flagged before production" },
     ],
-  },
-  {
-    tabLabel: "Schema Fingerprint",
-    title: "Schema Fingerprint Change",
-    description: (
-      <>
-        <span style={{ fontFamily: '"Oxanium", sans-serif', fontWeight: 700 }}>SynTitan</span> captures a schema fingerprint at each ingestion. When the fingerprint changes, it is logged in the Release State and surfaced in the Change Log before the run proceeds.
-      </>
-    ),
-    rootCause:
-      "Upstream data feed removed two feature columns without downstream notification.",
-    resolution:
-      "Run halted before training. Schema contract enforced. Upstream notified within the same hour.",
-    codeLines: [
+    [
       { type: "muted",  text: "// Schema fingerprint audit log" },
       { type: "warn",   text: "schema_fingerprint: CHANGED" },
       { type: "remove", text: "prev: sha256:a4f2b...3c91" },
@@ -56,20 +101,7 @@ const tabs: TabData[] = [
       { type: "remove", text: "// columns_removed: 2 [user_segment_v2, tenure_bucket]" },
       { type: "muted",  text: "// type_changes: 1" },
     ],
-  },
-  {
-    tabLabel: "Preprocessing Diff",
-    title: "Preprocessing Logic Change",
-    description: (
-      <>
-        Preprocessing steps are versioned inside each Release State. When logic changes — normalization, imputation, encoding — the diff shows exactly which step changed and what the expected effect is.
-      </>
-    ),
-    rootCause:
-      "Normalization method switched from min-max to z-score — changing the scale of all downstream feature inputs.",
-    resolution:
-      "Reverted to prior Release State for immediate rollback. New method evaluated in staging before reintroduction.",
-    codeLines: [
+    [
       { type: "muted",  text: "// Preprocessing diff: RS-0042 → RS-0043" },
       { type: "remove", text: "− step: normalize_amount" },
       { type: "remove", text: "  method: min-max  range: [0, 1000]" },
@@ -78,20 +110,7 @@ const tabs: TabData[] = [
       { type: "warn",   text: "! normalization method changed" },
       { type: "muted",  text: "// all downstream feature scores affected" },
     ],
-  },
-  {
-    tabLabel: "Runtime Dependency",
-    title: "Runtime Dependency Change",
-    description: (
-      <>
-        Runtime environment versions — libraries, Python runtime, inference server — are captured in each Release State. Unexpected version changes are surfaced as execution state drift events.
-      </>
-    ),
-    rootCause:
-      "Container image updated in CI/CD pipeline without version-pinning the AI dependencies.",
-    resolution:
-      "Dependency versions pinned in Release State manifest. Container image rebuild triggered with verified versions.",
-    codeLines: [
+    [
       { type: "muted",  text: "// Runtime dependency audit: RS-0043" },
       { type: "remove", text: "− sklearn: 1.2.2" },
       { type: "add",    text: "+ sklearn: 1.4.0" },
@@ -100,25 +119,16 @@ const tabs: TabData[] = [
       { type: "warn",   text: "! 2 runtime dependencies changed" },
       { type: "warn",   text: "! imputation behavior may differ" },
     ],
-  },
-]
+  ]
 
-// ─── Props ────────────────────────────────────────────────────────────────────
-interface Props {
-  marginTop?: number
-  sectionTitle?: string
-  sectionDescription?: string
-}
+  const tabData = [
+    { label: tab1Label, title: tab1Title, description: tab1Description, rootCause: tab1RootCause, resolution: tab1Resolution, codeLines: tabCodeLines[0] },
+    { label: tab2Label, title: tab2Title, description: tab2Description, rootCause: tab2RootCause, resolution: tab2Resolution, codeLines: tabCodeLines[1] },
+    { label: tab3Label, title: tab3Title, description: tab3Description, rootCause: tab3RootCause, resolution: tab3Resolution, codeLines: tabCodeLines[2] },
+    { label: tab4Label, title: tab4Title, description: tab4Description, rootCause: tab4RootCause, resolution: tab4Resolution, codeLines: tabCodeLines[3] },
+  ]
 
-// ─── Component ───────────────────────────────────────────────────────────────
-export default function Section05_StepTabs({
-  marginTop = 0,
-  sectionTitle = "What Traceability Looks Like in Practice",
-  sectionDescription = "Every SynTitan run produces structured artifacts that make execution conditions inspectable, comparable, and reproducible. These are the operational records teams use for incident response and regression verification.",
-}: Props) {
-  const [activeTab, setActiveTab] = useState(0)
-
-  const tab = tabs[activeTab]
+  const tab = tabData[activeTab]
 
   return (
     <>
@@ -164,8 +174,6 @@ export default function Section05_StepTabs({
         @media (min-width: 768px)  { .s5-header-title { font-size: 28px; } }
         @media (min-width: 1024px) { .s5-header-title { font-size: 32px; } }
         @media (min-width: 1440px) { .s5-header-title { font-size: 40px; } }
-
-        .s5-brand { color: #725bea; }
 
         .s5-header-desc {
           font-size: 18px;
@@ -372,11 +380,6 @@ export default function Section05_StepTabs({
           transition: background-color 0.2s;
         }
         .s5-btn-secondary:hover { background-color: #f7f7f7; }
-
-        .s5-product {
-          font-family: "Oxanium", sans-serif;
-          font-weight: 700;
-        }
       `}</style>
 
       <section className="s5-section" id="section-5" style={{ marginTop }}>
@@ -384,17 +387,13 @@ export default function Section05_StepTabs({
 
           {/* Section Header */}
           <div className="s5-section-header">
-            <h2 className="s5-header-title">
-              What <span className="s5-brand">Traceability</span> Looks Like in Practice
-            </h2>
-            <p className="s5-header-desc">
-              Every <span className="s5-product">SynTitan</span> run produces structured artifacts that make execution conditions inspectable, comparable, and reproducible. These are the operational records teams use for incident response and regression verification.
-            </p>
+            <h2 className="s5-header-title">{sectionTitle}</h2>
+            <p className="s5-header-desc">{sectionDescription}</p>
           </div>
 
           {/* Tab Navigation */}
           <nav className="s5-tab-nav" role="tablist" aria-label="Technical artifact types">
-            {tabs.map((t, i) => (
+            {tabData.map((t, i) => (
               <button
                 key={i}
                 className={`s5-tab-btn${activeTab === i ? " s5-tab-btn--active" : ""}`}
@@ -403,7 +402,7 @@ export default function Section05_StepTabs({
                 onClick={() => setActiveTab(i)}
               >
                 <span className="s5-tab-num">{i + 1}</span>
-                {t.tabLabel}
+                {t.label}
               </button>
             ))}
           </nav>
@@ -439,8 +438,8 @@ export default function Section05_StepTabs({
 
           {/* Bottom Banner */}
           <div className="s5-banner" role="note">
-            These artifact types are produced by <span className="s5-product">SynTitan</span> during every AI run. State Cards, Change Logs, Schema Diffs, Preprocessing Diffs, and Re-run Records are all standard outputs — not manual reports.
-            <a href="/syntitan" className="s5-btn-secondary">See execution state comparison</a>
+            {bannerText}
+            <a href={bannerLinkHref} className="s5-btn-secondary">{bannerLinkLabel}</a>
           </div>
 
         </div>
@@ -462,11 +461,115 @@ addPropertyControls(Section05_StepTabs, {
     type: ControlType.String,
     title: "Section Title",
     defaultValue: "What Traceability Looks Like in Practice",
+    displayTextArea: true,
   },
   sectionDescription: {
     type: ControlType.String,
     title: "Section Description",
     defaultValue:
       "Every SynTitan run produces structured artifacts that make execution conditions inspectable, comparable, and reproducible. These are the operational records teams use for incident response and regression verification.",
+    displayTextArea: true,
+  },
+
+  tab1Label: { type: ControlType.String, title: "Tab 1 Label", defaultValue: "Release State Diff" },
+  tab2Label: { type: ControlType.String, title: "Tab 2 Label", defaultValue: "Schema Fingerprint" },
+  tab3Label: { type: ControlType.String, title: "Tab 3 Label", defaultValue: "Preprocessing Diff" },
+  tab4Label: { type: ControlType.String, title: "Tab 4 Label", defaultValue: "Runtime Dependency" },
+
+  tab1Title: { type: ControlType.String, title: "Tab 1 Panel Title", defaultValue: "Release State Comparison" },
+  tab1Description: {
+    type: ControlType.String,
+    title: "Tab 1 Description",
+    defaultValue: "When output behavior changes between runs, SynTitan diffs the two Release States to surface exactly which execution condition changed.",
+    displayTextArea: true,
+  },
+  tab1RootCause: {
+    type: ControlType.String,
+    title: "Tab 1 Root Cause",
+    defaultValue: "Feature column type coerced from integer to string upstream. Preprocessing normalization version updated in the same window.",
+    displayTextArea: true,
+  },
+  tab1Resolution: {
+    type: ControlType.String,
+    title: "Tab 1 Resolution",
+    defaultValue: "Restored prior schema type constraint. Pinned preprocessing version in Release State.",
+    displayTextArea: true,
+  },
+
+  tab2Title: { type: ControlType.String, title: "Tab 2 Panel Title", defaultValue: "Schema Fingerprint Change" },
+  tab2Description: {
+    type: ControlType.String,
+    title: "Tab 2 Description",
+    defaultValue: "SynTitan captures a schema fingerprint at each ingestion. When the fingerprint changes, it is logged in the Release State and surfaced in the Change Log before the run proceeds.",
+    displayTextArea: true,
+  },
+  tab2RootCause: {
+    type: ControlType.String,
+    title: "Tab 2 Root Cause",
+    defaultValue: "Upstream data feed removed two feature columns without downstream notification.",
+    displayTextArea: true,
+  },
+  tab2Resolution: {
+    type: ControlType.String,
+    title: "Tab 2 Resolution",
+    defaultValue: "Run halted before training. Schema contract enforced. Upstream notified within the same hour.",
+    displayTextArea: true,
+  },
+
+  tab3Title: { type: ControlType.String, title: "Tab 3 Panel Title", defaultValue: "Preprocessing Logic Change" },
+  tab3Description: {
+    type: ControlType.String,
+    title: "Tab 3 Description",
+    defaultValue: "Preprocessing steps are versioned inside each Release State. When logic changes — normalization, imputation, encoding — the diff shows exactly which step changed and what the expected effect is.",
+    displayTextArea: true,
+  },
+  tab3RootCause: {
+    type: ControlType.String,
+    title: "Tab 3 Root Cause",
+    defaultValue: "Normalization method switched from min-max to z-score — changing the scale of all downstream feature inputs.",
+    displayTextArea: true,
+  },
+  tab3Resolution: {
+    type: ControlType.String,
+    title: "Tab 3 Resolution",
+    defaultValue: "Reverted to prior Release State for immediate rollback. New method evaluated in staging before reintroduction.",
+    displayTextArea: true,
+  },
+
+  tab4Title: { type: ControlType.String, title: "Tab 4 Panel Title", defaultValue: "Runtime Dependency Change" },
+  tab4Description: {
+    type: ControlType.String,
+    title: "Tab 4 Description",
+    defaultValue: "Runtime environment versions — libraries, Python runtime, inference server — are captured in each Release State. Unexpected version changes are surfaced as execution state drift events.",
+    displayTextArea: true,
+  },
+  tab4RootCause: {
+    type: ControlType.String,
+    title: "Tab 4 Root Cause",
+    defaultValue: "Container image updated in CI/CD pipeline without version-pinning the AI dependencies.",
+    displayTextArea: true,
+  },
+  tab4Resolution: {
+    type: ControlType.String,
+    title: "Tab 4 Resolution",
+    defaultValue: "Dependency versions pinned in Release State manifest. Container image rebuild triggered with verified versions.",
+    displayTextArea: true,
+  },
+
+  bannerText: {
+    type: ControlType.String,
+    title: "Banner Text",
+    defaultValue: "These artifact types are produced by SynTitan during every AI run. State Cards, Change Logs, Schema Diffs, Preprocessing Diffs, and Re-run Records are all standard outputs — not manual reports.",
+    displayTextArea: true,
+  },
+  bannerLinkLabel: {
+    type: ControlType.String,
+    title: "Banner Link Label",
+    defaultValue: "See execution state comparison",
+  },
+  bannerLinkHref: {
+    type: ControlType.String,
+    title: "Banner Link URL",
+    defaultValue: "/syntitan",
   },
 })

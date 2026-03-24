@@ -12,11 +12,6 @@ const IMAGE_BASE =
   "https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images"
 
 // ─── Props ────────────────────────────────────────────────────────────────────
-interface KpiItem {
-  number: string
-  label: string
-}
-
 interface Props {
   marginTop: number
   kpi1Number: string
@@ -37,7 +32,7 @@ export default function Section02_KpiBand({
   kpi3Number = "-90%",
   kpi3Label = "time-to-deploy: 4 weeks to 1 day on AI model production cycle",
 }: Partial<Props>) {
-  const kpis: KpiItem[] = [
+  const kpis = [
     { number: kpi1Number, label: kpi1Label },
     { number: kpi2Number, label: kpi2Label },
     { number: kpi3Number, label: kpi3Label },
@@ -118,11 +113,6 @@ export default function Section02_KpiBand({
           line-height: 1.5;
           font-family: ${tokens.fontBase};
         }
-
-        .s2-product {
-          font-family: ${tokens.fontBrand};
-          font-weight: 700;
-        }
       `}</style>
 
       <section
@@ -135,17 +125,7 @@ export default function Section02_KpiBand({
             {kpis.map((item, i) => (
               <div className="s2-kpi-band__item" key={i}>
                 <span className="s2-kpi-band__number">{item.number}</span>
-                <p className="s2-kpi-band__label">
-                  {i === 1 ? (
-                    <>
-                      F1-score improvement (58.55% to 88.55%) via{" "}
-                      <span className="s2-product">DTS</span> synthetic data
-                      augmentation
-                    </>
-                  ) : (
-                    item.label
-                  )}
-                </p>
+                <p className="s2-kpi-band__label">{item.label}</p>
               </div>
             ))}
           </div>
