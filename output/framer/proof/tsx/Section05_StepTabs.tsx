@@ -138,7 +138,7 @@ export default function Section05_StepTabs({
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         .s5-section {
-          width: 100%;
+          width: 100%; overflow: hidden; box-sizing: border-box;
           background-color: #ffffff;
           padding: 80px 16px;
           font-family: "DM Sans", sans-serif;

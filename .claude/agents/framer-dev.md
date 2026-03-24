@@ -243,10 +243,16 @@ addPropertyControls(SectionNN_Name, {
 **클래스명 규칙:**
 - 전역 충돌 방지를 위해 섹션별 접두사: `s1-`, `s2-`, ... `sN-`
 
+**Framer 컴포넌트 width 대응 (필수):**
+Framer는 Code Component에 고정 width를 부여하므로, media query만으로는 반응형이 안 될 수 있다.
+- 최상위 래퍼에 반드시 `style={{ width: "100%", overflow: "hidden" }}` 적용
+- `body { overflow-x: hidden }` 은 Framer에서 적용 불가하므로 컴포넌트 레벨에서 처리
+
 **반응형 breakpoint (4단계):**
 ```css
 /* mobile 기본 (375px) */
-.sN-container { padding: 0 16px; max-width: 100%; margin: 0 auto; }
+.sN-section { width: 100%; overflow: hidden; box-sizing: border-box; }
+.sN-container { width: 100%; padding: 0 16px; max-width: 100%; margin: 0 auto; box-sizing: border-box; }
 
 @media (min-width: 768px)  { .sN-container { padding: 0 32px; } }
 @media (min-width: 1024px) { .sN-container { padding: 0 32px; } }

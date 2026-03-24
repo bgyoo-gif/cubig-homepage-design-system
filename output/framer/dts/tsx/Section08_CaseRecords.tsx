@@ -23,61 +23,13 @@ interface Props {
   sectionTitle?: string
   sectionDescription?: string
   defaultOpenIndex?: number
+  body1?: string
+  body2?: string
+  body3?: string
+  body4?: string
 }
 
-const defaultItems: AccordionItem[] = [
-  {
-    industry: "Finance",
-    industryColor: "#725bea",
-    title: "97.6% AI detection rate -- 79 patterns expanded to 1,000 records",
-    badges: [
-      { text: "Privacy-Safe", type: "success" },
-      { text: "DTS Standalone", type: "purple" },
-    ],
-    metrics: [
-      { val: "97.6%", label: "AI Detection Rate" },
-      { val: "79 → 1,000", label: "Records Expanded" },
-    ],
-    body: "IBK expanded 79 fraud/transaction patterns into 1,000+ DP-safe synthetic records using DTS. AI detection rate reached 97.6%. Full PIPA compliance -- zero real customer data accessed or exported. Passed internal audit with no data sovereignty issues.",
-  },
-  {
-    industry: "Finance",
-    industryColor: "#725bea",
-    title: "F1 0.92 churn model -- 277,249 synthetic records, 6-month deletion policy bypassed",
-    badges: [
-      { text: "Privacy-Safe", type: "success" },
-      { text: "Compliance", type: "purple" },
-    ],
-    metrics: [
-      { val: "F1 0.92", label: "Churn Prediction" },
-      { val: "277,249", label: "Synthetic Records" },
-      { val: "+30pp", label: "F1 Improvement" },
-    ],
-    body: "Kyobo's churn AI was blocked by a 6-month data retention policy. DTS generated 277,249 DP-safe synthetic records from historical data -- legally usable after deletion. Churn F1 reached 0.92. Separately, a top-3 life insurer's VoC AI improved from F1 58.55% to 88.55% (+30pp); deploy time cut from 4 weeks to 1 day.",
-  },
-  {
-    industry: "Marketing",
-    industryColor: "#0e824c",
-    title: "90% time reduction -- 70% cost saving on trend research",
-    badges: [{ text: "Cost Reduction", type: "success" }],
-    metrics: [
-      { val: "90%", label: "Time Reduction" },
-      { val: "70%", label: "Cost Saving" },
-    ],
-    body: "Annual consumer trend surveys replaced with AI persona agents trained on synthetic behavioral data. Key insights delivered in 1-2 days (vs. 1+ month), with 70% cost savings by eliminating field collection, incentives, and anonymization steps.",
-  },
-  {
-    industry: "Defense",
-    industryColor: "#ff3030",
-    title: "Zero data exports -- Classified imagery converted to AI-ready synthetic datasets",
-    badges: [
-      { text: "Classified", type: "error" },
-      { text: "Zero-Access", type: "purple" },
-    ],
-    metrics: [{ val: "0", label: "Data Exports" }],
-    body: "DTS deployed on-premise in an air-gapped classified environment. Zero-Access Architecture: no original imagery left the secure perimeter. Classified defense data converted to AI-ready synthetic datasets for model training within security clearance requirements.",
-  },
-]
+// body 값은 Props에서 주입됨 — 아래 getItems() 참조
 
 function getBadgeStyle(type: string) {
   switch (type) {
@@ -109,12 +61,70 @@ export default function Section08_CaseRecords({
   sectionTitle = "Production Case Records",
   sectionDescription = "Enterprise AI projects stall when data conditions prevent training, validation, or safe deployment. DTS was built for exactly these situations.",
   defaultOpenIndex = 0,
+  body1 = "IBK expanded 79 fraud/transaction patterns into 1,000+ DP-safe synthetic records using DTS. AI detection rate reached 97.6%. Full PIPA compliance -- zero real customer data accessed or exported. Passed internal audit with no data sovereignty issues.",
+  body2 = "Kyobo's churn AI was blocked by a 6-month data retention policy. DTS generated 277,249 DP-safe synthetic records from historical data -- legally usable after deletion. Churn F1 reached 0.92. Separately, a top-3 life insurer's VoC AI improved from F1 58.55% to 88.55% (+30pp); deploy time cut from 4 weeks to 1 day.",
+  body3 = "Annual consumer trend surveys replaced with AI persona agents trained on synthetic behavioral data. Key insights delivered in 1-2 days (vs. 1+ month), with 70% cost savings by eliminating field collection, incentives, and anonymization steps.",
+  body4 = "DTS deployed on-premise in an air-gapped classified environment. Zero-Access Architecture: no original imagery left the secure perimeter. Classified defense data converted to AI-ready synthetic datasets for model training within security clearance requirements.",
 }: Props) {
   const [openIndex, setOpenIndex] = useState<number>(defaultOpenIndex)
 
   const toggle = (i: number) => {
     setOpenIndex(openIndex === i ? -1 : i)
   }
+
+  const items: AccordionItem[] = [
+    {
+      industry: "Finance",
+      industryColor: "#725bea",
+      title: "97.6% AI detection rate -- 79 patterns expanded to 1,000 records",
+      badges: [
+        { text: "Privacy-Safe", type: "success" },
+        { text: "DTS Standalone", type: "purple" },
+      ],
+      metrics: [
+        { val: "97.6%", label: "AI Detection Rate" },
+        { val: "79 → 1,000", label: "Records Expanded" },
+      ],
+      body: body1,
+    },
+    {
+      industry: "Finance",
+      industryColor: "#725bea",
+      title: "F1 0.92 churn model -- 277,249 synthetic records, 6-month deletion policy bypassed",
+      badges: [
+        { text: "Privacy-Safe", type: "success" },
+        { text: "Compliance", type: "purple" },
+      ],
+      metrics: [
+        { val: "F1 0.92", label: "Churn Prediction" },
+        { val: "277,249", label: "Synthetic Records" },
+        { val: "+30pp", label: "F1 Improvement" },
+      ],
+      body: body2,
+    },
+    {
+      industry: "Marketing",
+      industryColor: "#0e824c",
+      title: "90% time reduction -- 70% cost saving on trend research",
+      badges: [{ text: "Cost Reduction", type: "success" }],
+      metrics: [
+        { val: "90%", label: "Time Reduction" },
+        { val: "70%", label: "Cost Saving" },
+      ],
+      body: body3,
+    },
+    {
+      industry: "Defense",
+      industryColor: "#ff3030",
+      title: "Zero data exports -- Classified imagery converted to AI-ready synthetic datasets",
+      badges: [
+        { text: "Classified", type: "error" },
+        { text: "Zero-Access", type: "purple" },
+      ],
+      metrics: [{ val: "0", label: "Data Exports" }],
+      body: body4,
+    },
+  ]
 
   return (
     <>
@@ -373,7 +383,7 @@ export default function Section08_CaseRecords({
           </div>
 
           <div className="s8-ac-list" role="list">
-            {defaultItems.map((item, i) => {
+            {items.map((item, i) => {
               const isOpen = openIndex === i
               return (
                 <article
@@ -466,5 +476,29 @@ addPropertyControls(Section08_CaseRecords, {
     min: -1,
     max: 3,
     step: 1,
+  },
+  body1: {
+    type: ControlType.String,
+    title: "Body 1",
+    displayTextArea: true,
+    defaultValue: "IBK expanded 79 fraud/transaction patterns into 1,000+ DP-safe synthetic records using DTS. AI detection rate reached 97.6%. Full PIPA compliance -- zero real customer data accessed or exported. Passed internal audit with no data sovereignty issues.",
+  },
+  body2: {
+    type: ControlType.String,
+    title: "Body 2",
+    displayTextArea: true,
+    defaultValue: "Kyobo's churn AI was blocked by a 6-month data retention policy. DTS generated 277,249 DP-safe synthetic records from historical data -- legally usable after deletion. Churn F1 reached 0.92. Separately, a top-3 life insurer's VoC AI improved from F1 58.55% to 88.55% (+30pp); deploy time cut from 4 weeks to 1 day.",
+  },
+  body3: {
+    type: ControlType.String,
+    title: "Body 3",
+    displayTextArea: true,
+    defaultValue: "Annual consumer trend surveys replaced with AI persona agents trained on synthetic behavioral data. Key insights delivered in 1-2 days (vs. 1+ month), with 70% cost savings by eliminating field collection, incentives, and anonymization steps.",
+  },
+  body4: {
+    type: ControlType.String,
+    title: "Body 4",
+    displayTextArea: true,
+    defaultValue: "DTS deployed on-premise in an air-gapped classified environment. Zero-Access Architecture: no original imagery left the secure perimeter. Classified defense data converted to AI-ready synthetic datasets for model training within security clearance requirements.",
   },
 })

@@ -57,7 +57,7 @@ export default function Section07_Deployment({
         @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@700&family=Fragment+Mono&display=swap');
 
         .s7-section {
-          width: 100%;
+          width: 100%; overflow: hidden; box-sizing: border-box;
           padding: 80px 0;
           margin-top: ${marginTop}px;
           background-color: #f7f7f7;

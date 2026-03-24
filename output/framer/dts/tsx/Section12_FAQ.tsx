@@ -19,6 +19,12 @@ interface Props {
   faq4Question?: string
   faq5Question?: string
   faq6Question?: string
+  answer1?: string
+  answer2?: string
+  answer3?: string
+  answer4?: string
+  answer5?: string
+  answer6?: string
 }
 
 export default function Section12_FAQ({
@@ -32,40 +38,22 @@ export default function Section12_FAQ({
   faq4Question = "What data problems does DTS solve?",
   faq5Question = "What is Zero-Access Architecture?",
   faq6Question = "How is DTS different from SynTitan?",
+  answer1 = "DTS is CUBIG's enterprise synthetic data engine. It generates privacy-safe datasets using differential privacy to fix class imbalance, fill coverage gaps, expand training data, and replace restricted or non-accessible data. DTS runs as a standalone engine or integrates with the SynTitan platform.",
+  answer2 = "Differential privacy (DP) is a mathematical framework that guarantees any single individual's data cannot be identified from the synthetic output -- regardless of what an attacker already knows. DTS applies DP during generation to produce datasets that are statistically representative but contain no real personal information.",
+  answer3 = "Yes. DTS is a full standalone enterprise synthetic data engine. It can be deployed and used independently of SynTitan. When used alongside SynTitan, DTS-generated datasets are versioned and bound to Release States for full execution traceability.",
+  answer4 = "DTS addresses three categories: restricted data that cannot be shared due to privacy or compliance rules; data with coverage gaps or class imbalance that make models unreliable; and non-accessible data that exists but cannot reach training pipelines.",
+  answer5 = "Zero-Access Architecture means original data never leaves the client environment. DTS analyzes statistical properties in-situ, generates a DP-protected synthetic model, and only the synthetic output is used downstream. Raw data is never transferred or accessed externally -- suitable for classified, regulated, and air-gapped environments.",
+  answer6 = "SynTitan performs data quality refinement as part of execution stability. SynTitan can use a subset of DTS capabilities when privacy-safe synthetic data is needed, while DTS is a full standalone enterprise synthetic data engine.",
 }: Props) {
   const [openIndex, setOpenIndex] = useState<number>(defaultOpenIndex)
 
   const faqs: FaqItem[] = [
-    {
-      question: faq1Question,
-      answer:
-        "DTS is CUBIG's enterprise synthetic data engine. It generates privacy-safe datasets using differential privacy to fix class imbalance, fill coverage gaps, expand training data, and replace restricted or non-accessible data. DTS runs as a standalone engine or integrates with the SynTitan platform.",
-    },
-    {
-      question: faq2Question,
-      answer:
-        "Differential privacy (DP) is a mathematical framework that guarantees any single individual's data cannot be identified from the synthetic output -- regardless of what an attacker already knows. DTS applies DP during generation to produce datasets that are statistically representative but contain no real personal information.",
-    },
-    {
-      question: faq3Question,
-      answer:
-        "Yes. DTS is a full standalone enterprise synthetic data engine. It can be deployed and used independently of SynTitan. When used alongside SynTitan, DTS-generated datasets are versioned and bound to Release States for full execution traceability.",
-    },
-    {
-      question: faq4Question,
-      answer:
-        "DTS addresses three categories: restricted data that cannot be shared due to privacy or compliance rules; data with coverage gaps or class imbalance that make models unreliable; and non-accessible data that exists but cannot reach training pipelines.",
-    },
-    {
-      question: faq5Question,
-      answer:
-        "Zero-Access Architecture means original data never leaves the client environment. DTS analyzes statistical properties in-situ, generates a DP-protected synthetic model, and only the synthetic output is used downstream. Raw data is never transferred or accessed externally -- suitable for classified, regulated, and air-gapped environments.",
-    },
-    {
-      question: faq6Question,
-      answer:
-        "SynTitan performs data quality refinement as part of execution stability. SynTitan can use a subset of DTS capabilities when privacy-safe synthetic data is needed, while DTS is a full standalone enterprise synthetic data engine.",
-    },
+    { question: faq1Question, answer: answer1 },
+    { question: faq2Question, answer: answer2 },
+    { question: faq3Question, answer: answer3 },
+    { question: faq4Question, answer: answer4 },
+    { question: faq5Question, answer: answer5 },
+    { question: faq6Question, answer: answer6 },
   ]
 
   const handleToggle = (idx: number) => {
@@ -334,5 +322,41 @@ addPropertyControls(Section12_FAQ, {
     type: ControlType.String,
     title: "FAQ 6 Question",
     defaultValue: "How is DTS different from SynTitan?",
+  },
+  answer1: {
+    type: ControlType.String,
+    title: "Answer 1",
+    displayTextArea: true,
+    defaultValue: "DTS is CUBIG's enterprise synthetic data engine. It generates privacy-safe datasets using differential privacy to fix class imbalance, fill coverage gaps, expand training data, and replace restricted or non-accessible data. DTS runs as a standalone engine or integrates with the SynTitan platform.",
+  },
+  answer2: {
+    type: ControlType.String,
+    title: "Answer 2",
+    displayTextArea: true,
+    defaultValue: "Differential privacy (DP) is a mathematical framework that guarantees any single individual's data cannot be identified from the synthetic output -- regardless of what an attacker already knows. DTS applies DP during generation to produce datasets that are statistically representative but contain no real personal information.",
+  },
+  answer3: {
+    type: ControlType.String,
+    title: "Answer 3",
+    displayTextArea: true,
+    defaultValue: "Yes. DTS is a full standalone enterprise synthetic data engine. It can be deployed and used independently of SynTitan. When used alongside SynTitan, DTS-generated datasets are versioned and bound to Release States for full execution traceability.",
+  },
+  answer4: {
+    type: ControlType.String,
+    title: "Answer 4",
+    displayTextArea: true,
+    defaultValue: "DTS addresses three categories: restricted data that cannot be shared due to privacy or compliance rules; data with coverage gaps or class imbalance that make models unreliable; and non-accessible data that exists but cannot reach training pipelines.",
+  },
+  answer5: {
+    type: ControlType.String,
+    title: "Answer 5",
+    displayTextArea: true,
+    defaultValue: "Zero-Access Architecture means original data never leaves the client environment. DTS analyzes statistical properties in-situ, generates a DP-protected synthetic model, and only the synthetic output is used downstream. Raw data is never transferred or accessed externally -- suitable for classified, regulated, and air-gapped environments.",
+  },
+  answer6: {
+    type: ControlType.String,
+    title: "Answer 6",
+    displayTextArea: true,
+    defaultValue: "SynTitan performs data quality refinement as part of execution stability. SynTitan can use a subset of DTS capabilities when privacy-safe synthetic data is needed, while DTS is a full standalone enterprise synthetic data engine.",
   },
 })

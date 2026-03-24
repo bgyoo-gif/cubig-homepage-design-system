@@ -93,7 +93,7 @@ export default function Section07_BusinessImpact(props: Props) {
         @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Oxanium:wght@700&family=Fragment+Mono:ital@0;1&display=swap');
 
         .s7-section {
-          width: 100%;
+          width: 100%; overflow: hidden; box-sizing: border-box;
           background-color: #f7f7f7;
           padding: 80px 0;
           box-sizing: border-box;

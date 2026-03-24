@@ -48,7 +48,7 @@ export default function Section01_Hero({
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         .s1-section {
-          width: 100%;
+          width: 100%; overflow: hidden; box-sizing: border-box;
           padding: 100px 0 100px;
           background-color: ${tokens.colorSurfaceWhite};
           font-family: ${tokens.fontBase};

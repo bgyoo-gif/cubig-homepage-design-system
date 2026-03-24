@@ -27,7 +27,7 @@ export default function Section03_SyntheticData({
         @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap');
 
         .s3-section {
-          width: 100%;
+          width: 100%; overflow: hidden; box-sizing: border-box;
           padding: 80px 0;
           margin-top: ${marginTop}px;
           font-family: "DM Sans", sans-serif;
