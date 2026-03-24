@@ -398,7 +398,7 @@ h4, .ds-h4 { font-family: var(--ds-font-base); font-size: var(--ds-text-2xl); fo
 
 /* ── 8. Hero ── */
 .ds-hero { padding: 0; display: grid; grid-template-columns: 1fr; gap: var(--ds-space-lg); align-items: center; }
-.ds-hero--text-only { max-width: 860px; }
+.ds-hero--text-only { max-width: 860px; margin: 0 auto; text-align: center; }
 .ds-hero__title {
   font-family: var(--ds-font-base); font-size: 24px; font-weight: var(--ds-weight-bold);
   color: var(--ds-color-text-primary); line-height: var(--ds-leading-tight);
@@ -409,7 +409,7 @@ h4, .ds-h4 { font-family: var(--ds-font-base); font-size: var(--ds-text-2xl); fo
   line-height: var(--ds-leading-relaxed); max-width: 100%; margin-bottom: var(--ds-space-xl);
   word-break: keep-all; overflow-wrap: break-word;
 }
-.ds-hero__actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.ds-hero__actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
 .ds-hero__sub { font-size: var(--ds-text-sm); color: var(--ds-color-text-secondary); margin-bottom: var(--ds-space-xl); }
 
 /* ── 9. Button ── */
@@ -534,7 +534,7 @@ h4, .ds-h4 { font-family: var(--ds-font-base); font-size: var(--ds-text-2xl); fo
 
 /* ── 14. Gradient Card ── */
 .ds-card--gradient {
-  padding: 2px; border-radius: var(--ds-radius-md);
+  padding: 1px; border-radius: var(--ds-radius-md);
   box-shadow: rgba(113, 141, 176, 0.25) 0px 1px 20px 0px;
 }
 .ds-card--gradient-purple { background: var(--ds-gradient-card-purple); }
@@ -543,7 +543,7 @@ h4, .ds-h4 { font-family: var(--ds-font-base); font-size: var(--ds-text-2xl); fo
 .ds-card--gradient-brand  { background: var(--ds-gradient-brand); box-shadow: rgba(94, 167, 255, 0.25) 0px 1px 40px 0px, rgba(215, 94, 255, 0.15) 0px 2px 24px 0px; }
 .ds-card--gradient__inner {
   background: var(--ds-color-surface-white);
-  border-radius: calc(var(--ds-radius-md) - 2px);
+  border-radius: calc(var(--ds-radius-md) - 1px);
   padding: var(--ds-space-xl); display: flex; flex-direction: column;
 }
 .ds-card--gradient-purple .ds-card--gradient__inner { background: var(--ds-gradient-inner-purple); }
