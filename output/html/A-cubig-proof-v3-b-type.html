@@ -1119,10 +1119,14 @@
             <div class="ds-step-tabs__content">
               <h3 class="ds-step-tabs__title">Release State Comparison</h3>
               <p class="ds-step-tabs__description">When output behavior changes between runs, <span class="ds-text--product">SynTitan</span> diffs the two Release States to surface exactly which execution condition changed.</p>
+                          <div class="ds-step-tabs__meta">
+                <span class="ds-step-tabs__meta-label">Root cause</span>
+                <p>Feature column type coerced from integer to string upstream. Preprocessing normalization version updated in the same window.</p>
+                <span class="ds-step-tabs__meta-label">Resolution</span>
+                <p>Restored prior schema type constraint. Pinned preprocessing version in Release State.</p>
+              </div>
             </div>
-            <div class="ds-step-tabs__screenshot" aria-label="Release State Diff code example">
-              <span class="ds-step-tabs__meta-label">Root cause</span>
-              <p>Feature column type coerced from integer to string upstream. Preprocessing normalization version updated in the same window.</p>
+            <div class="ds-step-tabs__screenshot">
               <div class="ds-code-block">
                 <div class="ds-code--muted">// Release State diff: RS-0041 → RS-0042</div>
                 <div class="ds-code--remove">− schema.feature_col_7: dtype=int64</div>
@@ -1130,8 +1134,6 @@
                 <div class="ds-code--muted">// 1 schema fingerprint change detected</div>
                 <div class="ds-code--warn">! Run Binding: RS-0042 flagged before production</div>
               </div>
-              <span class="ds-step-tabs__meta-label">Resolution</span>
-              <p>Restored prior schema type constraint. Pinned preprocessing version in Release State.</p>
             </div>
           </div>
 
@@ -1140,10 +1142,14 @@
             <div class="ds-step-tabs__content">
               <h3 class="ds-step-tabs__title">Schema Fingerprint Change</h3>
               <p class="ds-step-tabs__description"><span class="ds-text--product">SynTitan</span> captures a schema fingerprint at each ingestion. When the fingerprint changes, it is logged in the Release State and surfaced in the Change Log before the run proceeds.</p>
+                          <div class="ds-step-tabs__meta">
+                <span class="ds-step-tabs__meta-label">Root cause</span>
+                <p>Upstream data feed removed two feature columns without downstream notification.</p>
+                <span class="ds-step-tabs__meta-label">Resolution</span>
+                <p>Run halted before training. Schema contract enforced. Upstream notified within the same hour.</p>
+              </div>
             </div>
-            <div class="ds-step-tabs__screenshot" aria-label="Schema fingerprint code example">
-              <span class="ds-step-tabs__meta-label">Root cause</span>
-              <p>Upstream data feed removed two feature columns without downstream notification.</p>
+            <div class="ds-step-tabs__screenshot">
               <div class="ds-code-block">
                 <div class="ds-code--muted">// Schema fingerprint audit log</div>
                 <div class="ds-code--warn">schema_fingerprint: CHANGED</div>
@@ -1153,8 +1159,6 @@
                 <div class="ds-code--remove">// columns_removed: 2 [user_segment_v2, tenure_bucket]</div>
                 <div class="ds-code--muted">// type_changes: 1</div>
               </div>
-              <span class="ds-step-tabs__meta-label">Resolution</span>
-              <p>Run halted before training. Schema contract enforced. Upstream notified within the same hour.</p>
             </div>
           </div>
 
@@ -1163,10 +1167,14 @@
             <div class="ds-step-tabs__content">
               <h3 class="ds-step-tabs__title">Preprocessing Logic Change</h3>
               <p class="ds-step-tabs__description">Preprocessing steps are versioned inside each Release State. When logic changes — normalization, imputation, encoding — the diff shows exactly which step changed and what the expected effect is.</p>
+                          <div class="ds-step-tabs__meta">
+                <span class="ds-step-tabs__meta-label">Root cause</span>
+                <p>Normalization method switched from min-max to z-score — changing the scale of all downstream feature inputs.</p>
+                <span class="ds-step-tabs__meta-label">Resolution</span>
+                <p>Reverted to prior Release State for immediate rollback. New method evaluated in staging before reintroduction.</p>
+              </div>
             </div>
-            <div class="ds-step-tabs__screenshot" aria-label="Preprocessing diff code example">
-              <span class="ds-step-tabs__meta-label">Root cause</span>
-              <p>Normalization method switched from min-max to z-score — changing the scale of all downstream feature inputs.</p>
+            <div class="ds-step-tabs__screenshot">
               <div class="ds-code-block">
                 <div class="ds-code--muted">// Preprocessing diff: RS-0042 → RS-0043</div>
                 <div class="ds-code--remove">− step: normalize_amount</div>
@@ -1176,8 +1184,6 @@
                 <div class="ds-code--warn">! normalization method changed</div>
                 <div class="ds-code--muted">// all downstream feature scores affected</div>
               </div>
-              <span class="ds-step-tabs__meta-label">Resolution</span>
-              <p>Reverted to prior Release State for immediate rollback. New method evaluated in staging before reintroduction.</p>
             </div>
           </div>
 
@@ -1186,10 +1192,14 @@
             <div class="ds-step-tabs__content">
               <h3 class="ds-step-tabs__title">Runtime Dependency Change</h3>
               <p class="ds-step-tabs__description">Runtime environment versions — libraries, Python runtime, inference server — are captured in each Release State. Unexpected version changes are surfaced as execution state drift events.</p>
+                          <div class="ds-step-tabs__meta">
+                <span class="ds-step-tabs__meta-label">Root cause</span>
+                <p>Container image updated in CI/CD pipeline without version-pinning the AI dependencies.</p>
+                <span class="ds-step-tabs__meta-label">Resolution</span>
+                <p>Dependency versions pinned in Release State manifest. Container image rebuild triggered with verified versions.</p>
+              </div>
             </div>
-            <div class="ds-step-tabs__screenshot" aria-label="Runtime dependency code example">
-              <span class="ds-step-tabs__meta-label">Root cause</span>
-              <p>Container image updated in CI/CD pipeline without version-pinning the AI dependencies.</p>
+            <div class="ds-step-tabs__screenshot">
               <div class="ds-code-block">
                 <div class="ds-code--muted">// Runtime dependency audit: RS-0043</div>
                 <div class="ds-code--remove">− sklearn: 1.2.2</div>
@@ -1199,8 +1209,6 @@
                 <div class="ds-code--warn">! 2 runtime dependencies changed</div>
                 <div class="ds-code--warn">! imputation behavior may differ</div>
               </div>
-              <span class="ds-step-tabs__meta-label">Resolution</span>
-              <p>Dependency versions pinned in Release State manifest. Container image rebuild triggered with verified versions.</p>
             </div>
           </div>
 
