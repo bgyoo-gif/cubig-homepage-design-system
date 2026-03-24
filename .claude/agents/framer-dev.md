@@ -411,6 +411,29 @@ return <div ref={containerRef}>...</div>
 - `maxHeight: 420px` (mobile `280px`)
 - `objectFit: "cover"`, `objectPosition: "top left"`
 
+### Localization (필수)
+**모든 사용자에게 보이는 텍스트는 prop으로 추출하고 `addPropertyControls`에 등록한다.**
+Framer Localization 패널에서 텍스트를 관리하려면 prop으로 노출되어야 함.
+
+추출 대상:
+- title, description, body text
+- bullet items (bullet1, bullet2, ...)
+- badge/tag labels (badgeLabel1, ...)
+- tab labels (tabLabel1, ...)
+- button/CTA labels (ctaLabel1, ...)
+- banner/callout text
+- metric values + labels (kpiValue1, kpiLabel1, ...)
+- FAQ question + answer (faq1Q, faq1A, ...)
+- table cell text
+- category/industry names
+- cert/partner names
+
+규칙:
+- 배열 데이터는 개별 prop으로 풀어서 등록 (Framer는 배열 prop을 Localization에 노출 안 함)
+- `defaultValue`는 현재 영문 텍스트 그대로
+- brand 키워드가 포함된 title은 `titlePart1` + `titleBrand`로 분리
+- JSX에 하드코딩 텍스트 0개가 목표
+
 ---
 
 ## 절대 규칙

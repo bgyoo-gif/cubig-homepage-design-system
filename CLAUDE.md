@@ -97,6 +97,7 @@ deploy (gh-pages push → GitHub Pages 자동 배포)
 - 외부 서비스 링크는 버튼형: AWS Marketplace, 제품 사이트 등 외부 링크는 `ds-btn--secondary` 버튼으로 구현 (인라인 텍스트 링크 금지)
 - 단계별 프로세스는 Step Tabs: "Step 1,2,3" / "How it works" 형태는 반드시 `[U] ds-step-tabs` 사용. 스크린샷 필요 시 placeholder + 사용자 요청
 - 인증/수상은 Cert Grid: ISO, GS 등 인증 내용은 `[L] ds-cert-grid` 마키 + 공식 이미지 사용
+- TSX Localization 필수: 모든 텍스트를 prop으로 추출 + `addPropertyControls` 등록 — JSX 하드코딩 텍스트 0개 (Framer Localization 패널 대응)
 
 ---
 

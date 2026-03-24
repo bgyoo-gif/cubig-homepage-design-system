@@ -400,6 +400,10 @@ grep -rL '"0 auto"' output/framer/[페이지명]/tsx/
 # addPropertyControls 존재 확인
 grep -rL 'addPropertyControls' output/framer/[페이지명]/tsx/
 
+# Localization: JSX 하드코딩 텍스트 검출 (prop으로 추출 안 된 것)
+# 영문 텍스트가 JSX에 직접 있으면 결함
+grep -rn '>[A-Z][a-z].*</' output/framer/[페이지명]/tsx/ | grep -v 'defaultValue\|props\.\|{.*}' | head -10
+
 # 이전 brand purple #a617ff 사용 금지
 grep -rn '#a617ff' output/framer/[페이지명]/tsx/
 ```
