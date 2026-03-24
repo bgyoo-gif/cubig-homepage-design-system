@@ -1119,9 +1119,7 @@
             <div class="ds-step-tabs__content">
               <h3 class="ds-step-tabs__title">Release State Comparison</h3>
               <p class="ds-step-tabs__description">When output behavior changes between runs, <span class="ds-text--product">SynTitan</span> diffs the two Release States to surface exactly which execution condition changed.</p>
-              <div class="ds-code-block" aria-label="Release State diff example">
-                <div class="ds-code--muted">// Release State diff: RS-0041 -&gt; RS-0042</div>
-                <div class="ds-code--remove">- schema.feature_col_7: dtype=int64</div>
+<div class="ds-code--remove">- schema.feature_col_7: dtype=int64</div>
                 <div class="ds-code--add">+ schema.feature_col_7: dtype=object</div>
                 <div class="ds-code--muted">// 1 schema fingerprint change detected</div>
                 <div class="ds-code--muted">// preprocessing.normalization_v: 1.2.1 -&gt; 1.3.0</div>
@@ -1150,9 +1148,7 @@
             <div class="ds-step-tabs__content">
               <h3 class="ds-step-tabs__title">Schema Fingerprint Change</h3>
               <p class="ds-step-tabs__description"><span class="ds-text--product">SynTitan</span> captures a schema fingerprint at each ingestion. When the fingerprint changes, it is logged in the Release State and surfaced in the Change Log before the run proceeds.</p>
-              <div class="ds-code-block" aria-label="Schema fingerprint audit log example">
-                <div class="ds-code--muted">// Schema fingerprint audit log</div>
-                <div>run_id: r-20240318-084501</div>
+<div>run_id: r-20240318-084501</div>
                 <div>release_state: RS-0041</div>
                 <div class="ds-code--warn">schema_fingerprint: CHANGED</div>
                 <div class="ds-code--remove">prev: sha256:a4f2b...3c91</div>
@@ -1186,9 +1182,7 @@
             <div class="ds-step-tabs__content">
               <h3 class="ds-step-tabs__title">Preprocessing Logic Change</h3>
               <p class="ds-step-tabs__description">Preprocessing steps are versioned inside each Release State. When logic changes — normalization, imputation, encoding — the diff shows exactly which step changed and what the expected effect is.</p>
-              <div class="ds-code-block" aria-label="Preprocessing diff example">
-                <div class="ds-code--muted">// Preprocessing diff: RS-0042 -&gt; RS-0043</div>
-                <div class="ds-code--remove">- step: normalize_amount</div>
+<div class="ds-code--remove">- step: normalize_amount</div>
                 <div class="ds-code--remove">  method: min-max  range: [0, 1000]</div>
                 <div class="ds-code--add">+ step: normalize_amount</div>
                 <div class="ds-code--add">  method: z-score  params: mu=0, sigma=1</div>
@@ -1220,9 +1214,7 @@
             <div class="ds-step-tabs__content">
               <h3 class="ds-step-tabs__title">Runtime Dependency Change</h3>
               <p class="ds-step-tabs__description">Runtime environment versions — libraries, Python runtime, inference server — are captured in each Release State. Unexpected version changes are surfaced as execution state drift events.</p>
-              <div class="ds-code-block" aria-label="Runtime dependency audit example">
-                <div class="ds-code--muted">// Runtime dependency audit: RS-0043</div>
-                <div class="ds-code--remove">- sklearn: 1.2.2</div>
+<div class="ds-code--remove">- sklearn: 1.2.2</div>
                 <div class="ds-code--add">+ sklearn: 1.4.0</div>
                 <div class="ds-code--remove">- pandas: 1.5.3</div>
                 <div class="ds-code--add">+ pandas: 2.1.0</div>
