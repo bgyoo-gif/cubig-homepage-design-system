@@ -28,7 +28,7 @@ export default function Section01_Hero({
   secondaryBtn1Href = "https://aws.amazon.com/marketplace",
   secondaryBtn2Text = "See SynTitan Platform",
   secondaryBtn2Href = "/syntitan",
-  screenshotSrc = `${IMAGE_BASE}/screenshot-dts.avif`,
+  screenshotSrc = `${IMAGE_BASE}/screenshot-dts.webp`,
   screenshotAlt = "DTS — Enterprise Synthetic Data Engine",
 }: Props) {
   return (

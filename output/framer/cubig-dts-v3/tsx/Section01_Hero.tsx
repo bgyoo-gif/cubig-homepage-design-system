@@ -110,7 +110,7 @@ export default function Section01_Hero({
               minHeight: isMobile ? 160 : 320,
             }}>
               <img
-                src={`${IMAGE_BASE}/screenshot-dts.avif`}
+                src={`${IMAGE_BASE}/screenshot-dts.webp`}
                 alt={screenshotAlt}
                 loading="lazy"
                 style={{ width: "100%", display: "block" }}

@@ -26,7 +26,7 @@ export default function Section01_Hero({
   secondaryBtn1Href = "https://llmcapsule.ai",
   secondaryBtn2Text = "See SynTitan Platform",
   secondaryBtn2Href = "/syntitan",
-  screenshotSrc = `${IMAGE_BASE}/screenshot-llmcapsule.avif`,
+  screenshotSrc = `${IMAGE_BASE}/screenshot-llmcapsule.webp`,
   screenshotAlt = "LLM Capsule — Enterprise AI Enablement",
 }: Props) {
   return (
