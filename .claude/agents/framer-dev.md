@@ -387,41 +387,44 @@ grep -n 'color.*#e6e7e9\|color.*#f2f2f2\|color.*#f7f7f7\|color.*#ececec' output/
 ## TSX 필수 규칙 (Framer Code Component)
 
 ### 스타일링
-- **`<style>` 태그 사용 금지** — Framer에서 지원 안 됨. 에러 발생
-- **인라인 스타일만 사용** — `style={{ fontSize: 16, color: "#0f0f0f" }}`
-- `className` 사용 금지 — Framer에서 CSS 클래스 미지원
-- `::before`/`::after` → 별도 `<div>` 오버레이로 구현
-- `@keyframes` → `useEffect`로 `document.head`에 `<style>` 태그 주입
+- **`<style>{``...``}</style>` 허용** — Container Queries 방식에서는 CSS를 style 태그에 작성
+- `className`은 **섹션별 접두사**(`s1-`, `s2-` 등)로 전역 충돌 방지
+- `::before`/`::after` → style 태그 안에서 pseudo-element 사용 가능
+- `@keyframes` → style 태그 안에 작성
 - Fragment `<>...</>` 금지 → 단일 `<div>` wrapper 사용
 
-### 반응형 (필수)
-모든 TSX에 아래 패턴을 반드시 포함:
-**`window.innerWidth` 사용 금지** — Framer 에디터 캔버스에서 컴포넌트 프레임 크기와 무관하게 에디터 창 크기를 반환하므로 반응형이 깨짐.
-반드시 `ResizeObserver`로 컴포넌트 자체 너비를 측정:
+### 반응형 (필수) — CSS Container Queries
+
+**`window.innerWidth` 사용 금지, `ResizeObserver` JS 방식도 비권장 (깜빡임 위험)**
+
+CSS Container Queries(`@container`)를 사용한다.
+컴포넌트 자체 너비 기준으로 반응형이 적용되므로 Framer 캔버스 + 실제 배포 모두 정상 동작.
+
+구조:
 ```tsx
-const containerRef = React.useRef<HTMLDivElement>(null)
-const [isMobile, setIsMobile] = React.useState(false)
-const [isTablet, setIsTablet] = React.useState(false)
-React.useEffect(() => {
-  const el = containerRef.current
-  if (!el) return
-  let prevMobile = false
-  let prevTablet = false
-  const ro = new ResizeObserver(([entry]) => {
-    const w = entry.contentRect.width
-    const m = w < 768
-    const t = w >= 768 && w < 1024
-    if (m !== prevMobile) { prevMobile = m; setIsMobile(m) }
-    if (t !== prevTablet) { prevTablet = t; setIsTablet(t) }
-  })
-  ro.observe(el)
-  return () => ro.disconnect()
-}, [])
-// return 최상위 div에 ref 연결:
-return <div ref={containerRef}>...</div>
+<style>{`
+  .s1-section { width: 100%; padding: 80px 0; }
+  .s1-inner { width: 100%; container-type: inline-size; }
+  .s1-container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 16px; box-sizing: border-box; }
+  @container (min-width: 768px)  { .s1-container { padding: 0 32px; } }
+  @container (min-width: 1024px) { .s1-container { padding: 0 32px; } }
+  @container (min-width: 1440px) { .s1-container { padding: 0 120px; max-width: 1440px; } }
+`}</style>
+
+<section className="s1-section">
+  <div className="s1-inner">
+    <div className="s1-container">
+      ...콘텐츠...
+    </div>
+  </div>
+</section>
 ```
-**주의:** `setState`를 값 변경 시에만 호출해야 함. 매번 호출하면 리렌더링 → padding 변경 → width 변경 → ResizeObserver 재트리거 → **무한 루프 깜빡임** 발생.
-적용 방식: `isMobile ? 모바일값 : isTablet ? 태블릿값 : 데스크톱값`
+
+핵심 규칙:
+- `container-type: inline-size`는 `.s{N}-inner` div에 설정
+- 컨테이너 padding: mobile `0 16px` / tablet `0 32px` / desktop `0 120px`
+- 그리드/폰트도 `@container` 쿼리로 반응형 처리
+- 폰트: h1 `24→28→32→36px`, h2 `20→22→24→28px`
 - 컨테이너 padding: mobile `"0 16px"` / tablet `"0 32px"` / desktop `"0 120px"`
 - 그리드: 2col/3col → mobile 1col
 - 폰트: h1 `36→24px`, h2 `28→20px`, body `16→14px`
