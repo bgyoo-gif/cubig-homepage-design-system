@@ -425,10 +425,7 @@ CSS Container Queries(`@container`)를 사용한다.
 - 컨테이너 padding: mobile `0 16px` / tablet `0 32px` / desktop `0 120px`
 - 그리드/폰트도 `@container` 쿼리로 반응형 처리
 - 폰트: h1 `24→28→32→36px`, h2 `20→22→24→28px`
-- 컨테이너 padding: mobile `"0 16px"` / tablet `"0 32px"` / desktop `"0 120px"`
-- 그리드: 2col/3col → mobile 1col
-- 폰트: h1 `36→24px`, h2 `28→20px`, body `16→14px`
-- CTA 버튼: `flexDirection: "column"` on mobile
+- CTA 버튼: mobile에서 `flex-direction: column`
 
 ### 정렬
 - 섹션 헤더: `textAlign: "center"` 기본
