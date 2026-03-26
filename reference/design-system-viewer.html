@@ -7,7 +7,7 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <title>CUBIG Design System v5.1</title>
-<!-- last-updated: 20260326150307 -->
+<!-- last-updated: 20260326154009 -->
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@400;600;700&family=Fragment+Mono&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -81,14 +81,6 @@
   --ds-diag-text-sub:      #666666;
   --ds-diag-arrow-dark:    #444444;
   --ds-diag-arrow-accent:  #4a9de0;
-  /* Diagram Gradient — Normal (shimmer border) */
-  --ds-diag-shimmer-normal: linear-gradient(90deg, #d0d0d0 0%, #ffffff 30%, #c8c8c8 50%, #ffffff 70%, #d0d0d0 100%);
-  /* Diagram Gradient — Accent (glow pulse) */
-  --ds-diag-grad-accent: linear-gradient(135deg, #7dd3fc 0%, #a78bfa 30%, #e879f9 65%, #67e8f9 100%);
-  /* Diagram Gradient — Nature (초록-노랑) */
-  --ds-diag-grad-nature: linear-gradient(135deg, #6ee7b7 0%, #a3e635 35%, #fbbf24 70%, #34d399 100%);
-  /* Diagram Gradient — Warm (주황-분홍) */
-  --ds-diag-grad-warm:   linear-gradient(135deg, #fb923c 0%, #f472b6 35%, #e879f9 70%, #fda4af 100%);
   /* Diagram OS Window content bg */
   --ds-diag-os-content: linear-gradient(135deg, #dff0ea 0%, #eef3ff 40%, #f3eeff 70%, #fdeef8 100%);
 
@@ -745,38 +737,33 @@ code, .ds-code-inline {
 .ds-diagram__exchange-wrap {
   padding: 2px;
   border-radius: var(--ds-radius-md);
-  background: var(--ds-diag-grad-accent);
-  animation: ds-diag-glow 3s ease-in-out infinite;
+  background: var(--ds-gradient-card-purple);
+  box-shadow: rgba(113,141,176,0.25) 0px 1px 20px;
   width: 100%;
 }
-@keyframes ds-diag-glow {
-  0%, 100% { box-shadow: 0 0 14px rgba(125,211,252,0.5), 0 0 28px rgba(167,139,250,0.35); }
-  50%      { box-shadow: 0 0 22px rgba(125,211,252,0.75), 0 0 42px rgba(167,139,250,0.55); }
-}
-.ds-diagram__exchange-wrap--nature {
+.ds-diagram__exchange-wrap--green {
   padding: 2px;
   border-radius: var(--ds-radius-md);
-  background: var(--ds-diag-grad-nature);
-  animation: ds-diag-glow-nature 3s ease-in-out infinite;
+  background: var(--ds-gradient-card-green);
+  box-shadow: rgba(113,141,176,0.25) 0px 1px 20px;
   width: 100%;
 }
-@keyframes ds-diag-glow-nature {
-  0%, 100% { box-shadow: 0 0 14px rgba(110,231,183,0.5), 0 0 28px rgba(163,230,53,0.35); }
-  50%      { box-shadow: 0 0 22px rgba(110,231,183,0.75), 0 0 42px rgba(163,230,53,0.55); }
-}
-.ds-diagram__exchange-wrap--warm {
+.ds-diagram__exchange-wrap--blue {
   padding: 2px;
   border-radius: var(--ds-radius-md);
-  background: var(--ds-diag-grad-warm);
-  animation: ds-diag-glow-warm 3s ease-in-out infinite;
+  background: var(--ds-gradient-card-blue);
+  box-shadow: rgba(113,141,176,0.25) 0px 1px 20px;
   width: 100%;
 }
-@keyframes ds-diag-glow-warm {
-  0%, 100% { box-shadow: 0 0 14px rgba(251,146,60,0.5), 0 0 28px rgba(244,114,182,0.35); }
-  50%      { box-shadow: 0 0 22px rgba(251,146,60,0.75), 0 0 42px rgba(244,114,182,0.55); }
+.ds-diagram__exchange-wrap--brand {
+  padding: 2px;
+  border-radius: var(--ds-radius-md);
+  background: var(--ds-gradient-brand);
+  box-shadow: 0 0 18px rgba(125,211,252,0.45), 0 0 32px rgba(167,139,250,0.3);
+  width: 100%;
 }
 .ds-diagram__exchange-inner {
-  background: linear-gradient(145deg, rgba(237,246,255,0.95), rgba(243,236,255,0.92), rgba(255,238,255,0.9));
+  background: var(--ds-gradient-inner-purple);
   border-radius: calc(var(--ds-radius-md) - 2px);
   padding: 14px 11px;
   display: flex;
@@ -798,17 +785,12 @@ code, .ds-code-inline {
 .ds-diagram__default-wrap {
   padding: 2px;
   border-radius: var(--ds-radius-md);
-  background: linear-gradient(90deg, #d0d0d0 0%, #ffffff 30%, #c8c8c8 50%, #ffffff 70%, #d0d0d0 100%);
-  background-size: 300% 100%;
-  animation: ds-diag-shimmer 4s linear infinite;
+  background: var(--ds-gradient-card-silver);
+  box-shadow: rgba(113,141,176,0.25) 0px 1px 20px;
   width: 100%;
 }
-@keyframes ds-diag-shimmer {
-  0%   { background-position: 200% center; }
-  100% { background-position: -200% center; }
-}
 .ds-diagram__default-inner {
-  background: linear-gradient(145deg, #ffffff 0%, #f4f4f4 100%);
+  background: var(--ds-color-surface-white);
   border-radius: calc(var(--ds-radius-md) - 2px);
   padding: 14px 12px;
   text-align: center;
@@ -2469,7 +2451,7 @@ code, .ds-code-inline {
         <p style="font-size:11px;color:var(--ds-color-text-tertiary);margin-top:6px">silver 카드 스택 — 모듈/서비스 단위</p>
       </div>
 
-      <!-- exchange: accent -->
+      <!-- exchange: purple -->
       <div>
         <p style="font-size:var(--ds-text-xs);color:var(--ds-color-text-tertiary);font-family:var(--ds-font-code);margin-bottom:8px">.ds-diagram__exchange-wrap</p>
         <div class="ds-diagram__exchange-wrap" style="width:100%">
@@ -2478,40 +2460,55 @@ code, .ds-code-inline {
             <span style="font-size:var(--ds-text-sm);color:var(--ds-diag-text);font-weight:500;margin-top:4px">Exchange</span>
           </div>
         </div>
-        <p style="font-size:11px;color:var(--ds-color-text-tertiary);margin-top:6px">accent glow 테두리 — 보안/교환 레이어</p>
+        <p style="font-size:11px;color:var(--ds-color-text-tertiary);margin-top:6px">purple gradient 테두리 — 보안/교환 레이어</p>
         <!-- gradient swatch -->
-        <div style="margin-top:8px;height:6px;border-radius:3px;background:var(--ds-diag-grad-accent)"></div>
-        <p style="font-size:10px;color:var(--ds-color-text-tertiary);margin-top:3px;font-family:var(--ds-font-code)">--ds-diag-grad-accent</p>
+        <div style="margin-top:8px;height:6px;border-radius:3px;background:var(--ds-gradient-card-purple)"></div>
+        <p style="font-size:10px;color:var(--ds-color-text-tertiary);margin-top:3px;font-family:var(--ds-font-code)">--ds-gradient-card-purple</p>
       </div>
 
-      <!-- exchange: nature -->
+      <!-- exchange: green -->
       <div>
-        <p style="font-size:var(--ds-text-xs);color:var(--ds-color-text-tertiary);font-family:var(--ds-font-code);margin-bottom:8px">.ds-diagram__exchange-wrap--nature</p>
-        <div class="ds-diagram__exchange-wrap--nature" style="width:100%">
+        <p style="font-size:var(--ds-text-xs);color:var(--ds-color-text-tertiary);font-family:var(--ds-font-code);margin-bottom:8px">.ds-diagram__exchange-wrap--green</p>
+        <div class="ds-diagram__exchange-wrap--green" style="width:100%">
           <div class="ds-diagram__exchange-inner">
-            <span style="font-size:var(--ds-text-sm);color:var(--ds-diag-text);font-weight:500">Nature</span>
-            <span style="font-size:11px;color:var(--ds-diag-text-sub)">초록-노랑</span>
+            <span style="font-size:var(--ds-text-sm);color:var(--ds-diag-text);font-weight:500">Green</span>
+            <span style="font-size:11px;color:var(--ds-diag-text-sub)">자연/생태 레이어</span>
           </div>
         </div>
-        <p style="font-size:11px;color:var(--ds-color-text-tertiary);margin-top:6px">nature glow 테두리 — 자연/생태/친환경 레이어</p>
+        <p style="font-size:11px;color:var(--ds-color-text-tertiary);margin-top:6px">green gradient 테두리 — 자연/생태/친환경 레이어</p>
         <!-- gradient swatch -->
-        <div style="margin-top:8px;height:6px;border-radius:3px;background:var(--ds-diag-grad-nature)"></div>
-        <p style="font-size:10px;color:var(--ds-color-text-tertiary);margin-top:3px;font-family:var(--ds-font-code)">--ds-diag-grad-nature</p>
+        <div style="margin-top:8px;height:6px;border-radius:3px;background:var(--ds-gradient-card-green)"></div>
+        <p style="font-size:10px;color:var(--ds-color-text-tertiary);margin-top:3px;font-family:var(--ds-font-code)">--ds-gradient-card-green</p>
       </div>
 
-      <!-- exchange: warm -->
+      <!-- exchange: blue -->
       <div>
-        <p style="font-size:var(--ds-text-xs);color:var(--ds-color-text-tertiary);font-family:var(--ds-font-code);margin-bottom:8px">.ds-diagram__exchange-wrap--warm</p>
-        <div class="ds-diagram__exchange-wrap--warm" style="width:100%">
+        <p style="font-size:var(--ds-text-xs);color:var(--ds-color-text-tertiary);font-family:var(--ds-font-code);margin-bottom:8px">.ds-diagram__exchange-wrap--blue</p>
+        <div class="ds-diagram__exchange-wrap--blue" style="width:100%">
           <div class="ds-diagram__exchange-inner">
-            <span style="font-size:var(--ds-text-sm);color:var(--ds-diag-text);font-weight:500">Warm</span>
-            <span style="font-size:11px;color:var(--ds-diag-text-sub)">주황-분홍</span>
+            <span style="font-size:var(--ds-text-sm);color:var(--ds-diag-text);font-weight:500">Blue</span>
+            <span style="font-size:11px;color:var(--ds-diag-text-sub)">데이터/신뢰 레이어</span>
           </div>
         </div>
-        <p style="font-size:11px;color:var(--ds-color-text-tertiary);margin-top:6px">warm glow 테두리 — 에너지/감성/경고 레이어</p>
+        <p style="font-size:11px;color:var(--ds-color-text-tertiary);margin-top:6px">blue gradient 테두리 — 데이터/신뢰 레이어</p>
         <!-- gradient swatch -->
-        <div style="margin-top:8px;height:6px;border-radius:3px;background:var(--ds-diag-grad-warm)"></div>
-        <p style="font-size:10px;color:var(--ds-color-text-tertiary);margin-top:3px;font-family:var(--ds-font-code)">--ds-diag-grad-warm</p>
+        <div style="margin-top:8px;height:6px;border-radius:3px;background:var(--ds-gradient-card-blue)"></div>
+        <p style="font-size:10px;color:var(--ds-color-text-tertiary);margin-top:3px;font-family:var(--ds-font-code)">--ds-gradient-card-blue</p>
+      </div>
+
+      <!-- exchange: brand -->
+      <div>
+        <p style="font-size:var(--ds-text-xs);color:var(--ds-color-text-tertiary);font-family:var(--ds-font-code);margin-bottom:8px">.ds-diagram__exchange-wrap--brand</p>
+        <div class="ds-diagram__exchange-wrap--brand" style="width:100%">
+          <div class="ds-diagram__exchange-inner">
+            <span class="ds-diagram__safe-badge">BRAND</span>
+            <span style="font-size:var(--ds-text-sm);color:var(--ds-diag-text);font-weight:500;margin-top:4px">Brand</span>
+          </div>
+        </div>
+        <p style="font-size:11px;color:var(--ds-color-text-tertiary);margin-top:6px">brand gradient 테두리 + glow — 핵심 강조 레이어</p>
+        <!-- gradient swatch -->
+        <div style="margin-top:8px;height:6px;border-radius:3px;background:var(--ds-gradient-brand)"></div>
+        <p style="font-size:10px;color:var(--ds-color-text-tertiary);margin-top:3px;font-family:var(--ds-font-code)">--ds-gradient-brand</p>
       </div>
 
       <!-- default -->
@@ -2520,10 +2517,13 @@ code, .ds-code-inline {
         <div class="ds-diagram__default-wrap" style="width:100%">
           <div class="ds-diagram__default-inner">
             <span style="font-weight:500">Output</span><br>
-            <span style="font-size:11px;color:var(--ds-diag-text-sub)">Normal gradient</span>
+            <span style="font-size:11px;color:var(--ds-diag-text-sub)">Silver gradient</span>
           </div>
         </div>
-        <p style="font-size:11px;color:var(--ds-color-text-tertiary);margin-top:6px">normal gradient 테두리 — 일반 출력 단계</p>
+        <p style="font-size:11px;color:var(--ds-color-text-tertiary);margin-top:6px">silver gradient 테두리 — 일반 출력 단계</p>
+        <!-- gradient swatch -->
+        <div style="margin-top:8px;height:6px;border-radius:3px;background:var(--ds-gradient-card-silver)"></div>
+        <p style="font-size:10px;color:var(--ds-color-text-tertiary);margin-top:3px;font-family:var(--ds-font-code)">--ds-gradient-card-silver</p>
       </div>
 
     </div>
