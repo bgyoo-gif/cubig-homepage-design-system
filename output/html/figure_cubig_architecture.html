@@ -84,15 +84,11 @@
     --ds-prod-capsule-out:    rgba(114, 91, 234, 0.10);
     --ds-prod-capsule-out-b:  rgba(114, 91, 234, 0.22);
 
-    /* Diagram Gradient Borders — 파스텔 톤 (스크린샷 기준) */
-    --ds-diag-grad-dts:
-      linear-gradient(135deg, #b8f0d8 0%, #a0e8c8 30%, #d4f5c0 60%, #b8f0d8 100%);
-    --ds-diag-grad-titan:
-      linear-gradient(135deg, #c8dcf8 0%, #b4ccf4 30%, #d0c8f4 60%, #c8dcf8 100%);
-    --ds-diag-grad-capsule:
-      linear-gradient(135deg, #ddd4f8 0%, #d0c0f4 30%, #e4d0f0 60%, #ddd4f8 100%);
-    --ds-diag-grad-accent:
-      linear-gradient(135deg, #d8d0f8 0%, #d4c4f4 25%, #e8d0f0 50%, #d0d8f8 75%, #d8d0f8 100%);
+    /* Diagram Borders — 단색에 가까운 연한 톤 (스크린샷 기준) */
+    --ds-diag-border-dts:     rgba(14, 130, 76, 0.22);
+    --ds-diag-border-titan:   rgba(48, 97, 242, 0.20);
+    --ds-diag-border-capsule: rgba(114, 91, 234, 0.22);
+    --ds-diag-border-accent:  rgba(114, 91, 234, 0.18);
 
     /* Diagram Surface */
     --ds-diag-surface:         #fdfdfd;
@@ -173,30 +169,10 @@
     flex-direction: column;
   }
 
-  /* Col 3: AI Applications — gradient border */
+  /* Col 3: AI Applications — 연한 보라 border (스크린샷 기준, glow 없음) */
   .diag-col-card--apps {
-    position: relative;
-    background: transparent;
-    padding: 2.5px;
-    border-radius: calc(var(--ds-radius-lg) + 2.5px);
-    background: var(--ds-diag-grad-accent);
-    animation: diag-glow-accent 3s ease-in-out infinite;
-    box-shadow:
-      0 0 12px rgba(208, 192, 244, 0.25),
-      0 0 24px rgba(212, 196, 244, 0.15);
-  }
-  .diag-col-card--apps-inner {
-    background: var(--ds-color-surface-white);
-    border-radius: calc(var(--ds-radius-lg) - 1px);
-    overflow: hidden;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-
-  @keyframes diag-glow-accent {
-    0%, 100% { box-shadow: 0 0 10px rgba(208, 192, 244, 0.25), 0 0 20px rgba(212, 196, 244, 0.15); }
-    50%       { box-shadow: 0 0 18px rgba(208, 192, 244, 0.40), 0 0 36px rgba(212, 196, 244, 0.25); }
+    border: 1.5px solid var(--ds-diag-border-accent);
+    box-shadow: var(--ds-shadow-card);
   }
 
   /* ─── Column Header Label (grey bar) ─── */
@@ -302,43 +278,29 @@
     flex: 1;
   }
 
-  /* gradient border wrapper */
+  /* product card border — 단색 연한 border (스크린샷 기준, glow 없음) */
   .diag-prod-border {
-    padding: 2px;
-    border-radius: calc(var(--ds-radius-md) + 2px);
+    border-radius: calc(var(--ds-radius-md) + 1px);
   }
   .diag-prod-border--dts {
-    background: var(--ds-diag-grad-dts);
-    animation: diag-glow-dts 3.5s ease-in-out infinite;
+    border: 1.5px solid var(--ds-diag-border-dts);
   }
   .diag-prod-border--titan {
-    background: var(--ds-diag-grad-titan);
-    animation: diag-glow-titan 3.5s ease-in-out infinite;
+    border: 1.5px solid var(--ds-diag-border-titan);
   }
   .diag-prod-border--capsule {
-    background: var(--ds-diag-grad-capsule);
-    animation: diag-glow-capsule 3.5s ease-in-out infinite;
+    border: 1.5px solid var(--ds-diag-border-capsule);
   }
 
-  @keyframes diag-glow-dts {
-    0%, 100% { box-shadow: 0 0 8px rgba(160, 232, 200, 0.25), 0 0 16px rgba(180, 240, 216, 0.15); }
-    50%       { box-shadow: 0 0 14px rgba(160, 232, 200, 0.40), 0 0 28px rgba(180, 240, 216, 0.25); }
-  }
-  @keyframes diag-glow-titan {
-    0%, 100% { box-shadow: 0 0 8px rgba(180, 204, 244, 0.25), 0 0 16px rgba(200, 220, 248, 0.15); }
-    50%       { box-shadow: 0 0 14px rgba(180, 204, 244, 0.40), 0 0 28px rgba(200, 220, 248, 0.25); }
-  }
-  @keyframes diag-glow-capsule {
-    0%, 100% { box-shadow: 0 0 8px rgba(208, 192, 244, 0.25), 0 0 16px rgba(221, 212, 248, 0.15); }
-    50%       { box-shadow: 0 0 14px rgba(208, 192, 244, 0.40), 0 0 28px rgba(221, 212, 248, 0.25); }
-  }
-
-  /* product card inner */
+  /* product card inner — 약간의 배경 틴트 */
   .diag-prod-card {
     background: var(--ds-color-surface-white);
     border-radius: var(--ds-radius-md);
     padding: 16px;
   }
+  .diag-prod-border--dts .diag-prod-card     { background: rgba(14, 130, 76, 0.02); }
+  .diag-prod-border--titan .diag-prod-card   { background: rgba(48, 97, 242, 0.02); }
+  .diag-prod-border--capsule .diag-prod-card { background: rgba(114, 91, 234, 0.02); }
   .diag-prod-header {
     display: flex;
     align-items: baseline;
@@ -765,7 +727,6 @@
          (full-column gradient border)
     ══════════════════════════════ -->
     <div class="diag-col-card diag-col-card--apps">
-      <div class="diag-col-card--apps-inner">
         <div class="diag-col-label">AI Applications</div>
         <div class="diag-col-body">
           <div class="diag-app-list">
@@ -898,7 +859,6 @@
 
           </div>
         </div>
-      </div>
     </div>
 
   </div><!-- /.diag-layout -->
