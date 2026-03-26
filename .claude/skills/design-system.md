@@ -1749,12 +1749,7 @@ HTML:
   --ds-diag-arrow-dark:    #444444;
   --ds-diag-arrow-accent:  #4a9de0;
 
-  /* Diagram Shimmer — Normal (흰↔회↔흰 300% animated border) */
-  --ds-diag-shimmer-normal: linear-gradient(90deg, #d0d0d0 0%, #ffffff 30%, #c8c8c8 50%, #ffffff 70%, #d0d0d0 100%);
-  /* Diagram Gradient — Accent 세트 (glow pulse border용) */
-  --ds-diag-grad-accent:  linear-gradient(135deg, #7dd3fc 0%, #a78bfa 30%, #e879f9 65%, #67e8f9 100%);  /* 파랑-보라 */
-  --ds-diag-grad-nature:  linear-gradient(135deg, #6ee7b7 0%, #a3e635 35%, #fbbf24 70%, #34d399 100%);  /* 초록-노랑 */
-  --ds-diag-grad-warm:    linear-gradient(135deg, #fb923c 0%, #f472b6 35%, #e879f9 70%, #fda4af 100%);  /* 주황-분홍 */
+  /* Diagram 강조 카드 — [V-2] Gradient Card 토큰 재사용 (--ds-gradient-card-*, --ds-gradient-inner-*) */
   /* Diagram OS Window content bg */
   --ds-diag-os-content: linear-gradient(135deg, #dff0ea 0%, #eef3ff 40%, #f3eeff 70%, #fdeef8 100%);
   /* Diagram Architecture header gradient (Framer 실측) */
@@ -1935,38 +1930,29 @@ HTML:
   justify-content: center;
 }
 
-/* ── Section Type: Exchange (accent gradient glow) ── */
+/* ── Section Type: Exchange — [V-2] Gradient Card 패턴 사용 ── */
 .ds-diagram__exchange-wrap {
   padding: 2px;
   border-radius: var(--ds-radius-md);
-  background: var(--ds-diag-grad-accent);
-  animation: ds-diag-glow 3s ease-in-out infinite;
+  background: var(--ds-gradient-card-purple);
+  box-shadow: rgba(113, 141, 176, 0.25) 0px 1px 20px 0px;
   width: 100%;
 }
-@keyframes ds-diag-glow {
-  0%, 100% { box-shadow: 0 0 14px rgba(125,211,252,0.5), 0 0 28px rgba(167,139,250,0.35); }
-  50%      { box-shadow: 0 0 22px rgba(125,211,252,0.75), 0 0 42px rgba(167,139,250,0.55); }
+/* Green variant */
+.ds-diagram__exchange-wrap--green {
+  background: var(--ds-gradient-card-green);
 }
-/* Nature (초록-노랑) */
-.ds-diagram__exchange-wrap--nature {
-  background: var(--ds-diag-grad-nature);
-  animation: ds-diag-glow-nature 3s ease-in-out infinite;
+/* Blue variant */
+.ds-diagram__exchange-wrap--blue {
+  background: var(--ds-gradient-card-blue);
 }
-@keyframes ds-diag-glow-nature {
-  0%, 100% { box-shadow: 0 0 14px rgba(110,231,183,0.5), 0 0 28px rgba(163,230,53,0.35); }
-  50%      { box-shadow: 0 0 22px rgba(110,231,183,0.75), 0 0 42px rgba(163,230,53,0.55); }
-}
-/* Warm (주황-분홍) */
-.ds-diagram__exchange-wrap--warm {
-  background: var(--ds-diag-grad-warm);
-  animation: ds-diag-glow-warm 3s ease-in-out infinite;
-}
-@keyframes ds-diag-glow-warm {
-  0%, 100% { box-shadow: 0 0 14px rgba(251,146,60,0.5), 0 0 28px rgba(244,114,182,0.35); }
-  50%      { box-shadow: 0 0 22px rgba(251,146,60,0.75), 0 0 42px rgba(244,114,182,0.55); }
+/* Brand accent variant */
+.ds-diagram__exchange-wrap--brand {
+  background: var(--ds-gradient-brand);
+  box-shadow: rgba(94, 167, 255, 0.25) 0px 1px 40px 0px, rgba(215, 94, 255, 0.15) 0px 2px 24px 0px;
 }
 .ds-diagram__exchange-inner {
-  background: linear-gradient(145deg, rgba(237,246,255,0.95), rgba(243,236,255,0.92), rgba(255,238,255,0.9));
+  background: var(--ds-gradient-inner-purple);
   border-radius: calc(var(--ds-radius-md) - 2px);
   padding: 14px 11px;
   display: flex;
@@ -1985,23 +1971,16 @@ HTML:
   letter-spacing: 0.12em;
 }
 
-/* ── Section Type: Default (normal gradient border) ── */
-/* Shimmer 애니메이션 — 일반 카드 border */
-@keyframes ds-diag-shimmer {
-  0%   { background-position: 200% center; }
-  100% { background-position: -200% center; }
-}
+/* ── Section Type: Default — [V-2] Silver Gradient Card 패턴 ── */
 .ds-diagram__default-wrap {
   padding: 2px;
   border-radius: var(--ds-radius-md);
-  background: linear-gradient(90deg, #d0d0d0 0%, #ffffff 30%, #c8c8c8 50%, #ffffff 70%, #d0d0d0 100%);
-  background-size: 300% 100%;
-  animation: ds-diag-shimmer 4s linear infinite;
-  box-shadow: 0 0 8px rgba(180,200,230,0.3), 0 0 16px rgba(200,180,230,0.15);
+  background: var(--ds-gradient-card-silver);
+  box-shadow: rgba(113, 141, 176, 0.25) 0px 1px 20px 0px;
   width: 100%;
 }
 .ds-diagram__default-inner {
-  background: linear-gradient(145deg, #ffffff 0%, #f4f4f4 100%);
+  background: var(--ds-color-surface-white);
   border-radius: calc(var(--ds-radius-md) - 2px);
   padding: 14px 12px;
   text-align: center;
