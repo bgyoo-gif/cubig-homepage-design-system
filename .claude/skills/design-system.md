@@ -781,6 +781,7 @@ HTML:
    - 쿨/다크 톤: ds-bg--grad-deep, ds-bg--grad-navy, ds-bg--grad-blue, ds-bg--grad-violet
    - 자연/유기적: ds-bg--green-wave, ds-bg--lime, ds-bg--paint-teal, ds-bg--glow-yellow
    - 부드러운: ds-bg--lavender, ds-bg--pink, ds-bg--smoke-pink, ds-bg--wave-teal
+   - 수채화: ds-bg--wc-ecosystem(히어로), ds-bg--wc-blue-right, ds-bg--wc-blue-left, ds-bg--wc-soft
    페이지별로 다른 배경을 사용해야 함 (중복 금지) */
 .ds-hero__screenshot-frame {
   margin-top: var(--ds-space-xl);
@@ -2139,6 +2140,12 @@ drawArrows() 함수 규칙:
   /* 스모크/글로우 계열 */
   --ds-bg-img-smoke-pink:    url('../reference/images/bg-smoke-pink-teal.png');
   --ds-bg-img-glow-yellow:   url('../reference/images/bg-glow-yellow-teal.png');
+
+  /* 수채화(watercolor) 계열 — 밝은 배경 + 한쪽/양쪽 수채화 터치 */
+  --ds-bg-img-wc-ecosystem:  url('../reference/images/bg-wc-ecosystem.webp');   /* 양쪽 블루-골드 수채화, 히어로/스크린샷용 */
+  --ds-bg-img-wc-blue-right: url('../reference/images/bg-wc-blue-right.webp');  /* 우측 블루 수채화, 밝은 섹션 */
+  --ds-bg-img-wc-blue-left:  url('../reference/images/bg-wc-blue-left.webp');   /* 좌측 블루 수채화, bg-2 반전 */
+  --ds-bg-img-wc-soft:       url('../reference/images/bg-wc-soft.webp');        /* 우측 연한 블루-옐로우, 부드러운 톤 */
 }
 
 .ds-section--bg-img { position: relative; background-size: cover; background-position: center; overflow: hidden; }
@@ -2170,6 +2177,11 @@ drawArrows() 함수 규칙:
 /* 스모크/글로우 */
 .ds-bg--smoke-pink    { background-image: var(--ds-bg-img-smoke-pink); }
 .ds-bg--glow-yellow   { background-image: var(--ds-bg-img-glow-yellow); }
+/* 수채화(watercolor) */
+.ds-bg--wc-ecosystem  { background-image: var(--ds-bg-img-wc-ecosystem); }
+.ds-bg--wc-blue-right { background-image: var(--ds-bg-img-wc-blue-right); }
+.ds-bg--wc-blue-left  { background-image: var(--ds-bg-img-wc-blue-left); }
+.ds-bg--wc-soft       { background-image: var(--ds-bg-img-wc-soft); }
 ```
 
 ---
