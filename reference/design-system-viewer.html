@@ -7,7 +7,7 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <title>CUBIG Design System v5.1</title>
-<!-- last-updated: 20260322013954 -->
+<!-- last-updated: 20260326150307 -->
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@400;600;700&family=Fragment+Mono&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -116,6 +116,11 @@
   /* 스모크/글로우 계열 */
   --ds-bg-img-smoke-pink:    url('images/bg-smoke-pink-teal.png');
   --ds-bg-img-glow-yellow:   url('images/bg-glow-yellow-teal.png');
+  /* 수채화(watercolor) 계열 */
+  --ds-bg-img-wc-ecosystem:  url('images/bg-wc-ecosystem.webp');
+  --ds-bg-img-wc-blue-right: url('images/bg-wc-blue-right.webp');
+  --ds-bg-img-wc-blue-left:  url('images/bg-wc-blue-left.webp');
+  --ds-bg-img-wc-soft:       url('images/bg-wc-soft.webp');
 }
 
 /* ===== Viewer Layout ===== */
@@ -848,6 +853,11 @@ code, .ds-code-inline {
 /* 스모크/글로우 */
 .ds-bg--smoke-pink    { background-image: var(--ds-bg-img-smoke-pink); }
 .ds-bg--glow-yellow   { background-image: var(--ds-bg-img-glow-yellow); }
+/* 수채화(watercolor) */
+.ds-bg--wc-ecosystem  { background-image: var(--ds-bg-img-wc-ecosystem); }
+.ds-bg--wc-blue-right { background-image: var(--ds-bg-img-wc-blue-right); }
+.ds-bg--wc-blue-left  { background-image: var(--ds-bg-img-wc-blue-left); }
+.ds-bg--wc-soft       { background-image: var(--ds-bg-img-wc-soft); }
 
 /* Background Image preview tiles (viewer-only) */
 .v-bg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; margin-top: 12px; }
@@ -1410,7 +1420,7 @@ code, .ds-code-inline {
 <!-- Background Images -->
 <section class="v-section" id="bg-images">
   <h2 class="v-section__title">Background Image Assets</h2>
-  <p class="v-section__desc">총 20개. 경로: <code>reference/images/</code>. 이미지가 없는 환경에서는 CSS gradient로 대체 표시.</p>
+  <p class="v-section__desc">총 24개. 경로: <code>reference/images/</code>. 이미지가 없는 환경에서는 CSS gradient로 대체 표시.</p>
 
   <div class="v-card"><div class="v-card__body">
     <span class="v-label">사용 규칙</span>
@@ -1420,6 +1430,18 @@ code, .ds-code-inline {
       <div>흰/회색 배경 3개 이상 연속 — 중간에 1개 삽입</div>
       <div>배경 이미지 위 텍스트 — <strong>black</strong>(밝은 이미지) 또는 <strong>white</strong>(어두운 이미지)만 허용</div>
       <div>한 페이지 안에 동일한 <code>ds-bg--*</code> 2번 이상 사용 금지</div>
+    </div>
+  </div></div>
+
+  <div class="v-card"><div class="v-card__body">
+    <span class="v-label">추천 조합 (스크린샷 프레임 / 섹션 배경)</span>
+    <div style="font-size:13px;line-height:1.8;color:var(--ds-color-text-secondary)">
+      <div><strong>밝은 제품:</strong> ds-bg--paint-blue, ds-bg--paint-lavender, ds-bg--paint-sand, ds-bg--grad-sky</div>
+      <div><strong>따뜻한 톤:</strong> ds-bg--peach, ds-bg--paint-peach, ds-bg--grad-cream, ds-bg--grad-sage</div>
+      <div><strong>쿨/다크 톤:</strong> ds-bg--grad-deep, ds-bg--grad-navy, ds-bg--grad-blue, ds-bg--grad-violet</div>
+      <div><strong>자연/유기적:</strong> ds-bg--green-wave, ds-bg--lime, ds-bg--paint-teal, ds-bg--glow-yellow</div>
+      <div><strong>부드러운:</strong> ds-bg--lavender, ds-bg--pink, ds-bg--smoke-pink, ds-bg--wave-teal</div>
+      <div><strong>수채화:</strong> ds-bg--wc-ecosystem (히어로용), ds-bg--wc-blue-right, ds-bg--wc-blue-left, ds-bg--wc-soft</div>
     </div>
   </div></div>
 
@@ -1439,7 +1461,11 @@ code, .ds-code-inline {
   <p class="v-bg-group-label">스모크 / 글로우 계열 (2)</p>
   <div class="v-bg-grid" id="bg-grid-smoke"></div>
 
-  <div class="v-note">이미지가 없으면 CSS gradient로 대체 표시됨. 실제 배경 이미지는 images/ 디렉터리에 png 파일로 배치.</div>
+  <!-- 수채화 계열 -->
+  <p class="v-bg-group-label">수채화 (watercolor) 계열 (4)</p>
+  <div class="v-bg-grid" id="bg-grid-wc"></div>
+
+  <div class="v-note">이미지가 없으면 CSS gradient로 대체 표시됨. 실제 배경 이미지는 images/ 디렉터리에 배치. 수채화 계열은 .webp 포맷 사용.</div>
 </section>
 
 <script>
@@ -1472,6 +1498,12 @@ code, .ds-code-inline {
     smoke: [
       { cls: 'ds-bg--smoke-pink',  varName: '--ds-bg-img-smoke-pink',  file: 'images/bg-smoke-pink-teal.png',       fallback: 'radial-gradient(ellipse at 30% 40%,rgba(240,130,170,0.7) 0%,rgba(0,150,150,0.5) 60%,rgba(20,20,30,0.9) 100%)' },
       { cls: 'ds-bg--glow-yellow', varName: '--ds-bg-img-glow-yellow', file: 'images/bg-glow-yellow-teal.png',      fallback: 'radial-gradient(ellipse at 50% 50%,rgba(255,230,50,0.8) 0%,rgba(0,180,160,0.5) 50%,rgba(10,10,20,0.95) 100%)' }
+    ],
+    wc: [
+      { cls: 'ds-bg--wc-ecosystem',  varName: '--ds-bg-img-wc-ecosystem',  file: 'images/bg-wc-ecosystem.webp',  fallback: 'linear-gradient(135deg,#dbeafe 0%,#f0f9ff 35%,#fefce8 65%,#fef3c7 100%)' },
+      { cls: 'ds-bg--wc-blue-right', varName: '--ds-bg-img-wc-blue-right', file: 'images/bg-wc-blue-right.webp', fallback: 'linear-gradient(135deg,#f8faff 0%,#e0f2fe 50%,#bfdbfe 100%)' },
+      { cls: 'ds-bg--wc-blue-left',  varName: '--ds-bg-img-wc-blue-left',  file: 'images/bg-wc-blue-left.webp',  fallback: 'linear-gradient(135deg,#bfdbfe 0%,#e0f2fe 50%,#f8faff 100%)' },
+      { cls: 'ds-bg--wc-soft',       varName: '--ds-bg-img-wc-soft',       file: 'images/bg-wc-soft.webp',       fallback: 'linear-gradient(135deg,#f8faff 0%,#e0f2fe 40%,#fefce8 70%,#fef9c3 100%)' }
     ]
   };
 
@@ -1510,6 +1542,7 @@ code, .ds-code-inline {
     buildGrid('bg-grid-paint', bgData.paint);
     buildGrid('bg-grid-grad',  bgData.grad);
     buildGrid('bg-grid-smoke', bgData.smoke);
+    buildGrid('bg-grid-wc',    bgData.wc);
   });
 })();
 </script>
