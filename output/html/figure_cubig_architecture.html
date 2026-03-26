@@ -84,11 +84,13 @@
     --ds-prod-capsule-out:    rgba(114, 91, 234, 0.10);
     --ds-prod-capsule-out-b:  rgba(114, 91, 234, 0.22);
 
-    /* Diagram Borders — 단색에 가까운 연한 톤 (스크린샷 기준) */
-    --ds-diag-border-dts:     rgba(14, 130, 76, 0.22);
-    --ds-diag-border-titan:   rgba(48, 97, 242, 0.20);
-    --ds-diag-border-capsule: rgba(114, 91, 234, 0.22);
-    --ds-diag-border-accent:  rgba(114, 91, 234, 0.18);
+    /* Diagram — [V-2] Gradient Card 토큰 재사용 */
+    --ds-gradient-card-green:  linear-gradient(109deg, #01CA51 0%, #FFEFF5 17%, #9AE6AD 43%, #C9FFE1 65%, #01CA51 84%, #01CA51 100%);
+    --ds-gradient-card-blue:   linear-gradient(109deg, #BFE1FB 0%, #fff 17%, #FFEDFA 38%, #81B8FB 51%, #E2E3F0 73%, #BFE1FB 100%);
+    --ds-gradient-card-purple: linear-gradient(109deg, #FCD6FF 0%, #fff 17%, #FFEDFA 38%, #D48AFF 51%, #fff 73%, #FCD6FF 100%);
+    --ds-gradient-inner-green:  linear-gradient(99deg, #F0FDF5 0%, #FCFCFE 58%, #fff 100%);
+    --ds-gradient-inner-blue:   linear-gradient(99deg, #E9EEFB 0%, #FCFCFE 58%, #fff 100%);
+    --ds-gradient-inner-purple: linear-gradient(99deg, #F8EDFF 0%, #FCFCFE 58%, #fff 100%);
 
     /* Diagram Surface */
     --ds-diag-surface:         #fdfdfd;
@@ -169,10 +171,23 @@
     flex-direction: column;
   }
 
-  /* Col 3: AI Applications — 연한 보라 border (스크린샷 기준, glow 없음) */
+  /* Col 3: AI Applications — [V-2] purple gradient border */
   .diag-col-card--apps {
-    border: 1.5px solid var(--ds-diag-border-accent);
-    box-shadow: var(--ds-shadow-card);
+    background: var(--ds-gradient-card-purple);
+    padding: 2px;
+    border-radius: calc(var(--ds-radius-lg) + 2px);
+    box-shadow: rgba(113, 141, 176, 0.25) 0px 1px 20px 0px;
+  }
+  .diag-col-card--apps > .diag-col-label,
+  .diag-col-card--apps > .diag-col-body {
+    background: var(--ds-color-surface-white);
+  }
+  .diag-col-card--apps > .diag-col-label {
+    border-radius: calc(var(--ds-radius-lg) - 2px) calc(var(--ds-radius-lg) - 2px) 0 0;
+  }
+  .diag-col-card--apps > .diag-col-body {
+    border-radius: 0 0 calc(var(--ds-radius-lg) - 2px) calc(var(--ds-radius-lg) - 2px);
+    flex: 1;
   }
 
   /* ─── Column Header Label (grey bar) ─── */
@@ -278,29 +293,25 @@
     flex: 1;
   }
 
-  /* product card border — 단색 연한 border (스크린샷 기준, glow 없음) */
+  /* product card border — [V-2] Gradient Card 패턴 */
   .diag-prod-border {
-    border-radius: calc(var(--ds-radius-md) + 1px);
+    padding: 2px;
+    border-radius: var(--ds-radius-md);
+    box-shadow: rgba(113, 141, 176, 0.25) 0px 1px 20px 0px;
   }
-  .diag-prod-border--dts {
-    border: 1.5px solid var(--ds-diag-border-dts);
-  }
-  .diag-prod-border--titan {
-    border: 1.5px solid var(--ds-diag-border-titan);
-  }
-  .diag-prod-border--capsule {
-    border: 1.5px solid var(--ds-diag-border-capsule);
-  }
+  .diag-prod-border--dts     { background: var(--ds-gradient-card-green); }
+  .diag-prod-border--titan   { background: var(--ds-gradient-card-blue); }
+  .diag-prod-border--capsule { background: var(--ds-gradient-card-purple); }
 
-  /* product card inner — 약간의 배경 틴트 */
+  /* product card inner — [V-2] tinted gradient background */
   .diag-prod-card {
     background: var(--ds-color-surface-white);
-    border-radius: var(--ds-radius-md);
+    border-radius: calc(var(--ds-radius-md) - 2px);
     padding: 16px;
   }
-  .diag-prod-border--dts .diag-prod-card     { background: rgba(14, 130, 76, 0.02); }
-  .diag-prod-border--titan .diag-prod-card   { background: rgba(48, 97, 242, 0.02); }
-  .diag-prod-border--capsule .diag-prod-card { background: rgba(114, 91, 234, 0.02); }
+  .diag-prod-border--dts .diag-prod-card     { background: var(--ds-gradient-inner-green); }
+  .diag-prod-border--titan .diag-prod-card   { background: var(--ds-gradient-inner-blue); }
+  .diag-prod-border--capsule .diag-prod-card { background: var(--ds-gradient-inner-purple); }
   .diag-prod-header {
     display: flex;
     align-items: baseline;
