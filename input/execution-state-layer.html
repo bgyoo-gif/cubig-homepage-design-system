@@ -1,0 +1,546 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>What is Execution State Layer? | CUBIG</title>
+  <meta name="description" content="Execution State Layer (ESL) solves AI reproducibility by binding every model execution to a versioned, frozen, and verifiable data state — enabling traceability and audit-ready AI systems." />
+  <meta property="og:title" content="What is Execution State Layer? | CUBIG" />
+  <meta property="og:description" content="ESL binds every AI execution to a versioned, frozen, and verifiable data state — enabling reproducibility, traceability, and audit-ready AI systems." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://cubig.ai/definitions/execution-state-layer" />
+  <link rel="canonical" href="https://cubig.ai/definitions/execution-state-layer" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Execution State Layer",
+        "alternateName": "ESL",
+        "description": "A data infrastructure layer that binds every AI execution to a versioned, frozen, and verifiable data state, enabling reproducibility, traceability, and consistent outcomes across production environments.",
+        "inDefinedTermSet": {
+          "@type": "DefinedTermSet",
+          "name": "CUBIG AI Glossary",
+          "url": "https://cubig.ai/definitions"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is an Execution State Layer in AI?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "An Execution State Layer (ESL) is a data infrastructure layer that binds every AI model execution to a versioned, frozen, and verifiable data state. It ensures that the exact data used in any given run can be identified, reproduced, and audited — making AI systems deterministic and production-grade."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How is Execution State Layer different from a traditional data pipeline?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A traditional pipeline moves data from source to destination but does not preserve the state of that data at the moment of AI execution. The Execution State Layer adds versioning, snapshot freezing, integrity verification, and full lineage on top of the pipeline — so every AI run has an explicit, immutable data record attached to it."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why do AI systems need an Execution State Layer?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Without an ESL, AI outputs can silently change due to data drift, schema updates, or pipeline modifications — making debugging and compliance nearly impossible. An Execution State Layer provides the infrastructure to ask and answer: what data did this model see, and can we prove it?"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is AI-Ready data, and how does it relate to the Execution State Layer?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "AI-Ready data meets quality thresholds across six dimensions: Privacy, Integrity, Traceability, Contextuality, Operational Reliability, and Conciseness. The Execution State Layer ensures that this AI-Ready status is preserved and verifiable at every point of execution — not just at the time of ingestion."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How does data versioning support reproducibility in AI?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Data versioning assigns a unique, immutable identifier to each state of a dataset. When an AI execution is tied to a specific version, that run can be exactly reproduced at any future point — critical for debugging, model comparison, regulatory audits, and MLOps workflows."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How does Execution State Layer compare to MLflow or DVC?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "MLflow and DVC are experiment tracking and data versioning tools focused on the model development lifecycle. The Execution State Layer is a broader infrastructure concept: it defines the contract between AI execution and data state, encompassing versioning, integrity verification, and traceability as first-class requirements. Tools like MLflow or DVC can serve as partial implementations of an Execution State Layer, but ESL describes the architectural requirement, not a specific product."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is Execution State Layer related to data provenance?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Data provenance tracks the origin, transformations, and movement of data over time. The Execution State Layer builds on provenance by binding that lineage record directly to each AI execution. ESL can be thought of as execution-scoped data provenance: provenance that is frozen, versioned, and verifiable at the moment of every AI run."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <style>
+    :root {
+      --bg: #ffffff; --text: #111111; --muted: #666666;
+      --line: #e8e8e8; --soft: #f7f7f8; --accent: #1a6ef5;
+      --accent-soft: #eef3ff; --max: 880px; --radius: 16px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.65; -webkit-font-smoothing: antialiased;
+    }
+    .wrap { width: min(calc(100% - 32px), var(--max)); margin: 0 auto; }
+    .hero { padding: 72px 0 40px; border-bottom: 1px solid var(--line); }
+    .eyebrow {
+      display: inline-block; padding: 6px 10px; border: 1px solid var(--line);
+      border-radius: 999px; background: var(--soft); color: var(--muted);
+      font-size: 13px; line-height: 1; margin-bottom: 18px;
+    }
+    h1 { margin: 0 0 16px; font-size: clamp(34px, 6vw, 56px); line-height: 1.05; letter-spacing: -0.03em; }
+    .lead { font-size: 18px; color: var(--muted); max-width: 760px; margin: 0; }
+    main { padding: 40px 0 80px; }
+    section { padding: 28px 0; border-bottom: 1px solid var(--line); }
+    section:last-child { border-bottom: 0; }
+    h2 { margin: 0 0 14px; font-size: 28px; line-height: 1.15; letter-spacing: -0.02em; }
+    h3 { margin: 24px 0 10px; font-size: 20px; line-height: 1.25; letter-spacing: -0.01em; }
+    p { margin: 0 0 14px; font-size: 16px; }
+    ul { margin: 10px 0 0 0; padding-left: 20px; }
+    li { margin: 8px 0; }
+    .definition { padding: 24px; background: var(--soft); border: 1px solid var(--line); border-radius: var(--radius); }
+    .grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 18px; }
+    .card { padding: 20px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; }
+    .card h3 { margin-top: 0; }
+    .compare { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 18px; }
+    .formula, blockquote {
+      margin: 18px 0 0; padding: 18px 20px; background: var(--soft);
+      border-left: 3px solid #cfcfcf; border-radius: 0 12px 12px 0;
+    }
+    blockquote p:last-child { margin-bottom: 0; }
+    .small { color: var(--muted); font-size: 14px; }
+    .faq-item { padding: 20px 0; border-bottom: 1px solid var(--line); }
+    .faq-item:last-child { border-bottom: 0; }
+    .faq-q { font-size: 17px; font-weight: 600; margin: 0 0 10px; }
+    .faq-a { font-size: 15px; color: #333; margin: 0; }
+    .feature-intro {
+      padding: 20px 24px; background: var(--accent-soft);
+      border: 1px solid #c5d8ff; border-radius: var(--radius); margin-bottom: 24px;
+    }
+    .feature-intro p { margin: 0; font-size: 15px; color: #1a3a7a; }
+    .feature-grid { display: grid; grid-template-columns: 1fr; gap: 20px; margin-top: 20px; }
+    .feature-card { border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: #fff; }
+    .feature-card-header {
+      padding: 16px 20px; background: var(--soft);
+      border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: 10px;
+    }
+    .feature-tag {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 3px 8px;
+      border-radius: 999px; background: var(--accent); color: #fff;
+    }
+    .feature-card-title { font-size: 16px; font-weight: 600; margin: 0; }
+    .feature-card-body { padding: 20px; }
+    .feature-card-body p { margin: 0 0 12px; font-size: 15px; }
+    .feature-card-body p:last-child { margin: 0; }
+    .axes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
+    .axis-item { padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; background: #fff; }
+    .axis-name { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+    .axis-desc { font-size: 13px; color: var(--muted); margin: 0; }
+    .axis-bar-wrap { height: 4px; background: #e8e8e8; border-radius: 99px; margin: 8px 0 4px; }
+    .axis-bar { height: 4px; border-radius: 99px; background: #22c55e; }
+    .version-timeline { margin-top: 16px; position: relative; padding-left: 24px; }
+    .version-timeline::before {
+      content: ''; position: absolute; left: 7px; top: 0; bottom: 0;
+      width: 2px; background: var(--line); border-radius: 2px;
+    }
+    .v-item { position: relative; margin-bottom: 16px; }
+    .v-item::before {
+      content: ''; position: absolute; left: -20px; top: 6px;
+      width: 10px; height: 10px; border-radius: 50%;
+      background: #fff; border: 2px solid #aaa;
+    }
+    .v-item.released::before { background: var(--accent); border-color: var(--accent); }
+    .v-label {
+      display: inline-block; font-size: 11px; font-weight: 700;
+      background: var(--accent); color: #fff; padding: 2px 7px;
+      border-radius: 999px; margin-bottom: 4px;
+    }
+    .v-label.draft { background: #e8e8e8; color: #555; }
+    .v-meta { font-size: 13px; color: var(--muted); }
+    .v-desc { font-size: 14px; margin: 2px 0 0; }
+    footer { padding: 20px 0 48px; color: var(--muted); font-size: 14px; }
+    @media (min-width: 768px) {
+      .grid { grid-template-columns: 1fr 1fr; }
+      .compare { grid-template-columns: 1fr 1fr; }
+      .feature-grid { grid-template-columns: 1fr 1fr; }
+      .axes-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <div class="eyebrow">Definition</div>
+      <h1>Execution State Layer</h1>
+      <p class="lead">
+        A data infrastructure layer that binds every AI execution to a versioned,
+        frozen, and verifiable data state — enabling reproducibility, traceability,
+        and consistent outcomes across production environments.
+      </p>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <section aria-labelledby="definition">
+      <h2 id="definition">Definition</h2>
+      <div class="definition">
+        <p>
+          <strong>Execution State Layer (ESL)</strong> is a data infrastructure layer
+          that binds every AI execution to a versioned, frozen, and verifiable data state,
+          enabling reproducibility, traceability, and consistent outcomes across production environments.
+        </p>
+      </div>
+    </section>
+
+    <section aria-labelledby="meaning">
+      <h2 id="meaning">What it means</h2>
+      <p>
+        In traditional AI systems, results often change without a clear explanation due to
+        data updates, schema changes, pipeline modifications, or environment differences.
+      </p>
+      <p>
+        The Execution State Layer resolves this by ensuring that every AI run is tied to
+        a specific, immutable data state. This transforms AI execution from non-deterministic
+        and opaque into reproducible and explainable.
+      </p>
+    </section>
+
+    <section aria-labelledby="characteristics">
+      <h2 id="characteristics">Core characteristics</h2>
+      <div class="grid">
+        <article class="card">
+          <h3>1. Versioned Data States</h3>
+          <p>Every dataset used in AI execution is versioned and explicitly identified.</p>
+          <ul>
+            <li>Explicit version identifiers</li>
+            <li>Comparable across runs</li>
+            <li>Rollback possible</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>2. Frozen Execution Conditions</h3>
+          <p>Each run is bound to a frozen snapshot of data.</p>
+          <ul>
+            <li>No drift during execution</li>
+            <li>Consistent input across environments</li>
+            <li>Stable production behavior</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>3. Verifiable State Integrity</h3>
+          <p>Data states can be validated before and after execution.</p>
+          <ul>
+            <li>Checksum or validation logic</li>
+            <li>Schema consistency checks</li>
+            <li>Integrity guarantees</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>4. Full Execution Traceability</h3>
+          <p>Every AI output can be traced back to the exact state and context used.</p>
+          <ul>
+            <li>Exact data state</li>
+            <li>Transformation steps</li>
+            <li>Execution context</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>5. Reproducibility by Design</h3>
+          <p>Past executions can be re-run under identical conditions.</p>
+          <ul>
+            <li>Debugging without guesswork</li>
+            <li>Reliable comparisons</li>
+            <li>Audit-ready AI systems</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="why">
+      <h2 id="why">Why it matters</h2>
+      <h3>Eliminates "why did the result change?"</h3>
+      <p>
+        Without an Execution State Layer, teams often debug models when the real issue is
+        hidden in the data or pipeline. With ESL, execution conditions are explicit and comparable.
+      </p>
+      <h3>Enables production-ready AI</h3>
+      <p>
+        AI systems often fail in production not because the model is wrong, but because
+        data shifts, pipeline inconsistencies, and hidden dependencies change the execution conditions.
+        ESL makes deployments more stable and predictable.
+      </p>
+      <h3>Supports audit and compliance</h3>
+      <p>
+        In regulated environments, organizations need to answer what data was used and
+        under what conditions AI was executed. ESL provides reproducible audit trails and
+        verifiable execution records.
+      </p>
+    </section>
+
+    <section aria-labelledby="comparison">
+      <h2 id="comparison">Comparison</h2>
+      <div class="compare">
+        <article class="card">
+          <h3>Traditional Data Pipeline</h3>
+          <ul>
+            <li>Data is mutable</li>
+            <li>Execution conditions are implicit</li>
+            <li>Results are difficult to reproduce</li>
+            <li>Debugging relies on assumptions</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>With Execution State Layer</h3>
+          <ul>
+            <li>Data is versioned and frozen</li>
+            <li>Execution conditions are explicit</li>
+            <li>Results are reproducible</li>
+            <li>Debugging is deterministic</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="relationship">
+      <h2 id="relationship">Relationship to AI-Ready Data</h2>
+      <p>
+        AI-ready data ensures that data is usable, reliable, and privacy-safe.
+        The Execution State Layer extends this by ensuring that AI-ready data is also
+        reproducible in execution. Data readiness is assessed across six dimensions —
+        <strong>Privacy, Integrity, Traceability, Contextuality, Operational Reliability, and Conciseness</strong> —
+        and each dimension must be verifiably maintained at every execution.
+      </p>
+    </section>
+
+    <section aria-labelledby="model">
+      <h2 id="model">Conceptual model</h2>
+      <div class="formula">
+        <p><strong>AI Execution = Model + Code + Execution State Layer</strong></p>
+        <p class="small">
+          Where the Execution State Layer provides versioned data state, verified integrity,
+          and full traceability.
+        </p>
+      </div>
+    </section>
+
+    <section aria-labelledby="example">
+      <h2 id="example">Example</h2>
+      <p>A customer analytics model produces different results week to week.</p>
+      <p>
+        Without ESL, it is unclear whether the change came from the model, the data,
+        or the pipeline. With ESL, each run is linked to a specific data version, previous
+        results can be exactly reproduced, and differences can be precisely explained.
+      </p>
+    </section>
+
+    <section aria-labelledby="product">
+      <h2 id="product">How SynTitan implements the Execution State Layer</h2>
+      <div class="feature-intro">
+        <p>
+          SynTitan operationalizes the Execution State Layer through four integrated capabilities:
+          AI Readiness profiling, multi-dimensional data quality scoring, full dataset versioning,
+          and immutable execution metadata — ensuring every AI run is traceable to its exact data state.
+        </p>
+      </div>
+      <div class="feature-grid">
+        <article class="feature-card">
+          <div class="feature-card-header">
+            <span class="feature-tag">Feature</span>
+            <p class="feature-card-title">Data Profiling &amp; AI Readiness Analysis</p>
+          </div>
+          <div class="feature-card-body">
+            <p>
+              Before any AI execution begins, SynTitan runs automated profiling across all
+              input datasets. Each file is evaluated against the AI-Ready standard,
+              and the platform surfaces pass/warn/fail status per file in real time.
+            </p>
+            <p>
+              This ensures that only datasets meeting a verified readiness threshold
+              enter the execution pipeline — preventing silent data quality failures
+              from propagating into model outputs.
+            </p>
+            <ul>
+              <li>Per-file profiling with pass / warn / fail status</li>
+              <li>AI readiness score (0–100%) per dataset</li>
+              <li>Profiling results stored as part of the execution state record</li>
+            </ul>
+          </div>
+        </article>
+        <article class="feature-card">
+          <div class="feature-card-header">
+            <span class="feature-tag">Feature</span>
+            <p class="feature-card-title">Six-Dimensional AI Readiness Score</p>
+          </div>
+          <div class="feature-card-body">
+            <p>
+              AI readiness is broken down into six independently scored dimensions.
+              Each dimension maps directly to a property the Execution State Layer must guarantee.
+            </p>
+            <div class="axes-grid">
+              <div class="axis-item">
+                <div class="axis-name">Privacy</div>
+                <div class="axis-bar-wrap"><div class="axis-bar" style="width:8%"></div></div>
+                <div class="axis-desc">PII detection &amp; safe handling</div>
+              </div>
+              <div class="axis-item">
+                <div class="axis-name">Integrity</div>
+                <div class="axis-bar-wrap"><div class="axis-bar" style="width:10%"></div></div>
+                <div class="axis-desc">Null, duplicate, type &amp; distribution checks</div>
+              </div>
+              <div class="axis-item">
+                <div class="axis-name">Traceability</div>
+                <div class="axis-bar-wrap"><div class="axis-bar" style="width:100%"></div></div>
+                <div class="axis-desc">Snapshot, version label &amp; change log</div>
+              </div>
+              <div class="axis-item">
+                <div class="axis-name">Contextuality</div>
+                <div class="axis-bar-wrap"><div class="axis-bar" style="width:50%"></div></div>
+                <div class="axis-desc">Column semantics &amp; purpose alignment</div>
+              </div>
+              <div class="axis-item">
+                <div class="axis-name">Operational Reliability</div>
+                <div class="axis-bar-wrap"><div class="axis-bar" style="width:100%"></div></div>
+                <div class="axis-desc">Processing result verification</div>
+              </div>
+              <div class="axis-item">
+                <div class="axis-name">Conciseness</div>
+                <div class="axis-bar-wrap"><div class="axis-bar" style="width:100%"></div></div>
+                <div class="axis-desc">Low-value &amp; redundant column removal</div>
+              </div>
+            </div>
+          </div>
+        </article>
+        <article class="feature-card">
+          <div class="feature-card-header">
+            <span class="feature-tag">Feature</span>
+            <p class="feature-card-title">Immutable Dataset Versioning</p>
+          </div>
+          <div class="feature-card-body">
+            <p>
+              Every change to a dataset is recorded as an immutable version entry
+              with a commit hash, timestamp, author, and change summary.
+            </p>
+            <p>
+              Any AI execution can be re-run against a past version to reproduce
+              the exact result, without guesswork.
+            </p>
+            <div class="version-timeline">
+              <div class="v-item released">
+                <span class="v-label">v2 · Released</span>
+                <div class="v-desc">Released as v2</div>
+                <div class="v-meta">Mar 25, 10:04 AM · hamilton</div>
+              </div>
+              <div class="v-item">
+                <span class="v-label draft">commit a3f8c2d</span>
+                <div class="v-desc">Feature Null Module (FNM) — 총 410개 보정</div>
+                <div class="v-meta">Mar 25, 10:04 AM · Alia</div>
+              </div>
+              <div class="v-item released">
+                <span class="v-label">v1 · Initial</span>
+                <div class="v-desc">Initial upload</div>
+                <div class="v-meta">Mar 25, 10:04 AM · hamilton · c4f8c2c</div>
+              </div>
+            </div>
+          </div>
+        </article>
+        <article class="feature-card">
+          <div class="feature-card-header">
+            <span class="feature-tag">Feature</span>
+            <p class="feature-card-title">Execution Metadata &amp; Column Lineage</p>
+          </div>
+          <div class="feature-card-body">
+            <p>
+              Each dataset version captures full structural metadata — storage size,
+              column count, row count, column types, owner, and format —
+              alongside per-column distribution statistics.
+            </p>
+            <p>
+              This metadata is frozen at the time of execution, forming the verifiable
+              state record that auditors and engineers can inspect after the fact.
+            </p>
+            <ul>
+              <li>Column schema: String, Numeric, ID, DateTime, Others</li>
+              <li>Row-level distribution histograms per column</li>
+              <li>Owner &amp; version tag (e.g., v1, v2)</li>
+              <li>Immutable at release — prevents post-hoc modification</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="faq">
+      <h2 id="faq">Frequently Asked Questions</h2>
+      <div class="faq-item">
+        <p class="faq-q">What is an Execution State Layer in AI?</p>
+        <p class="faq-a">An Execution State Layer (ESL) is a data infrastructure layer that binds every AI model execution to a versioned, frozen, and verifiable data state. It ensures that the exact data used in any given run can be identified, reproduced, and audited — making AI systems deterministic and production-grade.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">How is Execution State Layer different from a traditional data pipeline?</p>
+        <p class="faq-a">A traditional pipeline moves data from source to destination but does not preserve the state of that data at the moment of AI execution. The Execution State Layer adds versioning, snapshot freezing, integrity verification, and full lineage on top of the pipeline — so every AI run has an explicit, immutable data record attached to it.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">Why do AI systems need an Execution State Layer?</p>
+        <p class="faq-a">Without an ESL, AI outputs can silently change due to data drift, schema updates, or pipeline modifications — making debugging and compliance nearly impossible. An Execution State Layer provides the infrastructure to ask and answer: <em>what data did this model see, and can we prove it?</em></p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">What is AI-Ready data, and how does it relate to the Execution State Layer?</p>
+        <p class="faq-a">AI-Ready data meets quality thresholds across six dimensions: Privacy, Integrity, Traceability, Contextuality, Operational Reliability, and Conciseness. The Execution State Layer ensures that this AI-Ready status is preserved and verifiable at every point of execution — not just at the time of ingestion.</p>
+      </div>
+      <div celass="faq-item">
+        <p class="faq-q">How does data versioning support reproducibility in AI?</p>
+        <p class="faq-a">Data versioning assigns a unique, immutable identifier to each state of a dataset. When an AI execution is tied to a specific version, that run can be exactly reproduced at any future point — critical for debugging, model comparison, regulatory audits, and MLOps workflows.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">How does Execution State Layer compare to MLflow or DVC?</p>
+        <p class="faq-a">MLflow and DVC are experiment tracking and data versioning tools focused on the model development lifecycle. The Execution State Layer is a broader infrastructure concept: it defines the contract between AI execution and data state, encompassing versioning, integrity verification, and traceability as first-class requirements. Tools like MLflow or DVC can serve as partial implementations of an Execution State Layer, but ESL describes the architectural requirement, not a specific product.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">Is Execution State Layer related to data provenance?</p>
+        <p class="faq-a">Yes. Data provenance tracks the origin, transformations, and movement of data over time. The Execution State Layer builds on provenance by binding that lineage record directly to each AI execution — so it is not just known where data came from, but exactly which provenance state the model saw at inference or training time. ESL can be thought of as <em>execution-scoped data provenance</em>: provenance that is frozen, versioned, and verifiable at the moment of every AI run.</p>
+      </div>
+    </section>
+
+    <section aria-labelledby="summary">
+      <h2 id="summary">Summary</h2>
+      <p>
+        Execution State Layer transforms AI systems from unstable and opaque into
+        reproducible, traceable, and production-grade systems by binding every execution
+        to a controlled data state.
+      </p>
+      <blockquote>
+        <p>"Execution State Layer is a data infrastructure layer that binds AI executions to versioned, frozen, and verifiable data states, enabling reproducibility and traceability in production AI."</p>
+        <p class="small">— CUBIG</p>
+      </blockquote>
+    </section>
+
+  </main>
+
+  <footer class="wrap">
+    CUBIG Definition Document
+  </footer>
+</body>
+</html>
