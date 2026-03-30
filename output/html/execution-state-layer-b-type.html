@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What is Execution State Layer? | CUBIG</title>
+  <meta name="description" content="Execution State Layer (ESL) solves AI reproducibility by binding every model execution to a versioned, frozen, and verifiable data state — enabling traceability and audit-ready AI systems." />
+  <meta property="og:title" content="What is Execution State Layer? | CUBIG" />
+  <meta property="og:description" content="ESL binds every AI execution to a versioned, frozen, and verifiable data state — enabling reproducibility, traceability, and audit-ready AI systems." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://cubig.ai/definitions/execution-state-layer" />
+  <link rel="canonical" href="https://cubig.ai/definitions/execution-state-layer" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "DefinedTerm",
+        "name": "Execution State Layer",
+        "alternateName": "ESL",
+        "description": "A data infrastructure layer that binds every AI execution to a versioned, frozen, and verifiable data state, enabling reproducibility, traceability, and consistent outcomes across production environments.",
+        "inDefinedTermSet": {
+          "@type": "DefinedTermSet",
+          "name": "CUBIG AI Glossary",
+          "url": "https://cubig.ai/definitions"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is an Execution State Layer in AI?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "An Execution State Layer (ESL) is a data infrastructure layer that binds every AI model execution to a versioned, frozen, and verifiable data state. It ensures that the exact data used in any given run can be identified, reproduced, and audited — making AI systems deterministic and production-grade."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How is Execution State Layer different from a traditional data pipeline?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A traditional pipeline moves data from source to destination but does not preserve the state of that data at the moment of AI execution. The Execution State Layer adds versioning, snapshot freezing, integrity verification, and full lineage on top of the pipeline — so every AI run has an explicit, immutable data record attached to it."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why do AI systems need an Execution State Layer?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Without an ESL, AI outputs can silently change due to data drift, schema updates, or pipeline modifications — making debugging and compliance nearly impossible. An Execution State Layer provides the infrastructure to ask and answer: what data did this model see, and can we prove it?"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is AI-Ready data, and how does it relate to the Execution State Layer?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "AI-Ready data meets quality thresholds across six dimensions: Privacy, Integrity, Traceability, Contextuality, Operational Reliability, and Conciseness. The Execution State Layer ensures that this AI-Ready status is preserved and verifiable at every point of execution — not just at the time of ingestion."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How does data versioning support reproducibility in AI?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Data versioning assigns a unique, immutable identifier to each state of a dataset. When an AI execution is tied to a specific version, that run can be exactly reproduced at any future point — critical for debugging, model comparison, regulatory audits, and MLOps workflows."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How does Execution State Layer compare to MLflow or DVC?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "MLflow and DVC are experiment tracking and data versioning tools focused on the model development lifecycle. The Execution State Layer is a broader infrastructure concept: it defines the contract between AI execution and data state, encompassing versioning, integrity verification, and traceability as first-class requirements. Tools like MLflow or DVC can serve as partial implementations of an Execution State Layer, but ESL describes the architectural requirement, not a specific product."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is Execution State Layer related to data provenance?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Data provenance tracks the origin, transformations, and movement of data over time. The Execution State Layer builds on provenance by binding that lineage record directly to each AI execution. ESL can be thought of as execution-scoped data provenance: provenance that is frozen, versioned, and verifiable at the moment of every AI run."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Oxanium:wght@700&display=swap" rel="stylesheet">
+
+  <style>
+    /* =====================================================
+       1. CSS Reset + 전역 기본값
+    ===================================================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--ds-font-base);
+      color: var(--ds-color-text-primary);
+      background-color: var(--ds-color-surface-white);
+      padding-top: 58px;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+      -webkit-font-smoothing: antialiased;
+    }
+    img, video { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+
+    p, li, dt, dd, blockquote,
+    .ds-section-header__description,
+    .ds-hero__description,
+    .ds-cta-band__description,
+    .ds-body-l, .ds-body-m, .ds-body-s,
+    .ds-ac-card__title,
+    .ds-card__description {
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      text-wrap: pretty;
+    }
+
+    /* =====================================================
+       2. :root — CSS 변수
+    ===================================================== */
+    :root {
+      /* Brand */
+      --ds-color-brand-primary:   #3061f2;
+      --ds-color-brand-purple:    #725bea;
+      --ds-color-brand-purple-lt: #c6c5fa;
+
+      /* Neutral */
+      --ds-color-neutral-900: #0f0f0f;
+      --ds-color-neutral-850: #141414;
+      --ds-color-neutral-800: #171719;
+      --ds-color-neutral-700: #303135;
+      --ds-color-neutral-500: #636363;
+      --ds-color-neutral-400: #9c9c9c;
+      --ds-color-neutral-350: #adadad;
+      --ds-color-neutral-300: #bababa;
+      --ds-color-neutral-250: #c4c4c4;
+      --ds-color-neutral-200: #e0e0e0;
+      --ds-color-neutral-150: #e6e7e9;
+      --ds-color-neutral-100: #ececec;
+      --ds-color-neutral-050: #f2f2f2;
+      --ds-color-neutral-025: #f7f7f7;
+      --ds-color-white:       #ffffff;
+      --ds-color-black:       #000000;
+
+      /* Text */
+      --ds-color-text-primary:   #0f0f0f;
+      --ds-color-text-secondary: #636363;
+      --ds-color-text-tertiary:  #9c9c9c;
+      --ds-color-text-inverse:   #ffffff;
+      --ds-color-text-muted:     #cacccf;
+
+      /* Functional */
+      --ds-color-success: #0e824c;
+      --ds-color-error:   #ff3030;
+      --ds-color-info:    #155ea0;
+      --ds-color-warn:    #f59e0b;
+
+      /* Border */
+      --ds-color-border-default: #e6e7e9;
+      --ds-color-border-strong:  #171719;
+      --ds-color-border-brand:   #725bea;
+
+      /* Surface */
+      --ds-color-surface-dark:  #171719;
+      --ds-color-surface-mid:   #f2f2f2;
+      --ds-color-surface-light: #f7f7f7;
+      --ds-color-surface-white: #ffffff;
+
+      /* Gradient */
+      --ds-gradient-brand: linear-gradient(130deg, #673AFF 0%, #D932FF 50%, #FF266A 100%);
+      --ds-gradient-dark:  linear-gradient(180deg, #0f0f0f 0%, #171719 100%);
+
+      /* Fonts */
+      --ds-font-base:    "DM Sans", "DM Sans Placeholder", sans-serif;
+      --ds-font-brand:   "Oxanium", sans-serif;
+      --ds-font-code:    "Fragment Mono", "Geist Mono", monospace;
+
+      /* Type scale */
+      --ds-text-xs:   12px;
+      --ds-text-sm:   14px;
+      --ds-text-md:   16px;
+      --ds-text-lg:   18px;
+      --ds-text-xl:   20px;
+      --ds-text-2xl:  24px;
+      --ds-text-3xl:  30px;
+      --ds-text-4xl:  36px;
+      --ds-text-5xl:  40px;
+      --ds-text-6xl:  50px;
+      --ds-text-7xl:  64px;
+
+      /* Font weights */
+      --ds-weight-light:    300;
+      --ds-weight-regular:  400;
+      --ds-weight-medium:   500;
+      --ds-weight-semibold: 600;
+      --ds-weight-bold:     700;
+
+      /* Line heights */
+      --ds-leading-tight:   1.2;
+      --ds-leading-normal:  1.5;
+      --ds-leading-relaxed: 1.7;
+
+      /* Letter spacing */
+      --ds-tracking-tight:  -0.5px;
+      --ds-tracking-normal: 0px;
+      --ds-tracking-wide:   0.08em;
+
+      /* Spacing */
+      --ds-space-2xs:  4px;
+      --ds-space-xs:   8px;
+      --ds-space-sm:   12px;
+      --ds-space-md:   16px;
+      --ds-space-lg:   24px;
+      --ds-space-xl:   32px;
+      --ds-space-2xl:  48px;
+      --ds-space-3xl:  64px;
+      --ds-space-4xl:  80px;
+      --ds-space-5xl: 100px;
+
+      /* Radius */
+      --ds-radius-xs:   5px;
+      --ds-radius-sm:   8px;
+      --ds-radius-md:   18px;
+      --ds-radius-lg:   24px;
+      --ds-radius-xl:   40px;
+      --ds-radius-pill: 9999px;
+
+      /* Border */
+      --ds-border-default: 1px solid var(--ds-color-border-default);
+      --ds-border-brand:   1px solid var(--ds-color-brand-purple);
+
+      /* Shadow */
+      --ds-shadow-card:  0px 24px 40px rgba(0, 0, 0, 0.04);
+      --ds-shadow-modal: 0px 24px 40px rgba(0, 0, 0, 0.10);
+
+      /* Container padding */
+      --ds-container-padding-mobile:     16px;
+      --ds-container-padding-tablet:     32px;
+      --ds-container-padding-sm-desktop: 32px;
+      --ds-container-padding-desktop:    120px;
+    }
+
+    /* =====================================================
+       3. Base Styles
+    ===================================================== */
+    h1, .ds-h1 {
+      font-family: var(--ds-font-base);
+      font-size: 24px;
+      font-weight: var(--ds-weight-bold);
+      line-height: var(--ds-leading-tight);
+      letter-spacing: var(--ds-tracking-tight);
+      text-wrap: balance;
+    }
+    h2, .ds-h2 {
+      font-family: var(--ds-font-base);
+      font-size: 20px;
+      font-weight: var(--ds-weight-bold);
+      line-height: var(--ds-leading-tight);
+      letter-spacing: var(--ds-tracking-tight);
+      text-wrap: balance;
+    }
+    h3, .ds-h3 {
+      font-family: var(--ds-font-base);
+      font-size: 18px;
+      font-weight: var(--ds-weight-semibold);
+      line-height: var(--ds-leading-tight);
+      text-wrap: balance;
+    }
+    h4, .ds-h4 {
+      font-family: var(--ds-font-base);
+      font-size: var(--ds-text-2xl);
+      font-weight: var(--ds-weight-medium);
+      line-height: var(--ds-leading-tight);
+    }
+
+    .ds-body-l {
+      font-family: var(--ds-font-base);
+      font-size: var(--ds-text-xl);
+      font-weight: var(--ds-weight-regular);
+      line-height: var(--ds-leading-normal);
+    }
+    .ds-body-m {
+      font-family: var(--ds-font-base);
+      font-size: var(--ds-text-md);
+      font-weight: var(--ds-weight-medium);
+      line-height: var(--ds-leading-normal);
+    }
+    .ds-body-s {
+      font-family: var(--ds-font-base);
+      font-size: var(--ds-text-sm);
+      font-weight: var(--ds-weight-medium);
+      line-height: var(--ds-leading-normal);
+    }
+
+    .ds-text--brand { color: var(--ds-color-brand-purple); }
+    .ds-text--product {
+      font-family: var(--ds-font-brand);
+      font-weight: var(--ds-weight-bold);
+    }
+
+    /* =====================================================
+       4. Layout & Container
+    ===================================================== */
+    .ds-container {
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 var(--ds-container-padding-mobile);
+      box-sizing: border-box;
+    }
+
+    .ds-section { width: 100%; padding: var(--ds-space-4xl) 0; }
+    .ds-section--hero { padding: 100px 0 var(--ds-space-5xl); }
+    .ds-section--light { background-color: var(--ds-color-surface-light); }
+    .ds-section--dark {
+      background-color: var(--ds-color-surface-dark);
+      color: var(--ds-color-text-inverse);
+    }
+
+    /* Article layout — 본문 860px 통일 */
+    .ds-article { max-width: 860px; margin: 0 auto; }
+    .ds-article .ds-container { padding: 0 var(--ds-container-padding-mobile); }
+
+    /* =====================================================
+       5. Navigation
+    ===================================================== */
+    .ds-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: 58px;
+      display: flex; align-items: center;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(20px);
+      border-bottom: var(--ds-border-default);
+      padding: 0 var(--ds-container-padding-mobile);
+    }
+    .ds-nav__inner {
+      width: 100%;
+      display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    }
+    .ds-nav__logo {
+      font-family: var(--ds-font-base);
+      font-weight: var(--ds-weight-bold);
+      font-size: var(--ds-text-lg);
+      color: var(--ds-color-text-primary);
+    }
+    .ds-nav__links {
+      display: none;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+      padding: 0; margin: 0;
+    }
+    .ds-nav__link {
+      font-size: var(--ds-text-sm);
+      color: var(--ds-color-text-secondary);
+      transition: color 0.15s;
+    }
+    .ds-nav__link:hover { color: var(--ds-color-text-primary); }
+
+    /* =====================================================
+       6. Section Header
+    ===================================================== */
+    .ds-section-header {
+      margin-bottom: var(--ds-space-2xl);
+      text-align: left;
+    }
+    .ds-section-header__title {
+      font-family: var(--ds-font-base);
+      font-size: 20px;
+      font-weight: var(--ds-weight-bold);
+      color: var(--ds-color-text-primary);
+      line-height: var(--ds-leading-tight);
+      letter-spacing: var(--ds-tracking-tight);
+      margin-bottom: var(--ds-space-md);
+      text-wrap: balance;
+    }
+    .ds-section-header__description {
+      font-size: var(--ds-text-lg);
+      color: var(--ds-color-text-secondary);
+      line-height: var(--ds-leading-relaxed);
+      max-width: 100%;
+      margin: 0;
+    }
+    .ds-section-header--underline {
+      padding-bottom: var(--ds-space-lg);
+      border-bottom: var(--ds-border-default);
+      margin-bottom: var(--ds-space-xl);
+    }
+    .ds-section-header--left { text-align: left; }
+    .ds-section-header--left .ds-section-header__description { margin: 0; }
+
+    /* =====================================================
+       7. Hero — text-only
+    ===================================================== */
+    .ds-hero--text-only { max-width: 860px; }
+    .ds-hero__title {
+      font-family: var(--ds-font-base);
+      font-size: 24px;
+      font-weight: var(--ds-weight-bold);
+      color: var(--ds-color-text-primary);
+      line-height: var(--ds-leading-tight);
+      letter-spacing: -1px;
+      margin-bottom: var(--ds-space-sm);
+      text-wrap: balance;
+    }
+    .ds-hero__description {
+      font-size: var(--ds-text-lg);
+      color: var(--ds-color-text-secondary);
+      line-height: var(--ds-leading-relaxed);
+      max-width: 100%;
+      margin-bottom: var(--ds-space-xl);
+    }
+
+    /* =====================================================
+       8. Card
+    ===================================================== */
+    .ds-card {
+      background-color: var(--ds-color-surface-white);
+      border-radius: var(--ds-radius-md);
+      border: var(--ds-border-default);
+      padding: var(--ds-space-lg);
+      box-shadow: var(--ds-shadow-card);
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+    }
+    .ds-card__badge {
+      display: inline-flex; align-items: center; width: fit-content;
+      padding: 4px 12px; border-radius: var(--ds-radius-pill);
+      font-size: var(--ds-text-xs); font-weight: var(--ds-weight-medium);
+      font-family: var(--ds-font-code); text-transform: uppercase;
+      letter-spacing: var(--ds-tracking-wide);
+      border: 1px solid currentColor; margin-bottom: var(--ds-space-md);
+    }
+    .ds-card__badge--brand { color: var(--ds-color-brand-purple); border-color: var(--ds-color-brand-purple); }
+    .ds-card__badge--gray  { color: var(--ds-color-text-tertiary); border-color: var(--ds-color-border-default); }
+
+    .ds-card__title {
+      font-family: var(--ds-font-base);
+      font-size: var(--ds-text-2xl);
+      font-weight: var(--ds-weight-bold);
+      color: var(--ds-color-text-primary);
+      line-height: var(--ds-leading-tight);
+      margin-bottom: var(--ds-space-sm);
+      text-wrap: balance;
+    }
+    .ds-card__title--sm {
+      font-size: var(--ds-text-lg);
+      font-weight: var(--ds-weight-semibold);
+    }
+    .ds-card__description {
+      font-size: var(--ds-text-sm);
+      color: var(--ds-color-text-secondary);
+      line-height: var(--ds-leading-relaxed);
+      flex: 1;
+    }
+    .ds-card__icon {
+      font-size: 28px;
+      margin-bottom: var(--ds-space-sm);
+      display: block;
+    }
+
+    /* Card Grid */
+    .ds-card-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+    .ds-card-grid .ds-card { display: flex; flex-direction: column; }
+
+    /* =====================================================
+       9. Banner
+    ===================================================== */
+    .ds-banner {
+      padding: var(--ds-space-lg) var(--ds-space-xl);
+      border-radius: 0;
+      border: none;
+      border-top: var(--ds-border-default);
+      border-bottom: var(--ds-border-default);
+      background-color: var(--ds-color-surface-light);
+      font-size: var(--ds-text-md);
+      line-height: var(--ds-leading-relaxed);
+      text-align: center;
+    }
+    .ds-banner a { display: block; margin-top: var(--ds-space-sm); }
+
+    .ds-banner--full {
+      width: 100%;
+      text-align: center;
+      padding: var(--ds-space-xl) var(--ds-space-2xl);
+      border-radius: var(--ds-radius-xl);
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      overflow: hidden;
+      color: var(--ds-color-text-primary);
+      font-size: var(--ds-text-lg);
+      font-weight: var(--ds-weight-medium);
+      line-height: var(--ds-leading-relaxed);
+      border: none;
+      isolation: isolate;
+    }
+    .ds-banner--full::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.72);
+      z-index: 0;
+    }
+    .ds-banner--full > * { position: relative; z-index: 1; }
+
+    /* =====================================================
+       10. Bullet List
+    ===================================================== */
+    .ds-bullet {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--ds-space-sm);
+    }
+    .ds-bullet__item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--ds-space-xs);
+      font-size: var(--ds-text-md);
+      line-height: var(--ds-leading-normal);
+      color: var(--ds-color-text-primary);
+    }
+    .ds-bullet__icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      margin-top: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ds-bullet--check .ds-bullet__icon::before {
+      content: "✓";
+      color: var(--ds-color-success);
+      font-weight: var(--ds-weight-bold);
+      font-size: var(--ds-text-md);
+      line-height: 1;
+    }
+    .ds-bullet--dot .ds-bullet__icon::before {
+      content: "•";
+      color: var(--ds-color-brand-purple);
+      font-size: var(--ds-text-xl);
+      line-height: 1;
+    }
+    .ds-bullet--number { counter-reset: bullet; }
+    .ds-bullet--number .ds-bullet__icon::before {
+      counter-increment: bullet;
+      content: counter(bullet);
+      font-size: var(--ds-text-sm);
+      font-weight: var(--ds-weight-bold);
+      color: var(--ds-color-brand-primary);
+    }
+
+    /* =====================================================
+       11. Table
+    ===================================================== */
+    .ds-table-wrap {
+      overflow-x: auto;
+      border-radius: var(--ds-radius-lg);
+      border: var(--ds-border-default);
+    }
+    .ds-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: var(--ds-text-sm);
+    }
+    .ds-table thead th {
+      font-family: var(--ds-font-code);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: var(--ds-tracking-wide);
+      color: var(--ds-color-text-primary);
+      font-weight: var(--ds-weight-semibold);
+      padding: 12px 16px;
+      border-bottom: 2px solid var(--ds-color-border-default);
+      text-align: left;
+      background: var(--ds-color-surface-light);
+    }
+    .ds-table tbody td {
+      padding: 14px 16px;
+      border-bottom: var(--ds-border-default);
+      color: var(--ds-color-text-primary);
+      vertical-align: top;
+      line-height: var(--ds-leading-normal);
+    }
+    .ds-table tbody tr:last-child td { border-bottom: none; }
+    .ds-table tbody td:first-child {
+      font-weight: var(--ds-weight-semibold);
+      color: var(--ds-color-text-primary);
+    }
+    .ds-table tbody tr:hover td { background: var(--ds-color-surface-light); }
+
+    /* =====================================================
+       12. Accordion Card
+    ===================================================== */
+    .ds-ac-list { display: flex; flex-direction: column; gap: 2px; }
+    .ds-ac-card {
+      border: var(--ds-border-default);
+      border-radius: var(--ds-radius-sm);
+      background-color: var(--ds-color-surface-white);
+      overflow: hidden;
+      transition: background-color 0.2s;
+    }
+    .ds-ac-card:hover { background-color: var(--ds-color-neutral-025); }
+    .ds-ac-card__header {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      align-items: center;
+      gap: var(--ds-space-md);
+      padding: var(--ds-space-lg);
+      cursor: pointer;
+      user-select: none;
+    }
+    .ds-ac-card__title-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 0;
+    }
+    .ds-ac-card__industry {
+      font-family: var(--ds-font-code);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ds-color-text-tertiary);
+      display: flex;
+      align-items: center;
+      gap: var(--ds-space-2xs);
+    }
+    .ds-ac-card__industry-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .ds-ac-card__title {
+      font-family: var(--ds-font-base);
+      font-size: var(--ds-text-lg);
+      font-weight: var(--ds-weight-medium);
+      line-height: var(--ds-leading-tight);
+      color: var(--ds-color-text-primary);
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+    .ds-ac-card__meta {
+      display: flex;
+      align-items: center;
+      gap: var(--ds-space-xs);
+      flex-wrap: wrap;
+      flex-shrink: 0;
+    }
+    .ds-ac-card__toggle {
+      width: 28px; height: 28px;
+      border-radius: 6px;
+      border: 0.5px solid var(--ds-color-border-default);
+      background: var(--ds-color-surface-light);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .ds-ac-card__toggle:hover {
+      border-color: var(--ds-color-border-strong);
+      background: var(--ds-color-surface-mid);
+    }
+    .ds-ac-card__toggle-icon {
+      width: 12px; height: 12px;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .ds-ac-card__toggle-icon::before,
+    .ds-ac-card__toggle-icon::after {
+      content: '';
+      position: absolute;
+      background: var(--ds-color-text-muted);
+      border-radius: 1px;
+      transition: opacity 0.2s;
+    }
+    .ds-ac-card__toggle-icon::before {
+      width: 10px; height: 1.5px;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .ds-ac-card__toggle-icon::after {
+      width: 1.5px; height: 10px;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 1;
+    }
+    .ds-ac-card.ds-ac--open .ds-ac-card__toggle-icon::after { opacity: 0; }
+    .ds-ac-card.ds-ac--open .ds-ac-card__toggle-icon::before {
+      background: var(--ds-color-text-secondary);
+    }
+    .ds-ac-card__body {
+      display: none;
+      padding: var(--ds-space-lg);
+      border-top: var(--ds-border-default);
+      background: var(--ds-color-surface-light);
+    }
+    .ds-ac-card.ds-ac--open .ds-ac-card__body { display: block; }
+
+    /* =====================================================
+       13. Button
+    ===================================================== */
+    .ds-btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: var(--ds-space-xs);
+      border-radius: var(--ds-radius-pill);
+      font-family: var(--ds-font-base);
+      font-weight: var(--ds-weight-medium);
+      font-size: var(--ds-text-md);
+      cursor: pointer;
+      border: none;
+      transition: opacity 0.2s, background-color 0.2s;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+    .ds-btn--md { padding: var(--ds-space-sm) var(--ds-space-xl); font-size: var(--ds-text-md); }
+    .ds-btn--primary   { background: var(--ds-gradient-brand); color: var(--ds-color-white); }
+    .ds-btn--primary:hover { opacity: 0.88; }
+    .ds-btn--secondary {
+      background-color: transparent;
+      color: var(--ds-color-text-primary);
+      border: var(--ds-border-default);
+    }
+    .ds-btn--secondary:hover { background-color: var(--ds-color-surface-light); }
+
+    /* =====================================================
+       14. CTA Band
+    ===================================================== */
+    .ds-cta-band {
+      width: 100%; position: relative; overflow: hidden;
+      padding: 80px var(--ds-container-padding-mobile);
+      text-align: center;
+      background-size: cover; background-position: center;
+    }
+    .ds-cta-band::before {
+      content: ''; position: absolute; inset: 0;
+      background: rgba(0,0,0,0.15); z-index: 0;
+    }
+    .ds-cta-band > * { position: relative; z-index: 1; }
+    .ds-cta-band__inner {
+      max-width: 100%;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--ds-space-lg);
+    }
+    .ds-cta-band__title {
+      font-family: var(--ds-font-base);
+      font-size: 40px;
+      font-weight: var(--ds-weight-bold);
+      color: var(--ds-color-white);
+      line-height: var(--ds-leading-tight);
+      letter-spacing: -1px;
+      margin: 0;
+      text-wrap: balance;
+    }
+    .ds-cta-band__description {
+      font-size: var(--ds-text-lg);
+      color: rgba(255,255,255,0.85);
+      line-height: var(--ds-leading-relaxed);
+      margin: 0;
+    }
+    .ds-cta-band__quote {
+      font-size: var(--ds-text-md);
+      color: rgba(255,255,255,0.75);
+      line-height: var(--ds-leading-relaxed);
+      font-style: italic;
+      max-width: 680px;
+      text-align: center;
+    }
+    .ds-cta-band__quote-attr {
+      font-size: var(--ds-text-sm);
+      color: rgba(255,255,255,0.55);
+      font-style: normal;
+      margin-top: var(--ds-space-xs);
+      display: block;
+    }
+    .ds-cta-band__actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+    }
+    .ds-cta-band__actions .ds-btn {
+      background: rgba(255,255,255,0.92);
+      color: var(--ds-color-text-primary);
+      border: 1px solid rgba(255,255,255,0.6);
+      backdrop-filter: blur(8px);
+    }
+    .ds-cta-band__actions .ds-btn:hover { background: var(--ds-color-white); }
+
+    /* =====================================================
+       15. Article body text
+    ===================================================== */
+    .ds-article-body {
+      font-size: var(--ds-text-md);
+      color: var(--ds-color-text-secondary);
+      line-height: var(--ds-leading-relaxed);
+    }
+    .ds-article-body p + p { margin-top: var(--ds-space-md); }
+    .ds-article-body strong { color: var(--ds-color-text-primary); font-weight: var(--ds-weight-semibold); }
+
+    /* =====================================================
+       16. Background Images
+    ===================================================== */
+    .ds-bg--wave-teal {
+      background-image: url('/cubig-homepage-design-system/reference/images/bg-wave-teal.webp');
+    }
+    .ds-bg--grad-deep {
+      background-image: url('/cubig-homepage-design-system/reference/images/bg-grad-deep.webp');
+    }
+
+    /* =====================================================
+       17. Section-specific layout
+    ===================================================== */
+
+    /* Article wrapper — constrains all content to 860px within section */
+    .ds-article-section .ds-article-content {
+      max-width: 860px;
+    }
+
+    /* Comparison table: Aspect column narrower */
+    .ds-table--comparison colgroup col:first-child { width: 22%; }
+    .ds-table--comparison colgroup col:nth-child(2) { width: 39%; }
+    .ds-table--comparison colgroup col:nth-child(3) { width: 39%; }
+    .ds-table--comparison thead th:nth-child(2) {
+      color: var(--ds-color-text-tertiary);
+    }
+    .ds-table--comparison thead th:nth-child(3) {
+      color: var(--ds-color-brand-purple);
+    }
+    .ds-table--comparison tbody td:nth-child(2) {
+      color: var(--ds-color-text-tertiary);
+    }
+
+    /* Banner full formula */
+    .ds-banner--full .ds-banner__formula {
+      font-size: var(--ds-text-xl);
+      font-weight: var(--ds-weight-bold);
+      color: var(--ds-color-text-primary);
+      margin-bottom: var(--ds-space-sm);
+      display: block;
+    }
+    .ds-banner--full .ds-banner__sub {
+      font-size: var(--ds-text-md);
+      color: var(--ds-color-text-secondary);
+      font-weight: var(--ds-weight-regular);
+    }
+
+    /* Inline card body text */
+    .ds-card-body-text {
+      font-size: var(--ds-text-sm);
+      color: var(--ds-color-text-secondary);
+      line-height: var(--ds-leading-relaxed);
+      margin-bottom: var(--ds-space-md);
+    }
+    .ds-card-body-text:last-child { margin-bottom: 0; }
+
+    /* Bullet in card */
+    .ds-card .ds-bullet { margin-top: var(--ds-space-md); }
+
+    /* Six dimension grid in card */
+    .ds-six-dim-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--ds-space-xs);
+      margin-top: var(--ds-space-md);
+    }
+    .ds-six-dim-item {
+      padding: var(--ds-space-sm) var(--ds-space-md);
+      border: var(--ds-border-default);
+      border-radius: var(--ds-radius-sm);
+      background: var(--ds-color-surface-white);
+    }
+    .ds-six-dim-item__name {
+      font-size: var(--ds-text-sm);
+      font-weight: var(--ds-weight-semibold);
+      color: var(--ds-color-text-primary);
+      margin-bottom: 2px;
+    }
+    .ds-six-dim-item__desc {
+      font-size: var(--ds-text-xs);
+      color: var(--ds-color-text-tertiary);
+      line-height: var(--ds-leading-normal);
+    }
+
+    /* =====================================================
+       18. Responsive — Tablet (768px+)
+    ===================================================== */
+    @media (min-width: 768px) {
+      .ds-container { padding: 0 var(--ds-container-padding-tablet); }
+
+      h1, .ds-h1, .ds-hero__title { font-size: 28px; }
+      h2, .ds-h2, .ds-section-header__title { font-size: 22px; }
+
+      .ds-nav__links { display: flex; }
+
+      .ds-card-grid--2col { grid-template-columns: repeat(2, 1fr); }
+      .ds-card-grid--3col { grid-template-columns: repeat(2, 1fr); }
+
+      .ds-cta-band { padding: 100px var(--ds-container-padding-tablet); }
+      .ds-cta-band__title { font-size: var(--ds-text-5xl); }
+      .ds-cta-band__inner { max-width: 720px; }
+
+      .ds-section-header__description { max-width: 720px; }
+      .ds-hero__description { max-width: 720px; }
+
+      .ds-six-dim-grid { grid-template-columns: repeat(3, 1fr); }
+
+      .ds-banner--full { padding: var(--ds-space-xl) var(--ds-space-3xl); }
+      .ds-banner--full .ds-banner__formula { font-size: var(--ds-text-2xl); }
+    }
+
+    /* =====================================================
+       19. Responsive — sm-Desktop (1024px+)
+    ===================================================== */
+    @media (min-width: 1024px) {
+      .ds-container { padding: 0 var(--ds-container-padding-sm-desktop); }
+
+      h1, .ds-h1, .ds-hero__title { font-size: 32px; }
+      h2, .ds-h2, .ds-section-header__title { font-size: 24px; }
+      h3, .ds-h3 { font-size: 20px; }
+
+      .ds-card-grid--3col { grid-template-columns: repeat(3, 1fr); }
+
+      .ds-section-header__description { max-width: 720px; }
+      .ds-hero__description { max-width: 720px; }
+
+      .ds-cta-band__inner { max-width: 720px; }
+    }
+
+    /* =====================================================
+       20. Responsive — Desktop (1440px+)
+    ===================================================== */
+    @media (min-width: 1440px) {
+      .ds-container { padding: 0 var(--ds-container-padding-desktop); max-width: 1440px; }
+
+      h1, .ds-h1, .ds-hero__title { font-size: 36px; }
+      h2, .ds-h2, .ds-section-header__title { font-size: 28px; }
+      h3, .ds-h3 { font-size: 22px; }
+
+      .ds-nav { padding: 0 var(--ds-container-padding-desktop); }
+
+      .ds-section-header__description { max-width: 860px; }
+      .ds-hero__description { max-width: 860px; }
+
+      .ds-cta-band { padding: 120px var(--ds-container-padding-desktop); max-width: 1440px; margin: 0 auto; }
+      .ds-cta-band__title { font-size: var(--ds-text-7xl); letter-spacing: -2px; }
+      .ds-cta-band__inner { max-width: 860px; }
+
+      .ds-card { padding: var(--ds-space-xl); }
+    }
+
+    /* =====================================================
+       20.5 Footer
+    ===================================================== */
+    .ds-footer {
+      padding: var(--ds-space-lg) var(--ds-container-padding-mobile);
+      background: var(--ds-color-surface-dark);
+      color: var(--ds-color-text-tertiary);
+      font-size: var(--ds-text-xs);
+      text-align: center;
+    }
+
+    /* Bullet list spacing utility */
+    .ds-bullet--spaced-top { margin-top: var(--ds-space-lg); }
+
+    /* =====================================================
+       21. Mobile overrides
+    ===================================================== */
+    @media (max-width: 767px) {
+      .ds-cta-band__actions { flex-direction: column; align-items: center; }
+      .ds-cta-band__actions .ds-btn { width: 100%; max-width: 320px; }
+      .ds-ac-card__header { grid-template-columns: 1fr auto; align-items: start; }
+      .ds-ac-card__meta { display: none; }
+      .ds-banner--full { padding: var(--ds-space-xl) var(--ds-space-lg); border-radius: var(--ds-radius-lg); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="ds-nav" aria-label="Main navigation">
+    <div class="ds-nav__inner">
+      <a href="/" class="ds-nav__logo">CUBIG</a>
+      <ul class="ds-nav__links">
+        <li><a href="/products" class="ds-nav__link">Products</a></li>
+        <li><a href="/solutions" class="ds-nav__link">Solutions</a></li>
+        <li><a href="/definitions" class="ds-nav__link">Definitions</a></li>
+        <li><a href="/contact" class="ds-nav__link">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="ds-article">
+
+    <!-- ===================================================
+         Section 1: Hero
+    =================================================== -->
+    <section class="ds-section ds-section--hero" id="section-1">
+      <div class="ds-container">
+        <div class="ds-hero ds-hero--text-only">
+          <h1 class="ds-hero__title">Execution State Layer</h1>
+          <p class="ds-hero__description">
+            A data infrastructure layer that binds every AI execution to a versioned, frozen, and verifiable data state — enabling reproducibility, traceability, and consistent outcomes across production environments.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================
+         Section 2: Definition
+    =================================================== -->
+    <section class="ds-section" id="section-2">
+      <div class="ds-container">
+        <div class="ds-section-header ds-section-header--underline ds-section-header--left">
+          <h2 class="ds-section-header__title">
+            <span class="ds-text--brand">Definition</span>
+          </h2>
+        </div>
+        <div class="ds-banner">
+          <strong>Execution State Layer (ESL)</strong> is a data infrastructure layer that binds every AI execution to a versioned, frozen, and verifiable data state, enabling reproducibility, traceability, and consistent outcomes across production environments.
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================
+         Section 3: What it means
+    =================================================== -->
+    <section class="ds-section" id="section-3">
+      <div class="ds-container">
+        <div class="ds-section-header ds-section-header--underline ds-section-header--left">
+          <h2 class="ds-section-header__title">What it means</h2>
+        </div>
+        <div class="ds-article-body">
+          <p>In traditional AI systems, results often change without a clear explanation due to data updates, schema changes, pipeline modifications, or environment differences.</p>
+          <p>The Execution State Layer resolves this by ensuring that every AI run is tied to a specific, immutable data state. This transforms AI execution from non-deterministic and opaque into reproducible and explainable.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================
+         Section 4: Core characteristics
+    =================================================== -->
+    <section class="ds-section ds-section--light" id="section-4">
+      <div class="ds-container">
+        <div class="ds-section-header ds-section-header--underline ds-section-header--left">
+          <h2 class="ds-section-header__title">
+            Core <span class="ds-text--brand">characteristics</span>
+          </h2>
+        </div>
+        <div class="ds-card-grid ds-card-grid--3col">
+
+          <article class="ds-card">
+            <span class="ds-card__badge ds-card__badge--gray">01</span>
+            <h3 class="ds-card__title ds-card__title--sm">Versioned Data States</h3>
+            <p class="ds-card__description">Every dataset used in AI execution is versioned and explicitly identified.</p>
+            <ul class="ds-bullet ds-bullet--check">
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Explicit version identifiers</li>
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Comparable across runs</li>
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Rollback possible</li>
+            </ul>
+          </article>
+
+          <article class="ds-card">
+            <span class="ds-card__badge ds-card__badge--gray">02</span>
+            <h3 class="ds-card__title ds-card__title--sm">Frozen Execution Conditions</h3>
+            <p class="ds-card__description">Each run is bound to a frozen snapshot of data.</p>
+            <ul class="ds-bullet ds-bullet--check">
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>No drift during execution</li>
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Consistent input across environments</li>
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Stable production behavior</li>
+            </ul>
+          </article>
+
+          <article class="ds-card">
+            <span class="ds-card__badge ds-card__badge--gray">03</span>
+            <h3 class="ds-card__title ds-card__title--sm">Verifiable State Integrity</h3>
+            <p class="ds-card__description">Data states can be validated before and after execution.</p>
+            <ul class="ds-bullet ds-bullet--check">
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Checksum or validation logic</li>
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Schema consistency checks</li>
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Integrity guarantees</li>
+            </ul>
+          </article>
+
+          <article class="ds-card">
+            <span class="ds-card__badge ds-card__badge--gray">04</span>
+            <h3 class="ds-card__title ds-card__title--sm">Full Execution Traceability</h3>
+            <p class="ds-card__description">Every AI output can be traced back to the exact state and context used.</p>
+            <ul class="ds-bullet ds-bullet--check">
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Exact data state</li>
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Transformation steps</li>
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Execution context</li>
+            </ul>
+          </article>
+
+          <article class="ds-card">
+            <span class="ds-card__badge ds-card__badge--gray">05</span>
+            <h3 class="ds-card__title ds-card__title--sm">Reproducibility by Design</h3>
+            <p class="ds-card__description">Past executions can be re-run under identical conditions.</p>
+            <ul class="ds-bullet ds-bullet--check">
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Debugging without guesswork</li>
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Reliable comparisons</li>
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Audit-ready AI systems</li>
+            </ul>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================
+         Section 5: Why it matters
+    =================================================== -->
+    <section class="ds-section" id="section-5">
+      <div class="ds-container">
+        <div class="ds-section-header ds-section-header--underline ds-section-header--left">
+          <h2 class="ds-section-header__title">
+            Why it <span class="ds-text--brand">matters</span>
+          </h2>
+        </div>
+        <div class="ds-card-grid ds-card-grid--3col">
+
+          <article class="ds-card">
+            <span class="ds-card__icon" aria-hidden="true">
+              <svg class="ds-icon ds-icon--lg" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"/>
+                <path d="m21 21-4.35-4.35"/>
+              </svg>
+            </span>
+            <h3 class="ds-card__title ds-card__title--sm">Eliminates "why did the result change?"</h3>
+            <p class="ds-card__description">Without an Execution State Layer, teams often debug models when the real issue is hidden in the data or pipeline. With ESL, execution conditions are explicit and comparable.</p>
+          </article>
+
+          <article class="ds-card">
+            <span class="ds-card__icon" aria-hidden="true">
+              <svg class="ds-icon ds-icon--lg" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/>
+                <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/>
+                <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/>
+                <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>
+              </svg>
+            </span>
+            <h3 class="ds-card__title ds-card__title--sm">Enables production-ready AI</h3>
+            <p class="ds-card__description">AI systems often fail in production not because the model is wrong, but because data shifts, pipeline inconsistencies, and hidden dependencies change the execution conditions. ESL makes deployments more stable and predictable.</p>
+          </article>
+
+          <article class="ds-card">
+            <span class="ds-card__icon" aria-hidden="true">
+              <svg class="ds-icon ds-icon--lg" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <path d="m9 12 2 2 4-4"/>
+              </svg>
+            </span>
+            <h3 class="ds-card__title ds-card__title--sm">Supports audit and compliance</h3>
+            <p class="ds-card__description">In regulated environments, organizations need to answer what data was used and under what conditions AI was executed. ESL provides reproducible audit trails and verifiable execution records.</p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================
+         Section 6: Comparison
+    =================================================== -->
+    <section class="ds-section ds-section--light" id="section-6">
+      <div class="ds-container">
+        <div class="ds-section-header ds-section-header--underline ds-section-header--left">
+          <h2 class="ds-section-header__title">
+            <span class="ds-text--brand">Comparison</span>
+          </h2>
+        </div>
+        <div class="ds-table-wrap">
+          <table class="ds-table ds-table--comparison">
+            <colgroup>
+              <col>
+              <col>
+              <col>
+            </colgroup>
+            <thead>
+              <tr>
+                <th scope="col">Aspect</th>
+                <th scope="col">Traditional Data Pipeline</th>
+                <th scope="col">With Execution State Layer</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Data Mutability</td>
+                <td>Data is mutable</td>
+                <td>Data is versioned and frozen</td>
+              </tr>
+              <tr>
+                <td>Execution Conditions</td>
+                <td>Execution conditions are implicit</td>
+                <td>Execution conditions are explicit</td>
+              </tr>
+              <tr>
+                <td>Reproducibility</td>
+                <td>Results are difficult to reproduce</td>
+                <td>Results are reproducible</td>
+              </tr>
+              <tr>
+                <td>Debugging</td>
+                <td>Debugging relies on assumptions</td>
+                <td>Debugging is deterministic</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================
+         Section 7: Relationship to AI-Ready Data
+    =================================================== -->
+    <section class="ds-section" id="section-7">
+      <div class="ds-container">
+        <div class="ds-section-header ds-section-header--underline ds-section-header--left">
+          <h2 class="ds-section-header__title">
+            Relationship to <span class="ds-text--brand">AI-Ready Data</span>
+          </h2>
+        </div>
+        <div class="ds-article-body">
+          <p>AI-ready data ensures that data is usable, reliable, and privacy-safe. The Execution State Layer extends this by ensuring that AI-ready data is also reproducible in execution. Data readiness is assessed across six dimensions — <strong>Privacy, Integrity, Traceability, Contextuality, Operational Reliability, and Conciseness</strong> — and each dimension must be verifiably maintained at every execution.</p>
+        </div>
+        <ul class="ds-bullet ds-bullet--dot ds-bullet--spaced-top">
+          <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Privacy</li>
+          <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Integrity</li>
+          <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Traceability</li>
+          <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Contextuality</li>
+          <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Operational Reliability</li>
+          <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Conciseness</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================================================
+         Section 8: Conceptual model
+    =================================================== -->
+    <section class="ds-section" id="section-8">
+      <div class="ds-container">
+        <div class="ds-section-header ds-section-header--underline ds-section-header--left">
+          <h2 class="ds-section-header__title">
+            Conceptual <span class="ds-text--brand">model</span>
+          </h2>
+        </div>
+        <div class="ds-banner--full ds-bg--wave-teal">
+          <span class="ds-banner__formula">AI Execution = Model + Code + Execution State Layer</span>
+          <p class="ds-banner__sub">Where the Execution State Layer provides versioned data state, verified integrity, and full traceability.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================
+         Section 9: Example
+    =================================================== -->
+    <section class="ds-section ds-section--light" id="section-9">
+      <div class="ds-container">
+        <div class="ds-section-header ds-section-header--underline ds-section-header--left">
+          <h2 class="ds-section-header__title">Example</h2>
+        </div>
+        <div class="ds-article-body">
+          <p>A customer analytics model produces different results week to week.</p>
+          <p>Without ESL, it is unclear whether the change came from the model, the data, or the pipeline. With ESL, each run is linked to a specific data version, previous results can be exactly reproduced, and differences can be precisely explained.</p>
+        </div>
+        <ul class="ds-bullet ds-bullet--check ds-bullet--spaced-top">
+          <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Each run is linked to a specific data version</li>
+          <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Previous results can be exactly reproduced</li>
+          <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Differences can be precisely explained</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================================================
+         Section 10: How SynTitan implements the Execution State Layer
+    =================================================== -->
+    <section class="ds-section" id="section-10">
+      <div class="ds-container">
+        <div class="ds-section-header ds-section-header--underline ds-section-header--left">
+          <h2 class="ds-section-header__title">
+            How <span class="ds-text--product">SynTitan</span> implements the Execution State Layer
+          </h2>
+          <p class="ds-section-header__description">
+            SynTitan operationalizes the Execution State Layer through four integrated capabilities: AI Readiness profiling, multi-dimensional data quality scoring, full dataset versioning, and immutable execution metadata — ensuring every AI run is traceable to its exact data state.
+          </p>
+        </div>
+        <div class="ds-card-grid ds-card-grid--2col">
+
+          <article class="ds-card">
+            <span class="ds-card__badge ds-card__badge--brand">Feature</span>
+            <h3 class="ds-card__title ds-card__title--sm">Data Profiling &amp; AI Readiness Analysis</h3>
+            <p class="ds-card-body-text">Before any AI execution begins, SynTitan runs automated profiling across all input datasets. Each file is evaluated against the AI-Ready standard, and the platform surfaces pass/warn/fail status per file in real time.</p>
+            <p class="ds-card-body-text">This ensures that only datasets meeting a verified readiness threshold enter the execution pipeline — preventing silent data quality failures from propagating into model outputs.</p>
+            <ul class="ds-bullet ds-bullet--dot">
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Per-file profiling with pass / warn / fail status</li>
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>AI readiness score (0–100%) per dataset</li>
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Profiling results stored as part of the execution state record</li>
+            </ul>
+          </article>
+
+          <article class="ds-card">
+            <span class="ds-card__badge ds-card__badge--brand">Feature</span>
+            <h3 class="ds-card__title ds-card__title--sm">Six-Dimensional AI Readiness Score</h3>
+            <p class="ds-card-body-text">AI readiness is broken down into six independently scored dimensions. Each dimension maps directly to a property the Execution State Layer must guarantee.</p>
+            <div class="ds-six-dim-grid">
+              <div class="ds-six-dim-item">
+                <div class="ds-six-dim-item__name">Privacy</div>
+                <div class="ds-six-dim-item__desc">PII detection &amp; safe handling</div>
+              </div>
+              <div class="ds-six-dim-item">
+                <div class="ds-six-dim-item__name">Integrity</div>
+                <div class="ds-six-dim-item__desc">Null, duplicate, type &amp; distribution checks</div>
+              </div>
+              <div class="ds-six-dim-item">
+                <div class="ds-six-dim-item__name">Traceability</div>
+                <div class="ds-six-dim-item__desc">Snapshot, version label &amp; change log</div>
+              </div>
+              <div class="ds-six-dim-item">
+                <div class="ds-six-dim-item__name">Contextuality</div>
+                <div class="ds-six-dim-item__desc">Column semantics &amp; purpose alignment</div>
+              </div>
+              <div class="ds-six-dim-item">
+                <div class="ds-six-dim-item__name">Operational Reliability</div>
+                <div class="ds-six-dim-item__desc">Processing result verification</div>
+              </div>
+              <div class="ds-six-dim-item">
+                <div class="ds-six-dim-item__name">Conciseness</div>
+                <div class="ds-six-dim-item__desc">Low-value &amp; redundant column removal</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="ds-card">
+            <span class="ds-card__badge ds-card__badge--brand">Feature</span>
+            <h3 class="ds-card__title ds-card__title--sm">Immutable Dataset Versioning</h3>
+            <p class="ds-card-body-text">Every change to a dataset is recorded as an immutable version entry with a commit hash, timestamp, author, and change summary.</p>
+            <p class="ds-card-body-text">Any AI execution can be re-run against a past version to reproduce the exact result, without guesswork.</p>
+            <ul class="ds-bullet ds-bullet--number">
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>v2 Released — Released as v2 (Mar 25, 10:04 AM, hamilton)</li>
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>commit a3f8c2d — Feature Null Module (FNM) — 410 corrections (Mar 25, 10:04 AM, Alia)</li>
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>v1 Initial — Initial upload (Mar 25, 10:04 AM, hamilton, c4f8c2c)</li>
+            </ul>
+          </article>
+
+          <article class="ds-card">
+            <span class="ds-card__badge ds-card__badge--brand">Feature</span>
+            <h3 class="ds-card__title ds-card__title--sm">Execution Metadata &amp; Column Lineage</h3>
+            <p class="ds-card-body-text">Each dataset version captures full structural metadata — storage size, column count, row count, column types, owner, and format — alongside per-column distribution statistics.</p>
+            <p class="ds-card-body-text">This metadata is frozen at the time of execution, forming the verifiable state record that auditors and engineers can inspect after the fact.</p>
+            <ul class="ds-bullet ds-bullet--dot">
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Column schema: String, Numeric, ID, DateTime, Others</li>
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Row-level distribution histograms per column</li>
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Owner &amp; version tag (e.g., v1, v2)</li>
+              <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>Immutable at release — prevents post-hoc modification</li>
+            </ul>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================
+         Section 11: Frequently Asked Questions
+    =================================================== -->
+    <section class="ds-section ds-section--light" id="section-11">
+      <div class="ds-container">
+        <div class="ds-section-header ds-section-header--underline ds-section-header--left">
+          <h2 class="ds-section-header__title">
+            Frequently Asked <span class="ds-text--brand">Questions</span>
+          </h2>
+        </div>
+
+        <div class="ds-ac-list">
+
+          <article class="ds-ac-card ds-ac--open">
+            <div class="ds-ac-card__header" onclick="toggleAcCard(this)">
+              <div class="ds-ac-card__title-wrap">
+                <div class="ds-ac-card__industry">
+                  <span class="ds-ac-card__industry-dot" style="background-color: var(--ds-color-brand-purple)"></span>
+                  FAQ
+                </div>
+                <div class="ds-ac-card__title">What is an Execution State Layer in AI?</div>
+              </div>
+              <div class="ds-ac-card__toggle"><span class="ds-ac-card__toggle-icon"></span></div>
+            </div>
+            <div class="ds-ac-card__body">
+              <p class="ds-body-s">An Execution State Layer (ESL) is a data infrastructure layer that binds every AI model execution to a versioned, frozen, and verifiable data state. It ensures that the exact data used in any given run can be identified, reproduced, and audited — making AI systems deterministic and production-grade.</p>
+            </div>
+          </article>
+
+          <article class="ds-ac-card">
+            <div class="ds-ac-card__header" onclick="toggleAcCard(this)">
+              <div class="ds-ac-card__title-wrap">
+                <div class="ds-ac-card__industry">
+                  <span class="ds-ac-card__industry-dot" style="background-color: var(--ds-color-brand-purple)"></span>
+                  FAQ
+                </div>
+                <div class="ds-ac-card__title">How is Execution State Layer different from a traditional data pipeline?</div>
+              </div>
+              <div class="ds-ac-card__toggle"><span class="ds-ac-card__toggle-icon"></span></div>
+            </div>
+            <div class="ds-ac-card__body">
+              <p class="ds-body-s">A traditional pipeline moves data from source to destination but does not preserve the state of that data at the moment of AI execution. The Execution State Layer adds versioning, snapshot freezing, integrity verification, and full lineage on top of the pipeline — so every AI run has an explicit, immutable data record attached to it.</p>
+            </div>
+          </article>
+
+          <article class="ds-ac-card">
+            <div class="ds-ac-card__header" onclick="toggleAcCard(this)">
+              <div class="ds-ac-card__title-wrap">
+                <div class="ds-ac-card__industry">
+                  <span class="ds-ac-card__industry-dot" style="background-color: var(--ds-color-brand-purple)"></span>
+                  FAQ
+                </div>
+                <div class="ds-ac-card__title">Why do AI systems need an Execution State Layer?</div>
+              </div>
+              <div class="ds-ac-card__toggle"><span class="ds-ac-card__toggle-icon"></span></div>
+            </div>
+            <div class="ds-ac-card__body">
+              <p class="ds-body-s">Without an ESL, AI outputs can silently change due to data drift, schema updates, or pipeline modifications — making debugging and compliance nearly impossible. An Execution State Layer provides the infrastructure to ask and answer: <em>what data did this model see, and can we prove it?</em></p>
+            </div>
+          </article>
+
+          <article class="ds-ac-card">
+            <div class="ds-ac-card__header" onclick="toggleAcCard(this)">
+              <div class="ds-ac-card__title-wrap">
+                <div class="ds-ac-card__industry">
+                  <span class="ds-ac-card__industry-dot" style="background-color: var(--ds-color-brand-purple)"></span>
+                  FAQ
+                </div>
+                <div class="ds-ac-card__title">What is AI-Ready data, and how does it relate to the Execution State Layer?</div>
+              </div>
+              <div class="ds-ac-card__toggle"><span class="ds-ac-card__toggle-icon"></span></div>
+            </div>
+            <div class="ds-ac-card__body">
+              <p class="ds-body-s">AI-Ready data meets quality thresholds across six dimensions: Privacy, Integrity, Traceability, Contextuality, Operational Reliability, and Conciseness. The Execution State Layer ensures that this AI-Ready status is preserved and verifiable at every point of execution — not just at the time of ingestion.</p>
+            </div>
+          </article>
+
+          <article class="ds-ac-card">
+            <div class="ds-ac-card__header" onclick="toggleAcCard(this)">
+              <div class="ds-ac-card__title-wrap">
+                <div class="ds-ac-card__industry">
+                  <span class="ds-ac-card__industry-dot" style="background-color: var(--ds-color-brand-purple)"></span>
+                  FAQ
+                </div>
+                <div class="ds-ac-card__title">How does data versioning support reproducibility in AI?</div>
+              </div>
+              <div class="ds-ac-card__toggle"><span class="ds-ac-card__toggle-icon"></span></div>
+            </div>
+            <div class="ds-ac-card__body">
+              <p class="ds-body-s">Data versioning assigns a unique, immutable identifier to each state of a dataset. When an AI execution is tied to a specific version, that run can be exactly reproduced at any future point — critical for debugging, model comparison, regulatory audits, and MLOps workflows.</p>
+            </div>
+          </article>
+
+          <article class="ds-ac-card">
+            <div class="ds-ac-card__header" onclick="toggleAcCard(this)">
+              <div class="ds-ac-card__title-wrap">
+                <div class="ds-ac-card__industry">
+                  <span class="ds-ac-card__industry-dot" style="background-color: var(--ds-color-brand-purple)"></span>
+                  FAQ
+                </div>
+                <div class="ds-ac-card__title">How does Execution State Layer compare to MLflow or DVC?</div>
+              </div>
+              <div class="ds-ac-card__toggle"><span class="ds-ac-card__toggle-icon"></span></div>
+            </div>
+            <div class="ds-ac-card__body">
+              <p class="ds-body-s">MLflow and DVC are experiment tracking and data versioning tools focused on the model development lifecycle. The Execution State Layer is a broader infrastructure concept: it defines the contract between AI execution and data state, encompassing versioning, integrity verification, and traceability as first-class requirements. Tools like MLflow or DVC can serve as partial implementations of an Execution State Layer, but ESL describes the architectural requirement, not a specific product.</p>
+            </div>
+          </article>
+
+          <article class="ds-ac-card">
+            <div class="ds-ac-card__header" onclick="toggleAcCard(this)">
+              <div class="ds-ac-card__title-wrap">
+                <div class="ds-ac-card__industry">
+                  <span class="ds-ac-card__industry-dot" style="background-color: var(--ds-color-brand-purple)"></span>
+                  FAQ
+                </div>
+                <div class="ds-ac-card__title">Is Execution State Layer related to data provenance?</div>
+              </div>
+              <div class="ds-ac-card__toggle"><span class="ds-ac-card__toggle-icon"></span></div>
+            </div>
+            <div class="ds-ac-card__body">
+              <p class="ds-body-s">Yes. Data provenance tracks the origin, transformations, and movement of data over time. The Execution State Layer builds on provenance by binding that lineage record directly to each AI execution — so it is not just known where data came from, but exactly which provenance state the model saw at inference or training time. ESL can be thought of as <em>execution-scoped data provenance</em>: provenance that is frozen, versioned, and verifiable at the moment of every AI run.</p>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+  </main><!-- /.ds-article -->
+
+  <!-- ===================================================
+       Section 12: Summary + CTA (container 밖 전폭 배치)
+  =================================================== -->
+  <section class="ds-cta-band ds-bg--grad-deep" id="section-12" aria-label="Summary and CTA">
+    <div class="ds-cta-band__inner">
+      <h2 class="ds-cta-band__title">Execution State Layer</h2>
+      <p class="ds-cta-band__description">
+        Execution State Layer transforms AI systems from unstable and opaque into reproducible, traceable, and production-grade systems by binding every execution to a controlled data state.
+      </p>
+      <blockquote class="ds-cta-band__quote">
+        "Execution State Layer is a data infrastructure layer that binds AI executions to versioned, frozen, and verifiable data states, enabling reproducibility and traceability in production AI."
+        <span class="ds-cta-band__quote-attr">— CUBIG</span>
+      </blockquote>
+      <div class="ds-cta-band__actions">
+        <a href="/products/syntitan" class="ds-btn ds-btn--md">Learn more about SynTitan →</a>
+        <a href="/contact" class="ds-btn ds-btn--md">Contact us →</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="ds-footer">
+    CUBIG Definition Document
+  </footer>
+
+  <script>
+    function toggleAcCard(header) {
+      const card = header.closest('.ds-ac-card');
+      card.classList.toggle('ds-ac--open');
+    }
+  </script>
+
+</body>
+</html>
