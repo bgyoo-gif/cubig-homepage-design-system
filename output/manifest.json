@@ -1,5 +1,5 @@
 {
-  "generated": "2026-03-30 18:27:47",
+  "generated": "2026-03-30 18:35:26",
   "github_base": "https://bgyoo-gif.github.io/cubig-homepage-design-system",
   "groups": [
     {
@@ -654,7 +654,13 @@
         "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/input/cubig-learn-execution-state-drift.html",
         "modified": "2026-03-30"
       },
-      "html": [],
+      "html": [
+        {
+          "name": "cubig-learn-execution-state-drift-b-type.html",
+          "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/html/cubig-learn-execution-state-drift-b-type.html",
+          "modified": "2026-03-30"
+        }
+      ],
       "docs": [
         {
           "name": "cubig-learn-execution-state-drift-spec.md",
