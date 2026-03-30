@@ -762,7 +762,7 @@
     }
     .ds-cta-band__title {
       font-family: var(--ds-font-base);
-      font-size: 40px;
+      font-size: var(--ds-text-5xl);
       font-weight: var(--ds-weight-bold);
       color: var(--ds-color-white);
       line-height: var(--ds-leading-tight);
@@ -772,13 +772,13 @@
     }
     .ds-cta-band__description {
       font-size: var(--ds-text-lg);
-      color: rgba(255,255,255,0.85);
+      color: var(--ds-color-text-inverse);
       line-height: var(--ds-leading-relaxed);
       margin: 0;
     }
     .ds-cta-band__quote {
       font-size: var(--ds-text-md);
-      color: rgba(255,255,255,0.75);
+      color: var(--ds-color-text-inverse);
       line-height: var(--ds-leading-relaxed);
       font-style: italic;
       max-width: 680px;
@@ -786,7 +786,7 @@
     }
     .ds-cta-band__quote-attr {
       font-size: var(--ds-text-sm);
-      color: rgba(255,255,255,0.55);
+      color: var(--ds-color-text-inverse);
       font-style: normal;
       margin-top: var(--ds-space-xs);
       display: block;
@@ -1399,7 +1399,7 @@
                 </div>
                 <div class="ds-ac-card__title">What is an Execution State Layer in AI?</div>
               </div>
-              <div class="ds-ac-card__toggle"><span class="ds-ac-card__toggle-icon"></span></div>
+              <button type="button" class="ds-ac-card__toggle" aria-label="Toggle"><span class="ds-ac-card__toggle-icon"></span></button>
             </div>
             <div class="ds-ac-card__body">
               <p class="ds-body-s">An Execution State Layer (ESL) is a data infrastructure layer that binds every AI model execution to a versioned, frozen, and verifiable data state. It ensures that the exact data used in any given run can be identified, reproduced, and audited — making AI systems deterministic and production-grade.</p>
@@ -1415,7 +1415,7 @@
                 </div>
                 <div class="ds-ac-card__title">How is Execution State Layer different from a traditional data pipeline?</div>
               </div>
-              <div class="ds-ac-card__toggle"><span class="ds-ac-card__toggle-icon"></span></div>
+              <button type="button" class="ds-ac-card__toggle" aria-label="Toggle"><span class="ds-ac-card__toggle-icon"></span></button>
             </div>
             <div class="ds-ac-card__body">
               <p class="ds-body-s">A traditional pipeline moves data from source to destination but does not preserve the state of that data at the moment of AI execution. The Execution State Layer adds versioning, snapshot freezing, integrity verification, and full lineage on top of the pipeline — so every AI run has an explicit, immutable data record attached to it.</p>
@@ -1431,7 +1431,7 @@
                 </div>
                 <div class="ds-ac-card__title">Why do AI systems need an Execution State Layer?</div>
               </div>
-              <div class="ds-ac-card__toggle"><span class="ds-ac-card__toggle-icon"></span></div>
+              <button type="button" class="ds-ac-card__toggle" aria-label="Toggle"><span class="ds-ac-card__toggle-icon"></span></button>
             </div>
             <div class="ds-ac-card__body">
               <p class="ds-body-s">Without an ESL, AI outputs can silently change due to data drift, schema updates, or pipeline modifications — making debugging and compliance nearly impossible. An Execution State Layer provides the infrastructure to ask and answer: <em>what data did this model see, and can we prove it?</em></p>
@@ -1447,7 +1447,7 @@
                 </div>
                 <div class="ds-ac-card__title">What is AI-Ready data, and how does it relate to the Execution State Layer?</div>
               </div>
-              <div class="ds-ac-card__toggle"><span class="ds-ac-card__toggle-icon"></span></div>
+              <button type="button" class="ds-ac-card__toggle" aria-label="Toggle"><span class="ds-ac-card__toggle-icon"></span></button>
             </div>
             <div class="ds-ac-card__body">
               <p class="ds-body-s">AI-Ready data meets quality thresholds across six dimensions: Privacy, Integrity, Traceability, Contextuality, Operational Reliability, and Conciseness. The Execution State Layer ensures that this AI-Ready status is preserved and verifiable at every point of execution — not just at the time of ingestion.</p>
@@ -1463,7 +1463,7 @@
                 </div>
                 <div class="ds-ac-card__title">How does data versioning support reproducibility in AI?</div>
               </div>
-              <div class="ds-ac-card__toggle"><span class="ds-ac-card__toggle-icon"></span></div>
+              <button type="button" class="ds-ac-card__toggle" aria-label="Toggle"><span class="ds-ac-card__toggle-icon"></span></button>
             </div>
             <div class="ds-ac-card__body">
               <p class="ds-body-s">Data versioning assigns a unique, immutable identifier to each state of a dataset. When an AI execution is tied to a specific version, that run can be exactly reproduced at any future point — critical for debugging, model comparison, regulatory audits, and MLOps workflows.</p>
@@ -1479,7 +1479,7 @@
                 </div>
                 <div class="ds-ac-card__title">How does Execution State Layer compare to MLflow or DVC?</div>
               </div>
-              <div class="ds-ac-card__toggle"><span class="ds-ac-card__toggle-icon"></span></div>
+              <button type="button" class="ds-ac-card__toggle" aria-label="Toggle"><span class="ds-ac-card__toggle-icon"></span></button>
             </div>
             <div class="ds-ac-card__body">
               <p class="ds-body-s">MLflow and DVC are experiment tracking and data versioning tools focused on the model development lifecycle. The Execution State Layer is a broader infrastructure concept: it defines the contract between AI execution and data state, encompassing versioning, integrity verification, and traceability as first-class requirements. Tools like MLflow or DVC can serve as partial implementations of an Execution State Layer, but ESL describes the architectural requirement, not a specific product.</p>
@@ -1495,7 +1495,7 @@
                 </div>
                 <div class="ds-ac-card__title">Is Execution State Layer related to data provenance?</div>
               </div>
-              <div class="ds-ac-card__toggle"><span class="ds-ac-card__toggle-icon"></span></div>
+              <button type="button" class="ds-ac-card__toggle" aria-label="Toggle"><span class="ds-ac-card__toggle-icon"></span></button>
             </div>
             <div class="ds-ac-card__body">
               <p class="ds-body-s">Yes. Data provenance tracks the origin, transformations, and movement of data over time. The Execution State Layer builds on provenance by binding that lineage record directly to each AI execution — so it is not just known where data came from, but exactly which provenance state the model saw at inference or training time. ESL can be thought of as <em>execution-scoped data provenance</em>: provenance that is frozen, versioned, and verifiable at the moment of every AI run.</p>
