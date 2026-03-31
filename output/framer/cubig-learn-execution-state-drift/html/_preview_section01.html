@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 01 — Hero Preview</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@700&family=Fragment+Mono&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #f0f0f0; }
+
+    .s1esd-section {
+      width: 100%;
+      padding: 100px 0 80px;
+      background-color: #ffffff;
+      font-family: "DM Sans", sans-serif;
+      color: #0f0f0f;
+      -webkit-font-smoothing: antialiased;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+    .s1esd-container {
+      width: 100%;
+      padding: 0 16px;
+      box-sizing: border-box;
+      margin: 0 auto;
+    }
+    .s1esd-hero {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .s1esd-title {
+      font-family: "DM Sans", sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: #0f0f0f;
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+      margin: 0 0 16px;
+      text-wrap: balance;
+    }
+    .s1esd-title-brand { color: #725bea; }
+    .s1esd-description {
+      font-size: 18px;
+      color: #636363;
+      line-height: 1.7;
+      max-width: 100%;
+      margin: 0;
+      text-wrap: pretty;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+    @media (min-width: 768px) {
+      .s1esd-container { padding: 0 32px; }
+      .s1esd-title { font-size: 28px; }
+    }
+    @media (min-width: 1024px) {
+      .s1esd-container { padding: 0 32px; }
+      .s1esd-title { font-size: 32px; }
+      .s1esd-description { max-width: 720px; }
+    }
+    @media (min-width: 1440px) {
+      .s1esd-container { padding: 0 120px; max-width: 1440px; }
+      .s1esd-title { font-size: 36px; }
+      .s1esd-description { max-width: 860px; }
+    }
+  </style>
+</head>
+<body>
+  <section class="s1esd-section">
+    <div class="s1esd-container">
+      <div class="s1esd-hero">
+        <h1 class="s1esd-title">
+          <span class="s1esd-title-brand">Execution State Drift</span> vs Model Drift: Why Most Teams Look in the Wrong Place
+        </h1>
+        <p class="s1esd-description">When production AI degrades, teams check the model first. But most failures are not model drift — they are execution state drift. Schema changes, pipeline updates, runtime differences. Learn the distinction and how to isolate the root cause.</p>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

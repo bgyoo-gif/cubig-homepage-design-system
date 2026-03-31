@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 07 — FAQ Preview</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@700&family=Fragment+Mono&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #f0f0f0; }
+
+    .s7esd-section {
+      width: 100%; padding: 80px 0; background-color: #ffffff;
+      font-family: "DM Sans", sans-serif; color: #0f0f0f;
+      -webkit-font-smoothing: antialiased; word-break: keep-all; overflow-wrap: break-word;
+    }
+    .s7esd-container { width: 100%; padding: 0 16px; box-sizing: border-box; margin: 0 auto; }
+    .s7esd-body { max-width: 860px; margin: 0 auto; }
+    .s7esd-section-header { margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid #e6e7e9; }
+    .s7esd-title { font-size: 20px; font-weight: 700; color: #0f0f0f; line-height: 1.2; letter-spacing: -0.5px; margin: 0; text-wrap: balance; }
+    .s7esd-title-brand { color: #725bea; }
+
+    .s7esd-ac-list { display: flex; flex-direction: column; gap: 2px; }
+    .s7esd-ac-card { border: 1px solid #e6e7e9; border-radius: 8px; background-color: #ffffff; overflow: hidden; transition: background-color 0.2s; }
+    .s7esd-ac-card:hover { background-color: #f7f7f7; }
+    .s7esd-ac-header {
+      display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px;
+      padding: 24px; cursor: pointer; user-select: none;
+    }
+    .s7esd-ac-title { font-size: 16px; font-weight: 500; color: #0f0f0f; line-height: 1.2; text-wrap: balance; word-break: keep-all; overflow-wrap: break-word; }
+    .s7esd-ac-title-product { font-family: "Oxanium", sans-serif; font-weight: 700; }
+    .s7esd-ac-toggle {
+      width: 28px; height: 28px; border-radius: 6px; border: 0.5px solid #e6e7e9;
+      background: #f7f7f7; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; cursor: pointer; transition: border-color 0.15s, background 0.15s; position: relative;
+    }
+    .s7esd-ac-toggle-icon { width: 12px; height: 12px; position: relative; flex-shrink: 0; }
+    .s7esd-ac-toggle-icon::before, .s7esd-ac-toggle-icon::after {
+      content: ''; position: absolute; background: #9c9c9c; border-radius: 1px; transition: opacity 0.2s;
+    }
+    .s7esd-ac-toggle-icon::before { width: 10px; height: 1.5px; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+    .s7esd-ac-toggle-icon::after { width: 1.5px; height: 10px; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 1; }
+    .s7esd-ac-card.s7esd-ac--open .s7esd-ac-toggle-icon::after { opacity: 0; }
+    .s7esd-ac-card.s7esd-ac--open .s7esd-ac-toggle-icon::before { background: #636363; }
+    .s7esd-ac-body { display: none; padding: 24px; border-top: 1px solid #e6e7e9; background: #f7f7f7; }
+    .s7esd-ac-card.s7esd-ac--open .s7esd-ac-body { display: block; }
+    .s7esd-ac-answer { font-size: 16px; color: #636363; line-height: 1.7; margin: 0; text-wrap: pretty; word-break: keep-all; overflow-wrap: break-word; }
+
+    @media (min-width: 768px) { .s7esd-container { padding: 0 32px; } .s7esd-title { font-size: 22px; } .s7esd-ac-title { font-size: 17px; } }
+    @media (min-width: 1024px) { .s7esd-container { padding: 0 32px; } .s7esd-title { font-size: 24px; } }
+    @media (min-width: 1440px) { .s7esd-container { padding: 0 120px; max-width: 1440px; } .s7esd-title { font-size: 28px; } }
+  </style>
+</head>
+<body>
+  <section class="s7esd-section">
+    <div class="s7esd-container">
+      <div class="s7esd-body">
+        <div class="s7esd-section-header">
+          <h2 class="s7esd-title">Frequently Asked <span class="s7esd-title-brand">Questions</span></h2>
+        </div>
+        <div class="s7esd-ac-list" role="list">
+
+          <article class="s7esd-ac-card s7esd-ac--open" role="listitem">
+            <div class="s7esd-ac-header" onclick="toggle(this)" role="button" aria-expanded="true" tabindex="0">
+              <div class="s7esd-ac-title">What is the difference between model drift and execution state drift?</div>
+              <div class="s7esd-ac-toggle" aria-hidden="true"><span class="s7esd-ac-toggle-icon"></span></div>
+            </div>
+            <div class="s7esd-ac-body">
+              <p class="s7esd-ac-answer">Model drift is when real-world distribution diverges from training distribution over time. Execution state drift is when the conditions around the model — schema, pipeline, runtime — change without any model update. Most production AI failures are execution state drift, not model drift.</p>
+            </div>
+          </article>
+
+          <article class="s7esd-ac-card" role="listitem">
+            <div class="s7esd-ac-header" onclick="toggle(this)" role="button" aria-expanded="false" tabindex="0">
+              <div class="s7esd-ac-title">Can model drift monitoring detect execution state drift?</div>
+              <div class="s7esd-ac-toggle" aria-hidden="true"><span class="s7esd-ac-toggle-icon"></span></div>
+            </div>
+            <div class="s7esd-ac-body">
+              <p class="s7esd-ac-answer">No. Model drift monitoring tracks output and feature distributions relative to a baseline. It detects that something changed but cannot identify whether the change came from the model, the data schema, the preprocessing logic, or the runtime environment.</p>
+            </div>
+          </article>
+
+          <article class="s7esd-ac-card" role="listitem">
+            <div class="s7esd-ac-header" onclick="toggle(this)" role="button" aria-expanded="false" tabindex="0">
+              <div class="s7esd-ac-title">How do you distinguish execution state drift from model drift in production?</div>
+              <div class="s7esd-ac-toggle" aria-hidden="true"><span class="s7esd-ac-toggle-icon"></span></div>
+            </div>
+            <div class="s7esd-ac-body">
+              <p class="s7esd-ac-answer">By comparing the full execution state of the failing run against the last known-good run. If the model is unchanged but the execution state (schema, pipeline, runtime) differs, the cause is execution state drift. If the execution state is identical but output distributions have shifted, the cause is likely model or data drift.</p>
+            </div>
+          </article>
+
+          <article class="s7esd-ac-card" role="listitem">
+            <div class="s7esd-ac-header" onclick="toggle(this)" role="button" aria-expanded="false" tabindex="0">
+              <div class="s7esd-ac-title">Why does schema change cause AI failures?</div>
+              <div class="s7esd-ac-toggle" aria-hidden="true"><span class="s7esd-ac-toggle-icon"></span></div>
+            </div>
+            <div class="s7esd-ac-body">
+              <p class="s7esd-ac-answer">AI models expect a specific feature configuration. When upstream schema changes — a column type coerces differently, a field is removed, null rates increase — the model receives inputs that differ from what it was trained on, causing silent degradation without a visible error.</p>
+            </div>
+          </article>
+
+          <article class="s7esd-ac-card" role="listitem">
+            <div class="s7esd-ac-header" onclick="toggle(this)" role="button" aria-expanded="false" tabindex="0">
+              <div class="s7esd-ac-title">What is preprocessing drift?</div>
+              <div class="s7esd-ac-toggle" aria-hidden="true"><span class="s7esd-ac-toggle-icon"></span></div>
+            </div>
+            <div class="s7esd-ac-body">
+              <p class="s7esd-ac-answer">Preprocessing drift is when the logic applied to data before model training or inference changes between runs — through a normalization update, new imputation rule, or feature parsing change — causing model behavior to shift even though the model and raw data appear unchanged.</p>
+            </div>
+          </article>
+
+          <article class="s7esd-ac-card" role="listitem">
+            <div class="s7esd-ac-header" onclick="toggle(this)" role="button" aria-expanded="false" tabindex="0">
+              <div class="s7esd-ac-title">How does <span class="s7esd-ac-title-product">SynTitan</span> detect execution state drift?</div>
+              <div class="s7esd-ac-toggle" aria-hidden="true"><span class="s7esd-ac-toggle-icon"></span></div>
+            </div>
+            <div class="s7esd-ac-body">
+              <p class="s7esd-ac-answer"><span class="s7esd-ac-title-product">SynTitan</span> captures all execution conditions in a Release State at each run. When behavior changes, it diffs the Release State of the failing run against prior states to identify exactly which condition changed — schema, pipeline, or runtime — providing root cause without retraining cycles.</p>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </div>
+  </section>
+  <script>
+    function toggle(header) {
+      const card = header.closest('.s7esd-ac-card');
+      const isOpen = card.classList.toggle('s7esd-ac--open');
+      header.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    }
+    document.querySelectorAll('.s7esd-ac-header').forEach(h => {
+      h.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(h); }
+      });
+    });
+  </script>
+</body>
+</html>

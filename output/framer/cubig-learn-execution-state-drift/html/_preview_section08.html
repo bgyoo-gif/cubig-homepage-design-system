@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 08 — Where to Go Next Preview</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@700&family=Fragment+Mono&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #f0f0f0; }
+
+    .s8esd-section {
+      width: 100%; padding: 80px 0; background-color: #171719; color: #ffffff;
+      font-family: "DM Sans", sans-serif; -webkit-font-smoothing: antialiased;
+      word-break: keep-all; overflow-wrap: break-word;
+    }
+    .s8esd-container { width: 100%; padding: 0 16px; box-sizing: border-box; margin: 0 auto; }
+    .s8esd-body { max-width: 860px; margin: 0 auto; }
+    .s8esd-section-title { color: #ffffff; margin-bottom: 32px; font-size: 20px; font-weight: 600; line-height: 1.2; text-wrap: balance; }
+    .s8esd-dark-links { display: flex; flex-direction: column; gap: 12px; }
+    .s8esd-dark-link {
+      display: flex; align-items: center; gap: 16px; padding: 24px 32px;
+      background-color: #141414; border: 1px solid #303135; border-radius: 8px;
+      color: #ffffff; font-size: 16px; font-weight: 500; line-height: 1.5;
+      transition: border-color 0.2s, background-color 0.2s; text-decoration: none;
+      word-break: keep-all; overflow-wrap: break-word;
+    }
+    .s8esd-dark-link:hover { border-color: #636363; background-color: #171719; }
+    .s8esd-dark-link-arrow { font-family: "Fragment Mono", monospace; font-size: 18px; color: #c6c5fa; flex-shrink: 0; }
+    .s8esd-link-product { font-family: "Oxanium", sans-serif; font-weight: 700; }
+    @media (min-width: 768px) { .s8esd-container { padding: 0 32px; } .s8esd-section-title { font-size: 22px; } }
+    @media (min-width: 1024px) { .s8esd-container { padding: 0 32px; } .s8esd-section-title { font-size: 24px; } }
+    @media (min-width: 1440px) { .s8esd-container { padding: 0 120px; max-width: 1440px; } .s8esd-section-title { font-size: 28px; } }
+  </style>
+</head>
+<body>
+  <section class="s8esd-section">
+    <div class="s8esd-container">
+      <div class="s8esd-body">
+        <h3 class="s8esd-section-title">Where to go next</h3>
+        <div class="s8esd-dark-links" role="list">
+          <a href="/proof" class="s8esd-dark-link" role="listitem">
+            <span class="s8esd-dark-link-arrow" aria-hidden="true">→</span>
+            See a production incident: 21 days → 4 hours root cause identification
+          </a>
+          <a href="/syntitan" class="s8esd-dark-link" role="listitem">
+            <span class="s8esd-dark-link-arrow" aria-hidden="true">→</span>
+            Explore <span class="s8esd-link-product">SynTitan</span> — Release State and Run Binding
+          </a>
+          <a href="/learn/why-ai-fails-after-deployment" class="s8esd-dark-link" role="listitem">
+            <span class="s8esd-dark-link-arrow" aria-hidden="true">→</span>
+            Read: Why AI Fails After Deployment
+          </a>
+          <a href="/learn/release-state" class="s8esd-dark-link" role="listitem">
+            <span class="s8esd-dark-link-arrow" aria-hidden="true">→</span>
+            Read: What is Release State?
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

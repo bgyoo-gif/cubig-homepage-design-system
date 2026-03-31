@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 02 — Introduction Preview</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@700&family=Fragment+Mono&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #f0f0f0; }
+
+    .s2esd-section {
+      width: 100%;
+      padding: 80px 0;
+      background-color: #ffffff;
+      font-family: "DM Sans", sans-serif;
+      color: #0f0f0f;
+      -webkit-font-smoothing: antialiased;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+    .s2esd-container { width: 100%; padding: 0 16px; box-sizing: border-box; margin: 0 auto; }
+    .s2esd-body { max-width: 860px; margin: 0 auto; }
+    .s2esd-prose-lead {
+      font-size: 20px; font-weight: 600; color: #0f0f0f; line-height: 1.5;
+      margin-bottom: 24px; text-wrap: pretty; word-break: keep-all; overflow-wrap: break-word;
+    }
+    .s2esd-prose-body {
+      font-size: 16px; color: #636363; line-height: 1.7; margin-bottom: 16px;
+      text-wrap: pretty; word-break: keep-all; overflow-wrap: break-word;
+    }
+    .s2esd-prose-body strong { color: #0f0f0f; font-weight: 600; }
+    .s2esd-banner {
+      padding: 16px 24px; border-top: 1px solid #e6e7e9; border-bottom: 1px solid #e6e7e9;
+      background-color: #f7f7f7; margin: 32px 0;
+    }
+    .s2esd-banner-text {
+      font-size: 16px; color: #636363; line-height: 1.7;
+      text-wrap: pretty; word-break: keep-all; overflow-wrap: break-word; margin: 0;
+    }
+    .s2esd-banner-text strong { color: #0f0f0f; }
+    @media (min-width: 768px) { .s2esd-container { padding: 0 32px; } }
+    @media (min-width: 1024px) { .s2esd-container { padding: 0 32px; } }
+    @media (min-width: 1440px) { .s2esd-container { padding: 0 120px; max-width: 1440px; } }
+  </style>
+</head>
+<body>
+  <section class="s2esd-section">
+    <div class="s2esd-container">
+      <div class="s2esd-body">
+        <p class="s2esd-prose-lead">Your AI was accurate last month. This month it isn't. The model didn't change. The data did.</p>
+        <p class="s2esd-prose-body">Production AI degraded. Scores shifted. Decisions became inconsistent. The team did what teams always do: they checked the model. Nothing had changed. The weights were the same. The hyperparameters were the same. The model registry showed no update.</p>
+        <p class="s2esd-prose-body">But the results were still wrong. The issue was not model drift. It was <strong>execution state drift</strong> — and most monitoring tools are not built to detect it.</p>
+        <div class="s2esd-banner" role="note">
+          <p class="s2esd-banner-text">Most production AI failures are blamed on model drift. Most of them are actually caused by changes in the execution environment — <strong>schema, pipeline, runtime</strong> — that no model registry or drift monitor will show you.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

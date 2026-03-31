@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 10 — CTA Band Preview</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@700&family=Fragment+Mono&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #f0f0f0; }
+
+    .s10esd-section {
+      width: 100%; position: relative; overflow: hidden; padding: 80px 16px;
+      text-align: center;
+      background-image: url('../../reference/images/bg-gradient-deep-teal.webp');
+      background-size: cover; background-position: center;
+      font-family: "DM Sans", sans-serif; -webkit-font-smoothing: antialiased;
+      word-break: keep-all; overflow-wrap: break-word; box-sizing: border-box;
+    }
+    .s10esd-section::before {
+      content: ''; position: absolute; inset: 0;
+      background: rgba(0, 0, 0, 0.35); z-index: 0;
+    }
+    .s10esd-section > * { position: relative; z-index: 1; }
+    .s10esd-inner {
+      max-width: 100%; margin: 0 auto; display: flex;
+      flex-direction: column; align-items: center; gap: 24px;
+    }
+    .s10esd-title {
+      font-size: 36px; font-weight: 700; color: #ffffff; line-height: 1.2;
+      letter-spacing: -0.5px; margin: 0; text-wrap: balance;
+    }
+    .s10esd-title-brand { color: #c6c5fa; }
+    .s10esd-description {
+      font-size: 18px; color: #ffffff; line-height: 1.7; margin: 0;
+      text-wrap: pretty; word-break: keep-all; overflow-wrap: break-word;
+    }
+    .s10esd-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; }
+    .s10esd-btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      border-radius: 9999px; font-family: "DM Sans", sans-serif; font-weight: 500;
+      font-size: 16px; cursor: pointer; border: none;
+      transition: opacity 0.2s, background-color 0.2s; white-space: nowrap;
+      text-decoration: none; padding: 12px 32px; background: #ffffff; color: #0f0f0f;
+      border: 1px solid #ffffff; backdrop-filter: blur(8px);
+    }
+    .s10esd-btn:hover { opacity: 0.88; }
+    .s10esd-btn-product { font-family: "Oxanium", sans-serif; font-weight: 700; }
+    @media (max-width: 767px) {
+      .s10esd-title { font-size: 28px; letter-spacing: -0.5px; }
+      .s10esd-actions { flex-direction: column; align-items: center; }
+      .s10esd-btn { width: 100%; max-width: 320px; }
+    }
+    @media (min-width: 768px) { .s10esd-section { padding: 100px 32px; } }
+    @media (min-width: 1024px) { .s10esd-inner { max-width: 720px; } }
+    @media (min-width: 1440px) {
+      .s10esd-section { padding: 120px 120px; max-width: 1440px; margin: 0 auto; }
+      .s10esd-inner { max-width: 860px; }
+      .s10esd-title { font-size: 50px; }
+    }
+  </style>
+</head>
+<body>
+  <section class="s10esd-section" aria-label="Call to action">
+    <div class="s10esd-inner">
+      <h2 class="s10esd-title">Enterprise AI doesn't have to <span class="s10esd-title-brand">break</span> here.</h2>
+      <p class="s10esd-description">CUBIG builds the infrastructure layer that removes these exact problems — restricted data, unusable data, unstable execution — from production AI.</p>
+      <div class="s10esd-actions">
+        <a href="/syntitan" class="s10esd-btn">Explore <span class="s10esd-btn-product">SynTitan</span> →</a>
+        <a href="/learn/what-is-execution-state" class="s10esd-btn">Explore concept: Execution State →</a>
+        <a href="/proof" class="s10esd-btn">See production cases →</a>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
