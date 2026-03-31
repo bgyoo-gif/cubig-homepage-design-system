@@ -1555,6 +1555,72 @@
               <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>commit a3f8c2d — Feature Null Module (FNM) — 410 corrections (Mar 25, 10:04 AM, Alia)</li>
               <li class="ds-bullet__item"><span class="ds-bullet__icon"></span>v1 Initial — Initial upload (Mar 25, 10:04 AM, hamilton, c4f8c2c)</li>
             </ul>
+
+            <!-- Immutable Dataset Versioning Diagram -->
+            <style>
+  .iv-diag {
+    --iv-border: var(--ds-color-border-default, #e6e7e9); --iv-border-radius: var(--ds-radius-sm, 8px);
+    --iv-bg: var(--ds-color-surface-white, #fff); --iv-header-bg: var(--ds-color-neutral-050, #f2f2f2);
+    --iv-row-hover: var(--ds-color-neutral-025, #f7f7f7);
+    --iv-text-primary: var(--ds-color-text-primary, #0f0f0f); --iv-text-secondary: var(--ds-color-text-secondary, #636363);
+    --iv-text-tertiary: var(--ds-color-text-tertiary, #9c9c9c);
+    --iv-green: var(--ds-color-success, #0e824c); --iv-orange: var(--ds-color-warn, #f59e0b);
+    --iv-hash-bg: var(--ds-color-neutral-050, #f2f2f2); --iv-hash-border: var(--ds-color-neutral-200, #e0e0e0);
+    --iv-connector-clr: var(--ds-color-neutral-300, #bababa);
+    --iv-btn-bg: var(--ds-color-neutral-100, #ececec); --iv-btn-border: var(--ds-color-neutral-200, #e0e0e0);
+    --iv-btn-text: var(--ds-color-text-secondary, #636363); --iv-accent: var(--ds-color-brand-primary, #3061f2);
+    display: flex; gap: var(--ds-space-lg, 24px); width: 100%; font-family: var(--ds-font-base, "DM Sans", sans-serif);
+    background: var(--iv-bg); align-items: flex-start; margin-top: var(--ds-space-lg, 24px);
+  }
+  .iv-diag__table-wrap { flex: 1 1 0; min-width: 0; border: 1px solid var(--iv-border); border-radius: var(--iv-border-radius); overflow: hidden; }
+  .iv-diag__table-title { font-size: var(--ds-text-sm, 14px); font-weight: 600; color: var(--iv-text-primary); padding: 12px 16px; border-bottom: 1px solid var(--iv-border); }
+  .iv-diag__table { width: 100%; border-collapse: collapse; }
+  .iv-diag__table thead tr { background: var(--iv-header-bg); }
+  .iv-diag__table thead th { font-size: var(--ds-text-xs, 12px); font-weight: 600; color: var(--iv-text-tertiary); text-transform: uppercase; letter-spacing: 0.04em; padding: 8px 12px; text-align: left; border-bottom: 1px solid var(--iv-border); white-space: nowrap; }
+  .iv-diag__table tbody tr { border-bottom: 1px solid var(--iv-border); }
+  .iv-diag__table tbody tr:last-child { border-bottom: none; }
+  .iv-diag__table tbody td { font-size: var(--ds-text-xs, 12px); color: var(--iv-text-primary); padding: 12px 12px; vertical-align: top; line-height: 1.7; }
+  .iv-diag__td--version { font-family: var(--ds-font-code, monospace); font-weight: 600; white-space: nowrap; min-width: 44px; }
+  .iv-diag__td--log { color: var(--iv-text-secondary); min-width: 160px; }
+  .iv-diag__td--readiness { white-space: nowrap; text-align: center; }
+  .iv-diag__readiness-badge { display: inline-flex; align-items: center; gap: 5px; font-size: var(--ds-text-xs, 12px); font-weight: 600; }
+  .iv-diag__readiness-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .iv-diag__readiness-dot--green { background: var(--iv-green); }
+  .iv-diag__readiness-dot--orange { background: var(--iv-orange); }
+  .iv-diag__td--action { white-space: nowrap; min-width: 120px; }
+  .iv-diag__actions { display: flex; flex-direction: column; gap: 4px; }
+  .iv-diag__btn { display: inline-flex; align-items: center; gap: 3px; padding: 2px 8px; border-radius: 5px; border: 1px solid var(--iv-btn-border); background: var(--iv-btn-bg); font-size: var(--ds-text-xs, 12px); font-weight: 500; color: var(--iv-btn-text); text-decoration: none; line-height: 1.6; }
+  .iv-diag__btn--analysis { color: var(--iv-accent); border-color: var(--iv-accent); background: var(--iv-bg); }
+  .iv-diag__snapshot-wrap { flex: 0 0 220px; min-width: 0; }
+  .iv-diag__snapshot-title { font-size: var(--ds-text-sm, 14px); font-weight: 600; color: var(--iv-text-primary); margin-bottom: 12px; }
+  .iv-diag__snapshot-chain { display: flex; flex-direction: column; align-items: stretch; }
+  .iv-diag__snapshot-connector { display: none; width: 1px; height: 16px; background: var(--iv-connector-clr); margin: 0 auto; position: relative; }
+  .iv-diag__snapshot-connector::after { content: ''; position: absolute; bottom: -1px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 5px solid var(--iv-connector-clr); }
+  .iv-diag__snapshot-item + .iv-diag__snapshot-item .iv-diag__snapshot-connector { display: block; }
+  .iv-diag__hash-block { border: 1px solid var(--iv-hash-border); border-radius: var(--iv-border-radius); background: var(--iv-hash-bg); padding: 8px 12px; font-family: var(--ds-font-code, monospace); font-size: 11px; color: var(--iv-text-secondary); word-break: break-all; line-height: 1.5; }
+  @media (max-width: 768px) { .iv-diag { flex-direction: column; } .iv-diag__snapshot-wrap { flex: none; width: 100%; } .iv-diag__snapshot-chain { flex-direction: row; flex-wrap: wrap; gap: 8px; } .iv-diag__snapshot-item { flex: 1 1 140px; } .iv-diag__snapshot-connector, .iv-diag__snapshot-item + .iv-diag__snapshot-item .iv-diag__snapshot-connector { display: none; } .iv-diag__table thead th:nth-child(2), .iv-diag__table tbody td:nth-child(2) { display: none; } }
+</style>
+<div class="iv-diag">
+  <div class="iv-diag__table-wrap">
+    <div class="iv-diag__table-title">Dataset Versioning</div>
+    <table class="iv-diag__table"><thead><tr><th>Version</th><th>Change Log</th><th>AI Readiness</th><th>Action</th></tr></thead><tbody>
+      <tr><td class="iv-diag__td--version">V 1.4</td><td class="iv-diag__td--log">Applied full Data State transformation pipeline: Scoping, Type Validation, Imputation, Distribution Repair, Harmonization, Leakage Guard.</td><td class="iv-diag__td--readiness"><span class="iv-diag__readiness-badge"><span class="iv-diag__readiness-dot iv-diag__readiness-dot--green"></span>98%</span></td><td class="iv-diag__td--action"><div class="iv-diag__actions"><a href="#" class="iv-diag__btn iv-diag__btn--analysis">Analysis →</a><a href="#" class="iv-diag__btn">Download</a></div></td></tr>
+      <tr><td class="iv-diag__td--version">V 1.3</td><td class="iv-diag__td--log">Target Quality validation, Resampling for class imbalance, and Leakage Guard implemented.</td><td class="iv-diag__td--readiness"><span class="iv-diag__readiness-badge"><span class="iv-diag__readiness-dot iv-diag__readiness-dot--green"></span>97%</span></td><td class="iv-diag__td--action"><div class="iv-diag__actions"><a href="#" class="iv-diag__btn iv-diag__btn--analysis">Analysis →</a></div></td></tr>
+      <tr><td class="iv-diag__td--version">V 1.2</td><td class="iv-diag__td--log">Distribution Repair and Category Harmonization applied. Enforced data dependencies and reduced collinearity.</td><td class="iv-diag__td--readiness"><span class="iv-diag__readiness-badge"><span class="iv-diag__readiness-dot iv-diag__readiness-dot--orange"></span>82%</span></td><td class="iv-diag__td--action"><div class="iv-diag__actions"><a href="#" class="iv-diag__btn iv-diag__btn--analysis">Analysis →</a></div></td></tr>
+    </tbody></table>
+  </div>
+  <div class="iv-diag__snapshot-wrap">
+    <div class="iv-diag__snapshot-title">Snapshot Log</div>
+    <div class="iv-diag__snapshot-chain">
+      <div class="iv-diag__snapshot-item"><div class="iv-diag__hash-block">e4d909c290d0fb1ca068ffadf22cb0d0</div></div>
+      <div class="iv-diag__snapshot-item"><div class="iv-diag__snapshot-connector"></div><div class="iv-diag__hash-block">1bc29b36f6235a82a6f6724fd3b16718</div></div>
+      <div class="iv-diag__snapshot-item"><div class="iv-diag__snapshot-connector"></div><div class="iv-diag__hash-block">c4ca4238a0b923820dcc509a6f75849b</div></div>
+      <div class="iv-diag__snapshot-item"><div class="iv-diag__snapshot-connector"></div><div class="iv-diag__hash-block">0f5902ac237024bda0c176cb93063ac4</div></div>
+    </div>
+  </div>
+</div>
+            <!-- /Immutable Dataset Versioning Diagram -->
+
           </article>
 
           <article class="ds-card">

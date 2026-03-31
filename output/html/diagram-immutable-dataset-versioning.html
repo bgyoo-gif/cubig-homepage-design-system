@@ -1,0 +1,386 @@
+<style>
+  /* ===================================================
+     Immutable Dataset Versioning Diagram — Snippet
+     .iv-diag scope, DS tokens only
+  =================================================== */
+
+  .iv-diag {
+    --iv-border:        var(--ds-color-border-default);
+    --iv-border-radius: var(--ds-radius-sm);
+    --iv-bg:            var(--ds-color-surface-white);
+    --iv-header-bg:     var(--ds-color-neutral-050);
+    --iv-row-hover:     var(--ds-color-neutral-025);
+    --iv-text-primary:  var(--ds-color-text-primary);
+    --iv-text-secondary:var(--ds-color-text-secondary);
+    --iv-text-tertiary: var(--ds-color-text-tertiary);
+    --iv-green:         var(--ds-color-success);
+    --iv-orange:        var(--ds-color-warn);
+    --iv-hash-bg:       var(--ds-color-neutral-050);
+    --iv-hash-border:   var(--ds-color-neutral-200);
+    --iv-connector-clr: var(--ds-color-neutral-300);
+    --iv-btn-bg:        var(--ds-color-neutral-100);
+    --iv-btn-border:    var(--ds-color-neutral-200);
+    --iv-btn-text:      var(--ds-color-text-secondary);
+    --iv-accent:        var(--ds-color-brand-primary);
+
+    display: flex;
+    gap: var(--ds-space-lg);
+    width: 100%;
+    font-family: var(--ds-font-base);
+    background: var(--iv-bg);
+    align-items: flex-start;
+  }
+
+  /* ---- Left: Dataset Versioning Table ---- */
+  .iv-diag__table-wrap {
+    flex: 1 1 0;
+    min-width: 0;
+    border: 1px solid var(--iv-border);
+    border-radius: var(--iv-border-radius);
+    overflow: hidden;
+  }
+
+  .iv-diag__table-title {
+    font-size: var(--ds-text-sm);
+    font-weight: var(--ds-weight-semibold);
+    color: var(--iv-text-primary);
+    padding: var(--ds-space-sm) var(--ds-space-md);
+    border-bottom: 1px solid var(--iv-border);
+    background: var(--iv-bg);
+  }
+
+  .iv-diag__table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .iv-diag__table thead tr {
+    background: var(--iv-header-bg);
+  }
+
+  .iv-diag__table thead th {
+    font-size: var(--ds-text-xs);
+    font-weight: var(--ds-weight-semibold);
+    color: var(--iv-text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: var(--ds-space-xs) var(--ds-space-sm);
+    text-align: left;
+    border-bottom: 1px solid var(--iv-border);
+    white-space: nowrap;
+  }
+
+  .iv-diag__table tbody tr {
+    border-bottom: 1px solid var(--iv-border);
+    transition: background 0.15s;
+  }
+
+  .iv-diag__table tbody tr:last-child {
+    border-bottom: none;
+  }
+
+  .iv-diag__table tbody tr:hover {
+    background: var(--iv-row-hover);
+  }
+
+  .iv-diag__table tbody td {
+    font-size: var(--ds-text-xs);
+    color: var(--iv-text-primary);
+    padding: var(--ds-space-sm) var(--ds-space-sm);
+    vertical-align: top;
+    line-height: var(--ds-leading-relaxed);
+  }
+
+  /* Version column */
+  .iv-diag__td--version {
+    font-family: var(--ds-font-code);
+    font-weight: var(--ds-weight-semibold);
+    white-space: nowrap;
+    color: var(--iv-text-primary);
+    min-width: 44px;
+  }
+
+  /* Change Log column */
+  .iv-diag__td--log {
+    color: var(--iv-text-secondary);
+    min-width: 160px;
+  }
+
+  /* AI Readiness column */
+  .iv-diag__td--readiness {
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  .iv-diag__readiness-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: var(--ds-text-xs);
+    font-weight: var(--ds-weight-semibold);
+  }
+
+  .iv-diag__readiness-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .iv-diag__readiness-dot--green {
+    background: var(--iv-green);
+  }
+
+  .iv-diag__readiness-dot--orange {
+    background: var(--iv-orange);
+  }
+
+  /* Action column */
+  .iv-diag__td--action {
+    white-space: nowrap;
+    min-width: 120px;
+  }
+
+  .iv-diag__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .iv-diag__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding: 2px 8px;
+    border-radius: var(--ds-radius-xs);
+    border: 1px solid var(--iv-btn-border);
+    background: var(--iv-btn-bg);
+    font-size: var(--ds-text-xs);
+    font-family: var(--ds-font-base);
+    font-weight: var(--ds-weight-medium);
+    color: var(--iv-btn-text);
+    cursor: pointer;
+    text-decoration: none;
+    line-height: 1.6;
+    transition: background 0.15s, border-color 0.15s;
+  }
+
+  .iv-diag__btn:hover {
+    background: var(--ds-color-neutral-150);
+    border-color: var(--ds-color-neutral-300);
+  }
+
+  .iv-diag__btn--analysis {
+    color: var(--iv-accent);
+    border-color: var(--iv-accent);
+    background: var(--iv-bg);
+  }
+
+  .iv-diag__btn--analysis:hover {
+    background: var(--ds-color-neutral-025);
+  }
+
+  /* ---- Right: Snapshot Log ---- */
+  .iv-diag__snapshot-wrap {
+    flex: 0 0 220px;
+    min-width: 0;
+  }
+
+  .iv-diag__snapshot-title {
+    font-size: var(--ds-text-sm);
+    font-weight: var(--ds-weight-semibold);
+    color: var(--iv-text-primary);
+    margin-bottom: var(--ds-space-sm);
+  }
+
+  .iv-diag__snapshot-chain {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    position: relative;
+  }
+
+  .iv-diag__snapshot-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  /* Connector line between items (top border of connector segment) */
+  .iv-diag__snapshot-item + .iv-diag__snapshot-item .iv-diag__snapshot-connector {
+    display: block;
+  }
+
+  .iv-diag__snapshot-connector {
+    display: none;
+    width: 1px;
+    height: 16px;
+    background: var(--iv-connector-clr);
+    margin: 0 auto;
+    position: relative;
+  }
+
+  /* Arrow tip at bottom of connector */
+  .iv-diag__snapshot-connector::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 5px solid var(--iv-connector-clr);
+  }
+
+  .iv-diag__hash-block {
+    border: 1px solid var(--iv-hash-border);
+    border-radius: var(--iv-border-radius);
+    background: var(--iv-hash-bg);
+    padding: var(--ds-space-xs) var(--ds-space-sm);
+    font-family: var(--ds-font-code);
+    font-size: 11px;
+    color: var(--iv-text-secondary);
+    word-break: break-all;
+    line-height: 1.5;
+  }
+
+  /* ---- Connector lines from table rows to hash blocks ---- */
+  .iv-diag__layout {
+    display: flex;
+    gap: var(--ds-space-lg);
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 768px) {
+    .iv-diag {
+      flex-direction: column;
+    }
+
+    .iv-diag__snapshot-wrap {
+      flex: none;
+      width: 100%;
+    }
+
+    .iv-diag__snapshot-chain {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: var(--ds-space-xs);
+    }
+
+    .iv-diag__snapshot-item {
+      flex: 1 1 140px;
+    }
+
+    .iv-diag__snapshot-connector {
+      display: none;
+    }
+
+    .iv-diag__snapshot-item + .iv-diag__snapshot-item .iv-diag__snapshot-connector {
+      display: none;
+    }
+
+    .iv-diag__table thead th:nth-child(2),
+    .iv-diag__table tbody td:nth-child(2) {
+      display: none;
+    }
+  }
+</style>
+
+<div class="iv-diag">
+
+  <!-- Left: Dataset Versioning Table -->
+  <div class="iv-diag__table-wrap">
+    <div class="iv-diag__table-title">Dataset Versioning</div>
+    <table class="iv-diag__table" role="table">
+      <thead>
+        <tr>
+          <th scope="col">Version</th>
+          <th scope="col">Change Log</th>
+          <th scope="col">AI Readiness</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="iv-diag__td--version">V 1.4</td>
+          <td class="iv-diag__td--log">Applied full Data State transformation pipeline: Scoping, Type Validation, Imputation, Distribution Repair, Harmonization, Leakage Guard.</td>
+          <td class="iv-diag__td--readiness">
+            <span class="iv-diag__readiness-badge">
+              <span class="iv-diag__readiness-dot iv-diag__readiness-dot--green" aria-hidden="true"></span>
+              98%
+            </span>
+          </td>
+          <td class="iv-diag__td--action">
+            <div class="iv-diag__actions">
+              <a href="#" class="iv-diag__btn iv-diag__btn--analysis">Analysis →</a>
+              <a href="#" class="iv-diag__btn">Download</a>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="iv-diag__td--version">V 1.3</td>
+          <td class="iv-diag__td--log">Target Quality validation, Resampling for class imbalance, and Leakage Guard implemented.</td>
+          <td class="iv-diag__td--readiness">
+            <span class="iv-diag__readiness-badge">
+              <span class="iv-diag__readiness-dot iv-diag__readiness-dot--green" aria-hidden="true"></span>
+              97%
+            </span>
+          </td>
+          <td class="iv-diag__td--action">
+            <div class="iv-diag__actions">
+              <a href="#" class="iv-diag__btn iv-diag__btn--analysis">Analysis →</a>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="iv-diag__td--version">V 1.2</td>
+          <td class="iv-diag__td--log">Distribution Repair and Category Harmonization applied. Enforced data dependencies and reduced collinearity.</td>
+          <td class="iv-diag__td--readiness">
+            <span class="iv-diag__readiness-badge">
+              <span class="iv-diag__readiness-dot iv-diag__readiness-dot--orange" aria-hidden="true"></span>
+              82%
+            </span>
+          </td>
+          <td class="iv-diag__td--action">
+            <div class="iv-diag__actions">
+              <a href="#" class="iv-diag__btn iv-diag__btn--analysis">Analysis →</a>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Right: Snapshot Log -->
+  <div class="iv-diag__snapshot-wrap">
+    <div class="iv-diag__snapshot-title">Snapshot Log</div>
+    <div class="iv-diag__snapshot-chain" role="list">
+
+      <div class="iv-diag__snapshot-item" role="listitem">
+        <div class="iv-diag__hash-block">e4d909c290d0fb1ca068ffadf22cb0d0</div>
+      </div>
+
+      <div class="iv-diag__snapshot-item" role="listitem">
+        <div class="iv-diag__snapshot-connector" aria-hidden="true"></div>
+        <div class="iv-diag__hash-block">1bc29b36f6235a82a6f6724fd3b16718</div>
+      </div>
+
+      <div class="iv-diag__snapshot-item" role="listitem">
+        <div class="iv-diag__snapshot-connector" aria-hidden="true"></div>
+        <div class="iv-diag__hash-block">c4ca4238a0b923820dcc509a6f75849b</div>
+      </div>
+
+      <div class="iv-diag__snapshot-item" role="listitem">
+        <div class="iv-diag__snapshot-connector" aria-hidden="true"></div>
+        <div class="iv-diag__hash-block">0f5902ac237024bda0c176cb93063ac4</div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
