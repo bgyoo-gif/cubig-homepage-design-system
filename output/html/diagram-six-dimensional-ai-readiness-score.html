@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Six-Dimensional AI Readiness Score — Snippet</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fragment+Mono&display=swap" rel="stylesheet">
+  <style>
+    /* ─── DS Tokens ─────────────────────────────────────────────── */
+    :root {
+      --ds-font-base:    "DM Sans", sans-serif;
+      --ds-font-code:    "Fragment Mono", monospace;
+
+      --ds-text-xs:  12px;
+      --ds-text-sm:  14px;
+      --ds-text-md:  16px;
+      --ds-text-lg:  18px;
+      --ds-text-xl:  20px;
+      --ds-text-2xl: 24px;
+
+      --ds-weight-regular:  400;
+      --ds-weight-medium:   500;
+      --ds-weight-semibold: 600;
+      --ds-weight-bold:     700;
+
+      --ds-leading-tight:  1.2;
+      --ds-leading-normal: 1.5;
+
+      --ds-tracking-tight:  -0.5px;
+      --ds-tracking-normal: 0px;
+      --ds-tracking-wide:   0.08em;
+
+      --ds-space-2xs: 4px;
+      --ds-space-xs:  8px;
+      --ds-space-sm:  12px;
+      --ds-space-md:  16px;
+      --ds-space-lg:  24px;
+      --ds-space-xl:  32px;
+
+      --ds-radius-xs:  5px;
+      --ds-radius-sm:  8px;
+      --ds-radius-md:  18px;
+
+      --ds-color-neutral-900: #0f0f0f;
+      --ds-color-neutral-700: #303135;
+      --ds-color-neutral-500: #636363;
+      --ds-color-neutral-400: #9c9c9c;
+      --ds-color-neutral-200: #e0e0e0;
+      --ds-color-neutral-150: #e6e7e9;
+      --ds-color-neutral-100: #ececec;
+      --ds-color-neutral-050: #f2f2f2;
+      --ds-color-neutral-025: #f7f7f7;
+      --ds-color-white:       #ffffff;
+
+      --ds-color-text-primary:   #0f0f0f;
+      --ds-color-text-secondary: #636363;
+      --ds-color-text-tertiary:  #9c9c9c;
+
+      --ds-color-success:       #0e824c;
+      --ds-color-border-default: #e6e7e9;
+
+      --ds-shadow-card: 0px 24px 40px rgba(0,0,0,0.04);
+
+      /* ─── Six-Dim Diagram tokens ─── */
+      --sd-color-pass:         #22c55e;
+      --sd-color-pass-bg:      #f0fdf4;
+      --sd-color-pass-text:    #15803d;
+      --sd-color-warn:         #f59e0b;
+      --sd-color-warn-bg:      #fffbeb;
+      --sd-color-warn-text:    #92400e;
+      --sd-color-fail:         #ef4444;
+      --sd-color-fail-bg:      #fef2f2;
+      --sd-color-fail-text:    #991b1b;
+      --sd-color-score-pass:   #16a34a;
+      --sd-color-score-warn:   #d97706;
+      --sd-bar-bg:             #e5e7eb;
+      --sd-bar-radius:         var(--ds-radius-xs);
+      --sd-card-radius:        var(--ds-radius-sm);
+      --sd-card-border:        1px solid var(--ds-color-border-default);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--ds-font-base);
+      background: var(--ds-color-neutral-025);
+      color: var(--ds-color-text-primary);
+      -webkit-font-smoothing: antialiased;
+      padding: var(--ds-space-xl);
+    }
+
+    /* ─── Snippet wrapper ─────────────────────────────────────── */
+    .sd-diag {
+      width: 100%;
+      background: var(--ds-color-white);
+      border-radius: var(--ds-radius-md);
+      border: var(--sd-card-border);
+      box-shadow: var(--ds-shadow-card);
+      padding: var(--ds-space-xl);
+    }
+
+    /* ─── 2×3 Grid ────────────────────────────────────────────── */
+    .sd-diag__grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--ds-space-md);
+    }
+
+    @media (max-width: 640px) {
+      .sd-diag__grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ─── Score Card ──────────────────────────────────────────── */
+    .sd-diag__card {
+      background: var(--ds-color-white);
+      border: var(--sd-card-border);
+      border-radius: var(--sd-card-radius);
+      padding: var(--ds-space-md);
+      display: flex;
+      flex-direction: column;
+      gap: var(--ds-space-sm);
+    }
+
+    /* Card header: dimension name + score */
+    .sd-diag__card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--ds-space-xs);
+    }
+
+    .sd-diag__dim-name {
+      font-size: var(--ds-text-sm);
+      font-weight: var(--ds-weight-bold);
+      color: var(--ds-color-text-primary);
+      letter-spacing: var(--ds-tracking-normal);
+      line-height: var(--ds-leading-tight);
+    }
+
+    .sd-diag__score {
+      font-size: var(--ds-text-sm);
+      font-weight: var(--ds-weight-bold);
+      letter-spacing: var(--ds-tracking-normal);
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .sd-diag__score--pass { color: var(--sd-color-score-pass); }
+    .sd-diag__score--warn { color: var(--sd-color-score-warn); }
+
+    /* Description text */
+    .sd-diag__desc {
+      font-size: var(--ds-text-xs);
+      color: var(--ds-color-text-secondary);
+      line-height: var(--ds-leading-normal);
+      letter-spacing: var(--ds-tracking-normal);
+    }
+
+    /* Progress bar */
+    .sd-diag__bar-track {
+      width: 100%;
+      height: 4px;
+      background: var(--sd-bar-bg);
+      border-radius: var(--sd-bar-radius);
+      overflow: hidden;
+    }
+    .sd-diag__bar-fill {
+      height: 100%;
+      border-radius: var(--sd-bar-radius);
+      background: var(--sd-color-pass);
+      transition: width 0.4s ease;
+    }
+    .sd-diag__bar-fill--warn {
+      background: var(--sd-color-warn);
+    }
+
+    /* ─── Result Table ────────────────────────────────────────── */
+    .sd-diag__table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: var(--ds-space-2xs);
+    }
+
+    .sd-diag__table thead tr {
+      border-bottom: 1px solid var(--ds-color-neutral-150);
+    }
+
+    .sd-diag__table th {
+      font-size: var(--ds-text-xs);
+      font-weight: var(--ds-weight-semibold);
+      color: var(--ds-color-text-tertiary);
+      letter-spacing: var(--ds-tracking-wide);
+      text-transform: uppercase;
+      padding: var(--ds-space-2xs) var(--ds-space-xs);
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    .sd-diag__table th:last-child {
+      text-align: right;
+    }
+
+    .sd-diag__table td {
+      font-size: var(--ds-text-xs);
+      color: var(--ds-color-text-primary);
+      padding: var(--ds-space-2xs) var(--ds-space-xs);
+      letter-spacing: var(--ds-tracking-normal);
+      line-height: var(--ds-leading-normal);
+      vertical-align: middle;
+    }
+
+    .sd-diag__table td:last-child {
+      text-align: right;
+    }
+
+    .sd-diag__table tbody tr {
+      border-bottom: 1px solid var(--ds-color-neutral-100);
+    }
+
+    .sd-diag__table tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    /* Result badge */
+    .sd-diag__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      font-size: var(--ds-text-xs);
+      font-weight: var(--ds-weight-semibold);
+      letter-spacing: var(--ds-tracking-normal);
+      padding: 2px 6px;
+      border-radius: var(--ds-radius-pill, 9999px);
+      white-space: nowrap;
+      line-height: 1.4;
+    }
+
+    .sd-diag__badge--pass {
+      background: var(--sd-color-pass-bg);
+      color: var(--sd-color-pass-text);
+    }
+
+    .sd-diag__badge--warn {
+      background: var(--sd-color-warn-bg);
+      color: var(--sd-color-warn-text);
+    }
+
+    .sd-diag__badge--fail {
+      background: var(--sd-color-fail-bg);
+      color: var(--sd-color-fail-text);
+    }
+
+    /* Check / X icons inside badge */
+    .sd-diag__badge svg {
+      width: 10px;
+      height: 10px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+    }
+
+    /* Divider between desc and table */
+    .sd-diag__divider {
+      height: 1px;
+      background: var(--ds-color-neutral-100);
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════════
+     Six-Dimensional AI Readiness Score — Diagram Snippet
+     Insert this .sd-diag block into the ds-card that wraps
+     the "Six-Dimensional AI Readiness Score" section.
+     ══════════════════════════════════════════════════════════════ -->
+<div class="sd-diag">
+  <div class="sd-diag__grid">
+
+    <!-- ① Privacy — 100% -->
+    <div class="sd-diag__card">
+      <div class="sd-diag__card-header">
+        <span class="sd-diag__dim-name">Privacy</span>
+        <span class="sd-diag__score sd-diag__score--pass">100%</span>
+      </div>
+      <div class="sd-diag__bar-track">
+        <div class="sd-diag__bar-fill" style="width:100%"></div>
+      </div>
+      <p class="sd-diag__desc">Verifies that all PII is detected, anonymized, or removed before the dataset enters the execution pipeline.</p>
+      <div class="sd-diag__divider"></div>
+      <table class="sd-diag__table">
+        <thead>
+          <tr>
+            <th>Check</th>
+            <th>Score</th>
+            <th>Result</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>PII Column Detection</td>
+            <td>100%</td>
+            <td><span class="sd-diag__badge sd-diag__badge--pass"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>PASS</span></td>
+          </tr>
+          <tr>
+            <td>Masking Completeness</td>
+            <td>100%</td>
+            <td><span class="sd-diag__badge sd-diag__badge--pass"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>PASS</span></td>
+          </tr>
+          <tr>
+            <td>Re-identification Risk</td>
+            <td>100%</td>
+            <td><span class="sd-diag__badge sd-diag__badge--pass"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>PASS</span></td>
+          </tr>
+          <tr>
+            <td>Consent Traceability</td>
+            <td>100%</td>
+            <td><span class="sd-diag__badge sd-diag__badge--pass"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>PASS</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ② Integrity — 100% -->
+    <div class="sd-diag__card">
+      <div class="sd-diag__card-header">
+        <span class="sd-diag__dim-name">Integrity</span>
+        <span class="sd-diag__score sd-diag__score--pass">100%</span>
+      </div>
+      <div class="sd-diag__bar-track">
+        <div class="sd-diag__bar-fill" style="width:100%"></div>
+      </div>
+      <p class="sd-diag__desc">Confirms structural and statistical correctness: null rate, duplicate rate, type consistency, and distribution stability.</p>
+      <div class="sd-diag__divider"></div>
+      <table class="sd-diag__table">
+        <thead>
+          <tr>
+            <th>Check</th>
+            <th>Score</th>
+            <th>Result</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Null Rate</td>
+            <td>100%</td>
+            <td><span class="sd-diag__badge sd-diag__badge--pass"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>PASS</span></td>
+          </tr>
+          <tr>
+            <td>Duplicate Rate</td>
+            <td>100%</td>
+            <td><span class="sd-diag__badge sd-diag__badge--pass"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>PASS</span></td>
+          </tr>
+          <tr>
+            <td>Type Consistency</td>
+            <td>100%</td>
+            <td><span class="sd-diag__badge sd-diag__badge--pass"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>PASS</span></td>
+          </tr>
+          <tr>
+            <td>Distribution Stability</td>
+            <td>100%</td>
+            <td><span class="sd-diag__badge sd-diag__badge--pass"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>PASS</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ③ Contextuality — 80% -->
+    <div class="sd-diag__card">
+      <div class="sd-diag__card-header">
+        <span class="sd-diag__dim-name">Contextuality</span>
+        <span class="sd-diag__score sd-diag__score--warn">80%</span>
+      </div>
+      <div class="sd-diag__bar-track">
+        <div class="sd-diag__bar-fill sd-diag__bar-fill--warn" style="width:80%"></div>
+      </div>
+      <p class="sd-diag__desc">Evaluates whether column semantics and data purpose are correctly aligned with the intended AI task context.</p>
+      <div class="sd-diag__divider"></div>
+      <table class="sd-diag__table">
+        <thead>
+          <tr>
+            <th>Check</th>
+            <th>Score</th>
+            <th>Result</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Column Semantic Alignment</td>
+            <td>80%</td>
+            <td><span class="sd-diag__badge sd-diag__badge--warn">NO</span></td>
+          </tr>
+          <tr>
+            <td>Task Purpose Match</td>
+            <td>80%</td>
+            <td><span class="sd-diag__badge sd-diag__badge--warn">NO</span></td>
+          </tr>
+          <tr>
+            <td>Domain Label Coverage</td>
+            <td>80%</td>
+            <td><span class="sd-diag__badge sd-diag__badge--pass"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>PASS</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ④ Conciseness — 89% -->
+    <div class="sd-diag__card">
+      <div class="sd-diag__card-header">
+        <span class="sd-diag__dim-name">Conciseness</span>
+        <span class="sd-diag__score sd-diag__score--warn">89%</span>
+      </div>
+      <div class="sd-diag__bar-track">
+        <div class="sd-diag__bar-fill sd-diag__bar-fill--warn" style="width:89%"></div>
+      </div>
+      <p class="sd-diag__desc">Measures the proportion of meaningful, non-redundant columns — removing low-value or duplicate features before model ingestion.</p>
+      <div class="sd-diag__divider"></div>
+      <table class="sd-diag__table">
+        <thead>
+          <tr>
+            <th>Check</th>
+            <th>Score</th>
+            <th>Result</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Redundant Column Rate</td>
+            <td>89%</td>
+            <td><span class="sd-diag__badge sd-diag__badge--warn">NO</span></td>
+          </tr>
+          <tr>
+            <td>Low-Value Feature Ratio</td>
+            <td>89%</td>
+            <td><span class="sd-diag__badge sd-diag__badge--warn">NO</span></td>
+          </tr>
+          <tr>
+            <td>Feature Correlation Check</td>
+            <td>89%</td>
+            <td><span class="sd-diag__badge sd-diag__badge--pass"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>PASS</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ⑤ Operational Reliability — 100% -->
+    <div class="sd-diag__card">
+      <div class="sd-diag__card-header">
+        <span class="sd-diag__dim-name">Operational Reliability</span>
+        <span class="sd-diag__score sd-diag__score--pass">100%</span>
+      </div>
+      <div class="sd-diag__bar-track">
+        <div class="sd-diag__bar-fill" style="width:100%"></div>
+      </div>
+      <p class="sd-diag__desc">Validates that the dataset has been processed successfully with no pipeline errors, transformation failures, or missing outputs.</p>
+      <div class="sd-diag__divider"></div>
+      <table class="sd-diag__table">
+        <thead>
+          <tr>
+            <th>Check</th>
+            <th>Score</th>
+            <th>Result</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>AI Readiness Score Check</td>
+            <td>100%</td>
+            <td><span class="sd-diag__badge sd-diag__badge--pass"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>PASS</span></td>
+          </tr>
+          <tr>
+            <td>Pipeline Error Rate</td>
+            <td>100%</td>
+            <td><span class="sd-diag__badge sd-diag__badge--pass"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>PASS</span></td>
+          </tr>
+          <tr>
+            <td>Transformation Completeness</td>
+            <td>100%</td>
+            <td><span class="sd-diag__badge sd-diag__badge--pass"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>PASS</span></td>
+          </tr>
+          <tr>
+            <td>Output Verification</td>
+            <td>100%</td>
+            <td><span class="sd-diag__badge sd-diag__badge--pass"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>PASS</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ⑥ Traceability — 100% -->
+    <div class="sd-diag__card">
+      <div class="sd-diag__card-header">
+        <span class="sd-diag__dim-name">Traceability</span>
+        <span class="sd-diag__score sd-diag__score--pass">100%</span>
+      </div>
+      <div class="sd-diag__bar-track">
+        <div class="sd-diag__bar-fill" style="width:100%"></div>
+      </div>
+      <p class="sd-diag__desc">Ensures every dataset state is versioned and labelled — with a full change log linking each execution to its exact data snapshot.</p>
+      <div class="sd-diag__divider"></div>
+      <table class="sd-diag__table">
+        <thead>
+          <tr>
+            <th>Check</th>
+            <th>Score</th>
+            <th>Result</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Snapshot Availability</td>
+            <td>100%</td>
+            <td><span class="sd-diag__badge sd-diag__badge--pass"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>PASS</span></td>
+          </tr>
+          <tr>
+            <td>Version Label Integrity</td>
+            <td>100%</td>
+            <td><span class="sd-diag__badge sd-diag__badge--pass"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>PASS</span></td>
+          </tr>
+          <tr>
+            <td>Change Log Completeness</td>
+            <td>100%</td>
+            <td><span class="sd-diag__badge sd-diag__badge--pass"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>PASS</span></td>
+          </tr>
+          <tr>
+            <td>Execution Link Validity</td>
+            <td>100%</td>
+            <td><span class="sd-diag__badge sd-diag__badge--pass"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>PASS</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div><!-- /.sd-diag__grid -->
+</div><!-- /.sd-diag -->
+
+</body>
+</html>
