@@ -26,6 +26,7 @@ diagram-builder → diagram-qa (FAIL 시 재호출) → B타입 HTML에 삽입 �
 | diagram-qa | 다이어그램 원본 충실도 + DS 준수 검증 (DIAG-1~6) — diagram-builder 완료 후 필수 | sonnet |
 | feedback-sync | 사용자 피드백을 모든 관련 파일에 일괄 전파 | sonnet |
 | viewer-qa | 뷰어/서버 기능 품질 검증 — deploy 전 필수 | sonnet |
+| deploy | gh-pages 배포 전담 — manifest 충돌 자동 해결, 빌드 에러 감지 및 복구 | haiku |
 | orchestrator | 전체 변환 파이프라인 자동 실행 (PD→FE→QA→Framer) | opus |
 
 ### 자동 연동 체인 (모든 작업 완료 후 자동 실행)
@@ -210,26 +211,12 @@ design-system-viewer.html을 수정했으면 deploy 전에 viewer-qa 에이전�
 FAIL이면 수정 후 재검증. PASS일 때만 deploy 진행.
 뷰어를 수정하지 않았으면 건너뛴다.
 
-### ⑤ deploy (항상 실행)
-```bash
-# 새 이미지 WebP 변환 (PNG/AVIF → WebP)
-python3 -c "
-from pathlib import Path
-try:
-    from PIL import Image
-    for ext in ['*.png', '*.avif']:
-        for p in Path('reference/images').glob(ext):
-            if p.stat().st_size > 50000 and not p.with_suffix('.webp').exists():
-                img = Image.open(p)
-                if img.width > 1920: img = img.resize((1920, int(img.height * 1920 / img.width)), Image.LANCZOS)
-                img.save(p.with_suffix('.webp'), 'WEBP', quality=82)
-                print(f'  WebP: {p.name} → {p.with_suffix(\".webp\").name}')
-except: pass
-"
-python3 server/manifest.py   # Output manifest 자동 생성
-git add -A
-git commit -m "Auto-deploy: [작업 요약]"
-git push origin gh-pages
+### ⑤ deploy (항상 실행) — `deploy` 에이전트 호출
+deploy 에이전트를 호출하여 배포를 위임한다. deploy 에이전트가 아래를 자동 처리:
+- WebP 변환 → manifest 생성 → git add/commit → push
+- manifest.json 충돌 자동 해결 (pull --rebase → regenerate → continue)
+- Pages 빌드 에러 감지 → 빈 커밋 재빌드 트리거 (최대 2회)
+- 빌드 성공 확인까지 완료 후 보고
 ```
 
 **이 5단계를 빠뜨리면 작업 미완료로 간주한다.**
