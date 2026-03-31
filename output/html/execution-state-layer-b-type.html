@@ -1036,7 +1036,7 @@
     .ds-diag__file-meta { font-size: var(--ds-text-xs); color: var(--ds-color-text-tertiary); margin-top: 2px; font-family: var(--ds-font-code); }
     .ds-diag__body { display: grid; grid-template-columns: 1fr 1fr; gap: var(--ds-space-lg); }
     .ds-diag__col { display: flex; flex-direction: column; }
-    .ds-diag__readiness-header { display: flex; align-items: baseline; gap: 10px; margin-bottom: var(--ds-space-md); }
+    .ds-diag__readiness-header { display: flex; align-items: baseline; gap: 10px; margin-bottom: var(--ds-space-md); justify-content: space-between; }
     .ds-diag__readiness-label { font-size: var(--ds-text-sm); font-weight: var(--ds-weight-medium); color: var(--ds-color-text-secondary); }
     .ds-diag__readiness-score { font-size: var(--ds-text-4xl); font-weight: var(--ds-weight-bold); color: var(--ds-color-text-primary); line-height: 1; }
     .ds-diag__readiness-badge {
@@ -1514,8 +1514,7 @@
         <div class="ds-diag__col">
           <div class="ds-diag__readiness-header">
             <span class="ds-diag__readiness-label">AI readiness</span>
-            <span class="ds-diag__readiness-score">99%</span>
-            <span class="ds-diag__readiness-badge">AI Ready</span>
+            <span style="display:flex; align-items:baseline; gap:8px;"><span class="ds-diag__readiness-score">99%</span><span class="ds-diag__readiness-badge">AI Ready</span></span>
           </div>
           <div class="ds-diag__dim-list">
             <div class="ds-diag__dim-row"><span class="ds-diag__dim-name">Privacy</span><div class="ds-diag__dim-track"><div class="ds-diag__dim-fill ds-diag__dim-fill--warn" style="width:8%"></div></div><span class="ds-diag__dim-pct">8%</span></div>
@@ -1528,7 +1527,7 @@
         </div>
         <div class="ds-diag__col">
           <div class="ds-diag__radar-wrap">
-            <svg class="ds-diag__radar-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="6-axis radar chart">
+            <svg class="ds-diag__radar-svg" viewBox="-50 0 300 200" xmlns="http://www.w3.org/2000/svg" aria-label="6-axis radar chart">
               <defs><style>.rdr-grid{fill:none;stroke:var(--ds-color-neutral-200);stroke-width:0.8}.rdr-axis{stroke:var(--ds-color-neutral-250);stroke-width:0.8}.rdr-area{fill:rgba(14,130,76,0.15);stroke:rgba(14,130,76,0.7);stroke-width:1.5;stroke-linejoin:round}.rdr-dot{fill:var(--ds-color-success)}.rdr-label{font-family:var(--ds-font-base);font-size:9px;fill:var(--ds-color-text-secondary)}</style></defs>
               <polygon class="rdr-grid" points="100,28 162.4,64 162.4,136 100,172 37.6,136 37.6,64"/>
               <polygon class="rdr-grid" points="100,52 141.8,75 141.8,125 100,148 58.2,125 58.2,75"/>
