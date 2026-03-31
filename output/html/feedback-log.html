@@ -21,6 +21,12 @@
     <tr><th>날짜</th><th>피드백</th><th>변경 파일</th><th>변경 내용</th></tr>
   </thead>
   <tbody>
+    <tr>
+      <td class="date">2026-03-31</td>
+      <td>반복 결함 4건 규칙화: (1) 섹션 헤더 --left 전면 금지 (center 유일 기본값), (2) CTA band 타이틀 font-size 표준화 (text-5xl 기본 / mobile text-4xl / desktop text-6xl), (3) letter-spacing 하드코딩 금지 (DS 토큰만 허용), (4) FE 기존 B타입 파일 참조 필수</td>
+      <td class="files">CLAUDE.md, .claude/skills/design-system.md, .claude/agents/product-designer.md, .claude/agents/frontend-dev.md, .claude/agents/qa.md</td>
+      <td>CLAUDE.md: 핵심 규칙 3개 추가 + 자주 발생하는 결함 패턴 3개 추가. design-system.md: ds-cta-band__title CSS font-size/letter-spacing 수정 + 반응형 추가 + 전역 규칙 #25 강화 + 규칙 #30~#31 신규 추가. product-designer.md: 섹션 헤더 정렬 규칙 --left 금지로 강화. frontend-dev.md: Step 1에 기존 B타입 참조 필수 추가 + CSS 규칙 letter-spacing 금지 추가 + 체크리스트/검증 명령어 4개 추가. qa.md: CAT-2 체크리스트 2개 추가 + bash 검증 명령어 4개 추가 + FAIL 기준 3개 추가</td>
+    </tr>
   </tbody>
 </table>
 </body>

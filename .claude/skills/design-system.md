@@ -1261,9 +1261,10 @@ document.querySelectorAll('.ds-cert-grid__track').forEach(track => {
 @media (min-width: 1024px) { .ds-cta-band__inner { max-width: 720px; } }
 @media (min-width: 1440px) { .ds-cta-band__inner { max-width: 860px; } }
 .ds-cta-band__title {
-  font-family: var(--ds-font-base); font-size: var(--ds-text-7xl); /* 64px */
+  font-family: var(--ds-font-base); font-size: var(--ds-text-5xl); /* 40px — 기본 */
   font-weight: var(--ds-weight-bold); color: #ffffff;
-  line-height: var(--ds-leading-tight); letter-spacing: -2px; margin: 0;
+  line-height: var(--ds-leading-tight); letter-spacing: var(--ds-tracking-tight); margin: 0;
+  /* 반응형: mobile 36px → default 40px → desktop(1440) 50px */
 }
 .ds-cta-band__description {
   font-size: var(--ds-text-lg); color: rgba(255,255,255,0.85);
@@ -1278,9 +1279,12 @@ document.querySelectorAll('.ds-cert-grid__track').forEach(track => {
 @media (min-width: 768px)  { .ds-cta-band { padding: 100px var(--ds-container-padding-tablet); } }
 @media (min-width: 1440px) { .ds-cta-band { padding: 120px var(--ds-container-padding-desktop); max-width: 1440px; margin: 0 auto; } }
 @media (max-width: 767px) {
-  .ds-cta-band__title { font-size: var(--ds-text-5xl); letter-spacing: -1px; }
+  .ds-cta-band__title { font-size: var(--ds-text-4xl); /* 36px */ }
   .ds-cta-band__actions { flex-direction: column; align-items: center; }
   .ds-cta-band__actions .ds-btn { width: 100%; max-width: 320px; }
+}
+@media (min-width: 1440px) {
+  .ds-cta-band__title { font-size: var(--ds-text-6xl); /* 50px — desktop */ }
 }
 ```
 
@@ -2202,10 +2206,12 @@ drawArrows() 함수 규칙:
 22. Case Study 열 타입 혼합 금지: 한 섹션 안에서 1col과 2col/3col을 섞지 않는다. 1col이면 전부 1col, 2col이면 전부 2col로 통일한다.
 23. FAQ는 반드시 아코디언 형태: "FAQ", "Frequently Asked Questions", "Common Questions" 등의 섹션은 반드시 `ds-ac-card` 아코디언으로 구현한다. `ds-grid--1 + ds-card` 카드 나열 금지.
 24. 아티클형 페이지(Learn 등) 본문 폭 통일: `<main class="ds-article">` 적용 시 `.ds-article .ds-container > *`에 `max-width: 860px; margin: 0 auto;`가 걸림. 헤더/본문/카드/테이블 모두 동일 폭. 전폭 예외: partner-grid, kpi-band.
-25. 섹션 헤더 기본 center 정렬: `ds-section-header`는 기본 `text-align: center`. `ds-section-header--left`는 spec에 명시된 경우만 사용한다. 명시 없으면 center 유지.
+25. 섹션 헤더 기본 center 정렬: `ds-section-header`는 항상 `text-align: center`가 기본. `ds-section-header--left`는 사용 전면 금지 — 아티클형·제품형·문서형 페이지 모두 center 유지.
 26. 외부 서비스 링크는 버튼형: "View on AWS Marketplace", "llmcapsule.ai" 등 외부 서비스/제품 링크는 인라인 텍스트 링크가 아닌 `ds-btn ds-btn--secondary` 버튼으로 구현한다.
 27. 단계별 프로세스(Steps)는 Step Tabs 사용: "Step 1, 2, 3..." 또는 "How it works" 형태의 순차 프로세스 설명은 반드시 `[U] ds-step-tabs`로 구현. 각 탭 하단에 스크린샷이 필요하면 `<img src="[screenshot-placeholder]" alt="Step N screenshot">` placeholder를 넣고 사용자에게 스크린샷을 요청한다.
 28. 인증/수상 섹션은 Cert Grid 사용: ISO, GS인증 등 인증/수상 내용은 반드시 `[L] ds-cert-grid` 마키 컴포넌트를 사용하고, DS에 정의된 공식 인증 목록 + 이미지(reference/graphics/cert-*)를 참조한다.
 29. 도입 사례/Case Record는 Case Study 카드 필수: 고객명+산업+설명이 있는 사례는 반드시 `ds-card--case-study`([H]) 사용. 아코디언([S])이 아닌 카드 그리드. 범용 카드보다 우선.
+30. CTA band 타이포 표준: `ds-cta-band__title` font-size는 `var(--ds-text-5xl)` (40px) 기본. 반응형: max-width 767px에서 `var(--ds-text-4xl)` (36px), min-width 1440px에서 `var(--ds-text-6xl)` (50px). `var(--ds-text-7xl)` (64px) 사용 금지.
+31. letter-spacing 하드코딩 금지: letter-spacing은 반드시 DS 토큰 사용 — `var(--ds-tracking-tight)` (-0.5px) 또는 `var(--ds-tracking-wide)` (0.08em). `-2px`, `-1px` 등 숫자 직접 입력 금지.
 30. 이미지 경로는 GitHub Pages 전체 URL 사용: B타입 HTML/TSX에서 이미지 참조 시 상대경로 금지. 반드시 `https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/` 또는 `https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/` 전체 URL 사용. TSX의 IMAGE_BASE도 동일.
 31. 이미지 포맷은 WebP 우선: 모든 이미지는 `.webp` 포맷을 우선 사용한다. 새 이미지 추가 시 반드시 WebP로 변환 후 저장. WebP가 없는 경우에만 PNG/AVIF/JPG 허용. 배경 이미지, 스크린샷, 케이스스터디 모두 해당.

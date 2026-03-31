@@ -24,8 +24,9 @@ Design System을 100% 준수한 B타입 HTML을 생성합니다.
 ### Step 1: 명세서 & Design System 정독
 1. output/[파일명]-spec.md를 읽는다
 2. .claude/skills/design-system.md 전체를 읽는다
-3. 사용할 컴포넌트, CSS 변수, 배경 이미지 목록을 메모한다
-4. 폰트 로드 방법을 확인한다 (Google Fonts 또는 로컬 폰트)
+3. **기존 B타입 파일 1개 이상을 반드시 읽는다** (`output/html/` 폴더의 최근 파일) — CTA, hero, section-header 등 공통 패턴의 수치·구조를 참조하여 임의 수치 사용을 방지한다
+4. 사용할 컴포넌트, CSS 변수, 배경 이미지 목록을 메모한다
+5. 폰트 로드 방법을 확인한다 (Google Fonts 또는 로컬 폰트)
 
 ---
 
@@ -124,7 +125,7 @@ p, li, dt, dd, blockquote,
 <!-- 3. 본문 컴포넌트 -->
 ```
 
-- `ds-section-header--left`는 design-spec.md에 "헤더 정렬: left"로 명시된 섹션에만 적용. 명시 없으면 기본값 center (`--left` 클래스 추가 금지)
+- `ds-section-header--left`는 사용 전면 금지 — 아티클형·제품형 관계없이 center 정렬 유지. spec에 "left"가 명시돼 있어도 무시하고 center 사용
 - 타이틀 강조(`ds-text--brand`)는 spec에 명시된 키워드에만 적용 (남발 금지, 누락 금지)
 
 #### 아코디언 카드 규칙 (ds-ac-card)
@@ -217,7 +218,7 @@ CTA 밴드는 반드시 `ds-container` 밖에 전폭으로 배치한다:
 <!-- CTA: container 밖에 전폭 배치 -->
 <section class="ds-cta-band ds-bg--wave-teal-blue">
   <div class="ds-cta-band__inner">
-    <h2 class="ds-cta-band__title">타이틀 (64px)</h2>
+    <h2 class="ds-cta-band__title">타이틀 (40px 기본 / mobile 36px / desktop 50px)</h2>
     <p class="ds-cta-band__description">설명 (흰색)</p>
     <div class="ds-cta-band__actions">
       <a href="#" class="ds-btn ds-btn--md">버튼 1 →</a>
@@ -244,6 +245,7 @@ CTA       → 배경 이미지 (전폭)
 - 인라인 `style` 속성 금지 (CSS 변수 전달 목적 제외)
 - `!important` 절대 금지
 - 클래스명: `.ds-` 접두사 + BEM 방식
+- **letter-spacing 하드코딩 금지**: letter-spacing은 반드시 `var(--ds-tracking-tight)` 또는 `var(--ds-tracking-wide)` 토큰 사용. `-2px`, `-1px`, `0.1em` 등 숫자 직접 입력 금지
 
 #### 반응형 규칙 (Mobile-first, 4단계 필수)
 ```css
@@ -286,7 +288,7 @@ CTA       → 배경 이미지 (전폭)
 
 **섹션 헤더**
 - [ ] 모든 section이 `ds-section-header--underline`으로 시작하는가
-- [ ] `ds-section-header--left`는 spec에 명시된 섹션에만 적용됐는가 (기본 center)
+- [ ] `ds-section-header--left`가 어떤 섹션에도 사용되지 않았는가 (전면 금지 — center만 허용)
 - [ ] spec의 "타이틀 강조 키워드"가 `ds-text--brand`로 정확히 적용됐는가
 - [ ] eyebrow가 모든 섹션에서 완전히 제거됐는가 (ds-section-header__eyebrow 사용 금지)
 
@@ -301,7 +303,7 @@ CTA       → 배경 이미지 (전폭)
 **배경 이미지**
 - [ ] KPI 배경 이미지가 섹션이 아닌 ds-kpi-band 컴포넌트에 적용됐는가
 - [ ] CTA 밴드가 ds-container 밖에 전폭으로 배치됐는가
-- [ ] CTA 밴드 타이틀이 64px(ds-text-7xl) 이상인가
+- [ ] CTA 밴드 타이틀이 `var(--ds-text-5xl)` (40px) 기본이고 반응형(mobile 36px / desktop 50px)이 적용됐는가 (`ds-text-7xl` 64px 사용 금지)
 - [ ] CTA 밴드 텍스트가 흰색으로 표시되는가
 - [ ] 배경 이미지가 Hero + CTA + (3개 연속 시 중간 1곳)에만 사용됐는가
 - [ ] 배경 이미지 섹션에 오버레이가 적용됐는가
@@ -398,6 +400,15 @@ grep -n 'word-break' output/[파일명]-b-type.html
 
 # 12. ds-bullet 불릿 CSS 포함 여부
 grep -c 'ds-bullet__icon' output/[파일명]-b-type.html
+
+# 13. letter-spacing 하드코딩
+grep -n 'letter-spacing:.*-[0-9]\|letter-spacing:.*[0-9]px\|letter-spacing:.*[0-9]em' output/[파일명]-b-type.html | grep -v 'tracking-tight\|tracking-wide\|tracking-normal'
+
+# 14. ds-section-header--left 사용 금지
+grep -n 'section-header--left' output/[파일명]-b-type.html
+
+# 15. CTA 타이틀 임의 크기
+grep -n 'cta-band__title' output/[파일명]-b-type.html | grep 'text-7xl\|64px'
 ```
 
 → 각 명령어 결과를 확인하고, 결함이 발견되면 즉시 수정한다.

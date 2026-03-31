@@ -93,7 +93,9 @@ deploy (gh-pages push → GitHub Pages 자동 배포)
 - description max-width 반응형: mobile 100% → 1024px 720px → 1440px 860px (섹션 헤더, 히어로, CTA 모두 적용)
 - 텍스트 최소 명도 강화: `var(--ds-color-text-muted)` (#cacccf) 텍스트 사용 금지 — 텍스트 최소 `var(--ds-color-text-tertiary)` (#9c9c9c)
 - 아티클형 페이지 본문 860px 통일: `<main class="ds-article">` 적용 시 본문 폭 860px 통일 (전폭 예외: partner-grid, kpi-band)
-- 섹션 헤더 기본 center 정렬: `ds-section-header`는 기본 중앙 정렬. `--left`는 spec에 명시된 경우만 사용
+- 섹션 헤더 기본 center 정렬: `ds-section-header`는 항상 center 정렬이 기본. `ds-section-header--left` 사용 전면 금지 — 아티클형·제품형 관계없이 center 유지
+- CTA band 타이포 표준: `ds-cta-band__title` 기본 font-size는 `var(--ds-text-5xl)` (40px). 반응형: mobile `var(--ds-text-4xl)`(36px), desktop(1440px) `var(--ds-text-6xl)`(50px). `var(--ds-text-7xl)` 사용 금지
+- letter-spacing 하드코딩 금지: letter-spacing은 반드시 DS 토큰 사용 — `var(--ds-tracking-tight)` (-0.5px) 또는 `var(--ds-tracking-wide)` (0.08em). `-2px` 등 숫자 직접 입력 금지
 - 외부 서비스 링크는 버튼형: AWS Marketplace, 제품 사이트 등 외부 링크는 `ds-btn--secondary` 버튼으로 구현 (인라인 텍스트 링크 금지)
 - 단계별 프로세스는 Step Tabs: "Step 1,2,3" / "How it works" 형태는 반드시 `[U] ds-step-tabs` 사용. 스크린샷 필요 시 placeholder + 사용자 요청
 - 인증/수상은 Cert Grid: ISO, GS 등 인증 내용은 `[L] ds-cert-grid` 마키 + 공식 이미지 사용
@@ -169,6 +171,9 @@ Low 결함만 남은 경우 CONDITIONAL PASS 선언 가능.
 3. **section id 누락** → `id="section-N"` 추가
 4. **nav/hero 전용 수치** → `:root`에 전용 토큰(`--ds-nav-height`, `--ds-hero-container-pt` 등) 추가
 5. **ds-container max-width 누락** → `max-width: var(--ds-content-max-width)` 추가
+6. **CTA title 임의 크기 사용** → `ds-cta-band__title`은 `var(--ds-text-5xl)` 기본, mobile `var(--ds-text-4xl)`, desktop `var(--ds-text-6xl)` 반응형 표준 준수
+7. **letter-spacing 하드코딩** → `var(--ds-tracking-tight)` 또는 `var(--ds-tracking-wide)`로 교체
+8. **섹션 헤더 `--left` 남용** → 전체 삭제 (center가 유일 기본값)
 
 
 ## Bash 실행 규칙

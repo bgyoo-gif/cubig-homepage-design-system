@@ -76,7 +76,7 @@ frontend-dev 에이전트에게 구현을 위임합니다.
    - title: 원문 섹션 제목
    - 타이틀 강조 키워드: 반드시 1개 선정 → `ds-text--brand` 적용 (없으면 "없음"으로 명시)
    - description: 원문 도입 설명 첫 문장
-   - 기본 중앙 정렬. 아티클/문서형이면 `--left` 추가
+   - 정렬: 항상 center 정렬 기본. `ds-section-header--left` 사용 전면 금지 — 아티클형·제품형 관계없이 center 유지
    - 하단 border-bottom 구분선 포함
 
 2. `ds-section-title-icon` (선택)

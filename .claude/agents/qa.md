@@ -172,6 +172,24 @@ grep -oP '--ds-[a-zA-Z0-9-]+' output/[파일명]-b-type.html | sort -u
 ```
 → design-system.md에 정의되지 않은 변수가 있으면 결함
 
+**letter-spacing 하드코딩 확인:**
+```bash
+grep -n 'letter-spacing:.*-[0-9]\|letter-spacing:.*[0-9]px\|letter-spacing:.*[0-9]em' output/[파일명]-b-type.html | grep -v 'tracking-tight\|tracking-wide\|tracking-normal'
+```
+→ `var(--ds-tracking-*)` 토큰이 아닌 숫자 직접 입력이 있으면 결함
+
+**ds-section-header--left 사용 확인:**
+```bash
+grep -n 'section-header--left' output/[파일명]-b-type.html
+```
+→ 어떤 줄이든 존재하면 결함 (전면 금지)
+
+**CTA 타이틀 크기 확인:**
+```bash
+grep -n 'cta-band__title' output/[파일명]-b-type.html | grep 'text-7xl\|64px'
+```
+→ `ds-text-7xl` 또는 `64px`가 CTA 타이틀에 사용되면 결함
+
 체크리스트:
 - [ ] CSS 변수가 :root에 선언되어 있는가
 - [ ] 색상 하드코딩이 없는가
@@ -197,9 +215,10 @@ grep -oP '--ds-[a-zA-Z0-9-]+' output/[파일명]-b-type.html | sort -u
 - [ ] 배경 이미지 위 텍스트가 black 또는 white만 사용하는가 (secondary/tertiary/muted 금지)
 - [ ] ds-section--light가 3개 이상 남용되지 않았는가 (기본 white, 변화는 bg 이미지로)
 - [ ] 모든 CSS 변수가 design-system.md에 정의된 것만 사용됐는가 (커스텀 변수 금지)
+- [ ] letter-spacing 하드코딩이 없는가 (`-2px`, `-1px`, `0.1em` 등 숫자 직접 입력 금지 — `var(--ds-tracking-tight)` 또는 `var(--ds-tracking-wide)` 토큰만 허용)
 - [ ] 모든 섹션에서 eyebrow가 완전히 제거됐는가 (전면 금지)
 - [ ] 아티클형 페이지(Learn 등)에 `<main class="ds-article">` + 본문 860px 통일이 적용됐는가
-- [ ] `ds-section-header--left`가 spec에 명시되지 않은 섹션에 사용되지 않았는가 (기본 center)
+- [ ] `ds-section-header--left`가 어떤 섹션에도 사용되지 않았는가 (전면 금지 — center만 허용)
 - [ ] 제목에 `text-wrap: balance`, 본문에 `text-wrap: pretty`가 적용됐는가
 - [ ] 외부 서비스 링크("View on AWS Marketplace", "llmcapsule.ai" 등)가 `ds-btn ds-btn--secondary` 버튼으로 구현됐는가 (인라인 텍스트 링크 금지)
 - [ ] "Step 1,2,3" / "How it works" 순차 프로세스가 `ds-step-tabs`로 구현됐는가
@@ -218,7 +237,7 @@ grep -oP '--ds-[a-zA-Z0-9-]+' output/[파일명]-b-type.html | sort -u
 - [ ] 폰트가 실제로 로드되는가 (Google Fonts link 확인)
 - [ ] 아코디언 토글이 ds-ac-card__toggle 버튼으로 구현됐는가 (텍스트 "+" 금지)
 - [ ] eyebrow가 존재하지 않는가 (전면 금지)
-- [ ] CTA 밴드 타이틀이 64px(ds-text-7xl) 이상인가
+- [ ] CTA 밴드 타이틀이 `var(--ds-text-5xl)` (40px) 기본이고 반응형(mobile 36px / desktop 50px)이 적용됐는가 (`ds-text-7xl` 사용 금지)
 - [ ] CTA 밴드 텍스트가 흰색으로 표시되는가
 
 ### [CAT-4] 반응형 검증 (High)
@@ -326,6 +345,9 @@ grep -n "padding.*16px\|padding.*32px\|padding.*120px" output/[파일명]-b-type
 - banner-full padding이 space-3xl (space-xl이어야 함) (CAT-2 High)
 - Partner 로고가 ds-partner-grid 미사용 또는 커스텀 마키 사용 (CAT-2 High)
 - cert-grid/partner-grid에 커스텀 마키 사용 — DS 공식 컴포넌트 필수 (CAT-2 High)
+- `ds-section-header--left`가 어떤 섹션에든 사용됨 — center가 유일 기본값 (CAT-2 High)
+- CTA 타이틀에 `ds-text-7xl` (64px) 사용 — `ds-text-5xl` (40px) 기본 필수 (CAT-2 High)
+- letter-spacing 하드코딩 사용 (`-2px`, `-1px` 등) — `var(--ds-tracking-tight)` 토큰 필수 (CAT-2 High)
 
 아래 항목은 CONDITIONAL PASS 허용:
 - CTA container 안에 배치 (CAT-3 Medium)
