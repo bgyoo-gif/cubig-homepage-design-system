@@ -401,14 +401,14 @@
     /* =====================================================
        7. Hero — text-only
     ===================================================== */
-    .ds-hero--text-only { max-width: 860px; }
+    .ds-hero--text-only { max-width: 860px; margin: 0 auto; }
     .ds-hero__title {
       font-family: var(--ds-font-base);
       font-size: 24px;
       font-weight: var(--ds-weight-bold);
       color: var(--ds-color-text-primary);
       line-height: var(--ds-leading-tight);
-      letter-spacing: -1px;
+      letter-spacing: var(--ds-tracking-tight);
       margin-bottom: var(--ds-space-sm);
       text-wrap: balance;
     }
@@ -509,7 +509,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: rgba(255,255,255,0.72);
+      background: rgba(255,255,255,0.82);
       z-index: 0;
     }
     .ds-banner--full > * { position: relative; z-index: 1; }
@@ -766,7 +766,7 @@
       font-weight: var(--ds-weight-bold);
       color: var(--ds-color-white);
       line-height: var(--ds-leading-tight);
-      letter-spacing: -1px;
+      letter-spacing: var(--ds-tracking-tight);
       margin: 0;
       text-wrap: balance;
     }
@@ -798,9 +798,9 @@
       gap: 16px;
     }
     .ds-cta-band__actions .ds-btn {
-      background: rgba(255,255,255,0.92);
+      background: var(--ds-color-white);
       color: var(--ds-color-text-primary);
-      border: 1px solid rgba(255,255,255,0.6);
+      border: 1px solid var(--ds-color-white);
       backdrop-filter: blur(8px);
     }
     .ds-cta-band__actions .ds-btn:hover { background: var(--ds-color-white); }
@@ -961,7 +961,7 @@
       .ds-hero__description { max-width: 860px; }
 
       .ds-cta-band { padding: 120px var(--ds-container-padding-desktop); max-width: 1440px; margin: 0 auto; }
-      .ds-cta-band__title { font-size: var(--ds-text-7xl); letter-spacing: -2px; }
+      .ds-cta-band__title { font-size: var(--ds-text-6xl); }
       .ds-cta-band__inner { max-width: 860px; }
 
       .ds-card { padding: var(--ds-space-xl); }
@@ -1029,7 +1029,7 @@
     =================================================== -->
     <section class="ds-section" id="section-2">
       <div class="ds-container">
-        <div class="ds-section-header ds-section-header--underline ds-section-header--left">
+        <div class="ds-section-header ds-section-header--underline">
           <h2 class="ds-section-header__title">
             <span class="ds-text--brand">Definition</span>
           </h2>
@@ -1045,7 +1045,7 @@
     =================================================== -->
     <section class="ds-section" id="section-3">
       <div class="ds-container">
-        <div class="ds-section-header ds-section-header--underline ds-section-header--left">
+        <div class="ds-section-header ds-section-header--underline">
           <h2 class="ds-section-header__title">What it means</h2>
         </div>
         <div class="ds-article-body">
@@ -1060,7 +1060,7 @@
     =================================================== -->
     <section class="ds-section ds-section--light" id="section-4">
       <div class="ds-container">
-        <div class="ds-section-header ds-section-header--underline ds-section-header--left">
+        <div class="ds-section-header ds-section-header--underline">
           <h2 class="ds-section-header__title">
             Core <span class="ds-text--brand">characteristics</span>
           </h2>
@@ -1131,7 +1131,7 @@
     =================================================== -->
     <section class="ds-section" id="section-5">
       <div class="ds-container">
-        <div class="ds-section-header ds-section-header--underline ds-section-header--left">
+        <div class="ds-section-header ds-section-header--underline">
           <h2 class="ds-section-header__title">
             Why it <span class="ds-text--brand">matters</span>
           </h2>
@@ -1182,7 +1182,7 @@
     =================================================== -->
     <section class="ds-section ds-section--light" id="section-6">
       <div class="ds-container">
-        <div class="ds-section-header ds-section-header--underline ds-section-header--left">
+        <div class="ds-section-header ds-section-header--underline">
           <h2 class="ds-section-header__title">
             <span class="ds-text--brand">Comparison</span>
           </h2>
@@ -1233,7 +1233,7 @@
     =================================================== -->
     <section class="ds-section" id="section-7">
       <div class="ds-container">
-        <div class="ds-section-header ds-section-header--underline ds-section-header--left">
+        <div class="ds-section-header ds-section-header--underline">
           <h2 class="ds-section-header__title">
             Relationship to <span class="ds-text--brand">AI-Ready Data</span>
           </h2>
@@ -1257,7 +1257,7 @@
     =================================================== -->
     <section class="ds-section" id="section-8">
       <div class="ds-container">
-        <div class="ds-section-header ds-section-header--underline ds-section-header--left">
+        <div class="ds-section-header ds-section-header--underline">
           <h2 class="ds-section-header__title">
             Conceptual <span class="ds-text--brand">model</span>
           </h2>
@@ -1274,7 +1274,7 @@
     =================================================== -->
     <section class="ds-section" id="section-9">
       <div class="ds-container">
-        <div class="ds-section-header ds-section-header--underline ds-section-header--left">
+        <div class="ds-section-header ds-section-header--underline">
           <h2 class="ds-section-header__title">Example</h2>
         </div>
         <div class="ds-article-body">
@@ -1294,7 +1294,7 @@
     =================================================== -->
     <section class="ds-section" id="section-10">
       <div class="ds-container">
-        <div class="ds-section-header ds-section-header--underline ds-section-header--left">
+        <div class="ds-section-header ds-section-header--underline">
           <h2 class="ds-section-header__title">
             How <span class="ds-text--product">SynTitan</span> implements the Execution State Layer
           </h2>
@@ -1382,7 +1382,7 @@
     =================================================== -->
     <section class="ds-section ds-section--light" id="section-11">
       <div class="ds-container">
-        <div class="ds-section-header ds-section-header--underline ds-section-header--left">
+        <div class="ds-section-header ds-section-header--underline">
           <h2 class="ds-section-header__title">
             Frequently Asked <span class="ds-text--brand">Questions</span>
           </h2>
