@@ -100,7 +100,7 @@ frontend-dev 에이전트에게 구현을 위임합니다.
 | Hero Text-only | 배경 이미지 금지 — 흰색/밝은 배경만 |
 | CTA | 배경 이미지 (ds-bg--*) — container 밖 전폭 배치 |
 | 흰/회색 배경 3개 이상 연속 | 중간에 배경 이미지 1개 삽입 |
-| 일반 섹션 | white / surface-light 교대 사용 |
+| 일반 섹션 | 항상 white — surface-light 전면 금지 |
 | KPI 수치 카드 | 배경 이미지는 섹션이 아닌 ds-kpi-band 컴포넌트 자체에 적용 |
 
 배경 이미지 남용 금지:
@@ -491,7 +491,7 @@ JS 필수: `data-step-tabs` / `data-tab` / `data-panel` 속성으로 탭 전환
 - 헤더 description: [원문 도입 설명]
 - 헤더 정렬: [center 또는 left]
 - 서브 타이틀: [아이콘+텍스트 또는 없음]
-- 배경: [white / surface-light / bg-image / dark]
+- 배경: [white / bg-image / dark] (surface-light 금지)
 - 배경 bg-image 적용 위치: [section / ds-kpi-band / ds-cta-band / 없음]
 - 사용 컴포넌트: [ds-card--highlight 등]
 - 그리드: [ds-grid--3 등]
@@ -525,7 +525,7 @@ JS 필수: `data-step-tabs` / `data-tab` / `data-panel` 속성으로 탭 전환
 - 배경 이미지 중복 금지: 한 페이지 안에 동일한 `ds-bg--*` 2번 이상 사용 금지 — 다양하게 분산
 - 페이지 최상단 여백: `ds-section--hero` padding-top 100px 고정
 - 배경 이미지 위 텍스트: black 또는 white만 사용 (secondary/tertiary/muted 금지)
-- 미색 배경(ds-section--light) 남용 금지 — 기본 white, 다양성 필요 시 배경 이미지 사용
+- 미색 배경(ds-section--light) 전면 금지 — 섹션 배경은 항상 white. 변화 필요 시 배경 이미지 사용
 - CSS 변수는 design-system.md에 정의된 것만 사용 (임의 변수 생성 금지)
 
 ## 추가 설계 규칙

@@ -90,7 +90,7 @@ deploy (gh-pages push → GitHub Pages 자동 배포)
 - 배경 이미지 중복 금지: 한 페이지 안에 동일한 `ds-bg--*` 2번 이상 사용 금지 — 다양하게 분산
 - 페이지 최상단 여백: `ds-section--hero` padding-top 100px 고정
 - 배경 이미지 위 텍스트: black 또는 white만 사용 (secondary/tertiary/muted 금지)
-- 미색 배경(ds-section--light) 남용 금지 — 기본 white, 다양성 필요 시 배경 이미지 사용
+- 미색 배경(ds-section--light) 전면 금지 — 섹션 배경은 항상 white. 변화가 필요하면 배경 이미지 사용
 - CSS 변수는 design-system.md에 정의된 것만 사용 (임의 변수 생성 금지)
 - Case Study 열 타입 혼합 금지: 한 섹션 안에서 1col과 2col을 섞지 않는다. 1col이면 전부 1col, 2col이면 전부 2col로 통일
 - eyebrow 전면 금지: B타입 변환 시 모든 섹션에서 eyebrow(헤드라인 위 작은 텍스트) 삭제 — A타입에 있어도 B타입에서는 제거 (banner label 포함)

@@ -105,11 +105,11 @@ grep -n 'text-secondary\|text-tertiary\|text-muted\|neutral-600\|neutral-400' ou
 ```
 → 배경 이미지(`ds-bg--*`) 섹션 내에서 위 색상이 사용되면 결함 (black/white만 허용)
 
-**ds-section--light 남용 확인:**
+**ds-section--light 전면 금지 확인:**
 ```bash
 grep -c 'ds-section--light' output/[파일명]-b-type.html
 ```
-→ 3개 이상이면 남용 의심. 기본은 흰색 배경, 배경 이미지로 변화 부여
+→ 1개라도 존재하면 결함. 섹션 배경은 항상 white. 변화 필요 시 배경 이미지 사용
 
 **eyebrow 전면 금지 확인:**
 ```bash
@@ -213,7 +213,7 @@ grep -n 'cta-band__title' output/[파일명]-b-type.html | grep 'text-7xl\|64px'
 - [ ] 배너 내 링크(`<a>`)가 본문과 분리되어 줄바꿈됐는가
 - [ ] 동일한 배경 이미지(`ds-bg--*`)가 한 페이지에서 2번 이상 사용되지 않았는가
 - [ ] 배경 이미지 위 텍스트가 black 또는 white만 사용하는가 (secondary/tertiary/muted 금지)
-- [ ] ds-section--light가 3개 이상 남용되지 않았는가 (기본 white, 변화는 bg 이미지로)
+- [ ] ds-section--light가 사용되지 않았는가 (전면 금지 — 섹션 배경은 항상 white)
 - [ ] 모든 CSS 변수가 design-system.md에 정의된 것만 사용됐는가 (커스텀 변수 금지)
 - [ ] letter-spacing 하드코딩이 없는가 (`-2px`, `-1px`, `0.1em` 등 숫자 직접 입력 금지 — `var(--ds-tracking-tight)` 또는 `var(--ds-tracking-wide)` 토큰만 허용)
 - [ ] 모든 섹션에서 eyebrow가 완전히 제거됐는가 (전면 금지)
@@ -326,7 +326,7 @@ grep -n "padding.*16px\|padding.*32px\|padding.*120px" output/[파일명]-b-type
 - 텍스트 color에 neutral-150/050/025 사용 (CAT-2 High)
 - 배경 명도 vs 텍스트 색상 불일치 (CAT-2 High)
 - 배경 이미지 위 텍스트에 secondary/tertiary/muted 색상 사용 (CAT-2 High)
-- ds-section--light 남용 (CAT-2 High)
+- ds-section--light 사용 (전면 금지 — 1개라도 있으면 FAIL) (CAT-2 High)
 - DS에 없는 커스텀 CSS 변수 사용 (CAT-2 High)
 - 4단계 breakpoint 누락 (CAT-4 High)
 - 어떤 섹션이든 eyebrow 존재 (CAT-2 High)
