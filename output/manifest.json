@@ -1,5 +1,5 @@
 {
-  "generated": "2026-03-31 15:32:08",
+  "generated": "2026-03-31 16:28:39",
   "github_base": "https://bgyoo-gif.github.io/cubig-homepage-design-system",
   "groups": [
     {
@@ -734,6 +734,11 @@
         {
           "name": "diagram-data-profiling.html",
           "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/html/diagram-data-profiling.html",
+          "modified": "2026-03-31"
+        },
+        {
+          "name": "diagram-execution-state-model.html",
+          "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/html/diagram-execution-state-model.html",
           "modified": "2026-03-31"
         },
         {

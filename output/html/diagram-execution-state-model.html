@@ -1,0 +1,462 @@
+<style>
+/* ============================================================
+   Execution State Model Diagram — snippet
+   Prefix: .esm-diag
+   ============================================================ */
+
+.esm-diag {
+  --esm-blue-pill-bg:     #2563eb;
+  --esm-blue-pill-text:   #ffffff;
+  --esm-esl-card-bg:      #eef4fd;
+  --esm-esl-card-border:  #bfcff7;
+  --esm-sub-card-bg:      #dbeafe;
+  --esm-sub-card-border:  #93c5fd;
+  --esm-icon-bg:          #eff6ff;
+  --esm-icon-color:       #1d4ed8;
+  --esm-title-color:      #1e3a5f;
+  --esm-label-color:      #3b82f6;
+  --esm-bullet-color:     #374151;
+  --esm-caption-color:    #6b7280;
+  --esm-ai-card-bg:       #ffffff;
+  --esm-ai-card-border:   #bfcff7;
+  --esm-ai-title-color:   #1e3a5f;
+  --esm-ai-item-color:    #374151;
+  --esm-connector-color:  #3b82f6;
+  --esm-arrow-color:      #2563eb;
+
+  font-family: var(--ds-font-base, "DM Sans", sans-serif);
+  width: 100%;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ---- Top pill label ---- */
+.esm-diag__pill-row {
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 0;
+  margin-bottom: 0;
+}
+
+.esm-diag__pill {
+  display: inline-flex;
+  align-items: center;
+  background: var(--esm-blue-pill-bg);
+  color: var(--esm-blue-pill-text);
+  font-size: var(--ds-text-sm, 14px);
+  font-weight: 600;
+  border-radius: 999px;
+  padding: 6px 18px;
+  letter-spacing: 0.01em;
+  position: relative;
+  z-index: 2;
+}
+
+/* ---- Main layout: left ESL block + right AI card ---- */
+.esm-diag__main {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  position: relative;
+}
+
+/* ---- Pill → ESL vertical connector ---- */
+.esm-diag__pill-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  /* Positioned to align with pill left + ESL card */
+  padding-left: 20px; /* matches ESL card's own padding so line aligns with pill center */
+  margin-bottom: 0;
+}
+
+.esm-diag__pill-line {
+  width: 2px;
+  height: 14px;
+  background: var(--esm-connector-color);
+  margin-left: 56px; /* visually centers under the pill text */
+}
+
+/* ---- Pill + connector wrapper ---- */
+.esm-diag__top {
+  margin-bottom: 0;
+}
+
+/* ---- Pill + line + ESL as a left column ---- */
+.esm-diag__left-col {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---- ESL outer card ---- */
+.esm-diag__esl-card {
+  background: var(--esm-esl-card-bg);
+  border: 1.5px solid var(--esm-esl-card-border);
+  border-radius: 14px;
+  padding: 18px 16px 14px;
+  flex: 1;
+  position: relative;
+}
+
+/* The vertical line from pill drops into the card top */
+.esm-diag__esl-card::before {
+  content: '';
+  position: absolute;
+  top: -14px;
+  left: 74px; /* aligns with pill center visually */
+  width: 2px;
+  height: 14px;
+  background: var(--esm-connector-color);
+}
+
+/* small arrowhead at bottom of vertical connector */
+.esm-diag__esl-card::after {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: 70px;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid var(--esm-arrow-color);
+}
+
+/* ---- ESL 3-column inner grid ---- */
+.esm-diag__esl-cols {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+/* ---- Sub-card (Data State / Validation / Traceability) ---- */
+.esm-diag__sub-card {
+  background: var(--esm-sub-card-bg);
+  border: 1.5px solid var(--esm-sub-card-border);
+  border-radius: 10px;
+  padding: 12px 10px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.esm-diag__sub-title {
+  font-size: var(--ds-text-sm, 14px);
+  font-weight: 700;
+  color: var(--esm-title-color);
+  margin: 0 0 4px;
+}
+
+/* Icon circle */
+.esm-diag__icon-wrap {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: var(--esm-icon-bg);
+  border: 1.5px solid var(--esm-sub-card-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.esm-diag__icon-wrap svg {
+  width: 20px;
+  height: 20px;
+  stroke: var(--esm-icon-color);
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* V1.2 badge inside icon-wrap for Data State */
+.esm-diag__version-badge {
+  position: absolute;
+  bottom: -6px;
+  right: -8px;
+  background: #2563eb;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  border-radius: 4px;
+  padding: 1px 4px;
+  white-space: nowrap;
+  font-family: var(--ds-font-base, "DM Sans", sans-serif);
+}
+
+/* Dot bullet item */
+.esm-diag__bullet {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  font-size: var(--ds-text-xs, 12px);
+  color: var(--esm-bullet-color);
+}
+
+.esm-diag__bullet::before {
+  content: '•';
+  color: var(--esm-icon-color);
+  font-size: 10px;
+  flex-shrink: 0;
+}
+
+/* Caption / italic label at bottom */
+.esm-diag__caption {
+  font-size: var(--ds-text-xs, 12px);
+  color: var(--esm-caption-color);
+  font-style: italic;
+  margin-top: auto;
+  padding-top: 4px;
+}
+
+/* ---- Horizontal connector: ESL → AI Execution ---- */
+.esm-diag__h-connector {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 44px;
+  flex-shrink: 0;
+  position: relative;
+}
+
+/* single horizontal line */
+.esm-diag__h-connector::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: calc(100% - 8px);
+  height: 2px;
+  background: var(--esm-connector-color);
+  transform: translateY(-50%);
+}
+
+/* arrowhead pointing right */
+.esm-diag__h-connector::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 7px solid var(--esm-arrow-color);
+}
+
+/* ---- AI Execution card ---- */
+.esm-diag__ai-card {
+  background: var(--esm-ai-card-bg);
+  border: 1.5px solid var(--esm-ai-card-border);
+  border-radius: 14px;
+  padding: 18px 20px 16px;
+  width: 148px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.esm-diag__ai-title {
+  font-size: var(--ds-text-sm, 14px);
+  font-weight: 700;
+  color: var(--esm-ai-title-color);
+  margin: 0 0 4px;
+}
+
+.esm-diag__ai-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--ds-text-xs, 12px);
+  color: var(--esm-ai-item-color);
+  font-weight: 500;
+}
+
+.esm-diag__ai-item svg {
+  width: 16px;
+  height: 16px;
+  stroke: var(--esm-icon-color);
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+}
+
+/* ---- 3 horizontal arrows from ESL sub-cards to AI Execution ---- */
+/* We use a separate absolute-positioned SVG layer approach via CSS only */
+/* Instead: the single arrow connector is centered between ESL and AI */
+
+/* ---- Responsive ---- */
+@media (max-width: 768px) {
+  .esm-diag__main {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .esm-diag__h-connector {
+    width: auto;
+    height: 36px;
+    flex-direction: row;
+  }
+
+  .esm-diag__h-connector::before {
+    top: auto;
+    left: 50%;
+    bottom: 0;
+    width: 2px;
+    height: calc(100% - 8px);
+    transform: translateX(-50%);
+  }
+
+  .esm-diag__h-connector::after {
+    top: auto;
+    right: auto;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 7px solid var(--esm-arrow-color);
+    border-bottom: none;
+  }
+
+  .esm-diag__ai-card {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 16px;
+  }
+
+  .esm-diag__ai-title {
+    width: 100%;
+    margin-bottom: 0;
+  }
+
+  .esm-diag__esl-cols {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .esm-diag__sub-card {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .esm-diag__sub-title {
+    width: 100%;
+  }
+}
+</style>
+
+<!-- Execution State Model Diagram -->
+<div class="esm-diag">
+
+  <!-- Pill label -->
+  <div class="esm-diag__pill-row">
+    <span class="esm-diag__pill">Execution State Layer</span>
+  </div>
+
+  <!-- Main: Left (ESL) + Connector + Right (AI Execution) -->
+  <div class="esm-diag__main">
+
+    <!-- Left column: ESL outer card -->
+    <div class="esm-diag__left-col">
+      <div class="esm-diag__esl-card">
+        <div class="esm-diag__esl-cols">
+
+          <!-- Sub-card 1: Data State -->
+          <div class="esm-diag__sub-card">
+            <div class="esm-diag__sub-title">Data State</div>
+            <div class="esm-diag__icon-wrap">
+              <!-- Database icon -->
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                <path d="M3 5v6c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/>
+                <path d="M3 11v6c0 1.66 4.03 3 9 3s9-1.34 9-3v-6"/>
+              </svg>
+              <span class="esm-diag__version-badge">V1.2</span>
+            </div>
+            <div class="esm-diag__bullet">Versioned &amp; Frozen</div>
+            <div class="esm-diag__caption">Versioned Data</div>
+          </div>
+
+          <!-- Sub-card 2: Validation -->
+          <div class="esm-diag__sub-card">
+            <div class="esm-diag__sub-title">Validation</div>
+            <div class="esm-diag__icon-wrap">
+              <!-- Shield Check icon -->
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <polyline points="9 12 11 14 15 10"/>
+              </svg>
+            </div>
+            <div class="esm-diag__bullet">Integrity Checks</div>
+            <div class="esm-diag__caption">Verified Integrity</div>
+          </div>
+
+          <!-- Sub-card 3: Traceability -->
+          <div class="esm-diag__sub-card">
+            <div class="esm-diag__sub-title">Traceability</div>
+            <div class="esm-diag__icon-wrap">
+              <!-- Search icon -->
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="11" cy="11" r="8"/>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              </svg>
+            </div>
+            <div class="esm-diag__bullet">Full Lineage</div>
+            <div class="esm-diag__caption">Full Lineage</div>
+          </div>
+
+        </div><!-- /.esm-diag__esl-cols -->
+      </div><!-- /.esm-diag__esl-card -->
+    </div><!-- /.esm-diag__left-col -->
+
+    <!-- Horizontal connector arrow -->
+    <div class="esm-diag__h-connector" aria-hidden="true"></div>
+
+    <!-- Right: AI Execution card -->
+    <div class="esm-diag__ai-card">
+      <div class="esm-diag__ai-title">AI Execution</div>
+
+      <div class="esm-diag__ai-item">
+        <!-- Arrow / Model icon -->
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
+        </svg>
+        Model
+      </div>
+
+      <div class="esm-diag__ai-item">
+        <!-- Code icon -->
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <polyline points="16 18 22 12 16 6"/>
+          <polyline points="8 6 2 12 8 18"/>
+        </svg>
+        Code
+      </div>
+
+      <div class="esm-diag__ai-item">
+        <!-- Settings / Runtime icon -->
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.07 4.93A10 10 0 1 0 21 12M19.07 4.93L21 2.93"/>
+        </svg>
+        Runtime
+      </div>
+
+    </div><!-- /.esm-diag__ai-card -->
+
+  </div><!-- /.esm-diag__main -->
+
+</div><!-- /.esm-diag -->
