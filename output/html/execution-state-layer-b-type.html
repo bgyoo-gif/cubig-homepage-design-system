@@ -1094,74 +1094,93 @@
             A data infrastructure layer that binds every AI execution to a versioned, frozen, and verifiable data state — enabling reproducibility, traceability, and consistent outcomes across production environments.
           </p>
 
-          <!-- Execution State Model Diagram -->
+          <!-- Execution State Model Diagram — [W] ds-diagram -->
           <style>
-.esm-diag { --esm-blue-pill-bg:#2563eb; --esm-blue-pill-text:#fff; --esm-esl-card-bg:#eef4fd; --esm-esl-card-border:#bfcff7; --esm-sub-card-bg:#dbeafe; --esm-sub-card-border:#93c5fd; --esm-icon-bg:#eff6ff; --esm-icon-color:#1d4ed8; --esm-title-color:#1e3a5f; --esm-label-color:#3b82f6; --esm-bullet-color:#374151; --esm-caption-color:#6b7280; --esm-ai-card-bg:#fff; --esm-ai-card-border:#bfcff7; --esm-ai-title-color:#1e3a5f; --esm-ai-item-color:#374151; --esm-connector-color:#3b82f6; --esm-arrow-color:#2563eb; font-family:var(--ds-font-base,"DM Sans",sans-serif); width:100%; max-width:860px; margin:var(--ds-space-2xl,48px) auto 0; }
-.esm-diag__pill-row { display:flex; justify-content:flex-start; margin-bottom:0; }
-.esm-diag__pill { display:inline-flex; align-items:center; background:var(--esm-blue-pill-bg); color:var(--esm-blue-pill-text); font-size:var(--ds-text-sm,14px); font-weight:600; border-radius:999px; padding:6px 18px; position:relative; z-index:2; }
-.esm-diag__main { display:flex; align-items:stretch; gap:0; position:relative; }
-.esm-diag__left-col { flex:1 1 0; min-width:0; display:flex; flex-direction:column; }
-.esm-diag__esl-card { background:var(--esm-esl-card-bg); border:1.5px solid var(--esm-esl-card-border); border-radius:14px; padding:18px 16px 14px; flex:1; position:relative; }
-.esm-diag__esl-card::before { content:''; position:absolute; top:-14px; left:74px; width:2px; height:14px; background:var(--esm-connector-color); }
-.esm-diag__esl-card::after { content:''; position:absolute; top:-4px; left:70px; border-left:5px solid transparent; border-right:5px solid transparent; border-top:6px solid var(--esm-arrow-color); }
-.esm-diag__esl-cols { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
-.esm-diag__sub-card { background:var(--esm-sub-card-bg); border:1.5px solid var(--esm-sub-card-border); border-radius:10px; padding:12px 10px 10px; display:flex; flex-direction:column; gap:6px; }
-.esm-diag__sub-title { font-size:var(--ds-text-sm,14px); font-weight:700; color:var(--esm-title-color); margin:0 0 4px; }
-.esm-diag__icon-wrap { width:40px; height:40px; border-radius:8px; background:var(--esm-icon-bg); border:1.5px solid var(--esm-sub-card-border); display:flex; align-items:center; justify-content:center; flex-shrink:0; position:relative; }
-.esm-diag__icon-wrap svg { width:20px; height:20px; stroke:var(--esm-icon-color); fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
-.esm-diag__version-badge { position:absolute; bottom:-6px; right:-8px; background:#2563eb; color:#fff; font-size:9px; font-weight:700; border-radius:4px; padding:1px 4px; white-space:nowrap; }
-.esm-diag__bullet { display:flex; align-items:baseline; gap:5px; font-size:var(--ds-text-xs,12px); color:var(--esm-bullet-color); }
-.esm-diag__bullet::before { content:'•'; color:var(--esm-icon-color); font-size:10px; flex-shrink:0; }
-.esm-diag__caption { font-size:var(--ds-text-xs,12px); color:var(--esm-caption-color); font-style:italic; margin-top:auto; padding-top:4px; }
-.esm-diag__h-connector { display:flex; flex-direction:column; justify-content:center; align-items:center; width:44px; flex-shrink:0; position:relative; }
-.esm-diag__h-connector::before { content:''; position:absolute; top:50%; left:0; width:calc(100% - 8px); height:2px; background:var(--esm-connector-color); transform:translateY(-50%); }
-.esm-diag__h-connector::after { content:''; position:absolute; top:50%; right:0; transform:translateY(-50%); border-top:5px solid transparent; border-bottom:5px solid transparent; border-left:7px solid var(--esm-arrow-color); }
-.esm-diag__ai-card { background:var(--esm-ai-card-bg); border:1.5px solid var(--esm-ai-card-border); border-radius:14px; padding:18px 20px 16px; width:148px; flex-shrink:0; display:flex; flex-direction:column; gap:10px; }
-.esm-diag__ai-title { font-size:var(--ds-text-sm,14px); font-weight:700; color:var(--esm-ai-title-color); margin:0 0 4px; }
-.esm-diag__ai-item { display:flex; align-items:center; gap:8px; font-size:var(--ds-text-xs,12px); color:var(--esm-ai-item-color); font-weight:500; }
-.esm-diag__ai-item svg { width:16px; height:16px; stroke:var(--esm-icon-color); fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; flex-shrink:0; }
-@media (max-width:768px) { .esm-diag__main { flex-direction:column; gap:16px; } .esm-diag__h-connector { width:auto; height:36px; } .esm-diag__h-connector::before { top:auto; left:50%; bottom:0; width:2px; height:calc(100% - 8px); transform:translateX(-50%); } .esm-diag__h-connector::after { top:auto; right:auto; bottom:0; left:50%; transform:translateX(-50%); border-left:5px solid transparent; border-right:5px solid transparent; border-top:7px solid var(--esm-arrow-color); border-bottom:none; } .esm-diag__ai-card { width:100%; flex-direction:row; flex-wrap:wrap; align-items:center; gap:8px 16px; } .esm-diag__ai-title { width:100%; } .esm-diag__esl-cols { grid-template-columns:1fr; gap:8px; } .esm-diag__sub-card { flex-direction:row; flex-wrap:wrap; align-items:flex-start; gap:8px; } .esm-diag__sub-title { width:100%; } }
+.esm-window { background: var(--ds-diag-surface, #f8f8f8); border-radius: var(--ds-radius-md, 18px); box-shadow: 0 8px 32px rgba(0,0,0,0.14), 0 2px 8px rgba(0,0,0,0.08); overflow: hidden; margin-top: var(--ds-space-2xl, 48px); max-width: 860px; width: 100%; margin-left: auto; margin-right: auto; font-family: var(--ds-font-base, "DM Sans", sans-serif); }
+.esm-titlebar { background: linear-gradient(180deg, #e8e8e8 0%, #d8d8d8 100%); height: 36px; display: flex; align-items: center; padding: 0 14px; gap: 8px; border-bottom: 1px solid #c0c0c0; }
+.esm-titlebar__dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+.esm-titlebar__dot--close { background: #ff5f57; }
+.esm-titlebar__dot--min { background: #ffbd2e; }
+.esm-titlebar__dot--max { background: #28ca41; }
+.esm-titlebar__label { margin: 0 auto; font-size: var(--ds-text-xs, 12px); font-weight: 500; color: #555; font-family: var(--ds-font-code, monospace); transform: translateX(-18px); }
+.esm-content { background: var(--ds-diag-os-content, linear-gradient(135deg, #dff0ea 0%, #eef3ff 40%, #f3eeff 70%, #fdeef8 100%)); padding: var(--ds-space-xl, 32px); }
+.esm-card { background: linear-gradient(145deg, #ffffff 0%, #f0f0f0 40%, #e8e8e8 70%, #f5f5f5 100%); border: 1px solid var(--ds-diag-border, #d0d0d0); border-radius: var(--ds-radius-md, 18px); overflow: hidden; }
+.esm-card__title { text-align: center; padding: var(--ds-space-sm, 12px) var(--ds-space-lg, 24px); font-size: var(--ds-text-sm, 14px); font-weight: 500; color: var(--ds-diag-text, #2a2a2a); letter-spacing: 0.04em; border-bottom: 1px solid var(--ds-diag-border-light, #e0e0e0); font-family: var(--ds-font-code, monospace); background: linear-gradient(180deg, #fff 0%, #f8f8f8 100%); }
+.esm-body { display: grid; grid-template-columns: 3fr auto 1fr; align-items: stretch; }
+.esm-col--esl { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-right: 1px dashed var(--ds-diag-border, #d0d0d0); }
+.esm-sub { padding: var(--ds-space-md, 16px) var(--ds-space-sm, 12px); display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; border-right: 1px dashed var(--ds-diag-border-light, #e0e0e0); }
+.esm-sub:last-child { border-right: none; }
+.esm-sub__title { font-size: var(--ds-text-sm, 14px); font-weight: 700; color: var(--ds-diag-text, #2a2a2a); }
+.esm-sub__icon { width: 44px; height: 44px; border-radius: 10px; background: #fff; border: 1.5px solid var(--ds-diag-border-light, #e0e0e0); display: flex; align-items: center; justify-content: center; position: relative; }
+.esm-sub__icon svg { width: 22px; height: 22px; stroke: #2563eb; fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.esm-sub__badge { position: absolute; bottom: -5px; right: -8px; background: #2563eb; color: #fff; font-size: 9px; font-weight: 700; border-radius: 4px; padding: 1px 5px; }
+.esm-sub__bullet { font-size: var(--ds-text-xs, 12px); color: var(--ds-diag-text-sub, #666); }
+.esm-sub__bullet::before { content: '• '; color: #2563eb; }
+.esm-sub__caption { font-size: 11px; color: #9c9c9c; font-style: italic; margin-top: auto; }
+.esm-col--arrow { display: flex; align-items: center; justify-content: center; padding: 0 var(--ds-space-sm, 12px); }
+.esm-arrow-line { display: flex; align-items: center; gap: 0; }
+.esm-arrow-line__bar { width: 32px; height: 2px; background: var(--ds-diag-arrow-dark, #444); }
+.esm-arrow-line__tip { width: 0; height: 0; border-top: 5px solid transparent; border-bottom: 5px solid transparent; border-left: 7px solid var(--ds-diag-arrow-dark, #444); }
+.esm-col--ai { padding: var(--ds-space-md, 16px) var(--ds-space-lg, 24px); display: flex; flex-direction: column; justify-content: center; gap: 10px; }
+.esm-col--ai__title { font-size: var(--ds-text-sm, 14px); font-weight: 700; color: var(--ds-diag-text, #2a2a2a); margin-bottom: 4px; }
+.esm-col--ai__item { display: flex; align-items: center; gap: 8px; font-size: var(--ds-text-xs, 12px); color: var(--ds-diag-text-sub, #666); font-weight: 500; }
+.esm-col--ai__item svg { width: 16px; height: 16px; stroke: #2563eb; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+@media (max-width: 768px) {
+  .esm-body { grid-template-columns: 1fr; }
+  .esm-col--esl { grid-template-columns: 1fr; border-right: none; border-bottom: 1px dashed var(--ds-diag-border, #d0d0d0); }
+  .esm-sub { border-right: none; border-bottom: 1px dashed var(--ds-diag-border-light, #e0e0e0); }
+  .esm-sub:last-child { border-bottom: none; }
+  .esm-col--arrow { padding: var(--ds-space-xs, 8px) 0; transform: rotate(90deg); }
+  .esm-col--ai { flex-direction: row; flex-wrap: wrap; gap: 8px 16px; }
+  .esm-col--ai__title { width: 100%; }
+}
           </style>
-          <div class="esm-diag">
-            <div class="esm-diag__pill-row"><span class="esm-diag__pill">Execution State Layer</span></div>
-            <div class="esm-diag__main">
-              <div class="esm-diag__left-col">
-                <div class="esm-diag__esl-card">
-                  <div class="esm-diag__esl-cols">
-                    <div class="esm-diag__sub-card">
-                      <div class="esm-diag__sub-title">Data State</div>
-                      <div class="esm-diag__icon-wrap">
-                        <svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v6c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 11v6c0 1.66 4.03 3 9 3s9-1.34 9-3v-6"/></svg>
-                        <span class="esm-diag__version-badge">V1.2</span>
+          <div class="esm-window">
+            <div class="esm-titlebar">
+              <span class="esm-titlebar__dot esm-titlebar__dot--close"></span>
+              <span class="esm-titlebar__dot esm-titlebar__dot--min"></span>
+              <span class="esm-titlebar__dot esm-titlebar__dot--max"></span>
+              <span class="esm-titlebar__label">Execution State Layer</span>
+            </div>
+            <div class="esm-content">
+              <div class="esm-card">
+                <div class="esm-card__title">AI Execution = Model + Code + Execution State Layer</div>
+                <div class="esm-body">
+                  <div class="esm-col--esl">
+                    <div class="esm-sub">
+                      <div class="esm-sub__title">Data State</div>
+                      <div class="esm-sub__icon">
+                        <svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v6c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 11v6c0 1.66 4.03 3 9 3s9-1.34 9-3v-6"/></svg>
+                        <span class="esm-sub__badge">V1.2</span>
                       </div>
-                      <div class="esm-diag__bullet">Versioned &amp; Frozen</div>
-                      <div class="esm-diag__caption">Versioned Data</div>
+                      <div class="esm-sub__bullet">Versioned &amp; Frozen</div>
+                      <div class="esm-sub__caption">Versioned Data</div>
                     </div>
-                    <div class="esm-diag__sub-card">
-                      <div class="esm-diag__sub-title">Validation</div>
-                      <div class="esm-diag__icon-wrap">
-                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+                    <div class="esm-sub">
+                      <div class="esm-sub__title">Validation</div>
+                      <div class="esm-sub__icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
                       </div>
-                      <div class="esm-diag__bullet">Integrity Checks</div>
-                      <div class="esm-diag__caption">Verified Integrity</div>
+                      <div class="esm-sub__bullet">Integrity Checks</div>
+                      <div class="esm-sub__caption">Verified Integrity</div>
                     </div>
-                    <div class="esm-diag__sub-card">
-                      <div class="esm-diag__sub-title">Traceability</div>
-                      <div class="esm-diag__icon-wrap">
-                        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    <div class="esm-sub">
+                      <div class="esm-sub__title">Traceability</div>
+                      <div class="esm-sub__icon">
+                        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
                       </div>
-                      <div class="esm-diag__bullet">Full Lineage</div>
-                      <div class="esm-diag__caption">Full Lineage</div>
+                      <div class="esm-sub__bullet">Full Lineage</div>
+                      <div class="esm-sub__caption">Full Lineage</div>
                     </div>
                   </div>
+                  <div class="esm-col--arrow"><div class="esm-arrow-line"><div class="esm-arrow-line__bar"></div><div class="esm-arrow-line__tip"></div></div></div>
+                  <div class="esm-col--ai">
+                    <div class="esm-col--ai__title">AI Execution</div>
+                    <div class="esm-col--ai__item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>Model</div>
+                    <div class="esm-col--ai__item"><svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>Code</div>
+                    <div class="esm-col--ai__item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Runtime</div>
+                  </div>
                 </div>
-              </div>
-              <div class="esm-diag__h-connector" aria-hidden="true"></div>
-              <div class="esm-diag__ai-card">
-                <div class="esm-diag__ai-title">AI Execution</div>
-                <div class="esm-diag__ai-item"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>Model</div>
-                <div class="esm-diag__ai-item"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>Code</div>
-                <div class="esm-diag__ai-item"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93A10 10 0 1 0 21 12M19.07 4.93L21 2.93"/></svg>Runtime</div>
               </div>
             </div>
           </div>
