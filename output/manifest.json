@@ -1,5 +1,5 @@
 {
-  "generated": "2026-03-31 15:06:30",
+  "generated": "2026-03-31 15:13:49",
   "github_base": "https://bgyoo-gif.github.io/cubig-homepage-design-system",
   "groups": [
     {
@@ -693,7 +693,7 @@
         {
           "name": "execution-state-layer-qa-report.md",
           "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/docs/execution-state-layer-qa-report.md",
-          "modified": "2026-03-30"
+          "modified": "2026-03-31"
         },
         {
           "name": "execution-state-layer-spec.md",
@@ -734,6 +734,11 @@
         {
           "name": "diagram-data-profiling.html",
           "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/html/diagram-data-profiling.html",
+          "modified": "2026-03-31"
+        },
+        {
+          "name": "diagram-six-dimensional-ai-readiness-score.html",
+          "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/html/diagram-six-dimensional-ai-readiness-score.html",
           "modified": "2026-03-31"
         },
         {
