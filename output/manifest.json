@@ -1,5 +1,5 @@
 {
-  "generated": "2026-03-31 14:39:47",
+  "generated": "2026-03-31 14:47:11",
   "github_base": "https://bgyoo-gif.github.io/cubig-homepage-design-system",
   "groups": [
     {
@@ -730,6 +730,11 @@
           "name": "design-system-viewer.html",
           "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/html/design-system-viewer.html",
           "modified": "2026-03-24"
+        },
+        {
+          "name": "diagram-data-profiling.html",
+          "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/html/diagram-data-profiling.html",
+          "modified": "2026-03-31"
         },
         {
           "name": "feedback-log.html",

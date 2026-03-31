@@ -1,0 +1,549 @@
+<!--
+  Data Profiling & AI Readiness Analysis — Diagram Snippet
+  [W] ds-diagram 패턴
+  삽입 위치: output/html/execution-state-layer-b-type.html
+             "Data Profiling & AI Readiness Analysis" 카드 내부
+  의존성: 부모 페이지의 design-system CSS 변수 필요
+-->
+
+<style>
+  /* ── Diagram Tokens ── */
+  .dp-diag {
+    --dp-surface:        #f8f8f8;
+    --dp-surface-inner:  #f2f2f2;
+    --dp-border:         #d0d0d0;
+    --dp-border-light:   #e0e0e0;
+    --dp-text:           #2a2a2a;
+    --dp-text-sub:       #666666;
+    --dp-text-dim:       #999999;
+    --dp-accent:         #4a9de0;
+    --dp-accent-bg:      #e8f4fd;
+    --dp-success:        #0e824c;
+    --dp-success-bg:     #e8f8f0;
+    --dp-warn:           #c05a00;
+    --dp-warn-bg:        #fff3e0;
+    --dp-error:          #c0302a;
+    --dp-error-bg:       #fff0ef;
+    --dp-radar-fill:     rgba(74,157,224,0.18);
+    --dp-radar-stroke:   rgba(74,157,224,0.75);
+    --dp-bar-track:      #e8e8e8;
+    --dp-bar-fill:       #4a9de0;
+    --dp-bar-warn:       #e09f4a;
+    font-family: var(--ds-font-base, "DM Sans", sans-serif);
+  }
+
+  /* ── OS Window ── */
+  .dp-diag__window {
+    background: var(--dp-surface);
+    border-radius: var(--ds-radius-md, 18px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.14), 0 2px 8px rgba(0,0,0,0.08);
+    overflow: hidden;
+    margin-top: var(--ds-space-lg, 24px);
+  }
+  .dp-diag__titlebar {
+    background: linear-gradient(180deg, #e8e8e8 0%, #d8d8d8 100%);
+    height: 36px;
+    display: flex;
+    align-items: center;
+    padding: 0 14px;
+    gap: 8px;
+    border-bottom: 1px solid #c0c0c0;
+  }
+  .dp-diag__titlebar-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .dp-diag__titlebar-dot--close { background: #ff5f57; }
+  .dp-diag__titlebar-dot--min   { background: #ffbd2e; }
+  .dp-diag__titlebar-dot--max   { background: #28ca41; }
+  .dp-diag__titlebar-label {
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 12px;
+    font-weight: 500;
+    color: #555;
+    font-family: var(--ds-font-code, "Fragment Mono", monospace);
+    letter-spacing: 0.02em;
+    transform: translateX(-18px); /* 시각적 중앙 보정 */
+  }
+
+  .dp-diag__content {
+    background: linear-gradient(135deg, #dff0ea 0%, #eef3ff 40%, #f3eeff 70%, #fdeef8 100%);
+    padding: 20px;
+  }
+
+  /* ── Main Card ── */
+  .dp-diag__card {
+    background: linear-gradient(145deg, #ffffff 0%, #f0f0f0 40%, #e8e8e8 70%, #f5f5f5 100%);
+    border: 1px solid var(--dp-border);
+    border-radius: var(--ds-radius-md, 18px);
+    overflow: hidden;
+  }
+
+  /* ── Card Header ── */
+  .dp-diag__card-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid var(--dp-border-light);
+    background: linear-gradient(180deg, #ffffff 0%, #f8f8f8 100%);
+  }
+  .dp-diag__card-header-cell {
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .dp-diag__card-header-cell:first-child {
+    border-right: 1px solid var(--dp-border-light);
+  }
+  .dp-diag__file-icon {
+    width: 32px;
+    height: 32px;
+    background: var(--dp-accent-bg);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--dp-accent);
+  }
+  .dp-diag__file-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--dp-text);
+    line-height: 1.3;
+  }
+  .dp-diag__file-meta {
+    font-size: 11px;
+    color: var(--dp-text-sub);
+    margin-top: 1px;
+    font-family: var(--ds-font-code, monospace);
+  }
+  .dp-diag__chart-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--dp-text-sub);
+  }
+  .dp-diag__chart-sublabel {
+    font-size: 10px;
+    color: var(--dp-text-dim);
+    margin-top: 2px;
+  }
+
+  /* ── Body Grid ── */
+  .dp-diag__body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .dp-diag__col {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+  }
+  .dp-diag__col:first-child {
+    border-right: 1px dashed var(--dp-border);
+  }
+
+  /* ── AI Readiness Score ── */
+  .dp-diag__readiness-header {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .dp-diag__readiness-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--dp-text-sub);
+  }
+  .dp-diag__readiness-score {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--dp-text);
+    line-height: 1;
+    letter-spacing: -1px;
+  }
+  .dp-diag__readiness-badge {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--dp-success);
+    background: var(--dp-success-bg);
+    border: 1px solid rgba(14,130,76,0.25);
+    border-radius: 999px;
+    padding: 2px 8px;
+    letter-spacing: 0.06em;
+    align-self: center;
+  }
+
+  /* ── Progress Bars ── */
+  .dp-diag__dim-list {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+  .dp-diag__dim-row {
+    display: grid;
+    grid-template-columns: 116px 1fr 32px;
+    align-items: center;
+    gap: 8px;
+  }
+  .dp-diag__dim-name {
+    font-size: 11px;
+    color: var(--dp-text-sub);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .dp-diag__dim-track {
+    height: 6px;
+    background: var(--dp-bar-track);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .dp-diag__dim-fill {
+    height: 100%;
+    border-radius: 999px;
+    background: var(--dp-bar-fill);
+    transition: width 0.6s ease;
+  }
+  .dp-diag__dim-fill--warn {
+    background: var(--dp-bar-warn);
+  }
+  .dp-diag__dim-pct {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--dp-text);
+    text-align: right;
+    font-family: var(--ds-font-code, monospace);
+  }
+
+  /* ── Radar Chart ── */
+  .dp-diag__radar-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    gap: 6px;
+    padding-top: 8px;
+  }
+  .dp-diag__radar-title {
+    font-size: 11px;
+    color: var(--dp-text-sub);
+    font-weight: 500;
+    text-align: center;
+  }
+  .dp-diag__radar-svg {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+  .dp-diag__radar-footnote {
+    font-size: 9.5px;
+    color: var(--dp-text-dim);
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  /* ── Warning Box ── */
+  .dp-diag__warn-box {
+    margin: 0 16px 16px;
+    background: var(--dp-error-bg);
+    border: 1px solid rgba(192,48,42,0.25);
+    border-left: 3px solid var(--dp-error);
+    border-radius: 8px;
+    padding: 10px 12px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .dp-diag__warn-icon {
+    flex-shrink: 0;
+    color: var(--dp-error);
+    margin-top: 1px;
+  }
+  .dp-diag__warn-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--dp-error);
+    margin-bottom: 2px;
+  }
+  .dp-diag__warn-text {
+    font-size: 11px;
+    color: var(--dp-text-sub);
+    line-height: 1.5;
+  }
+
+  /* ── Chart SVG (bar chart placeholder) ── */
+  .dp-diag__chart-svg {
+    width: 100%;
+    height: 80px;
+    display: block;
+    margin-top: 6px;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 640px) {
+    .dp-diag__body {
+      grid-template-columns: 1fr;
+    }
+    .dp-diag__col:first-child {
+      border-right: none;
+      border-bottom: 1px dashed var(--dp-border);
+    }
+    .dp-diag__card-header {
+      grid-template-columns: 1fr;
+    }
+    .dp-diag__card-header-cell:first-child {
+      border-right: none;
+      border-bottom: 1px solid var(--dp-border-light);
+    }
+    .dp-diag__readiness-score {
+      font-size: 28px;
+    }
+    .dp-diag__dim-row {
+      grid-template-columns: 100px 1fr 28px;
+    }
+  }
+</style>
+
+<div class="dp-diag">
+  <div class="dp-diag__window">
+
+    <!-- macOS 타이틀바 -->
+    <div class="dp-diag__titlebar">
+      <span class="dp-diag__titlebar-dot dp-diag__titlebar-dot--close"></span>
+      <span class="dp-diag__titlebar-dot dp-diag__titlebar-dot--min"></span>
+      <span class="dp-diag__titlebar-dot dp-diag__titlebar-dot--max"></span>
+      <span class="dp-diag__titlebar-label">SynTitan — Data Profiling</span>
+    </div>
+
+    <!-- 콘텐츠 -->
+    <div class="dp-diag__content">
+      <div class="dp-diag__card">
+
+        <!-- 상단 행: 파일 정보 + 차트 영역 -->
+        <div class="dp-diag__card-header">
+
+          <!-- 좌: 파일 정보 카드 -->
+          <div class="dp-diag__card-header-cell">
+            <div class="dp-diag__file-icon">
+              <!-- database icon -->
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                <path d="M3 5v4c0 1.657 4.029 3 9 3s9-1.343 9-3V5"/>
+                <path d="M3 9v4c0 1.657 4.029 3 9 3s9-1.343 9-3V9"/>
+                <path d="M3 13v4c0 1.657 4.029 3 9 3s9-1.343 9-3v-4"/>
+              </svg>
+            </div>
+            <div>
+              <div class="dp-diag__file-name">[SAPLE] CUBIG Data</div>
+              <div class="dp-diag__file-meta">4.83GB &nbsp;·&nbsp; 247 columns &nbsp;·&nbsp; 47 rows</div>
+            </div>
+          </div>
+
+          <!-- 우: 차트 레이블 + 미니 bar chart -->
+          <div class="dp-diag__card-header-cell" style="flex-direction:column; align-items:flex-start;">
+            <div class="dp-diag__chart-label">Revenue Strategy Analysis by Customer Segment</div>
+            <div class="dp-diag__chart-sublabel">Data usage</div>
+            <!-- 미니 바 차트 (SVG) -->
+            <svg class="dp-diag__chart-svg" viewBox="0 0 240 70" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <!-- 기준선 -->
+              <line x1="0" y1="62" x2="240" y2="62" stroke="#e0e0e0" stroke-width="1"/>
+              <!-- 바 그룹들 (7 세그먼트) -->
+              <!-- 세그먼트 1 -->
+              <rect x="4"   y="20" width="14" height="42" rx="2" fill="#4a9de0" opacity="0.85"/>
+              <rect x="20"  y="32" width="14" height="30" rx="2" fill="#9dc8f0" opacity="0.7"/>
+              <!-- 세그먼트 2 -->
+              <rect x="42"  y="12" width="14" height="50" rx="2" fill="#4a9de0" opacity="0.85"/>
+              <rect x="58"  y="38" width="14" height="24" rx="2" fill="#9dc8f0" opacity="0.7"/>
+              <!-- 세그먼트 3 -->
+              <rect x="80"  y="28" width="14" height="34" rx="2" fill="#4a9de0" opacity="0.85"/>
+              <rect x="96"  y="42" width="14" height="20" rx="2" fill="#9dc8f0" opacity="0.7"/>
+              <!-- 세그먼트 4 -->
+              <rect x="118" y="8"  width="14" height="54" rx="2" fill="#4a9de0" opacity="0.85"/>
+              <rect x="134" y="22" width="14" height="40" rx="2" fill="#9dc8f0" opacity="0.7"/>
+              <!-- 세그먼트 5 -->
+              <rect x="156" y="36" width="14" height="26" rx="2" fill="#4a9de0" opacity="0.85"/>
+              <rect x="172" y="48" width="14" height="14" rx="2" fill="#9dc8f0" opacity="0.7"/>
+              <!-- 세그먼트 6 -->
+              <rect x="194" y="18" width="14" height="44" rx="2" fill="#4a9de0" opacity="0.85"/>
+              <rect x="210" y="30" width="14" height="32" rx="2" fill="#9dc8f0" opacity="0.7"/>
+              <!-- 세그먼트 7 -->
+              <rect x="226" y="24" width="14" height="38" rx="2" fill="#4a9de0" opacity="0.85"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- 하단 행: AI Readiness + 레이더 차트 -->
+        <div class="dp-diag__body">
+
+          <!-- 좌: AI Readiness 스코어 + 6축 바 -->
+          <div class="dp-diag__col">
+            <div class="dp-diag__readiness-header">
+              <span class="dp-diag__readiness-label">AI readiness</span>
+              <span class="dp-diag__readiness-score">99%</span>
+              <span class="dp-diag__readiness-badge">AI Ready</span>
+            </div>
+
+            <div class="dp-diag__dim-list">
+              <!-- Privacy 8% — warn -->
+              <div class="dp-diag__dim-row">
+                <span class="dp-diag__dim-name">Privacy</span>
+                <div class="dp-diag__dim-track">
+                  <div class="dp-diag__dim-fill dp-diag__dim-fill--warn" style="width:8%"></div>
+                </div>
+                <span class="dp-diag__dim-pct">8%</span>
+              </div>
+              <!-- Integrity 10% — warn -->
+              <div class="dp-diag__dim-row">
+                <span class="dp-diag__dim-name">Integrity</span>
+                <div class="dp-diag__dim-track">
+                  <div class="dp-diag__dim-fill dp-diag__dim-fill--warn" style="width:10%"></div>
+                </div>
+                <span class="dp-diag__dim-pct">10%</span>
+              </div>
+              <!-- Traceability 100% -->
+              <div class="dp-diag__dim-row">
+                <span class="dp-diag__dim-name">Traceability</span>
+                <div class="dp-diag__dim-track">
+                  <div class="dp-diag__dim-fill" style="width:100%"></div>
+                </div>
+                <span class="dp-diag__dim-pct">100%</span>
+              </div>
+              <!-- Contextuality 50% -->
+              <div class="dp-diag__dim-row">
+                <span class="dp-diag__dim-name">Contextuality</span>
+                <div class="dp-diag__dim-track">
+                  <div class="dp-diag__dim-fill dp-diag__dim-fill--warn" style="width:50%"></div>
+                </div>
+                <span class="dp-diag__dim-pct">50%</span>
+              </div>
+              <!-- Operational Reliability 100% -->
+              <div class="dp-diag__dim-row">
+                <span class="dp-diag__dim-name">Operational Reliability</span>
+                <div class="dp-diag__dim-track">
+                  <div class="dp-diag__dim-fill" style="width:100%"></div>
+                </div>
+                <span class="dp-diag__dim-pct">100%</span>
+              </div>
+              <!-- Conciseness 100% -->
+              <div class="dp-diag__dim-row">
+                <span class="dp-diag__dim-name">Conciseness</span>
+                <div class="dp-diag__dim-track">
+                  <div class="dp-diag__dim-fill" style="width:100%"></div>
+                </div>
+                <span class="dp-diag__dim-pct">100%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 우: 레이더 차트 -->
+          <div class="dp-diag__col">
+            <div class="dp-diag__radar-wrap">
+              <div class="dp-diag__radar-title">6-Axis AI Readiness</div>
+
+              <!--
+                레이더 차트 SVG
+                6축 (Privacy=8%, Integrity=10%, Traceability=100%,
+                      Contextuality=50%, Operational Reliability=100%, Conciseness=100%)
+                중심 (100,100), 반지름 72
+                축 순서 (시계 방향, 상단부터):
+                  0: Privacy        → top        angle=-90°
+                  1: Traceability   → top-right  angle=-30°
+                  2: Operational R. → bottom-right angle=30°
+                  3: Conciseness    → bottom      angle=90°
+                  4: Contextuality  → bottom-left  angle=150°
+                  5: Integrity      → top-left    angle=210°
+              -->
+              <svg class="dp-diag__radar-svg" viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg" aria-label="6-axis radar chart showing AI readiness dimensions">
+                <defs>
+                  <style>
+                    .rdr-grid { fill: none; stroke: #ddd; stroke-width: 0.8; }
+                    .rdr-axis { stroke: #ccc; stroke-width: 0.8; }
+                    .rdr-area { fill: rgba(74,157,224,0.18); stroke: rgba(74,157,224,0.75); stroke-width: 1.5; stroke-linejoin: round; }
+                    .rdr-dot  { fill: rgba(74,157,224,0.9); }
+                    .rdr-label { font-family: "DM Sans", sans-serif; font-size: 9px; fill: #555; }
+                  </style>
+                </defs>
+
+                <!-- 격자 (3단계: 33%, 67%, 100%) -->
+                <!-- 100% 격자 -->
+                <polygon class="rdr-grid"
+                  points="100,28 162.4,64 162.4,136 100,172 37.6,136 37.6,64"/>
+                <!-- 67% 격자 -->
+                <polygon class="rdr-grid"
+                  points="100,51.8 141.8,74.9 141.8,125.1 100,148.2 58.2,125.1 58.2,74.9"/>
+                <!-- 33% 격자 -->
+                <polygon class="rdr-grid"
+                  points="100,75.6 121.3,87.8 121.3,112.2 100,124.4 78.7,112.2 78.7,87.8"/>
+
+                <!-- 축선 -->
+                <line class="rdr-axis" x1="100" y1="100" x2="100"  y2="28"/>   <!-- Privacy (top) -->
+                <line class="rdr-axis" x1="100" y1="100" x2="162.4" y2="64"/>  <!-- Traceability (top-right) -->
+                <line class="rdr-axis" x1="100" y1="100" x2="162.4" y2="136"/> <!-- Operational R (bottom-right) -->
+                <line class="rdr-axis" x1="100" y1="100" x2="100"  y2="172"/>  <!-- Conciseness (bottom) -->
+                <line class="rdr-axis" x1="100" y1="100" x2="37.6" y2="136"/>  <!-- Contextuality (bottom-left) -->
+                <line class="rdr-axis" x1="100" y1="100" x2="37.6" y2="64"/>   <!-- Integrity (top-left) -->
+
+                <!--
+                  데이터 포인트 계산 (radius=72, center=100,100)
+                  Privacy (0.08):        angle=-90° → 100 + 72*0.08*cos(-90°) = 100, 100 - 72*0.08 = 94.24  → (100, 94.24)
+                  Traceability (1.00):   angle=-30° → 100 + 72*cos(-30°) = 162.35, 100 + 72*sin(-30°) = 64   → (162.4, 64)
+                  Oper.Rel. (1.00):      angle=30°  → 100 + 72*cos(30°)  = 162.35, 100 + 72*sin(30°)  = 136  → (162.4, 136)
+                  Conciseness (1.00):    angle=90°  → 100, 172
+                  Contextuality (0.50):  angle=150° → 100 + 72*0.5*cos(150°) = 100-31.18 = 68.82, 100+72*0.5*sin(150°) = 118  → (68.82, 118)
+                  Integrity (0.10):      angle=210° → 100 + 72*0.1*cos(210°) = 100-6.24 = 93.76, 100+72*0.1*sin(210°) = 96.4 → (93.76, 96.4)
+                -->
+                <polygon class="rdr-area"
+                  points="100,94.24 162.4,64 162.4,136 100,172 68.82,118 93.76,96.4"/>
+
+                <!-- 데이터 점 -->
+                <circle class="rdr-dot" cx="100"    cy="94.24" r="3"/>
+                <circle class="rdr-dot" cx="162.4"  cy="64"    r="3"/>
+                <circle class="rdr-dot" cx="162.4"  cy="136"   r="3"/>
+                <circle class="rdr-dot" cx="100"    cy="172"   r="3"/>
+                <circle class="rdr-dot" cx="68.82"  cy="118"   r="3"/>
+                <circle class="rdr-dot" cx="93.76"  cy="96.4"  r="3"/>
+
+                <!-- 축 레이블 -->
+                <text class="rdr-label" x="100" y="20"  text-anchor="middle">Privacy</text>
+                <text class="rdr-label" x="170" y="60"  text-anchor="start">Traceability</text>
+                <text class="rdr-label" x="170" y="142" text-anchor="start">Operational</text>
+                <text class="rdr-label" x="170" y="153" text-anchor="start">Reliability</text>
+                <text class="rdr-label" x="100" y="185" text-anchor="middle">Conciseness</text>
+                <text class="rdr-label" x="30"  y="142" text-anchor="end">Contextuality</text>
+                <text class="rdr-label" x="30"  y="60"  text-anchor="end">Integrity</text>
+              </svg>
+
+              <div class="dp-diag__radar-footnote">*Detailed information is available in the AI Readiness tab.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 경고 박스 -->
+        <div class="dp-diag__warn-box">
+          <svg class="dp-diag__warn-icon" width="14" height="14" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+          <div>
+            <div class="dp-diag__warn-title">분석 결과</div>
+            <div class="dp-diag__warn-text">
+              데이터의 AI 준비도는 분석되었으나, 특정 항목의 점수가 평균 10% 이상 낮아, 세 항목의 점수를 10% 이상 상향해야 합니다.
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /.dp-diag__card -->
+    </div><!-- /.dp-diag__content -->
+  </div><!-- /.dp-diag__window -->
+</div><!-- /.dp-diag -->
