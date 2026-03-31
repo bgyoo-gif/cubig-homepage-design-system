@@ -1,5 +1,5 @@
 {
-  "generated": "2026-03-31 17:34:34",
+  "generated": "2026-03-31 17:37:15",
   "github_base": "https://bgyoo-gif.github.io/cubig-homepage-design-system",
   "groups": [
     {
@@ -874,6 +874,31 @@
         {
           "name": "_preview_section02.html",
           "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/framer/execution-state-layer/html/_preview_section02.html",
+          "modified": "2026-03-31"
+        },
+        {
+          "name": "_preview_section04.html",
+          "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/framer/execution-state-layer/html/_preview_section04.html",
+          "modified": "2026-03-31"
+        },
+        {
+          "name": "_preview_section06.html",
+          "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/framer/execution-state-layer/html/_preview_section06.html",
+          "modified": "2026-03-31"
+        },
+        {
+          "name": "_preview_section08.html",
+          "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/framer/execution-state-layer/html/_preview_section08.html",
+          "modified": "2026-03-31"
+        },
+        {
+          "name": "_preview_section11.html",
+          "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/framer/execution-state-layer/html/_preview_section11.html",
+          "modified": "2026-03-31"
+        },
+        {
+          "name": "_preview_section12.html",
+          "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/framer/execution-state-layer/html/_preview_section12.html",
           "modified": "2026-03-31"
         }
       ]

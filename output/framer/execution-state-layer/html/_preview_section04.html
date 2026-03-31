@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 04 Preview — Core Characteristics</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Fragment+Mono&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "DM Sans", sans-serif; background: #f2f2f2; }
+    .s4-section { width: 100%; padding: 80px 0; background-color: #ffffff; font-family: "DM Sans", sans-serif; color: #0f0f0f; -webkit-font-smoothing: antialiased; word-break: keep-all; overflow-wrap: break-word; }
+    .s4-container { width: 100%; margin: 0 auto; padding: 0 16px; box-sizing: border-box; }
+    .s4-header { margin-bottom: 48px; text-align: center; padding-bottom: 24px; border-bottom: 1px solid #e6e7e9; }
+    .s4-header__title { font-size: 20px; font-weight: 700; color: #0f0f0f; line-height: 1.2; letter-spacing: -0.5px; text-wrap: balance; }
+    .s4-header__title-brand { color: #725bea; }
+    .s4-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+    .s4-card { background-color: #ffffff; border-radius: 18px; border: 1px solid #e6e7e9; padding: 24px; box-shadow: 0px 24px 40px rgba(0,0,0,0.04); display: flex; flex-direction: column; }
+    .s4-card__badge { display: inline-flex; align-items: center; width: fit-content; padding: 4px 12px; border-radius: 9999px; font-size: 12px; font-weight: 500; font-family: "Fragment Mono", monospace; text-transform: uppercase; letter-spacing: 0.08em; border: 1px solid #e6e7e9; color: #9c9c9c; margin-bottom: 16px; }
+    .s4-card__title { font-size: 18px; font-weight: 600; color: #0f0f0f; line-height: 1.2; margin-bottom: 12px; text-wrap: balance; }
+    .s4-card__desc { font-size: 14px; color: #636363; line-height: 1.7; flex: 1; margin-bottom: 16px; text-wrap: pretty; }
+    .s4-bullet { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; }
+    .s4-bullet__item { display: flex; align-items: flex-start; gap: 8px; font-size: 16px; line-height: 1.5; color: #0f0f0f; }
+    .s4-bullet__icon { width: 20px; height: 20px; flex-shrink: 0; margin-top: 2px; display: flex; align-items: center; justify-content: center; }
+    .s4-bullet__icon::before { content: "✓"; color: #0e824c; font-weight: 700; font-size: 16px; line-height: 1; }
+    @media (min-width: 768px) { .s4-container { padding: 0 32px; } .s4-header__title { font-size: 28px; } .s4-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .s4-container { padding: 0 32px; } .s4-header__title { font-size: 32px; } .s4-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (min-width: 1440px) { .s4-container { padding: 0 120px; max-width: 1440px; } .s4-header__title { font-size: 36px; } }
+  </style>
+</head>
+<body>
+  <section class="s4-section">
+    <div class="s4-container">
+      <div class="s4-header">
+        <h2 class="s4-header__title">Core <span class="s4-header__title-brand">characteristics</span></h2>
+      </div>
+      <div class="s4-grid">
+        <article class="s4-card">
+          <span class="s4-card__badge">01</span>
+          <h3 class="s4-card__title">Versioned Data States</h3>
+          <p class="s4-card__desc">Every dataset used in AI execution is versioned and explicitly identified.</p>
+          <ul class="s4-bullet">
+            <li class="s4-bullet__item"><span class="s4-bullet__icon"></span>Explicit version identifiers</li>
+            <li class="s4-bullet__item"><span class="s4-bullet__icon"></span>Comparable across runs</li>
+            <li class="s4-bullet__item"><span class="s4-bullet__icon"></span>Rollback possible</li>
+          </ul>
+        </article>
+        <article class="s4-card">
+          <span class="s4-card__badge">02</span>
+          <h3 class="s4-card__title">Frozen Execution Conditions</h3>
+          <p class="s4-card__desc">Each run is bound to a frozen snapshot of data.</p>
+          <ul class="s4-bullet">
+            <li class="s4-bullet__item"><span class="s4-bullet__icon"></span>No drift during execution</li>
+            <li class="s4-bullet__item"><span class="s4-bullet__icon"></span>Consistent input across environments</li>
+            <li class="s4-bullet__item"><span class="s4-bullet__icon"></span>Stable production behavior</li>
+          </ul>
+        </article>
+        <article class="s4-card">
+          <span class="s4-card__badge">03</span>
+          <h3 class="s4-card__title">Verifiable State Integrity</h3>
+          <p class="s4-card__desc">Data states can be validated before and after execution.</p>
+          <ul class="s4-bullet">
+            <li class="s4-bullet__item"><span class="s4-bullet__icon"></span>Checksum or validation logic</li>
+            <li class="s4-bullet__item"><span class="s4-bullet__icon"></span>Schema consistency checks</li>
+            <li class="s4-bullet__item"><span class="s4-bullet__icon"></span>Integrity guarantees</li>
+          </ul>
+        </article>
+        <article class="s4-card">
+          <span class="s4-card__badge">04</span>
+          <h3 class="s4-card__title">Full Execution Traceability</h3>
+          <p class="s4-card__desc">Every AI output can be traced back to the exact state and context used.</p>
+          <ul class="s4-bullet">
+            <li class="s4-bullet__item"><span class="s4-bullet__icon"></span>Exact data state</li>
+            <li class="s4-bullet__item"><span class="s4-bullet__icon"></span>Transformation steps</li>
+            <li class="s4-bullet__item"><span class="s4-bullet__icon"></span>Execution context</li>
+          </ul>
+        </article>
+        <article class="s4-card">
+          <span class="s4-card__badge">05</span>
+          <h3 class="s4-card__title">Reproducibility by Design</h3>
+          <p class="s4-card__desc">Past executions can be re-run under identical conditions.</p>
+          <ul class="s4-bullet">
+            <li class="s4-bullet__item"><span class="s4-bullet__icon"></span>Debugging without guesswork</li>
+            <li class="s4-bullet__item"><span class="s4-bullet__icon"></span>Reliable comparisons</li>
+            <li class="s4-bullet__item"><span class="s4-bullet__icon"></span>Audit-ready AI systems</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

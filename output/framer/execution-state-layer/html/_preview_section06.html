@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 06 Preview — Comparison</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Fragment+Mono&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "DM Sans", sans-serif; background: #f2f2f2; }
+    .s6-section { width: 100%; padding: 80px 0; background-color: #ffffff; font-family: "DM Sans", sans-serif; color: #0f0f0f; -webkit-font-smoothing: antialiased; word-break: keep-all; overflow-wrap: break-word; }
+    .s6-container { width: 100%; margin: 0 auto; padding: 0 16px; box-sizing: border-box; }
+    .s6-header { margin-bottom: 48px; text-align: center; padding-bottom: 24px; border-bottom: 1px solid #e6e7e9; }
+    .s6-header__title { font-size: 20px; font-weight: 700; color: #0f0f0f; line-height: 1.2; letter-spacing: -0.5px; text-wrap: balance; }
+    .s6-header__title-brand { color: #725bea; }
+    .s6-table-wrap { overflow-x: auto; border-radius: 24px; border: 1px solid #e6e7e9; }
+    .s6-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .s6-table colgroup col:first-child { width: 22%; }
+    .s6-table colgroup col:nth-child(2) { width: 39%; }
+    .s6-table colgroup col:nth-child(3) { width: 39%; }
+    .s6-table thead th { font-family: "Fragment Mono", monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #0f0f0f; font-weight: 600; padding: 12px 16px; border-bottom: 2px solid #e6e7e9; text-align: left; background: #f7f7f7; }
+    .s6-table thead th:nth-child(2) { color: #9c9c9c; }
+    .s6-table thead th:nth-child(3) { color: #725bea; }
+    .s6-table tbody td { padding: 14px 16px; border-bottom: 1px solid #e6e7e9; color: #0f0f0f; vertical-align: top; line-height: 1.5; }
+    .s6-table tbody tr:last-child td { border-bottom: none; }
+    .s6-table tbody td:first-child { font-weight: 600; }
+    .s6-table tbody td:nth-child(2) { color: #9c9c9c; }
+    .s6-table tbody tr:hover td { background: #f7f7f7; }
+    @media (min-width: 768px) { .s6-container { padding: 0 32px; } .s6-header__title { font-size: 28px; } }
+    @media (min-width: 1024px) { .s6-container { padding: 0 32px; } .s6-header__title { font-size: 32px; } }
+    @media (min-width: 1440px) { .s6-container { padding: 0 120px; max-width: 1440px; } .s6-header__title { font-size: 36px; } }
+  </style>
+</head>
+<body>
+  <section class="s6-section">
+    <div class="s6-container">
+      <div class="s6-header">
+        <h2 class="s6-header__title"><span class="s6-header__title-brand">Comparison</span></h2>
+      </div>
+      <div class="s6-table-wrap">
+        <table class="s6-table">
+          <colgroup><col><col><col></colgroup>
+          <thead>
+            <tr>
+              <th scope="col">Aspect</th>
+              <th scope="col">Traditional Data Pipeline</th>
+              <th scope="col">With Execution State Layer</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Data Mutability</td><td>Data is mutable</td><td>Data is versioned and frozen</td></tr>
+            <tr><td>Execution Conditions</td><td>Execution conditions are implicit</td><td>Execution conditions are explicit</td></tr>
+            <tr><td>Reproducibility</td><td>Results are difficult to reproduce</td><td>Results are reproducible</td></tr>
+            <tr><td>Debugging</td><td>Debugging relies on assumptions</td><td>Debugging is deterministic</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

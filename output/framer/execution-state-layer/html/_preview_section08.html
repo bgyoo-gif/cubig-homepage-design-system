@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section 08 Preview — Conceptual Model</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "DM Sans", sans-serif; background: #f2f2f2; }
+    .s8-section { width: 100%; padding: 80px 0; background-color: #ffffff; font-family: "DM Sans", sans-serif; color: #0f0f0f; -webkit-font-smoothing: antialiased; word-break: keep-all; overflow-wrap: break-word; }
+    .s8-container { width: 100%; margin: 0 auto; padding: 0 16px; box-sizing: border-box; }
+    .s8-header { margin-bottom: 48px; text-align: center; padding-bottom: 24px; border-bottom: 1px solid #e6e7e9; }
+    .s8-header__title { font-size: 20px; font-weight: 700; color: #0f0f0f; line-height: 1.2; letter-spacing: -0.5px; text-wrap: balance; }
+    .s8-header__title-brand { color: #725bea; }
+    .s8-banner {
+      width: 100%; text-align: center; padding: 32px 48px; border-radius: 40px;
+      background-image: url('../../reference/images/bg-gradient-sage-rose.webp');
+      background-size: cover; background-position: center;
+      position: relative; overflow: hidden; color: #0f0f0f; font-size: 18px; font-weight: 500; line-height: 1.7; isolation: isolate;
+    }
+    .s8-banner::before { content: ''; position: absolute; inset: 0; background: rgba(255,255,255,0.45); z-index: 0; }
+    .s8-banner > * { position: relative; z-index: 1; }
+    .s8-banner__formula { font-size: 24px; font-weight: 700; color: #0f0f0f; margin-bottom: 12px; display: block; text-wrap: balance; }
+    .s8-banner__sub { font-size: 16px; color: #0f0f0f; font-weight: 400; text-wrap: pretty; }
+    @media (min-width: 768px) { .s8-container { padding: 0 32px; } .s8-header__title { font-size: 28px; } }
+    @media (min-width: 1024px) { .s8-container { padding: 0 32px; } .s8-header__title { font-size: 32px; } }
+    @media (min-width: 1440px) { .s8-container { padding: 0 120px; max-width: 1440px; } .s8-header__title { font-size: 36px; } }
+    @media (max-width: 640px) { .s8-banner { padding: 32px 24px; border-radius: 24px; } }
+  </style>
+</head>
+<body>
+  <section class="s8-section">
+    <div class="s8-container">
+      <div class="s8-header">
+        <h2 class="s8-header__title">Conceptual <span class="s8-header__title-brand">model</span></h2>
+      </div>
+      <div class="s8-banner">
+        <span class="s8-banner__formula">AI Execution = Model + Code + Execution State Layer</span>
+        <p class="s8-banner__sub">Where the Execution State Layer provides versioned data state, verified integrity, and full traceability.</p>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
