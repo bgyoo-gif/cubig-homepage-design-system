@@ -395,7 +395,7 @@
       border-bottom: var(--ds-border-default);
       margin-bottom: var(--ds-space-xl);
     }
-    @media (max-width: 767px) { .ds-section-header { text-align: left; } .ds-section-header__description { margin: 0; } }
+    /* mobile: section-header stays center per DS rules */
 
     /* =====================================================
        7. Hero — text-only
@@ -632,7 +632,7 @@
     .ds-ac-card__industry {
       font-family: var(--ds-font-code);
       font-size: 10px;
-      letter-spacing: 0.1em;
+      letter-spacing: var(--ds-tracking-wide);
       text-transform: uppercase;
       color: var(--ds-color-text-tertiary);
       display: flex;
@@ -984,11 +984,80 @@
        21. Mobile overrides
     ===================================================== */
     @media (max-width: 767px) {
+      .ds-cta-band__title { font-size: var(--ds-text-4xl); }
       .ds-cta-band__actions { flex-direction: column; align-items: center; }
       .ds-cta-band__actions .ds-btn { width: 100%; max-width: 320px; }
       .ds-ac-card__header { grid-template-columns: 1fr auto; align-items: start; }
       .ds-ac-card__meta { display: none; }
       .ds-banner--full { padding: var(--ds-space-xl) var(--ds-space-lg); border-radius: var(--ds-radius-lg); }
+    }
+
+    /* =====================================================
+       22. Data Profiling Diagram
+    ===================================================== */
+    .dp-diag { font-family: var(--ds-font-base); }
+    .dp-diag__window {
+      background: var(--ds-color-surface-white); border-radius: var(--ds-radius-md);
+      box-shadow: var(--ds-shadow-modal);
+      overflow: hidden; margin-top: var(--ds-space-lg);
+    }
+    .dp-diag__titlebar {
+      background: linear-gradient(180deg, var(--ds-color-neutral-050) 0%, var(--ds-color-neutral-100) 100%);
+      height: 36px; display: flex; align-items: center; padding: 0 14px; gap: 8px;
+      border-bottom: 1px solid var(--ds-color-neutral-200);
+    }
+    .dp-diag__titlebar-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+    .dp-diag__titlebar-dot--close { background: var(--ds-color-error); }
+    .dp-diag__titlebar-dot--min { background: var(--ds-color-warn); }
+    .dp-diag__titlebar-dot--max { background: var(--ds-color-success); }
+    .dp-diag__titlebar-label {
+      margin-left: auto; margin-right: auto; font-size: var(--ds-text-xs); font-weight: var(--ds-weight-medium);
+      color: var(--ds-color-text-secondary); font-family: var(--ds-font-code);
+      transform: translateX(-18px);
+    }
+    .dp-diag__content { background: var(--ds-color-surface-white); padding: var(--ds-space-lg); }
+    .dp-diag__file-row {
+      display: flex; align-items: center; gap: var(--ds-space-sm); padding-bottom: var(--ds-space-md);
+      border-bottom: 1px solid var(--ds-color-neutral-100); margin-bottom: var(--ds-space-lg);
+    }
+    .dp-diag__file-icon {
+      width: 36px; height: 36px; background: var(--ds-color-surface-light); border-radius: var(--ds-radius-sm);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--ds-color-success);
+    }
+    .dp-diag__file-name { font-size: var(--ds-text-sm); font-weight: var(--ds-weight-semibold); color: var(--ds-color-text-primary); }
+    .dp-diag__file-meta { font-size: var(--ds-text-xs); color: var(--ds-color-text-tertiary); margin-top: 2px; font-family: var(--ds-font-code); }
+    .dp-diag__body { display: grid; grid-template-columns: 1fr 1fr; gap: var(--ds-space-lg); }
+    .dp-diag__col { display: flex; flex-direction: column; }
+    .dp-diag__readiness-header { display: flex; align-items: baseline; gap: 10px; margin-bottom: var(--ds-space-md); }
+    .dp-diag__readiness-label { font-size: var(--ds-text-sm); font-weight: var(--ds-weight-medium); color: var(--ds-color-text-secondary); }
+    .dp-diag__readiness-score { font-size: var(--ds-text-4xl); font-weight: var(--ds-weight-bold); color: var(--ds-color-text-primary); line-height: 1; }
+    .dp-diag__readiness-badge {
+      font-size: 10px; font-weight: var(--ds-weight-bold); color: var(--ds-color-success); background: var(--ds-color-surface-light);
+      border: 1px solid var(--ds-color-success); border-radius: var(--ds-radius-pill); padding: 2px 8px;
+      letter-spacing: var(--ds-tracking-wide); align-self: center;
+    }
+    .dp-diag__dim-list { display: flex; flex-direction: column; gap: var(--ds-space-xs); }
+    .dp-diag__dim-row { display: grid; grid-template-columns: 130px 1fr 36px; align-items: center; gap: var(--ds-space-xs); }
+    .dp-diag__dim-name { font-size: var(--ds-text-xs); color: var(--ds-color-text-secondary); white-space: nowrap; }
+    .dp-diag__dim-track { height: 6px; background: var(--ds-color-neutral-100); border-radius: var(--ds-radius-pill); overflow: hidden; }
+    .dp-diag__dim-fill { height: 100%; border-radius: var(--ds-radius-pill); background: var(--ds-color-success); }
+    .dp-diag__dim-fill--warn { background: var(--ds-color-warn); }
+    .dp-diag__dim-pct { font-size: var(--ds-text-xs); font-weight: var(--ds-weight-semibold); color: var(--ds-color-text-primary); text-align: right; font-family: var(--ds-font-code); }
+    .dp-diag__radar-wrap { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; }
+    .dp-diag__radar-svg { width: 100%; max-width: 220px; height: auto; display: block; margin: 0 auto; }
+    .dp-diag__radar-footnote { font-size: var(--ds-text-xs); color: var(--ds-color-text-tertiary); text-align: center; line-height: 1.4; margin-top: var(--ds-space-xs); }
+    .dp-diag__warn-box {
+      margin-top: var(--ds-space-lg); background: var(--ds-color-surface-light); border: 1px solid var(--ds-color-error);
+      border-left: 3px solid var(--ds-color-error); border-radius: var(--ds-radius-sm); padding: var(--ds-space-sm) var(--ds-space-md);
+      display: flex; align-items: flex-start; gap: 10px;
+    }
+    .dp-diag__warn-icon { flex-shrink: 0; color: var(--ds-color-error); margin-top: 1px; }
+    .dp-diag__warn-title { font-size: var(--ds-text-xs); font-weight: var(--ds-weight-bold); color: var(--ds-color-error); margin-bottom: 2px; }
+    .dp-diag__warn-text { font-size: var(--ds-text-xs); color: var(--ds-color-text-secondary); line-height: var(--ds-leading-normal); }
+    @media (max-width: 640px) {
+      .dp-diag__body { grid-template-columns: 1fr; }
+      .dp-diag__readiness-score { font-size: var(--ds-text-3xl); }
+      .dp-diag__dim-row { grid-template-columns: 110px 1fr 32px; }
     }
   </style>
 </head>
@@ -1315,80 +1384,6 @@
             </ul>
 
             <!-- Data Profiling Diagram -->
-            <style>
-  .dp-diag {
-    --dp-border: #e0e0e0; --dp-border-light: #ececec;
-    --dp-text: #1a1a1a; --dp-text-sub: #555555; --dp-text-dim: #888888;
-    --dp-green: #22c55e; --dp-green-bg: #dcfce7; --dp-green-border: rgba(34,197,94,0.3);
-    --dp-green-fill: rgba(34,197,94,0.15); --dp-green-stroke: rgba(34,197,94,0.7);
-    --dp-orange: #f59e0b; --dp-red: #ef4444; --dp-red-bg: #fef2f2;
-    --dp-bar-track: #e8e8e8;
-    font-family: var(--ds-font-base, "DM Sans", sans-serif);
-  }
-  .dp-diag__window {
-    background: var(--ds-color-surface-white, #fff); border-radius: var(--ds-radius-md, 18px);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.06);
-    overflow: hidden; margin-top: var(--ds-space-lg, 24px);
-  }
-  .dp-diag__titlebar {
-    background: linear-gradient(180deg, #f0f0f0 0%, #e4e4e4 100%);
-    height: 36px; display: flex; align-items: center; padding: 0 14px; gap: 8px;
-    border-bottom: 1px solid #d0d0d0;
-  }
-  .dp-diag__titlebar-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
-  .dp-diag__titlebar-dot--close { background: #ff5f57; }
-  .dp-diag__titlebar-dot--min { background: #ffbd2e; }
-  .dp-diag__titlebar-dot--max { background: #28ca41; }
-  .dp-diag__titlebar-label {
-    margin-left: auto; margin-right: auto; font-size: var(--ds-text-xs, 12px); font-weight: 500;
-    color: var(--dp-text-sub); font-family: var(--ds-font-code, monospace);
-    transform: translateX(-18px);
-  }
-  .dp-diag__content { background: var(--ds-color-surface-white, #fff); padding: 24px; }
-  .dp-diag__file-row {
-    display: flex; align-items: center; gap: 12px; padding-bottom: 16px;
-    border-bottom: 1px solid var(--dp-border-light); margin-bottom: 20px;
-  }
-  .dp-diag__file-icon {
-    width: 36px; height: 36px; background: #f0fdf4; border-radius: 8px;
-    display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--dp-green);
-  }
-  .dp-diag__file-name { font-size: var(--ds-text-sm, 14px); font-weight: 600; color: var(--dp-text); }
-  .dp-diag__file-meta { font-size: var(--ds-text-xs, 12px); color: var(--dp-text-dim); margin-top: 2px; font-family: var(--ds-font-code, monospace); }
-  .dp-diag__body { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-  .dp-diag__col { display: flex; flex-direction: column; }
-  .dp-diag__readiness-header { display: flex; align-items: baseline; gap: 10px; margin-bottom: 16px; }
-  .dp-diag__readiness-label { font-size: var(--ds-text-sm, 14px); font-weight: 500; color: var(--dp-text-sub); }
-  .dp-diag__readiness-score { font-size: var(--ds-text-4xl, 36px); font-weight: var(--ds-weight-bold, 700); color: var(--dp-text); line-height: 1; }
-  .dp-diag__readiness-badge {
-    font-size: 10px; font-weight: 700; color: var(--dp-green); background: var(--dp-green-bg);
-    border: 1px solid var(--dp-green-border); border-radius: 999px; padding: 2px 8px;
-    letter-spacing: 0.06em; align-self: center;
-  }
-  .dp-diag__dim-list { display: flex; flex-direction: column; gap: 8px; }
-  .dp-diag__dim-row { display: grid; grid-template-columns: 130px 1fr 36px; align-items: center; gap: 8px; }
-  .dp-diag__dim-name { font-size: var(--ds-text-xs, 12px); color: var(--dp-text-sub); white-space: nowrap; }
-  .dp-diag__dim-track { height: 6px; background: var(--dp-bar-track); border-radius: 999px; overflow: hidden; }
-  .dp-diag__dim-fill { height: 100%; border-radius: 999px; background: var(--dp-green); }
-  .dp-diag__dim-fill--warn { background: var(--dp-orange); }
-  .dp-diag__dim-pct { font-size: var(--ds-text-xs, 12px); font-weight: 600; color: var(--dp-text); text-align: right; font-family: var(--ds-font-code, monospace); }
-  .dp-diag__radar-wrap { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; }
-  .dp-diag__radar-svg { width: 100%; max-width: 220px; height: auto; display: block; margin: 0 auto; }
-  .dp-diag__radar-footnote { font-size: var(--ds-text-xs, 12px); color: var(--dp-text-dim); text-align: center; line-height: 1.4; margin-top: 8px; }
-  .dp-diag__warn-box {
-    margin-top: 20px; background: var(--dp-red-bg); border: 1px solid rgba(239,68,68,0.25);
-    border-left: 3px solid var(--dp-red); border-radius: 8px; padding: 12px 14px;
-    display: flex; align-items: flex-start; gap: 10px;
-  }
-  .dp-diag__warn-icon { flex-shrink: 0; color: var(--dp-red); margin-top: 1px; }
-  .dp-diag__warn-title { font-size: var(--ds-text-xs, 12px); font-weight: 700; color: var(--dp-red); margin-bottom: 2px; }
-  .dp-diag__warn-text { font-size: var(--ds-text-xs, 12px); color: var(--dp-text-sub); line-height: 1.5; }
-  @media (max-width: 640px) {
-    .dp-diag__body { grid-template-columns: 1fr; }
-    .dp-diag__readiness-score { font-size: 28px; }
-    .dp-diag__dim-row { grid-template-columns: 110px 1fr 32px; }
-  }
-</style>
 <div class="dp-diag">
   <div class="dp-diag__window">
     <div class="dp-diag__titlebar">
@@ -1430,7 +1425,7 @@
         <div class="dp-diag__col">
           <div class="dp-diag__radar-wrap">
             <svg class="dp-diag__radar-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="6-axis radar chart">
-              <defs><style>.rdr-grid{fill:none;stroke:#e0e0e0;stroke-width:0.8}.rdr-axis{stroke:#d0d0d0;stroke-width:0.8}.rdr-area{fill:rgba(34,197,94,0.15);stroke:rgba(34,197,94,0.7);stroke-width:1.5;stroke-linejoin:round}.rdr-dot{fill:#22c55e}.rdr-label{font-family:"DM Sans",sans-serif;font-size:9px;fill:#555}</style></defs>
+              <defs><style>.rdr-grid{fill:none;stroke:var(--ds-color-neutral-200);stroke-width:0.8}.rdr-axis{stroke:var(--ds-color-neutral-250);stroke-width:0.8}.rdr-area{fill:rgba(14,130,76,0.15);stroke:rgba(14,130,76,0.7);stroke-width:1.5;stroke-linejoin:round}.rdr-dot{fill:var(--ds-color-success)}.rdr-label{font-family:var(--ds-font-base);font-size:9px;fill:var(--ds-color-text-secondary)}</style></defs>
               <polygon class="rdr-grid" points="100,28 162.4,64 162.4,136 100,172 37.6,136 37.6,64"/>
               <polygon class="rdr-grid" points="100,52 141.8,75 141.8,125 100,148 58.2,125 58.2,75"/>
               <polygon class="rdr-grid" points="100,76 121.3,88 121.3,112 100,124 78.7,112 78.7,88"/>
@@ -1500,6 +1495,52 @@
                 <div class="ds-six-dim-item__desc">Low-value &amp; redundant column removal</div>
               </div>
             </div>
+
+            <!-- Six-Dimensional AI Readiness Score Diagram -->
+            <style>
+  .sd-diag {
+    --sd-color-pass: #22c55e; --sd-color-pass-bg: #f0fdf4; --sd-color-pass-text: #15803d;
+    --sd-color-warn: #f59e0b; --sd-color-warn-bg: #fffbeb; --sd-color-warn-text: #92400e;
+    --sd-color-score-pass: #16a34a; --sd-color-score-warn: #d97706;
+    --sd-bar-bg: #e5e7eb;
+    font-family: var(--ds-font-base, "DM Sans", sans-serif);
+    width: 100%; margin-top: var(--ds-space-lg, 24px);
+  }
+  .sd-diag__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--ds-space-md, 16px); }
+  @media (max-width: 640px) { .sd-diag__grid { grid-template-columns: 1fr; } }
+  .sd-diag__card { background: var(--ds-color-surface-white, #fff); border: 1px solid var(--ds-color-border-default, #e6e7e9); border-radius: var(--ds-radius-sm, 8px); padding: var(--ds-space-md, 16px); display: flex; flex-direction: column; gap: var(--ds-space-sm, 12px); }
+  .sd-diag__card-header { display: flex; align-items: center; justify-content: space-between; }
+  .sd-diag__dim-name { font-size: var(--ds-text-sm, 14px); font-weight: var(--ds-weight-bold, 700); color: var(--ds-color-text-primary, #0f0f0f); }
+  .sd-diag__score { font-size: var(--ds-text-sm, 14px); font-weight: var(--ds-weight-bold, 700); }
+  .sd-diag__score--pass { color: var(--sd-color-score-pass); }
+  .sd-diag__score--warn { color: var(--sd-color-score-warn); }
+  .sd-diag__desc { font-size: var(--ds-text-xs, 12px); color: var(--ds-color-text-secondary, #636363); line-height: 1.5; }
+  .sd-diag__bar-track { width: 100%; height: 4px; background: var(--sd-bar-bg); border-radius: 999px; overflow: hidden; }
+  .sd-diag__bar-fill { height: 100%; border-radius: 999px; background: var(--sd-color-pass); }
+  .sd-diag__bar-fill--warn { background: var(--sd-color-warn); }
+  .sd-diag__divider { height: 1px; background: var(--ds-color-neutral-100, #ececec); }
+  .sd-diag__table { width: 100%; border-collapse: collapse; margin-top: 4px; }
+  .sd-diag__table th { font-size: var(--ds-text-xs, 12px); font-weight: 600; color: var(--ds-color-text-tertiary, #9c9c9c); letter-spacing: var(--ds-tracking-wide, 0.08em); text-transform: uppercase; padding: 4px 8px; text-align: left; border-bottom: 1px solid var(--ds-color-neutral-150, #e6e7e9); }
+  .sd-diag__table th:last-child { text-align: right; }
+  .sd-diag__table td { font-size: var(--ds-text-xs, 12px); color: var(--ds-color-text-primary, #0f0f0f); padding: 4px 8px; line-height: 1.5; vertical-align: middle; }
+  .sd-diag__table td:last-child { text-align: right; }
+  .sd-diag__table tbody tr { border-bottom: 1px solid var(--ds-color-neutral-100, #ececec); }
+  .sd-diag__table tbody tr:last-child { border-bottom: none; }
+  .sd-diag__badge { display: inline-flex; align-items: center; gap: 3px; font-size: var(--ds-text-xs, 12px); font-weight: 600; padding: 2px 6px; border-radius: 9999px; white-space: nowrap; }
+  .sd-diag__badge--pass { background: var(--sd-color-pass-bg); color: var(--sd-color-pass-text); }
+  .sd-diag__badge--warn { background: var(--sd-color-warn-bg); color: var(--sd-color-warn-text); }
+  .sd-diag__badge svg { width: 10px; height: 10px; stroke: currentColor; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+</style>
+<div class="sd-diag"><div class="sd-diag__grid">
+  <div class="sd-diag__card"><div class="sd-diag__card-header"><span class="sd-diag__dim-name">Privacy</span><span class="sd-diag__score sd-diag__score--pass">100%</span></div><div class="sd-diag__bar-track"><div class="sd-diag__bar-fill" style="width:100%"></div></div><p class="sd-diag__desc">Verifies that all PII is detected, anonymized, or removed before the dataset enters the execution pipeline.</p><div class="sd-diag__divider"></div><table class="sd-diag__table"><thead><tr><th>Check</th><th>Score</th><th>Result</th></tr></thead><tbody><tr><td>PII Column Detection</td><td>100%</td><td><span class="sd-diag__badge sd-diag__badge--pass"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>PASS</span></td></tr><tr><td>Masking Completeness</td><td>100%</td><td><span class="sd-diag__badge sd-diag__badge--pass"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>PASS</span></td></tr><tr><td>Re-identification Risk</td><td>100%</td><td><span class="sd-diag__badge sd-diag__badge--pass"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>PASS</span></td></tr><tr><td>Consent Traceability</td><td>100%</td><td><span class="sd-diag__badge sd-diag__badge--pass"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>PASS</span></td></tr></tbody></table></div>
+  <div class="sd-diag__card"><div class="sd-diag__card-header"><span class="sd-diag__dim-name">Integrity</span><span class="sd-diag__score sd-diag__score--pass">100%</span></div><div class="sd-diag__bar-track"><div class="sd-diag__bar-fill" style="width:100%"></div></div><p class="sd-diag__desc">Confirms structural and statistical correctness: null rate, duplicate rate, type consistency, and distribution stability.</p><div class="sd-diag__divider"></div><table class="sd-diag__table"><thead><tr><th>Check</th><th>Score</th><th>Result</th></tr></thead><tbody><tr><td>Null Rate</td><td>100%</td><td><span class="sd-diag__badge sd-diag__badge--pass"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>PASS</span></td></tr><tr><td>Duplicate Rate</td><td>100%</td><td><span class="sd-diag__badge sd-diag__badge--pass"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>PASS</span></td></tr><tr><td>Type Consistency</td><td>100%</td><td><span class="sd-diag__badge sd-diag__badge--pass"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>PASS</span></td></tr><tr><td>Distribution Stability</td><td>100%</td><td><span class="sd-diag__badge sd-diag__badge--pass"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>PASS</span></td></tr></tbody></table></div>
+  <div class="sd-diag__card"><div class="sd-diag__card-header"><span class="sd-diag__dim-name">Contextuality</span><span class="sd-diag__score sd-diag__score--warn">80%</span></div><div class="sd-diag__bar-track"><div class="sd-diag__bar-fill sd-diag__bar-fill--warn" style="width:80%"></div></div><p class="sd-diag__desc">Evaluates whether column semantics and data purpose are correctly aligned with the intended AI task context.</p><div class="sd-diag__divider"></div><table class="sd-diag__table"><thead><tr><th>Check</th><th>Score</th><th>Result</th></tr></thead><tbody><tr><td>Column Semantic Alignment</td><td>80%</td><td><span class="sd-diag__badge sd-diag__badge--warn">NO</span></td></tr><tr><td>Task Purpose Match</td><td>80%</td><td><span class="sd-diag__badge sd-diag__badge--warn">NO</span></td></tr><tr><td>Domain Label Coverage</td><td>80%</td><td><span class="sd-diag__badge sd-diag__badge--pass"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>PASS</span></td></tr></tbody></table></div>
+  <div class="sd-diag__card"><div class="sd-diag__card-header"><span class="sd-diag__dim-name">Conciseness</span><span class="sd-diag__score sd-diag__score--warn">89%</span></div><div class="sd-diag__bar-track"><div class="sd-diag__bar-fill sd-diag__bar-fill--warn" style="width:89%"></div></div><p class="sd-diag__desc">Measures the proportion of meaningful, non-redundant columns — removing low-value or duplicate features before model ingestion.</p><div class="sd-diag__divider"></div><table class="sd-diag__table"><thead><tr><th>Check</th><th>Score</th><th>Result</th></tr></thead><tbody><tr><td>Redundant Column Rate</td><td>89%</td><td><span class="sd-diag__badge sd-diag__badge--warn">NO</span></td></tr><tr><td>Low-Value Feature Ratio</td><td>89%</td><td><span class="sd-diag__badge sd-diag__badge--warn">NO</span></td></tr><tr><td>Feature Correlation Check</td><td>89%</td><td><span class="sd-diag__badge sd-diag__badge--pass"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>PASS</span></td></tr></tbody></table></div>
+  <div class="sd-diag__card"><div class="sd-diag__card-header"><span class="sd-diag__dim-name">Operational Reliability</span><span class="sd-diag__score sd-diag__score--pass">100%</span></div><div class="sd-diag__bar-track"><div class="sd-diag__bar-fill" style="width:100%"></div></div><p class="sd-diag__desc">Validates that the dataset has been processed successfully with no pipeline errors, transformation failures, or missing outputs.</p><div class="sd-diag__divider"></div><table class="sd-diag__table"><thead><tr><th>Check</th><th>Score</th><th>Result</th></tr></thead><tbody><tr><td>AI Readiness Score Check</td><td>100%</td><td><span class="sd-diag__badge sd-diag__badge--pass"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>PASS</span></td></tr><tr><td>Pipeline Error Rate</td><td>100%</td><td><span class="sd-diag__badge sd-diag__badge--pass"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>PASS</span></td></tr><tr><td>Transformation Completeness</td><td>100%</td><td><span class="sd-diag__badge sd-diag__badge--pass"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>PASS</span></td></tr><tr><td>Output Verification</td><td>100%</td><td><span class="sd-diag__badge sd-diag__badge--pass"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>PASS</span></td></tr></tbody></table></div>
+  <div class="sd-diag__card"><div class="sd-diag__card-header"><span class="sd-diag__dim-name">Traceability</span><span class="sd-diag__score sd-diag__score--pass">100%</span></div><div class="sd-diag__bar-track"><div class="sd-diag__bar-fill" style="width:100%"></div></div><p class="sd-diag__desc">Ensures every dataset state is versioned and labelled — with a full change log linking each execution to its exact data snapshot.</p><div class="sd-diag__divider"></div><table class="sd-diag__table"><thead><tr><th>Check</th><th>Score</th><th>Result</th></tr></thead><tbody><tr><td>Snapshot Availability</td><td>100%</td><td><span class="sd-diag__badge sd-diag__badge--pass"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>PASS</span></td></tr><tr><td>Version Label Integrity</td><td>100%</td><td><span class="sd-diag__badge sd-diag__badge--pass"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>PASS</span></td></tr><tr><td>Change Log Completeness</td><td>100%</td><td><span class="sd-diag__badge sd-diag__badge--pass"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>PASS</span></td></tr><tr><td>Execution Link Validity</td><td>100%</td><td><span class="sd-diag__badge sd-diag__badge--pass"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>PASS</span></td></tr></tbody></table></div>
+</div></div>
+            <!-- /Six-Dimensional Diagram -->
+
           </article>
 
           <article class="ds-card">

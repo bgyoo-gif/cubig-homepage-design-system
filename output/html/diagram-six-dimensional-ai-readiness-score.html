@@ -1,13 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Six-Dimensional AI Readiness Score — Snippet</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fragment+Mono&display=swap" rel="stylesheet">
-  <style>
-    /* ─── DS Tokens ─────────────────────────────────────────────── */
-    :root {
+<!-- Six-Dimensional AI Readiness Score — Diagram Snippet -->
+<style>
+    .sd-diag {
       --ds-font-base:    "DM Sans", sans-serif;
       --ds-font-code:    "Fragment Mono", monospace;
 
@@ -76,27 +69,10 @@
       --sd-bar-bg:             #e5e7eb;
       --sd-bar-radius:         var(--ds-radius-xs);
       --sd-card-radius:        var(--ds-radius-sm);
-      --sd-card-border:        1px solid var(--ds-color-border-default);
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: var(--ds-font-base);
-      background: var(--ds-color-neutral-025);
-      color: var(--ds-color-text-primary);
-      -webkit-font-smoothing: antialiased;
-      padding: var(--ds-space-xl);
-    }
-
-    /* ─── Snippet wrapper ─────────────────────────────────────── */
-    .sd-diag {
+      --sd-card-border:        1px solid var(--ds-color-border-default, #e6e7e9);
+      font-family: var(--ds-font-base, "DM Sans", sans-serif);
       width: 100%;
-      background: var(--ds-color-white);
-      border-radius: var(--ds-radius-md);
-      border: var(--sd-card-border);
-      box-shadow: var(--ds-shadow-card);
-      padding: var(--ds-space-xl);
+      margin-top: var(--ds-space-lg, 24px);
     }
 
     /* ─── 2×3 Grid ────────────────────────────────────────────── */
@@ -270,14 +246,6 @@
       margin: 0;
     }
   </style>
-</head>
-<body>
-
-<!-- ══════════════════════════════════════════════════════════════
-     Six-Dimensional AI Readiness Score — Diagram Snippet
-     Insert this .sd-diag block into the ds-card that wraps
-     the "Six-Dimensional AI Readiness Score" section.
-     ══════════════════════════════════════════════════════════════ -->
 <div class="sd-diag">
   <div class="sd-diag__grid">
 
@@ -537,6 +505,3 @@
 
   </div><!-- /.sd-diag__grid -->
 </div><!-- /.sd-diag -->
-
-</body>
-</html>
