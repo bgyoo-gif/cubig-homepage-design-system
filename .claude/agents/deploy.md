@@ -129,3 +129,9 @@ Deploy 주의: Pages 빌드 에러 발생.
 - manifest.json 충돌만 자동 해결 — 다른 파일 충돌은 사용자에게 보고
 - 빌드 에러 복구는 최대 2회 시도 — 그래도 실패하면 사용자에게 보고
 - 배포 URL 확인 없이 "완료"라고 보고하지 않음
+
+## 인프라 참고
+- GitHub Actions "Generate Manifest & Deploy" 워크플로우는 **비활성화** 상태 (disabled_manually)
+  - 이유: 로컬에서 manifest 생성 + push하는데 Actions가 또 manifest를 재생성 push하여 충돌 유발
+  - manifest 생성은 deploy 에이전트가 로컬에서 전담
+  - `pages-build-deployment`는 활성 상태 (GitHub Pages 자동 빌드 — 건들지 않음)
