@@ -107,6 +107,7 @@ deploy (gh-pages push → GitHub Pages 자동 배포)
 - 인증/수상은 Cert Grid: ISO, GS 등 인증 내용은 `[L] ds-cert-grid` 마키 + 공식 이미지 사용
 - TSX Localization 필수: 모든 텍스트를 prop으로 추출 + `addPropertyControls` 등록 — JSX 하드코딩 텍스트 0개 (Framer Localization 패널 대응)
 - TSX 반응형: CSS Container Queries(`@container`) 사용 — `window.innerWidth` 금지, `ResizeObserver` 비권장. `.s{N}-inner { container-type: inline-size }` + `@container (min-width: 768px)` 패턴
+- TSX JSON-LD 필수: 모든 페이지 Hero TSX에 `useEffect` + `document.head.appendChild`로 JSON-LD 삽입. Framer SEO 중복 항목(title, meta description, og:*) 제외. B타입 HTML의 JSON-LD 스키마와 동일 내용 유지
 - 이미지 WebP 우선: 모든 이미지는 .webp 포맷 우선 사용. 새 이미지 추가 시 WebP 변환 필수. WebP 없을 때만 PNG/AVIF 허용
 
 ---

@@ -471,6 +471,97 @@ Framer Localization 패널에서 텍스트를 관리하려면 prop으로 노출�
 
 ---
 
+## JSON-LD 구조화 데이터 (필수)
+
+**모든 TSX 페이지의 첫 번째 섹션(Hero)에 JSON-LD를 삽입한다.**
+
+### 삽입 방법 — useEffect + DOM
+
+```tsx
+import { useEffect } from "react"
+
+// Hero 컴포넌트 내부
+useEffect(() => {
+    const id = "ld-json-[페이지명]"
+    if (document.getElementById(id)) return
+
+    const script = document.createElement("script")
+    script.id = id
+    script.type = "application/ld+json"
+    script.textContent = JSON.stringify(jsonLdData)
+    document.head.appendChild(script)
+
+    return () => { document.getElementById(id)?.remove() }
+}, [])
+```
+
+### Framer SEO와 중복 방지 규칙
+
+Framer Page Settings → SEO에서 이미 처리하는 항목은 JSON-LD에 **넣지 않는다**:
+
+| Framer SEO가 처리 (JSON-LD 금지) | JSON-LD에 넣을 것 |
+|---|---|
+| `<title>` | `@type: DefinedTerm` (용어 정의 페이지) |
+| `<meta name="description">` | `@type: FAQPage` + `mainEntity` (FAQ 섹션 있을 때) |
+| `og:title`, `og:description` | `@type: Product` (제품 페이지) |
+| `og:image`, `og:url` | `@type: SoftwareApplication` |
+| canonical URL | `@type: Organization` (회사 소개) |
+
+### 페이지 타입별 스키마
+
+**용어 정의 페이지** (definitions/*):
+```json
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    { "@type": "DefinedTerm", "name": "...", "alternateName": "...", "description": "..." },
+    { "@type": "FAQPage", "mainEntity": [{ "@type": "Question", "name": "...", "acceptedAnswer": { "@type": "Answer", "text": "..." } }] }
+  ]
+}
+```
+
+**제품 페이지** (products/*):
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "...", "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Cloud", "offers": { "@type": "Offer", "availability": "https://schema.org/OnlineOnly" }
+}
+```
+
+**회사/솔루션 페이지**:
+```json
+{ "@context": "https://schema.org", "@type": "Organization", "name": "CUBIG", "url": "https://cubig.ai" }
+```
+
+### Localization
+
+JSON-LD의 `name`, `description`, `Question.name`, `Answer.text` 등도 **prop으로 추출**한다.
+Hero 컴포넌트의 기존 title/description prop을 JSON-LD에도 재사용:
+
+```tsx
+script.textContent = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "DefinedTerm",
+    name: title,           // ← prop 재사용
+    description: description, // ← prop 재사용
+})
+```
+
+FAQ 데이터는 해당 FAQ 섹션의 prop에서 가져오기 어려우므로 (다른 컴포넌트),
+Hero에 `faqJsonLd` prop (ControlType.String, displayTextArea: true)으로 JSON 문자열을 받아 파싱한다.
+
+### 체크리스트
+- [ ] Hero TSX에 `useEffect` + JSON-LD 삽입 코드 있음
+- [ ] `document.getElementById` 중복 방지 있음
+- [ ] cleanup return 있음
+- [ ] Framer SEO 중복 항목(title, description, og:*) 미포함
+- [ ] name/description은 prop 재사용
+- [ ] B타입 HTML의 `<script type="application/ld+json">` 내용과 동일
+
+---
+
 ## 절대 규칙
 - 원문 텍스트를 단 한 글자도 바꾸지 않는다
 - 이미지 경로는 반드시 `IMAGE_BASE` 상수 경유
