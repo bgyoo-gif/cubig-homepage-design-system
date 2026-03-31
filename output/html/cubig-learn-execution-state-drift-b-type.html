@@ -387,9 +387,7 @@
       border-bottom: var(--ds-border-default);
       margin-bottom: var(--ds-space-xl);
     }
-    .ds-section-header--left { text-align: left; }
-    .ds-section-header--left .ds-section-header__description { margin: 0; }
-    /* mobile: section-header stays center */
+    /* section-header: always center (--left prohibited) */
 
     /* Article section header: responsive title */
     .ds-section-header__title { font-size: 20px; }
@@ -403,10 +401,11 @@
     .ds-hero--text-only {
       max-width: 860px;
       margin: 0 auto;
+      text-align: center;
     }
     .ds-hero__title {
       font-family: var(--ds-font-base);
-      font-size: 24px;
+      font-size: var(--ds-text-5xl);
       font-weight: var(--ds-weight-bold);
       color: var(--ds-color-text-primary);
       line-height: var(--ds-leading-tight);
@@ -419,20 +418,17 @@
       color: var(--ds-color-text-secondary);
       line-height: var(--ds-leading-relaxed);
       max-width: 100%;
-      margin-bottom: var(--ds-space-xl);
+      margin: 0 auto var(--ds-space-xl);
       word-break: keep-all;
       overflow-wrap: break-word;
       text-wrap: pretty;
     }
-    @media (min-width: 768px)  {
-      .ds-hero__title { font-size: 28px; }
-    }
     @media (min-width: 1024px) {
-      .ds-hero__title { font-size: 32px; }
+      .ds-hero__title { font-size: var(--ds-text-6xl); }
       .ds-hero__description { max-width: 720px; }
     }
     @media (min-width: 1440px) {
-      .ds-hero__title { font-size: 36px; }
+      .ds-hero__title { font-size: var(--ds-text-7xl); }
       .ds-hero__description { max-width: 860px; }
     }
 
@@ -819,7 +815,7 @@
     @media (min-width: 768px)  { .ds-cta-band { padding: 100px var(--ds-container-padding-tablet); } }
     @media (min-width: 1440px) { .ds-cta-band { padding: 120px var(--ds-container-padding-desktop); max-width: 1440px; margin: 0 auto; } .ds-cta-band__title { font-size: var(--ds-text-6xl); } }
     @media (max-width: 767px) {
-      .ds-cta-band__title { font-size: var(--ds-text-4xl); letter-spacing: -1px; }
+      .ds-cta-band__title { font-size: var(--ds-text-4xl); letter-spacing: var(--ds-tracking-tight); }
       .ds-cta-band__actions { flex-direction: column; align-items: center; }
       .ds-cta-band__actions .ds-btn { width: 100%; max-width: 320px; }
     }
