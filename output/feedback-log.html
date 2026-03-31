@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Feedback Sync Log</title>
+<style>
+  body { font-family: "DM Sans", sans-serif; margin: 40px auto; max-width: 1200px; padding: 0 20px; color: #0f0f0f; }
+  h1 { font-size: 24px; font-weight: 700; margin-bottom: 24px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th { text-align: left; padding: 12px 16px; background: #f7f7f7; border-bottom: 2px solid #e6e7e9; font-weight: 600; }
+  td { padding: 10px 16px; border-bottom: 1px solid #e6e7e9; vertical-align: top; }
+  tr:hover td { background: #fafafa; }
+  .date { white-space: nowrap; color: #636363; }
+  .files { font-family: "Fragment Mono", monospace; font-size: 12px; color: #636363; }
+</style>
+</head>
+<body>
+<h1>Feedback Sync Log</h1>
+<table>
+  <thead>
+    <tr><th>날짜</th><th>피드백</th><th>변경 파일</th><th>변경 내용</th></tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td class="date">2026-03-31</td>
+    <td>TSX JSON-LD 구조화 데이터 필수 — Hero TSX에 useEffect + document.head.appendChild로 JSON-LD 삽입, Framer SEO 중복 항목 제외, B타입 HTML JSON-LD와 동일 내용 유지, name/description은 prop 재사용, cleanup return 필수</td>
+    <td class="files">qa.md</td>
+    <td>[CAT-F4] JSON-LD 구조화 데이터 섹션 신규 추가 (bash 검증 5개 + 체크리스트 6개). CONDITIONAL PASS FAIL 목록에 JSON-LD 관련 항목 5개 추가 (CAT-F4 High)</td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>

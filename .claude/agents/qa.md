@@ -348,6 +348,11 @@ grep -n "padding.*16px\|padding.*32px\|padding.*120px" output/[파일명]-b-type
 - `ds-section-header--left`가 어떤 섹션에든 사용됨 — center가 유일 기본값 (CAT-2 High)
 - CTA 타이틀에 `ds-text-7xl` (64px) 사용 — `ds-text-5xl` (40px) 기본 필수 (CAT-2 High)
 - letter-spacing 하드코딩 사용 (`-2px`, `-1px` 등) — `var(--ds-tracking-tight)` 토큰 필수 (CAT-2 High)
+- Hero TSX에 JSON-LD `useEffect` 삽입 코드 없음 (CAT-F4 High)
+- JSON-LD에 Framer SEO 중복 항목(title, meta description, og:*) 포함 (CAT-F4 High)
+- JSON-LD cleanup return 없음 — 메모리 누수 (CAT-F4 High)
+- JSON-LD `name`/`description`이 prop 재사용 없이 하드코딩 (CAT-F4 High)
+- B타입 HTML의 JSON-LD 스키마(`@type`, 필드)와 TSX JSON-LD가 불일치 (CAT-F4 High)
 
 아래 항목은 CONDITIONAL PASS 허용:
 - CTA container 안에 배치 (CAT-3 Medium)
@@ -433,6 +438,33 @@ grep -rn '#a617ff' output/framer/[페이지명]/tsx/
 ```
 → `<style>`, `className`, `#a617ff`가 있으면 FAIL
 → `isMobile`, `textAlign.*center`, `wordBreak`, `"0 auto"`, `addPropertyControls`가 없으면 FAIL
+
+### [CAT-F4] JSON-LD 구조화 데이터 (High)
+
+```bash
+# Hero TSX에 useEffect JSON-LD 삽입 확인
+grep -rn 'useEffect' output/framer/[페이지명]/tsx/Section01_*.tsx | grep -c 'useEffect'
+
+# application/ld+json 타입 확인
+grep -rn 'application/ld+json' output/framer/[페이지명]/tsx/Section01_*.tsx
+
+# 중복 방지 getElementById 확인
+grep -rn 'getElementById' output/framer/[페이지명]/tsx/Section01_*.tsx
+
+# cleanup return 확인
+grep -rn 'return () =>' output/framer/[페이지명]/tsx/Section01_*.tsx
+
+# Framer SEO 중복 항목 금지 확인 (title/description/og:* 는 JSON-LD에 넣지 않음)
+grep -rn '"title"\|"og:title"\|"og:description"\|"og:image"' output/framer/[페이지명]/tsx/Section01_*.tsx
+```
+
+체크리스트:
+- [ ] Hero TSX에 `useEffect` + `document.head.appendChild`로 JSON-LD 삽입 코드 있음
+- [ ] `document.getElementById(id)` 중복 삽입 방지 있음
+- [ ] `return () => { document.getElementById(id)?.remove() }` cleanup return 있음
+- [ ] Framer SEO 중복 항목(title, meta description, og:title, og:description, og:image, canonical) JSON-LD 미포함
+- [ ] `name`, `description` 등 props 재사용 (하드코딩 금지)
+- [ ] B타입 HTML의 `<script type="application/ld+json">` 스키마와 동일한 `@type` 및 필드 사용
 
 ### [CAT-F3] B타입 HTML 대조 (High)
 - TSX의 텍스트 콘텐츠가 B타입 HTML과 일치하는지 확인
