@@ -922,7 +922,7 @@
 
       .ds-six-dim-grid { grid-template-columns: repeat(3, 1fr); }
 
-      .ds-banner--full { padding: var(--ds-space-xl) var(--ds-space-3xl); }
+      .ds-banner--full { padding: var(--ds-space-xl) var(--ds-space-2xl); }
       .ds-banner--full .ds-banner__formula { font-size: var(--ds-text-2xl); }
     }
 
@@ -995,69 +995,69 @@
     /* =====================================================
        22. Data Profiling Diagram
     ===================================================== */
-    .dp-diag { font-family: var(--ds-font-base); }
-    .dp-diag__window {
+    .ds-diag { font-family: var(--ds-font-base); }
+    .ds-diag__window {
       background: var(--ds-color-surface-white); border-radius: var(--ds-radius-md);
       box-shadow: var(--ds-shadow-modal);
       overflow: hidden; margin-top: var(--ds-space-lg);
     }
-    .dp-diag__titlebar {
+    .ds-diag__titlebar {
       background: linear-gradient(180deg, var(--ds-color-neutral-050) 0%, var(--ds-color-neutral-100) 100%);
       height: 36px; display: flex; align-items: center; padding: 0 14px; gap: 8px;
       border-bottom: 1px solid var(--ds-color-neutral-200);
     }
-    .dp-diag__titlebar-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
-    .dp-diag__titlebar-dot--close { background: var(--ds-color-error); }
-    .dp-diag__titlebar-dot--min { background: var(--ds-color-warn); }
-    .dp-diag__titlebar-dot--max { background: var(--ds-color-success); }
-    .dp-diag__titlebar-label {
+    .ds-diag__titlebar-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+    .ds-diag__titlebar-dot--close { background: var(--ds-color-error); }
+    .ds-diag__titlebar-dot--min { background: var(--ds-color-warn); }
+    .ds-diag__titlebar-dot--max { background: var(--ds-color-success); }
+    .ds-diag__titlebar-label {
       margin-left: auto; margin-right: auto; font-size: var(--ds-text-xs); font-weight: var(--ds-weight-medium);
       color: var(--ds-color-text-secondary); font-family: var(--ds-font-code);
       transform: translateX(-18px);
     }
-    .dp-diag__content { background: var(--ds-color-surface-white); padding: var(--ds-space-lg); }
-    .dp-diag__file-row {
+    .ds-diag__content { background: var(--ds-color-surface-white); padding: var(--ds-space-lg); }
+    .ds-diag__file-row {
       display: flex; align-items: center; gap: var(--ds-space-sm); padding-bottom: var(--ds-space-md);
       border-bottom: 1px solid var(--ds-color-neutral-100); margin-bottom: var(--ds-space-lg);
     }
-    .dp-diag__file-icon {
+    .ds-diag__file-icon {
       width: 36px; height: 36px; background: var(--ds-color-surface-light); border-radius: var(--ds-radius-sm);
       display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--ds-color-success);
     }
-    .dp-diag__file-name { font-size: var(--ds-text-sm); font-weight: var(--ds-weight-semibold); color: var(--ds-color-text-primary); }
-    .dp-diag__file-meta { font-size: var(--ds-text-xs); color: var(--ds-color-text-tertiary); margin-top: 2px; font-family: var(--ds-font-code); }
-    .dp-diag__body { display: grid; grid-template-columns: 1fr 1fr; gap: var(--ds-space-lg); }
-    .dp-diag__col { display: flex; flex-direction: column; }
-    .dp-diag__readiness-header { display: flex; align-items: baseline; gap: 10px; margin-bottom: var(--ds-space-md); }
-    .dp-diag__readiness-label { font-size: var(--ds-text-sm); font-weight: var(--ds-weight-medium); color: var(--ds-color-text-secondary); }
-    .dp-diag__readiness-score { font-size: var(--ds-text-4xl); font-weight: var(--ds-weight-bold); color: var(--ds-color-text-primary); line-height: 1; }
-    .dp-diag__readiness-badge {
+    .ds-diag__file-name { font-size: var(--ds-text-sm); font-weight: var(--ds-weight-semibold); color: var(--ds-color-text-primary); }
+    .ds-diag__file-meta { font-size: var(--ds-text-xs); color: var(--ds-color-text-tertiary); margin-top: 2px; font-family: var(--ds-font-code); }
+    .ds-diag__body { display: grid; grid-template-columns: 1fr 1fr; gap: var(--ds-space-lg); }
+    .ds-diag__col { display: flex; flex-direction: column; }
+    .ds-diag__readiness-header { display: flex; align-items: baseline; gap: 10px; margin-bottom: var(--ds-space-md); }
+    .ds-diag__readiness-label { font-size: var(--ds-text-sm); font-weight: var(--ds-weight-medium); color: var(--ds-color-text-secondary); }
+    .ds-diag__readiness-score { font-size: var(--ds-text-4xl); font-weight: var(--ds-weight-bold); color: var(--ds-color-text-primary); line-height: 1; }
+    .ds-diag__readiness-badge {
       font-size: 10px; font-weight: var(--ds-weight-bold); color: var(--ds-color-success); background: var(--ds-color-surface-light);
       border: 1px solid var(--ds-color-success); border-radius: var(--ds-radius-pill); padding: 2px 8px;
       letter-spacing: var(--ds-tracking-wide); align-self: center;
     }
-    .dp-diag__dim-list { display: flex; flex-direction: column; gap: var(--ds-space-xs); }
-    .dp-diag__dim-row { display: grid; grid-template-columns: 130px 1fr 36px; align-items: center; gap: var(--ds-space-xs); }
-    .dp-diag__dim-name { font-size: var(--ds-text-xs); color: var(--ds-color-text-secondary); white-space: nowrap; }
-    .dp-diag__dim-track { height: 6px; background: var(--ds-color-neutral-100); border-radius: var(--ds-radius-pill); overflow: hidden; }
-    .dp-diag__dim-fill { height: 100%; border-radius: var(--ds-radius-pill); background: var(--ds-color-success); }
-    .dp-diag__dim-fill--warn { background: var(--ds-color-warn); }
-    .dp-diag__dim-pct { font-size: var(--ds-text-xs); font-weight: var(--ds-weight-semibold); color: var(--ds-color-text-primary); text-align: right; font-family: var(--ds-font-code); }
-    .dp-diag__radar-wrap { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; }
-    .dp-diag__radar-svg { width: 100%; max-width: 220px; height: auto; display: block; margin: 0 auto; }
-    .dp-diag__radar-footnote { font-size: var(--ds-text-xs); color: var(--ds-color-text-tertiary); text-align: center; line-height: 1.4; margin-top: var(--ds-space-xs); }
-    .dp-diag__warn-box {
+    .ds-diag__dim-list { display: flex; flex-direction: column; gap: var(--ds-space-xs); }
+    .ds-diag__dim-row { display: grid; grid-template-columns: 130px 1fr 36px; align-items: center; gap: var(--ds-space-xs); }
+    .ds-diag__dim-name { font-size: var(--ds-text-xs); color: var(--ds-color-text-secondary); white-space: nowrap; }
+    .ds-diag__dim-track { height: 6px; background: var(--ds-color-neutral-100); border-radius: var(--ds-radius-pill); overflow: hidden; }
+    .ds-diag__dim-fill { height: 100%; border-radius: var(--ds-radius-pill); background: var(--ds-color-success); }
+    .ds-diag__dim-fill--warn { background: var(--ds-color-warn); }
+    .ds-diag__dim-pct { font-size: var(--ds-text-xs); font-weight: var(--ds-weight-semibold); color: var(--ds-color-text-primary); text-align: right; font-family: var(--ds-font-code); }
+    .ds-diag__radar-wrap { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; }
+    .ds-diag__radar-svg { width: 100%; max-width: 220px; height: auto; display: block; margin: 0 auto; }
+    .ds-diag__radar-footnote { font-size: var(--ds-text-xs); color: var(--ds-color-text-tertiary); text-align: center; line-height: 1.4; margin-top: var(--ds-space-xs); }
+    .ds-diag__warn-box {
       margin-top: var(--ds-space-lg); background: var(--ds-color-surface-light); border: 1px solid var(--ds-color-error);
       border-left: 3px solid var(--ds-color-error); border-radius: var(--ds-radius-sm); padding: var(--ds-space-sm) var(--ds-space-md);
       display: flex; align-items: flex-start; gap: 10px;
     }
-    .dp-diag__warn-icon { flex-shrink: 0; color: var(--ds-color-error); margin-top: 1px; }
-    .dp-diag__warn-title { font-size: var(--ds-text-xs); font-weight: var(--ds-weight-bold); color: var(--ds-color-error); margin-bottom: 2px; }
-    .dp-diag__warn-text { font-size: var(--ds-text-xs); color: var(--ds-color-text-secondary); line-height: var(--ds-leading-normal); }
+    .ds-diag__warn-icon { flex-shrink: 0; color: var(--ds-color-error); margin-top: 1px; }
+    .ds-diag__warn-title { font-size: var(--ds-text-xs); font-weight: var(--ds-weight-bold); color: var(--ds-color-error); margin-bottom: 2px; }
+    .ds-diag__warn-text { font-size: var(--ds-text-xs); color: var(--ds-color-text-secondary); line-height: var(--ds-leading-normal); }
     @media (max-width: 640px) {
-      .dp-diag__body { grid-template-columns: 1fr; }
-      .dp-diag__readiness-score { font-size: var(--ds-text-3xl); }
-      .dp-diag__dim-row { grid-template-columns: 110px 1fr 32px; }
+      .ds-diag__body { grid-template-columns: 1fr; }
+      .ds-diag__readiness-score { font-size: var(--ds-text-3xl); }
+      .ds-diag__dim-row { grid-template-columns: 110px 1fr 32px; }
     }
   </style>
 </head>
@@ -1384,47 +1384,47 @@
             </ul>
 
             <!-- Data Profiling Diagram -->
-<div class="dp-diag">
-  <div class="dp-diag__window">
-    <div class="dp-diag__titlebar">
-      <span class="dp-diag__titlebar-dot dp-diag__titlebar-dot--close"></span>
-      <span class="dp-diag__titlebar-dot dp-diag__titlebar-dot--min"></span>
-      <span class="dp-diag__titlebar-dot dp-diag__titlebar-dot--max"></span>
-      <span class="dp-diag__titlebar-label">SynTitan — Data Profiling</span>
+<div class="ds-diag">
+  <div class="ds-diag__window">
+    <div class="ds-diag__titlebar">
+      <span class="ds-diag__titlebar-dot ds-diag__titlebar-dot--close"></span>
+      <span class="ds-diag__titlebar-dot ds-diag__titlebar-dot--min"></span>
+      <span class="ds-diag__titlebar-dot ds-diag__titlebar-dot--max"></span>
+      <span class="ds-diag__titlebar-label">SynTitan — Data Profiling</span>
     </div>
-    <div class="dp-diag__content">
+    <div class="ds-diag__content">
       <!-- File info row -->
-      <div class="dp-diag__file-row">
-        <div class="dp-diag__file-icon">
+      <div class="ds-diag__file-row">
+        <div class="ds-diag__file-icon">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
             <ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v4c0 1.657 4.029 3 9 3s9-1.343 9-3V5"/><path d="M3 9v4c0 1.657 4.029 3 9 3s9-1.343 9-3V9"/><path d="M3 13v4c0 1.657 4.029 3 9 3s9-1.343 9-3v-4"/>
           </svg>
         </div>
         <div>
-          <div class="dp-diag__file-name">[SAPLE] CUBIG Data</div>
-          <div class="dp-diag__file-meta">4.83 GB · 247 columns · 47 rows</div>
+          <div class="ds-diag__file-name">[SAPLE] CUBIG Data</div>
+          <div class="ds-diag__file-meta">4.83 GB · 247 columns · 47 rows</div>
         </div>
       </div>
       <!-- AI Readiness + Radar -->
-      <div class="dp-diag__body">
-        <div class="dp-diag__col">
-          <div class="dp-diag__readiness-header">
-            <span class="dp-diag__readiness-label">AI readiness</span>
-            <span class="dp-diag__readiness-score">99%</span>
-            <span class="dp-diag__readiness-badge">AI Ready</span>
+      <div class="ds-diag__body">
+        <div class="ds-diag__col">
+          <div class="ds-diag__readiness-header">
+            <span class="ds-diag__readiness-label">AI readiness</span>
+            <span class="ds-diag__readiness-score">99%</span>
+            <span class="ds-diag__readiness-badge">AI Ready</span>
           </div>
-          <div class="dp-diag__dim-list">
-            <div class="dp-diag__dim-row"><span class="dp-diag__dim-name">Privacy</span><div class="dp-diag__dim-track"><div class="dp-diag__dim-fill dp-diag__dim-fill--warn" style="width:8%"></div></div><span class="dp-diag__dim-pct">8%</span></div>
-            <div class="dp-diag__dim-row"><span class="dp-diag__dim-name">Integrity</span><div class="dp-diag__dim-track"><div class="dp-diag__dim-fill dp-diag__dim-fill--warn" style="width:10%"></div></div><span class="dp-diag__dim-pct">10%</span></div>
-            <div class="dp-diag__dim-row"><span class="dp-diag__dim-name">Traceability</span><div class="dp-diag__dim-track"><div class="dp-diag__dim-fill" style="width:100%"></div></div><span class="dp-diag__dim-pct">100%</span></div>
-            <div class="dp-diag__dim-row"><span class="dp-diag__dim-name">Contextuality</span><div class="dp-diag__dim-track"><div class="dp-diag__dim-fill dp-diag__dim-fill--warn" style="width:50%"></div></div><span class="dp-diag__dim-pct">50%</span></div>
-            <div class="dp-diag__dim-row"><span class="dp-diag__dim-name">Operational Reliability</span><div class="dp-diag__dim-track"><div class="dp-diag__dim-fill" style="width:100%"></div></div><span class="dp-diag__dim-pct">100%</span></div>
-            <div class="dp-diag__dim-row"><span class="dp-diag__dim-name">Conciseness</span><div class="dp-diag__dim-track"><div class="dp-diag__dim-fill" style="width:100%"></div></div><span class="dp-diag__dim-pct">100%</span></div>
+          <div class="ds-diag__dim-list">
+            <div class="ds-diag__dim-row"><span class="ds-diag__dim-name">Privacy</span><div class="ds-diag__dim-track"><div class="ds-diag__dim-fill ds-diag__dim-fill--warn" style="width:8%"></div></div><span class="ds-diag__dim-pct">8%</span></div>
+            <div class="ds-diag__dim-row"><span class="ds-diag__dim-name">Integrity</span><div class="ds-diag__dim-track"><div class="ds-diag__dim-fill ds-diag__dim-fill--warn" style="width:10%"></div></div><span class="ds-diag__dim-pct">10%</span></div>
+            <div class="ds-diag__dim-row"><span class="ds-diag__dim-name">Traceability</span><div class="ds-diag__dim-track"><div class="ds-diag__dim-fill" style="width:100%"></div></div><span class="ds-diag__dim-pct">100%</span></div>
+            <div class="ds-diag__dim-row"><span class="ds-diag__dim-name">Contextuality</span><div class="ds-diag__dim-track"><div class="ds-diag__dim-fill ds-diag__dim-fill--warn" style="width:50%"></div></div><span class="ds-diag__dim-pct">50%</span></div>
+            <div class="ds-diag__dim-row"><span class="ds-diag__dim-name">Operational Reliability</span><div class="ds-diag__dim-track"><div class="ds-diag__dim-fill" style="width:100%"></div></div><span class="ds-diag__dim-pct">100%</span></div>
+            <div class="ds-diag__dim-row"><span class="ds-diag__dim-name">Conciseness</span><div class="ds-diag__dim-track"><div class="ds-diag__dim-fill" style="width:100%"></div></div><span class="ds-diag__dim-pct">100%</span></div>
           </div>
         </div>
-        <div class="dp-diag__col">
-          <div class="dp-diag__radar-wrap">
-            <svg class="dp-diag__radar-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="6-axis radar chart">
+        <div class="ds-diag__col">
+          <div class="ds-diag__radar-wrap">
+            <svg class="ds-diag__radar-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="6-axis radar chart">
               <defs><style>.rdr-grid{fill:none;stroke:var(--ds-color-neutral-200);stroke-width:0.8}.rdr-axis{stroke:var(--ds-color-neutral-250);stroke-width:0.8}.rdr-area{fill:rgba(14,130,76,0.15);stroke:rgba(14,130,76,0.7);stroke-width:1.5;stroke-linejoin:round}.rdr-dot{fill:var(--ds-color-success)}.rdr-label{font-family:var(--ds-font-base);font-size:9px;fill:var(--ds-color-text-secondary)}</style></defs>
               <polygon class="rdr-grid" points="100,28 162.4,64 162.4,136 100,172 37.6,136 37.6,64"/>
               <polygon class="rdr-grid" points="100,52 141.8,75 141.8,125 100,148 58.2,125 58.2,75"/>
@@ -1444,18 +1444,18 @@
               <text class="rdr-label" x="30" y="142" text-anchor="end">Contextuality</text>
               <text class="rdr-label" x="30" y="60" text-anchor="end">Integrity</text>
             </svg>
-            <div class="dp-diag__radar-footnote">*Detailed information is available in the AI Readiness tab.</div>
+            <div class="ds-diag__radar-footnote">*Detailed information is available in the AI Readiness tab.</div>
           </div>
         </div>
       </div>
       <!-- Warning box -->
-      <div class="dp-diag__warn-box">
-        <svg class="dp-diag__warn-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <div class="ds-diag__warn-box">
+        <svg class="ds-diag__warn-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
         </svg>
         <div>
-          <div class="dp-diag__warn-title">Analysis Result</div>
-          <div class="dp-diag__warn-text">AI readiness has been analyzed, but certain dimensions scored more than 10% below average. Three dimensions need to be improved by at least 10%.</div>
+          <div class="ds-diag__warn-title">Analysis Result</div>
+          <div class="ds-diag__warn-text">AI readiness has been analyzed, but certain dimensions scored more than 10% below average. Three dimensions need to be improved by at least 10%.</div>
         </div>
       </div>
     </div>

@@ -1,10 +1,24 @@
 # QA Report
-- 검증일: 2026-03-30 (재검증)
+- 검증일: 2026-03-31 (재검증 — 2차)
 - 대상 파일: output/html/execution-state-layer-b-type.html
 - 원본 파일: input/execution-state-layer.html
 - 명세서: output/docs/execution-state-layer-spec.md
 - QA 엔지니어: qa-agent
-- 검증 이력: 1차 FAIL (Q01, Q02) → 수정 후 2차 재검증
+- 검증 라운드: 2차 (이전 10건 High 수정 후 재검증)
+
+---
+
+## 수정 확인 결과 (이전 Q01~Q10)
+
+| 이전 ID | 내용 | 수정 결과 |
+|---------|------|-----------|
+| Q01 | letter-spacing: 0.1em → var(--ds-tracking-wide) | FIXED (line 440, 583, 635, 1037) |
+| Q02 | letter-spacing: 0.06em → var(--ds-tracking-wide) | FIXED |
+| Q03 | diagram style 태그 head로 이동 | FIXED (style 블록 head 내 통합) |
+| Q04-Q06 | --dp-* 커스텀 변수 완전 제거 | FIXED (grep 결과 0건) |
+| Q07 | CTA title mobile size var(--ds-text-4xl) | FIXED (line 987) |
+| Q08 | mobile section-header text-align: left 제거 | FIXED (center 유지 확인) |
+| Q09 | SVG 인라인 스타일 DS 토큰으로 교체 | FIXED |
 
 ---
 
@@ -12,164 +26,102 @@
 
 | ID | 카테고리 | 심각도 | 위치 | 내용 | 원인 분석 |
 |----|----------|--------|------|------|-----------|
-| Q03 | CAT-2 | High | line 765 | `.ds-cta-band__title` font-size가 `40px` 하드코딩 | DS 토큰 없이 수치 직접 기입. `var(--ds-text-5xl)` 등 DS 토큰으로 변경 필요. `!important` 규칙 아니지만 수치 하드코딩은 DS 준수 위반 |
-| Q04 | CAT-2 | High | line 775, 781, 789 | `.ds-cta-band__description`, `__quote`, `__quote-attr` 색상이 `rgba(255,255,255,0.85/0.75/0.55)` 하드코딩 | 어두운 배경(ds-bg--grad-deep) 위 텍스트에 rgba 하드코딩 사용. `var(--ds-color-text-inverse)` (#ffffff) 또는 DS 정의 토큰으로 교체 필요 |
-| Q05 | CAT-3 | Medium | line 1402 | 아코디언 토글이 `<div class="ds-ac-card__toggle">` — `<button>` 태그 미사용 | 시맨틱 마크업 위반 + 키보드 접근성 결함. `<button>` 태그로 교체 필요 |
+| Q11 | CAT-2 | High | line 925 | `ds-banner--full` padding에 `var(--ds-space-3xl)` 사용 | 768px+ 미디어쿼리에서 `.ds-banner--full { padding: var(--ds-space-xl) var(--ds-space-3xl); }` — 가로 padding에 space-3xl 적용. 규칙: banner-full padding은 space-xl만 허용 (space-3xl 금지). `padding: var(--ds-space-xl)` 로 수정 필요 |
+| Q12 | CAT-3 | Medium | line 998~ | `.dp-diag*` 클래스가 `.ds-` 접두사 미사용 | 다이어그램 컴포넌트 내부 클래스 prefix가 `.dp-`로 시작. DS 규칙: 모든 커스텀 클래스에 `.ds-` 접두사 필수. 내부에서 `--ds-*` 변수만 사용하고 있으므로 Medium 처리. `.ds-diag-*` 또는 `.ds-dp-*`로 rename 권고 |
 
 ---
 
-## 수정 확인 — 이전 결함
+## 전체 체크리스트 결과
 
-| ID | 이전 판정 | 수정 내용 | 재검증 결과 |
-|----|-----------|-----------|-------------|
-| Q01 | FAIL (High) | `ds-banner--full .ds-banner__sub` color: text-secondary → text-primary | **RESOLVED** — line 862: `color: var(--ds-color-text-primary)` 확인 |
-| Q02 | FAIL (High) | `ds-section--light` 4개 → 3개로 축소 (section-9 제거) | **RESOLVED** — section-4(line 1061), section-6(line 1183), section-11(line 1383) 총 3개 확인 |
-
----
-
-## PASS 확인 항목 요약
-
-### [CAT-1] 내용 무결성 — PASS
-
-| 항목 | 결과 |
-|------|------|
-| 모든 섹션 제목 존재 (12개) | PASS — Hero, Definition, What it means, Core characteristics, Why it matters, Comparison, Relationship to AI-Ready Data, Conceptual model, Example, How SynTitan implements..., FAQ, Summary/CTA |
-| 본문 텍스트 누락/변경 없음 | PASS — A타입 모든 본문 텍스트 그대로 포함 |
-| 수치/데이터 일치 | PASS — 6개 차원, 5개 특성, 7개 FAQ, 4개 Feature 카드 수 일치 |
-| 목록 항목 수 일치 | PASS — 각 카드의 bullet 항목 수 A타입 동일 |
-| FAQ 7개 항목 | PASS — Q1~Q7 모두 포함 |
+### [CAT-1] 내용 무결성
+- [x] 모든 섹션 제목 존재 (12섹션: Definition, What it means, Core characteristics, Why it matters, Comparison, Relationship to AI-Ready Data, Conceptual model, Example, How SynTitan implements, FAQ, Summary+CTA)
+- [x] 모든 본문 텍스트 누락/변경 없음
+- [x] 수치 데이터 정확히 일치 (Privacy 8%, Integrity 10%, Traceability 100%, Contextuality 50%, Operational Reliability 100%, Conciseness 100%)
+- [x] FAQ 7개 항목 모두 포함
+- [x] 버전 타임라인 (v2 Released, commit a3f8c2d, v1 Initial) 포함
 
 ### [CAT-2] Design System 준수
-
-| 항목 | 결과 | 비고 |
-|------|------|------|
-| CSS 변수 :root 선언 | PASS | line 131~251 |
-| 하드코딩 색상 | **FAIL Q04** | CTA 밴드 텍스트에 rgba 하드코딩 (line 775, 781, 789) |
-| 수치 하드코딩 | **FAIL Q03** | CTA 타이틀 font-size: 40px 하드코딩 (line 765) |
-| !important 없음 | PASS | 전혀 없음 |
-| 인라인 style 속성 | PASS | `style="background-color: var(--ds-color-brand-purple)"` — CSS 변수 전달 목적으로 허용 |
-| ds-text--brand 적용 | PASS | 섹션 2(Definition), 4(characteristics), 5(matters), 6(Comparison), 7(AI-Ready Data), 8(model), 11(Questions) — spec과 일치 |
-| ds-text--product SynTitan | PASS | line 1299 |
-| ds-banner 좌측 border 없음 | PASS | top/bottom border만 있음 |
-| KPI 수치 파란색 아님 | PASS | brand-primary는 ds-bullet--number 아이콘(숫자) 색상에만 사용 (line 564) |
-| ds-card 배경 흰색 | PASS | `background-color: var(--ds-color-surface-white)` (line 427) |
-| CTA band ds-container 밖 배치 | PASS | `</main>` (line 1509) 이후에 section으로 배치 (line 1514) |
-| word-break: keep-all body | PASS | line 108 |
-| 긴 문장 불릿 분리 | PASS | 독립 문장들이 ds-bullet--dot, ds-bullet--check로 분리됨 |
-| 인라인 middot 없음 | PASS | |
-| neutral-150/050/025 텍스트 color 없음 | PASS | :root 정의에만 있고 color 프로퍼티에 미사용 |
-| text-muted 텍스트 사용 없음 | PASS | ds-ac-card__toggle-icon의 background(아이콘 선 색상)에만 사용 — 텍스트 color 아님 |
-| 배경 이미지 위 텍스트 (banner--full) | PASS | line 862: `color: var(--ds-color-text-primary)` — Q01 수정 완료 |
-| eyebrow 전면 없음 | PASS | grep 결과 0개 |
-| 배경 이미지 중복 없음 | PASS | wave-teal 1회, grad-deep 1회 |
-| ds-section--light 3개 이하 | PASS | 3개 (section-4, 6, 11) — Q02 수정 완료 |
-| 커스텀 CSS 변수 없음 | PASS | `--ds-` 접두사 외 변수 0개. --ds-border-brand, --ds-border-default는 design-system.md line 213~214에 정의된 공식 변수 |
-| DS에 없는 변수 없음 | PASS | |
-| 코드블록 없음 | PASS | 페이지 내 코드블록 없어 해당 없음 |
-| description max-width 반응형 | PASS | mobile 100%, 1024px: 720px (line 921~922), 1440px: 860px (line 960~961) |
-| text-wrap balance/pretty | PASS | 제목 balance(line 262, 270, 277), 본문 pretty(line 125) |
-| Brand 폰트 단독 키워드만 | PASS | SynTitan만 Oxanium 적용 |
-| 배너 텍스트 가운데 정렬 | PASS | ds-banner: text-align: center (line 488), ds-banner--full: text-align: center (line 494) |
+- [x] CSS 변수 :root 선언 확인
+- [x] 색상 하드코딩 없음 (:root 내 정의 변수만 사용)
+- [x] !important 없음
+- [x] 인라인 style: 프로그레스 바 width(기능적 값), 아코디언 dot background-color(CSS 변수 전달) — 허용
+- [x] ds-text--brand 강조 키워드 7개 섹션 타이틀 적용 확인
+- [x] ds-banner 좌측 굵은 border 없음 (border-top/bottom 상하만 존재)
+- [x] KPI 수치 파란색 미사용 (bullet--number 번호 아이콘만 brand-primary — 정상)
+- [x] ds-section--light 3개 사용 (section-4, 6, 11) — 허용 범위
+- [x] 모든 CSS 변수가 DS 정의 토큰만 사용 (--ds-tracking-normal 포함)
+- [x] letter-spacing 하드코딩 없음 (전부 var(--ds-tracking-*) 토큰)
+- [x] eyebrow 완전 제거 (grep 결과 0건)
+- [x] section-header--left 미사용 (grep 결과 0건)
+- [x] CTA 타이틀: var(--ds-text-5xl) 기본, mobile var(--ds-text-4xl), desktop var(--ds-text-6xl) — 표준 준수
+- [x] ds-article + main 860px 적용
+- [x] word-break: keep-all body 전역 적용 (line 108)
+- [x] 배경 이미지 경로 절대경로 (/cubig-homepage-design-system/reference/images/*.webp)
+- [x] 이미지 WebP 포맷 사용
+- [x] 아코디언 header grid 1fr auto auto (line 619)
+- [FAIL] Q11: ds-banner--full padding space-3xl 사용 (line 925)
+- [x] 긴 문장 불릿 분리 적용
+- [x] 배경 이미지 위 텍스트: ds-banner--full에 text-primary + 흰색 오버레이 — 적절
+- [x] CTA band ds-container 밖 배치 (</main> 이후)
+- [x] text-wrap: balance(제목), text-wrap: pretty(본문) 적용
 
 ### [CAT-3] 코드 품질
-
-| 항목 | 결과 | 비고 |
-|------|------|------|
-| 시맨틱 태그 | PASS | nav, main, section, article, footer, h1~h2, blockquote 모두 적절 사용 |
-| 모든 section에 id | PASS | id="section-1" ~ id="section-12" |
-| HTML 유효성 | PASS | 태그 중첩 오류 없음 |
-| 이미지/아이콘 aria | PASS | SVG 아이콘 aria-hidden="true" 적용, nav aria-label |
-| Google Fonts 로드 | PASS | DM Sans + Oxanium (line 94~96) |
-| 아코디언 토글 버튼 | **FAIL Q05** | `<div class="ds-ac-card__toggle">` — `<button>` 태그 필요 (line 1402) |
-| eyebrow 없음 | PASS | |
-| CTA band 타이틀 64px 이상 | PASS (partial) | desktop(@1440px)에서 var(--ds-text-7xl) 적용 (line 964). 단, 기본값 40px 하드코딩은 Q03으로 별도 처리 |
-| CTA band 텍스트 흰색 | PASS | 타이틀: `color: var(--ds-color-white)` (line 767). description rgba는 Q04 처리 |
-| ds-article 적용 | PASS | `<main class="ds-article">` (line 1011) |
-| 아코디언 header grid | PASS | `grid-template-columns: 1fr auto auto` (line 620) |
-| FAQ 아코디언 구현 | PASS | ds-ac-card x 7개 |
+- [x] 시맨틱 태그 사용 (section, article, main, footer, h1-h2)
+- [x] 모든 section에 id 존재 (section-1 ~ section-12)
+- [x] HTML 유효성 (태그 중첩 오류 없음)
+- [x] 이미지 alt/aria-label 확인
+- [x] Google Fonts 로드 확인 (DM Sans + Oxanium)
+- [x] 아코디언 toggle button 구현 (ds-ac-card__toggle — 텍스트 "+" 미사용)
+- [WARN] Q12: .dp-diag* 클래스 prefix .ds- 미사용 (Medium)
 
 ### [CAT-4] 반응형 검증
-
-| 항목 | 결과 | 비고 |
-|------|------|------|
-| 4단계 breakpoint 모두 존재 | PASS | 768px(line 906), 1024px(line 933), 1440px(line 951) |
-| mobile padding 16px | PASS | `--ds-container-padding-mobile: 16px` |
-| tablet padding 32px | PASS | `--ds-container-padding-tablet: 32px` |
-| sm-desktop padding 32px | PASS | `--ds-container-padding-sm-desktop: 32px` |
-| desktop padding 120px + max-width 1440px | PASS | line 952 |
-| 모든 ds-grid mobile 1열 | PASS | `.ds-card-grid { grid-template-columns: 1fr; }` (line 473) |
-| Typography 단계적 변화 | PASS | h1: 24→28→32→36px |
-| max-width 1440px | PASS | line 952 |
-| body padding-top 58px | PASS | line 107 |
-| ds-section--hero padding-top 100px | PASS | line 322 |
-| description max-width 반응형 | PASS | 768px: 720px, 1440px: 860px |
-| 여백 하드코딩 없음 | PASS | ds-container 외 padding 하드코딩 없음 (table 내 12px/14px/16px은 컴포넌트 내부 간격으로 Low) |
+- [x] 4단계 breakpoint 존재 (768/1024/1440 min-width)
+- [x] mobile padding 16px (ds-container-padding-mobile)
+- [x] tablet padding 32px (ds-container-padding-tablet)
+- [x] sm-desktop padding 32px (ds-container-padding-sm-desktop)
+- [x] desktop padding 120px + max-width: 1440px
+- [x] body padding-top: 58px (line 107)
+- [x] ds-section--hero padding-top: 100px (line 322)
+- [x] ds-card-grid mobile 1열
+- [x] description max-width 반응형: 100% → 720px(1024) → 860px(1440)
+- [x] CTA title 반응형: 4xl(mobile) → 5xl(base) → 6xl(1440px)
+- [x] hero title 반응형: 28px(768) → 32px(1024) → 36px(1440) — DS 표준 h1 반응형 준수
 
 ---
 
 ## 통계
-- 전체 결함 수: 3개 (신규 Q03, Q04, Q05)
-- Critical: 0개 / High: 2개 / Medium: 1개 / Low: 0개
+- 전체 결함 수: 2개
+- Critical: 0개
+- High: 1개 (Q11)
+- Medium: 1개 (Q12)
+- Low: 0개
 
 ---
 
 ## 최종 판정
+
 **FAIL**
 
 ---
 
 ## 판정 근거
 
-이전 Q01, Q02는 정상 수정됐으나 재검증 중 신규 결함 3개 발견:
+**Q11 (High — FAIL 기준 해당):** `ds-banner--full` padding에 `var(--ds-space-3xl)`이 사용됩니다 (line 925, 768px+ 미디어쿼리). 규칙 "banner-full padding이 space-xl이어야 함 (space-3xl 금지)"에 의해 FAIL 처리합니다. `padding: var(--ds-space-xl)` 으로 수정이 필요합니다.
 
-1. **Q03 (High)**: `.ds-cta-band__title` font-size가 `40px` 하드코딩 (line 765). DS 규칙 "수치 하드코딩 금지" 위반. `var(--ds-text-5xl)` (40px 해당 없음 → `var(--ds-text-4xl)` 36px 또는 `var(--ds-text-5xl)` 48px) 으로 교체 필요. desktop(1440px)에서는 이미 `var(--ds-text-7xl)` 사용 — mobile 기본값만 DS 토큰으로 교체하면 됨.
-
-2. **Q04 (High)**: CTA 밴드 텍스트 색상이 `rgba(255,255,255,0.85)`, `rgba(255,255,255,0.75)`, `rgba(255,255,255,0.55)` 하드코딩 (line 775, 781, 789). 하드코딩 색상 금지 규칙 위반. `var(--ds-color-text-inverse)` 또는 DS 정의 투명도 처리 방식으로 교체 필요. description과 quote는 `var(--ds-color-text-inverse)`, quote-attr은 `var(--ds-color-text-tertiary)` 또는 동일한 inverse 사용.
-
-3. **Q05 (Medium)**: 아코디언 토글이 `<div class="ds-ac-card__toggle">` (line 1402). `<button type="button">` 태그로 교체해야 시맨틱/접근성 기준을 충족.
+**Q12 (Medium — FAIL 기준 미해당):** `.dp-diag*` 클래스 prefix가 `.ds-`를 사용하지 않습니다. Medium이므로 FAIL 기준에는 해당하지 않으나 수정을 권고합니다.
 
 ---
 
 ## 다음 액션
-[FAIL]: frontend-dev 에이전트에 qa-report.md 전달 및 수정 요청.
 
-### 수정 지시사항
+**FAIL:** frontend-dev 에이전트에 qa-report.md 전달 및 수정 요청.
 
-**Q03 수정 (line 765):**
-```css
-/* 변경 전 */
-.ds-cta-band__title {
-  font-size: 40px;
-  ...
-}
+### 수정 우선순위
 
-/* 변경 후 */
-.ds-cta-band__title {
-  font-size: var(--ds-text-5xl);  /* 48px — mobile/tablet 기본값 */
-  ...
-}
-/* @media (min-width: 1440px) 에 이미 var(--ds-text-7xl) 있으므로 유지 */
-```
+**[필수 — High]**
+- Q11: line 925 `.ds-banner--full` padding 수정
+  - 현재: `padding: var(--ds-space-xl) var(--ds-space-3xl);`
+  - 수정: `padding: var(--ds-space-xl);`
 
-**Q04 수정 (line 775, 781, 789):**
-```css
-/* 변경 전 */
-.ds-cta-band__description { color: rgba(255,255,255,0.85); }
-.ds-cta-band__quote       { color: rgba(255,255,255,0.75); }
-.ds-cta-band__quote-attr  { color: rgba(255,255,255,0.55); }
-
-/* 변경 후 */
-.ds-cta-band__description { color: var(--ds-color-text-inverse); }
-.ds-cta-band__quote       { color: var(--ds-color-text-inverse); }
-.ds-cta-band__quote-attr  { color: var(--ds-color-text-tertiary); }
-/* 어두운 배경(grad-deep) 위이므로 text-tertiary(#9c9c9c)도 허용 */
-```
-
-**Q05 수정 (line 1402):**
-```html
-<!-- 변경 전 -->
-<div class="ds-ac-card__toggle"><span class="ds-ac-card__toggle-icon"></span></div>
-
-<!-- 변경 후 -->
-<button type="button" class="ds-ac-card__toggle" aria-label="Toggle"><span class="ds-ac-card__toggle-icon"></span></button>
-```
+**[권고 — Medium]**
+- Q12: `.dp-diag*` → `.ds-diag-*` 또는 `.ds-dp-*`로 클래스명 일괄 변경 (CSS + HTML 모두)
