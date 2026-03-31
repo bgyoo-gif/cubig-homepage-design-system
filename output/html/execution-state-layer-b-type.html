@@ -400,7 +400,7 @@
     /* =====================================================
        7. Hero — text-only
     ===================================================== */
-    .ds-hero--text-only { max-width: 860px; margin: 0 auto; }
+    .ds-hero--text-only { max-width: 860px; margin: 0 auto; text-align: center; }
     .ds-hero__title {
       font-family: var(--ds-font-base);
       font-size: var(--ds-text-5xl);
@@ -905,8 +905,9 @@
     @media (min-width: 768px) {
       .ds-container { padding: 0 var(--ds-container-padding-tablet); }
 
-      h1, .ds-h1, .ds-hero__title { font-size: 28px; }
+      h1, .ds-h1 { font-size: 28px; }
       h2, .ds-h2, .ds-section-header__title { font-size: 22px; }
+      /* hero title stays at 5xl (40px) — no downgrade at tablet */
 
       .ds-nav__links { display: flex; }
 
@@ -917,8 +918,7 @@
       .ds-cta-band__title { font-size: var(--ds-text-5xl); }
       .ds-cta-band__inner { max-width: 720px; }
 
-      .ds-section-header__description { max-width: 720px; }
-      .ds-hero__description { max-width: 720px; }
+      /* description max-width stays 100% at 768px — only 720px from 1024px */
 
       .ds-six-dim-grid { grid-template-columns: repeat(3, 1fr); }
 
@@ -932,9 +932,10 @@
     @media (min-width: 1024px) {
       .ds-container { padding: 0 var(--ds-container-padding-sm-desktop); }
 
-      h1, .ds-h1, .ds-hero__title { font-size: 32px; }
+      h1, .ds-h1 { font-size: 32px; }
       h2, .ds-h2, .ds-section-header__title { font-size: 24px; }
       h3, .ds-h3 { font-size: 20px; }
+      .ds-hero__title { font-size: var(--ds-text-6xl); }
 
       .ds-card-grid--3col { grid-template-columns: repeat(3, 1fr); }
 
@@ -950,9 +951,10 @@
     @media (min-width: 1440px) {
       .ds-container { padding: 0 var(--ds-container-padding-desktop); max-width: 1440px; }
 
-      h1, .ds-h1, .ds-hero__title { font-size: 36px; }
+      h1, .ds-h1 { font-size: 36px; }
       h2, .ds-h2, .ds-section-header__title { font-size: 28px; }
       h3, .ds-h3 { font-size: 22px; }
+      .ds-hero__title { font-size: var(--ds-text-7xl); }
 
       .ds-nav { padding: 0 var(--ds-container-padding-desktop); }
 
