@@ -1099,7 +1099,8 @@
 
           <!-- Execution State Model Diagram — [W] ds-diagram -->
           <style>
-.esm-window { background: var(--ds-diag-surface, #f8f8f8); border-radius: var(--ds-radius-md, 18px); box-shadow: 0 8px 32px rgba(0,0,0,0.14), 0 2px 8px rgba(0,0,0,0.08); overflow: hidden; margin-top: var(--ds-space-2xl, 48px); max-width: 860px; width: 100%; margin-left: auto; margin-right: auto; font-family: var(--ds-font-base, "DM Sans", sans-serif); }
+.esm-bg-wrap { background: linear-gradient(180deg, transparent 0%, rgba(48,97,242,0.06) 30%, rgba(114,91,234,0.08) 70%, transparent 100%); border-radius: var(--ds-radius-lg, 24px); padding: var(--ds-space-xl, 32px) var(--ds-space-md, 16px); margin-top: var(--ds-space-2xl, 48px); max-width: 920px; width: 100%; margin-left: auto; margin-right: auto; }
+.esm-window { background: var(--ds-diag-surface, #f8f8f8); border-radius: var(--ds-radius-md, 18px); box-shadow: 0 8px 32px rgba(0,0,0,0.14), 0 2px 8px rgba(0,0,0,0.08); overflow: hidden; font-family: var(--ds-font-base, "DM Sans", sans-serif); }
 .esm-titlebar { background: linear-gradient(180deg, #e8e8e8 0%, #d8d8d8 100%); height: 36px; display: flex; align-items: center; padding: 0 14px; gap: 8px; border-bottom: 1px solid #c0c0c0; }
 .esm-titlebar__dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
 .esm-titlebar__dot--close { background: #ff5f57; }
@@ -1138,6 +1139,7 @@
   .esm-col--ai__title { width: 100%; }
 }
           </style>
+          <div class="esm-bg-wrap">
           <div class="esm-window">
             <div class="esm-titlebar">
               <span class="esm-titlebar__dot esm-titlebar__dot--close"></span>
@@ -1187,6 +1189,7 @@
               </div>
             </div>
           </div>
+          </div><!-- /.esm-bg-wrap -->
           <!-- /Execution State Model Diagram -->
 
         </div>
@@ -1688,9 +1691,9 @@
   <div class="iv-diag__table-wrap">
     <div class="iv-diag__table-title">Dataset Versioning</div>
     <table class="iv-diag__table"><thead><tr><th>Version</th><th>Change Log</th><th>AI Readiness</th><th>Action</th></tr></thead><tbody>
-      <tr><td class="iv-diag__td--version">V 1.4</td><td class="iv-diag__td--log">Applied full Data State transformation pipeline: Scoping, Type Validation, Imputation, Distribution Repair, Harmonization, Leakage Guard.</td><td class="iv-diag__td--readiness"><span class="iv-diag__readiness-badge"><span class="iv-diag__readiness-dot iv-diag__readiness-dot--green"></span>98%</span></td><td class="iv-diag__td--action"><div class="iv-diag__actions"><a href="#" class="iv-diag__btn iv-diag__btn--analysis">Analysis →</a><a href="#" class="iv-diag__btn">Download</a></div></td></tr>
-      <tr><td class="iv-diag__td--version">V 1.3</td><td class="iv-diag__td--log">Target Quality validation, Resampling for class imbalance, and Leakage Guard implemented.</td><td class="iv-diag__td--readiness"><span class="iv-diag__readiness-badge"><span class="iv-diag__readiness-dot iv-diag__readiness-dot--green"></span>97%</span></td><td class="iv-diag__td--action"><div class="iv-diag__actions"><a href="#" class="iv-diag__btn iv-diag__btn--analysis">Analysis →</a></div></td></tr>
-      <tr><td class="iv-diag__td--version">V 1.2</td><td class="iv-diag__td--log">Distribution Repair and Category Harmonization applied. Enforced data dependencies and reduced collinearity.</td><td class="iv-diag__td--readiness"><span class="iv-diag__readiness-badge"><span class="iv-diag__readiness-dot iv-diag__readiness-dot--orange"></span>82%</span></td><td class="iv-diag__td--action"><div class="iv-diag__actions"><a href="#" class="iv-diag__btn iv-diag__btn--analysis">Analysis →</a></div></td></tr>
+      <tr><td class="iv-diag__td--version">V 1.4</td><td class="iv-diag__td--log">Applied full Data State transformation pipeline: Scoping, Type Validation, Imputation, Distribution Repair, Harmonization, Leakage Guard.</td><td class="iv-diag__td--readiness"><span class="iv-diag__readiness-badge"><span class="iv-diag__readiness-dot iv-diag__readiness-dot--green"></span>98%</span></td><td class="iv-diag__td--action"><div class="iv-diag__actions"><span class="iv-diag__btn iv-diag__btn--analysis">Analysis →</span><span class="iv-diag__btn">Download</span></div></td></tr>
+      <tr><td class="iv-diag__td--version">V 1.3</td><td class="iv-diag__td--log">Target Quality validation, Resampling for class imbalance, and Leakage Guard implemented.</td><td class="iv-diag__td--readiness"><span class="iv-diag__readiness-badge"><span class="iv-diag__readiness-dot iv-diag__readiness-dot--green"></span>97%</span></td><td class="iv-diag__td--action"><div class="iv-diag__actions"><span class="iv-diag__btn iv-diag__btn--analysis">Analysis →</span></div></td></tr>
+      <tr><td class="iv-diag__td--version">V 1.2</td><td class="iv-diag__td--log">Distribution Repair and Category Harmonization applied. Enforced data dependencies and reduced collinearity.</td><td class="iv-diag__td--readiness"><span class="iv-diag__readiness-badge"><span class="iv-diag__readiness-dot iv-diag__readiness-dot--orange"></span>82%</span></td><td class="iv-diag__td--action"><div class="iv-diag__actions"><span class="iv-diag__btn iv-diag__btn--analysis">Analysis →</span></div></td></tr>
     </tbody></table>
   </div>
   <div class="iv-diag__snapshot-wrap">
