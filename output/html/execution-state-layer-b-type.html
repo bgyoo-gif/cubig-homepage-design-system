@@ -1100,16 +1100,16 @@
           <!-- Execution State Model Diagram — [W] ds-diagram -->
           <style>
 .esm-bg-wrap { background-image: url('/cubig-homepage-design-system/reference/images/bg-paint-white-teal.webp'); background-size: cover; background-position: center; border-radius: var(--ds-radius-xl, 40px); padding: var(--ds-space-3xl, 64px) var(--ds-space-xl, 32px); margin-top: var(--ds-space-2xl, 48px); max-width: 920px; width: 100%; margin-left: auto; margin-right: auto; }
-.esm-window { background: var(--ds-diag-surface, #f8f8f8); border-radius: var(--ds-radius-md, 18px); box-shadow: 0 8px 32px rgba(0,0,0,0.14), 0 2px 8px rgba(0,0,0,0.08); overflow: hidden; font-family: var(--ds-font-base, "DM Sans", sans-serif); }
+.esm-window { background: rgba(255,255,255,0.65); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-radius: var(--ds-radius-md, 18px); box-shadow: 0 8px 32px rgba(0,0,0,0.08); overflow: hidden; font-family: var(--ds-font-base, "DM Sans", sans-serif); }
 .esm-titlebar { background: linear-gradient(180deg, #e8e8e8 0%, #d8d8d8 100%); height: 36px; display: flex; align-items: center; padding: 0 14px; gap: 8px; border-bottom: 1px solid #c0c0c0; }
 .esm-titlebar__dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
 .esm-titlebar__dot--close { background: #ff5f57; }
 .esm-titlebar__dot--min { background: #ffbd2e; }
 .esm-titlebar__dot--max { background: #28ca41; }
 .esm-titlebar__label { margin: 0 auto; font-size: var(--ds-text-xs, 12px); font-weight: 500; color: #555; font-family: var(--ds-font-code, monospace); transform: translateX(-18px); }
-.esm-content { background: var(--ds-color-surface-white, #fff); padding: var(--ds-space-xl, 32px); }
-.esm-card { background: var(--ds-color-surface-white, #fff); border: 1px solid var(--ds-diag-border, #d0d0d0); border-radius: var(--ds-radius-md, 18px); overflow: hidden; }
-.esm-card__title { text-align: center; padding: var(--ds-space-sm, 12px) var(--ds-space-lg, 24px); font-size: var(--ds-text-sm, 14px); font-weight: 500; color: var(--ds-diag-text, #2a2a2a); letter-spacing: 0.04em; border-bottom: 1px solid var(--ds-diag-border-light, #e0e0e0); font-family: var(--ds-font-code, monospace); background: linear-gradient(180deg, #fff 0%, #f8f8f8 100%); }
+.esm-content { background: transparent; padding: var(--ds-space-xl, 32px); }
+.esm-card { background: rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.5); border-radius: var(--ds-radius-md, 18px); overflow: hidden; }
+.esm-card__title { text-align: center; padding: var(--ds-space-sm, 12px) var(--ds-space-lg, 24px); font-size: var(--ds-text-sm, 14px); font-weight: 500; color: var(--ds-diag-text, #2a2a2a); letter-spacing: 0.04em; border-bottom: 1px solid rgba(255,255,255,0.5); font-family: var(--ds-font-code, monospace); background: rgba(255,255,255,0.4); }
 .esm-body { display: grid; grid-template-columns: 3fr auto 1fr; align-items: stretch; }
 .esm-col--esl { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-right: 1px dashed var(--ds-diag-border, #d0d0d0); }
 .esm-sub { padding: var(--ds-space-md, 16px) var(--ds-space-sm, 12px); display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; border-right: 1px dashed var(--ds-diag-border-light, #e0e0e0); }
