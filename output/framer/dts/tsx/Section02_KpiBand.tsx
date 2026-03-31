@@ -1,6 +1,9 @@
 // Section02_KpiBand.tsx — DTS KPI Band + AI-Ready Definition Banner
 // Framer Code Component
+import { useEffect } from "react"
 import { addPropertyControls, ControlType } from "framer"
+
+const FONT_URL = "https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@700&family=Fragment+Mono&display=swap"
 
 const IMAGE_BASE = "https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images"
 
@@ -43,10 +46,19 @@ export default function Section02_KpiBand({
   kpi4Sub = "Kyobo Life Insurance",
   bannerText = "True AI-ready data means it is usable, privacy-safe, and stable for production execution.",
 }: Props) {
+  useEffect(() => {
+    const id = "font-dm-sans"
+    if (document.getElementById(id)) return
+    const link = document.createElement("link")
+    link.id = id
+    link.rel = "stylesheet"
+    link.href = FONT_URL
+    document.head.appendChild(link)
+  }, [])
+
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Fragment+Mono&display=swap');
 
         .s2-section {
           width: 100%;

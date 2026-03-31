@@ -1,5 +1,5 @@
 {
-  "generated": "2026-03-31 17:40:06",
+  "generated": "2026-03-31 17:56:56",
   "github_base": "https://bgyoo-gif.github.io/cubig-homepage-design-system",
   "groups": [
     {
@@ -181,12 +181,12 @@
         {
           "name": "Figure_Architecture.tsx",
           "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/framer/llm-capsule/tsx/Figure_Architecture.tsx",
-          "modified": "2026-03-24"
+          "modified": "2026-03-31"
         },
         {
           "name": "Section01_Hero.tsx",
           "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/framer/llm-capsule/tsx/Section01_Hero.tsx",
-          "modified": "2026-03-24"
+          "modified": "2026-03-31"
         },
         {
           "name": "Section02_KpiBand.tsx",
@@ -401,7 +401,7 @@
         {
           "name": "Section01_Hero.tsx",
           "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/framer/proof/tsx/Section01_Hero.tsx",
-          "modified": "2026-03-24"
+          "modified": "2026-03-31"
         },
         {
           "name": "Section02_KpiBand.tsx",
@@ -416,22 +416,22 @@
         {
           "name": "Section04_CaseStudy.tsx",
           "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/framer/proof/tsx/Section04_CaseStudy.tsx",
-          "modified": "2026-03-24"
+          "modified": "2026-03-31"
         },
         {
           "name": "Section05_StepTabs.tsx",
           "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/framer/proof/tsx/Section05_StepTabs.tsx",
-          "modified": "2026-03-24"
+          "modified": "2026-03-31"
         },
         {
           "name": "Section06_Banner.tsx",
           "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/framer/proof/tsx/Section06_Banner.tsx",
-          "modified": "2026-03-24"
+          "modified": "2026-03-31"
         },
         {
           "name": "Section07_BusinessImpact.tsx",
           "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/framer/proof/tsx/Section07_BusinessImpact.tsx",
-          "modified": "2026-03-24"
+          "modified": "2026-03-31"
         },
         {
           "name": "Section08_FAQ.tsx",
@@ -589,67 +589,67 @@
         {
           "name": "Section01_Hero.tsx",
           "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/framer/dts/tsx/Section01_Hero.tsx",
-          "modified": "2026-03-24"
+          "modified": "2026-03-31"
         },
         {
           "name": "Section02_KpiBand.tsx",
           "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/framer/dts/tsx/Section02_KpiBand.tsx",
-          "modified": "2026-03-24"
+          "modified": "2026-03-31"
         },
         {
           "name": "Section03_SyntheticData.tsx",
           "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/framer/dts/tsx/Section03_SyntheticData.tsx",
-          "modified": "2026-03-24"
+          "modified": "2026-03-31"
         },
         {
           "name": "Section04_ComparisonTable.tsx",
           "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/framer/dts/tsx/Section04_ComparisonTable.tsx",
-          "modified": "2026-03-24"
+          "modified": "2026-03-31"
         },
         {
           "name": "Section05_ThreeProblems.tsx",
           "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/framer/dts/tsx/Section05_ThreeProblems.tsx",
-          "modified": "2026-03-24"
+          "modified": "2026-03-31"
         },
         {
           "name": "Section06_DifferentialPrivacy.tsx",
           "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/framer/dts/tsx/Section06_DifferentialPrivacy.tsx",
-          "modified": "2026-03-24"
+          "modified": "2026-03-31"
         },
         {
           "name": "Section07_Deployment.tsx",
           "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/framer/dts/tsx/Section07_Deployment.tsx",
-          "modified": "2026-03-24"
+          "modified": "2026-03-31"
         },
         {
           "name": "Section08_CaseRecords.tsx",
           "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/framer/dts/tsx/Section08_CaseRecords.tsx",
-          "modified": "2026-03-24"
+          "modified": "2026-03-31"
         },
         {
           "name": "Section09_FiveSignals.tsx",
           "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/framer/dts/tsx/Section09_FiveSignals.tsx",
-          "modified": "2026-03-24"
+          "modified": "2026-03-31"
         },
         {
           "name": "Section10_Certs.tsx",
           "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/framer/dts/tsx/Section10_Certs.tsx",
-          "modified": "2026-03-24"
+          "modified": "2026-03-31"
         },
         {
           "name": "Section11_Banner.tsx",
           "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/framer/dts/tsx/Section11_Banner.tsx",
-          "modified": "2026-03-24"
+          "modified": "2026-03-31"
         },
         {
           "name": "Section12_FAQ.tsx",
           "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/framer/dts/tsx/Section12_FAQ.tsx",
-          "modified": "2026-03-24"
+          "modified": "2026-03-31"
         },
         {
           "name": "Section13_CTA.tsx",
           "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/framer/dts/tsx/Section13_CTA.tsx",
-          "modified": "2026-03-24"
+          "modified": "2026-03-31"
         }
       ],
       "preview": [
@@ -1002,7 +1002,7 @@
         {
           "name": "ArchitectureDiagram.tsx",
           "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/framer/figure_cubig_architecture/tsx/ArchitectureDiagram.tsx",
-          "modified": "2026-03-24"
+          "modified": "2026-03-31"
         }
       ],
       "preview": []

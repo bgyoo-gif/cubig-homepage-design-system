@@ -1,6 +1,9 @@
 // Figure_Architecture.tsx — CUBIG AI-Ready Data Infrastructure Architecture Diagram
 // Framer Code Component
+import { useEffect } from "react"
 import { addPropertyControls, ControlType } from "framer"
+
+const FONT_URL = "https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@700&family=Fragment+Mono&display=swap"
 
 interface Props {
   title?: string
@@ -11,10 +14,19 @@ export default function Figure_Architecture({
   title = "AI-Ready Data Infrastructure",
   subtitle = "CUBIG",
 }: Props) {
+  useEffect(() => {
+    const id = "font-dm-sans"
+    if (document.getElementById(id)) return
+    const link = document.createElement("link")
+    link.id = id
+    link.rel = "stylesheet"
+    link.href = FONT_URL
+    document.head.appendChild(link)
+  }, [])
+
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@700&family=Fragment+Mono:wght@400;500&display=swap');
 
         .fig-wrap * {
           margin: 0;

@@ -1,6 +1,9 @@
 // Section11_Banner.tsx — DTS Operational Example: Fraud Detection with Rare Events
 // Framer Code Component
+import { useEffect } from "react"
 import { addPropertyControls, ControlType } from "framer"
+
+const FONT_URL = "https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@700&family=Fragment+Mono&display=swap"
 
 const IMAGE_BASE = "https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images"
 
@@ -27,10 +30,19 @@ export default function Section11_Banner({
   ctaBtnText = "See enterprise use cases",
   ctaBtnHref = "/#enterprise-use-cases",
 }: Props) {
+  useEffect(() => {
+    const id = "font-dm-sans"
+    if (document.getElementById(id)) return
+    const link = document.createElement("link")
+    link.id = id
+    link.rel = "stylesheet"
+    link.href = FONT_URL
+    document.head.appendChild(link)
+  }, [])
+
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@700&family=Fragment+Mono&display=swap');
 
         .s11-section {
           width: 100%;

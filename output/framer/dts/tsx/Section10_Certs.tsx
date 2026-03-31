@@ -1,6 +1,9 @@
 // Section10_Certs.tsx — DTS Certified and Trusted (Cert Grid + Partner Grid)
 // Framer Code Component
+import { useEffect } from "react"
 import { addPropertyControls, ControlType } from "framer"
+
+const FONT_URL = "https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@700&family=Fragment+Mono&display=swap"
 
 const IMAGE_BASE = "https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images"
 const GRAPHICS_BASE = "https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics"
@@ -62,10 +65,19 @@ export default function Section10_Certs({
   const certDouble = [...CERT_ITEMS, ...CERT_ITEMS]
   const partnerDouble = [...PARTNER_ITEMS, ...PARTNER_ITEMS]
 
+  useEffect(() => {
+    const id = "font-dm-sans"
+    if (document.getElementById(id)) return
+    const link = document.createElement("link")
+    link.id = id
+    link.rel = "stylesheet"
+    link.href = FONT_URL
+    document.head.appendChild(link)
+  }, [])
+
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@700&family=Fragment+Mono&display=swap');
 
         .s10-section {
           width: 100%;

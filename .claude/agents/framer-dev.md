@@ -307,10 +307,25 @@ const IMAGE_BASE = "https://cubig.ai/assets"
 
 ### 6. 폰트 로드
 
-첫 번째 섹션에만 Google Fonts @import 포함:
-```css
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@700&family=Fragment+Mono&display=swap');
+**`@import url(...)` 사용 금지** — Framer 샌드박스에서 `<style>` 내 `@import`는 전체 CSS 파싱을 깨뜨린다.
+
+대신 `useEffect` + `<link>` 태그로 head에 삽입:
+```tsx
+const FONT_URL = "https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@700&family=Fragment+Mono&display=swap"
+
+// 컴포넌트 내부
+useEffect(() => {
+    const id = "font-dm-sans"
+    if (document.getElementById(id)) return
+    const link = document.createElement("link")
+    link.id = id
+    link.rel = "stylesheet"
+    link.href = FONT_URL
+    document.head.appendChild(link)
+}, [])
 ```
+
+모든 섹션 TSX에 이 패턴을 적용한다 (id 체크로 중복 삽입 방지됨).
 
 ---
 

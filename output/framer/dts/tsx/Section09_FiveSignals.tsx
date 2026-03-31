@@ -1,6 +1,9 @@
 // Section09_FiveSignals.tsx — DTS Five Signals + Key Concepts
 // Framer Code Component
+import { useEffect } from "react"
 import { addPropertyControls, ControlType } from "framer"
+
+const FONT_URL = "https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@700&family=Fragment+Mono&display=swap"
 
 interface Props {
   marginTop?: number
@@ -100,10 +103,19 @@ export default function Section09_FiveSignals({
     { title: concept3Title, description: concept3Description, btnText: concept3BtnText, btnHref: concept3BtnHref },
   ]
 
+  useEffect(() => {
+    const id = "font-dm-sans"
+    if (document.getElementById(id)) return
+    const link = document.createElement("link")
+    link.id = id
+    link.rel = "stylesheet"
+    link.href = FONT_URL
+    document.head.appendChild(link)
+  }, [])
+
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@700&family=Fragment+Mono&display=swap');
 
         .s9-section {
           width: 100%; overflow: hidden; box-sizing: border-box;

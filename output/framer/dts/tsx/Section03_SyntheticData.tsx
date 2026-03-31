@@ -1,6 +1,9 @@
 // Section03_SyntheticData.tsx — DTS Privacy-Safe Synthetic Data Positioning
 // Framer Code Component
+import { useEffect } from "react"
 import { addPropertyControls, ControlType } from "framer"
+
+const FONT_URL = "https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@700&family=Fragment+Mono&display=swap"
 
 interface Props {
   marginTop?: number
@@ -21,10 +24,19 @@ export default function Section03_SyntheticData({
   body2 = "DTS is a capability within Cubig's AI-Ready Data Infrastructure -- the infrastructure layer that makes enterprise data usable, privacy-safe, and stable for production AI execution. DTS specifically addresses the Restricted Data and Unusable Data blockers.",
   bannerText = "Synthetic data is a DTS capability. It is not Cubig's top-level identity.",
 }: Props) {
+  useEffect(() => {
+    const id = "font-dm-sans"
+    if (document.getElementById(id)) return
+    const link = document.createElement("link")
+    link.id = id
+    link.rel = "stylesheet"
+    link.href = FONT_URL
+    document.head.appendChild(link)
+  }, [])
+
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap');
 
         .s3-section {
           width: 100%; overflow: hidden; box-sizing: border-box;

@@ -1,6 +1,9 @@
 // Section04_ComparisonTable.tsx — DTS vs Other Approaches Comparison Table
 // Framer Code Component
+import { useEffect } from "react"
 import { addPropertyControls, ControlType } from "framer"
+
+const FONT_URL = "https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@700&family=Fragment+Mono&display=swap"
 
 interface Props {
   marginTop?: number
@@ -19,10 +22,19 @@ export default function Section04_ComparisonTable({
   sectionTitleHighlight = "Restricted Data",
   sectionDescription = "Databricks stores your data. Masking removes it. DTS makes it AI-ready -- without removing or exposing it.",
 }: Props) {
+  useEffect(() => {
+    const id = "font-dm-sans"
+    if (document.getElementById(id)) return
+    const link = document.createElement("link")
+    link.id = id
+    link.rel = "stylesheet"
+    link.href = FONT_URL
+    document.head.appendChild(link)
+  }, [])
+
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@700&family=Fragment+Mono&display=swap');
 
         .s4-section {
           width: 100%; overflow: hidden; box-sizing: border-box;

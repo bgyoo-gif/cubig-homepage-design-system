@@ -1,7 +1,10 @@
 // Section12_FAQ.tsx — DTS Common Questions (FAQ Accordion)
 // Framer Code Component
 import { useState } from "react"
+import { useEffect } from "react"
 import { addPropertyControls, ControlType } from "framer"
+
+const FONT_URL = "https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@700&family=Fragment+Mono&display=swap"
 
 interface FaqItem {
   question: string
@@ -60,10 +63,19 @@ export default function Section12_FAQ({
     setOpenIndex(openIndex === idx ? -1 : idx)
   }
 
+  useEffect(() => {
+    const id = "font-dm-sans"
+    if (document.getElementById(id)) return
+    const link = document.createElement("link")
+    link.id = id
+    link.rel = "stylesheet"
+    link.href = FONT_URL
+    document.head.appendChild(link)
+  }, [])
+
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@700&family=Fragment+Mono&display=swap');
 
         .s12-section {
           width: 100%;

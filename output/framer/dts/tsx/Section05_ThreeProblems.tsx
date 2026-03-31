@@ -1,6 +1,9 @@
 // Section05_ThreeProblems.tsx — DTS Three Data Problems / One Engine (Card Grid)
 // Framer Code Component
+import { useEffect } from "react"
 import { addPropertyControls, ControlType } from "framer"
+
+const FONT_URL = "https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@700&family=Fragment+Mono&display=swap"
 
 interface Props {
   marginTop?: number
@@ -66,10 +69,19 @@ export default function Section05_ThreeProblems({
   card3Check3 = "Remove data access bottlenecks in regulated environments",
   card3Check4 = "Maintain statistical characteristics without data transfer",
 }: Props) {
+  useEffect(() => {
+    const id = "font-dm-sans"
+    if (document.getElementById(id)) return
+    const link = document.createElement("link")
+    link.id = id
+    link.rel = "stylesheet"
+    link.href = FONT_URL
+    document.head.appendChild(link)
+  }, [])
+
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Fragment+Mono&display=swap');
 
         .s5-section {
           width: 100%; overflow: hidden; box-sizing: border-box;
