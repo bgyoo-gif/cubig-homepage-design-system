@@ -8,7 +8,11 @@ CUBIG 홈페이지용 콘텐츠 HTML을 A타입(LLM 생성, 내용 중심) → B
 ## 에이전트 파이프라인
 
 ```
+# B타입 변환 파이프라인
 product-designer → frontend-dev → qa (FAIL 시 재호출) → feedback-sync → deploy (gh-pages push)
+
+# 다이어그램 파이프라인 (B타입 카드에 삽입 시)
+diagram-builder → diagram-qa (FAIL 시 재호출) → B타입 HTML에 삽입 → deploy
 ```
 
 | 에이전트 | 역할 | 모델 |
@@ -18,7 +22,8 @@ product-designer → frontend-dev → qa (FAIL 시 재호출) → feedback-sync 
 | qa | 4개 카테고리 검증 (CAT-1~4) | sonnet |
 | design-system-agent | 새 컴포넌트 추가/개량 | sonnet |
 | design-system-viewer | design-system-viewer.html 업데이트 + GitHub Pages 배포 | sonnet |
-| diagram-builder | 프롬프트 기반 다이어그램 HTML 생성 | sonnet |
+| diagram-builder | 스크린샷/프롬프트 기반 다이어그램 HTML 생성 (Mode A: 파이프라인형, Mode B: 스크린샷 재현형) | sonnet |
+| diagram-qa | 다이어그램 원본 충실도 + DS 준수 검증 (DIAG-1~6) — diagram-builder 완료 후 필수 | sonnet |
 | feedback-sync | 사용자 피드백을 모든 관련 파일에 일괄 전파 | sonnet |
 | viewer-qa | 뷰어/서버 기능 품질 검증 — deploy 전 필수 | sonnet |
 | orchestrator | 전체 변환 파이프라인 자동 실행 (PD→FE→QA→Framer) | opus |

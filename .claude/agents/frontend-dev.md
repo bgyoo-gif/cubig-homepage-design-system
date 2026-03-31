@@ -429,6 +429,12 @@ QA 검증 요청합니다.
 
 ---
 
+## 다이어그램 삽입 규칙
+- spec에 다이어그램/스크린샷이 필요한 섹션이 명시되면, `diagram-builder` 에이전트에 위임한다
+- 직접 다이어그램 HTML을 만들지 않는다 — diagram-builder가 생성한 snippet을 삽입만 한다
+- diagram-builder가 완료되면 `diagram-qa`를 호출하여 검증 후, PASS된 snippet만 삽입한다
+- 삽입 위치: 해당 카드의 불릿 리스트 또는 본문 텍스트 뒤
+
 ## 절대 규칙
 - 원문 텍스트를 단 한 글자도 바꾸지 않는다
 - Design System에 없는 스타일은 `design-system-agent`에 먼저 요청한다

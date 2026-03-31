@@ -371,7 +371,7 @@
     ===================================================== */
     .ds-section-header {
       margin-bottom: var(--ds-space-2xl);
-      text-align: left;
+      text-align: center;
     }
     .ds-section-header__title {
       font-family: var(--ds-font-base);
@@ -388,15 +388,14 @@
       color: var(--ds-color-text-secondary);
       line-height: var(--ds-leading-relaxed);
       max-width: 100%;
-      margin: 0;
+      margin: 0 auto;
     }
     .ds-section-header--underline {
       padding-bottom: var(--ds-space-lg);
       border-bottom: var(--ds-border-default);
       margin-bottom: var(--ds-space-xl);
     }
-    .ds-section-header--left { text-align: left; }
-    .ds-section-header--left .ds-section-header__description { margin: 0; }
+    @media (max-width: 767px) { .ds-section-header { text-align: left; } .ds-section-header__description { margin: 0; } }
 
     /* =====================================================
        7. Hero — text-only
@@ -404,7 +403,7 @@
     .ds-hero--text-only { max-width: 860px; margin: 0 auto; }
     .ds-hero__title {
       font-family: var(--ds-font-base);
-      font-size: 24px;
+      font-size: var(--ds-text-5xl);
       font-weight: var(--ds-weight-bold);
       color: var(--ds-color-text-primary);
       line-height: var(--ds-leading-tight);
@@ -417,7 +416,7 @@
       color: var(--ds-color-text-secondary);
       line-height: var(--ds-leading-relaxed);
       max-width: 100%;
-      margin-bottom: var(--ds-space-xl);
+      margin: 0 auto var(--ds-space-xl);
     }
 
     /* =====================================================
