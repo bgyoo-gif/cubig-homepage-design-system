@@ -1120,8 +1120,8 @@
     var endX = ar.left - cr.left;
     var endY = ar.top - cr.top + ar.height / 2;
 
-    // 꺾은선 경유점: 좌측 바깥 (layers 왼쪽 여백)
-    var marginX = 14;
+    // 꺾은선 경유점: 레이어 좌측에서 16px 왼쪽
+    var marginX = startX - 16;
 
     var defs = svg.querySelector('defs');
     svg.innerHTML = '';
