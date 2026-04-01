@@ -1,5 +1,5 @@
 {
-  "generated": "2026-04-01 12:06:53",
+  "generated": "2026-04-01 12:17:33",
   "github_base": "https://bgyoo-gif.github.io/cubig-homepage-design-system",
   "groups": [
     {
@@ -939,6 +939,11 @@
           "name": "diagram-data-profiling.html",
           "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/html/diagram-data-profiling.html",
           "modified": "2026-03-31"
+        },
+        {
+          "name": "diagram-execution-state-drift-hero.html",
+          "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/html/diagram-execution-state-drift-hero.html",
+          "modified": "2026-04-01"
         },
         {
           "name": "diagram-execution-state-drift.html",
