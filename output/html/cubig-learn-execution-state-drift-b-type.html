@@ -935,8 +935,8 @@
     ============================================================ */
     .edh-diag {
       font-family: var(--ds-font-base);
-      background: var(--ds-color-surface-white); border-radius: 0; overflow: hidden;
-      width: 100%;
+      background: var(--ds-color-surface-white); border-radius: var(--ds-radius-md) var(--ds-radius-md) 0 0; overflow: hidden;
+      width: 100%; box-shadow: 0 -8px 40px rgba(0,0,0,0.12);
     }
     .edh-diag__frame { display: flex; align-items: center; gap: 6px; padding: 10px 14px; background: linear-gradient(180deg, var(--ds-color-neutral-050) 0%, var(--ds-color-neutral-100) 100%); border-bottom: 1px solid var(--ds-color-neutral-200); }
     .edh-diag__dot { width: 12px; height: 12px; border-radius: 50%; }
@@ -1000,10 +1000,8 @@
         </h1>
         <p class="ds-hero__description">When production AI degrades, teams check the model first. But most failures are not model drift — they are execution state drift. Schema changes, pipeline updates, runtime differences. Learn the distinction and how to isolate the root cause.</p>
       </div>
-      <!-- 배경 이미지 프레임 + 다이어그램 (스크린샷 역할) -->
+      <!-- 배경 이미지 프레임 + 다이어그램 -->
       <div class="ds-hero__screenshot-frame ds-bg--wc-ecosystem">
-        <div class="ds-hero__screenshot">
-
 <div class="edh-diag">
   <div class="edh-diag__frame">
     <span class="edh-diag__dot edh-diag__dot--red"></span>
@@ -1149,7 +1147,6 @@
 })();
 </script>
 
-        </div><!-- /.ds-hero__screenshot -->
       </div><!-- /.ds-hero__screenshot-frame -->
     </div>
   </section>
