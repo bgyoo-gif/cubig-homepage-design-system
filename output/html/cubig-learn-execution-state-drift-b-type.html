@@ -429,7 +429,7 @@
       text-wrap: pretty;
     }
     .ds-hero__screenshot-frame {
-      margin-top: var(--ds-space-xl);
+      margin-top: var(--ds-space-2xl);
       border-radius: var(--ds-radius-xl);
       padding: var(--ds-space-2xl) var(--ds-space-2xl) 0;
       background-size: cover;
@@ -932,6 +932,61 @@
     @media (min-width: 768px)  { .ds-dark-section__title { font-size: 22px; } }
     @media (min-width: 1024px) { .ds-dark-section__title { font-size: 24px; } }
     @media (min-width: 1440px) { .ds-dark-section__title { font-size: 28px; } }
+
+    /* ============================================================
+       22. Hero Diagram — Execution State Drift
+    ============================================================ */
+    .edh-diag {
+      font-family: var(--ds-font-base);
+      background: var(--ds-color-surface-white); border-radius: var(--ds-radius-md) var(--ds-radius-md) 0 0; overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.06);
+      max-width: 720px; width: 100%; margin: 0 auto;
+    }
+    .edh-diag__frame { display: flex; align-items: center; gap: 6px; padding: 10px 14px; background: linear-gradient(180deg, var(--ds-color-neutral-050) 0%, var(--ds-color-neutral-100) 100%); border-bottom: 1px solid var(--ds-color-neutral-200); }
+    .edh-diag__dot { width: 12px; height: 12px; border-radius: 50%; }
+    .edh-diag__dot--red { background: var(--ds-color-error); }
+    .edh-diag__dot--yellow { background: var(--ds-color-warn); }
+    .edh-diag__dot--green { background: var(--ds-color-success); }
+    .edh-diag__canvas { padding: var(--ds-space-xl) var(--ds-space-xl) var(--ds-space-lg); background: var(--ds-color-surface-white); position: relative; }
+    .edh-diag__main { display: grid; grid-template-columns: 130px 1fr 130px; gap: 0; align-items: start; position: relative; }
+    .edh-diag__layers { display: flex; flex-direction: column; gap: 0; position: relative; z-index: 1; }
+    .edh-diag__layer { border-radius: 10px; padding: var(--ds-space-md) var(--ds-space-lg); text-align: center; }
+    .edh-diag__layer-title { font-size: var(--ds-text-md); font-weight: var(--ds-weight-bold); margin: 0 0 4px; }
+    .edh-diag__layer-sub { font-size: var(--ds-text-xs); margin: 0; line-height: 1.4; }
+    .edh-diag__layer--app { background: #eef3ff; border: 1.5px solid #c6d4fa; }
+    .edh-diag__layer--app .edh-diag__layer-title { color: var(--ds-color-brand-primary); }
+    .edh-diag__layer--app .edh-diag__layer-sub { color: var(--ds-color-text-secondary); }
+    .edh-diag__layer--model { background: var(--ds-color-neutral-050); border: 1.5px solid var(--ds-color-border-default); }
+    .edh-diag__layer--model .edh-diag__layer-title { color: var(--ds-color-text-primary); }
+    .edh-diag__layer--model .edh-diag__layer-sub { color: var(--ds-color-text-secondary); }
+    .edh-diag__layer--exec { background: #fff5f5; border: 1.5px solid #ffcccc; }
+    .edh-diag__layer--exec .edh-diag__layer-title { color: var(--ds-color-error); }
+    .edh-diag__layer--exec .edh-diag__layer-sub { color: var(--ds-color-text-secondary); }
+    .edh-diag__layer-gap { height: 10px; }
+    .edh-diag__nc { display: flex; align-items: center; justify-content: center; gap: var(--ds-space-xs); margin: var(--ds-space-xs) 0; }
+    .edh-diag__nc-line { flex: 1; height: 1px; background: var(--ds-color-border-default); }
+    .edh-diag__nc-text { font-size: var(--ds-text-xs); color: var(--ds-color-text-tertiary); font-weight: var(--ds-weight-medium); background: var(--ds-color-surface-white); padding: 0 var(--ds-space-xs); }
+    .edh-diag__sub-cards { display: flex; gap: var(--ds-space-xs); margin-top: var(--ds-space-sm); }
+    .edh-diag__sub-card { flex: 1; background: var(--ds-color-surface-white); border: 1.5px solid #ffcccc; border-radius: 7px; padding: 10px; text-align: center; }
+    .edh-diag__sub-card-title { font-size: var(--ds-text-sm); font-weight: var(--ds-weight-bold); color: var(--ds-color-error); margin: 0 0 2px; }
+    .edh-diag__sub-card-desc { font-size: var(--ds-text-xs); color: var(--ds-color-text-secondary); margin: 0; line-height: 1.4; }
+    .edh-diag__right-col { display: flex; flex-direction: column; justify-content: start; }
+    .edh-diag__right-spacer { height: 82px; }
+    .edh-diag__teams { display: flex; align-items: center; gap: 6px; }
+    .edh-diag__teams-arrow { width: 28px; height: 2px; background: var(--ds-color-text-secondary); position: relative; flex-shrink: 0; }
+    .edh-diag__teams-arrow::before { content: ''; position: absolute; left: -1px; top: 50%; transform: translateY(-50%); border-top: 4px solid transparent; border-bottom: 4px solid transparent; border-right: 6px solid var(--ds-color-text-secondary); }
+    .edh-diag__teams-text { font-size: var(--ds-text-xs); color: var(--ds-color-text-secondary); font-weight: var(--ds-weight-medium); white-space: nowrap; }
+    .edh-diag__svg-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+    .edh-diag__caption { margin-top: var(--ds-space-lg); text-align: center; font-size: var(--ds-text-sm); color: var(--ds-color-text-secondary); font-style: italic; }
+    .edh-diag__left-col { min-height: 1px; }
+    @media (max-width: 640px) {
+      .edh-diag__main { grid-template-columns: 1fr; }
+      .edh-diag__right-col, .edh-diag__left-col { display: none; }
+      .edh-diag__sub-cards { flex-direction: column; }
+      .edh-diag__layer-title { font-size: var(--ds-text-sm); }
+      .edh-diag__canvas { padding: var(--ds-space-lg) var(--ds-space-sm) var(--ds-space-md); }
+      .edh-diag__svg-overlay { display: none; }
+    }
   </style>
 </head>
 <body>
@@ -952,96 +1007,6 @@
       <!-- 배경 이미지 프레임 + 다이어그램 (스크린샷 역할) -->
       <div class="ds-hero__screenshot-frame ds-bg--wc-ecosystem">
         <div class="ds-hero__screenshot">
-          <style>
-/* ─── Execution State Drift Hero Diagram ─── */
-.edh-diag {
-  font-family: var(--ds-font-base, "DM Sans", sans-serif);
-  background: #fff; border-radius: 12px 12px 0 0; overflow: hidden;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.06);
-  max-width: 720px; width: 100%; margin: 0 auto;
-}
-/* OS Frame */
-.edh-diag__frame { display: flex; align-items: center; gap: 6px; padding: 10px 14px; background: linear-gradient(180deg, #f5f5f5 0%, #ebebeb 100%); border-bottom: 1px solid #d8d8d8; }
-.edh-diag__dot { width: 12px; height: 12px; border-radius: 50%; }
-.edh-diag__dot--red { background: #ff5f57; }
-.edh-diag__dot--yellow { background: #febc2e; }
-.edh-diag__dot--green { background: #28c840; }
-
-/* Canvas — layers 중앙, drift path는 SVG로 */
-.edh-diag__canvas { padding: 32px 32px 24px; background: #fff; position: relative; }
-
-/* ── Center: 3 layers + right label — 좌우 대칭 ── */
-.edh-diag__main { display: grid; grid-template-columns: 130px 1fr 130px; gap: 0; align-items: start; position: relative; }
-.edh-diag__layers { display: flex; flex-direction: column; gap: 0; position: relative; z-index: 1; }
-
-/* Layer boxes */
-.edh-diag__layer { border-radius: 10px; padding: 16px 24px; text-align: center; }
-.edh-diag__layer-title { font-size: var(--ds-text-md, 16px); font-weight: 700; margin: 0 0 4px; }
-.edh-diag__layer-sub { font-size: var(--ds-text-xs, 12px); margin: 0; line-height: 1.4; }
-
-/* Application outputs — brand blue tint */
-.edh-diag__layer--app {
-  background: #eef3ff; border: 1.5px solid #c6d4fa;
-}
-.edh-diag__layer--app .edh-diag__layer-title { color: #3061f2; }
-.edh-diag__layer--app .edh-diag__layer-sub { color: #636363; }
-
-/* Model layer — neutral */
-.edh-diag__layer--model {
-  background: #f2f2f2; border: 1.5px solid #e6e7e9;
-}
-.edh-diag__layer--model .edh-diag__layer-title { color: #0f0f0f; }
-.edh-diag__layer--model .edh-diag__layer-sub { color: #636363; }
-
-/* Execution environment — error red */
-.edh-diag__layer--exec {
-  background: #fff5f5; border: 1.5px solid #ffcccc;
-}
-.edh-diag__layer--exec .edh-diag__layer-title { color: #ff3030; }
-.edh-diag__layer--exec .edh-diag__layer-sub { color: #636363; }
-
-.edh-diag__layer-gap { height: 10px; }
-
-/* no changes — 텍스트만 */
-.edh-diag__nc { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 8px 0; }
-.edh-diag__nc-line { flex: 1; height: 1px; background: #e6e7e9; }
-.edh-diag__nc-text { font-size: var(--ds-text-xs, 12px); color: #9c9c9c; font-weight: 500; background: #fff; padding: 0 8px; }
-
-/* Sub-cards */
-.edh-diag__sub-cards { display: flex; gap: 8px; margin-top: 12px; }
-.edh-diag__sub-card { flex: 1; background: #fff; border: 1.5px solid #ffcccc; border-radius: 7px; padding: 10px 10px; text-align: center; }
-.edh-diag__sub-card-title { font-size: var(--ds-text-sm, 14px); font-weight: 700; color: #ff3030; margin: 0 0 2px; }
-.edh-diag__sub-card-desc { font-size: var(--ds-text-xs, 12px); color: #636363; margin: 0; line-height: 1.4; }
-
-/* ── Right: "Teams look here" — Model layer 세로 중앙에 정렬 ── */
-.edh-diag__right-col { display: flex; flex-direction: column; justify-content: start; }
-.edh-diag__right-spacer { height: 82px; } /* Application outputs(~60px) + gap(10px) + Model top padding → Model 세로 중앙 */
-.edh-diag__teams { display: flex; align-items: center; gap: 6px; }
-.edh-diag__teams-arrow { width: 28px; height: 2px; background: #636363; position: relative; flex-shrink: 0; }
-.edh-diag__teams-arrow::before { content: ''; position: absolute; left: -1px; top: 50%; transform: translateY(-50%); border-top: 4px solid transparent; border-bottom: 4px solid transparent; border-right: 6px solid #636363; }
-.edh-diag__teams-text { font-size: var(--ds-text-xs, 12px); color: #636363; font-weight: 500; white-space: nowrap; }
-
-/* ── SVG drift path — L자 꺾은선, Execution env 하단 → 좌측 → Application outputs 좌중앙 ── */
-.edh-diag__svg-overlay {
-  position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0;
-}
-
-/* Caption */
-.edh-diag__caption { margin-top: 20px; text-align: center; font-size: var(--ds-text-sm, 14px); color: #636363; font-style: italic; }
-
-/* Left col (drift path SVG가 이 영역 위에 그려짐) */
-.edh-diag__left-col { min-height: 1px; }
-
-/* Responsive */
-@media (max-width: 640px) {
-  .edh-diag__main { grid-template-columns: 1fr; }
-  .edh-diag__right-col, .edh-diag__left-col { display: none; }
-  .edh-diag__sub-cards { flex-direction: column; }
-  .edh-diag__layer-title { font-size: var(--ds-text-sm, 14px); }
-  .edh-diag__canvas { padding: 20px 14px 18px; }
-  .edh-diag__svg-overlay { display: none; }
-}
-</style>
 
 <div class="edh-diag">
   <div class="edh-diag__frame">
