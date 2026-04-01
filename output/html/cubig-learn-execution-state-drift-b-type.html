@@ -1658,37 +1658,50 @@
 }
 /* SVG overlay for arrows */
 .tcp-diag__svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
-/* Run Binding section */
+/* Run Binding — ds-diagram__default-wrap (silver gradient card) */
 .tcp-diag__rb {
   margin: var(--ds-space-md, 16px) var(--ds-space-md, 16px) 0;
-  border: 1.5px dashed var(--ds-color-success, #0e824c);
-  border-radius: var(--ds-radius-sm, 8px);
-  padding: var(--ds-space-sm, 12px) var(--ds-space-md, 16px);
-  text-align: center;
-  background: rgba(14, 130, 76, 0.04);
+  padding: 2px;
+  border-radius: var(--ds-radius-md, 18px);
+  background: var(--ds-gradient-card-silver, linear-gradient(109deg, #898989 0%, #fff 17%, #D5D5D5 63%, #F6F5F6 84%, #898989 100%));
+  box-shadow: rgba(113, 141, 176, 0.25) 0px 1px 20px 0px;
 }
-.tcp-diag__rb-title { font-size: var(--ds-text-sm, 14px); font-weight: 600; color: var(--ds-color-success, #0e824c); margin: 0 0 4px; }
+.tcp-diag__rb-inner {
+  background: var(--ds-color-surface-white, #fff);
+  border-radius: calc(var(--ds-radius-md, 18px) - 2px);
+  padding: var(--ds-space-md, 16px) var(--ds-space-lg, 24px);
+  text-align: center;
+}
+.tcp-diag__rb-title { font-size: var(--ds-text-sm, 14px); font-weight: 600; color: var(--ds-diag-text, #2a2a2a); margin: 0 0 4px; }
 .tcp-diag__rb-desc { font-size: var(--ds-text-xs, 12px); color: var(--ds-diag-text-sub, #666); margin: 0; }
 /* Bottom comparison */
 .tcp-diag__compare {
   display: grid; grid-template-columns: 1fr 1fr; gap: var(--ds-space-sm, 12px);
   margin: var(--ds-space-md, 16px) var(--ds-space-md, 16px) var(--ds-space-md, 16px);
 }
-.tcp-diag__cmp-card {
-  border-radius: var(--ds-radius-sm, 8px); padding: var(--ds-space-sm, 12px);
-  text-align: center;
+/* Without — ds-diagram__default-wrap (silver) */
+.tcp-diag__cmp-without {
+  padding: 2px; border-radius: var(--ds-radius-md, 18px);
+  background: var(--ds-gradient-card-silver, linear-gradient(109deg, #898989 0%, #fff 17%, #D5D5D5 63%, #F6F5F6 84%, #898989 100%));
+  box-shadow: rgba(113, 141, 176, 0.25) 0px 1px 20px 0px;
 }
-.tcp-diag__cmp-card--without {
-  border: 1px dashed var(--ds-diag-border, #d0d0d0);
-  background: var(--ds-diag-surface, #f8f8f8);
+.tcp-diag__cmp-without-inner {
+  background: var(--ds-color-surface-white, #fff);
+  border-radius: calc(var(--ds-radius-md, 18px) - 2px);
+  padding: var(--ds-space-sm, 12px); text-align: center;
 }
-.tcp-diag__cmp-card--with {
-  border: 1.5px solid var(--ds-color-success, #0e824c);
-  background: rgba(14, 130, 76, 0.06);
+/* With — ds-diagram__exchange-wrap--blue (blue gradient) */
+.tcp-diag__cmp-with {
+  padding: 2px; border-radius: var(--ds-radius-md, 18px);
+  background: var(--ds-gradient-card-blue, linear-gradient(109deg, #BFE1FB 0%, #fff 17%, #FFEDFA 38%, #81B8FB 51%, #E2E3F0 73%, #BFE1FB 100%));
+  box-shadow: rgba(113, 141, 176, 0.25) 0px 1px 20px 0px;
 }
-.tcp-diag__cmp-title { font-size: var(--ds-text-sm, 14px); font-weight: 600; margin: 0 0 3px; }
-.tcp-diag__cmp-card--without .tcp-diag__cmp-title { color: var(--ds-diag-text, #2a2a2a); }
-.tcp-diag__cmp-card--with .tcp-diag__cmp-title { color: var(--ds-color-success, #0e824c); }
+.tcp-diag__cmp-with-inner {
+  background: var(--ds-gradient-inner-blue, linear-gradient(99deg, #E9EEFB 0%, #FCFCFE 58%, #fff 100%));
+  border-radius: calc(var(--ds-radius-md, 18px) - 2px);
+  padding: var(--ds-space-sm, 12px); text-align: center;
+}
+.tcp-diag__cmp-title { font-size: var(--ds-text-sm, 14px); font-weight: 600; margin: 0 0 3px; color: var(--ds-diag-text, #2a2a2a); }
 .tcp-diag__cmp-desc { font-size: var(--ds-text-xs, 12px); color: var(--ds-diag-text-sub, #666); margin: 0; }
 /* Responsive */
 @media (max-width: 640px) {
@@ -1745,18 +1758,24 @@
         </div>
 
         <div class="tcp-diag__rb">
-          <p class="tcp-diag__rb-title">Run Binding</p>
-          <p class="tcp-diag__rb-desc">Diffs Release State between runs — surfaces schema change immediately</p>
+          <div class="tcp-diag__rb-inner">
+            <p class="tcp-diag__rb-title">Run Binding</p>
+            <p class="tcp-diag__rb-desc">Diffs Release State between runs — surfaces schema change immediately</p>
+          </div>
         </div>
 
         <div class="tcp-diag__compare">
-          <div class="tcp-diag__cmp-card tcp-diag__cmp-card--without">
-            <p class="tcp-diag__cmp-title">Without Run Binding</p>
-            <p class="tcp-diag__cmp-desc">No mechanism to identify cause</p>
+          <div class="tcp-diag__cmp-without">
+            <div class="tcp-diag__cmp-without-inner">
+              <p class="tcp-diag__cmp-title">Without Run Binding</p>
+              <p class="tcp-diag__cmp-desc">No mechanism to identify cause</p>
+            </div>
           </div>
-          <div class="tcp-diag__cmp-card tcp-diag__cmp-card--with">
-            <p class="tcp-diag__cmp-title">With Run Binding</p>
-            <p class="tcp-diag__cmp-desc">Diff surfaces schema change at source</p>
+          <div class="tcp-diag__cmp-with">
+            <div class="tcp-diag__cmp-with-inner">
+              <p class="tcp-diag__cmp-title">With Run Binding</p>
+              <p class="tcp-diag__cmp-desc">Diff surfaces schema change at source</p>
+            </div>
           </div>
         </div>
       </div>
