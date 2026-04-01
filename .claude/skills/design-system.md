@@ -784,26 +784,23 @@ HTML:
    - 수채화: ds-bg--wc-ecosystem(히어로), ds-bg--wc-blue-right, ds-bg--wc-blue-left, ds-bg--wc-soft
    페이지별로 다른 배경을 사용해야 함 (중복 금지) */
 .ds-hero__screenshot-frame {
-  margin-top: var(--ds-space-xl);
-  border-radius: var(--ds-radius-xl);
-  padding: var(--ds-space-2xl) var(--ds-space-2xl) 0;
+  margin-top: var(--ds-space-2xl);
+  border-radius: var(--ds-radius-xl) var(--ds-radius-xl) 0 0;
+  padding: 0;
   background-size: cover; background-position: center;
   overflow: hidden;
 }
 
-/* 프레임 안의 스크린샷 */
+/* 프레임 안의 스크린샷 — 패딩 없이 프레임에 꽉 채움 */
 .ds-hero__screenshot {
-  border-radius: var(--ds-radius-lg) var(--ds-radius-lg) 0 0;
-  overflow: hidden; box-shadow: 0 -8px 40px rgba(0,0,0,0.12);
+  overflow: hidden;
   background: var(--ds-color-surface-white);
-  min-height: 320px;
 }
 .ds-hero__screenshot img { width: 100%; display: block; }
 
 @media (max-width: 767px) {
   .ds-hero-screenshot-section { padding: 100px 0 0; }
-  .ds-hero__screenshot-frame { padding: var(--ds-space-xl) var(--ds-space-xl) 0; border-radius: var(--ds-radius-lg); }
-  .ds-hero__screenshot { min-height: 180px; border-radius: var(--ds-radius-md) var(--ds-radius-md) 0 0; }
+  .ds-hero__screenshot-frame { border-radius: var(--ds-radius-lg) var(--ds-radius-lg) 0 0; }
 }
 ```
 
