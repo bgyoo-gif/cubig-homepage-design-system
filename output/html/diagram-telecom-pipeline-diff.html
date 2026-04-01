@@ -1,0 +1,558 @@
+<!-- Telecom Pipeline Diff — Diagram Snippet (Mode B) -->
+<style>
+  /* ── Scoped tokens ── */
+  .tcp-diag {
+    --tcp-font-base: var(--ds-font-base, "DM Sans", sans-serif);
+    --tcp-font-code: var(--ds-font-code, "Fragment Mono", monospace);
+
+    --tcp-text-xs:  12px;
+    --tcp-text-sm:  13px;
+    --tcp-text-md:  14px;
+
+    /* error (red) */
+    --tcp-err-bg:     #fff5f5;
+    --tcp-err-border: #ffcccc;
+    --tcp-err-title:  #cc0000;
+    --tcp-err-sub:    #ff3030;
+
+    /* neutral */
+    --tcp-neu-bg:     #f2f2f2;
+    --tcp-neu-border: #e6e7e9;
+    --tcp-neu-title:  #0f0f0f;
+    --tcp-neu-sub:    #636363;
+
+    /* success (green) */
+    --tcp-suc-bg:     #dcfce7;
+    --tcp-suc-border: #86efac;
+    --tcp-suc-title:  #0e824c;
+    --tcp-suc-sub:    #166534;
+
+    /* schema change dashed arrow */
+    --tcp-schema-color: #ff3030;
+
+    /* run binding */
+    --tcp-rb-border: #0e824c;
+    --tcp-rb-bg:     #f0fdf4;
+    --tcp-rb-title:  #0e824c;
+    --tcp-rb-desc:   #166534;
+
+    /* arrows */
+    --tcp-arrow-node: #9c9c9c;
+
+    font-family: var(--tcp-font-base);
+  }
+
+  /* ── OS Window Frame ── */
+  .tcp-diag__window {
+    background: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.06);
+    border: 1px solid #e6e7e9;
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .tcp-diag__titlebar {
+    background: linear-gradient(180deg, #f5f5f5 0%, #ebebeb 100%);
+    border-bottom: 1px solid #d9d9d9;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    padding: 0 14px;
+    gap: 7px;
+    position: relative;
+  }
+
+  .tcp-diag__dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .tcp-diag__dot--red    { background: #ff5f57; }
+  .tcp-diag__dot--yellow { background: #febc2e; }
+  .tcp-diag__dot--green  { background: #28c840; }
+
+  .tcp-diag__titlebar-label {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: var(--tcp-text-sm);
+    color: #636363;
+    font-family: var(--tcp-font-base);
+    font-weight: 500;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  /* ── Content area ── */
+  .tcp-diag__content {
+    background: #ffffff;
+    padding: 24px 24px 20px;
+  }
+
+  /* ── Pipeline title ── */
+  .tcp-diag__pipeline-title {
+    text-align: center;
+    font-size: var(--tcp-text-sm);
+    color: #9c9c9c;
+    font-family: var(--tcp-font-base);
+    font-weight: 400;
+    margin-bottom: 16px;
+    letter-spacing: 0.01em;
+  }
+
+  /* ── Schema change entry ── */
+  .tcp-diag__schema-entry {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 0;
+    /* positioned above node1, will be laid out in the canvas */
+  }
+
+  /* ── Canvas (relative container for SVG overlay) ── */
+  .tcp-diag__canvas {
+    position: relative;
+    width: 100%;
+  }
+
+  .tcp-diag__arrow-svg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  /* ── Schema change label area ── */
+  .tcp-diag__schema-row {
+    display: flex;
+    align-items: flex-end;
+    height: 40px;
+    margin-bottom: 0;
+  }
+
+  .tcp-diag__schema-spacer {
+    /* aligns to node1 center */
+    flex: 0 0 auto;
+  }
+
+  .tcp-diag__schema-label {
+    font-size: var(--tcp-text-xs);
+    color: #9c9c9c;
+    font-family: var(--tcp-font-base);
+    padding-left: 6px;
+    white-space: nowrap;
+    line-height: 1;
+  }
+
+  /* ── Nodes row ── */
+  .tcp-diag__nodes {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0;
+    width: 100%;
+  }
+
+  .tcp-diag__node-wrap {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* arrow gap between nodes */
+  .tcp-diag__node-gap {
+    flex: 0 0 32px;
+    /* arrows drawn by JS */
+  }
+
+  /* ── Node card ── */
+  .tcp-diag__node {
+    border-radius: 8px;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    width: 100%;
+    max-width: 148px;
+    box-sizing: border-box;
+    border-width: 1px;
+    border-style: solid;
+  }
+
+  .tcp-diag__node--error {
+    background: var(--tcp-err-bg);
+    border-color: var(--tcp-err-border);
+  }
+  .tcp-diag__node--neutral {
+    background: var(--tcp-neu-bg);
+    border-color: var(--tcp-neu-border);
+  }
+
+  .tcp-diag__node-title {
+    font-size: var(--tcp-text-md);
+    font-weight: 500;
+    text-align: center;
+    line-height: 1.3;
+    white-space: nowrap;
+  }
+  .tcp-diag__node--error .tcp-diag__node-title  { color: var(--tcp-err-title); }
+  .tcp-diag__node--neutral .tcp-diag__node-title { color: var(--tcp-neu-title); }
+
+  .tcp-diag__node-sub {
+    font-size: var(--tcp-text-xs);
+    text-align: center;
+    line-height: 1.3;
+    white-space: nowrap;
+  }
+  .tcp-diag__node--error .tcp-diag__node-sub  { color: var(--tcp-err-sub); }
+  .tcp-diag__node--neutral .tcp-diag__node-sub { color: var(--tcp-neu-sub); }
+
+  /* ── Run Binding bracket ── */
+  .tcp-diag__rb {
+    margin-top: 16px;
+    border: 1px dashed var(--tcp-rb-border);
+    border-radius: 8px;
+    background: var(--tcp-rb-bg);
+    padding: 10px 16px 10px;
+    text-align: center;
+  }
+
+  .tcp-diag__rb-title {
+    font-size: var(--tcp-text-md);
+    font-weight: 600;
+    color: var(--tcp-rb-title);
+    margin-bottom: 2px;
+  }
+
+  .tcp-diag__rb-desc {
+    font-size: var(--tcp-text-xs);
+    color: var(--tcp-rb-desc);
+    line-height: 1.4;
+  }
+
+  /* ── Bottom comparison row ── */
+  .tcp-diag__compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 12px;
+  }
+
+  .tcp-diag__compare-card {
+    border-radius: 8px;
+    padding: 10px 14px;
+    border-width: 1px;
+    border-style: dashed;
+  }
+
+  .tcp-diag__compare-card--without {
+    background: #ffffff;
+    border-color: #e6e7e9;
+  }
+  .tcp-diag__compare-card--with {
+    background: var(--tcp-suc-bg);
+    border-color: var(--tcp-suc-border);
+    border-style: solid;
+  }
+
+  .tcp-diag__compare-title {
+    font-size: var(--tcp-text-md);
+    font-weight: 600;
+    margin-bottom: 3px;
+  }
+  .tcp-diag__compare-card--without .tcp-diag__compare-title { color: #0f0f0f; }
+  .tcp-diag__compare-card--with    .tcp-diag__compare-title { color: var(--tcp-suc-title); }
+
+  .tcp-diag__compare-desc {
+    font-size: var(--tcp-text-xs);
+    line-height: 1.4;
+  }
+  .tcp-diag__compare-card--without .tcp-diag__compare-desc { color: #636363; }
+  .tcp-diag__compare-card--with    .tcp-diag__compare-desc { color: var(--tcp-suc-sub); }
+
+  /* ── Responsive ── */
+  @media (max-width: 640px) {
+    .tcp-diag__content {
+      padding: 16px 14px 16px;
+    }
+    .tcp-diag__nodes {
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+    }
+    .tcp-diag__node-wrap {
+      flex: 0 0 calc(50% - 4px);
+    }
+    .tcp-diag__node-gap {
+      display: none;
+    }
+    .tcp-diag__node-title {
+      white-space: normal;
+    }
+    .tcp-diag__node-sub {
+      white-space: normal;
+    }
+    .tcp-diag__compare {
+      grid-template-columns: 1fr;
+    }
+    .tcp-diag__schema-row {
+      display: none;
+    }
+  }
+</style>
+
+<div class="tcp-diag">
+  <div class="tcp-diag__window">
+
+    <!-- OS titlebar -->
+    <div class="tcp-diag__titlebar">
+      <span class="tcp-diag__dot tcp-diag__dot--red"></span>
+      <span class="tcp-diag__dot tcp-diag__dot--yellow"></span>
+      <span class="tcp-diag__dot tcp-diag__dot--green"></span>
+      <span class="tcp-diag__titlebar-label">Telecom churn prediction pipeline</span>
+    </div>
+
+    <!-- Content -->
+    <div class="tcp-diag__content">
+
+      <!-- Pipeline label -->
+      <div class="tcp-diag__pipeline-title">Telecom churn prediction pipeline</div>
+
+      <!-- Canvas: schema entry row + nodes + SVG overlay -->
+      <div class="tcp-diag__canvas" id="tcp-canvas">
+
+        <!-- SVG arrow layer -->
+        <svg class="tcp-diag__arrow-svg" id="tcp-arrow-svg" aria-hidden="true">
+          <defs>
+            <marker id="tcp-arrow-node" viewBox="0 0 10 10" refX="9" refY="5"
+                    markerWidth="6" markerHeight="6" orient="auto">
+              <path d="M2 1L8 5L2 9" fill="none" stroke="#9c9c9c"
+                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </marker>
+            <marker id="tcp-arrow-schema" viewBox="0 0 10 10" refX="9" refY="5"
+                    markerWidth="6" markerHeight="6" orient="auto">
+              <path d="M2 1L8 5L2 9" fill="none" stroke="#ff3030"
+                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </marker>
+            <marker id="tcp-arrow-rb" viewBox="0 0 10 10" refX="9" refY="5"
+                    markerWidth="6" markerHeight="6" orient="auto">
+              <path d="M2 1L8 5L2 9" fill="none" stroke="#0e824c"
+                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </marker>
+          </defs>
+        </svg>
+
+        <!-- Schema change label row -->
+        <div class="tcp-diag__schema-row" id="tcp-schema-row">
+          <!-- schema label positioned dynamically by JS -->
+          <span id="tcp-schema-label" style="
+            font-size: 12px;
+            color: #9c9c9c;
+            font-family: var(--ds-font-base, 'DM Sans', sans-serif);
+            white-space: nowrap;
+            line-height: 1;
+            display: inline-block;
+          ">schema change</span>
+        </div>
+
+        <!-- Nodes row -->
+        <div class="tcp-diag__nodes" id="tcp-nodes">
+          <!-- Node 1: Upstream schema (error) -->
+          <div class="tcp-diag__node-wrap">
+            <div class="tcp-diag__node tcp-diag__node--error" id="tcp-node1">
+              <span class="tcp-diag__node-title">Upstream schema</span>
+              <span class="tcp-diag__node-sub">New segment field</span>
+            </div>
+          </div>
+
+          <div class="tcp-diag__node-gap" id="tcp-gap1"></div>
+
+          <!-- Node 2: Feature store (neutral) -->
+          <div class="tcp-diag__node-wrap">
+            <div class="tcp-diag__node tcp-diag__node--neutral" id="tcp-node2">
+              <span class="tcp-diag__node-title">Feature store</span>
+              <span class="tcp-diag__node-sub">Customer features</span>
+            </div>
+          </div>
+
+          <div class="tcp-diag__node-gap" id="tcp-gap2"></div>
+
+          <!-- Node 3: Churn model (neutral) -->
+          <div class="tcp-diag__node-wrap">
+            <div class="tcp-diag__node tcp-diag__node--neutral" id="tcp-node3">
+              <span class="tcp-diag__node-title">Churn model</span>
+              <span class="tcp-diag__node-sub">Unchanged</span>
+            </div>
+          </div>
+
+          <div class="tcp-diag__node-gap" id="tcp-gap3"></div>
+
+          <!-- Node 4: Prediction scores (error) -->
+          <div class="tcp-diag__node-wrap">
+            <div class="tcp-diag__node tcp-diag__node--error" id="tcp-node4">
+              <span class="tcp-diag__node-title">Prediction scores</span>
+              <span class="tcp-diag__node-sub">Shifted</span>
+            </div>
+          </div>
+        </div><!-- /.tcp-diag__nodes -->
+
+        <!-- Run Binding bracket -->
+        <div class="tcp-diag__rb" id="tcp-rb">
+          <div class="tcp-diag__rb-title">Run Binding</div>
+          <div class="tcp-diag__rb-desc">Diffs Release State between runs — surfaces schema change immediately</div>
+        </div>
+
+      </div><!-- /#tcp-canvas -->
+
+      <!-- Bottom comparison -->
+      <div class="tcp-diag__compare">
+        <div class="tcp-diag__compare-card tcp-diag__compare-card--without">
+          <div class="tcp-diag__compare-title">Without Run Binding</div>
+          <div class="tcp-diag__compare-desc">No mechanism to identify cause</div>
+        </div>
+        <div class="tcp-diag__compare-card tcp-diag__compare-card--with">
+          <div class="tcp-diag__compare-title">With Run Binding</div>
+          <div class="tcp-diag__compare-desc">Diff surfaces schema change at source</div>
+        </div>
+      </div>
+
+    </div><!-- /.tcp-diag__content -->
+  </div><!-- /.tcp-diag__window -->
+</div><!-- /.tcp-diag -->
+
+<script>
+(function() {
+  var GAP = 8;
+  var NS = 'http://www.w3.org/2000/svg';
+
+  function getPoints(el, canvas) {
+    var r = el.getBoundingClientRect();
+    var c = canvas.getBoundingClientRect();
+    return {
+      top:    { x: r.left - c.left + r.width / 2,  y: r.top - c.top },
+      bottom: { x: r.left - c.left + r.width / 2,  y: r.bottom - c.top },
+      left:   { x: r.left - c.left,                 y: r.top - c.top + r.height / 2 },
+      right:  { x: r.right - c.left,                y: r.top - c.top + r.height / 2 }
+    };
+  }
+
+  function makeLine(svg, x1, y1, x2, y2, stroke, marker, dasharray) {
+    var line = document.createElementNS(NS, 'line');
+    line.setAttribute('x1', x1);
+    line.setAttribute('y1', y1);
+    line.setAttribute('x2', x2);
+    line.setAttribute('y2', y2);
+    line.setAttribute('stroke', stroke);
+    line.setAttribute('stroke-width', '1.5');
+    if (dasharray) line.setAttribute('stroke-dasharray', dasharray);
+    if (marker) line.setAttribute('marker-end', 'url(#' + marker + ')');
+    svg.appendChild(line);
+  }
+
+  function drawTcpArrows() {
+    var canvas = document.getElementById('tcp-canvas');
+    var svg    = document.getElementById('tcp-arrow-svg');
+    if (!canvas || !svg) return;
+
+    /* preserve defs */
+    var defs = svg.querySelector('defs');
+    while (svg.lastChild && svg.lastChild !== defs) svg.removeChild(svg.lastChild);
+    if (!svg.contains(defs)) svg.appendChild(defs);
+
+    var node1 = document.getElementById('tcp-node1');
+    var node2 = document.getElementById('tcp-node2');
+    var node3 = document.getElementById('tcp-node3');
+    var node4 = document.getElementById('tcp-node4');
+    var rb    = document.getElementById('tcp-rb');
+
+    if (!node1 || !node2 || !node3 || !node4 || !rb) return;
+
+    /* check if mobile layout (nodes wrapped) */
+    var nodesEl = document.getElementById('tcp-nodes');
+    var isWrapped = nodesEl ? (getComputedStyle(nodesEl).flexWrap === 'wrap') : false;
+    if (isWrapped) return; /* skip arrows on mobile */
+
+    var p1 = getPoints(node1, canvas);
+    var p2 = getPoints(node2, canvas);
+    var p3 = getPoints(node3, canvas);
+    var p4 = getPoints(node4, canvas);
+    var rb_p = getPoints(rb, canvas);
+
+    /* ── Step 4a: Node → Node horizontal arrows (right→left, GAP 8px) ── */
+    /* node1 → node2 */
+    makeLine(svg,
+      p1.right.x + GAP, p1.right.y,
+      p2.left.x  - GAP, p2.left.y,
+      '#9c9c9c', 'tcp-arrow-node', null
+    );
+    /* node2 → node3 */
+    makeLine(svg,
+      p2.right.x + GAP, p2.right.y,
+      p3.left.x  - GAP, p3.left.y,
+      '#9c9c9c', 'tcp-arrow-node', null
+    );
+    /* node3 → node4 */
+    makeLine(svg,
+      p3.right.x + GAP, p3.right.y,
+      p4.left.x  - GAP, p4.left.y,
+      '#9c9c9c', 'tcp-arrow-node', null
+    );
+
+    /* ── Step 4b: Schema change — vertical dashed red arrow from above node1 ── */
+    /* Start: 36px above node1.top, End: node1.top - GAP */
+    var schemaX = p1.top.x;
+    var schemaStartY = p1.top.y - 36;
+    var schemaEndY   = p1.top.y - GAP;
+    makeLine(svg,
+      schemaX, schemaStartY,
+      schemaX, schemaEndY,
+      '#ff3030', 'tcp-arrow-schema', '4 3'
+    );
+
+    /* position "schema change" label just to the right of arrow start */
+    var label = document.getElementById('tcp-schema-label');
+    if (label) {
+      var canvasRect = canvas.getBoundingClientRect();
+      label.style.position = 'absolute';
+      label.style.left = (schemaX + 6) + 'px';
+      label.style.top  = (schemaStartY + 4) + 'px';
+    }
+
+    /* ── Step 4c: Node → Run Binding vertical dashed green connectors ── */
+    var nodes = [p1, p2, p3, p4];
+    nodes.forEach(function(p) {
+      makeLine(svg,
+        p.bottom.x, p.bottom.y + GAP,
+        p.bottom.x, rb_p.top.y - GAP,
+        '#0e824c', null, '3 3'
+      );
+    });
+
+    /* resize SVG height to cover canvas */
+    svg.setAttribute('height', canvas.offsetHeight);
+  }
+
+  /* schema row: give it enough height for the arrow to render above nodes */
+  function updateSchemaRow() {
+    var row = document.getElementById('tcp-schema-row');
+    if (row) row.style.height = '44px';
+  }
+
+  function init() {
+    updateSchemaRow();
+    drawTcpArrows();
+  }
+
+  setTimeout(init, 120);
+  window.addEventListener('resize', function() {
+    setTimeout(drawTcpArrows, 60);
+  });
+})();
+</script>
