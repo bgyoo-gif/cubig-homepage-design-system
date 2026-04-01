@@ -1,5 +1,5 @@
 {
-  "generated": "2026-04-01 15:21:17",
+  "generated": "2026-04-01 15:25:28",
   "github_base": "https://bgyoo-gif.github.io/cubig-homepage-design-system",
   "groups": [
     {
@@ -964,6 +964,11 @@
           "name": "diagram-six-dimensional-ai-readiness-score.html",
           "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/html/diagram-six-dimensional-ai-readiness-score.html",
           "modified": "2026-03-31"
+        },
+        {
+          "name": "diagram-telecom-pipeline-diff.html",
+          "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/html/diagram-telecom-pipeline-diff.html",
+          "modified": "2026-04-01"
         },
         {
           "name": "feedback-log.html",
