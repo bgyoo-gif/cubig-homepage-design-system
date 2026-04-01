@@ -1,5 +1,5 @@
 {
-  "generated": "2026-03-31 19:08:32",
+  "generated": "2026-04-01 10:41:27",
   "github_base": "https://bgyoo-gif.github.io/cubig-homepage-design-system",
   "groups": [
     {
@@ -760,7 +760,7 @@
         {
           "name": "cubig-learn-execution-state-drift-b-type.html",
           "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/html/cubig-learn-execution-state-drift-b-type.html",
-          "modified": "2026-03-31"
+          "modified": "2026-04-01"
         }
       ],
       "docs": [
@@ -939,6 +939,11 @@
           "name": "diagram-data-profiling.html",
           "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/html/diagram-data-profiling.html",
           "modified": "2026-03-31"
+        },
+        {
+          "name": "diagram-execution-state-drift.html",
+          "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/html/diagram-execution-state-drift.html",
+          "modified": "2026-04-01"
         },
         {
           "name": "diagram-execution-state-model.html",
