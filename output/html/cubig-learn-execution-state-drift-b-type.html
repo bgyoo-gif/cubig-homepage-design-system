@@ -430,10 +430,14 @@
     }
     .ds-hero__screenshot-frame {
       margin-top: var(--ds-space-2xl);
-      border-radius: var(--ds-radius-xl) var(--ds-radius-xl) 0 0;
+      border-radius: var(--ds-radius-xl);
+      padding: 48px 48px 0;
       background-size: cover;
       background-position: center;
       overflow: hidden;
+    }
+    .ds-hero__screenshot-frame .edh-diag {
+      border-radius: var(--ds-radius-md) var(--ds-radius-md) 0 0;
     }
     @media (min-width: 1024px) {
       .ds-hero__title { font-size: var(--ds-text-6xl); }
