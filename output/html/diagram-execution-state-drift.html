@@ -1,0 +1,279 @@
+<style>
+/* ── ESD Diagram: Execution State Drift ── */
+.esd-diag {
+  --esd-bg:             #1a1a1c;
+  --esd-card-bg:        #252528;
+  --esd-card-border:    #3a3a3e;
+  --esd-header-text:    #e8e8e8;
+  --esd-subtext:        #8a8a90;
+  --esd-success:        #34d399;
+  --esd-drift-bg:       #3d1a0a;
+  --esd-drift-border:   #c04a10;
+  --esd-drift-text:     #ff7040;
+  --esd-drift-subtext:  #e06040;
+  --esd-drift-header:   #ff6030;
+  --esd-conclusion-bg:  #c04010;
+  --esd-vs-text:        #5a5a60;
+  --esd-caption:        #7a7a82;
+  --esd-win-bar:        linear-gradient(180deg, #2e2e32 0%, #252528 100%);
+  font-family: var(--ds-font-base, "DM Sans", sans-serif);
+}
+
+/* OS Window frame */
+.esd-diag__window {
+  border-radius: var(--ds-radius-md, 18px);
+  overflow: hidden;
+  box-shadow: 0 12px 48px rgba(0,0,0,0.55), 0 2px 10px rgba(0,0,0,0.35);
+}
+
+.esd-diag__titlebar {
+  background: var(--esd-win-bar);
+  height: 36px;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  gap: 8px;
+  border-bottom: 1px solid #111;
+}
+
+.esd-diag__dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+.esd-diag__dot--close { background: #ff5f57; }
+.esd-diag__dot--min   { background: #ffbd2e; }
+.esd-diag__dot--max   { background: #28ca41; }
+
+/* Content area */
+.esd-diag__content {
+  background: var(--esd-bg);
+  padding: var(--ds-space-xl, 32px);
+}
+
+/* 2-col comparison grid */
+.esd-diag__compare {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: var(--ds-space-lg, 24px);
+  align-items: start;
+}
+
+/* Column headers */
+.esd-diag__col-header {
+  padding: 11px 16px;
+  border-radius: var(--ds-radius-sm, 8px);
+  font-size: var(--ds-text-sm, 14px);
+  font-weight: var(--ds-weight-semibold, 600);
+  text-align: center;
+  margin-bottom: var(--ds-space-sm, 12px);
+}
+
+.esd-diag__col-header--left {
+  background: #2e2e32;
+  color: var(--esd-header-text);
+  border: 1px solid var(--esd-card-border);
+}
+
+.esd-diag__col-header--right {
+  background: #3d1a0a;
+  color: var(--esd-drift-header);
+  border: 1px solid var(--esd-drift-border);
+}
+
+/* VS separator */
+.esd-diag__vs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 8px;
+  font-size: var(--ds-text-sm, 14px);
+  font-weight: var(--ds-weight-medium, 500);
+  color: var(--esd-vs-text);
+  min-width: 32px;
+}
+
+/* Individual cards */
+.esd-diag__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-radius: var(--ds-radius-sm, 8px);
+  margin-bottom: var(--ds-space-xs, 8px);
+}
+
+.esd-diag__item:last-of-type {
+  margin-bottom: 0;
+}
+
+/* Left cards — neutral dark */
+.esd-diag__item--left {
+  background: var(--esd-card-bg);
+  border: 1px solid var(--esd-card-border);
+}
+
+.esd-diag__item-label--left {
+  font-size: var(--ds-text-sm, 14px);
+  font-weight: var(--ds-weight-medium, 500);
+  color: var(--esd-header-text);
+}
+
+.esd-diag__item-status {
+  font-size: var(--ds-text-xs, 12px);
+  font-weight: var(--ds-weight-medium, 500);
+  color: var(--esd-success);
+  white-space: nowrap;
+}
+
+/* Right cards — orange/red emphasis */
+.esd-diag__item--right {
+  background: var(--esd-drift-bg);
+  border: 1px solid var(--esd-drift-border);
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.esd-diag__item-label--right {
+  font-size: var(--ds-text-sm, 14px);
+  font-weight: var(--ds-weight-semibold, 600);
+  color: var(--esd-drift-text);
+}
+
+.esd-diag__item-drift {
+  font-size: var(--ds-text-xs, 12px);
+  font-weight: var(--ds-weight-regular, 400);
+  color: var(--esd-drift-subtext);
+}
+
+/* "Results were still wrong." note */
+.esd-diag__note {
+  margin-top: var(--ds-space-md, 16px);
+  font-size: var(--ds-text-xs, 12px);
+  font-style: italic;
+  color: var(--esd-subtext);
+}
+
+/* Conclusion card */
+.esd-diag__conclusion {
+  margin-top: var(--ds-space-lg, 24px);
+  display: flex;
+  justify-content: center;
+}
+
+.esd-diag__conclusion-card {
+  background: var(--esd-conclusion-bg);
+  border: 1px solid #e05020;
+  border-radius: var(--ds-radius-sm, 8px);
+  padding: 12px 32px;
+  font-size: var(--ds-text-sm, 14px);
+  font-weight: var(--ds-weight-bold, 700);
+  color: #fff;
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+
+/* Bottom caption */
+.esd-diag__caption {
+  margin-top: var(--ds-space-md, 16px);
+  text-align: center;
+  font-size: var(--ds-text-xs, 12px);
+  color: var(--esd-caption);
+}
+
+/* Responsive: 2-col → 1-col */
+@media (max-width: 640px) {
+  .esd-diag__compare {
+    grid-template-columns: 1fr;
+    gap: var(--ds-space-sm, 12px);
+  }
+
+  .esd-diag__vs {
+    padding-top: 0;
+    justify-content: flex-start;
+  }
+
+  .esd-diag__content {
+    padding: var(--ds-space-md, 16px);
+  }
+
+  .esd-diag__conclusion-card {
+    padding: 12px 20px;
+  }
+}
+</style>
+
+<div class="esd-diag">
+  <div class="esd-diag__window">
+    <!-- OS Window titlebar -->
+    <div class="esd-diag__titlebar">
+      <span class="esd-diag__dot esd-diag__dot--close"></span>
+      <span class="esd-diag__dot esd-diag__dot--min"></span>
+      <span class="esd-diag__dot esd-diag__dot--max"></span>
+    </div>
+
+    <!-- Diagram content -->
+    <div class="esd-diag__content">
+
+      <!-- 2-column comparison -->
+      <div class="esd-diag__compare">
+
+        <!-- Left col: What teams check -->
+        <div class="esd-diag__left-col">
+          <div class="esd-diag__col-header esd-diag__col-header--left">What teams check</div>
+
+          <div class="esd-diag__item esd-diag__item--left">
+            <span class="esd-diag__item-label--left">Model weights</span>
+            <span class="esd-diag__item-status">Unchanged ✓</span>
+          </div>
+
+          <div class="esd-diag__item esd-diag__item--left">
+            <span class="esd-diag__item-label--left">Hyperparameters</span>
+            <span class="esd-diag__item-status">Unchanged ✓</span>
+          </div>
+
+          <div class="esd-diag__item esd-diag__item--left">
+            <span class="esd-diag__item-label--left">Model registry</span>
+            <span class="esd-diag__item-status">No update ✓</span>
+          </div>
+
+          <p class="esd-diag__note">Results were still wrong.</p>
+        </div>
+
+        <!-- VS separator -->
+        <div class="esd-diag__vs">vs</div>
+
+        <!-- Right col: What actually changed -->
+        <div class="esd-diag__right-col">
+          <div class="esd-diag__col-header esd-diag__col-header--right">What actually changed</div>
+
+          <div class="esd-diag__item esd-diag__item--right">
+            <span class="esd-diag__item-label--right">Schema</span>
+            <span class="esd-diag__item-drift">Silently drifted</span>
+          </div>
+
+          <div class="esd-diag__item esd-diag__item--right">
+            <span class="esd-diag__item-label--right">Pipeline</span>
+            <span class="esd-diag__item-drift">Silently drifted</span>
+          </div>
+
+          <div class="esd-diag__item esd-diag__item--right">
+            <span class="esd-diag__item-label--right">Runtime</span>
+            <span class="esd-diag__item-drift">Silently drifted</span>
+          </div>
+        </div>
+
+      </div><!-- /.esd-diag__compare -->
+
+      <!-- Conclusion -->
+      <div class="esd-diag__conclusion">
+        <div class="esd-diag__conclusion-card">Execution state drift</div>
+      </div>
+
+      <!-- Caption -->
+      <p class="esd-diag__caption">Most drift monitors are not built to detect this.</p>
+
+    </div><!-- /.esd-diag__content -->
+  </div><!-- /.esd-diag__window -->
+</div><!-- /.esd-diag -->
