@@ -1157,29 +1157,21 @@
   color: var(--ds-color-error-light, #ff6b6b);
 }
 
-/* "Results were still wrong." note */
-.esd-diag__note {
-  margin-top: var(--ds-space-md, 16px);
+/* Column footnotes — same layer, below cards */
+.esd-diag__footnote {
+  margin-top: var(--ds-space-sm, 12px);
   font-size: var(--ds-text-xs, 12px);
-  font-style: italic;
   color: var(--ds-color-text-tertiary, #9c9c9c);
-}
-
-/* Conclusion card */
-.esd-diag__conclusion {
-  margin-top: var(--ds-space-lg, 24px);
-  display: flex;
-  justify-content: center;
-}
-
-.esd-diag__conclusion-card {
-  background: var(--ds-color-error, #ff3030);
-  border-radius: var(--ds-radius-sm, 8px);
-  padding: 12px 32px;
-  font-size: var(--ds-text-sm, 14px);
-  font-weight: 700;
-  color: #fff;
+  font-style: italic;
   text-align: center;
+  padding: 8px 0;
+  border-top: 1px dashed var(--ds-color-border-default, #e6e7e9);
+}
+
+.esd-diag__footnote--right {
+  color: var(--ds-color-error, #ff3030);
+  font-weight: 600;
+  font-style: normal;
 }
 
 /* Bottom caption */
@@ -1195,7 +1187,6 @@
   .esd-diag__compare { grid-template-columns: 1fr; gap: var(--ds-space-sm, 12px); }
   .esd-diag__vs { padding: 0; justify-content: flex-start; }
   .esd-diag__content { padding: var(--ds-space-md, 16px); }
-  .esd-diag__conclusion-card { padding: 12px 20px; }
 }
 </style>
 
@@ -1224,7 +1215,7 @@
             <span class="esd-diag__item-label--left">Model registry</span>
             <span class="esd-diag__item-status">No update ✓</span>
           </div>
-          <p class="esd-diag__note">Results were still wrong.</p>
+          <p class="esd-diag__footnote">Results were still wrong.</p>
         </div>
 
         <div class="esd-diag__vs">vs</div>
@@ -1243,12 +1234,9 @@
             <span class="esd-diag__item-label--right">Runtime</span>
             <span class="esd-diag__item-drift">Silently drifted</span>
           </div>
+          <p class="esd-diag__footnote esd-diag__footnote--right">Execution state drift</p>
         </div>
 
-      </div>
-
-      <div class="esd-diag__conclusion">
-        <div class="esd-diag__conclusion-card">Execution state drift</div>
       </div>
 
       <p class="esd-diag__caption">Most drift monitors are not built to detect this.</p>
