@@ -44,9 +44,10 @@ skills:
 - 판단이 어려우면 보수적으로 (없으면 안 넣는다)
 
 ### 컬러
-- 스크린샷의 컬러를 최대한 정확히 재현
+- **DS [W] Diagram 토큰을 최우선 사용** — 원본 스크린샷의 컬러 톤은 참고하되, 구현은 반드시 DS Diagram 토큰으로
 - 다이어그램 전용 CSS 변수(`--dp-*`, `--diag-*`)로 스코프 — 부모 DS 변수와 충돌 방지
-- 녹색 UI → `#22c55e` 계열, 파란색 UI → `#4a9de0` 계열 등 원본 매칭
+- 원본이 다크 테마여도 DS 라이트 테마(silver gradient + 파스텔 os-content)로 변환
+- 상세 토큰 목록은 아래 "컬러 — DS [W] Diagram 토큰 필수 사용" 섹션 참조
 
 ### 타이포그래피
 - 폰트: `var(--ds-font-base)` (DM Sans), 코드: `var(--ds-font-code)` (Fragment Mono)
@@ -108,10 +109,40 @@ var right  = { x: rect.right - canvasRect.left,                 y: rect.top - ca
 - **resize 대응**: `window.addEventListener('resize', drawFn)`
 - **초기 지연**: `setTimeout(drawFn, 100)` — DOM 렌더 완료 후 실행
 
-### 컬러 팔레트 제한
-- DS 팔레트에 없는 색상(주황 #f59e0b, 오렌지 등) 사용 금지
-- 강조가 필요한 경우 DS error(`#ff3030`), brand-primary(`#3061f2`), brand-purple(`#725bea`) 중 선택
-- success: `#0e824c`, neutral 계열: `#0f0f0f ~ #f7f7f7` 범위 내에서만 사용
+### 컬러 — DS [W] Diagram 토큰 필수 사용
+
+다이어그램의 모든 색상은 아래 DS Diagram 토큰을 먼저 사용한다. 임의 색상 직접 입력 금지.
+
+```
+필수 토큰 (design-system.md [W] Diagram 섹션 참조):
+  --ds-diag-surface:       #f8f8f8    ← OS 윈도우 배경
+  --ds-diag-surface-inner: #f2f2f2    ← neutral 노드/카드 배경
+  --ds-diag-border:        #d0d0d0    ← 메인 카드 border
+  --ds-diag-border-light:  #e0e0e0    ← 노드/구분선 border
+  --ds-diag-text:          #2a2a2a    ← 제목 텍스트
+  --ds-diag-text-sub:      #666666    ← 설명 텍스트
+  --ds-diag-arrow-dark:    #444444    ← 일반 화살표
+  --ds-diag-arrow-accent:  #4a9de0    ← 강조 화살표
+  --ds-diag-os-content:    linear-gradient(135deg, #dff0ea, #eef3ff, #f3eeff, #fdeef8)  ← OS content 배경
+  메인 카드 배경:            linear-gradient(145deg, #fff, #f0f0f0, #e8e8e8, #f5f5f5)  ← silver gradient
+```
+
+**강조 노드가 필요한 경우 (error/warning 상태):**
+- 배경: `linear-gradient(145deg, #fff5f5, #ffe8e8)` + border `#ff3030`
+- 텍스트: `#ff3030` (DS error)
+- 주황색/오렌지색 절대 금지
+
+**성공/positive 상태:**
+- border/텍스트: `#0e824c` (DS success)
+- 배경: `rgba(14,130,76,0.04~0.06)`
+
+**brand 강조:**
+- `#3061f2` (brand-primary), `#725bea` (brand-purple)
+
+**절대 하지 말 것:**
+- `#fff` 단색 배경으로 OS 윈도우/카드 채우기 — 반드시 silver gradient 또는 ds-diag-surface 사용
+- 임의 색상 (`#c53d15`, `#d97653`, `#f5c4b5` 등) 직접 입력 — DS 토큰만 사용
+- 주황/오렌지 계열 사용
 
 ---
 

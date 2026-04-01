@@ -50,8 +50,27 @@ grep -n 'dp-accent\|dp-bar-fill\|rdr-area\|rdr-dot' [다이어그램 파일]
 → 원본 녹색 UI에 `#4a9de0`(파란색)이 사용되면 결함
 → 원본 파란색 UI에 `#22c55e`(녹색)이 사용되면 결함
 
-### [DIAG-3] DS 준수 (High)
-Design System 규칙을 준수하는지 확인한다.
+### [DIAG-3] DS [W] Diagram 토큰 준수 (High)
+DS Diagram 토큰이 사용되었는지 확인한다. 임의 색상 직접 입력은 결함.
+
+**DS Diagram 토큰 사용 확인:**
+```bash
+# OS 윈도우/카드에 #fff 단색 배경이 있으면 결함 (ds-diag-surface 또는 silver gradient 필수)
+grep -n 'background.*#fff\b\|background.*white' [다이어그램 파일] | grep -v 'surface-white\|ds-diag\|gradient\|rgba\|sub-card\|cmp-card'
+```
+→ OS window, content, main card에 `#fff` 단색이면 결함
+
+```bash
+# 주황/오렌지 색상 사용 확인
+grep -ni 'orange\|#f59e0b\|#c53d15\|#d97653\|#f5c4b5' [다이어그램 파일]
+```
+→ 1개라도 있으면 결함
+
+```bash
+# ds-diag 토큰 참조 확인 — OS window/card에서 최소 1개 이상 사용해야 함
+grep -c 'ds-diag-surface\|ds-diag-border\|ds-diag-os-content\|ds-diag-arrow' [다이어그램 파일]
+```
+→ 0이면 결함 (DS Diagram 토큰 미사용)
 
 **폰트 사이즈 토큰 확인:**
 ```bash
