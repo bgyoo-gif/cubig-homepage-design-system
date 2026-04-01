@@ -98,8 +98,8 @@
     <!-- SVG drift path overlay — JS로 좌표 계산 -->
     <svg class="edh-diag__svg-overlay" id="edh-svg" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <marker id="edh-arrow-up" viewBox="0 0 10 10" refX="5" refY="10" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-          <path d="M0 10 L5 0 L10 10" fill="none" stroke="#ff3030" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <marker id="edh-arrow-right" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M2 1 L8 5 L2 9" fill="none" stroke="#ff3030" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </marker>
       </defs>
     </svg>
@@ -175,45 +175,46 @@
     var cr = canvas.getBoundingClientRect();
     var ar = app.getBoundingClientRect();
     var er = exec.getBoundingClientRect();
+    var NS = 'http://www.w3.org/2000/svg';
 
-    // 종착점: Application outputs 좌측 중앙
-    var endX = ar.left - cr.left - 6;
-    var endY = ar.top - cr.top + ar.height/2;
+    // 시작점: Execution environment 좌측 중앙
+    var startX = er.left - cr.left;
+    var startY = er.top - cr.top + er.height * 0.35;
 
-    // 시작점: Execution environment 하단 중앙에서 좌측으로
-    var startX = er.left - cr.left + er.width/2;
-    var startY = er.bottom - cr.top + 8;
+    // 끝점: Application outputs 좌측 중앙 (→ 방향으로 들어감)
+    var endX = ar.left - cr.left;
+    var endY = ar.top - cr.top + ar.height / 2;
 
-    // 꺾은선 경유점: 좌측 margin
-    var cornerX = endX;
+    // 꺾은선 경유점: 좌측 바깥 (layers 왼쪽 여백)
+    var marginX = 14;
 
     var defs = svg.querySelector('defs');
     svg.innerHTML = '';
     if(defs) svg.appendChild(defs);
 
-    var NS = 'http://www.w3.org/2000/svg';
-
-    // L자 꺾은선: 시작점(하단) → 아래로 → 좌측으로 → 위로 → Application 좌중앙
+    // 경로: Exec 좌측 → 왼쪽으로 → 위로 → 오른쪽으로 App 좌측 중앙
     var path = document.createElementNS(NS, 'path');
     path.setAttribute('d',
-      'M'+startX+' '+startY+
-      ' L'+startX+' '+(startY+12)+
-      ' L'+cornerX+' '+(startY+12)+
-      ' L'+cornerX+' '+endY
+      'M' + startX + ' ' + startY +
+      ' L' + marginX + ' ' + startY +
+      ' L' + marginX + ' ' + endY +
+      ' L' + endX + ' ' + endY
     );
     path.setAttribute('fill', 'none');
     path.setAttribute('stroke', '#ff3030');
     path.setAttribute('stroke-width', '2');
-    path.setAttribute('marker-end', 'url(#edh-arrow-up)');
+    path.setAttribute('stroke-linejoin', 'round');
+    path.setAttribute('marker-end', 'url(#edh-arrow-right)');
     svg.appendChild(path);
 
-    // "drift path" 라벨 (세로)
+    // "drift path" 라벨 (세로, 좌측 수직선 옆)
+    var midY = (startY + endY) / 2;
     var text = document.createElementNS(NS, 'text');
-    text.setAttribute('x', cornerX - 8);
-    text.setAttribute('y', (endY + startY + 12) / 2);
+    text.setAttribute('x', marginX - 8);
+    text.setAttribute('y', midY);
     text.setAttribute('text-anchor', 'middle');
     text.setAttribute('dominant-baseline', 'middle');
-    text.setAttribute('transform', 'rotate(-90 '+(cornerX-8)+' '+((endY+startY+12)/2)+')');
+    text.setAttribute('transform', 'rotate(-90 ' + (marginX - 8) + ' ' + midY + ')');
     text.setAttribute('fill', '#ff3030');
     text.setAttribute('font-size', '11');
     text.setAttribute('font-weight', '600');
