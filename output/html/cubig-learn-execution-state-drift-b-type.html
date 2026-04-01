@@ -928,335 +928,87 @@
         <!-- Execution State Drift Hero Diagram -->
         <div style="margin-top:var(--ds-space-2xl, 48px); max-width:860px; margin-left:auto; margin-right:auto;">
           <style>
-/* ─── Execution State Drift Hero Diagram ─────────────────────────────────── */
-/* Scoped under .edh-diag — DS tokens inherited from parent page             */
-
+/* ─── Execution State Drift Hero Diagram ─── */
 .edh-diag {
-  --edh-neutral-bg:     #f2f2f2;
-  --edh-neutral-border: #e6e7e9;
-  --edh-neutral-text:   #0f0f0f;
-  --edh-error-bg:       #fff5f5;
-  --edh-error-border:   #ffcccc;
-  --edh-error-text:     #ff3030;
-  --edh-label-sec:      #636363;
-  --edh-label-ter:      #9c9c9c;
-  --edh-arrow-error:    #ff3030;
-  --edh-radius:         10px;
-  --edh-radius-sm:      7px;
-  --edh-font:           "DM Sans", sans-serif;
+  --edh-neutral-bg: #f2f2f2; --edh-neutral-border: #e6e7e9; --edh-neutral-text: #0f0f0f;
+  --edh-error-bg: #fff5f5; --edh-error-border: #ffcccc; --edh-error-text: #ff3030;
+  --edh-sec: #636363; --edh-ter: #9c9c9c;
+  font-family: var(--ds-font-base, "DM Sans", sans-serif);
+  background: #fff; border-radius: 12px; overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.06);
+  max-width: 720px; width: 100%;
+}
+/* OS Frame */
+.edh-diag__frame { display: flex; align-items: center; gap: 6px; padding: 10px 14px; background: linear-gradient(180deg, #f5f5f5 0%, #ebebeb 100%); border-bottom: 1px solid #d8d8d8; }
+.edh-diag__dot { width: 12px; height: 12px; border-radius: 50%; }
+.edh-diag__dot--red { background: #ff5f57; } .edh-diag__dot--yellow { background: #febc2e; } .edh-diag__dot--green { background: #28c840; }
+/* Canvas */
+.edh-diag__canvas { padding: 32px 32px 24px; background: #fff; display: grid; grid-template-columns: 40px 1fr 120px; gap: 0; align-items: stretch; }
+/* ── Left: drift path (꺾은선, 아래→위 방향) ── */
+.edh-diag__drift-col { display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 0 4px; position: relative; }
+.edh-diag__drift-label { writing-mode: vertical-rl; transform: rotate(180deg); font-size: var(--ds-text-xs, 12px); color: var(--edh-error-text); font-weight: 600; letter-spacing: 0.06em; }
+.edh-diag__drift-line { position: absolute; left: 50%; top: 20px; bottom: 20px; width: 2px; background: var(--edh-error-text); transform: translateX(-50%); }
+/* 화살표: 위쪽 방향 (▲) — Execution env → Application outputs */
+.edh-diag__drift-line::before { content: ''; position: absolute; top: -1px; left: 50%; transform: translateX(-50%); border-left: 5px solid transparent; border-right: 5px solid transparent; border-bottom: 7px solid var(--edh-error-text); }
+/* 꺾은선 하단 가로 연결 */
+.edh-diag__drift-line::after { content: ''; position: absolute; bottom: 0; left: 1px; width: 20px; height: 2px; background: var(--edh-error-text); }
 
-  font-family:  var(--edh-font);
-  background:   #ffffff;
-  border-radius: 12px;
-  overflow:     hidden;
-  box-shadow:   0 4px 24px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.06);
-  max-width:    680px;
-  width:        100%;
-}
+/* ── Center: 3 layers ── */
+.edh-diag__layers { display: flex; flex-direction: column; gap: 0; }
+.edh-diag__layer { border-radius: 10px; padding: 14px 20px; text-align: center; }
+.edh-diag__layer-title { font-size: var(--ds-text-md, 16px); font-weight: 700; margin: 0 0 3px; }
+.edh-diag__layer-sub { font-size: var(--ds-text-xs, 12px); color: var(--edh-sec); margin: 0; line-height: 1.4; }
+.edh-diag__layer--neutral { background: var(--edh-neutral-bg); border: 1.5px solid var(--edh-neutral-border); }
+.edh-diag__layer--neutral .edh-diag__layer-title { color: var(--edh-neutral-text); }
+.edh-diag__layer--error { background: var(--edh-error-bg); border: 1.5px solid var(--edh-error-border); }
+.edh-diag__layer--error .edh-diag__layer-title { color: var(--edh-error-text); }
+.edh-diag__layer-gap { height: 8px; }
+/* no changes — 텍스트만, 화살표 없음 */
+.edh-diag__nc { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 6px 0; }
+.edh-diag__nc-line { flex: 1; height: 1px; background: var(--edh-neutral-border); }
+.edh-diag__nc-text { font-size: var(--ds-text-xs, 12px); color: var(--edh-ter); font-weight: 500; background: #fff; padding: 0 8px; }
+/* Sub-cards */
+.edh-diag__sub-cards { display: flex; gap: 8px; margin-top: 12px; }
+.edh-diag__sub-card { flex: 1; background: #fff; border: 1.5px solid var(--edh-error-border); border-radius: 7px; padding: 8px 10px; text-align: center; }
+.edh-diag__sub-card-title { font-size: var(--ds-text-sm, 14px); font-weight: 700; color: var(--edh-error-text); margin: 0 0 2px; }
+.edh-diag__sub-card-desc { font-size: var(--ds-text-xs, 12px); color: var(--edh-sec); margin: 0; line-height: 1.4; }
 
-/* ── OS Window Frame ─────────────────────────────────────────────────────── */
-.edh-diag__frame {
-  display:         flex;
-  align-items:     center;
-  gap:             6px;
-  padding:         10px 14px;
-  background:      linear-gradient(180deg, #f5f5f5 0%, #ebebeb 100%);
-  border-bottom:   1px solid #d8d8d8;
-}
-.edh-diag__dot {
-  width:         12px;
-  height:        12px;
-  border-radius: 50%;
-  flex-shrink:   0;
-}
-.edh-diag__dot--red    { background: #ff5f57; }
-.edh-diag__dot--yellow { background: #febc2e; }
-.edh-diag__dot--green  { background: #28c840; }
-.edh-diag__frame-title {
-  flex:       1;
-  text-align: center;
-  font-size:  var(--ds-text-xs, 12px);
-  color:      #636363;
-  font-weight: 500;
-  margin-left: -30px; /* visually center after 3 dots */
-}
+/* ── Right: "Teams look here" ── */
+.edh-diag__right-col { display: flex; align-items: flex-start; padding-top: 60px; /* align with Model layer */ }
+.edh-diag__teams { display: flex; align-items: center; gap: 6px; }
+.edh-diag__teams-arrow { width: 28px; height: 2px; background: var(--edh-sec); position: relative; flex-shrink: 0; }
+.edh-diag__teams-arrow::before { content: ''; position: absolute; left: -1px; top: 50%; transform: translateY(-50%); border-top: 4px solid transparent; border-bottom: 4px solid transparent; border-right: 6px solid var(--edh-sec); }
+.edh-diag__teams-text { font-size: var(--ds-text-xs, 12px); color: var(--edh-sec); font-weight: 500; white-space: nowrap; }
 
-/* ── Canvas ──────────────────────────────────────────────────────────────── */
-.edh-diag__canvas {
-  padding:    32px 28px 24px;
-  background: #ffffff;
-  position:   relative;
-}
+/* Caption */
+.edh-diag__caption { grid-column: 1 / -1; margin-top: 20px; text-align: center; font-size: var(--ds-text-sm, 14px); color: var(--edh-sec); font-style: italic; }
 
-/* ── Drift Path (left vertical arrow) ────────────────────────────────────── */
-/* The drift path is a vertical line on the left that bypasses Model layer   */
-.edh-diag__drift-path {
-  position:  absolute;
-  left:      22px;
-  top:       62px;    /* starts at top of Application outputs layer */
-  display:   flex;
-  flex-direction: column;
-  align-items:    center;
-  gap:            0;
-}
-.edh-diag__drift-label {
-  writing-mode:    vertical-rl;
-  text-orientation: mixed;
-  transform:       rotate(180deg);
-  font-size:       var(--ds-text-xs, 12px);
-  color:           var(--edh-arrow-error);
-  font-weight:     600;
-  letter-spacing:  0.06em;
-  margin-bottom:   6px;
-  white-space:     nowrap;
-}
-.edh-diag__drift-line {
-  width:      2px;
-  flex:       1;
-  min-height: 200px;
-  background: var(--edh-arrow-error);
-  position:   relative;
-}
-/* arrowhead at bottom */
-.edh-diag__drift-line::after {
-  content:      "";
-  position:     absolute;
-  bottom:       -1px;
-  left:         50%;
-  transform:    translateX(-50%);
-  width:        0;
-  height:       0;
-  border-left:  5px solid transparent;
-  border-right: 5px solid transparent;
-  border-top:   7px solid var(--edh-arrow-error);
-}
-
-/* ── Layers wrapper (right of drift path) ───────────────────────────────── */
-.edh-diag__layers {
-  margin-left: 44px;
-  display:     flex;
-  flex-direction: column;
-  gap:         0;
-}
-
-/* ── Generic Layer Box ───────────────────────────────────────────────────── */
-.edh-diag__layer {
-  border-radius: var(--edh-radius);
-  padding:       16px 20px;
-  position:      relative;
-}
-.edh-diag__layer-title {
-  font-size:   var(--ds-text-md, 16px);
-  font-weight: 700;
-  color:       var(--edh-neutral-text);
-  text-align:  center;
-  margin:      0 0 4px;
-}
-.edh-diag__layer-sub {
-  font-size:   var(--ds-text-xs, 12px);
-  color:       var(--edh-label-sec);
-  text-align:  center;
-  margin:      0;
-  line-height: 1.4;
-}
-
-/* neutral variant */
-.edh-diag__layer--neutral {
-  background:    var(--edh-neutral-bg);
-  border:        1.5px solid var(--edh-neutral-border);
-}
-
-/* error variant (Execution environment) */
-.edh-diag__layer--error {
-  background:    var(--edh-error-bg);
-  border:        1.5px solid var(--edh-error-border);
-}
-.edh-diag__layer--error .edh-diag__layer-title {
-  color: var(--edh-error-text);
-}
-
-/* ── "Teams look here" label on Model layer ─────────────────────────────── */
-.edh-diag__model-wrap {
-  position: relative;
-}
-.edh-diag__teams-label {
-  position:    absolute;
-  right:       -128px;
-  top:         50%;
-  transform:   translateY(-50%);
-  display:     flex;
-  align-items: center;
-  gap:         6px;
-  white-space: nowrap;
-}
-.edh-diag__teams-arrow {
-  width:    40px;
-  height:   2px;
-  background: var(--edh-label-sec);
-  position: relative;
-  flex-shrink: 0;
-}
-/* arrowhead pointing left (toward the card) */
-.edh-diag__teams-arrow::before {
-  content:      "";
-  position:     absolute;
-  left:         -1px;
-  top:          50%;
-  transform:    translateY(-50%);
-  width:        0;
-  height:       0;
-  border-top:    4px solid transparent;
-  border-bottom: 4px solid transparent;
-  border-right:  6px solid var(--edh-label-sec);
-}
-.edh-diag__teams-text {
-  font-size:   var(--ds-text-xs, 12px);
-  color:       var(--edh-label-sec);
-  font-weight: 500;
-}
-
-/* ── "no changes" connector between Model and Execution env ─────────────── */
-.edh-diag__no-changes {
-  display:     flex;
-  align-items: center;
-  justify-content: center;
-  gap:         8px;
-  margin:      6px 0;
-  position:    relative;
-}
-.edh-diag__nc-line {
-  flex:       1;
-  height:     1px;
-  background: var(--edh-neutral-border);
-}
-.edh-diag__nc-arrow {
-  /* downward arrow between model and exec env */
-  display:        flex;
-  flex-direction: column;
-  align-items:    center;
-  gap:            2px;
-}
-.edh-diag__nc-stem {
-  width:      1.5px;
-  height:     18px;
-  background: var(--edh-label-ter);
-  position:   relative;
-}
-.edh-diag__nc-stem::after {
-  content:      "";
-  position:     absolute;
-  bottom:       -1px;
-  left:         50%;
-  transform:    translateX(-50%);
-  width:        0;
-  height:       0;
-  border-left:  4px solid transparent;
-  border-right: 4px solid transparent;
-  border-top:   5px solid var(--edh-label-ter);
-}
-.edh-diag__nc-label {
-  font-size:   var(--ds-text-xs, 12px);
-  color:       var(--edh-label-ter);
-  font-weight: 500;
-  padding:     0 8px;
-  background:  #ffffff;
-  position:    relative;
-  z-index:     1;
-}
-
-/* ── Sub-cards inside Execution environment ─────────────────────────────── */
-.edh-diag__sub-cards {
-  display: flex;
-  gap:     8px;
-  margin-top: 12px;
-}
-.edh-diag__sub-card {
-  flex:          1;
-  background:    #ffffff;
-  border:        1.5px solid var(--edh-error-border);
-  border-radius: var(--edh-radius-sm);
-  padding:       8px 10px;
-  text-align:    center;
-}
-.edh-diag__sub-card-title {
-  font-size:   var(--ds-text-sm, 14px);
-  font-weight: 700;
-  color:       var(--edh-error-text);
-  margin:      0 0 2px;
-}
-.edh-diag__sub-card-desc {
-  font-size:  var(--ds-text-xs, 12px);
-  color:      var(--edh-label-sec);
-  margin:     0;
-  line-height: 1.4;
-}
-
-/* ── Caption ─────────────────────────────────────────────────────────────── */
-.edh-diag__caption {
-  margin-top:  20px;
-  text-align:  center;
-  font-size:   var(--ds-text-sm, 14px);
-  color:       var(--edh-label-sec);
-  font-style:  italic;
-  line-height: 1.5;
-  padding:     0 8px;
-}
-
-/* ── Spacer between top 2 layers ─────────────────────────────────────────── */
-.edh-diag__layer-gap {
-  height: 8px;
-}
-
-/* ── Responsive ──────────────────────────────────────────────────────────── */
+/* Responsive */
 @media (max-width: 640px) {
-  .edh-diag__canvas {
-    padding: 20px 14px 18px;
-  }
-  .edh-diag__drift-path {
-    left: 10px;
-  }
-  .edh-diag__drift-line {
-    min-height: 160px;
-  }
-  .edh-diag__layers {
-    margin-left: 30px;
-  }
-  .edh-diag__teams-label {
-    display: none; /* hide on very small screens */
-  }
-  .edh-diag__sub-cards {
-    flex-direction: column;
-  }
-  .edh-diag__layer-title {
-    font-size: var(--ds-text-sm, 14px);
-  }
+  .edh-diag__canvas { grid-template-columns: 28px 1fr; padding: 20px 14px 18px; }
+  .edh-diag__right-col { display: none; }
+  .edh-diag__sub-cards { flex-direction: column; }
+  .edh-diag__layer-title { font-size: var(--ds-text-sm, 14px); }
 }
 </style>
 
-<!-- Execution State Drift Hero Diagram -->
 <div class="edh-diag">
-
-  <!-- OS Window Frame -->
   <div class="edh-diag__frame">
     <span class="edh-diag__dot edh-diag__dot--red"></span>
     <span class="edh-diag__dot edh-diag__dot--yellow"></span>
     <span class="edh-diag__dot edh-diag__dot--green"></span>
-    <span class="edh-diag__frame-title">execution-state-drift.diagram</span>
   </div>
 
-  <!-- Canvas -->
   <div class="edh-diag__canvas">
 
-    <!-- Drift path: vertical red arrow on the left -->
-    <div class="edh-diag__drift-path" aria-hidden="true">
+    <!-- Left: drift path (꺾은선, ▲ 위 방향) -->
+    <div class="edh-diag__drift-col">
       <span class="edh-diag__drift-label">drift path</span>
       <span class="edh-diag__drift-line"></span>
     </div>
 
-    <!-- Three stacked layers -->
+    <!-- Center: 3 layers -->
     <div class="edh-diag__layers">
-
-      <!-- Layer 1: Application outputs -->
       <div class="edh-diag__layer edh-diag__layer--neutral">
         <p class="edh-diag__layer-title">Application outputs</p>
         <p class="edh-diag__layer-sub">Scores · decisions · predictions</p>
@@ -1264,34 +1016,20 @@
 
       <div class="edh-diag__layer-gap"></div>
 
-      <!-- Layer 2: Model layer + "Teams look here" label -->
-      <div class="edh-diag__model-wrap">
-        <div class="edh-diag__layer edh-diag__layer--neutral">
-          <p class="edh-diag__layer-title">Model layer</p>
-          <p class="edh-diag__layer-sub">Weights · hyperparameters · registry — unchanged</p>
-        </div>
-        <div class="edh-diag__teams-label" aria-label="Teams look here">
-          <span class="edh-diag__teams-arrow"></span>
-          <span class="edh-diag__teams-text">Teams look here</span>
-        </div>
+      <div class="edh-diag__layer edh-diag__layer--neutral">
+        <p class="edh-diag__layer-title">Model layer</p>
+        <p class="edh-diag__layer-sub">Weights · hyperparameters · registry — unchanged</p>
       </div>
 
-      <!-- "no changes" connector -->
-      <div class="edh-diag__no-changes" aria-hidden="true">
+      <div class="edh-diag__nc">
         <span class="edh-diag__nc-line"></span>
-        <div class="edh-diag__nc-arrow">
-          <span class="edh-diag__nc-stem"></span>
-        </div>
-        <span class="edh-diag__nc-label">no changes</span>
+        <span class="edh-diag__nc-text">no changes</span>
         <span class="edh-diag__nc-line"></span>
       </div>
 
-      <!-- Layer 3: Execution environment -->
       <div class="edh-diag__layer edh-diag__layer--error">
         <p class="edh-diag__layer-title">Execution environment</p>
         <p class="edh-diag__layer-sub">Schema · pipeline · runtime</p>
-
-        <!-- Sub-cards -->
         <div class="edh-diag__sub-cards">
           <div class="edh-diag__sub-card">
             <p class="edh-diag__sub-card-title">Schema</p>
@@ -1307,16 +1045,20 @@
           </div>
         </div>
       </div>
+    </div>
 
-    </div><!-- /.edh-diag__layers -->
+    <!-- Right: Teams look here -->
+    <div class="edh-diag__right-col">
+      <div class="edh-diag__teams">
+        <span class="edh-diag__teams-arrow"></span>
+        <span class="edh-diag__teams-text">Teams look here</span>
+      </div>
+    </div>
 
-    <!-- Caption -->
-    <p class="edh-diag__caption">
-      Execution state drift bypasses the model — and most monitors.
-    </p>
+    <p class="edh-diag__caption">Execution state drift bypasses the model — and most monitors.</p>
 
-  </div><!-- /.edh-diag__canvas -->
-</div><!-- /.edh-diag -->
+  </div>
+</div>
 
         </div>
         <!-- /Execution State Drift Hero Diagram -->
