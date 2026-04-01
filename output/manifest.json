@@ -1,5 +1,5 @@
 {
-  "generated": "2026-04-01 23:18:35",
+  "generated": "2026-04-01 23:32:29",
   "github_base": "https://bgyoo-gif.github.io/cubig-homepage-design-system",
   "groups": [
     {
@@ -46,7 +46,7 @@
         {
           "name": "Section01_Hero.tsx",
           "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/framer/cubig-learn-execution-state-drift/tsx/Section01_Hero.tsx",
-          "modified": "2026-03-31"
+          "modified": "2026-04-01"
         },
         {
           "name": "Section02_Introduction.tsx",
@@ -56,22 +56,22 @@
         {
           "name": "Section03_ModelDrift.tsx",
           "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/framer/cubig-learn-execution-state-drift/tsx/Section03_ModelDrift.tsx",
-          "modified": "2026-03-31"
+          "modified": "2026-04-01"
         },
         {
           "name": "Section04_ExecutionStateDrift.tsx",
           "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/framer/cubig-learn-execution-state-drift/tsx/Section04_ExecutionStateDrift.tsx",
-          "modified": "2026-03-31"
+          "modified": "2026-04-01"
         },
         {
           "name": "Section05_IncidentResponse.tsx",
           "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/framer/cubig-learn-execution-state-drift/tsx/Section05_IncidentResponse.tsx",
-          "modified": "2026-03-31"
+          "modified": "2026-04-01"
         },
         {
           "name": "Section06_ReleaseState.tsx",
           "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/framer/cubig-learn-execution-state-drift/tsx/Section06_ReleaseState.tsx",
-          "modified": "2026-03-31"
+          "modified": "2026-04-01"
         },
         {
           "name": "Section07_FAQ.tsx",
@@ -91,14 +91,14 @@
         {
           "name": "Section10_CTA.tsx",
           "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/framer/cubig-learn-execution-state-drift/tsx/Section10_CTA.tsx",
-          "modified": "2026-03-31"
+          "modified": "2026-04-01"
         }
       ],
       "preview": [
         {
           "name": "_preview_section01.html",
           "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/framer/cubig-learn-execution-state-drift/html/_preview_section01.html",
-          "modified": "2026-03-31"
+          "modified": "2026-04-01"
         },
         {
           "name": "_preview_section02.html",
@@ -108,22 +108,22 @@
         {
           "name": "_preview_section03.html",
           "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/framer/cubig-learn-execution-state-drift/html/_preview_section03.html",
-          "modified": "2026-03-31"
+          "modified": "2026-04-01"
         },
         {
           "name": "_preview_section04.html",
           "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/framer/cubig-learn-execution-state-drift/html/_preview_section04.html",
-          "modified": "2026-03-31"
+          "modified": "2026-04-01"
         },
         {
           "name": "_preview_section05.html",
           "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/framer/cubig-learn-execution-state-drift/html/_preview_section05.html",
-          "modified": "2026-03-31"
+          "modified": "2026-04-01"
         },
         {
           "name": "_preview_section06.html",
           "path": "https://bgyoo-gif.github.io/cubig-homepage-design-system/output/framer/cubig-learn-execution-state-drift/html/_preview_section06.html",
-          "modified": "2026-03-31"
+          "modified": "2026-04-01"
         },
         {
           "name": "_preview_section07.html",
