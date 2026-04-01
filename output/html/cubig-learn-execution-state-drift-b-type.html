@@ -245,6 +245,7 @@
     .ds-bg--grad-sage      { background-image: var(--ds-bg-img-grad-sage); }
     .ds-bg--paint-lavender { background-image: var(--ds-bg-img-paint-lavender); }
     .ds-bg--grad-deep      { background-image: var(--ds-bg-img-grad-deep); }
+    .ds-bg--wc-ecosystem   { background-image: url('/cubig-homepage-design-system/reference/images/bg-wc-ecosystem.webp'); }
 
     /* ============================================================
        3. Base Typography
@@ -949,15 +950,15 @@
         <p class="ds-hero__description">When production AI degrades, teams check the model first. But most failures are not model drift — they are execution state drift. Schema changes, pipeline updates, runtime differences. Learn the distinction and how to isolate the root cause.</p>
       </div>
       <!-- 배경 이미지 프레임 + 다이어그램 (스크린샷 역할) -->
-      <div class="ds-hero__screenshot-frame ds-bg--paint-lavender">
+      <div class="ds-hero__screenshot-frame ds-bg--wc-ecosystem">
         <div class="ds-hero__screenshot">
           <style>
 /* ─── Execution State Drift Hero Diagram ─── */
 .edh-diag {
   font-family: var(--ds-font-base, "DM Sans", sans-serif);
-  background: #fff; border-radius: 12px; overflow: hidden;
+  background: #fff; border-radius: 12px 12px 0 0; overflow: hidden;
   box-shadow: 0 4px 24px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.06);
-  max-width: 720px; width: 100%;
+  max-width: 720px; width: 100%; margin: 0 auto;
 }
 /* OS Frame */
 .edh-diag__frame { display: flex; align-items: center; gap: 6px; padding: 10px 14px; background: linear-gradient(180deg, #f5f5f5 0%, #ebebeb 100%); border-bottom: 1px solid #d8d8d8; }
