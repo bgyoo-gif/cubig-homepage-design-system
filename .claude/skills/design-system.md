@@ -786,12 +786,12 @@ HTML:
 .ds-hero__screenshot-frame {
   margin-top: var(--ds-space-2xl);
   border-radius: var(--ds-radius-xl) var(--ds-radius-xl) 0 0;
-  padding: 0;
+  padding: var(--ds-space-2xl) 0 0;
   background-size: cover; background-position: center;
   overflow: hidden;
 }
 
-/* 프레임 안의 스크린샷 — 패딩 없이 프레임에 꽉 채움 */
+/* 프레임 안의 스크린샷 — 좌우 밀착, 상단만 배경 노출 */
 .ds-hero__screenshot {
   overflow: hidden;
   background: var(--ds-color-surface-white);
