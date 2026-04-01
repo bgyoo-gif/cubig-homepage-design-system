@@ -945,8 +945,8 @@
 /* Canvas — layers 중앙, drift path는 SVG로 */
 .edh-diag__canvas { padding: 32px 32px 24px; background: #fff; position: relative; }
 
-/* ── Center: 3 layers + right label ── */
-.edh-diag__main { display: grid; grid-template-columns: 1fr 130px; gap: 0; align-items: start; position: relative; }
+/* ── Center: 3 layers + right label — 좌우 대칭 ── */
+.edh-diag__main { display: grid; grid-template-columns: 130px 1fr 130px; gap: 0; align-items: start; position: relative; }
 .edh-diag__layers { display: flex; flex-direction: column; gap: 0; position: relative; z-index: 1; }
 
 /* Layer boxes */
@@ -1004,10 +1004,13 @@
 /* Caption */
 .edh-diag__caption { margin-top: 20px; text-align: center; font-size: var(--ds-text-sm, 14px); color: #636363; font-style: italic; }
 
+/* Left col (drift path SVG가 이 영역 위에 그려짐) */
+.edh-diag__left-col { min-height: 1px; }
+
 /* Responsive */
 @media (max-width: 640px) {
   .edh-diag__main { grid-template-columns: 1fr; }
-  .edh-diag__right-col { display: none; }
+  .edh-diag__right-col, .edh-diag__left-col { display: none; }
   .edh-diag__sub-cards { flex-direction: column; }
   .edh-diag__layer-title { font-size: var(--ds-text-sm, 14px); }
   .edh-diag__canvas { padding: 20px 14px 18px; }
@@ -1034,6 +1037,9 @@
     </svg>
 
     <div class="edh-diag__main">
+      <!-- Left spacer for drift path SVG -->
+      <div class="edh-diag__left-col"></div>
+
       <div class="edh-diag__layers" id="edh-layers">
 
         <!-- Layer 1: Application outputs -->
