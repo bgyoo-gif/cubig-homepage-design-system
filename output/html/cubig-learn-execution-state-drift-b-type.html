@@ -410,7 +410,7 @@
     }
     .ds-hero__title {
       font-family: var(--ds-font-base);
-      font-size: var(--ds-text-5xl);
+      font-size: 24px;
       font-weight: var(--ds-weight-bold);
       color: var(--ds-color-text-primary);
       line-height: var(--ds-leading-tight);
@@ -439,12 +439,15 @@
     .ds-hero__screenshot-frame .edh-diag {
       border-radius: var(--ds-radius-md) var(--ds-radius-md) 0 0;
     }
+    @media (min-width: 768px) {
+      .ds-hero__title { font-size: 28px; }
+    }
     @media (min-width: 1024px) {
-      .ds-hero__title { font-size: var(--ds-text-6xl); }
+      .ds-hero__title { font-size: 32px; }
       .ds-hero__description { max-width: 720px; }
     }
     @media (min-width: 1440px) {
-      .ds-hero__title { font-size: var(--ds-text-7xl); }
+      .ds-hero__title { font-size: 36px; }
       .ds-hero__description { max-width: 860px; }
     }
     @media (max-width: 767px) {
