@@ -65,6 +65,54 @@ skills:
 - 다이어그램 내 모든 텍스트는 **영어**로 작성
 - 원본이 한글이면 영어로 번역하여 삽입
 
+### 화살표/연결선 — 4단계 프로세스 (필수)
+
+다이어그램에 화살표나 연결선이 필요할 때 반드시 아래 순서를 따른다.
+
+**Step 1. 맥락 파악**
+- 원본 스크린샷에서 어떤 object가 어떤 object로 연결되는지 파악
+- 화살표의 의미 (데이터 흐름, 바이패스, 참조 등) 이해
+
+**Step 2. Object를 먼저 그린다**
+- 모든 박스, 카드, 레이어를 HTML + CSS로 완성한 후에 화살표를 그린다
+- 각 object에 고유 `id` 부여 (예: `id="edh-app"`, `id="edh-exec"`)
+
+**Step 3. 각 object의 4개 포인트 좌표를 런타임 계산**
+```javascript
+var rect = element.getBoundingClientRect();
+var canvasRect = canvas.getBoundingClientRect();
+
+// 4개 앵커 포인트 (canvas 기준 상대 좌표)
+var top    = { x: rect.left - canvasRect.left + rect.width/2,  y: rect.top - canvasRect.top };
+var bottom = { x: rect.left - canvasRect.left + rect.width/2,  y: rect.bottom - canvasRect.top };
+var left   = { x: rect.left - canvasRect.left,                  y: rect.top - canvasRect.top + rect.height/2 };
+var right  = { x: rect.right - canvasRect.left,                 y: rect.top - canvasRect.top + rect.height/2 };
+```
+- **하드코딩 좌표 금지** — `left: 74px`, `padding-top: 60px` 같은 추정값 사용 금지
+- 반드시 `getBoundingClientRect()`로 실제 렌더링 좌표 사용
+
+**Step 4. 화살표를 포인트 간 연결**
+
+| 화살표 방향 | 시작 포인트 | 끝 포인트 |
+|------------|-----------|----------|
+| → (가로 오른쪽) | start.right | end.left |
+| ← (가로 왼쪽) | start.left | end.right |
+| ↓ (세로 아래) | start.bottom | end.top |
+| ↑ (세로 위) | start.top | end.bottom |
+| ↳ (꺾은선) | start의 적절한 포인트 → 경유점 → end의 적절한 포인트 |
+
+- **GAP = 8px**: 포인트에서 8px 떨어진 곳에서 화살표 시작/끝 (object 테두리에 겹치지 않게)
+- **꺾은선 경유점**: object의 포인트에서 수직/수평으로 연장하여 직각으로 꺾음
+- **SVG `<path>` 사용**: `M(시작) L(경유) L(끝)` 형태
+- **marker-end로 화살표 머리** 표시
+- **resize 대응**: `window.addEventListener('resize', drawFn)`
+- **초기 지연**: `setTimeout(drawFn, 100)` — DOM 렌더 완료 후 실행
+
+### 컬러 팔레트 제한
+- DS 팔레트에 없는 색상(주황 #f59e0b, 오렌지 등) 사용 금지
+- 강조가 필요한 경우 DS error(`#ff3030`), brand-primary(`#3061f2`), brand-purple(`#725bea`) 중 선택
+- success: `#0e824c`, neutral 계열: `#0f0f0f ~ #f7f7f7` 범위 내에서만 사용
+
 ---
 
 ## Mode A: 파이프라인형 다이어그램 상세

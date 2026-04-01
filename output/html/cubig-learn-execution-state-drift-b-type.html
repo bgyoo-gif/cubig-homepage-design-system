@@ -396,12 +396,16 @@
     @media (min-width: 1440px) { .ds-section-header__title { font-size: 28px; } }
 
     /* ============================================================
-       7. Hero — Text Only
+       7. Hero — Screenshot
     ============================================================ */
-    .ds-hero--text-only {
+    .ds-hero-screenshot-section {
+      padding: 100px 0 0;
+      overflow: visible;
+    }
+    .ds-hero--screenshot {
+      text-align: center;
       max-width: 860px;
       margin: 0 auto;
-      text-align: center;
     }
     .ds-hero__title {
       font-family: var(--ds-font-base);
@@ -423,6 +427,20 @@
       overflow-wrap: break-word;
       text-wrap: pretty;
     }
+    .ds-hero__screenshot-frame {
+      margin-top: var(--ds-space-xl);
+      border-radius: var(--ds-radius-xl);
+      padding: var(--ds-space-2xl) var(--ds-space-2xl) 0;
+      background-size: cover;
+      background-position: center;
+      overflow: hidden;
+    }
+    .ds-hero__screenshot {
+      border-radius: var(--ds-radius-lg) var(--ds-radius-lg) 0 0;
+      overflow: hidden;
+      box-shadow: 0 -8px 40px rgba(0,0,0,0.12);
+      background: var(--ds-color-surface-white);
+    }
     @media (min-width: 1024px) {
       .ds-hero__title { font-size: var(--ds-text-6xl); }
       .ds-hero__description { max-width: 720px; }
@@ -430,6 +448,11 @@
     @media (min-width: 1440px) {
       .ds-hero__title { font-size: var(--ds-text-7xl); }
       .ds-hero__description { max-width: 860px; }
+    }
+    @media (max-width: 767px) {
+      .ds-hero-screenshot-section { padding: 100px 0 0; }
+      .ds-hero__screenshot-frame { padding: var(--ds-space-xl) var(--ds-space-xl) 0; border-radius: var(--ds-radius-lg); }
+      .ds-hero__screenshot { border-radius: var(--ds-radius-md) var(--ds-radius-md) 0 0; }
     }
 
     /* ============================================================
@@ -915,18 +938,19 @@
 <main class="ds-article" id="top">
 
   <!-- ============================================================
-       SECTION 1: Hero (text-only, white background)
+       SECTION 1: Hero Screenshot
   ============================================================ -->
-  <section class="ds-section ds-section--hero" id="section-1">
+  <section class="ds-section ds-hero-screenshot-section" id="section-1">
     <div class="ds-container">
-      <div class="ds-hero ds-hero--text-only">
+      <div class="ds-hero ds-hero--screenshot">
         <h1 class="ds-hero__title">
           <span class="ds-text--brand">Execution State Drift</span> vs Model Drift: Why Most Teams Look in the Wrong Place
         </h1>
         <p class="ds-hero__description">When production AI degrades, teams check the model first. But most failures are not model drift — they are execution state drift. Schema changes, pipeline updates, runtime differences. Learn the distinction and how to isolate the root cause.</p>
-
-        <!-- Execution State Drift Hero Diagram -->
-        <div style="margin-top:var(--ds-space-2xl, 48px); max-width:860px; margin-left:auto; margin-right:auto;">
+      </div>
+      <!-- 배경 이미지 프레임 + 다이어그램 (스크린샷 역할) -->
+      <div class="ds-hero__screenshot-frame ds-bg--paint-lavender">
+        <div class="ds-hero__screenshot">
           <style>
 /* ─── Execution State Drift Hero Diagram ─── */
 .edh-diag {
@@ -1163,10 +1187,8 @@
 })();
 </script>
 
-        </div>
-        <!-- /Execution State Drift Hero Diagram -->
-
-      </div>
+        </div><!-- /.ds-hero__screenshot -->
+      </div><!-- /.ds-hero__screenshot-frame -->
     </div>
   </section>
 
