@@ -430,17 +430,14 @@
     }
     .ds-hero__screenshot-frame {
       margin-top: var(--ds-space-2xl);
-      border-radius: var(--ds-radius-xl);
-      padding: 48px 48px 0;
-      background-color: #e8e0f0;
+      border-radius: var(--ds-radius-xl) var(--ds-radius-xl) 0 0;
+      padding: 0;
       background-size: cover;
       background-position: center;
       overflow: hidden;
     }
     .ds-hero__screenshot {
-      border-radius: var(--ds-radius-lg) var(--ds-radius-lg) 0 0;
       overflow: hidden;
-      box-shadow: 0 -8px 40px rgba(0,0,0,0.12);
       background: var(--ds-color-surface-white);
     }
     @media (min-width: 1024px) {
@@ -453,8 +450,7 @@
     }
     @media (max-width: 767px) {
       .ds-hero-screenshot-section { padding: 100px 0 0; }
-      .ds-hero__screenshot-frame { padding: var(--ds-space-xl) var(--ds-space-xl) 0; border-radius: var(--ds-radius-lg); }
-      .ds-hero__screenshot { border-radius: var(--ds-radius-md) var(--ds-radius-md) 0 0; }
+      .ds-hero__screenshot-frame { border-radius: var(--ds-radius-lg) var(--ds-radius-lg) 0 0; }
     }
 
     /* ============================================================
