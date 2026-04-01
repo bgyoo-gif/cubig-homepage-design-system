@@ -2909,9 +2909,10 @@ function openDetail(path, name) {
   // 절대 URL이면 그대로, 상대경로면 ../prefix 붙이기
   var isAbsolute = path.startsWith('http://') || path.startsWith('https://');
   var directUrl = isAbsolute ? path : (path.startsWith('../') ? path : '../' + path);
+  var cacheBust = directUrl + (directUrl.indexOf('?') > -1 ? '&' : '?') + '_t=' + Date.now();
 
-  // 1차: 직접 fetch (GitHub Pages에서도 동작)
-  fetch(directUrl).then(function(r) {
+  // 1차: 직접 fetch (GitHub Pages에서도 동작) — cache-bust
+  fetch(cacheBust).then(function(r) {
     if (!r.ok) throw new Error(r.status);
     return r.text();
   }).then(function(text) {
