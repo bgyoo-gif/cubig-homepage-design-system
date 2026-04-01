@@ -9,31 +9,55 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body { background: #f0f0f0; }
 
-    .s4esd-section {
-      width: 100%; padding: 80px 0; background-color: #ffffff;
-      font-family: "DM Sans", sans-serif; color: #0f0f0f;
-      -webkit-font-smoothing: antialiased; word-break: keep-all; overflow-wrap: break-word;
-    }
+    .s4esd-section { width: 100%; padding: 80px 0; background-color: #ffffff; font-family: "DM Sans", sans-serif; color: #0f0f0f; -webkit-font-smoothing: antialiased; word-break: keep-all; overflow-wrap: break-word; }
     .s4esd-container { width: 100%; padding: 0 16px; box-sizing: border-box; margin: 0 auto; }
     .s4esd-body { max-width: 860px; margin: 0 auto; }
     .s4esd-section-header { margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid #e6e7e9; }
     .s4esd-title { font-size: 20px; font-weight: 700; color: #0f0f0f; line-height: 1.2; letter-spacing: -0.5px; margin: 0; text-wrap: balance; }
     .s4esd-title-brand { color: #725bea; }
-    .s4esd-banner {
-      padding: 16px 24px; border-top: 1px solid #e6e7e9; border-bottom: 1px solid #e6e7e9;
-      background-color: #f7f7f7; margin: 0 0 24px; word-break: keep-all; overflow-wrap: break-word;
-    }
+    .s4esd-banner { padding: 16px 24px; border-top: 1px solid #e6e7e9; border-bottom: 1px solid #e6e7e9; background-color: #f7f7f7; margin: 0 0 24px; }
     .s4esd-banner-title { font-size: 18px; font-weight: 700; color: #0f0f0f; margin-bottom: 8px; line-height: 1.2; }
-    .s4esd-banner-body { font-size: 16px; color: #636363; line-height: 1.7; text-wrap: pretty; word-break: keep-all; overflow-wrap: break-word; margin: 0; }
-    .s4esd-prose-body { font-size: 16px; color: #636363; line-height: 1.7; margin-bottom: 16px; text-wrap: pretty; word-break: keep-all; overflow-wrap: break-word; }
+    .s4esd-banner-body { font-size: 16px; color: #636363; line-height: 1.7; margin: 0; text-wrap: pretty; }
+    .s4esd-prose-body { font-size: 16px; color: #636363; line-height: 1.7; margin-bottom: 16px; text-wrap: pretty; }
     .s4esd-bullet-list { list-style: none; padding: 0; margin: 0 0 16px; display: flex; flex-direction: column; gap: 12px; }
-    .s4esd-bullet-item { display: flex; align-items: flex-start; gap: 8px; font-size: 16px; line-height: 1.5; word-break: keep-all; overflow-wrap: break-word; text-wrap: pretty; }
+    .s4esd-bullet-item { display: flex; align-items: flex-start; gap: 8px; font-size: 16px; line-height: 1.5; }
     .s4esd-bullet-icon { width: 20px; height: 20px; flex-shrink: 0; margin-top: 2px; display: flex; align-items: center; justify-content: center; color: #0e824c; font-weight: 700; font-size: 14px; }
     .s4esd-bullet-item strong { color: #0f0f0f; font-weight: 600; }
-    .s4esd-closing { font-size: 16px; color: #636363; line-height: 1.7; margin-top: 24px; text-wrap: pretty; word-break: keep-all; overflow-wrap: break-word; }
+    .s4esd-closing { font-size: 16px; color: #636363; line-height: 1.7; margin-top: 24px; text-wrap: pretty; }
+
+    /* ESD Comparison Diagram */
+    .s4esd-diag { margin-top: 48px; }
+    .s4esd-diag-window { background: #ffffff; border-radius: 18px; box-shadow: 0 8px 32px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.06); overflow: hidden; }
+    .s4esd-diag-titlebar { background: linear-gradient(180deg, #f0f0f0 0%, #e4e4e4 100%); height: 36px; display: flex; align-items: center; padding: 0 14px; gap: 8px; border-bottom: 1px solid #d0d0d0; }
+    .s4esd-diag-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .s4esd-diag-dot--close { background: #ff5f57; }
+    .s4esd-diag-dot--min { background: #ffbd2e; }
+    .s4esd-diag-dot--max { background: #28ca41; }
+    .s4esd-diag-content { background: #ffffff; padding: 32px; }
+    .s4esd-diag-compare { display: grid; grid-template-columns: 1fr auto 1fr; gap: 24px; align-items: start; }
+    .s4esd-diag-col-header { padding: 12px 16px; border-radius: 8px; font-size: 14px; font-weight: 600; text-align: center; margin-bottom: 12px; }
+    .s4esd-diag-col-header--left { background: #f2f2f2; color: #0f0f0f; border: 1px solid #e6e7e9; }
+    .s4esd-diag-col-header--right { background: #fff0f0; color: #ff3030; border: 1px solid #ffcccc; }
+    .s4esd-diag-vs { display: flex; align-items: center; justify-content: center; padding-top: 8px; font-size: 14px; font-weight: 500; color: #9c9c9c; min-width: 32px; }
+    .s4esd-diag-item { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; }
+    .s4esd-diag-item--left { background: #ffffff; border: 1px solid #e6e7e9; }
+    .s4esd-diag-item-label--left { font-size: 14px; font-weight: 500; color: #0f0f0f; }
+    .s4esd-diag-item-status { font-size: 12px; font-weight: 500; color: #0e824c; white-space: nowrap; }
+    .s4esd-diag-item--right { background: #fff5f5; border: 1px solid #ffcccc; flex-direction: column; align-items: flex-start; gap: 2px; }
+    .s4esd-diag-item-label--right { font-size: 14px; font-weight: 600; color: #ff3030; }
+    .s4esd-diag-item-drift { font-size: 12px; font-weight: 400; color: #ff6b6b; }
+    .s4esd-diag-footnote { margin-top: 12px; font-size: 12px; color: #9c9c9c; font-style: italic; text-align: center; padding: 8px 0; border-top: 1px dashed #e6e7e9; }
+    .s4esd-diag-footnote--right { color: #ff3030; font-weight: 600; font-style: normal; }
+    .s4esd-diag-caption { margin-top: 16px; text-align: center; font-size: 12px; color: #9c9c9c; }
+
     @media (min-width: 768px) { .s4esd-container { padding: 0 32px; } .s4esd-title { font-size: 22px; } }
     @media (min-width: 1024px) { .s4esd-container { padding: 0 32px; } .s4esd-title { font-size: 24px; } }
     @media (min-width: 1440px) { .s4esd-container { padding: 0 120px; max-width: 1440px; } .s4esd-title { font-size: 28px; } }
+    @media (max-width: 639px) {
+      .s4esd-diag-compare { grid-template-columns: 1fr; gap: 12px; }
+      .s4esd-diag-vs { padding: 0; justify-content: flex-start; }
+      .s4esd-diag-content { padding: 16px; }
+    }
   </style>
 </head>
 <body>
@@ -67,6 +91,56 @@
           </li>
         </ul>
         <p class="s4esd-closing">None of these appear in a model's version history. All of them change how the model behaves.</p>
+
+        <!-- ESD Comparison Diagram -->
+        <div class="s4esd-diag">
+          <div class="s4esd-diag-window">
+            <div class="s4esd-diag-titlebar">
+              <span class="s4esd-diag-dot s4esd-diag-dot--close"></span>
+              <span class="s4esd-diag-dot s4esd-diag-dot--min"></span>
+              <span class="s4esd-diag-dot s4esd-diag-dot--max"></span>
+            </div>
+            <div class="s4esd-diag-content">
+              <div class="s4esd-diag-compare">
+                <div>
+                  <div class="s4esd-diag-col-header s4esd-diag-col-header--left">What teams check</div>
+                  <div class="s4esd-diag-item s4esd-diag-item--left">
+                    <span class="s4esd-diag-item-label--left">Model weights</span>
+                    <span class="s4esd-diag-item-status">Unchanged ✓</span>
+                  </div>
+                  <div class="s4esd-diag-item s4esd-diag-item--left">
+                    <span class="s4esd-diag-item-label--left">Hyperparameters</span>
+                    <span class="s4esd-diag-item-status">Unchanged ✓</span>
+                  </div>
+                  <div class="s4esd-diag-item s4esd-diag-item--left">
+                    <span class="s4esd-diag-item-label--left">Model registry</span>
+                    <span class="s4esd-diag-item-status">No update ✓</span>
+                  </div>
+                  <p class="s4esd-diag-footnote">Results were still wrong.</p>
+                </div>
+                <div class="s4esd-diag-vs">vs</div>
+                <div>
+                  <div class="s4esd-diag-col-header s4esd-diag-col-header--right">What actually changed</div>
+                  <div class="s4esd-diag-item s4esd-diag-item--right">
+                    <span class="s4esd-diag-item-label--right">Schema</span>
+                    <span class="s4esd-diag-item-drift">Silently drifted</span>
+                  </div>
+                  <div class="s4esd-diag-item s4esd-diag-item--right">
+                    <span class="s4esd-diag-item-label--right">Pipeline</span>
+                    <span class="s4esd-diag-item-drift">Silently drifted</span>
+                  </div>
+                  <div class="s4esd-diag-item s4esd-diag-item--right">
+                    <span class="s4esd-diag-item-label--right">Runtime</span>
+                    <span class="s4esd-diag-item-drift">Silently drifted</span>
+                  </div>
+                  <p class="s4esd-diag-footnote s4esd-diag-footnote--right">Execution state drift</p>
+                </div>
+              </div>
+              <p class="s4esd-diag-caption">Most drift monitors are not built to detect this.</p>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>

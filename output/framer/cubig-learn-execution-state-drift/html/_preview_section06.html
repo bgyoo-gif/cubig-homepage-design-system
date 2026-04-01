@@ -9,40 +9,70 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body { background: #f0f0f0; }
 
-    .s6esd-section {
-      width: 100%; padding: 80px 0; background-color: #ffffff;
-      font-family: "DM Sans", sans-serif; color: #0f0f0f;
-      -webkit-font-smoothing: antialiased; word-break: keep-all; overflow-wrap: break-word;
-    }
+    .s6esd-section { width: 100%; padding: 80px 0; background-color: #ffffff; font-family: "DM Sans", sans-serif; color: #0f0f0f; -webkit-font-smoothing: antialiased; word-break: keep-all; overflow-wrap: break-word; }
     .s6esd-container { width: 100%; padding: 0 16px; box-sizing: border-box; margin: 0 auto; }
     .s6esd-body { max-width: 860px; margin: 0 auto; }
     .s6esd-section-header { margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid #e6e7e9; }
     .s6esd-title { font-size: 20px; font-weight: 700; color: #0f0f0f; line-height: 1.2; letter-spacing: -0.5px; margin: 0; text-wrap: balance; }
     .s6esd-title-brand { color: #725bea; }
-    .s6esd-banner { padding: 16px 24px; border-top: 1px solid #e6e7e9; border-bottom: 1px solid #e6e7e9; background-color: #f7f7f7; margin: 0 0 24px; word-break: keep-all; overflow-wrap: break-word; }
+    .s6esd-banner { padding: 16px 24px; border-top: 1px solid #e6e7e9; border-bottom: 1px solid #e6e7e9; background-color: #f7f7f7; margin: 0 0 24px; }
     .s6esd-banner-title { font-size: 18px; font-weight: 700; color: #0f0f0f; margin-bottom: 8px; line-height: 1.2; }
-    .s6esd-banner-body { font-size: 16px; color: #636363; line-height: 1.7; text-wrap: pretty; word-break: keep-all; overflow-wrap: break-word; margin: 0; }
-    .s6esd-prose-body { font-size: 16px; color: #636363; line-height: 1.7; margin-bottom: 16px; text-wrap: pretty; word-break: keep-all; overflow-wrap: break-word; }
+    .s6esd-banner-body { font-size: 16px; color: #636363; line-height: 1.7; margin: 0; text-wrap: pretty; }
+    .s6esd-prose-body { font-size: 16px; color: #636363; line-height: 1.7; margin-bottom: 16px; text-wrap: pretty; }
     .s6esd-bullet-list { list-style: none; padding: 0; margin: 0 0 16px; display: flex; flex-direction: column; gap: 12px; }
-    .s6esd-bullet-item { display: flex; align-items: flex-start; gap: 8px; font-size: 16px; line-height: 1.5; color: #636363; word-break: keep-all; overflow-wrap: break-word; text-wrap: pretty; }
+    .s6esd-bullet-item { display: flex; align-items: flex-start; gap: 8px; font-size: 16px; line-height: 1.5; color: #636363; }
     .s6esd-bullet-icon { width: 20px; height: 20px; flex-shrink: 0; margin-top: 2px; display: flex; align-items: center; justify-content: center; color: #0e824c; font-weight: 700; font-size: 14px; }
-    .s6esd-example-wrap { margin-top: 32px; }
-    .s6esd-example-banner {
-      width: 100%; text-align: center; padding: 32px 48px; border-radius: 40px;
-      background-image: url('../../reference/images/bg-gradient-sage-rose.webp');
-      background-size: cover; background-position: center; position: relative;
-      overflow: hidden; isolation: isolate;
+
+    /* Example section header */
+    .s6esd-example-section-header { margin-top: 80px; margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid #e6e7e9; text-align: center; }
+    .s6esd-example-title { font-size: 20px; font-weight: 700; color: #0f0f0f; line-height: 1.2; letter-spacing: -0.5px; margin: 0 0 16px; text-wrap: balance; }
+    .s6esd-example-desc { font-size: 18px; color: #636363; line-height: 1.7; max-width: 720px; margin: 0 auto; text-wrap: pretty; }
+
+    /* TCP Diagram */
+    .s6esd-tcp-diag { margin-top: 32px; }
+    .s6esd-tcp-window { background: #f8f8f8; border-radius: 18px; box-shadow: 0 8px 32px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.10); overflow: hidden; }
+    .s6esd-tcp-titlebar { background: linear-gradient(180deg, #e8e8e8 0%, #d8d8d8 100%); height: 36px; display: flex; align-items: center; padding: 0 14px; gap: 8px; border-bottom: 1px solid #c0c0c0; }
+    .s6esd-tcp-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .s6esd-tcp-dot--close { background: #ff5f57; }
+    .s6esd-tcp-dot--min { background: #ffbd2e; }
+    .s6esd-tcp-dot--max { background: #28ca41; }
+    .s6esd-tcp-titlebar-label { margin: 0 auto; font-size: 12px; font-weight: 500; color: #636363; font-family: "Fragment Mono", monospace; transform: translateX(-18px); }
+    .s6esd-tcp-content { background: linear-gradient(135deg, #dff0ea 0%, #eef3ff 40%, #f3eeff 70%, #fdeef8 100%); padding: 32px; position: relative; }
+    .s6esd-tcp-card { background: linear-gradient(145deg, #ffffff 0%, #f0f0f0 40%, #e8e8e8 70%, #f5f5f5 100%); border: 1px solid #d0d0d0; border-radius: 18px; overflow: hidden; }
+    .s6esd-tcp-card-title { text-align: center; padding: 12px 24px; font-size: 14px; font-weight: 500; color: #2a2a2a; letter-spacing: 0.04em; border-bottom: 1px solid #e0e0e0; font-family: "Fragment Mono", monospace; background: linear-gradient(180deg, #fff 0%, #f8f8f8 100%); }
+    .s6esd-tcp-nodes { display: flex; align-items: stretch; padding: 24px 16px; gap: 0; position: relative; }
+    .s6esd-tcp-node { flex: 1; text-align: center; padding: 14px 10px; border-radius: 8px; border: 1px solid #e0e0e0; background: #f2f2f2; display: flex; flex-direction: column; gap: 3px; align-items: center; justify-content: center; }
+    .s6esd-tcp-node-title { font-size: 14px; font-weight: 600; color: #2a2a2a; }
+    .s6esd-tcp-node-sub { font-size: 12px; color: #636363; }
+    .s6esd-tcp-node--error { background: linear-gradient(145deg, #fff5f5 0%, #ffe8e8 100%); border: 1.5px solid #ff3030; }
+    .s6esd-tcp-node--error .s6esd-tcp-node-title { color: #ff3030; }
+    .s6esd-tcp-node--error .s6esd-tcp-node-sub { color: #ff6b6b; }
+    .s6esd-tcp-arrow-gap { width: 36px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+    .s6esd-tcp-schema-label { position: absolute; top: 6px; left: 16px; font-size: 12px; color: #ff3030; font-weight: 500; display: flex; align-items: center; gap: 4px; }
+    .s6esd-tcp-schema-label::after { content: ''; display: inline-block; width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 5px solid #ff3030; }
+    .s6esd-tcp-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+    .s6esd-tcp-rb { margin: 16px 16px 0; padding: 2px; border-radius: 18px; background: linear-gradient(109deg, #898989 0%, #fff 17%, #D5D5D5 63%, #F6F5F6 84%, #898989 100%); box-shadow: rgba(113,141,176,0.25) 0px 1px 20px 0px; }
+    .s6esd-tcp-rb-inner { background: #ffffff; border-radius: 16px; padding: 16px 24px; text-align: center; }
+    .s6esd-tcp-rb-title { font-size: 14px; font-weight: 600; color: #2a2a2a; margin: 0 0 4px; }
+    .s6esd-tcp-rb-desc { font-size: 12px; color: #636363; margin: 0; }
+    .s6esd-tcp-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px; }
+    .s6esd-tcp-cmp-without { padding: 2px; border-radius: 18px; background: linear-gradient(109deg, #898989 0%, #fff 17%, #D5D5D5 63%, #F6F5F6 84%, #898989 100%); box-shadow: rgba(113,141,176,0.25) 0px 1px 20px 0px; }
+    .s6esd-tcp-cmp-without-inner { background: #ffffff; border-radius: 16px; padding: 12px; text-align: center; }
+    .s6esd-tcp-cmp-with { padding: 2px; border-radius: 18px; background: linear-gradient(109deg, #BFE1FB 0%, #fff 17%, #FFEDFA 38%, #81B8FB 51%, #E2E3F0 73%, #BFE1FB 100%); box-shadow: rgba(113,141,176,0.25) 0px 1px 20px 0px; }
+    .s6esd-tcp-cmp-with-inner { background: linear-gradient(99deg, #E9EEFB 0%, #FCFCFE 58%, #fff 100%); border-radius: 16px; padding: 12px; text-align: center; }
+    .s6esd-tcp-cmp-title { font-size: 14px; font-weight: 600; margin: 0 0 3px; color: #2a2a2a; }
+    .s6esd-tcp-cmp-desc { font-size: 12px; color: #636363; margin: 0; }
+
+    @media (min-width: 768px) { .s6esd-container { padding: 0 32px; } .s6esd-title { font-size: 22px; } .s6esd-example-title { font-size: 22px; } }
+    @media (min-width: 1024px) { .s6esd-container { padding: 0 32px; } .s6esd-title { font-size: 24px; } .s6esd-example-title { font-size: 24px; } .s6esd-example-desc { max-width: 720px; } }
+    @media (min-width: 1440px) { .s6esd-container { padding: 0 120px; max-width: 1440px; } .s6esd-title { font-size: 28px; } .s6esd-example-title { font-size: 28px; } .s6esd-example-desc { max-width: 860px; } }
+    @media (max-width: 639px) {
+      .s6esd-tcp-nodes { flex-wrap: wrap; gap: 8px; }
+      .s6esd-tcp-arrow-gap { display: none; }
+      .s6esd-tcp-node { flex: 1 1 calc(50% - 4px); }
+      .s6esd-tcp-compare { grid-template-columns: 1fr; }
+      .s6esd-tcp-svg { display: none; }
     }
-    .s6esd-example-banner::before {
-      content: ''; position: absolute; inset: 0;
-      background: rgba(255, 255, 255, 0.82); z-index: 0;
-    }
-    .s6esd-example-banner > * { position: relative; z-index: 1; }
-    .s6esd-example-title { font-size: 18px; font-weight: 700; color: #0f0f0f; margin-bottom: 16px; line-height: 1.2; text-wrap: balance; }
-    .s6esd-example-body { font-size: 16px; color: #0f0f0f; line-height: 1.7; max-width: 720px; margin: 0 auto; text-wrap: pretty; word-break: keep-all; overflow-wrap: break-word; }
-    @media (min-width: 768px) { .s6esd-container { padding: 0 32px; } .s6esd-title { font-size: 22px; } }
-    @media (min-width: 1024px) { .s6esd-container { padding: 0 32px; } .s6esd-title { font-size: 24px; } }
-    @media (min-width: 1440px) { .s6esd-container { padding: 0 120px; max-width: 1440px; } .s6esd-title { font-size: 28px; } }
   </style>
 </head>
 <body>
@@ -64,15 +94,118 @@
           <li class="s6esd-bullet-item"><span class="s6esd-bullet-icon" aria-hidden="true">✓</span><span>Determine whether the issue is execution drift (fixable without retraining) or data drift (requires retraining)</span></li>
         </ul>
       </div>
+
       <div class="s6esd-body">
-        <div class="s6esd-example-wrap">
-          <div class="s6esd-example-banner" role="complementary" aria-label="Production example: Telecom churn prediction">
-            <h3 class="s6esd-example-title">Production example: Telecom churn prediction</h3>
-            <p class="s6esd-example-body">In telecom churn prediction pipelines, execution state drift often occurs when upstream customer feature schemas change between runs — such as a new segment field added or an existing type coerced differently. The model continues running. Prediction scores shift. Without Release State, there is no mechanism to identify which condition caused the divergence. With Run Binding, the diff between Release States surfaces the schema change immediately.</p>
+        <div class="s6esd-example-section-header">
+          <h3 class="s6esd-example-title">Production example: <span class="s6esd-title-brand">Telecom churn prediction</span></h3>
+          <p class="s6esd-example-desc">In telecom churn prediction pipelines, execution state drift often occurs when upstream customer feature schemas change between runs — such as a new segment field added or an existing type coerced differently. The model continues running. Prediction scores shift. Without Release State, there is no mechanism to identify which condition caused the divergence. With Run Binding, the diff between Release States surfaces the schema change immediately.</p>
+        </div>
+
+        <div class="s6esd-tcp-diag">
+          <div class="s6esd-tcp-window">
+            <div class="s6esd-tcp-titlebar">
+              <span class="s6esd-tcp-dot s6esd-tcp-dot--close"></span>
+              <span class="s6esd-tcp-dot s6esd-tcp-dot--min"></span>
+              <span class="s6esd-tcp-dot s6esd-tcp-dot--max"></span>
+              <span class="s6esd-tcp-titlebar-label">Telecom churn prediction pipeline</span>
+            </div>
+            <div class="s6esd-tcp-content">
+              <div class="s6esd-tcp-card">
+                <div class="s6esd-tcp-card-title">Pipeline flow</div>
+                <div class="s6esd-tcp-nodes" id="tcp-nodes">
+                  <div class="s6esd-tcp-schema-label">schema change</div>
+                  <div class="s6esd-tcp-node s6esd-tcp-node--error" id="tcp-n1">
+                    <span class="s6esd-tcp-node-title">Upstream schema</span>
+                    <span class="s6esd-tcp-node-sub">New segment field</span>
+                  </div>
+                  <div class="s6esd-tcp-arrow-gap" id="tcp-a1"></div>
+                  <div class="s6esd-tcp-node" id="tcp-n2">
+                    <span class="s6esd-tcp-node-title">Feature store</span>
+                    <span class="s6esd-tcp-node-sub">Customer features</span>
+                  </div>
+                  <div class="s6esd-tcp-arrow-gap" id="tcp-a2"></div>
+                  <div class="s6esd-tcp-node" id="tcp-n3">
+                    <span class="s6esd-tcp-node-title">Churn model</span>
+                    <span class="s6esd-tcp-node-sub">Unchanged</span>
+                  </div>
+                  <div class="s6esd-tcp-arrow-gap" id="tcp-a3"></div>
+                  <div class="s6esd-tcp-node s6esd-tcp-node--error" id="tcp-n4">
+                    <span class="s6esd-tcp-node-title">Prediction scores</span>
+                    <span class="s6esd-tcp-node-sub">Shifted</span>
+                  </div>
+                  <svg class="s6esd-tcp-svg" id="tcp-svg" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                      <marker id="tcp-arr-dark" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                        <path d="M2 1L8 5L2 9" fill="none" stroke="#444" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </marker>
+                    </defs>
+                  </svg>
+                </div>
+                <div class="s6esd-tcp-rb">
+                  <div class="s6esd-tcp-rb-inner">
+                    <p class="s6esd-tcp-rb-title">Run Binding</p>
+                    <p class="s6esd-tcp-rb-desc">Diffs Release State between runs — surfaces schema change immediately</p>
+                  </div>
+                </div>
+                <div class="s6esd-tcp-compare">
+                  <div class="s6esd-tcp-cmp-without">
+                    <div class="s6esd-tcp-cmp-without-inner">
+                      <p class="s6esd-tcp-cmp-title">Without Run Binding</p>
+                      <p class="s6esd-tcp-cmp-desc">No mechanism to identify cause</p>
+                    </div>
+                  </div>
+                  <div class="s6esd-tcp-cmp-with">
+                    <div class="s6esd-tcp-cmp-with-inner">
+                      <p class="s6esd-tcp-cmp-title">With Run Binding</p>
+                      <p class="s6esd-tcp-cmp-desc">Diff surfaces schema change at source</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+
       </div>
     </div>
   </section>
+
+  <script>
+  (function(){
+    var GAP = 8;
+    function draw(){
+      var wrap = document.getElementById('tcp-nodes');
+      var svg = document.getElementById('tcp-svg');
+      if(!wrap||!svg) return;
+      var wr = wrap.getBoundingClientRect();
+      var defs = svg.querySelector('defs');
+      svg.innerHTML = ''; if(defs) svg.appendChild(defs);
+      var NS = 'http://www.w3.org/2000/svg';
+      var nodes = [
+        document.getElementById('tcp-n1'),
+        document.getElementById('tcp-n2'),
+        document.getElementById('tcp-n3'),
+        document.getElementById('tcp-n4')
+      ];
+      for(var i=0;i<nodes.length-1;i++){
+        var a = nodes[i].getBoundingClientRect();
+        var b = nodes[i+1].getBoundingClientRect();
+        var x1 = a.right - wr.left + GAP;
+        var y1 = a.top - wr.top + a.height/2;
+        var x2 = b.left - wr.left - GAP;
+        var y2 = b.top - wr.top + b.height/2;
+        var line = document.createElementNS(NS,'line');
+        line.setAttribute('x1',x1); line.setAttribute('y1',y1);
+        line.setAttribute('x2',x2); line.setAttribute('y2',y2);
+        line.setAttribute('stroke','#444');
+        line.setAttribute('stroke-width','1.5');
+        line.setAttribute('marker-end','url(#tcp-arr-dark)');
+        svg.appendChild(line);
+      }
+    }
+    setTimeout(draw,100);
+    window.addEventListener('resize',draw);
+  })();
+  </script>
 </body>
 </html>

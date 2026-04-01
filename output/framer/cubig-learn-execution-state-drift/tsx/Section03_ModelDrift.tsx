@@ -45,7 +45,7 @@ export default function Section03_ModelDrift({
         .s3esd-section {
           width: 100%;
           padding: 80px 0;
-          background-color: #f7f7f7;
+          background-color: #ffffff;
           font-family: "DM Sans", sans-serif;
           color: #0f0f0f;
           -webkit-font-smoothing: antialiased;

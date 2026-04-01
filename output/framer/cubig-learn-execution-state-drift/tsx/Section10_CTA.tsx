@@ -122,24 +122,29 @@ export default function Section10_CTA({
           font-weight: 700;
         }
 
-        @media (max-width: 767px) {
+        .s10esd-outer {
+          width: 100%;
+          container-type: inline-size;
+        }
+        @container (max-width: 767px) {
           .s10esd-title { font-size: 28px; letter-spacing: -0.5px; }
           .s10esd-actions { flex-direction: column; align-items: center; }
           .s10esd-btn { width: 100%; max-width: 320px; }
         }
-        @media (min-width: 768px) {
+        @container (min-width: 768px) {
           .s10esd-section { padding: 100px 32px; }
         }
-        @media (min-width: 1024px) {
+        @container (min-width: 1024px) {
           .s10esd-inner { max-width: 720px; }
         }
-        @media (min-width: 1440px) {
+        @container (min-width: 1440px) {
           .s10esd-section { padding: 120px 120px; max-width: 1440px; margin: 0 auto; }
           .s10esd-inner { max-width: 860px; }
           .s10esd-title { font-size: 50px; }
         }
       `}</style>
 
+      <div className="s10esd-outer">
       <section className="s10esd-section" aria-label="Call to action">
         <div className="s10esd-inner">
           <h2 className="s10esd-title">
@@ -161,6 +166,7 @@ export default function Section10_CTA({
           </div>
         </div>
       </section>
+      </div>
     </div>
   )
 }

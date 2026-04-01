@@ -11,13 +11,14 @@
 
     .s1esd-section {
       width: 100%;
-      padding: 100px 0 80px;
+      padding: 100px 0 0;
       background-color: #ffffff;
       font-family: "DM Sans", sans-serif;
       color: #0f0f0f;
       -webkit-font-smoothing: antialiased;
       word-break: keep-all;
       overflow-wrap: break-word;
+      overflow: visible;
     }
     .s1esd-container {
       width: 100%;
@@ -28,6 +29,7 @@
     .s1esd-hero {
       max-width: 860px;
       margin: 0 auto;
+      text-align: center;
     }
     .s1esd-title {
       font-family: "DM Sans", sans-serif;
@@ -36,7 +38,7 @@
       color: #0f0f0f;
       line-height: 1.2;
       letter-spacing: -0.5px;
-      margin: 0 0 16px;
+      margin: 0 0 12px;
       text-wrap: balance;
     }
     .s1esd-title-brand { color: #725bea; }
@@ -45,11 +47,108 @@
       color: #636363;
       line-height: 1.7;
       max-width: 100%;
-      margin: 0;
+      margin: 0 0 32px;
       text-wrap: pretty;
       word-break: keep-all;
       overflow-wrap: break-word;
     }
+    .s1esd-frame {
+      margin-top: 48px;
+      border-radius: 40px;
+      padding: 48px 48px 0;
+      background-image: url('../../reference/images/bg-wc-ecosystem.webp');
+      background-size: cover;
+      background-position: center;
+      overflow: hidden;
+    }
+    .s1esd-diag {
+      font-family: "DM Sans", sans-serif;
+      background: #ffffff;
+      overflow: hidden;
+      width: 100%;
+      border-radius: 18px 18px 0 0;
+    }
+    .s1esd-diag-frame {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 14px;
+      background: linear-gradient(180deg, #f2f2f2 0%, #ececec 100%);
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .s1esd-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .s1esd-dot--red { background: #ff3030; }
+    .s1esd-dot--yellow { background: #f59e0b; }
+    .s1esd-dot--green { background: #0e824c; }
+    .s1esd-canvas {
+      padding: 32px 32px 0;
+      background: #ffffff;
+      position: relative;
+    }
+    .s1esd-main {
+      display: grid;
+      grid-template-columns: 130px 1fr 130px;
+      gap: 0;
+      align-items: start;
+      position: relative;
+    }
+    .s1esd-layers {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+      z-index: 1;
+    }
+    .s1esd-layer {
+      border-radius: 10px;
+      padding: 16px 24px;
+      text-align: center;
+    }
+    .s1esd-layer-title { font-size: 16px; font-weight: 700; margin: 0 0 4px; }
+    .s1esd-layer-sub { font-size: 12px; margin: 0; line-height: 1.4; }
+    .s1esd-layer--app { background: #eef3ff; border: 1.5px solid #c6d4fa; }
+    .s1esd-layer--app .s1esd-layer-title { color: #3061f2; }
+    .s1esd-layer--app .s1esd-layer-sub { color: #636363; }
+    .s1esd-layer--model { background: #f2f2f2; border: 1.5px solid #e6e7e9; }
+    .s1esd-layer--model .s1esd-layer-title { color: #0f0f0f; }
+    .s1esd-layer--model .s1esd-layer-sub { color: #636363; }
+    .s1esd-layer--exec { background: #fff5f5; border: 1.5px solid #ffcccc; }
+    .s1esd-layer--exec .s1esd-layer-title { color: #ff3030; }
+    .s1esd-layer--exec .s1esd-layer-sub { color: #636363; }
+    .s1esd-layer-gap { height: 10px; }
+    .s1esd-nc { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 8px 0; }
+    .s1esd-nc-line { flex: 1; height: 1px; background: #e6e7e9; }
+    .s1esd-nc-text { font-size: 12px; color: #9c9c9c; font-weight: 500; background: #ffffff; padding: 0 8px; }
+    .s1esd-sub-cards { display: flex; gap: 8px; margin-top: 12px; }
+    .s1esd-sub-card {
+      flex: 1; background: #ffffff; border: 1.5px solid #ffcccc;
+      border-radius: 7px; padding: 10px; text-align: center;
+    }
+    .s1esd-sub-card-title { font-size: 14px; font-weight: 700; color: #ff3030; margin: 0 0 2px; }
+    .s1esd-sub-card-desc { font-size: 12px; color: #636363; margin: 0; line-height: 1.4; }
+    .s1esd-right-col { display: flex; flex-direction: column; justify-content: start; }
+    .s1esd-right-spacer { height: 82px; }
+    .s1esd-teams { display: flex; align-items: center; gap: 6px; }
+    .s1esd-teams-arrow {
+      width: 28px; height: 2px; background: #636363; position: relative; flex-shrink: 0;
+    }
+    .s1esd-teams-arrow::before {
+      content: '';
+      position: absolute; left: -1px; top: 50%; transform: translateY(-50%);
+      border-top: 4px solid transparent; border-bottom: 4px solid transparent;
+      border-right: 6px solid #636363;
+    }
+    .s1esd-teams-text { font-size: 12px; color: #636363; font-weight: 500; white-space: nowrap; }
+    .s1esd-svg-overlay {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 0;
+    }
+    .s1esd-left-col { min-height: 1px; }
+    .s1esd-caption {
+      margin-top: 24px; text-align: center; font-size: 14px;
+      color: #636363; font-style: italic; padding-bottom: 24px;
+    }
+
     @media (min-width: 768px) {
       .s1esd-container { padding: 0 32px; }
       .s1esd-title { font-size: 28px; }
@@ -57,12 +156,21 @@
     @media (min-width: 1024px) {
       .s1esd-container { padding: 0 32px; }
       .s1esd-title { font-size: 32px; }
-      .s1esd-description { max-width: 720px; }
+      .s1esd-description { max-width: 720px; margin-left: auto; margin-right: auto; }
     }
     @media (min-width: 1440px) {
       .s1esd-container { padding: 0 120px; max-width: 1440px; }
       .s1esd-title { font-size: 36px; }
       .s1esd-description { max-width: 860px; }
+    }
+    @media (max-width: 639px) {
+      .s1esd-main { grid-template-columns: 1fr; }
+      .s1esd-right-col, .s1esd-left-col { display: none; }
+      .s1esd-sub-cards { flex-direction: column; }
+      .s1esd-layer-title { font-size: 14px; }
+      .s1esd-canvas { padding: 24px 12px 0; }
+      .s1esd-svg-overlay { display: none; }
+      .s1esd-frame { padding: 32px 24px 0; border-radius: 24px 24px 0 0; }
     }
   </style>
 </head>
@@ -75,7 +183,119 @@
         </h1>
         <p class="s1esd-description">When production AI degrades, teams check the model first. But most failures are not model drift — they are execution state drift. Schema changes, pipeline updates, runtime differences. Learn the distinction and how to isolate the root cause.</p>
       </div>
+
+      <div class="s1esd-frame">
+        <div class="s1esd-diag">
+          <div class="s1esd-diag-frame">
+            <span class="s1esd-dot s1esd-dot--red"></span>
+            <span class="s1esd-dot s1esd-dot--yellow"></span>
+            <span class="s1esd-dot s1esd-dot--green"></span>
+          </div>
+          <div class="s1esd-canvas" id="edh-canvas">
+            <svg class="s1esd-svg-overlay" id="edh-svg" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="edh-arrow-right" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                  <path d="M2 1 L8 5 L2 9" fill="none" stroke="#ff3030" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </marker>
+              </defs>
+            </svg>
+            <div class="s1esd-main">
+              <div class="s1esd-left-col"></div>
+              <div class="s1esd-layers" id="edh-layers">
+                <div class="s1esd-layer s1esd-layer--app" id="edh-app">
+                  <p class="s1esd-layer-title">Application outputs</p>
+                  <p class="s1esd-layer-sub">Scores · decisions · predictions</p>
+                </div>
+                <div class="s1esd-layer-gap"></div>
+                <div class="s1esd-layer s1esd-layer--model">
+                  <p class="s1esd-layer-title">Model layer</p>
+                  <p class="s1esd-layer-sub">Weights · hyperparameters · registry — unchanged</p>
+                </div>
+                <div class="s1esd-nc">
+                  <span class="s1esd-nc-line"></span>
+                  <span class="s1esd-nc-text">no changes</span>
+                  <span class="s1esd-nc-line"></span>
+                </div>
+                <div class="s1esd-layer s1esd-layer--exec" id="edh-exec">
+                  <p class="s1esd-layer-title">Execution environment</p>
+                  <p class="s1esd-layer-sub">Schema · pipeline · runtime</p>
+                  <div class="s1esd-sub-cards">
+                    <div class="s1esd-sub-card">
+                      <p class="s1esd-sub-card-title">Schema</p>
+                      <p class="s1esd-sub-card-desc">Silent column change</p>
+                    </div>
+                    <div class="s1esd-sub-card">
+                      <p class="s1esd-sub-card-title">Pipeline</p>
+                      <p class="s1esd-sub-card-desc">Updated transform</p>
+                    </div>
+                    <div class="s1esd-sub-card">
+                      <p class="s1esd-sub-card-title">Runtime</p>
+                      <p class="s1esd-sub-card-desc">Env difference</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="s1esd-right-col">
+                <div class="s1esd-right-spacer"></div>
+                <div class="s1esd-teams">
+                  <span class="s1esd-teams-arrow"></span>
+                  <span class="s1esd-teams-text">Teams look here</span>
+                </div>
+              </div>
+            </div>
+            <p class="s1esd-caption">Execution state drift bypasses the model — and most monitors.</p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
+
+  <script>
+  (function(){
+    function drawDrift(){
+      var canvas = document.getElementById('edh-canvas');
+      var svg = document.getElementById('edh-svg');
+      var app = document.getElementById('edh-app');
+      var exec = document.getElementById('edh-exec');
+      if(!canvas||!svg||!app||!exec) return;
+      var cr = canvas.getBoundingClientRect();
+      var ar = app.getBoundingClientRect();
+      var er = exec.getBoundingClientRect();
+      var NS = 'http://www.w3.org/2000/svg';
+      var startX = er.left - cr.left;
+      var startY = er.top - cr.top + er.height * 0.35;
+      var endX = ar.left - cr.left;
+      var endY = ar.top - cr.top + ar.height / 2;
+      var marginX = startX - 16;
+      var defs = svg.querySelector('defs');
+      svg.innerHTML = '';
+      if(defs) svg.appendChild(defs);
+      var path = document.createElementNS(NS, 'path');
+      path.setAttribute('d', 'M'+startX+' '+startY+' L'+marginX+' '+startY+' L'+marginX+' '+endY+' L'+endX+' '+endY);
+      path.setAttribute('fill', 'none');
+      path.setAttribute('stroke', '#ff3030');
+      path.setAttribute('stroke-width', '2');
+      path.setAttribute('stroke-linejoin', 'round');
+      path.setAttribute('marker-end', 'url(#edh-arrow-right)');
+      svg.appendChild(path);
+      var midY = (startY + endY) / 2;
+      var text = document.createElementNS(NS, 'text');
+      text.setAttribute('x', marginX - 8);
+      text.setAttribute('y', midY);
+      text.setAttribute('text-anchor', 'middle');
+      text.setAttribute('dominant-baseline', 'middle');
+      text.setAttribute('transform', 'rotate(-90 '+(marginX-8)+' '+midY+')');
+      text.setAttribute('fill', '#ff3030');
+      text.setAttribute('font-size', '11');
+      text.setAttribute('font-weight', '600');
+      text.setAttribute('font-family', '"DM Sans", sans-serif');
+      text.setAttribute('letter-spacing', '0.06em');
+      text.textContent = 'drift path';
+      svg.appendChild(text);
+    }
+    setTimeout(drawDrift, 100);
+    window.addEventListener('resize', drawDrift);
+  })();
+  </script>
 </body>
 </html>
