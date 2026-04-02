@@ -974,16 +974,35 @@
     .edh-diag__teams-arrow { width: 28px; height: 2px; background: var(--ds-color-text-secondary); position: relative; flex-shrink: 0; }
     .edh-diag__teams-arrow::before { content: ''; position: absolute; left: -1px; top: 50%; transform: translateY(-50%); border-top: 4px solid transparent; border-bottom: 4px solid transparent; border-right: 6px solid var(--ds-color-text-secondary); }
     .edh-diag__teams-text { font-size: var(--ds-text-xs); color: var(--ds-color-text-secondary); font-weight: var(--ds-weight-medium); white-space: nowrap; }
-    .edh-diag__svg-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
     .edh-diag__caption { margin-top: var(--ds-space-lg); text-align: center; font-size: var(--ds-text-sm); color: var(--ds-color-text-secondary); font-style: italic; }
-    .edh-diag__left-col { min-height: 1px; }
+    .edh-diag__left-col { position: relative; }
+    .edh-diag__drift-wrap {
+      position: absolute; top: 10%; bottom: 10%; right: 0; width: 60%;
+    }
+    .edh-diag__drift-wrap::before {
+      content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--ds-color-error);
+    }
+    .edh-diag__drift-h-top {
+      position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--ds-color-error);
+    }
+    .edh-diag__drift-h-top::after {
+      content: ""; position: absolute; right: -2px; top: 50%; transform: translateY(-50%);
+      border-top: 5px solid transparent; border-bottom: 5px solid transparent; border-left: 7px solid var(--ds-color-error);
+    }
+    .edh-diag__drift-h-bottom {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--ds-color-error);
+    }
+    .edh-diag__drift-label {
+      position: absolute; left: -6px; top: 50%; transform: translateY(-50%) rotate(-90deg);
+      font-size: 11px; font-weight: var(--ds-weight-semibold); color: var(--ds-color-error);
+      letter-spacing: var(--ds-tracking-wide); white-space: nowrap;
+    }
     @media (max-width: 640px) {
       .edh-diag__main { grid-template-columns: 1fr; }
       .edh-diag__right-col, .edh-diag__left-col { display: none; }
       .edh-diag__sub-cards { flex-direction: column; }
       .edh-diag__layer-title { font-size: var(--ds-text-sm); }
       .edh-diag__canvas { padding: var(--ds-space-lg) var(--ds-space-sm) var(--ds-space-md); }
-      .edh-diag__svg-overlay { display: none; }
     }
   </style>
 </head>
@@ -1013,18 +1032,15 @@
 
   <div class="edh-diag__canvas" id="edh-canvas">
 
-    <!-- SVG drift path overlay — JS로 좌표 계산 -->
-    <svg class="edh-diag__svg-overlay" id="edh-svg" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <marker id="edh-arrow-right" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-          <path d="M2 1 L8 5 L2 9" fill="none" stroke="#ff3030" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </marker>
-      </defs>
-    </svg>
-
     <div class="edh-diag__main">
-      <!-- Left spacer for drift path SVG -->
-      <div class="edh-diag__left-col"></div>
+      <!-- Left: CSS L-shape drift path -->
+      <div class="edh-diag__left-col">
+        <div class="edh-diag__drift-wrap">
+          <div class="edh-diag__drift-h-top"></div>
+          <div class="edh-diag__drift-h-bottom"></div>
+          <span class="edh-diag__drift-label">drift path</span>
+        </div>
+      </div>
 
       <div class="edh-diag__layers" id="edh-layers">
 
@@ -1084,70 +1100,7 @@
   </div>
 </div>
 
-<script>
-(function(){
-  function drawDrift(){
-    var canvas = document.getElementById('edh-canvas');
-    var svg = document.getElementById('edh-svg');
-    var app = document.getElementById('edh-app');
-    var exec = document.getElementById('edh-exec');
-    if(!canvas||!svg||!app||!exec) return;
-
-    var cr = canvas.getBoundingClientRect();
-    var ar = app.getBoundingClientRect();
-    var er = exec.getBoundingClientRect();
-    var NS = 'http://www.w3.org/2000/svg';
-
-    // 시작점: Execution environment 좌측 중앙
-    var startX = er.left - cr.left;
-    var startY = er.top - cr.top + er.height * 0.35;
-
-    // 끝점: Application outputs 좌측 중앙 (→ 방향으로 들어감)
-    var endX = ar.left - cr.left;
-    var endY = ar.top - cr.top + ar.height / 2;
-
-    // 꺾은선 경유점: 레이어 좌측에서 16px 왼쪽
-    var marginX = startX - 16;
-
-    var defs = svg.querySelector('defs');
-    svg.innerHTML = '';
-    if(defs) svg.appendChild(defs);
-
-    // 경로: Exec 좌측 → 왼쪽으로 → 위로 → 오른쪽으로 App 좌측 중앙
-    var path = document.createElementNS(NS, 'path');
-    path.setAttribute('d',
-      'M' + startX + ' ' + startY +
-      ' L' + marginX + ' ' + startY +
-      ' L' + marginX + ' ' + endY +
-      ' L' + endX + ' ' + endY
-    );
-    path.setAttribute('fill', 'none');
-    path.setAttribute('stroke', '#ff3030');
-    path.setAttribute('stroke-width', '2');
-    path.setAttribute('stroke-linejoin', 'round');
-    path.setAttribute('marker-end', 'url(#edh-arrow-right)');
-    svg.appendChild(path);
-
-    // "drift path" 라벨 (세로, 좌측 수직선 옆)
-    var midY = (startY + endY) / 2;
-    var text = document.createElementNS(NS, 'text');
-    text.setAttribute('x', marginX - 8);
-    text.setAttribute('y', midY);
-    text.setAttribute('text-anchor', 'middle');
-    text.setAttribute('dominant-baseline', 'middle');
-    text.setAttribute('transform', 'rotate(-90 ' + (marginX - 8) + ' ' + midY + ')');
-    text.setAttribute('fill', '#ff3030');
-    text.setAttribute('font-size', '11');
-    text.setAttribute('font-weight', '600');
-    text.setAttribute('font-family', '"DM Sans", sans-serif');
-    text.setAttribute('letter-spacing', '0.06em');
-    text.textContent = 'drift path';
-    svg.appendChild(text);
-  }
-  setTimeout(drawDrift, 100);
-  window.addEventListener('resize', drawDrift);
-})();
-</script>
+<!-- drift path is now CSS-only -->
 
       </div><!-- /.ds-hero__screenshot-frame -->
     </div>

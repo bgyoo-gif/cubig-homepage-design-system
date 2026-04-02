@@ -356,42 +356,56 @@ export default function Section01_Hero({
 
         .s1esd-left-col {
           position: relative;
-          display: flex;
-          align-items: center;
-          justify-content: center;
         }
-        .s1esd-drift-path {
+        /* L자 경로: 하단→좌→상→우 화살표 */
+        .s1esd-drift-wrap {
           position: absolute;
-          top: 50%;
+          top: 10%;
+          bottom: 10%;
           right: 0;
-          width: 70%;
-          height: 80%;
-          transform: translateY(-50%);
-          border-left: 2px solid #ff3030;
-          border-top: 2px solid #ff3030;
-          border-bottom: 2px solid #ff3030;
-          border-right: none;
-          border-radius: 8px 0 0 8px;
+          width: 60%;
         }
-        .s1esd-drift-path::before {
+        /* 수직선 (좌측) */
+        .s1esd-drift-wrap::before {
           content: "";
           position: absolute;
-          top: -6px;
+          left: 0;
+          top: 0;
+          bottom: 0;
+          width: 2px;
+          background: #ff3030;
+        }
+        /* 하단 가로선 (좌→우, exec 높이) */
+        .s1esd-drift-h-bottom {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          height: 2px;
+          background: #ff3030;
+        }
+        /* 상단 가로선 + 화살표 (좌→우, app 높이) */
+        .s1esd-drift-h-top {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 2px;
+          background: #ff3030;
+        }
+        .s1esd-drift-h-top::after {
+          content: "";
+          position: absolute;
           right: -2px;
-          border-left: 7px solid #ff3030;
+          top: 50%;
+          transform: translateY(-50%);
           border-top: 5px solid transparent;
           border-bottom: 5px solid transparent;
-        }
-        .s1esd-drift-path::after {
-          content: "";
-          position: absolute;
-          bottom: -6px;
-          right: -2px;
-          width: 0; height: 0;
+          border-left: 7px solid #ff3030;
         }
         .s1esd-drift-label {
           position: absolute;
-          left: 4px;
+          left: -6px;
           top: 50%;
           transform: translateY(-50%) rotate(-90deg);
           font-size: 11px;
@@ -430,7 +444,7 @@ export default function Section01_Hero({
           .s1esd-sub-cards { flex-direction: column; }
           .s1esd-layer-title { font-size: 14px; }
           .s1esd-canvas { padding: 24px 12px 16px; }
-          .s1esd-drift-path, .s1esd-drift-label { display: none; }
+          .s1esd-drift-wrap { display: none; }
           .s1esd-frame { padding: 32px 24px 0; border-radius: 24px 24px 0 0; }
         }
       `}</style>
@@ -460,10 +474,13 @@ export default function Section01_Hero({
                 {/* Canvas */}
                 <div className="s1esd-canvas">
                   <div className="s1esd-main">
-                    {/* Left: CSS drift path */}
+                    {/* Left: CSS L-shape drift path */}
                     <div className="s1esd-left-col">
-                      <div className="s1esd-drift-path"></div>
-                      <span className="s1esd-drift-label">drift path</span>
+                      <div className="s1esd-drift-wrap">
+                        <div className="s1esd-drift-h-top"></div>
+                        <div className="s1esd-drift-h-bottom"></div>
+                        <span className="s1esd-drift-label">drift path</span>
+                      </div>
                     </div>
 
                     <div className="s1esd-layers" id="edh-layers-fr">
