@@ -1,6 +1,6 @@
 // Section01_Hero.tsx — Execution State Drift Learn Article Hero (A-2 Hero Screenshot + Diagram)
 // Framer Code Component
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 import { addPropertyControls, ControlType } from "framer"
 
 const FONT_URL = "https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@700&family=Fragment+Mono&display=swap"
@@ -49,6 +49,11 @@ export default function Section01_Hero({
   ncText = "no changes",
   teamsLookText = "Teams look here",
 }: Props) {
+  const canvasRef = useRef<HTMLDivElement>(null)
+  const svgRef = useRef<SVGSVGElement>(null)
+  const appRef = useRef<HTMLDivElement>(null)
+  const execRef = useRef<HTMLDivElement>(null)
+
   useEffect(() => {
     // Load fonts
     const fontId = "font-dm-sans-esd"
@@ -128,10 +133,10 @@ export default function Section01_Hero({
 
     // Draw SVG drift path
     function drawDrift() {
-      const canvas = document.getElementById("edh-canvas-fr")
-      const svg = document.getElementById("edh-svg-fr") as SVGSVGElement | null
-      const app = document.getElementById("edh-app-fr")
-      const exec = document.getElementById("edh-exec-fr")
+      const canvas = canvasRef.current
+      const svg = svgRef.current
+      const app = appRef.current
+      const exec = execRef.current
       if (!canvas || !svg || !app || !exec) return
 
       const cr = canvas.getBoundingClientRect()
@@ -477,9 +482,9 @@ export default function Section01_Hero({
                 </div>
 
                 {/* Canvas */}
-                <div className="s1esd-canvas" id="edh-canvas-fr">
+                <div className="s1esd-canvas" ref={canvasRef}>
                   {/* SVG drift path overlay */}
-                  <svg className="s1esd-svg-overlay" id="edh-svg-fr" xmlns="http://www.w3.org/2000/svg">
+                  <svg className="s1esd-svg-overlay" ref={svgRef} xmlns="http://www.w3.org/2000/svg">
                     <defs>
                       <marker id="edh-arrow-right-fr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
                         <path d="M2 1 L8 5 L2 9" fill="none" stroke="#ff3030" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -493,7 +498,7 @@ export default function Section01_Hero({
 
                     <div className="s1esd-layers" id="edh-layers-fr">
                       {/* Layer 1: Application outputs */}
-                      <div className="s1esd-layer s1esd-layer--app" id="edh-app-fr">
+                      <div className="s1esd-layer s1esd-layer--app" ref={appRef}>
                         <p className="s1esd-layer-title">{layer1Title}</p>
                         <p className="s1esd-layer-sub">{layer1Sub}</p>
                       </div>
@@ -514,7 +519,7 @@ export default function Section01_Hero({
                       </div>
 
                       {/* Layer 3: Execution environment */}
-                      <div className="s1esd-layer s1esd-layer--exec" id="edh-exec-fr">
+                      <div className="s1esd-layer s1esd-layer--exec" ref={execRef}>
                         <p className="s1esd-layer-title">{layer3Title}</p>
                         <p className="s1esd-layer-sub">{layer3Sub}</p>
                         <div className="s1esd-sub-cards">
