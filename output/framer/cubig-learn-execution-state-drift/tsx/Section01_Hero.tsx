@@ -189,7 +189,7 @@ export default function Section01_Hero({
           margin-top: 48px;
           border-radius: 40px;
           padding: 48px 48px 0;
-          background-image: url('${IMAGE_BASE}/bg-wc-ecosystem.webp');
+          background-image: url('${IMAGE_BASE}/bg-paint-white-teal.webp');
           background-size: cover;
           background-position: center;
           overflow: hidden;
