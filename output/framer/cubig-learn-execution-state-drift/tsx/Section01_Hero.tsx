@@ -228,7 +228,7 @@ export default function Section01_Hero({
           display: grid;
           grid-template-columns: 130px 1fr 130px;
           gap: 0;
-          align-items: start;
+          align-items: stretch;
           position: relative;
         }
         .s1esd-layers {

@@ -1,6 +1,5 @@
 // Section06_ReleaseState.tsx — How Release State isolates which layer changed (with TCP diagram)
 // Framer Code Component
-import { useEffect } from "react"
 import { addPropertyControls, ControlType } from "framer"
 
 const IMAGE_BASE = "https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images"
@@ -74,56 +73,6 @@ export default function Section06_ReleaseState({
   tcpWithTitle = "With Run Binding",
   tcpWithDesc = "Diff surfaces schema change at source",
 }: Props) {
-  useEffect(() => {
-    function drawArrows() {
-      const wrap = document.getElementById("tcp-nodes-fr")
-      const svg = document.getElementById("tcp-svg-fr") as SVGSVGElement | null
-      if (!wrap || !svg) return
-
-      const wr = wrap.getBoundingClientRect()
-      const defs = svg.querySelector("defs")
-      svg.innerHTML = ""
-      if (defs) svg.appendChild(defs)
-
-      const NS = "http://www.w3.org/2000/svg"
-      const GAP = 8
-      const nodes = [
-        document.getElementById("tcp-n1-fr"),
-        document.getElementById("tcp-n2-fr"),
-        document.getElementById("tcp-n3-fr"),
-        document.getElementById("tcp-n4-fr"),
-      ]
-
-      for (let i = 0; i < nodes.length - 1; i++) {
-        const a = nodes[i]
-        const b = nodes[i + 1]
-        if (!a || !b) continue
-        const ar = a.getBoundingClientRect()
-        const br = b.getBoundingClientRect()
-        const x1 = ar.right - wr.left + GAP
-        const y1 = ar.top - wr.top + ar.height / 2
-        const x2 = br.left - wr.left - GAP
-        const y2 = br.top - wr.top + br.height / 2
-        const line = document.createElementNS(NS, "line")
-        line.setAttribute("x1", String(x1))
-        line.setAttribute("y1", String(y1))
-        line.setAttribute("x2", String(x2))
-        line.setAttribute("y2", String(y2))
-        line.setAttribute("stroke", "#444444")
-        line.setAttribute("stroke-width", "1.5")
-        line.setAttribute("marker-end", "url(#tcp-arr-dark-fr)")
-        svg.appendChild(line)
-      }
-    }
-
-    const timer = setTimeout(drawArrows, 150)
-    window.addEventListener("resize", drawArrows)
-    return () => {
-      clearTimeout(timer)
-      window.removeEventListener("resize", drawArrows)
-    }
-  }, [])
-
   return (
     <div>
       <style>{`
@@ -362,6 +311,19 @@ export default function Section06_ReleaseState({
           display: flex;
           align-items: center;
           justify-content: center;
+          position: relative;
+        }
+        .s6esd-tcp-arrow-gap::before {
+          content: "";
+          width: 20px;
+          height: 1.5px;
+          background: #444;
+        }
+        .s6esd-tcp-arrow-gap::after {
+          content: "";
+          border-top: 4px solid transparent;
+          border-bottom: 4px solid transparent;
+          border-left: 6px solid #444;
         }
         .s6esd-tcp-schema-label {
           position: absolute;
@@ -383,12 +345,9 @@ export default function Section06_ReleaseState({
           border-right: 4px solid transparent;
           border-top: 5px solid #ff3030;
         }
-        .s6esd-tcp-svg {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
+        /* tcp-svg removed — arrows are CSS ::before/::after on arrow-gap */
+        .s6esd-tcp-svg-removed {
+          display: none;
           pointer-events: none;
         }
 
@@ -550,33 +509,27 @@ export default function Section06_ReleaseState({
                       <div className="s6esd-tcp-nodes" id="tcp-nodes-fr">
                         <div className="s6esd-tcp-schema-label">{tcpSchemaLabel}</div>
 
-                        <div className="s6esd-tcp-node s6esd-tcp-node--error" id="tcp-n1-fr">
+                        <div className="s6esd-tcp-node s6esd-tcp-node--error">
                           <span className="s6esd-tcp-node-title">{tcpNode1Title}</span>
                           <span className="s6esd-tcp-node-sub">{tcpNode1Sub}</span>
                         </div>
                         <div className="s6esd-tcp-arrow-gap"></div>
-                        <div className="s6esd-tcp-node" id="tcp-n2-fr">
+                        <div className="s6esd-tcp-node">
                           <span className="s6esd-tcp-node-title">{tcpNode2Title}</span>
                           <span className="s6esd-tcp-node-sub">{tcpNode2Sub}</span>
                         </div>
                         <div className="s6esd-tcp-arrow-gap"></div>
-                        <div className="s6esd-tcp-node" id="tcp-n3-fr">
+                        <div className="s6esd-tcp-node">
                           <span className="s6esd-tcp-node-title">{tcpNode3Title}</span>
                           <span className="s6esd-tcp-node-sub">{tcpNode3Sub}</span>
                         </div>
                         <div className="s6esd-tcp-arrow-gap"></div>
-                        <div className="s6esd-tcp-node s6esd-tcp-node--error" id="tcp-n4-fr">
+                        <div className="s6esd-tcp-node s6esd-tcp-node--error">
                           <span className="s6esd-tcp-node-title">{tcpNode4Title}</span>
                           <span className="s6esd-tcp-node-sub">{tcpNode4Sub}</span>
                         </div>
 
-                        <svg className="s6esd-tcp-svg" id="tcp-svg-fr" xmlns="http://www.w3.org/2000/svg">
-                          <defs>
-                            <marker id="tcp-arr-dark-fr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-                              <path d="M2 1L8 5L2 9" fill="none" stroke="#444444" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                            </marker>
-                          </defs>
-                        </svg>
+                        {/* arrows are CSS-only via .s6esd-tcp-arrow-gap */}
                       </div>
 
                       {/* Run Binding */}
