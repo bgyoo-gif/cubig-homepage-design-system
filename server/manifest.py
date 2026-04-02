@@ -54,8 +54,11 @@ def scan():
             parts = clean_base.replace("-v3", "").replace("-v2", "").replace("-v1", "").split("-")
             product_key = parts[0] if parts else ""
             # Check if output path contains input base or product key in framer dir
-            path_match = base in rel or clean_base in rel
-            framer_match = "framer" in rel and product_key and product_key in rel.lower()
+            # Use boundary-aware matching to avoid partial overlaps (e.g., execution-state-layer vs execution-state-drift)
+            path_match = (f"/{base}" in rel or f"/{base}." in rel or f"/{base}-" in rel or
+                          f"/{clean_base}" in rel or f"/{clean_base}." in rel or
+                          base in rel.split("/")[-1] or clean_base in rel.split("/")[-1])
+            framer_match = "framer" in rel and (f"framer/{base}/" in rel or f"framer/cubig-{clean_base}/" in rel or f"framer/{clean_base}/" in rel)
             # Special: llm-capsule folder matches llm input
             if not path_match and not framer_match:
                 if "llm-capsule" in rel and "llm" in base.lower():
