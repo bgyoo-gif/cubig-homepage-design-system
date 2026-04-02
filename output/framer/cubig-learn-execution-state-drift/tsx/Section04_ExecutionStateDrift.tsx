@@ -95,6 +95,7 @@ export default function Section04_ExecutionStateDrift({
           margin: 0 auto;
         }
         .s4esd-section-header {
+          text-align: center;
           margin-bottom: 32px;
           padding-bottom: 24px;
           border-bottom: 1px solid #e6e7e9;

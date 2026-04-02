@@ -153,6 +153,7 @@ export default function Section06_ReleaseState({
           margin: 0 auto;
         }
         .s6esd-section-header {
+          text-align: center;
           margin-bottom: 32px;
           padding-bottom: 24px;
           border-bottom: 1px solid #e6e7e9;
@@ -239,6 +240,7 @@ export default function Section06_ReleaseState({
         /* Example section header */
         .s6esd-example-section-header {
           margin-top: 80px;
+          text-align: center;
           margin-bottom: 32px;
           padding-bottom: 24px;
           border-bottom: 1px solid #e6e7e9;

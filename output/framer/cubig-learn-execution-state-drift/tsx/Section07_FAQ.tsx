@@ -82,6 +82,7 @@ export default function Section07_FAQ({
           margin: 0 auto;
         }
         .s7esd-section-header {
+          text-align: center;
           margin-bottom: 32px;
           padding-bottom: 24px;
           border-bottom: 1px solid #e6e7e9;

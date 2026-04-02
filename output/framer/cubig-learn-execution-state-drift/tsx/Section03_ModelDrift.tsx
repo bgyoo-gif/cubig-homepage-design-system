@@ -68,6 +68,7 @@ export default function Section03_ModelDrift({
           margin: 0 auto;
         }
         .s3esd-section-header {
+          text-align: center;
           margin-bottom: 48px;
           padding-bottom: 24px;
           border-bottom: 1px solid #e6e7e9;

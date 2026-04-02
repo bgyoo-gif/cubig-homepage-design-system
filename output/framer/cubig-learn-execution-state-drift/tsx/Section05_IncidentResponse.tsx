@@ -75,6 +75,7 @@ export default function Section05_IncidentResponse({
           margin: 0 auto;
         }
         .s5esd-section-header {
+          text-align: center;
           margin-bottom: 32px;
           padding-bottom: 24px;
           border-bottom: 1px solid #e6e7e9;
