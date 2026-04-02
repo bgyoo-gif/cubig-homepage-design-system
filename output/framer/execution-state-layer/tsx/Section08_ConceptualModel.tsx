@@ -48,7 +48,7 @@ export default function Section08_ConceptualModel({
           border-bottom: 1px solid #e6e7e9;
         }
         .s8-header__title {
-          font-size: 20px;
+          font-size: 24px;
           font-weight: 700;
           color: #0f0f0f;
           line-height: 1.2;

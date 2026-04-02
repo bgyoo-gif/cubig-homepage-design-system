@@ -56,7 +56,7 @@ export default function Section07_AIReadyData({
           border-bottom: 1px solid #e6e7e9;
         }
         .s7-header__title {
-          font-size: 20px;
+          font-size: 24px;
           font-weight: 700;
           color: #0f0f0f;
           line-height: 1.2;

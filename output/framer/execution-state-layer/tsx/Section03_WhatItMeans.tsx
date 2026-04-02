@@ -43,7 +43,7 @@ export default function Section03_WhatItMeans({
         }
         .s3-header__title {
           font-family: "DM Sans", sans-serif;
-          font-size: 20px;
+          font-size: 24px;
           font-weight: 700;
           color: #0f0f0f;
           line-height: 1.2;

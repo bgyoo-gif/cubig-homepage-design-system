@@ -45,7 +45,7 @@ export default function Section02_Definition({
         }
         .s2-header__title {
           font-family: "DM Sans", sans-serif;
-          font-size: 20px;
+          font-size: 24px;
           font-weight: 700;
           color: #0f0f0f;
           line-height: 1.2;
