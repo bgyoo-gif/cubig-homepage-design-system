@@ -22,6 +22,12 @@
   </thead>
   <tbody>
   <tr>
+    <td class="date">2026-04-02</td>
+    <td>세션 시행착오 14건 전파 — #1 섹션헤더--left 전면금지(재확인), #2 CTA타이틀 text-7xl 금지, #3 letter-spacing 하드코딩 금지, #4 ds-section--light 전면금지, #5 다이어그램 DS토큰 미사용 금지, #6 화살표 좌표 하드코딩 금지, #7 주황/오렌지 색상 금지, #8 background shorthand 금지, #9 Actions manifest 충돌(deploy 반영), #10 TSX 미동기화(CLAUDE.md 재확인), #11 screenshot-frame fallback 필수, #12 모바일 배경이미지 none처리, #13 [W]Diagram 구조 필수, #14 배경이미지 적용위치 명확화</td>
+    <td class="files">CLAUDE.md, design-system.md, frontend-dev.md, qa.md, diagram-builder.md, diagram-qa.md, product-designer.md</td>
+    <td>CLAUDE.md: 핵심규칙 6개 추가(주황금지/background-shorthand금지/fallback필수/모바일처리/적용위치), 자주발생결함 패턴 #9~#13 추가. design-system.md: 전역CSS규칙 30번 중복 수정(32~38번), 규칙 #20 전면금지로 강화. frontend-dev.md: 배경이미지규칙 보강(shorthand금지/fallback/모바일처리/적용위치), 섹션배경리듬 surface-light 제거, CSS규칙 4개 추가, 자가체크리스트 6개 추가. qa.md: bash검증 5개 추가(주황/shorthand/fallback/모바일/위치), CAT-2 체크리스트 5개 추가, CONDITIONAL PASS FAIL목록 5개 추가. diagram-builder.md: 컬러규칙에 주황금지 명시, 배경규칙 2개 추가. diagram-qa.md: 주황검증 강화, shorthand/fallback 검증 추가, FAIL기준 4개 추가. product-designer.md: 섹션배경규칙 표현 보강</td>
+  </tr>
+  <tr>
     <td class="date">2026-03-31</td>
     <td>TSX JSON-LD 구조화 데이터 필수 — Hero TSX에 useEffect + document.head.appendChild로 JSON-LD 삽입, Framer SEO 중복 항목 제외, B타입 HTML JSON-LD와 동일 내용 유지, name/description은 prop 재사용, cleanup return 필수</td>
     <td class="files">qa.md</td>

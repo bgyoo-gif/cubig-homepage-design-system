@@ -91,6 +91,11 @@ deploy (gh-pages push → GitHub Pages 자동 배포)
 - 페이지 최상단 여백: `ds-section--hero` padding-top 100px 고정
 - 배경 이미지 위 텍스트: black 또는 white만 사용 (secondary/tertiary/muted 금지)
 - 미색 배경(ds-section--light) 전면 금지 — 섹션 배경은 항상 white. 변화가 필요하면 배경 이미지 사용
+- 주황/오렌지 계열 색상 전면 금지: `#f59e0b`, `#c53d15`, `#d97653` 등 DS 팔레트에 없는 주황색 사용 금지. 강조 필요 시 `var(--ds-color-error)` (#ff3030), `var(--ds-color-brand-primary)` (#3061f2), `var(--ds-color-brand-purple)` (#725bea) 중 선택
+- background shorthand 금지: 배경 이미지가 있는 요소에는 `background-color`만 사용. `background: white` 같은 shorthand는 `background-size: cover` 등을 리셋하므로 금지
+- screenshot-frame/bg-wrap 배경색 fallback 필수: `background-color: var(--ds-color-surface-white)` fallback 항상 포함 — 이미지 로드 전 검정 여백 방지
+- 모바일 배경 이미지 처리: `@media (max-width: 767px)`에서 screenshot-frame/bg-wrap의 `background-image: none` 처리 — 가로형 이미지가 세로형 모바일에서 커버 안 되는 문제 방지
+- 배경 이미지 적용 위치: 배경 이미지는 반드시 의도한 영역에만 적용. section 전체 vs 특정 컴포넌트(kpi-band, banner-full 등) 구분 명확히
 - CSS 변수는 design-system.md에 정의된 것만 사용 (임의 변수 생성 금지)
 - Case Study 열 타입 혼합 금지: 한 섹션 안에서 1col과 2col을 섞지 않는다. 1col이면 전부 1col, 2col이면 전부 2col로 통일
 - eyebrow 전면 금지: B타입 변환 시 모든 섹션에서 eyebrow(헤드라인 위 작은 텍스트) 삭제 — A타입에 있어도 B타입에서는 제거 (banner label 포함)
@@ -181,6 +186,11 @@ Low 결함만 남은 경우 CONDITIONAL PASS 선언 가능.
 6. **CTA title 임의 크기 사용** → `ds-cta-band__title`은 `var(--ds-text-5xl)` 기본, mobile `var(--ds-text-4xl)`, desktop `var(--ds-text-6xl)` 반응형 표준 준수
 7. **letter-spacing 하드코딩** → `var(--ds-tracking-tight)` 또는 `var(--ds-tracking-wide)`로 교체
 8. **섹션 헤더 `--left` 남용** → 전체 삭제 (center가 유일 기본값)
+9. **주황/오렌지 색상 사용** → DS 팔레트로 교체 (error/#ff3030, brand-primary/#3061f2, brand-purple/#725bea)
+10. **background shorthand가 background-image 덮어씀** → `background-color`만 사용하고 shorthand 제거
+11. **screenshot-frame 배경색 누락** → `background-color: var(--ds-color-surface-white)` fallback 추가
+12. **모바일 배경 이미지 비율 문제** → `@media (max-width: 767px)` `background-image: none` 추가
+13. **배경 이미지 적용 위치 오류** → section 전체 vs 특정 컴포넌트 적용 범위 재확인
 
 
 ## Bash 실행 규칙

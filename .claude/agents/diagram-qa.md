@@ -61,10 +61,10 @@ grep -n 'background.*#fff\b\|background.*white' [다이어그램 파일] | grep 
 → OS window, content, main card에 `#fff` 단색이면 결함
 
 ```bash
-# 주황/오렌지 색상 사용 확인
-grep -ni 'orange\|#f59e0b\|#c53d15\|#d97653\|#f5c4b5' [다이어그램 파일]
+# 주황/오렌지 색상 사용 확인 (DS 팔레트에 없는 임의 주황 금지)
+grep -ni 'orange\|#f59e0b\|#c53d15\|#d97653\|#f5c4b5\|#e07b39\|#ff8c00' [다이어그램 파일]
 ```
-→ 1개라도 있으면 결함
+→ 1개라도 있으면 결함 (강조 필요 시 #ff3030/error, #3061f2/brand-primary, #725bea/brand-purple 사용)
 
 ```bash
 # ds-diag 토큰 참조 확인 — OS window/card에서 최소 1개 이상 사용해야 함
@@ -97,6 +97,18 @@ grep -n 'dp-diag__content\|dp-diag__card' [다이어그램 파일] | grep 'backg
 grep -n 'font-family' [다이어그램 파일]
 ```
 → `var(--ds-font-base)` 또는 `var(--ds-font-code)` 외 폰트 사용 시 결함
+
+**background shorthand 확인:**
+```bash
+grep -n 'background:.*white\|background:.*#fff\b' [다이어그램 파일]
+```
+→ 배경 이미지 요소에 `background` shorthand 사용 시 결함 (background-color만 허용)
+
+**screenshot-frame fallback 확인:**
+```bash
+grep -n 'background-color.*surface-white\|background-color.*#ffffff\|background-color.*#fff' [다이어그램 파일]
+```
+→ screenshot-frame 또는 bg-wrap에 fallback background-color가 없으면 결함
 
 ### [DIAG-4] 텍스트 언어 (Medium)
 ```bash
@@ -177,6 +189,11 @@ grep -n 'left:.*px\|top:.*px\|right:.*px\|bottom:.*px' [다이어그램 파일] 
 - 원본에 없는 요소 추가됨 (DIAG-1 Critical)
 - 원본에 있는 요소 누락됨 (DIAG-1 Critical)
 - 컬러 톤 불일치 — 녹색↔파란색 혼동 등 (DIAG-2 High)
+- 주황/오렌지 계열 색상 사용 (DIAG-3 High)
+- DS Diagram 토큰 미사용 — ds-diag-surface, ds-diag-os-content 등 (DIAG-3 High)
+- 화살표 좌표 하드코딩 — getBoundingClientRect() 런타임 계산 필수 (DIAG-6 High)
+- background shorthand로 배경 이미지 설정 리셋됨 (DIAG-3 High)
+- screenshot-frame에 background-color fallback 없음 (DIAG-3 High)
 - 콘텐츠 배경이 흰색이 아님 (DIAG-3 High)
 - 폰트 사이즈 DS 토큰 미사용 (DIAG-3 High)
 - 한글 텍스트 존재 (DIAG-4 Medium)

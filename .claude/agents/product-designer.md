@@ -100,7 +100,7 @@ frontend-dev 에이전트에게 구현을 위임합니다.
 | Hero Text-only | 배경 이미지 금지 — 흰색/밝은 배경만 |
 | CTA | 배경 이미지 (ds-bg--*) — container 밖 전폭 배치 |
 | 흰/회색 배경 3개 이상 연속 | 중간에 배경 이미지 1개 삽입 |
-| 일반 섹션 | 항상 white — surface-light 전면 금지 |
+| 일반 섹션 | 항상 white — surface-light 전면 금지. ds-section--light 사용 금지 |
 | KPI 수치 카드 | 배경 이미지는 섹션이 아닌 ds-kpi-band 컴포넌트 자체에 적용 |
 
 배경 이미지 남용 금지:

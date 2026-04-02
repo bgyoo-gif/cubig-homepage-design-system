@@ -190,6 +190,30 @@ grep -n 'cta-band__title' output/[파일명]-b-type.html | grep 'text-7xl\|64px'
 ```
 → `ds-text-7xl` 또는 `64px`가 CTA 타이틀에 사용되면 결함
 
+**주황/오렌지 색상 확인:**
+```bash
+grep -ni '#f59e0b\|#c53d15\|#d97653\|#f5c4b5\|#e07b39\|orange' output/[파일명]-b-type.html
+```
+→ DS 팔레트에 없는 주황색이 있으면 결함 (강조 필요 시 error/#ff3030, brand-primary/#3061f2, brand-purple/#725bea 사용)
+
+**background shorthand 확인:**
+```bash
+grep -n 'background:.*white\|background:.*#fff\b' output/[파일명]-b-type.html
+```
+→ 배경 이미지 요소에 `background` shorthand 사용 시 결함 (background-color만 허용)
+
+**screenshot-frame fallback 확인:**
+```bash
+grep -n 'screenshot-frame\|bg-wrap' output/[파일명]-b-type.html
+```
+→ screenshot-frame이 있는데 `background-color: var(--ds-color-surface-white)` fallback이 없으면 결함
+
+**모바일 배경 이미지 처리 확인:**
+```bash
+grep -n 'max-width: 767px\|max-width:767px' output/[파일명]-b-type.html | grep -i 'background'
+```
+→ screenshot-frame/bg-wrap이 있는데 `@media (max-width: 767px)` `background-image: none` 처리가 없으면 결함
+
 체크리스트:
 - [ ] CSS 변수가 :root에 선언되어 있는가
 - [ ] 색상 하드코딩이 없는가
@@ -228,6 +252,10 @@ grep -n 'cta-band__title' output/[파일명]-b-type.html | grep 'text-7xl\|64px'
 - [ ] 아코디언 header grid가 `1fr auto auto`인가 (160px 고정 금지 — 1024px+에서도 동일)
 - [ ] banner-full padding이 `space-xl`인가 (`space-3xl` 금지 — 과도한 여백 방지)
 - [ ] cert-grid/partner-grid가 DS 공식 컴포넌트만 사용했는가 (커스텀 마키 금지)
+- [ ] 주황/오렌지 계열 색상(`#f59e0b`, `#c53d15`, `#d97653` 등)이 없는가
+- [ ] background shorthand(`background: white` 등)가 배경 이미지 요소에 사용되지 않았는가 (background-color만 허용)
+- [ ] screenshot-frame/bg-wrap에 `background-color: var(--ds-color-surface-white)` fallback이 있는가
+- [ ] `@media (max-width: 767px)`에서 screenshot-frame의 `background-image: none` 처리가 됐는가
 
 ### [CAT-3] 코드 품질 (Medium)
 - [ ] 시맨틱 태그를 사용했는가 (div 남용 없는가)
@@ -348,6 +376,10 @@ grep -n "padding.*16px\|padding.*32px\|padding.*120px" output/[파일명]-b-type
 - `ds-section-header--left`가 어떤 섹션에든 사용됨 — center가 유일 기본값 (CAT-2 High)
 - CTA 타이틀에 `ds-text-7xl` (64px) 사용 — `ds-text-5xl` (40px) 기본 필수 (CAT-2 High)
 - letter-spacing 하드코딩 사용 (`-2px`, `-1px` 등) — `var(--ds-tracking-tight)` 토큰 필수 (CAT-2 High)
+- DS 팔레트에 없는 주황/오렌지 색상 사용 — error/#ff3030 또는 brand 팔레트 사용 필수 (CAT-2 High)
+- background shorthand(`background: white`)로 배경 이미지 설정 리셋됨 — background-color만 허용 (CAT-2 High)
+- screenshot-frame/bg-wrap에 background-color fallback 없음 — 이미지 로드 전 검정 여백 방지 필수 (CAT-2 High)
+- `@media (max-width: 767px)` screenshot-frame background-image: none 처리 누락 — 모바일 배경 이미지 비율 문제 방지 필수 (CAT-4 High)
 - Hero TSX에 JSON-LD `useEffect` 삽입 코드 없음 (CAT-F4 High)
 - JSON-LD에 Framer SEO 중복 항목(title, meta description, og:*) 포함 (CAT-F4 High)
 - JSON-LD cleanup return 없음 — 메모리 누수 (CAT-F4 High)

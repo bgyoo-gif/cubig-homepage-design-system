@@ -188,8 +188,35 @@ function toggleAcCard(header) {
 - Hero 섹션: 배경 이미지 사용
 - CTA 섹션: 배경 이미지 사용 (전폭 배치, container 밖)
 - 흰/회색 배경 섹션이 3개 이상 연속: 중간에 배경 이미지 1개 삽입
-- 그 외 섹션: `var(--ds-color-surface-white)` 또는 `var(--ds-color-surface-light)` 교대 사용
+- 그 외 섹션: `var(--ds-color-surface-white)` — `surface-light` 교대 사용 금지 (섹션 배경은 항상 white)
 - 배경 이미지 사용 시 반드시 오버레이 레이어 적용
+- 배경 이미지 적용 위치: 의도한 영역에만 적용. section 전체 vs 특정 컴포넌트(ds-kpi-band, ds-banner--full 등) 구분 명확히. "section에 배경 이미지를 넣어야 한다"는 명세면 section에, "컴포넌트에만"이라는 명세면 컴포넌트에만
+
+**screenshot-frame/bg-wrap 배경 필수 처리:**
+```css
+.ds-hero__screenshot-frame {
+  background-color: var(--ds-color-surface-white); /* fallback — 이미지 로드 전 검정 방지 */
+  background-size: cover;
+  background-position: center;
+}
+
+/* 모바일: 가로형 배경 이미지가 세로형 화면에서 커버 안 되는 문제 방지 */
+@media (max-width: 767px) {
+  .ds-hero__screenshot-frame {
+    background-image: none;
+    background-color: var(--ds-color-surface-white);
+  }
+}
+```
+
+**배경 이미지 요소에 background shorthand 금지:**
+```css
+/* 금지 — background shorthand는 background-size: cover를 리셋함 */
+.ds-hero__screenshot-frame { background: white; }
+
+/* 올바른 방법 */
+.ds-hero__screenshot-frame { background-color: var(--ds-color-surface-white); }
+```
 
 KPI 배경 이미지는 섹션이 아닌 ds-kpi-band 컴포넌트 자체에 적용:
 ```html
@@ -230,14 +257,14 @@ CTA 밴드는 반드시 `ds-container` 밖에 전폭으로 배치한다:
 
 #### 섹션 배경 리듬 규칙
 ```
-Hero      → 배경 이미지
+Hero      → 배경 이미지 (screenshot-frame)
 섹션 1    → white
-섹션 2    → surface-light (회색)
-섹션 3    → white
-섹션 4    → 배경 이미지 (3개 연속 시)
-섹션 5    → dark
+섹션 2    → white
+섹션 3    → white  ← 3개 연속 시 다음 섹션에 배경 이미지 삽입
+섹션 4    → 배경 이미지 (ds-bg--*)
 CTA       → 배경 이미지 (전폭)
 ```
+surface-light 사용 금지 — 단조로운 회색↔흰색 교대 대신 배경 이미지로 변화 부여
 
 #### CSS 규칙
 - `:root`에 사용하는 CSS 변수만 선언 (design-system.md 전체 복붙 금지)
@@ -246,6 +273,9 @@ CTA       → 배경 이미지 (전폭)
 - `!important` 절대 금지
 - 클래스명: `.ds-` 접두사 + BEM 방식
 - **letter-spacing 하드코딩 금지**: letter-spacing은 반드시 `var(--ds-tracking-tight)` 또는 `var(--ds-tracking-wide)` 토큰 사용. `-2px`, `-1px`, `0.1em` 등 숫자 직접 입력 금지
+- **주황/오렌지 계열 색상 금지**: `#f59e0b`, `#c53d15`, `#d97653` 등 DS 팔레트에 없는 주황색 사용 금지. 강조 필요 시 `var(--ds-color-error)`, `var(--ds-color-brand-primary)`, `var(--ds-color-brand-purple)` 사용
+- **background shorthand 금지**: 배경 이미지가 있는 요소에는 `background-color`만 사용. `background: white` 같은 shorthand는 `background-size: cover`를 리셋하므로 금지
+- **ds-section--light 전면 금지**: 섹션 배경은 항상 `var(--ds-color-surface-white)` (white). 변화가 필요하면 배경 이미지 사용
 
 #### 반응형 규칙 (Mobile-first, 4단계 필수)
 ```css
@@ -323,7 +353,12 @@ CTA       → 배경 이미지 (전폭)
 - [ ] 배너 내 링크(`<a>`)가 본문과 분리되어 줄바꿈됐는가
 - [ ] 동일한 배경 이미지(`ds-bg--*`)가 한 페이지에서 2번 이상 사용되지 않았는가
 - [ ] 배경 이미지 위 텍스트가 black 또는 white만 사용하는가 (secondary/tertiary/muted 금지)
-- [ ] ds-section--light가 3개 이상 남용되지 않았는가 (기본 white, 변화는 bg 이미지로)
+- [ ] ds-section--light가 1개도 사용되지 않았는가 (전면 금지 — 섹션 배경은 항상 white)
+- [ ] 주황/오렌지 계열 색상(`#f59e0b`, `#c53d15`, `#d97653` 등)이 없는가
+- [ ] 배경 이미지 요소에 `background` shorthand 대신 `background-color`만 사용했는가
+- [ ] screenshot-frame/bg-wrap에 `background-color: var(--ds-color-surface-white)` fallback이 있는가
+- [ ] `@media (max-width: 767px)`에서 screenshot-frame의 `background-image: none` 처리가 됐는가
+- [ ] 배경 이미지가 의도한 영역(section vs 특정 컴포넌트)에만 적용됐는가
 - [ ] 모든 CSS 변수가 design-system.md에 정의된 것만 사용됐는가 (커스텀 변수 금지)
 - [ ] 4단계 breakpoint가 모두 존재하는가 (768/1024/1440)
 - [ ] 좌우 여백이 각 breakpoint에서 16/32/32/120px인가

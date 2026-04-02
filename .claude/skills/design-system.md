@@ -2198,7 +2198,7 @@ drawArrows() 함수 규칙:
 17. 배경 이미지 중복 금지: 한 페이지 안에 동일한 배경 이미지(`ds-bg--*`)를 2번 이상 사용 금지 — 다양하게 분산 사용
 18. 페이지 최상단 여백: `ds-section--hero`, `ds-hero-screenshot-section` 모두 padding-top 100px 고정 (nav 아래 ~ 콘텐츠 시작, 모바일 포함)
 19. 배경 이미지 위 텍스트 색상 제한: `ds-section--bg-img`, `ds-bg--*`, `ds-kpi-band`, `ds-cta-band`, `ds-banner--full` 등 배경 이미지가 있는 영역의 텍스트는 **black(`--ds-color-text-primary`) 또는 white(`--ds-color-white`)만 사용** — secondary, tertiary, muted 등 중간 톤 금지
-20. 미색 배경(ds-section--light) 사용 제한: 섹션 배경으로 ds-section--light 남용 금지. 배경 다양성이 필요하면 배경 이미지(ds-bg--*) 사용. 기본은 white.
+20. 미색 배경(ds-section--light) 전면 금지: 섹션 배경으로 ds-section--light 사용 금지. 1개라도 있으면 결함. 배경 다양성이 필요하면 배경 이미지(ds-bg--*) 사용. 기본은 white.
 21. CSS 변수는 design-system.md에 정의된 것만 사용: 임의로 새 변수(--ds-color-teal, --ds-bg-gradient-* 등)를 만들지 않는다. DS에 없는 색상이 필요하면 design-system-agent를 통해 추가한다.
 22. Case Study 열 타입 혼합 금지: 한 섹션 안에서 1col과 2col/3col을 섞지 않는다. 1col이면 전부 1col, 2col이면 전부 2col로 통일한다.
 23. FAQ는 반드시 아코디언 형태: "FAQ", "Frequently Asked Questions", "Common Questions" 등의 섹션은 반드시 `ds-ac-card` 아코디언으로 구현한다. `ds-grid--1 + ds-card` 카드 나열 금지.
@@ -2210,5 +2210,10 @@ drawArrows() 함수 규칙:
 29. 도입 사례/Case Record는 Case Study 카드 필수: 고객명+산업+설명이 있는 사례는 반드시 `ds-card--case-study`([H]) 사용. 아코디언([S])이 아닌 카드 그리드. 범용 카드보다 우선.
 30. CTA band 타이포 표준: `ds-cta-band__title` font-size는 `var(--ds-text-5xl)` (40px) 기본. 반응형: max-width 767px에서 `var(--ds-text-4xl)` (36px), min-width 1440px에서 `var(--ds-text-6xl)` (50px). `var(--ds-text-7xl)` (64px) 사용 금지.
 31. letter-spacing 하드코딩 금지: letter-spacing은 반드시 DS 토큰 사용 — `var(--ds-tracking-tight)` (-0.5px) 또는 `var(--ds-tracking-wide)` (0.08em). `-2px`, `-1px` 등 숫자 직접 입력 금지.
-30. 이미지 경로는 GitHub Pages 전체 URL 사용: B타입 HTML/TSX에서 이미지 참조 시 상대경로 금지. 반드시 `https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/` 또는 `https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/` 전체 URL 사용. TSX의 IMAGE_BASE도 동일.
-31. 이미지 포맷은 WebP 우선: 모든 이미지는 `.webp` 포맷을 우선 사용한다. 새 이미지 추가 시 반드시 WebP로 변환 후 저장. WebP가 없는 경우에만 PNG/AVIF/JPG 허용. 배경 이미지, 스크린샷, 케이스스터디 모두 해당.
+32. 이미지 경로는 GitHub Pages 전체 URL 사용: B타입 HTML/TSX에서 이미지 참조 시 상대경로 금지. 반드시 `https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/images/` 또는 `https://bgyoo-gif.github.io/cubig-homepage-design-system/reference/graphics/` 전체 URL 사용. TSX의 IMAGE_BASE도 동일.
+33. 이미지 포맷은 WebP 우선: 모든 이미지는 `.webp` 포맷을 우선 사용한다. 새 이미지 추가 시 반드시 WebP로 변환 후 저장. WebP가 없는 경우에만 PNG/AVIF/JPG 허용. 배경 이미지, 스크린샷, 케이스스터디 모두 해당.
+34. 주황/오렌지 계열 색상 전면 금지: `#f59e0b`, `#c53d15`, `#d97653` 등 DS 팔레트에 없는 주황색 사용 금지. 강조 필요 시 `var(--ds-color-error)` (#ff3030), `var(--ds-color-brand-primary)` (#3061f2), `var(--ds-color-brand-purple)` (#725bea) 중 선택.
+35. background shorthand 금지: 배경 이미지가 있는 요소에는 `background-color`만 사용. `background: white` 같은 shorthand는 `background-size: cover` 등을 리셋하므로 금지.
+36. screenshot-frame/bg-wrap background-color fallback 필수: 배경 이미지 프레임에는 항상 `background-color: var(--ds-color-surface-white)` fallback 포함. 이미지 로드 전 검정 여백 방지.
+37. 모바일 배경 이미지 처리: `@media (max-width: 767px)` 내에서 screenshot-frame/bg-wrap의 `background-image: none` 처리. 가로형 이미지가 세로형 모바일에서 커버 안 되는 문제 방지.
+38. 배경 이미지 적용 위치 명확화: 배경 이미지는 반드시 의도한 영역에만 적용. section 전체 적용 vs 특정 컴포넌트(ds-kpi-band, ds-banner--full, ds-hero__screenshot-frame) 적용을 구분. spec에 "섹션 배경"으로 명시 시 section에, "컴포넌트 배경"으로 명시 시 컴포넌트에만 적용.

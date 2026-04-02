@@ -48,6 +48,7 @@ skills:
 - 다이어그램 전용 CSS 변수(`--dp-*`, `--diag-*`)로 스코프 — 부모 DS 변수와 충돌 방지
 - 원본이 다크 테마여도 DS 라이트 테마(silver gradient + 파스텔 os-content)로 변환
 - 상세 토큰 목록은 아래 "컬러 — DS [W] Diagram 토큰 필수 사용" 섹션 참조
+- **주황/오렌지 계열 절대 금지**: `#f59e0b`, `#c53d15`, `#d97653`, `#f5c4b5` 등 임의 주황색 사용 금지. 강조 필요 시 `#ff3030` (error), `#3061f2` (brand-primary), `#725bea` (brand-purple) 사용
 
 ### 타이포그래피
 - 폰트: `var(--ds-font-base)` (DM Sans), 코드: `var(--ds-font-code)` (Fragment Mono)
@@ -57,6 +58,8 @@ skills:
 ### 배경
 - 다이어그램 콘텐츠 영역 배경: **흰색(`#fff`)** 기본 — 회색/gradient 배경 금지 (원본이 명시적으로 다른 경우만 예외)
 - OS 윈도우 프레임 타이틀바만 회색 gradient 허용
+- **background shorthand 금지**: 배경 이미지가 있는 요소에는 `background-color`만 사용. `background: white` shorthand는 `background-size: cover`를 리셋하므로 금지
+- **screenshot-frame 배경색 fallback 필수**: `background-color: var(--ds-color-surface-white)` fallback 항상 포함 — 이미지 로드 전 검정 여백 방지
 
 ### 반응형
 - `@media (max-width: 640px)` 에서 2열 → 1열 전환
