@@ -439,6 +439,13 @@ export default function Section01_Hero({
           .s1esd-title { font-size: 36px; }
           .s1esd-description { max-width: 860px; }
         }
+        @container (max-width: 767px) {
+          .s1esd-frame {
+            padding: 16px 16px 0;
+            border-radius: 24px 24px 0 0;
+            background-image: none;
+          }
+        }
         @container (max-width: 639px) {
           .s1esd-main { grid-template-columns: 1fr; }
           .s1esd-right-col, .s1esd-left-col { display: none; }
@@ -446,7 +453,6 @@ export default function Section01_Hero({
           .s1esd-layer-title { font-size: 14px; }
           .s1esd-canvas { padding: 24px 12px 16px; }
           .s1esd-drift-wrap { display: none; }
-          .s1esd-frame { padding: 32px 24px 0; border-radius: 24px 24px 0 0; }
         }
       `}</style>
 
