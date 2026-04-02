@@ -432,9 +432,13 @@
       margin-top: var(--ds-space-2xl);
       border-radius: var(--ds-radius-xl);
       padding: 48px 48px 0;
+      background: var(--ds-color-surface-white);
       background-size: cover;
       background-position: center;
       overflow: hidden;
+    }
+    @media (max-width: 767px) {
+      .ds-hero__screenshot-frame { padding: 16px 16px 0; border-radius: var(--ds-radius-lg); }
     }
     .ds-hero__screenshot-frame .edh-diag {
       border-radius: var(--ds-radius-md) var(--ds-radius-md) 0 0;
