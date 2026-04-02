@@ -1,6 +1,6 @@
 // Section01_Hero.tsx — Execution State Drift Learn Article Hero (A-2 Hero Screenshot + Diagram)
 // Framer Code Component
-import { useEffect, useRef } from "react"
+import { useEffect } from "react"
 import { addPropertyControls, ControlType } from "framer"
 
 const FONT_URL = "https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Oxanium:wght@700&family=Fragment+Mono&display=swap"
@@ -49,11 +49,6 @@ export default function Section01_Hero({
   ncText = "no changes",
   teamsLookText = "Teams look here",
 }: Props) {
-  const canvasRef = useRef<HTMLDivElement>(null)
-  const svgRef = useRef<SVGSVGElement>(null)
-  const appRef = useRef<HTMLDivElement>(null)
-  const execRef = useRef<HTMLDivElement>(null)
-
   useEffect(() => {
     // Load fonts
     const fontId = "font-dm-sans-esd"
@@ -131,62 +126,7 @@ export default function Section01_Hero({
       document.head.appendChild(script)
     }
 
-    // Draw SVG drift path
-    function drawDrift() {
-      const canvas = canvasRef.current
-      const svg = svgRef.current
-      const app = appRef.current
-      const exec = execRef.current
-      if (!canvas || !svg || !app || !exec) return
-
-      const cr = canvas.getBoundingClientRect()
-      const ar = app.getBoundingClientRect()
-      const er = exec.getBoundingClientRect()
-      const NS = "http://www.w3.org/2000/svg"
-
-      const startX = er.left - cr.left
-      const startY = er.top - cr.top + er.height * 0.35
-      const endX = ar.left - cr.left
-      const endY = ar.top - cr.top + ar.height / 2
-      const marginX = startX - 16
-
-      const defs = svg.querySelector("defs")
-      svg.innerHTML = ""
-      if (defs) svg.appendChild(defs)
-
-      const path = document.createElementNS(NS, "path")
-      path.setAttribute("d",
-        `M${startX} ${startY} L${marginX} ${startY} L${marginX} ${endY} L${endX} ${endY}`
-      )
-      path.setAttribute("fill", "none")
-      path.setAttribute("stroke", "#ff3030")
-      path.setAttribute("stroke-width", "2")
-      path.setAttribute("stroke-linejoin", "round")
-      path.setAttribute("marker-end", "url(#edh-arrow-right-fr)")
-      svg.appendChild(path)
-
-      const midY = (startY + endY) / 2
-      const text = document.createElementNS(NS, "text")
-      text.setAttribute("x", String(marginX - 8))
-      text.setAttribute("y", String(midY))
-      text.setAttribute("text-anchor", "middle")
-      text.setAttribute("dominant-baseline", "middle")
-      text.setAttribute("transform", `rotate(-90 ${marginX - 8} ${midY})`)
-      text.setAttribute("fill", "#ff3030")
-      text.setAttribute("font-size", "11")
-      text.setAttribute("font-weight", "600")
-      text.setAttribute("font-family", '"DM Sans", sans-serif')
-      text.setAttribute("letter-spacing", "0.06em")
-      text.textContent = "drift path"
-      svg.appendChild(text)
-    }
-
-    const timer = setTimeout(drawDrift, 150)
-    window.addEventListener("resize", drawDrift)
-    return () => {
-      clearTimeout(timer)
-      window.removeEventListener("resize", drawDrift)
-    }
+    return () => {}
   }, [])
 
   return (
@@ -414,16 +354,52 @@ export default function Section01_Hero({
           white-space: nowrap;
         }
 
-        .s1esd-svg-overlay {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          pointer-events: none;
-          z-index: 0;
+        .s1esd-left-col {
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
-        .s1esd-left-col { min-height: 1px; }
+        .s1esd-drift-path {
+          position: absolute;
+          top: 50%;
+          right: 0;
+          width: 70%;
+          height: 80%;
+          transform: translateY(-50%);
+          border-left: 2px solid #ff3030;
+          border-top: 2px solid #ff3030;
+          border-bottom: 2px solid #ff3030;
+          border-right: none;
+          border-radius: 8px 0 0 8px;
+        }
+        .s1esd-drift-path::before {
+          content: "";
+          position: absolute;
+          top: -6px;
+          right: -2px;
+          border-left: 7px solid #ff3030;
+          border-top: 5px solid transparent;
+          border-bottom: 5px solid transparent;
+        }
+        .s1esd-drift-path::after {
+          content: "";
+          position: absolute;
+          bottom: -6px;
+          right: -2px;
+          width: 0; height: 0;
+        }
+        .s1esd-drift-label {
+          position: absolute;
+          left: 4px;
+          top: 50%;
+          transform: translateY(-50%) rotate(-90deg);
+          font-size: 11px;
+          font-weight: 600;
+          color: #ff3030;
+          letter-spacing: 0.06em;
+          white-space: nowrap;
+        }
 
         .s1esd-caption {
           margin-top: 24px;
@@ -454,7 +430,7 @@ export default function Section01_Hero({
           .s1esd-sub-cards { flex-direction: column; }
           .s1esd-layer-title { font-size: 14px; }
           .s1esd-canvas { padding: 24px 12px 16px; }
-          .s1esd-svg-overlay { display: none; }
+          .s1esd-drift-path, .s1esd-drift-label { display: none; }
           .s1esd-frame { padding: 32px 24px 0; border-radius: 24px 24px 0 0; }
         }
       `}</style>
@@ -482,23 +458,17 @@ export default function Section01_Hero({
                 </div>
 
                 {/* Canvas */}
-                <div className="s1esd-canvas" ref={canvasRef}>
-                  {/* SVG drift path overlay */}
-                  <svg className="s1esd-svg-overlay" ref={svgRef} xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                      <marker id="edh-arrow-right-fr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-                        <path d="M2 1 L8 5 L2 9" fill="none" stroke="#ff3030" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                      </marker>
-                    </defs>
-                  </svg>
-
+                <div className="s1esd-canvas">
                   <div className="s1esd-main">
-                    {/* Left spacer for drift path */}
-                    <div className="s1esd-left-col"></div>
+                    {/* Left: CSS drift path */}
+                    <div className="s1esd-left-col">
+                      <div className="s1esd-drift-path"></div>
+                      <span className="s1esd-drift-label">drift path</span>
+                    </div>
 
                     <div className="s1esd-layers" id="edh-layers-fr">
                       {/* Layer 1: Application outputs */}
-                      <div className="s1esd-layer s1esd-layer--app" ref={appRef}>
+                      <div className="s1esd-layer s1esd-layer--app">
                         <p className="s1esd-layer-title">{layer1Title}</p>
                         <p className="s1esd-layer-sub">{layer1Sub}</p>
                       </div>
@@ -519,7 +489,7 @@ export default function Section01_Hero({
                       </div>
 
                       {/* Layer 3: Execution environment */}
-                      <div className="s1esd-layer s1esd-layer--exec" ref={execRef}>
+                      <div className="s1esd-layer s1esd-layer--exec">
                         <p className="s1esd-layer-title">{layer3Title}</p>
                         <p className="s1esd-layer-sub">{layer3Sub}</p>
                         <div className="s1esd-sub-cards">
