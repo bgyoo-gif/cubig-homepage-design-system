@@ -142,7 +142,7 @@ export default function Section01_Hero({
           word-break: keep-all;
           overflow-wrap: break-word;
           box-sizing: border-box;
-          overflow: visible;
+          overflow: hidden;
         }
         .s1esd-inner {
           width: 100%;
@@ -152,6 +152,7 @@ export default function Section01_Hero({
           width: 100%;
           padding: 0 16px;
           box-sizing: border-box;
+          overflow: hidden;
           margin: 0 auto;
         }
         .s1esd-hero {
