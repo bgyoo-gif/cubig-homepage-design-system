@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Learn — Enterprise AI Enablement Resources | LLM Capsule</title>
+<meta name="description" content="Learn articles on enterprise AI enablement, secure LLM usage, and restorable workflows.">
+<meta name="keywords" content="enterprise AI enablement, AI-ready data layer, AI adoption enabler, LLM plugin, enterprise AI data layer">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://llmcapsule.ai/resources/learn">
+<meta property="og:type" content="website"><meta property="og:title" content="Learn — Enterprise AI Enablement Resources | LLM Capsule"><meta property="og:url" content="https://llmcapsule.ai/resources/learn"><meta property="og:site_name" content="LLM Capsule">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://llmcapsule.ai/"},{"@type":"ListItem","position":2,"name":"Resources","item":"https://llmcapsule.ai/resources"},{"@type":"ListItem","position":3,"name":"Learn","item":"https://llmcapsule.ai/resources/learn"}]}</script>
+<style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green-900:#042116;--green-800:#0A3622;--green-700:#0E4D31;--green-600:#198038;--green-500:#24A148;--green-400:#42BE65;--green-300:#6FDC8C;--green-200:#A7F0BA;--green-100:#DEFBE6;--green-50:#F2FFF6;
+  --coral:#E8453C;--coral-hover:#CC3830;--coral-light:#FFF1F0;
+  --blue:#4589FF;--blue-dark:#0F62FE;--blue-light:#EDF5FF;
+  --amber:#FF832B;--amber-light:#FFF3EB;
+  --white:#FFFFFF;--gray-50:#F9FAF8;--gray-100:#F4F4F2;--gray-200:#E8E8E6;--gray-300:#C6C6C4;--gray-400:#8D8D8B;--gray-500:#6F6F6D;--gray-600:#525251;--gray-700:#393939;--gray-800:#262626;--gray-900:#161616;
+  --text:#161616;--text-secondary:#525251;--text-muted:#6F6F6D;--text-light:#8D8D8B;--text-inverse:#FFFFFF;
+  --border:#E8E8E6;--border-light:#F0F0EE;
+  --radius:8px;--radius-sm:6px;--radius-lg:12px;--radius-xl:16px;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.05);--shadow-md:0 4px 12px rgba(0,0,0,.06);--shadow-lg:0 8px 30px rgba(0,0,0,.08);--shadow-xl:0 16px 48px rgba(0,0,0,.1);
+  --max-w:1200px;--nav-h:56px;
+  --font-sans:'IBM Plex Sans',-apple-system,BlinkMacSystemFont,sans-serif;
+  --font-mono:'IBM Plex Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-sans);background:var(--white);color:var(--text);line-height:1.6;font-size:16px;-webkit-font-smoothing:antialiased;overflow-x:hidden;padding-top:var(--nav-h)}
+a{color:inherit;text-decoration:none}
+.container{max-width:var(--max-w);margin:0 auto;padding:0 24px}
+.section{padding:clamp(80px,10vw,120px) 0}
+.section--light{background:var(--gray-50)}
+
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,.95);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);height:var(--nav-h);display:flex;align-items:center}
+.nav__inner{max-width:var(--max-w);margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;width:100%;height:100%}
+.nav__logo{font-family:var(--font-mono);font-weight:700;font-size:15px;letter-spacing:-.01em;color:var(--green-800);display:flex;align-items:center;gap:8px}
+.nav__logo-mark{width:28px;height:28px;background:var(--green-800);border-radius:6px;display:flex;align-items:center;justify-content:center}
+.nav__logo-mark svg{width:16px;height:16px}
+.nav__links{display:flex;align-items:center;gap:6px;list-style:none}
+.nav__links a{font-size:14px;font-weight:500;color:var(--text-secondary);padding:6px 12px;border-radius:6px;transition:all .2s}
+.nav__links a:hover{color:var(--text);background:var(--gray-100)}
+.nav__cta{display:inline-flex;align-items:center;padding:7px 18px!important;background:var(--coral)!important;color:var(--white)!important;border-radius:6px!important;font-size:13px!important;font-weight:600!important;transition:all .2s!important}
+.nav__cta:hover{background:var(--coral-hover)!important;transform:translateY(-1px)}
+.nav__aws{font-size:12px!important;color:var(--text-light)!important;padding:5px 10px!important;border:1px solid var(--border)!important;border-radius:4px!important}
+.nav__aws:hover{border-color:var(--gray-300)!important;color:var(--text-secondary)!important}
+
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;border-radius:var(--radius);font-size:15px;font-weight:600;cursor:pointer;border:none;transition:all .25s;text-decoration:none;font-family:var(--font-sans);letter-spacing:-.01em}
+.btn--primary{background:var(--coral);color:var(--white);box-shadow:0 2px 8px rgba(232,69,60,.25)}
+.btn--primary:hover{background:var(--coral-hover);transform:translateY(-2px);box-shadow:0 6px 20px rgba(232,69,60,.3)}
+.btn--secondary{background:var(--green-800);color:var(--white)}
+.btn--secondary:hover{background:var(--green-700);transform:translateY(-1px)}
+.btn--outline{background:transparent;color:var(--text);border:1.5px solid var(--gray-300)}
+.btn--outline:hover{border-color:var(--text);transform:translateY(-1px)}
+.btn--ghost{background:transparent;color:var(--text-secondary);padding:13px 8px;font-weight:500}
+.btn--ghost::after{content:'→';margin-left:6px;transition:margin-left .2s}
+.btn--ghost:hover::after{margin-left:10px}
+.btn--ghost:hover{color:var(--text)}
+.btn--white{background:var(--white);color:var(--green-800);font-weight:600}
+.btn--white:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.15)}
+.btn--lg{padding:16px 34px;font-size:16px}
+
+.eyebrow{font-family:var(--font-mono);font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
+.section-header{text-align:center;margin-bottom:56px}
+.section-header h2{font-size:clamp(28px,3.4vw,42px);font-weight:700;line-height:1.2;letter-spacing:-.02em;margin-bottom:16px}
+.section-header p{font-size:17px;color:var(--text-secondary);max-width:600px;margin:0 auto;line-height:1.7}
+
+.page-hero{padding:80px 0 48px;background:linear-gradient(180deg,var(--green-50) 0%,var(--white) 100%)}
+.page-hero .eyebrow{color:var(--green-600)}
+.page-hero h1{font-size:clamp(32px,4vw,48px);font-weight:700;line-height:1.15;letter-spacing:-.02em;margin-bottom:16px;max-width:800px}
+.page-hero__sub{font-size:18px;color:var(--text-secondary);line-height:1.7;max-width:660px;margin-bottom:24px}
+.page-hero__actions{display:flex;gap:12px;flex-wrap:wrap}
+.breadcrumb{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-muted);margin-bottom:24px;flex-wrap:wrap}
+.breadcrumb a{color:var(--green-600);font-weight:500}
+.breadcrumb span{color:var(--gray-300)}
+
+.content-section{max-width:900px;margin:0 auto}
+.content-section h2{font-size:clamp(24px,2.8vw,34px);font-weight:700;line-height:1.25;letter-spacing:-.015em;margin:48px 0 16px}
+.content-section h3{font-size:19px;font-weight:600;margin:28px 0 12px}
+.content-section p{font-size:16px;color:var(--text-secondary);line-height:1.75;margin-bottom:14px}
+
+.feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.feature-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;transition:all .3s}
+.feature-card:hover{border-color:var(--green-400);box-shadow:var(--shadow-md);transform:translateY(-2px)}
+.feature-card__icon{font-size:24px;margin-bottom:12px}
+.feature-card__title{font-size:16px;font-weight:700;margin-bottom:6px}
+.feature-card__desc{font-size:14px;color:var(--text-secondary);line-height:1.6}
+
+.cmp-table{width:100%;border-collapse:collapse;margin:28px 0;font-size:14px}
+.cmp-table thead{background:var(--gray-50)}
+.cmp-table th{padding:14px 16px;text-align:left;font-weight:600;font-size:13px;border-bottom:2px solid var(--border)}
+.cmp-table th.cmp-highlight{background:var(--green-50);color:var(--green-800)}
+.cmp-table td{padding:12px 16px;border-bottom:1px solid var(--border-light);color:var(--text-secondary);vertical-align:top}
+.cmp-table td.cmp-highlight{background:var(--green-50);color:var(--green-800);font-weight:500}
+.cmp-check{color:var(--green-500);font-weight:600}
+.cmp-cross{color:var(--coral);font-weight:600}
+
+.definition-box{background:var(--green-50);border-left:3px solid var(--green-500);padding:20px 24px;border-radius:0 var(--radius) var(--radius) 0;margin:24px 0}
+.definition-box p{font-size:15px;color:var(--green-800);font-weight:500;line-height:1.7;margin:0}
+
+.deploy-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin:28px 0}
+.deploy-card{border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;background:var(--white)}
+.deploy-card__title{font-size:15px;font-weight:700;margin-bottom:6px}
+.deploy-card__desc{font-size:13px;color:var(--text-secondary);line-height:1.6}
+
+.price-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin:40px 0}
+.price-card{border:1px solid var(--border);border-radius:var(--radius-xl);padding:36px 28px;background:var(--white);text-align:center;transition:all .3s}
+.price-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-3px)}
+.price-card--featured{border-color:var(--green-500);background:var(--green-50)}
+.price-card__name{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin-bottom:8px;font-family:var(--font-mono)}
+.price-card__price{font-size:36px;font-weight:700;color:var(--text);margin-bottom:4px}
+.price-card__period{font-size:13px;color:var(--text-muted);margin-bottom:20px}
+.price-card__features{list-style:none;text-align:left;margin-bottom:28px}
+.price-card__features li{font-size:14px;color:var(--text-secondary);padding:8px 0;border-bottom:1px solid var(--border-light);display:flex;align-items:flex-start;gap:8px}
+.price-card__features li::before{content:'✓';color:var(--green-500);font-weight:700;flex-shrink:0}
+
+.form-group{margin-bottom:20px}
+.form-group label{display:block;font-size:14px;font-weight:600;margin-bottom:6px;color:var(--text)}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:var(--radius);font-size:15px;font-family:var(--font-sans);transition:border-color .2s;background:var(--white)}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--green-500);box-shadow:0 0 0 3px rgba(36,161,72,.1)}
+.form-group textarea{min-height:120px;resize:vertical}
+
+.hub-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.hub-card{border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;background:var(--white);transition:all .3s}
+.hub-card:hover{border-color:var(--green-400);box-shadow:var(--shadow-md);transform:translateY(-2px)}
+.hub-card__icon{font-size:24px;margin-bottom:10px}
+.hub-card__title{font-size:17px;font-weight:700;margin-bottom:6px}
+.hub-card__desc{font-size:14px;color:var(--text-secondary);line-height:1.6;margin-bottom:14px}
+.hub-card__link{font-size:13px;color:var(--green-600);font-weight:600}
+
+.arch-diagram{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-xl);padding:36px;box-shadow:var(--shadow-md);margin:28px 0}
+.arch-zones{display:grid;grid-template-columns:1fr auto 1fr;gap:0;align-items:stretch;min-height:300px}
+.arch-zone{padding:20px}
+.arch-zone-label{font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.arch-zone-label::before{content:'';width:8px;height:8px;border-radius:2px}
+.arch-zone--int .arch-zone-label::before{background:var(--green-500)}
+.arch-zone--int .arch-zone-label{color:var(--green-700)}
+.arch-zone--ext .arch-zone-label::before{background:var(--blue)}
+.arch-zone--ext .arch-zone-label{color:var(--blue-dark)}
+.arch-items{display:flex;flex-direction:column;gap:8px}
+.arch-item{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:var(--radius-sm);font-size:13px;font-weight:500}
+.arch-item--int{background:var(--green-50);color:var(--green-800);border:1px solid rgba(36,161,72,.12)}
+.arch-item--capsule{background:var(--green-800);color:var(--white);font-weight:600;padding:12px;border-radius:var(--radius)}
+.arch-item--ext{background:var(--blue-light);color:var(--blue-dark);border:1px solid rgba(15,98,254,.1)}
+.arch-boundary{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 16px;position:relative}
+.arch-boundary::before{content:'';position:absolute;top:0;bottom:0;left:50%;width:2px;border-left:2px dashed var(--coral);opacity:.4}
+.arch-boundary-label{background:var(--white);padding:8px 10px;border:1.5px solid var(--coral);border-radius:var(--radius-sm);font-family:var(--font-mono);font-size:9px;font-weight:600;color:var(--coral);letter-spacing:.06em;text-transform:uppercase;position:relative;z-index:1;writing-mode:vertical-lr;white-space:nowrap}
+
+.final-cta{background:var(--green-800);border-radius:var(--radius-xl);padding:clamp(48px,6vw,80px);text-align:center;position:relative;overflow:hidden}
+.final-cta::before{content:'';position:absolute;top:-100px;right:-100px;width:400px;height:400px;background:radial-gradient(circle,rgba(66,190,101,.15) 0%,transparent 70%);pointer-events:none}
+.final-cta h2{font-size:clamp(26px,3.2vw,38px);font-weight:700;color:var(--white);margin-bottom:16px;line-height:1.25;letter-spacing:-.02em}
+.final-cta p{font-size:16px;color:var(--green-200);margin-bottom:32px;max-width:540px;margin-left:auto;margin-right:auto;line-height:1.7}
+.final-cta__actions{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
+.final-cta__secondary{display:flex;align-items:center;justify-content:center;gap:24px;margin-top:24px}
+.final-cta__secondary a{font-size:14px;color:var(--green-300);font-weight:500;transition:color .2s}
+.final-cta__secondary a:hover{color:var(--white)}
+
+.faq__item{border:1px solid var(--border);border-radius:var(--radius);margin-bottom:8px;overflow:hidden}
+.faq__item:hover{border-color:var(--gray-300)}
+.faq__q{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;cursor:pointer;font-size:15px;font-weight:600;color:var(--text);background:var(--white);gap:12px}
+.faq__q::after{content:'+';font-size:20px;font-weight:400;color:var(--text-muted)}
+.faq__item.open .faq__q::after{content:'−'}
+.faq__a{padding:0 20px 16px;font-size:14px;color:var(--text-secondary);line-height:1.7;display:none}
+.faq__item.open .faq__a{display:block}
+
+.footer{padding:56px 0 32px;border-top:1px solid var(--border);background:var(--white)}
+.footer__grid{display:grid;grid-template-columns:2fr repeat(4,1fr);gap:40px;margin-bottom:40px}
+.footer__brand{font-family:var(--font-mono);font-size:14px;font-weight:600;color:var(--green-800)}
+.footer__brand p{font-family:var(--font-sans);font-size:13px;color:var(--text-muted);margin-top:10px;line-height:1.6;max-width:260px;font-weight:400}
+.footer__col h4{font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px}
+.footer__col ul{list-style:none}.footer__col li{margin-bottom:8px}.footer__col a{font-size:13px;color:var(--text-secondary);transition:color .2s}.footer__col a:hover{color:var(--text)}
+.footer__bottom{padding-top:20px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--text-light)}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .65s cubic-bezier(.22,1,.36,1),transform .65s cubic-bezier(.22,1,.36,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:.1s}
+.reveal-delay-2{transition-delay:.2s}
+.reveal-delay-3{transition-delay:.3s}
+
+@media(max-width:900px){
+  .feature-grid,.hub-grid,.deploy-grid,.price-grid{grid-template-columns:1fr}
+  .arch-zones{grid-template-columns:1fr}
+  .arch-boundary{flex-direction:row;padding:12px 0}
+  .arch-boundary::before{display:none}
+  .arch-boundary-label{writing-mode:horizontal-tb}
+  .footer__grid{grid-template-columns:1fr 1fr}
+  .nav__links{display:none}
+}
+@media(max-width:600px){.footer__grid{grid-template-columns:1fr}}/* === Extracted utility classes for design agent compatibility === */
+.screenshot-placeholder{background:#F4F4F2;border:2px dashed #C6C6C4;border-radius:12px;padding:48px 24px;text-align:center;margin:24px auto 32px;max-width:900px}
+.screenshot-placeholder--top{margin:0 auto 40px}
+.screenshot-placeholder--flush{margin:0 auto 32px}
+.screenshot-placeholder__icon{font-size:40px;margin-bottom:8px}
+.screenshot-placeholder__label{font-family:var(--font-mono);font-size:12px;color:var(--gray-500);font-weight:600;letter-spacing:.08em}
+.screenshot-placeholder__desc{font-size:13px;color:var(--gray-400);margin-top:4px}
+.text-green{color:var(--green-600)}
+.text-green-light{color:var(--green-300)}
+.text-medium{font-weight:500}
+.text-muted{color:var(--text-muted)}
+.text-center{text-align:center}
+.text-sm-muted{font-size:13px;color:var(--text-muted)}
+.section-title{font-size:clamp(26px,3vw,36px);font-weight:700;line-height:1.25;letter-spacing:-.02em;margin-bottom:16px}
+.section-title--lg{font-size:clamp(28px,3.4vw,42px);font-weight:700;line-height:1.2;letter-spacing:-.02em;margin-bottom:16px}
+.body-text{font-size:16px;color:var(--text-secondary);line-height:1.75;max-width:720px;margin-bottom:32px}
+.body-text--tight{margin-bottom:16px}
+.body-text--no-margin{margin-bottom:0}
+.body-text--full{max-width:none}
+.body-text--sm{font-size:15px;color:var(--text-secondary);line-height:1.7;margin-bottom:14px}
+.pb-section{padding-bottom:clamp(80px,10vw,120px)}
+.mt-8{margin-top:8px}
+.mt-16{margin-top:16px}
+.mt-20{margin-top:20px}
+.mt-28{margin-top:28px}
+.mt-32{margin-top:32px}
+.mt-48{margin-top:48px}
+.pt-0{padding-top:0}
+.max-w-800{max-width:800px}
+.overflow-x-auto{overflow-x:auto}
+.w-full{width:100%}
+.justify-center{justify-content:center}
+.grid-2{grid-template-columns:repeat(2,1fr)}
+.grid-3{grid-template-columns:repeat(3,1fr)}
+.grid-5{grid-template-columns:repeat(5,1fr)}
+.grid-auto-180{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+.grid-auto-210{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+.grid-auto-230{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.tag-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);font-size:15px;font-weight:600;color:var(--text);transition:all .2s}
+.badge-core{font-size:10px;font-weight:600;background:var(--green-100);color:var(--green-700);padding:2px 8px;border-radius:3px;margin-left:8px}
+.badge--gray{background:var(--gray-100);color:var(--gray-600)}
+.badge--coral{background:var(--coral-light);color:var(--coral)}
+.badge--blue{background:var(--blue-light);color:var(--blue)}
+.badge--amber{background:var(--amber-light);color:var(--amber)}
+.flex-wrap-gap{display:flex;gap:14px;flex-wrap:wrap}
+.flex-center-wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;max-width:760px;margin:0 auto}
+.svg-container{width:100%;height:auto;max-width:1100px;margin:0 auto;display:block}
+.svg-responsive{width:100%;height:auto;display:block}
+.card-bordered{background:var(--white);border:1px solid var(--border)}
+.heading-md{font-size:24px;font-weight:700;margin-bottom:20px}
+</style><meta property="og:description" content="In-depth articles on enterprise AI enablement, secure LLM usage, and restorable workflows with LLM Capsule.">
+</head><body>
+<nav class="nav"><div class="nav__inner">
+<a href="index.html" class="nav__logo"><span class="nav__logo-mark"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2" stroke="#fff" stroke-width="1.5"/><circle cx="8" cy="8" r="3" fill="#fff"/></svg></span>LLM Capsule</a>
+<ul class="nav__links">
+  <li><a href="product.html">Product</a></li>
+  <li><a href="architecture.html">Architecture</a></li>
+  <li><a href="solutions.html">Solutions</a></li>
+  <li><a href="trust.html">Trust</a></li>
+  <li><a href="pricing.html">Pricing</a></li>
+  <li><a href="resources.html">Resources</a></li>
+  <li><a href="https://aws.amazon.com/marketplace" target="_blank" rel="noopener" class="nav__aws">AWS Marketplace</a></li>
+  <li><a href="request-pov.html" class="nav__cta">Request PoV</a></li>
+</ul>
+</div></nav>
+<section class="page-hero">
+<div class="container">
+  <nav class="breadcrumb"><a href="index.html">Home</a> <span>/</span> <a href="resources.html">Resources</a> <span>/</span> Learn</nav>
+  <div class="eyebrow">Learn</div>
+  <h1>Enterprise AI Enablement — Learn</h1>
+  <p class="page-hero__sub">In-depth technical articles on enterprise AI enablement, secure AI workflows, structure-preserving processing, and restorable workflows.</p>
+</div>
+</section>
+<section class="section">
+<div class="container">
+  <div class="hub-grid"><a href="secure-enterprise-ai-data-workflows.html" class="hub-card"><div class="hub-card__title">Secure Enterprise AI Data Workflows<span class="badge-core">Pillar</span></div><div class="hub-card__link">Read article →</div></a>
+<a href="enterprise-ai-data-protection.html" class="hub-card"><div class="hub-card__title">Enterprise AI Enablement<span class="badge-core">Pillar</span></div><div class="hub-card__link">Read article →</div></a>
+<a href="enterprise-ai-document-processing.html" class="hub-card"><div class="hub-card__title">Enterprise AI Document Processing<span class="badge-core">Pillar</span></div><div class="hub-card__link">Read article →</div></a>
+<a href="what-is-ai-data-capsule.html" class="hub-card"><div class="hub-card__title">What Is an AI Data Capsule</div><div class="hub-card__link">Read article →</div></a>
+<a href="how-to-use-ai-on-sensitive-enterprise-data.html" class="hub-card"><div class="hub-card__title">How to Use AI on Sensitive Enterprise Data</div><div class="hub-card__link">Read article →</div></a>
+<a href="why-redaction-breaks-enterprise-ai-workflows.html" class="hub-card"><div class="hub-card__title">Why Redaction Breaks Enterprise AI Workflows<span class="badge-core">Featured</span></div><div class="hub-card__link">Read article →</div></a>
+<a href="secure-enterprise-ai-workflows.html" class="hub-card"><div class="hub-card__title">Secure Enterprise AI Workflows</div><div class="hub-card__link">Read article →</div></a>
+<a href="structure-preserving-document-processing.html" class="hub-card"><div class="hub-card__title">Structure-Preserving Document Processing</div><div class="hub-card__link">Read article →</div></a>
+<a href="pii-protection-vs-enterprise-confidentiality-control.html" class="hub-card"><div class="hub-card__title">PII Protection vs Enterprise Confidentiality Control</div><div class="hub-card__link">Read article →</div></a>
+<a href="on-premise-vs-cloud-ai-data-protection.html" class="hub-card"><div class="hub-card__title">On-Premise vs Cloud AI Data Protection</div><div class="hub-card__link">Read article →</div></a>
+<a href="local-restorationvs-anonymization.html" class="hub-card"><div class="hub-card__title">Local Restoration vs Anonymization</div><div class="hub-card__link">Read article →</div></a>
+<a href="ai-data-pipeline-protection.html" class="hub-card"><div class="hub-card__title">AI Data Pipeline Protection</div><div class="hub-card__link">Read article →</div></a>
+</div>
+</div>
+</section>
+<section class="section pb-section" >
+<div class="container">
+  <div class="final-cta reveal">
+    <div class="eyebrow text-green-light" >Get Started</div>
+    <h2>See how LLM Capsule works with your data</h2>
+    <p>Bring your documents, deployment constraints, and evaluation criteria. We demonstrate on your actual workflows.</p>
+    <div class="final-cta__actions">
+      <a href="request-pov.html" class="btn btn--primary btn--lg">Request PoV</a>
+      <a href="architecture.html" class="btn btn--white">Talk to an Architect</a>
+    </div>
+    <div class="final-cta__secondary">
+      <a href="downloads.html">📄 Download Architecture Brief</a>
+      <a href="https://aws.amazon.com/marketplace" target="_blank" rel="noopener">☁ Available on AWS Marketplace</a>
+    </div>
+  </div>
+</div>
+</section><footer class="footer"><div class="container">
+<div class="footer__grid">
+  <div class="footer__brand">LLM Capsule<p>Enterprise AI enablement by CUBIG. Enable AI. Protect data. Restore results.</p></div>
+  <div class="footer__col"><h4>Product</h4><ul>
+    <li><a href="product.html">Product</a></li><li><a href="architecture.html">Architecture</a></li><li><a href="trust.html">Trust</a></li><li><a href="pricing.html">Pricing</a></li>
+    <li><a href="https://aws.amazon.com/marketplace" target="_blank" rel="noopener">AWS Marketplace</a></li>
+  </ul></div>
+  <div class="footer__col"><h4>Solutions</h4><ul><li><a href="solutions.html">All Solutions</a></li></ul></div>
+  <div class="footer__col"><h4>Resources</h4><ul>
+    <li><a href="resources.html">Resources Hub</a></li><li><a href="learn.html">Learn</a></li><li><a href="glossary.html">Glossary</a></li>
+    <li><a href="downloads.html">Downloads</a></li><li><a href="trust-center.html">Trust Center</a></li>
+  </ul></div>
+  <div class="footer__col"><h4>Company</h4><ul>
+    <li><a href="request-pov.html">Request PoV</a></li><li><a href="https://cubig.ai" target="_blank" rel="noopener">CUBIG</a></li>
+    <li><a href="#">Privacy</a></li><li><a href="#">Terms</a></li>
+  </ul></div>
+</div>
+<div class="footer__bottom"><span>&copy; 2025 LLM Capsule by CUBIG. All rights reserved.</span><span>Enterprise AI Enablement</span></div>
+</div></footer><script>document.querySelectorAll('.faq__q').forEach(function(b){b.addEventListener('click',function(){var i=this.closest('.faq__item');var w=i.classList.contains('open');i.parentElement.querySelectorAll('.faq__item').forEach(function(x){x.classList.remove('open')});if(!w)i.classList.add('open')})});
+var obs=new IntersectionObserver(function(e){e.forEach(function(en){if(en.isIntersecting)en.target.classList.add('visible')})},{threshold:0.08});
+document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el)});</script></body></html>

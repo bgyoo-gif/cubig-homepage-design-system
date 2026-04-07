@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Restorable Workflow — AI Processing Pattern with Reversible Data Protection | LLM Capsule Glossary</title>
+<meta name="description" content="A restorable workflow preserves enterprise context while protecting sensitive data, enabling AI outputs restored with original data after processing.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://llmcapsule.ai/resources/glossary/restorable-workflow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Restorable Workflow — AI Processing Pattern with Reversible Data Protection | LLM Capsule Glossary">
+<meta property="og:description" content="A restorable workflow is an AI data processing pattern where sensitive data is protected reversibly, enabling AI outputs to be restored with original enterprise data after processing.">
+<meta property="og:url" content="https://llmcapsule.ai/resources/glossary/restorable-workflow">
+<meta property="og:site_name" content="LLM Capsule">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Restorable Workflow — AI Processing Pattern with Reversible Data Protection | LLM Capsule Glossary">
+<meta name="twitter:description" content="A restorable workflow is an AI data processing pattern where sensitive data is protected reversibly, enabling AI outputs to be restored with original enterprise data after processing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<meta name="keywords" content="enterprise AI enablement, AI-ready data layer, AI adoption enabler, LLM plugin, cross-model execution">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://llmcapsule.ai/"},{"@type":"ListItem","position":2,"name":"Resources","item":"https://llmcapsule.ai/resources"},{"@type":"ListItem","position":3,"name":"Glossary","item":"https://llmcapsule.ai/resources/glossary"},{"@type":"ListItem","position":4,"name":"Restorable Workflow","item":"https://llmcapsule.ai/resources/glossary/restorable-workflow"}]}</script>
+
+<style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green-900:#042116;--green-800:#0A3622;--green-700:#0E4D31;--green-600:#198038;--green-500:#24A148;--green-400:#42BE65;--green-300:#6FDC8C;--green-200:#A7F0BA;--green-100:#DEFBE6;--green-50:#F2FFF6;
+  --coral:#E8453C;--coral-hover:#CC3830;--coral-light:#FFF1F0;
+  --blue:#4589FF;--blue-dark:#0F62FE;--blue-light:#EDF5FF;
+  --amber:#FF832B;--amber-light:#FFF3EB;
+  --white:#FFFFFF;--gray-50:#F9FAF8;--gray-100:#F4F4F2;--gray-200:#E8E8E6;--gray-300:#C6C6C4;--gray-400:#8D8D8B;--gray-500:#6F6F6D;--gray-600:#525251;--gray-700:#393939;--gray-800:#262626;--gray-900:#161616;
+  --text:#161616;--text-secondary:#525251;--text-muted:#6F6F6D;--text-light:#8D8D8B;--text-inverse:#FFFFFF;
+  --border:#E8E8E6;--border-light:#F0F0EE;
+  --radius:8px;--radius-sm:6px;--radius-lg:12px;--radius-xl:16px;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.05);--shadow-md:0 4px 12px rgba(0,0,0,.06);--shadow-lg:0 8px 30px rgba(0,0,0,.08);--shadow-xl:0 16px 48px rgba(0,0,0,.1);
+  --max-w:1200px;--nav-h:56px;
+  --font-sans:'IBM Plex Sans',-apple-system,BlinkMacSystemFont,sans-serif;
+  --font-mono:'IBM Plex Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-sans);background:var(--white);color:var(--text);line-height:1.6;font-size:16px;-webkit-font-smoothing:antialiased;overflow-x:hidden;padding-top:var(--nav-h)}
+a{color:inherit;text-decoration:none}
+.container{max-width:var(--max-w);margin:0 auto;padding:0 24px}
+.section{padding:clamp(80px,10vw,120px) 0}
+.section--light{background:var(--gray-50)}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,.95);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);height:var(--nav-h);display:flex;align-items:center}
+.nav__inner{max-width:var(--max-w);margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;width:100%;height:100%}
+.nav__logo{font-family:var(--font-mono);font-weight:700;font-size:15px;letter-spacing:-.01em;color:var(--green-800);display:flex;align-items:center;gap:8px}
+.nav__logo-mark{width:28px;height:28px;background:var(--green-800);border-radius:6px;display:flex;align-items:center;justify-content:center}
+.nav__logo-mark svg{width:16px;height:16px}
+.nav__links{display:flex;align-items:center;gap:6px;list-style:none}
+.nav__links a{font-size:14px;font-weight:500;color:var(--text-secondary);padding:6px 12px;border-radius:6px;transition:all .2s}
+.nav__links a:hover{color:var(--text);background:var(--gray-100)}
+.nav__cta{display:inline-flex;align-items:center;padding:7px 18px!important;background:var(--coral)!important;color:var(--white)!important;border-radius:6px!important;font-size:13px!important;font-weight:600!important;transition:all .2s!important}
+.nav__cta:hover{background:var(--coral-hover)!important;transform:translateY(-1px)}
+.nav__aws{font-size:12px!important;color:var(--text-light)!important;padding:5px 10px!important;border:1px solid var(--border)!important;border-radius:4px!important}
+.nav__aws:hover{border-color:var(--gray-300)!important;color:var(--text-secondary)!important}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;border-radius:var(--radius);font-size:15px;font-weight:600;cursor:pointer;border:none;transition:all .25s;text-decoration:none;font-family:var(--font-sans);letter-spacing:-.01em}
+.btn--primary{background:var(--coral);color:var(--white);box-shadow:0 2px 8px rgba(232,69,60,.25)}
+.btn--primary:hover{background:var(--coral-hover);transform:translateY(-2px);box-shadow:0 6px 20px rgba(232,69,60,.3)}
+.btn--secondary{background:var(--green-800);color:var(--white)}
+.btn--secondary:hover{background:var(--green-700);transform:translateY(-1px)}
+.btn--outline{background:transparent;color:var(--text);border:1.5px solid var(--gray-300)}
+.btn--outline:hover{border-color:var(--text);transform:translateY(-1px)}
+.btn--ghost{background:transparent;color:var(--text-secondary);padding:13px 8px;font-weight:500}
+.btn--ghost::after{content:'→';margin-left:6px;transition:margin-left .2s}
+.btn--ghost:hover::after{margin-left:10px}
+.btn--ghost:hover{color:var(--text)}
+.btn--lg{padding:16px 34px;font-size:16px}
+
+.eyebrow{font-family:var(--font-mono);font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
+
+/* ARTICLE */
+.article-hero{padding:80px 0 48px;background:linear-gradient(180deg,var(--green-50) 0%,var(--white) 100%)}
+.article-hero .eyebrow{color:var(--green-600)}
+.article-hero h1{font-size:clamp(28px,3.6vw,44px);font-weight:700;line-height:1.2;letter-spacing:-.02em;margin-bottom:16px;max-width:800px}
+.article-hero__sub{font-size:17px;color:var(--text-secondary);line-height:1.7;max-width:660px}
+.breadcrumb{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-muted);margin-bottom:24px;flex-wrap:wrap}
+.breadcrumb a{color:var(--green-600);font-weight:500;transition:color .2s}
+.breadcrumb a:hover{color:var(--green-800)}
+.breadcrumb span{color:var(--gray-300)}
+
+.article{max-width:800px;margin:0 auto;padding:48px 24px 80px}
+.article h2{font-size:clamp(22px,2.6vw,30px);font-weight:700;line-height:1.25;letter-spacing:-.015em;margin:48px 0 16px;color:var(--text)}
+.article h3{font-size:19px;font-weight:600;margin:32px 0 12px;color:var(--text)}
+.article p{font-size:16px;color:var(--text-secondary);line-height:1.75;margin-bottom:16px}
+.article ul,.article ol{margin:0 0 16px 20px;color:var(--text-secondary)}
+.article li{font-size:15px;line-height:1.7;margin-bottom:8px}
+
+.definition-box{background:var(--green-50);border-left:3px solid var(--green-500);padding:20px 24px;border-radius:0 var(--radius) var(--radius) 0;margin:24px 0}
+.definition-box p{font-size:15px;color:var(--green-800);font-weight:500;line-height:1.7;margin:0}
+.definition-box .def-label{font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--green-600);margin-bottom:8px}
+
+.key-message{background:var(--green-800);color:var(--white);padding:20px 28px;border-radius:var(--radius-lg);margin:28px 0;font-size:15px;font-weight:500;line-height:1.6}
+.key-message strong{color:var(--green-300)}
+
+.example-box{background:var(--gray-50);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;margin:24px 0}
+.example-box h4{font-size:14px;font-weight:600;margin-bottom:10px;color:var(--text)}
+.example-box p{font-size:14px;color:var(--text-secondary);line-height:1.7;margin-bottom:8px}
+.example-box p:last-child{margin-bottom:0}
+
+/* COMPARISON TABLE */
+.cmp-table{width:100%;border-collapse:collapse;margin:28px 0;font-size:14px}
+.cmp-table thead{background:var(--gray-50)}
+.cmp-table th{padding:14px 16px;text-align:left;font-weight:600;font-size:13px;color:var(--text);border-bottom:2px solid var(--border)}
+.cmp-table th.cmp-highlight{background:var(--green-50);color:var(--green-800)}
+.cmp-table td{padding:12px 16px;border-bottom:1px solid var(--border-light);color:var(--text-secondary);vertical-align:top}
+.cmp-table td.cmp-highlight{background:var(--green-50);color:var(--green-800);font-weight:500}
+.cmp-table .cmp-check{color:var(--green-500);font-weight:600}
+.cmp-table .cmp-cross{color:var(--coral);font-weight:600}
+
+/* FAQ */
+.faq{margin:40px 0}
+.faq h2{margin-bottom:20px}
+.faq__item{border:1px solid var(--border);border-radius:var(--radius);margin-bottom:8px;overflow:hidden;transition:border-color .2s}
+.faq__item:hover{border-color:var(--gray-300)}
+.faq__q{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;cursor:pointer;font-size:15px;font-weight:600;color:var(--text);background:var(--white);gap:12px}
+.faq__q::after{content:'+';font-size:20px;font-weight:400;color:var(--text-muted);flex-shrink:0;transition:transform .2s}
+.faq__item.open .faq__q::after{content:'-'}
+.faq__a{padding:0 20px 16px;font-size:14px;color:var(--text-secondary);line-height:1.7;display:none}
+.faq__item.open .faq__a{display:block}
+
+/* CTA */
+.article-cta{background:var(--green-800);border-radius:var(--radius-xl);padding:clamp(40px,5vw,64px);text-align:center;margin:48px 0 0}
+.article-cta h2{font-size:clamp(22px,2.8vw,32px);font-weight:700;color:var(--white);margin:0 0 12px}
+.article-cta p{font-size:15px;color:var(--green-200);margin-bottom:24px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.7}
+.article-cta__actions{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
+.article-cta__secondary{display:flex;align-items:center;justify-content:center;gap:24px;margin-top:20px}
+.article-cta__secondary a{font-size:13px;color:var(--green-300);font-weight:500;transition:color .2s}
+.article-cta__secondary a:hover{color:var(--white)}
+
+/* INTERNAL LINKS */
+.internal-links{border-top:1px solid var(--border);padding-top:32px;margin-top:40px}
+.internal-links h3{font-size:16px;font-weight:600;margin-bottom:16px}
+.internal-links__grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.internal-links__card{display:flex;align-items:center;gap:10px;padding:14px 16px;border:1px solid var(--border);border-radius:var(--radius);transition:all .2s;font-size:14px;font-weight:500;color:var(--text)}
+.internal-links__card:hover{border-color:var(--green-400);background:var(--green-50);transform:translateY(-1px)}
+.internal-links__card span{font-size:16px}
+
+/* FOOTER */
+.footer{padding:56px 0 32px;border-top:1px solid var(--border);background:var(--white)}
+.footer__grid{display:grid;grid-template-columns:2fr repeat(4,1fr);gap:40px;margin-bottom:40px}
+.footer__brand{font-family:var(--font-mono);font-size:14px;font-weight:600;color:var(--green-800)}
+.footer__brand p{font-family:var(--font-sans);font-size:13px;color:var(--text-muted);margin-top:10px;line-height:1.6;max-width:260px;font-weight:400}
+.footer__col h4{font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px}
+.footer__col ul{list-style:none}.footer__col li{margin-bottom:8px}.footer__col a{font-size:13px;color:var(--text-secondary);transition:color .2s}.footer__col a:hover{color:var(--text)}
+.footer__bottom{padding-top:20px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--text-light)}
+
+@media(max-width:900px){
+  .internal-links__grid{grid-template-columns:1fr}
+  .cmp-table{font-size:12px}
+  .cmp-table th,.cmp-table td{padding:8px 10px}
+  .footer__grid{grid-template-columns:1fr 1fr}
+  .nav__links{display:none}
+}
+@media(max-width:600px){
+  .footer__grid{grid-template-columns:1fr}
+}/* === Extracted utility classes for design agent compatibility === */
+.screenshot-placeholder{background:#F4F4F2;border:2px dashed #C6C6C4;border-radius:12px;padding:48px 24px;text-align:center;margin:24px auto 32px;max-width:900px}
+.screenshot-placeholder--top{margin:0 auto 40px}
+.screenshot-placeholder--flush{margin:0 auto 32px}
+.screenshot-placeholder__icon{font-size:40px;margin-bottom:8px}
+.screenshot-placeholder__label{font-family:var(--font-mono);font-size:12px;color:var(--gray-500);font-weight:600;letter-spacing:.08em}
+.screenshot-placeholder__desc{font-size:13px;color:var(--gray-400);margin-top:4px}
+.text-green{color:var(--green-600)}
+.text-green-light{color:var(--green-300)}
+.text-medium{font-weight:500}
+.text-muted{color:var(--text-muted)}
+.text-center{text-align:center}
+.text-sm-muted{font-size:13px;color:var(--text-muted)}
+.section-title{font-size:clamp(26px,3vw,36px);font-weight:700;line-height:1.25;letter-spacing:-.02em;margin-bottom:16px}
+.section-title--lg{font-size:clamp(28px,3.4vw,42px);font-weight:700;line-height:1.2;letter-spacing:-.02em;margin-bottom:16px}
+.body-text{font-size:16px;color:var(--text-secondary);line-height:1.75;max-width:720px;margin-bottom:32px}
+.body-text--tight{margin-bottom:16px}
+.body-text--no-margin{margin-bottom:0}
+.body-text--full{max-width:none}
+.body-text--sm{font-size:15px;color:var(--text-secondary);line-height:1.7;margin-bottom:14px}
+.pb-section{padding-bottom:clamp(80px,10vw,120px)}
+.mt-8{margin-top:8px}
+.mt-16{margin-top:16px}
+.mt-20{margin-top:20px}
+.mt-28{margin-top:28px}
+.mt-32{margin-top:32px}
+.mt-48{margin-top:48px}
+.pt-0{padding-top:0}
+.max-w-800{max-width:800px}
+.overflow-x-auto{overflow-x:auto}
+.w-full{width:100%}
+.justify-center{justify-content:center}
+.grid-2{grid-template-columns:repeat(2,1fr)}
+.grid-3{grid-template-columns:repeat(3,1fr)}
+.grid-5{grid-template-columns:repeat(5,1fr)}
+.grid-auto-180{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+.grid-auto-210{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+.grid-auto-230{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.tag-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);font-size:15px;font-weight:600;color:var(--text);transition:all .2s}
+.badge-core{font-size:10px;font-weight:600;background:var(--green-100);color:var(--green-700);padding:2px 8px;border-radius:3px;margin-left:8px}
+.badge--gray{background:var(--gray-100);color:var(--gray-600)}
+.badge--coral{background:var(--coral-light);color:var(--coral)}
+.badge--blue{background:var(--blue-light);color:var(--blue)}
+.badge--amber{background:var(--amber-light);color:var(--amber)}
+.flex-wrap-gap{display:flex;gap:14px;flex-wrap:wrap}
+.flex-center-wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;max-width:760px;margin:0 auto}
+.svg-container{width:100%;height:auto;max-width:1100px;margin:0 auto;display:block}
+.svg-responsive{width:100%;height:auto;display:block}
+.card-bordered{background:var(--white);border:1px solid var(--border)}
+.heading-md{font-size:24px;font-weight:700;margin-bottom:20px}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="nav__inner">
+<a href="index.html" class="nav__logo"><span class="nav__logo-mark"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2" stroke="#fff" stroke-width="1.5"/><circle cx="8" cy="8" r="3" fill="#fff"/></svg></span>LLM Capsule</a>
+<ul class="nav__links">
+  <li><a href="product.html">Product</a></li>
+  <li><a href="architecture.html">Architecture</a></li>
+  <li><a href="solutions.html">Solutions</a></li>
+  <li><a href="trust.html">Trust</a></li>
+  <li><a href="pricing.html">Pricing</a></li>
+  <li><a href="resources.html">Resources</a></li>
+  <li><a href="https://aws.amazon.com/marketplace" target="_blank" rel="noopener" class="nav__aws">AWS Marketplace</a></li>
+  <li><a href="request-pov.html" class="nav__cta">Request PoV</a></li>
+</ul>
+</div></nav>
+
+<section class="article-hero">
+<div class="container">
+  <nav class="breadcrumb"><a href="index.html">Home</a> <span>/</span> <a href="resources.html">Resources</a> <span>/</span> <a href="glossary.html">Glossary</a> <span>/</span> Restorable Workflow</nav>
+  <div class="eyebrow">Glossary</div>
+  <h1>Restorable Workflow</h1>
+</div>
+</section>
+<div class="container"><div class="article">
+
+  <div class="screenshot-placeholder">
+    <div class="screenshot-placeholder__icon">📸</div>
+    <div class="screenshot-placeholder__label">PRODUCT SCREENSHOT</div>
+    <div class="screenshot-placeholder__desc">Restorable Workflow — End-to-end document processing with full restoration of business context</div>
+  </div>
+
+  <div class="definition-box">
+    <div class="def-label">Definition</div>
+    <p>A restorable workflow is an AI enablement pattern in which sensitive enterprise data is replaced with reversible, structure-preserving representations before AI processing. After the AI model generates outputs, local restoration automatically restores original enterprise data into the results, producing enterprise-ready outputs without manual post-processing. This is the core mechanism by which LLM Capsule enables AI adoption on sensitive data.</p>
+  </div>
+
+  <h2>Explanation</h2>
+  <p>Traditional data protection workflows are one-directional: protect data, process it, and accept that outputs lack original context. A restorable workflow closes the loop — outputs are automatically restored with real enterprise data. This is what makes LLM Capsule an AI enabler rather than just a data protector.</p>
+  <p>The key properties of a restorable workflow are: reversible encapsulation (not permanent masking), locally stored mappings (never transmitted), structure-preserving protection (AI accuracy maintained), and deterministic restoration (outputs exactly match original data).</p>
+
+  <h2>Example</h2>
+  <div class="example-box">
+    <p>An HR department uses AI to generate performance review summaries. Employee names, performance ratings, and salary information are encapsulated. AI produces structured summaries from protected data. Restoration restores all employee details, producing manager-ready review documents without any manual editing.</p>
+  </div>
+
+  <h3>Related Terms</h3>
+  <p><a href="restoration.html" class="text-green text-medium">Restoration</a> · <a href="structure-preserving-processing.html" class="text-green text-medium">Structure-Preserving Processing</a> · <a href="secure-llm-usage.html" class="text-green text-medium">Secure LLM Usage</a></p>
+
+  <div class="internal-links">
+    <h3>Related</h3>
+    <div class="internal-links__grid">
+      <a href="product.html" class="internal-links__card"><span>⬡</span> Product Overview</a>
+      <a href="architecture.html" class="internal-links__card"><span>◇</span> Architecture</a>
+      <a href="trust.html" class="internal-links__card"><span>✓</span> Trust &amp; Compliance</a>
+      <a href="request-pov.html" class="internal-links__card"><span>→</span> Request PoV</a>
+      
+    </div>
+  </div>
+</div></div>
+<footer class="footer"><div class="container">
+<div class="footer__grid">
+  <div class="footer__brand">LLM Capsule<p>Enterprise AI enablement by CUBIG. Enable AI. Protect data. Restore results.</p></div>
+  <div class="footer__col"><h4>Product</h4><ul>
+    <li><a href="product.html">Product</a></li>
+    <li><a href="architecture.html">Architecture</a></li>
+    <li><a href="trust.html">Trust</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="https://aws.amazon.com/marketplace" target="_blank" rel="noopener">AWS Marketplace</a></li>
+  </ul></div>
+  <div class="footer__col"><h4>Solutions</h4><ul>
+    <li><a href="solutions.html">All Solutions</a></li>
+  </ul></div>
+  <div class="footer__col"><h4>Resources</h4><ul>
+    <li><a href="resources.html">Resources Hub</a></li>
+    <li><a href="learn.html">Learn</a></li>
+    <li><a href="glossary.html">Glossary</a></li>
+    <li><a href="downloads.html">Downloads</a></li>
+    <li><a href="trust-center.html">Trust Center</a></li>
+  </ul></div>
+  <div class="footer__col"><h4>Company</h4><ul>
+    <li><a href="request-pov.html">Request PoV</a></li>
+    <li><a href="https://cubig.ai" target="_blank" rel="noopener">CUBIG</a></li>
+    <li><a href="#">Privacy</a></li>
+    <li><a href="#">Terms</a></li>
+  </ul></div>
+</div>
+<div class="footer__bottom"><span>&copy; 2025 LLM Capsule by CUBIG. All rights reserved.</span><span>Enterprise AI Enablement</span></div>
+</div></footer>
+<script>document.querySelectorAll('.faq__q').forEach(function(b){b.addEventListener('click',function(){var i=this.closest('.faq__item');var w=i.classList.contains('open');i.parentElement.querySelectorAll('.faq__item').forEach(function(x){x.classList.remove('open')});if(!w)i.classList.add('open')})});</script>
+</body>
+</html>
